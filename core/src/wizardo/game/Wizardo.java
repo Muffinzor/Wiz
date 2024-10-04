@@ -8,11 +8,10 @@ import java.util.Stack;
 
 public class Wizardo extends Game {
 
-	private Stack<Screen> screenStack;
+	private Screen previousScreen;
 	
 	@Override
 	public void create () {
-		screenStack = new Stack<>();
 		setScreen(new MainMenuScreen(this));
 	}
 
@@ -23,6 +22,25 @@ public class Wizardo extends Game {
 	
 	@Override
 	public void dispose () {
+		previousScreen.dispose();
+	}
 
+	/**
+	 * Swap to new screen, holds reference to screen it leaves
+	 * @param previousScreen "this" as in the screen actually active
+	 * @param newScreen screen to switch to
+	 */
+	public void setNewScreen(Screen previousScreen, Screen newScreen) {
+		this.previousScreen = previousScreen;
+		setScreen(newScreen);
+	}
+
+	/**
+	 * Goes back to screen held in reference
+	 */
+	public void setPreviousScreen() {
+		if (null != previousScreen) {
+			setScreen(previousScreen);
+		}
 	}
 }
