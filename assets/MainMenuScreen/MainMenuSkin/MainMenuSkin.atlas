@@ -1,0 +1,27 @@
+
+MainMenuSkin.png
+size: 512, 512
+format: RGBA8888
+filter: Linear, Linear
+repeat: none
+Lemon Shake Shake
+  rotate: false
+  xy: 1, 429
+  size: 506, 76
+  orig: 506, 76
+  offset: 0, 0
+  index: -1
+WoodButton
+  rotate: false
+  xy: 1, 307
+  size: 500, 120
+  orig: 500, 120
+  offset: 0, 0
+  index: -1
+WoodButtonHovered
+  rotate: false
+  xy: 1, 185
+  size: 500, 120
+  orig: 500, 120
+  offset: 0, 0
+  index: -1

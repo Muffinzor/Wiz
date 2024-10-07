@@ -1,4 +1,4 @@
-package wizardo.game.Sounds.Music;
+package wizardo.game.Audio.Music;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
@@ -19,7 +19,7 @@ public class MusicPlayer {
 
     public void playMusic(String filePath, boolean looping) {
 
-        //If music to be played and music playing are the same
+        //If music to be played and music playing are the same, keeps playing
         if (currentMusicFilePath != null && currentMusicFilePath.equals(filePath)) {
             return;
         }
@@ -29,7 +29,6 @@ public class MusicPlayer {
             currentMusic.dispose();
         }
 
-        // Load and start the new music
         currentMusic = Gdx.audio.newMusic(Gdx.files.internal(filePath));
         currentMusicFilePath = filePath;
         currentMusic.setLooping(looping);
