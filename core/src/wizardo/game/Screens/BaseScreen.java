@@ -6,6 +6,7 @@ import com.badlogic.gdx.controllers.ControllerAdapter;
 import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.graphics.Cursor;
 import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -31,12 +32,14 @@ public abstract class BaseScreen implements Screen {
 
     public Stage stage;
     protected ArrayList<Button> buttons;
+    protected String cursorTexturePath;
 
     public BaseScreen(Wizardo game) {
 
         this.game = game;
         this.batch = new SpriteBatch();
         buttons = new ArrayList<>();
+        cursorTexturePath = "Cursors/Menu_Cursor.png";
         Gdx.input.setInputProcessor(inputMultiplexer);
 
     }
@@ -59,7 +62,6 @@ public abstract class BaseScreen implements Screen {
     }
 
     public void removeInputs() {
-        System.out.println("REMOVE INPUTS");
         if(controllerAdapter != null) {
             for (Controller controller : Controllers.getControllers()) {
                 controller.removeListener(controllerAdapter);
@@ -86,7 +88,11 @@ public abstract class BaseScreen implements Screen {
         if(mouseInvisible) {
 
             mouseInvisible = false;
-            Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Arrow);
+
+            Pixmap pixmap = new Pixmap(Gdx.files.internal("Cursors/Menu_Cursor.png"));
+            Cursor customCursor = Gdx.graphics.newCursor(pixmap, 0, 0);
+            Gdx.graphics.setCursor(customCursor);
+            pixmap.dispose();
 
         }
 

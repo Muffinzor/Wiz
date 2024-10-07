@@ -161,6 +161,7 @@ public class MenuTable {
 
     public void clickSelectedButton() {
         table.clearChildren();
+        table = null;
         switch (selectedButtonIndex) {
             case 0 -> game.setNewScreen(new HubScreen(game));
             case 1 -> System.out.println("Nope");

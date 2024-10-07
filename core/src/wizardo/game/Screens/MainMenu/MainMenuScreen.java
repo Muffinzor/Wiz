@@ -3,6 +3,8 @@ package wizardo.game.Screens.MainMenu;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.Controllers;
+import com.badlogic.gdx.graphics.Cursor;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -43,6 +45,11 @@ public class MainMenuScreen extends BaseScreen {
     }
 
     private void setInputs() {
+        Pixmap pixmap = new Pixmap(Gdx.files.internal("Cursors/Menu_Cursor.png"));
+        Cursor customCursor = Gdx.graphics.newCursor(pixmap, 0, 0);
+        Gdx.graphics.setCursor(customCursor);
+        pixmap.dispose();
+
         inputMultiplexer.clear();
         inputMultiplexer.addProcessor(stage);
         inputMultiplexer.addProcessor(mouseAdapter);

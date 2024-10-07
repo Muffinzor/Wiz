@@ -108,6 +108,7 @@ public class HubScreen extends BaseScreen {
     @Override
     public void dispose() {
         removeInputs();
+        batch.dispose();
     }
 
     public void loadTiledMap(String pathToFile) {
