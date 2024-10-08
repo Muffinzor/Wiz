@@ -1,18 +1,16 @@
-package wizardo.game.Screens.MainMenu.Controls;
+package wizardo.game.Screens.EscapeMenu.Controls;
 
 import com.badlogic.gdx.InputAdapter;
-import wizardo.game.Screens.BaseScreen;
-import wizardo.game.Screens.MainMenu.MainMenuScreen;
+import wizardo.game.Screens.EscapeMenu.EscapeScreen;
 
 import static wizardo.game.Screens.BaseScreen.controllerActive;
 import static wizardo.game.Screens.BaseScreen.inputMultiplexer;
 
-public class MouseListener_MAINMENU extends InputAdapter {
+public class KeyboardMouseListener_ESCAPE extends InputAdapter {
 
+    EscapeScreen screen;
 
-    MainMenuScreen screen;
-
-    public MouseListener_MAINMENU(MainMenuScreen screen) {
+    public KeyboardMouseListener_ESCAPE(EscapeScreen screen) {
 
         this.screen = screen;
         inputMultiplexer.addProcessor(this.screen.stage);
@@ -29,5 +27,4 @@ public class MouseListener_MAINMENU extends InputAdapter {
 
         return true;
     }
-
 }

@@ -6,7 +6,9 @@ import wizardo.game.Player.Pawn;
 import wizardo.game.Screens.EscapeMenu.EscapeScreen;
 import wizardo.game.Screens.Hub.HubScreen;
 
-public class KeyboardListener_HUB implements InputProcessor {
+import static wizardo.game.Screens.BaseScreen.controllerActive;
+
+public class KeyboardMouseListener_HUB implements InputProcessor {
 
     boolean A_pressed;
     boolean S_pressed;
@@ -16,9 +18,20 @@ public class KeyboardListener_HUB implements InputProcessor {
     Pawn pawn;
     HubScreen screen;
 
-    public KeyboardListener_HUB(Pawn pawn, HubScreen screen) {
+    public KeyboardMouseListener_HUB(Pawn pawn, HubScreen screen) {
         this.screen = screen;
         this.pawn = pawn;
+    }
+
+
+    @Override
+    public boolean mouseMoved(int screenX, int screenY) {
+
+        if (controllerActive) {
+            controllerActive = false;
+            screen.showCursor();
+        }
+        return true;
     }
 
     @Override
@@ -117,10 +130,6 @@ public class KeyboardListener_HUB implements InputProcessor {
         return false;
     }
 
-    @Override
-    public boolean mouseMoved(int i, int i1) {
-        return false;
-    }
 
     @Override
     public boolean scrolled(float v, float v1) {

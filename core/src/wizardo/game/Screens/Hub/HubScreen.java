@@ -11,8 +11,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import wizardo.game.Screens.Hub.Controls.KeyboardListener_HUB;
-import wizardo.game.Screens.Hub.Controls.MouseListener_HUB;
+import wizardo.game.Screens.Hub.Controls.KeyboardMouseListener_HUB;
 import wizardo.game.Screens.Hub.Controls.ControllerListener_HUB;
 import wizardo.game.Display.SpriteRenderer;
 import wizardo.game.Player.Pawn;
@@ -69,15 +68,13 @@ public class HubScreen extends BaseScreen {
     }
 
     private void setInputs() {
-        mouseAdapter = new MouseListener_HUB(this);
-        keyboardProcessor = new KeyboardListener_HUB(playerPawn, this);
+        keyboardProcessor = new KeyboardMouseListener_HUB(playerPawn, this);
         controllerAdapter = new ControllerListener_HUB(playerPawn, this);
 
         inputMultiplexer.clear();
         for (Controller controller : Controllers.getControllers()) {
             controller.addListener(controllerAdapter);
         }
-        inputMultiplexer.addProcessor(mouseAdapter);
         inputMultiplexer.addProcessor(keyboardProcessor);
     }
 

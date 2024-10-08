@@ -22,7 +22,15 @@ public class ControllerListener_HUB extends ControllerAdapter {
     @Override
     public boolean axisMoved(Controller controller, int axisIndex, float value) {
 
-        if(Math.abs(value) < 0.3f) {
+        switch(axisIndex) {
+            case 0, 1 -> {
+
+            }
+        }
+
+
+
+        if(Math.abs(value) < 0.1f) {
             value = 0;
         } else if (!controllerActive) {
             controllerActive = true;
@@ -37,6 +45,7 @@ public class ControllerListener_HUB extends ControllerAdapter {
             pawn.aimX(value);
         } else if (axisIndex == 3) {
             pawn.aimY(-value);
+            
         }
 
         // Left joystick: Axis 0 = left/right, Axis 1 = up/down

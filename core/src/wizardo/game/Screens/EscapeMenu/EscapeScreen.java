@@ -3,12 +3,11 @@ package wizardo.game.Screens.EscapeMenu;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.Controllers;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import wizardo.game.Screens.BaseScreen;
 import wizardo.game.Screens.EscapeMenu.Controls.ControllerListener_ESCAPE;
-import wizardo.game.Screens.EscapeMenu.Controls.MouseListener_ESCAPE;
+import wizardo.game.Screens.EscapeMenu.Controls.KeyboardMouseListener_ESCAPE;
 import wizardo.game.Wizardo;
 
 public class EscapeScreen extends BaseScreen {
@@ -27,7 +26,7 @@ public class EscapeScreen extends BaseScreen {
     }
 
     private void setInputs() {
-        mouseAdapter = new MouseListener_ESCAPE(this);
+        mouseAdapter = new KeyboardMouseListener_ESCAPE(this);
         controllerAdapter = new ControllerListener_ESCAPE(this);
 
         inputMultiplexer.clear();

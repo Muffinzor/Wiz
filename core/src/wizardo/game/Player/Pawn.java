@@ -22,7 +22,7 @@ public class Pawn {
 
     public Pawn() {
         stateTime = 0;
-        movementVector = new Vector2();
+        movementVector = new Vector2(0,0);
         targetVector = new Vector2(1,0);
         controllerTargetSprite = new Sprite(new Texture("Cursors/Controller_Cursor.png"));
     }

@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import wizardo.game.Screens.MainMenu.Controls.ControllerListener_MAINMENU;
-import wizardo.game.Screens.MainMenu.Controls.MouseListener_MAINMENU;
+import wizardo.game.Screens.MainMenu.Controls.KeyboardMouseListener_MAINMENU;
 import wizardo.game.Screens.BaseScreen;
 import wizardo.game.Audio.Music.MusicPlayer;
 import wizardo.game.Wizardo;
@@ -34,7 +34,7 @@ public class MainMenuScreen extends BaseScreen {
         stage = new Stage();
         menuTable = new MenuTable(stage, mainMenuSkin, buttons, game);
 
-        mouseAdapter = new MouseListener_MAINMENU(this);
+        mouseAdapter = new KeyboardMouseListener_MAINMENU(this);
         controllerAdapter = new ControllerListener_MAINMENU(this);
     }
 
