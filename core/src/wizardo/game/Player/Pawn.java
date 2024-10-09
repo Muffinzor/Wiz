@@ -4,14 +4,17 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import wizardo.game.Screens.BaseScreen;
 import wizardo.game.Utils.BodyFactory;
 
-import static wizardo.game.Display.SpriteRenderer.toRender;
+import static wizardo.game.Display.DisplayUtils.getSprite;
 import static wizardo.game.Screens.BaseScreen.controllerActive;
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.world;
 
 public class Pawn {
+
+    public BaseScreen screen;
 
     public Body body;
     private float stateTime;
@@ -20,7 +23,8 @@ public class Pawn {
     public Vector2 targetVector;
     public Sprite controllerTargetSprite;
 
-    public Pawn() {
+    public Pawn(BaseScreen screen) {
+        this.screen = screen;
         stateTime = 0;
         movementVector = new Vector2(0,0);
         targetVector = new Vector2(1,0);
@@ -37,9 +41,10 @@ public class Pawn {
     }
 
     public void drawSprite() {
-        Sprite frame = PlayerResources.playerWalk.getKeyFrame(stateTime, true);
+        Sprite frame = getSprite(screen);
+        frame.set(PlayerResources.playerWalk.getKeyFrame(stateTime, true));
         frame.setCenter(body.getPosition().x * PPM, body.getPosition().y * PPM);
-        toRender.add(frame);
+        screen.spriteRenderer.character_spell_sprites.add(frame);
     }
 
     public void drawControllerTarget() {
@@ -48,15 +53,16 @@ public class Pawn {
             if(targetVector.len() > 0.1f) {
                 targetVector.nor();
             }
-            float aimRadius = 7;
+            float aimRadius = 5;
             Vector2 aimPosition = new Vector2(targetVector).scl(aimRadius);
             Vector2 cursorPosition = playerPosition.add(aimPosition);
 
-            Sprite frame = controllerTargetSprite;
+            Sprite frame = getSprite(screen);
+            frame.set(controllerTargetSprite);
             frame.setCenter(cursorPosition.x * PPM, cursorPosition.y * PPM);
             float angle = targetVector.angleDeg();
             frame.setRotation(angle - 45);
-            toRender.add(frame);
+            screen.spriteRenderer.ui_sprites.add(frame);
         }
     }
 

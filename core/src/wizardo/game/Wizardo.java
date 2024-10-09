@@ -18,6 +18,7 @@ public class Wizardo extends Game {
 	
 	@Override
 	public void create () {
+		BaseScreen.screenRatio = Gdx.graphics.getWidth()/1920f;
 		screenStack = new Stack<>();
 		setNewScreen(new MainMenuScreen(this));
 	}

@@ -14,11 +14,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import wizardo.game.Audio.Sounds.SoundPlayer;
 import wizardo.game.Screens.Hub.HubScreen;
 import wizardo.game.Wizardo;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static wizardo.game.Screens.BaseScreen.screenRatio;
 
 public class MenuTable {
 
@@ -31,33 +34,36 @@ public class MenuTable {
     private int selectedButtonIndex;
     private ArrayList<Button> buttons;
 
+    private int lastHoveredButtonIndex = -1;
+
     public MenuTable(Stage stage, Skin skin, ArrayList<Button> buttons, Wizardo game) {
         this.game = game;
         this.stage = stage;
         this.skin = skin;
         this.buttons = buttons;
         table = new Table();
-        selectedButtonIndex = 0;
+        selectedButtonIndex = -1;
 
-        createButtons();
-        setPosition();
-
-        updateButtonStates();
+        resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
     }
 
     public void setPosition() {
-
-        int screenWidth = Gdx.graphics.getWidth();
-        int screenHeight = Gdx.graphics.getHeight();
-
-        table.setPosition(screenWidth/2f - table.getWidth()/2, screenHeight/2f - table.getHeight()/2);
+        System.out.println(screenRatio);
+        int x = Gdx.graphics.getWidth()/2;
+        int y = Gdx.graphics.getHeight()/2 - (int)(200 * screenRatio);
+        table.setPosition(x,y);
         stage.addActor(table);
-        
     }
 
     public void createButtons() {
 
+        playButton();
+        settingsButton();
+        quitButton();
+    }
+
+    public void playButton() {
         MainMenuButton playButton = new MainMenuButton("Play", skin);
         buttons.add(playButton);
         table.add(playButton);
@@ -66,8 +72,12 @@ public class MenuTable {
         playButton.addListener(new InputListener() {
             @Override
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                selectedButtonIndex = 0;
-                updateButtonStates();
+                if (selectedButtonIndex != 0 || lastHoveredButtonIndex != 0) {
+                    selectedButtonIndex = 0;
+                    updateButtonStates();
+                    SoundPlayer.getSoundPlayer().playSound("Sounds/menu_selection_1.mp3", 0.3f);
+                }
+                lastHoveredButtonIndex = 0;
             }
             @Override
             public void exit(InputEvent event, float x, float y, int pointer, Actor fromActor) {
@@ -80,9 +90,13 @@ public class MenuTable {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 table.clearChildren();
+                SoundPlayer.getSoundPlayer().playSound("Sounds/click_1.mp3", 1);
                 game.setNewScreen(new HubScreen(game));
             }
         });
+
+    }
+    public void settingsButton() {
 
         MainMenuButton settingsButton = new MainMenuButton("Settings", skin);
         buttons.add(settingsButton);
@@ -92,8 +106,12 @@ public class MenuTable {
         settingsButton.addListener(new InputListener() {
             @Override
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                selectedButtonIndex = 1;
-                updateButtonStates();
+                if (selectedButtonIndex != 1 || lastHoveredButtonIndex != 1) {
+                    selectedButtonIndex = 1;
+                    updateButtonStates();
+                    SoundPlayer.getSoundPlayer().playSound("Sounds/menu_selection_1.mp3", 0.3f);
+                }
+                lastHoveredButtonIndex = 1;
             }
             @Override
             public void exit(InputEvent event, float x, float y, int pointer, Actor fromActor) {
@@ -105,9 +123,12 @@ public class MenuTable {
         settingsButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                SoundPlayer.getSoundPlayer().playSound("Sounds/click_1.mp3", 1);
                 System.out.println("No settings");
             }
         });
+    }
+    public void quitButton() {
 
 
 
@@ -118,8 +139,12 @@ public class MenuTable {
         exitButton.addListener(new InputListener() {
             @Override
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                selectedButtonIndex = 2;
-                updateButtonStates();
+                if (selectedButtonIndex != 2 || lastHoveredButtonIndex != 2) {
+                    selectedButtonIndex = 2;
+                    updateButtonStates();
+                    SoundPlayer.getSoundPlayer().playSound("Sounds/menu_selection_1.mp3", 0.3f);
+                }
+                lastHoveredButtonIndex = 2;
             }
             @Override
             public void exit(InputEvent event, float x, float y, int pointer, Actor fromActor) {
@@ -131,6 +156,7 @@ public class MenuTable {
         exitButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                SoundPlayer.getSoundPlayer().playSound("Sounds/click_1.mp3", 1);
                 Gdx.app.exit();
             }
         });
@@ -144,6 +170,7 @@ public class MenuTable {
     }
 
     public void navigateUp() {
+        SoundPlayer.getSoundPlayer().playSound("Sounds/menu_selection_1.mp3", 0.3f);
         selectedButtonIndex++;
         if(selectedButtonIndex > buttons.size() - 1 ) {
             selectedButtonIndex = 0;
@@ -152,6 +179,7 @@ public class MenuTable {
     }
 
     public void navigateDown() {
+        SoundPlayer.getSoundPlayer().playSound("Sounds/menu_selection_1.mp3", 0.3f);
         selectedButtonIndex--;
         if(selectedButtonIndex < 0) {
             selectedButtonIndex = buttons.size() - 1;
@@ -167,6 +195,23 @@ public class MenuTable {
             case 1 -> System.out.println("Nope");
             case 2 -> Gdx.app.exit();
         }
+    }
+
+    public void resize(int width, int height) {
+        buttons.clear();
+        table.clearChildren();
+        table = new Table();
+        setPosition();
+        createButtons();
+        stage.addActor(table);
+        updateButtonStates();
+    }
+
+    public void dispose() {
+        buttons.clear();
+        table.clearChildren();
+        table = null;
+        stage.clear();
     }
 
 }

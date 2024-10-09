@@ -1,6 +1,7 @@
 package wizardo.game.Screens.MainMenu.Controls;
 
 import com.badlogic.gdx.InputAdapter;
+import wizardo.game.Audio.Sounds.SoundPlayer;
 import wizardo.game.Screens.MainMenu.MainMenuScreen;
 
 import static wizardo.game.Screens.BaseScreen.controllerActive;
@@ -26,6 +27,13 @@ public class KeyboardMouseListener_MAINMENU extends InputAdapter {
             screen.showCursor();
         }
 
+        return true;
+
+    }
+
+    @Override
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        SoundPlayer.getSoundPlayer().playSound("Sounds/click_1.mp3", 1);
         return true;
     }
 

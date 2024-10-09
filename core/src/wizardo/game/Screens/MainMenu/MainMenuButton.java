@@ -26,6 +26,7 @@ public class MainMenuButton extends TextButton {
         newStyle.checked = new TextureRegionDrawable(((TextureRegionDrawable) style.checked).getRegion());
         newStyle.over = new TextureRegionDrawable(((TextureRegionDrawable) style.over).getRegion());
         newStyle.font = style.font;
+
         newStyle.fontColor = style.fontColor;
 
         float GEARBOX_WIDTH = Xscale * 500;

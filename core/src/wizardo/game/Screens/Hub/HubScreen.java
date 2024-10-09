@@ -1,5 +1,6 @@
 package wizardo.game.Screens.Hub;
 
+import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.Controllers;
@@ -13,7 +14,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import wizardo.game.Screens.Hub.Controls.KeyboardMouseListener_HUB;
 import wizardo.game.Screens.Hub.Controls.ControllerListener_HUB;
-import wizardo.game.Display.SpriteRenderer;
 import wizardo.game.Player.Pawn;
 import wizardo.game.Screens.BaseScreen;
 import wizardo.game.Wizardo;
@@ -25,11 +25,9 @@ import static wizardo.game.Wizardo.world;
 public class HubScreen extends BaseScreen {
 
     public Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
-    public SpriteRenderer spriteRenderer = new SpriteRenderer();
 
     private TiledMap map;
     private TiledMapRenderer mapRenderer;
-    private OrthographicCamera camera;
 
     private Pawn playerPawn;
 
@@ -38,7 +36,9 @@ public class HubScreen extends BaseScreen {
         loadTiledMap("Maps/StartingChunk.tmx");
 
         createNewWorld();
-        playerPawn = new Pawn();
+        rayHandler = new RayHandler(world);
+        rayHandler.setAmbientLight(0.3f);
+        playerPawn = new Pawn(this);
         playerPawn.createPawn(new Vector2(500,500));
 
         camera = new OrthographicCamera();
@@ -65,6 +65,9 @@ public class HubScreen extends BaseScreen {
 
         Matrix4 debugMatrix = camera.combined.cpy().scl(PPM);
         debugRenderer.render(world, debugMatrix);
+
+        rayHandler.setCombinedMatrix(camera);
+        rayHandler.updateAndRender();
     }
 
     private void setInputs() {

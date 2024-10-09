@@ -3,12 +3,12 @@ package wizardo.game.Screens.MainMenu;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.Controllers;
-import com.badlogic.gdx.graphics.Cursor;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import wizardo.game.Screens.MainMenu.Controls.ControllerListener_MAINMENU;
 import wizardo.game.Screens.MainMenu.Controls.KeyboardMouseListener_MAINMENU;
 import wizardo.game.Screens.BaseScreen;
@@ -19,23 +19,27 @@ public class MainMenuScreen extends BaseScreen {
     private String musicFilePath = "MainMenuScreen/Abbesses.mp3";
     private Skin mainMenuSkin = new Skin(Gdx.files.internal("MainMenuScreen/MainMenuSkin/MainMenuSkin.json"));
 
-    private final Sprite background;
+    private Sprite background;
     private final Sprite title;
 
     public MenuTable menuTable;
 
     public MainMenuScreen(Wizardo game) {
         super(game);
-        System.out.println("LOL");
+
+        stage = new Stage(new ScreenViewport());
 
         background = new Sprite(new Texture("MainMenuScreen/MainBackground.png"));
+        background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
         title = new Sprite(new Texture("MainMenuScreen/Title.png"));
+        title.setSize(600 * screenRatio, 150 * screenRatio);
+        title.setPosition(Gdx.graphics.getWidth()/2f - title.getWidth()/2f, 600 * screenRatio);
 
-        stage = new Stage();
         menuTable = new MenuTable(stage, mainMenuSkin, buttons, game);
-
         mouseAdapter = new KeyboardMouseListener_MAINMENU(this);
         controllerAdapter = new ControllerListener_MAINMENU(this);
+
     }
 
     @Override
@@ -61,6 +65,8 @@ public class MainMenuScreen extends BaseScreen {
     @Override
     public void render(float delta) {
         globalCD -= delta;
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
 
         batch.begin();
         background.draw(batch);
@@ -97,7 +103,11 @@ public class MainMenuScreen extends BaseScreen {
 
     @Override
     public void resize(int width, int height) {
+        super.resize(width, height);
+        stage.getViewport().update(width, height, true);
 
+        menuTable.dispose();
+        menuTable = new MenuTable(stage, mainMenuSkin, buttons, game);
     }
 
 }

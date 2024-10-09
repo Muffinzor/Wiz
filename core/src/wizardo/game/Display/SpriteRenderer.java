@@ -7,18 +7,28 @@ import java.util.ArrayList;
 
 public class SpriteRenderer {
 
-    public static ArrayList<Sprite> toRender;
+    public ArrayList<Sprite> character_spell_sprites;
+    public ArrayList<Sprite> ui_sprites;
+    public SpritePool pool;
 
     public SpriteRenderer() {
-        toRender = new ArrayList<>();
+        character_spell_sprites = new ArrayList<>();
+        ui_sprites = new ArrayList<>();
+        pool = new SpritePool();
     }
 
     public void renderAll() {
         SpriteBatch batch = new SpriteBatch();
         batch.begin();
 
-        for (Sprite sprite : toRender) {
+        for (Sprite sprite : character_spell_sprites) {
             sprite.draw(batch);
+            pool.poolSprite(sprite);
+        }
+
+        for (Sprite sprite : ui_sprites) {
+            sprite.draw(batch);
+            pool.poolSprite(sprite);
         }
 
         batch.end();
@@ -26,6 +36,7 @@ public class SpriteRenderer {
     }
 
     public void clearSpriteArrays() {
-        toRender.clear();
+        character_spell_sprites.clear();
+        ui_sprites.clear();
     }
 }
