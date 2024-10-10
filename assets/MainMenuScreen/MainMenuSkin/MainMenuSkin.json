@@ -21,6 +21,11 @@ com.badlogic.gdx.graphics.Color: {
 		a: 1
 	}
 }
+com.badlogic.gdx.scenes.scene2d.ui.ProgressBar$ProgressBarStyle: {
+	default-horizontal: {
+		background: WoodButton
+	}
+}
 com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 	default: {
 		font: LemonShake
@@ -35,7 +40,7 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 		overFontColor: LightYellow
 		checkedFontColor: LightYellow
 		up: WoodButton
-		over: WoodButton
+		over: WoodButtonHovered
 		checked: WoodButtonHovered
 	}
 }

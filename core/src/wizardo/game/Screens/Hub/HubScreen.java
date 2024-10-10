@@ -12,6 +12,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import wizardo.game.Display.DisplayManager;
 import wizardo.game.Screens.Hub.Controls.KeyboardMouseListener_HUB;
 import wizardo.game.Screens.Hub.Controls.ControllerListener_HUB;
 import wizardo.game.Player.Pawn;
@@ -35,15 +36,23 @@ public class HubScreen extends BaseScreen {
         super(game);
         loadTiledMap("Maps/StartingChunk.tmx");
 
+        camera = new OrthographicCamera();
+        camera.viewportWidth = Gdx.graphics.getWidth();
+        camera.viewportHeight = Gdx.graphics.getHeight();
+        camera.position.set(1000, 1000, 0);
+
+        camera.zoom = 1f;
+
+        displayManager = new DisplayManager(this);
+
         createNewWorld();
         rayHandler = new RayHandler(world);
         rayHandler.setAmbientLight(0.3f);
-        playerPawn = new Pawn(this);
-        playerPawn.createPawn(new Vector2(500,500));
 
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        camera.position.set(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2, 0);
+        playerPawn = new Pawn(this);
+        playerPawn.createPawn(new Vector2(1000,1000));
+
+        cursorTexturePath = "Cursors/Battle_Cursor.png";
     }
 
     @Override
@@ -54,20 +63,19 @@ public class HubScreen extends BaseScreen {
         }
 
         world.step(1 / 30f, 2, 1);
-        camera.update();
+        updateCamera();
 
         mapRenderer.setView(camera);
         mapRenderer.render();
 
         playerPawn.update(delta);
 
-        spriteRenderer.renderAll();
+        displayManager.update(delta);
 
         Matrix4 debugMatrix = camera.combined.cpy().scl(PPM);
         debugRenderer.render(world, debugMatrix);
 
-        rayHandler.setCombinedMatrix(camera);
-        rayHandler.updateAndRender();
+
     }
 
     private void setInputs() {
@@ -85,6 +93,7 @@ public class HubScreen extends BaseScreen {
     public void show() {
         paused = false;
         setInputs();
+        setCursorTexture();
     }
 
     @Override
@@ -98,6 +107,20 @@ public class HubScreen extends BaseScreen {
         paused = true;
         playerPawn.stop();
         removeInputs();
+    }
+
+    public void updateCamera() {
+
+        float x = playerPawn.getBodyX() * PPM;
+        float y = playerPawn.getBodyY() * PPM;
+
+        float cameraX = Math.max(camera.viewportWidth / 2, Math.min(x, 2560 - camera.viewportWidth / 2));
+        float cameraY = Math.max(camera.viewportHeight / 2, Math.min(y, 2560 - camera.viewportHeight / 2));
+
+        camera.position.x += (cameraX - camera.position.x) * 0.03f;
+        camera.position.y += (cameraY - camera.position.y) * 0.03f;
+
+        camera.update();
     }
 
     @Override
@@ -115,6 +138,15 @@ public class HubScreen extends BaseScreen {
         TmxMapLoader loader = new TmxMapLoader();
         map = loader.load(pathToFile);
         mapRenderer = new OrthogonalTiledMapRenderer(map);
+    }
+
+    @Override
+    public void resize(int width, int height) {
+        super.resize(width, height);
+        camera.viewportWidth = width;
+        camera.viewportHeight = height;
+        camera.position.set(playerPawn.getBodyX() * PPM, playerPawn.getBodyY() * PPM, 0);
+        camera.update();
     }
 
 

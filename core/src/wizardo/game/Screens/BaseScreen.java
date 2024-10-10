@@ -8,12 +8,11 @@ import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.graphics.Cursor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import wizardo.game.Display.SpriteRenderer;
+import wizardo.game.Display.DisplayManager;
 import wizardo.game.Wizardo;
 
 import java.util.ArrayList;
@@ -27,6 +26,7 @@ public abstract class BaseScreen implements Screen {
 
     public Wizardo game;
     protected SpriteBatch batch;
+    public RayHandler rayHandler;
 
     public boolean paused;
     public float globalCD = 0;
@@ -35,20 +35,19 @@ public abstract class BaseScreen implements Screen {
     protected InputAdapter mouseAdapter;
     protected InputProcessor keyboardProcessor;
 
-    public SpriteRenderer spriteRenderer;
-    public RayHandler rayHandler;
+    public DisplayManager displayManager;
     public ArrayList<Animation> animations;
+    public OrthographicCamera camera;
+
     public Stage stage;
     protected ArrayList<Button> buttons;
     protected String cursorTexturePath;
 
-    protected OrthographicCamera camera;
 
     public BaseScreen(Wizardo game) {
 
         this.game = game;
         this.batch = new SpriteBatch();
-        spriteRenderer = new SpriteRenderer();
         animations = new ArrayList<>();
         buttons = new ArrayList<>();
 
@@ -102,13 +101,20 @@ public abstract class BaseScreen implements Screen {
 
             mouseInvisible = false;
 
-            Pixmap pixmap = new Pixmap(Gdx.files.internal("Cursors/Menu_Cursor.png"));
+            Pixmap pixmap = new Pixmap(Gdx.files.internal(cursorTexturePath));
             Cursor customCursor = Gdx.graphics.newCursor(pixmap, 0, 0);
             Gdx.graphics.setCursor(customCursor);
             pixmap.dispose();
 
         }
 
+    }
+
+    public void setCursorTexture() {
+        Pixmap pixmap = new Pixmap(Gdx.files.internal(cursorTexturePath));
+        Cursor customCursor = Gdx.graphics.newCursor(pixmap, 0, 0);
+        Gdx.graphics.setCursor(customCursor);
+        pixmap.dispose();
     }
 
 

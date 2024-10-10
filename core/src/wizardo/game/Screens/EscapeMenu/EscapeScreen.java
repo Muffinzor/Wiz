@@ -48,6 +48,7 @@ public class EscapeScreen extends BaseScreen {
     @Override
     public void show() {
         setInputs();
+        setCursorTexture();
     }
 
     @Override

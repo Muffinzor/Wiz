@@ -1,6 +1,8 @@
 package wizardo.game.Display;
 
+import box2dLight.RayHandler;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Screens.BaseScreen;
 
 public class DisplayUtils {
@@ -11,7 +13,11 @@ public class DisplayUtils {
      * @return a sprite from that screen's SpriteRenderer's pool
      */
     public static Sprite getSprite(BaseScreen screen) {
-        return screen.spriteRenderer.pool.getSprite();
+        return new Sprite();
+    }
+
+    public static RoundLight getLight(RayHandler rayHandler) {
+        return new RoundLight(rayHandler);
     }
 
 }
