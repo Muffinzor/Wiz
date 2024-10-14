@@ -18,9 +18,9 @@ public class KeyboardMouseListener_HUB implements InputProcessor {
     Pawn pawn;
     HubScreen screen;
 
-    public KeyboardMouseListener_HUB(Pawn pawn, HubScreen screen) {
+    public KeyboardMouseListener_HUB(HubScreen screen) {
         this.screen = screen;
-        this.pawn = pawn;
+        this.pawn = screen.playerPawn;
     }
 
 
@@ -57,7 +57,7 @@ public class KeyboardMouseListener_HUB implements InputProcessor {
         }
 
         if (keycode == Input.Keys.ESCAPE) {
-            screen.game.setNewScreen(new EscapeScreen(screen.game));
+            screen.game.setOverScreen(new EscapeScreen(screen.game));
         }
 
         return true;

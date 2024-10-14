@@ -1,13 +1,10 @@
 package wizardo.game.Screens.EscapeMenu;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.controllers.Controller;
-import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import wizardo.game.Screens.BaseScreen;
-import wizardo.game.Screens.EscapeMenu.Controls.ControllerListener_ESCAPE;
-import wizardo.game.Screens.EscapeMenu.Controls.KeyboardMouseListener_ESCAPE;
 import wizardo.game.Wizardo;
 
 public class EscapeScreen extends BaseScreen {
@@ -20,21 +17,9 @@ public class EscapeScreen extends BaseScreen {
     public EscapeScreen(Wizardo game) {
         super(game);
 
-        stage = new Stage();
+        stage = new Stage(new ScreenViewport(uiCamera));
         menuTable = new EscapeMenuTable(stage, mainMenuSkin, buttons, game);
 
-    }
-
-    private void setInputs() {
-        mouseAdapter = new KeyboardMouseListener_ESCAPE(this);
-        controllerAdapter = new ControllerListener_ESCAPE(this);
-
-        inputMultiplexer.clear();
-        inputMultiplexer.addProcessor(stage);
-        inputMultiplexer.addProcessor(mouseAdapter);
-        for (Controller controller : Controllers.getControllers()) {
-            controller.addListener(controllerAdapter);
-        }
     }
 
     @Override
@@ -47,8 +32,8 @@ public class EscapeScreen extends BaseScreen {
 
     @Override
     public void show() {
-        setInputs();
-        setCursorTexture();
+        super.show();
+        paused = true;
     }
 
     @Override
@@ -64,5 +49,16 @@ public class EscapeScreen extends BaseScreen {
     @Override
     public void dispose() {
         removeInputs();
+    }
+
+    @Override
+    public void resize(int width, int height) {
+        super.resize(width, height);
+
+        menuTable.dispose();
+        menuTable = new EscapeMenuTable(stage, mainMenuSkin, buttons, game);
+
+        stage.getViewport().update(width, height, true);
+
     }
 }

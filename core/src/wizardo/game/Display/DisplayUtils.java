@@ -13,11 +13,15 @@ public class DisplayUtils {
      * @return a sprite from that screen's SpriteRenderer's pool
      */
     public static Sprite getSprite(BaseScreen screen) {
-        return new Sprite();
+        return screen.displayManager.spriteRenderer.pool.getSprite();
     }
 
-    public static RoundLight getLight(RayHandler rayHandler) {
-        return new RoundLight(rayHandler);
+    /**
+     * @param screen The current screen
+     * @return a RoundLight object from that screen's LightManager's pool
+     */
+    public static RoundLight getLight(BaseScreen screen) {
+        return screen.lightManager.pool.getLight();
     }
 
 }

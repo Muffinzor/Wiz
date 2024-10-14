@@ -1,16 +1,13 @@
 package wizardo.game.Screens.MainMenu;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.controllers.Controller;
-import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import wizardo.game.Screens.MainMenu.Controls.ControllerListener_MAINMENU;
-import wizardo.game.Screens.MainMenu.Controls.KeyboardMouseListener_MAINMENU;
+import wizardo.game.Controls.KeyboardMouseListener_TABLEMENU;
 import wizardo.game.Screens.BaseScreen;
 import wizardo.game.Audio.Music.MusicPlayer;
 import wizardo.game.Wizardo;
@@ -22,12 +19,12 @@ public class MainMenuScreen extends BaseScreen {
     private Sprite background;
     private final Sprite title;
 
-    public MenuTable menuTable;
+    public MainMenuTable menuTable;
 
     public MainMenuScreen(Wizardo game) {
         super(game);
 
-        stage = new Stage(new ScreenViewport());
+        stage = new Stage(new ScreenViewport(uiCamera));
 
         background = new Sprite(new Texture("MainMenuScreen/MainBackground.png"));
         background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -36,37 +33,21 @@ public class MainMenuScreen extends BaseScreen {
         title.setSize(600 * screenRatio, 150 * screenRatio);
         title.setPosition(Gdx.graphics.getWidth()/2f - title.getWidth()/2f, 600 * screenRatio);
 
-        menuTable = new MenuTable(stage, mainMenuSkin, buttons, game);
-        mouseAdapter = new KeyboardMouseListener_MAINMENU(this);
+        menuTable = new MainMenuTable(stage, mainMenuSkin, buttons, game);
+        inputProcessor = new KeyboardMouseListener_TABLEMENU(this);
         controllerAdapter = new ControllerListener_MAINMENU(this);
-
     }
 
     @Override
     public void show() {
-        setInputs();
+        super.show();
         //MusicPlayer.getMusicPlayer().playMusic(musicFilePath, true);
-    }
-
-    private void setInputs() {
-        Pixmap pixmap = new Pixmap(Gdx.files.internal("Cursors/Menu_Cursor.png"));
-        Cursor customCursor = Gdx.graphics.newCursor(pixmap, 0, 0);
-        Gdx.graphics.setCursor(customCursor);
-        pixmap.dispose();
-
-        inputMultiplexer.clear();
-        inputMultiplexer.addProcessor(stage);
-        inputMultiplexer.addProcessor(mouseAdapter);
-        for (Controller controller : Controllers.getControllers()) {
-            controller.addListener(controllerAdapter);
-        }
     }
 
     @Override
     public void render(float delta) {
         globalCD -= delta;
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
 
         batch.begin();
         background.draw(batch);
@@ -77,7 +58,6 @@ public class MainMenuScreen extends BaseScreen {
         stage.draw();
 
     }
-
 
     @Override
     public void hide() {
@@ -104,10 +84,10 @@ public class MainMenuScreen extends BaseScreen {
     @Override
     public void resize(int width, int height) {
         super.resize(width, height);
-        stage.getViewport().update(width, height, true);
 
+        stage.getViewport().update(width, height, true);
         menuTable.dispose();
-        menuTable = new MenuTable(stage, mainMenuSkin, buttons, game);
+        menuTable = new MainMenuTable(stage, mainMenuSkin, buttons, game);
     }
 
 }

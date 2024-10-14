@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 
 import static wizardo.game.Utils.Constants.PPM;
-import static wizardo.game.Utils.Masks.PAWN;
+import static wizardo.game.Utils.Contacts.Masks.PAWN;
 
 public class BodyFactory {
 

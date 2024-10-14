@@ -20,8 +20,10 @@ public class RoundLight {
     boolean kill;
     float dimSpeed;
 
+    RayHandler rayHandler;
 
-    public RoundLight(RayHandler rayHandler) {
+    public RoundLight(BaseScreen screen) {
+        rayHandler = screen.rayHandler;
         pointLight = new PointLight(rayHandler, 15, Color.WHITE, 0, 0, 0);
     }
 

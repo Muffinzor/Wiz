@@ -2,13 +2,13 @@ package wizardo.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import wizardo.game.Screens.BaseScreen;
 import wizardo.game.Screens.LoadingScreen.LoadingScreen;
-import wizardo.game.Screens.MainMenu.MainMenuScreen;
+import wizardo.game.Utils.Contacts.WizContactListener;
 
 import java.util.Stack;
 
@@ -18,14 +18,20 @@ public class Wizardo extends Game {
 	private Stack<BaseScreen> screenStack;
 	public BaseScreen currentScreen;
 	public static World world;
+	public static WizContactListener contactListener;
 	public static AssetManager assetManager;
+	public OrthographicCamera mainCamera;
+	public OrthographicCamera uiCamera;
 	
 	@Override
 	public void create () {
 		BaseScreen.screenRatio = Gdx.graphics.getWidth()/1920f;
 		screenStack = new Stack<>();
+		mainCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		uiCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		assetManager = new AssetManager();
-		setNewScreen(new LoadingScreen(this));
+		contactListener = new WizContactListener();
+		setOverScreen(new LoadingScreen(this));
 	}
 
 
@@ -56,13 +62,29 @@ public class Wizardo extends Game {
 	 * Swap to new screen, puts current screen on top of stack
 	 * @param newScreen screen to switch to
 	 */
-	public void setNewScreen(BaseScreen newScreen) {
+	public void setOverScreen(BaseScreen newScreen) {
 		if (!screenStack.isEmpty()) {
 			screenStack.peek().removeInputs();
 			screenStack.peek().pause();
 		}
 		screenStack.push(newScreen);
 		currentScreen = newScreen;
+		setScreen(newScreen);
+	}
+
+	/**
+	 * Resets the stack with only the new screen
+	 * @param newScreen
+	 */
+	public void freshScreen(BaseScreen newScreen) {
+		for(BaseScreen screen : screenStack) {
+			screen.dispose();
+		}
+
+		screenStack.clear();
+		currentScreen.removeInputs();
+		currentScreen = newScreen;
+		screenStack.push(newScreen);
 		setScreen(newScreen);
 	}
 
@@ -86,8 +108,7 @@ public class Wizardo extends Game {
 			world.dispose();
 		}
 		world = new World(new Vector2(0,0), false);
+		world.setContactListener(contactListener);
 	}
-
-
 
 }

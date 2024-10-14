@@ -3,7 +3,6 @@ package wizardo.game.Screens.Hub.Controls;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.ControllerAdapter;
 import wizardo.game.Player.Pawn;
-import wizardo.game.Screens.BaseScreen;
 import wizardo.game.Screens.EscapeMenu.EscapeScreen;
 import wizardo.game.Screens.Hub.HubScreen;
 
@@ -14,8 +13,8 @@ public class ControllerListener_HUB extends ControllerAdapter {
     Pawn pawn;
     HubScreen screen;
 
-    public ControllerListener_HUB(Pawn pawn, HubScreen screen) {
-        this.pawn = pawn;
+    public ControllerListener_HUB(HubScreen screen) {
+        this.pawn = screen.playerPawn;
         this.screen = screen;
     }
 
@@ -62,7 +61,7 @@ public class ControllerListener_HUB extends ControllerAdapter {
 
         switch (buttonIndex) {
             case 6: //Options - PS4
-                screen.game.setNewScreen(new EscapeScreen(screen.game));
+                screen.game.setOverScreen(new EscapeScreen(screen.game));
                 return true;
         }
 

@@ -8,14 +8,16 @@ import java.util.ArrayDeque;
 public class LightPool {
 
     private final ArrayDeque<RoundLight> array;
+    BaseScreen screen;
 
-    public LightPool() {
+    public LightPool(BaseScreen screen) {
+        this.screen = screen;
         array = new ArrayDeque<>();
     }
 
-    public RoundLight getLight(RayHandler rayHandler) {
+    public RoundLight getLight() {
         if(array.isEmpty()) {
-            return new RoundLight(rayHandler);
+            return new RoundLight(screen);
         } else {
             return array.removeLast();
         }

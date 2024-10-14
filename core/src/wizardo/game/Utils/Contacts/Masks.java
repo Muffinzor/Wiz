@@ -1,6 +1,8 @@
-package wizardo.game.Utils;
+package wizardo.game.Utils.Contacts;
 
 public class Masks {
+
+    // IDs
 
     public static final short SPELL = 0x0001;
     public static final short PAWN = 0x0002;
@@ -18,7 +20,12 @@ public class Masks {
     public static final short RAMP = 0x0800;
 
     public static final short ITEM = 0x1000;
-    public static final short EVENT = 0x2000;
+    public static final short TRIGGER = 0x2000;
+
+
+    // MASKS
+
+    public static final short EVENT_MASK = PAWN;
 
 
 }

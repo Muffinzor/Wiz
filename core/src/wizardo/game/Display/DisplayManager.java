@@ -13,12 +13,14 @@ public class DisplayManager {
     }
 
     public void update(float delta) {
+
         spriteRenderer.renderSprites();
 
-        screen.rayHandler.setCombinedMatrix(screen.camera);
+        screen.rayHandler.setCombinedMatrix(screen.mainCamera);
         screen.rayHandler.updateAndRender();
 
         spriteRenderer.renderUI();
+
         spriteRenderer.clearSpriteArrays();
     }
 

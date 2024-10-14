@@ -1,10 +1,6 @@
 package wizardo.game.Screens.MainMenu;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.controllers.Controller;
-import com.badlogic.gdx.controllers.ControllerAdapter;
-import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -12,39 +8,25 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import wizardo.game.Audio.Sounds.SoundPlayer;
+import wizardo.game.Display.MenuTable;
 import wizardo.game.Screens.Hub.HubScreen;
 import wizardo.game.Wizardo;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static wizardo.game.Screens.BaseScreen.screenRatio;
 
-public class MenuTable {
-
-    private Wizardo game;
-
-    private Stage stage;
-    private Skin skin;
-
-    private Table table;
-    private int selectedButtonIndex;
-    private ArrayList<Button> buttons;
+public class MainMenuTable extends MenuTable {
 
     private int lastHoveredButtonIndex = -1;
 
-    public MenuTable(Stage stage, Skin skin, ArrayList<Button> buttons, Wizardo game) {
+    public MainMenuTable(Stage stage, Skin skin, ArrayList<Button> buttons, Wizardo game) {
+        super(stage, skin, buttons, game);
         this.game = game;
-        this.stage = stage;
-        this.skin = skin;
-        this.buttons = buttons;
-        table = new Table();
-        selectedButtonIndex = -1;
 
-        resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        resize();
 
     }
 
@@ -57,7 +39,6 @@ public class MenuTable {
     }
 
     public void createButtons() {
-
         playButton();
         settingsButton();
         quitButton();
@@ -91,7 +72,7 @@ public class MenuTable {
             public void clicked(InputEvent event, float x, float y) {
                 table.clearChildren();
                 SoundPlayer.getSoundPlayer().playSound("Sounds/click_1.mp3", 1);
-                game.setNewScreen(new HubScreen(game));
+                game.setOverScreen(new HubScreen(game));
             }
         });
 
@@ -162,6 +143,9 @@ public class MenuTable {
         });
     }
 
+    /**
+     * Adjusts the currently buttons' visuals
+     */
     public void updateButtonStates() {
         for (int i = 0; i < buttons.size(); i++) {
             Button button = buttons.get(i);
@@ -178,6 +162,16 @@ public class MenuTable {
         updateButtonStates();
     }
 
+    @Override
+    public void navigateLeft() {
+
+    }
+
+    @Override
+    public void navigateRight() {
+
+    }
+
     public void navigateDown() {
         SoundPlayer.getSoundPlayer().playSound("Sounds/menu_selection_1.mp3", 0.3f);
         selectedButtonIndex--;
@@ -191,13 +185,13 @@ public class MenuTable {
         table.clearChildren();
         table = null;
         switch (selectedButtonIndex) {
-            case 0 -> game.setNewScreen(new HubScreen(game));
+            case 0 -> game.setOverScreen(new HubScreen(game));
             case 1 -> System.out.println("Nope");
             case 2 -> Gdx.app.exit();
         }
     }
 
-    public void resize(int width, int height) {
+    public void resize() {
         buttons.clear();
         table.clearChildren();
         table = new Table();

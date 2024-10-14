@@ -49,7 +49,7 @@ public class Pawn {
         Sprite frame = getSprite(screen);
         frame.set(PlayerResources.playerWalk.getKeyFrame(stateTime, true));
         frame.setCenter(body.getPosition().x * PPM, body.getPosition().y * PPM + 5);
-        screen.displayManager.spriteRenderer.character_spell_sprites.add(frame);
+        screen.displayManager.spriteRenderer.regular_sorted_sprites.add(frame);
     }
 
 
@@ -86,9 +86,11 @@ public class Pawn {
     }
 
     public void stop() {
-        movementVector.x = 0;
-        movementVector.y = 0;
-        body.setLinearVelocity(movementVector);
+        if(body != null) {
+            movementVector.x = 0;
+            movementVector.y = 0;
+            body.setLinearVelocity(movementVector);
+        }
     }
 
     public void aimX(float value) {
@@ -107,7 +109,7 @@ public class Pawn {
     }
 
     public void createLight() {
-        light = getLight(screen.rayHandler);
+        light = getLight(screen);
         light.setLight(0,0,0,0.8f,120, body.getPosition());
 
     }
@@ -122,6 +124,11 @@ public class Pawn {
 
     public float getBodyY() {
         return body.getPosition().y;
+    }
+
+    public void dispose() {
+        world.destroyBody(body);
+        body = null;
     }
 
 }

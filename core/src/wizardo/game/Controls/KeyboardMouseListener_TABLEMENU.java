@@ -1,18 +1,19 @@
-package wizardo.game.Screens.MainMenu.Controls;
+package wizardo.game.Controls;
 
 import com.badlogic.gdx.InputAdapter;
 import wizardo.game.Audio.Sounds.SoundPlayer;
+import wizardo.game.Screens.BaseScreen;
 import wizardo.game.Screens.MainMenu.MainMenuScreen;
 
 import static wizardo.game.Screens.BaseScreen.controllerActive;
 import static wizardo.game.Screens.BaseScreen.inputMultiplexer;
 
-public class KeyboardMouseListener_MAINMENU extends InputAdapter {
+public class KeyboardMouseListener_TABLEMENU extends InputAdapter {
 
 
-    MainMenuScreen screen;
+    BaseScreen screen;
 
-    public KeyboardMouseListener_MAINMENU(MainMenuScreen screen) {
+    public KeyboardMouseListener_TABLEMENU(BaseScreen screen) {
 
         this.screen = screen;
         inputMultiplexer.addProcessor(this.screen.stage);
