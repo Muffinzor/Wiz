@@ -1,8 +1,8 @@
 package wizardo.game.Maps;
 
 import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import wizardo.game.Maps.MapGeneration.MapChunk;
 
 public abstract class TriggerObject extends LayerObject{
 

@@ -4,12 +4,12 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 
 import static wizardo.game.Utils.Constants.PPM;
-import static wizardo.game.Utils.Contacts.Masks.PAWN;
+import static wizardo.game.Utils.Contacts.Masks.*;
+import static wizardo.game.Wizardo.world;
 
 public class BodyFactory {
 
-    public static Body playerBody (World world, Vector2 position) {
-
+    public static Body playerBody (Vector2 position) {
         BodyDef def = new BodyDef();
         def.type = BodyDef.BodyType.DynamicBody;
         def.fixedRotation = true;
@@ -37,5 +37,28 @@ public class BodyFactory {
 
         return body;
 
+    }
+    public static Body monsterBody(Vector2 position, float radius) {
+        BodyDef def = new BodyDef();
+        def.type = BodyDef.BodyType.DynamicBody;
+        def.position.set(position.x/PPM, position.y/PPM);
+        def.fixedRotation = true;
+
+        Body body = world.createBody(def);
+
+        CircleShape shape = new CircleShape();
+        shape.setRadius(radius / PPM);
+
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = shape;
+        fixtureDef.filter.categoryBits = MONSTER;
+        fixtureDef.filter.maskBits = MONSTER_MASK;
+        fixtureDef.isSensor = false;
+        fixtureDef.friction = 0f;
+
+        body.createFixture(fixtureDef);
+        shape.dispose();
+
+        return body;
     }
 }

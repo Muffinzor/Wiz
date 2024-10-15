@@ -27,5 +27,7 @@ public class Masks {
 
     public static final short EVENT_MASK = PAWN;
 
+    public static final short MONSTER_MASK = (short) ( SPELL | OBSTACLE | PAWN | DECOR | MONSTER | AVOID_ZONE | RAMP | LIGHT_PROJECTILE);
+
 
 }

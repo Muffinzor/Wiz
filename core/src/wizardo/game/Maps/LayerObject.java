@@ -1,6 +1,7 @@
 package wizardo.game.Maps;
 
 import com.badlogic.gdx.maps.MapObject;
+import wizardo.game.Maps.MapGeneration.MapChunk;
 
 public abstract class LayerObject {
 

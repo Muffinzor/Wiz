@@ -2,23 +2,12 @@ package wizardo.game.Screens.Hub;
 
 import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.controllers.Controller;
-import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import wizardo.game.Display.DisplayManager;
-import wizardo.game.Lighting.LightManager;
 import wizardo.game.Maps.Hub.HubChunk;
-import wizardo.game.Maps.MapChunk;
-import wizardo.game.Screens.Hub.Controls.KeyboardMouseListener_HUB;
-import wizardo.game.Screens.Hub.Controls.ControllerListener_HUB;
+import wizardo.game.Maps.MapGeneration.MapChunk;
 import wizardo.game.Player.Pawn;
 import wizardo.game.Screens.BaseScreen;
 import wizardo.game.Wizardo;
@@ -31,8 +20,8 @@ public class HubScreen extends BaseScreen {
 
     public Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
 
-    public Pawn playerPawn;
     public MapChunk chunk;
+    public Pawn playerPawn;
 
     public HubScreen(Wizardo game) {
         super(game);
@@ -43,9 +32,6 @@ public class HubScreen extends BaseScreen {
         mainCamera.position.set(1000, 1000, 0);
 
         mainCamera.zoom = 1f;
-
-        displayManager = new DisplayManager(this);
-        lightManager = new LightManager(this);
 
         createNewWorld();
         rayHandler = new RayHandler(world);

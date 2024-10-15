@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import wizardo.game.Display.MenuTable;
+import wizardo.game.Screens.Battle.BattleScreen;
 import wizardo.game.Screens.EscapeMenu.EscapeMenuButton;
 import wizardo.game.Screens.Hub.HubScreen;
 import wizardo.game.Wizardo;
@@ -82,7 +83,7 @@ public class BattleSelectionTable extends MenuTable {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 table.clearChildren();
-                game.freshScreen(new HubScreen(game));
+                game.freshScreen(new BattleScreen(game, "Dungeon"));
             }
         });
 
@@ -109,8 +110,6 @@ public class BattleSelectionTable extends MenuTable {
                 System.out.println("No settings");
             }
         });
-
-
 
         EscapeMenuButton exitButton = new EscapeMenuButton("Cancel", skin);
         buttons.add(exitButton);

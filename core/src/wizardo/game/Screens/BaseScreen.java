@@ -23,6 +23,10 @@ import wizardo.game.Controls.ControllerListener_TABLEMENU;
 import wizardo.game.Display.DisplayManager;
 import wizardo.game.Display.MenuTable;
 import wizardo.game.Lighting.LightManager;
+import wizardo.game.Player.Pawn;
+import wizardo.game.Screens.Battle.BattleScreen;
+import wizardo.game.Screens.Battle.Controls.ControllerListener_BATTLE;
+import wizardo.game.Screens.Battle.Controls.KeyboardMouseListener_BATTLE;
 import wizardo.game.Screens.EscapeMenu.Controls.ControllerListener_ESCAPE;
 import wizardo.game.Screens.EscapeMenu.Controls.KeyboardMouseListener_ESCAPE;
 import wizardo.game.Screens.EscapeMenu.EscapeScreen;
@@ -74,6 +78,8 @@ public abstract class BaseScreen implements Screen {
         this.batch = new SpriteBatch();
         animations = new ArrayList<>();
         buttons = new ArrayList<>();
+        displayManager = new DisplayManager(this);
+        lightManager = new LightManager(this);
 
         cursorTexturePath = "Cursors/Menu_Cursor.png";
         Gdx.input.setInputProcessor(inputMultiplexer);
@@ -176,6 +182,11 @@ public abstract class BaseScreen implements Screen {
         if(this instanceof EscapeScreen) {
             inputProcessor = new KeyboardMouseListener_ESCAPE( (EscapeScreen) this);
             controllerAdapter = new ControllerListener_ESCAPE( (EscapeScreen) this);
+        }
+
+        if(this instanceof BattleScreen) {
+            inputProcessor = new KeyboardMouseListener_BATTLE((BattleScreen) this);
+            controllerAdapter = new ControllerListener_BATTLE((BattleScreen) this);
         }
 
         for (Controller controller : Controllers.getControllers()) {

@@ -70,6 +70,6 @@
 </data>
  </layer>
  <objectgroup id="2" name="ObstacleBodies">
-  <object id="1" name="Test_Body" x="945" y="952" width="80" height="88"/>
+  <object id="1" name="Portal" x="945" y="952" width="80" height="88"/>
  </objectgroup>
 </map>

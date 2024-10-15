@@ -74,7 +74,7 @@ public class Pawn {
 
 
     public void createPawn(Vector2 position) {
-        body = BodyFactory.playerBody(world, position);
+        body = BodyFactory.playerBody(position);
         createLight();
     }
 

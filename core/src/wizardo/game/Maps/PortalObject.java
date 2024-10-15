@@ -3,6 +3,7 @@ package wizardo.game.Maps;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.MapObject;
 import wizardo.game.Lighting.RoundLight;
+import wizardo.game.Maps.MapGeneration.MapChunk;
 import wizardo.game.Resources.DecorResources.GeneralDecorResources;
 import wizardo.game.Screens.Hub.BattleSelection.BattleSelectionScreen;
 

@@ -4,6 +4,7 @@ import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.*;
+import wizardo.game.Maps.MapGeneration.MapChunk;
 
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Utils.Contacts.Masks.*;
@@ -12,11 +13,12 @@ import static wizardo.game.Wizardo.world;
 public class MapUtils {
 
     /**
-     * Creates an impassable body to the shape of the Object passed in argument
+     * Creates an impassable body to the shape of the Object passed in argument,
+     * adds it to the chunk's list of bodies to keep its reference
      * @param chunk the tilemap chunk where the object is found
      * @param object the RectangleMapObject
      */
-    public static void createRectangleBody(MapChunk chunk, RectangleMapObject object) {
+    public static void createRectangleObstacleBody(MapChunk chunk, RectangleMapObject object) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
 
@@ -27,6 +29,7 @@ public class MapUtils {
         float y = rectangle.y + chunk.y_pos + height / 2; // Box2D uses center position
         bodyDef.position.set(x / PPM, y / PPM);
         Body body = world.createBody(bodyDef);
+        body.setUserData("Obstacle");
 
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(width / 2 / PPM, height / 2 / PPM);
