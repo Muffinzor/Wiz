@@ -3,6 +3,7 @@ package wizardo.game.Maps.MapGeneration;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Maps.LayerObject;
 import wizardo.game.Screens.BaseScreen;
@@ -21,6 +22,8 @@ public abstract class MapChunk {
 
     public float x_pos;
     public float y_pos;
+
+    public Vector2 chunkCenter;
 
     public ArrayList<Body> bodies;
     public ArrayList<LayerObject> layerObjects;
@@ -45,4 +48,6 @@ public abstract class MapChunk {
     }
 
     public abstract void createBodies();
+
+    public abstract void disposeBodies();
 }

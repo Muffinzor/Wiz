@@ -25,6 +25,7 @@ public class SpritePool {
 
     public void poolSprite(Sprite sprite) {
         sprite.set(whitePixel);
+        sprite.setAlpha(1);
         array.add(sprite);
     }
 

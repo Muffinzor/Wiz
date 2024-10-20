@@ -21,16 +21,18 @@ public class RoundLight {
     float dimSpeed;
 
     RayHandler rayHandler;
+    BaseScreen screen;
 
     public RoundLight(BaseScreen screen) {
+        this.screen = screen;
         rayHandler = screen.rayHandler;
         pointLight = new PointLight(rayHandler, 15, Color.WHITE, 0, 0, 0);
     }
 
     public void update(float delta) {
 
-        if(kill) {
-            alpha = alpha - dimSpeed * delta;
+        if(dimSpeed > 0 && delta > 0) {
+            alpha = alpha - dimSpeed;
             if(alpha < 0) {
                 alpha = 0;
             }
@@ -38,8 +40,7 @@ public class RoundLight {
         }
 
         if(alpha <= 0) {
-            pointLight.setActive(false);
-            //screen.displayManager.lightManager.remove(this);
+            kill();
         }
 
     }
@@ -50,6 +51,7 @@ public class RoundLight {
         this.blue = blue;
         this.alpha = alpha;
         this.radius = radius;
+        dimSpeed = 0;
 
         pointLight.setColor(red, green, blue, alpha);
         pointLight.setDistance(radius);
@@ -59,8 +61,21 @@ public class RoundLight {
 
     public void resetLight() {
         pointLight.setColor(0,0,0,0);
+        alpha = 0;
         pointLight.setDistance(0);
         pointLight.setActive(false);
+    }
+
+    public void toLightManager() {
+        screen.lightManager.addLight(this);
+    }
+
+    public void dimKill(float dimSpeed) {
+        this.dimSpeed = dimSpeed;
+    }
+
+    public void kill() {
+        screen.lightManager.pool.poolLight(this);
     }
 
 }

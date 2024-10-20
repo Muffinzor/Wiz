@@ -3,19 +3,21 @@ package wizardo.game.Screens.Battle.Controls;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.ControllerAdapter;
 import wizardo.game.Player.Pawn;
+import wizardo.game.Player.Player;
 import wizardo.game.Screens.Battle.BattleScreen;
 import wizardo.game.Screens.EscapeMenu.EscapeScreen;
-import wizardo.game.Screens.Hub.HubScreen;
 
 import static wizardo.game.Screens.BaseScreen.controllerActive;
+import static wizardo.game.Wizardo.player;
 
 public class ControllerListener_BATTLE extends ControllerAdapter {
+
 
     Pawn pawn;
     BattleScreen screen;
 
     public ControllerListener_BATTLE(BattleScreen screen) {
-        this.pawn = screen.playerPawn;
+        this.pawn = player.pawn;
         this.screen = screen;
     }
 
@@ -62,7 +64,7 @@ public class ControllerListener_BATTLE extends ControllerAdapter {
 
         switch (buttonIndex) {
             case 6: //Options - PS4
-                screen.game.setOverScreen(new EscapeScreen(screen.game));
+                screen.game.addNewScreen(new EscapeScreen(screen.game));
                 return true;
         }
 

@@ -1,7 +1,6 @@
 package wizardo.game.Lighting;
 
 import box2dLight.RayHandler;
-import wizardo.game.Display.SpritePool;
 import wizardo.game.Screens.BaseScreen;
 
 import java.util.ArrayList;
@@ -11,7 +10,7 @@ public class LightManager {
     public LightPool pool;
     public BaseScreen screen;
 
-    public ArrayList<RoundLight> roundLights;
+    public ArrayList<RoundLight> activeLights;
     public RayHandler rayHandler;
 
     public LightManager(BaseScreen screen) {
@@ -19,15 +18,25 @@ public class LightManager {
         this.screen = screen;
         rayHandler = screen.rayHandler;
         pool = new LightPool(screen);
-        roundLights = new ArrayList<>();
+        activeLights = new ArrayList<>();
 
     }
 
     public void update(float delta) {
 
-        for(RoundLight roundLight : roundLights) {
+        for(RoundLight roundLight : activeLights) {
             roundLight.update(delta);
         }
 
+        activeLights.removeIf(roundLight -> roundLight.alpha <= 0);
+
+    }
+
+    public void addLight(RoundLight light) {
+        activeLights.add(light);
+    }
+
+    public void removeLight(RoundLight light) {
+        activeLights.remove(light);
     }
 }

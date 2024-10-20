@@ -6,7 +6,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import wizardo.game.Resources.DecorResources.GeneralDecorResources;
+import wizardo.game.Resources.MonsterResources.SkeletonAnims;
+import wizardo.game.Resources.SpellAnims.FireballAnims;
 import wizardo.game.Resources.SpellAnims.FrostboltAnims;
+import wizardo.game.Resources.SpellAnims.FrozenorbAnims;
+import wizardo.game.Resources.SpellAnims.IcespearAnims;
 import wizardo.game.Screens.BaseScreen;
 import wizardo.game.Screens.MainMenu.MainMenuScreen;
 import wizardo.game.Wizardo;
@@ -23,7 +27,7 @@ public class LoadingScreen extends BaseScreen {
 
         stage = new Stage(new ScreenViewport());
 
-        Skin skin = new Skin(Gdx.files.internal("MainMenuScreen/MainMenuSkin/MainMenuSkin.json"));
+        Skin skin = new Skin(Gdx.files.internal("Screens/MainMenuScreen/MainMenuSkin/MainMenuSkin.json"));
 
         progressBar = new ProgressBar(0, 1, 0.01f, false, skin);
         progressBar.setSize(300, 40);
@@ -40,7 +44,7 @@ public class LoadingScreen extends BaseScreen {
             loadAnims();
             System.out.println("Loading Complete!");
             assetsFinishedLoading = true;
-            game.setOverScreen(new MainMenuScreen(game));
+            game.addNewScreen(new MainMenuScreen(game));
         }
 
         float progress = assetManager.getProgress();
@@ -73,11 +77,23 @@ public class LoadingScreen extends BaseScreen {
 
     public void loadAssets() {
         FrostboltAnims.loadAtlas();
+        IcespearAnims.loadAtlas();
+        FrozenorbAnims.loadAtlas();
+        FireballAnims.loadAtlas();
+
         GeneralDecorResources.loadAtlas();
+
+        SkeletonAnims.loadAtlas();
     }
 
     public void loadAnims() {
         FrostboltAnims.loadAnimations();
+        IcespearAnims.loadAnimations();
+        FrozenorbAnims.loadAnimations();
+        FireballAnims.loadAnimations();
+
         GeneralDecorResources.loadAnimations();
+
+        SkeletonAnims.loadAnimations();
     }
 }

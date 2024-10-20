@@ -1,0 +1,15 @@
+Fireball_Projectile.png
+size:512,64
+repeat:none
+fire1
+bounds:78,2,74,55
+fire2
+bounds:382,2,74,55
+fire3
+bounds:230,2,74,55
+fire4
+bounds:2,2,74,55
+fire5
+bounds:306,2,74,55
+fire6
+bounds:154,2,74,55

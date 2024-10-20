@@ -13,7 +13,7 @@ public class BodyFactory {
         BodyDef def = new BodyDef();
         def.type = BodyDef.BodyType.DynamicBody;
         def.fixedRotation = true;
-        def.position.set(position.x / PPM, position.y / PPM);
+        def.position.set(position.x, position.y);
 
         Body body = world.createBody(def);
 
@@ -41,7 +41,7 @@ public class BodyFactory {
     public static Body monsterBody(Vector2 position, float radius) {
         BodyDef def = new BodyDef();
         def.type = BodyDef.BodyType.DynamicBody;
-        def.position.set(position.x/PPM, position.y/PPM);
+        def.position.set(position.x, position.y);
         def.fixedRotation = true;
 
         Body body = world.createBody(def);
@@ -55,6 +55,56 @@ public class BodyFactory {
         fixtureDef.filter.maskBits = MONSTER_MASK;
         fixtureDef.isSensor = false;
         fixtureDef.friction = 0f;
+
+        body.createFixture(fixtureDef);
+        shape.dispose();
+
+        return body;
+    }
+    public static Body spellProjectileBody(Vector2 position, float radius, boolean isSensor) {
+        Body body;
+        BodyDef def = new BodyDef();
+
+        def.type = BodyDef.BodyType.DynamicBody;
+
+        def.position.set(position.x, position.y);
+        def.fixedRotation = true;
+        body = world.createBody(def);
+
+        CircleShape shape = new CircleShape();
+        shape.setRadius(radius / PPM);
+
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = shape;
+        fixtureDef.isSensor = isSensor;
+
+        fixtureDef.filter.categoryBits = SPELL;
+        fixtureDef.filter.maskBits = SPELL_MASK;
+
+        body.createFixture(fixtureDef);
+        shape.dispose();
+
+        return body;
+    }
+    public static Body spellExplosionBody(Vector2 position, float radius) {
+        Body body;
+        BodyDef def = new BodyDef();
+
+        def.type = BodyDef.BodyType.StaticBody;
+
+        def.position.set(position.x, position.y);
+        def.fixedRotation = true;
+        body = world.createBody(def);
+
+        CircleShape shape = new CircleShape();
+        shape.setRadius(radius / PPM);
+
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = shape;
+        fixtureDef.isSensor = true;
+
+        fixtureDef.filter.categoryBits = SPELL;
+        fixtureDef.filter.maskBits = SPELL_MASK;
 
         body.createFixture(fixtureDef);
         shape.dispose();

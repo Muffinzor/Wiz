@@ -1,6 +1,5 @@
 package wizardo.game.Display;
 
-import box2dLight.RayHandler;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Screens.BaseScreen;

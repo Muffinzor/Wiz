@@ -4,10 +4,11 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import wizardo.game.Player.Pawn;
 import wizardo.game.Screens.Battle.BattleScreen;
+import wizardo.game.Screens.Character.CharacterScreen;
 import wizardo.game.Screens.EscapeMenu.EscapeScreen;
-import wizardo.game.Screens.Hub.HubScreen;
 
 import static wizardo.game.Screens.BaseScreen.controllerActive;
+import static wizardo.game.Wizardo.player;
 
 public class KeyboardMouseListener_BATTLE implements InputProcessor {
 
@@ -21,7 +22,7 @@ public class KeyboardMouseListener_BATTLE implements InputProcessor {
 
     public KeyboardMouseListener_BATTLE(BattleScreen screen) {
         this.screen = screen;
-        this.pawn = screen.playerPawn;
+        this.pawn = player.pawn;
     }
 
 
@@ -57,8 +58,12 @@ public class KeyboardMouseListener_BATTLE implements InputProcessor {
             D_pressed = true;
         }
 
+        if (keycode == Input.Keys.C) {
+            screen.game.addNewScreen(new CharacterScreen(screen.game));
+        }
+
         if (keycode == Input.Keys.ESCAPE) {
-            screen.game.setOverScreen(new EscapeScreen(screen.game));
+            screen.game.addNewScreen(new EscapeScreen(screen.game));
         }
 
         return true;

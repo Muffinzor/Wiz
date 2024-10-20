@@ -5,7 +5,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import wizardo.game.Screens.BaseScreen;
-import wizardo.game.Screens.EscapeMenu.EscapeMenuTable;
 import wizardo.game.Wizardo;
 
 public class AreYouSureScreen extends BaseScreen {
@@ -19,7 +18,7 @@ public class AreYouSureScreen extends BaseScreen {
         super(game);
 
         stage = new Stage(new ScreenViewport(uiCamera));
-        menuTable = new YesOrNoTable(stage, mainMenuSkin, buttons, game);
+        menuTable = new YesOrNoTable(stage, mainMenuSkin, game);
     }
 
     @Override

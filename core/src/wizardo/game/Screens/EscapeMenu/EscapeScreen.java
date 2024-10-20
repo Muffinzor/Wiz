@@ -9,16 +9,15 @@ import wizardo.game.Wizardo;
 
 public class EscapeScreen extends BaseScreen {
 
-    public float globalCD = 0;
     public EscapeMenuTable menuTable;
 
-    private Skin mainMenuSkin = new Skin(Gdx.files.internal("MainMenuScreen/MainMenuSkin/MainMenuSkin.json"));
+    private Skin mainMenuSkin = new Skin(Gdx.files.internal("Screens/MainMenuScreen/MainMenuSkin/MainMenuSkin.json"));
 
     public EscapeScreen(Wizardo game) {
         super(game);
 
         stage = new Stage(new ScreenViewport(uiCamera));
-        menuTable = new EscapeMenuTable(stage, mainMenuSkin, buttons, game);
+        menuTable = new EscapeMenuTable(stage, mainMenuSkin, game);
 
     }
 
@@ -56,7 +55,7 @@ public class EscapeScreen extends BaseScreen {
         super.resize(width, height);
 
         menuTable.dispose();
-        menuTable = new EscapeMenuTable(stage, mainMenuSkin, buttons, game);
+        menuTable = new EscapeMenuTable(stage, mainMenuSkin, game);
 
         stage.getViewport().update(width, height, true);
 

@@ -2,8 +2,8 @@ package wizardo.game.Monsters;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.RayCastCallback;
 
+import static wizardo.game.Wizardo.player;
 import static wizardo.game.Wizardo.world;
 
 public class Pathfinder {
@@ -17,7 +17,7 @@ public class Pathfinder {
 
     public Pathfinder(Monster monster) {
         this.monster = monster;
-        playerBody = monster.screen.playerPawn.body;
+        playerBody = player.pawn.body;
         currentPosition = new Vector2();
         lastSidestepDirection = new Vector2();
     }
@@ -26,30 +26,39 @@ public class Pathfinder {
         currentPosition.set(monster.body.getPosition());
         this.targetPosition = new Vector2(playerBody.getPosition());
         Vector2 targetDirection = targetPosition.cpy().sub(currentPosition).nor();
-        raycast(targetDirection);
+        detectObstacles(targetDirection);
     }
 
-    private void raycast(Vector2 direction) {
+    private void detectObstacles(Vector2 direction) {
         Vector2 desiredVelocity = new Vector2();
 
         float rayLength = 500;
         Vector2 rayEnd = currentPosition.cpy().add(direction.scl(rayLength));
         desiredVelocity.set(targetPosition.cpy().sub(currentPosition).nor().scl(monster.speed));
 
-
         world.rayCast((fixture, point, normal, fraction) -> {
-
             if (fixture.getBody().getUserData() != null && fixture.getBody().getUserData().equals("Obstacle")) {
-
                 Vector2 avoidForce;
-                if(monster.leftie) {
-                    avoidForce = new Vector2(normal.y, -normal.x);
+
+
+                Vector2 obstacleToMonster = currentPosition.cpy().sub(fixture.getBody().getPosition());
+                Vector2 obstacleToPlayer = targetPosition.cpy().sub(fixture.getBody().getPosition());
+
+                // Cross product to determine relative position of player to obstacle
+                float cross = obstacleToMonster.crs(obstacleToPlayer);
+
+                // If the cross product is positive, sidestep to the right, otherwise to the left
+                if (cross > 0) {
+                    // Sidestep right
+                    avoidForce = new Vector2(-normal.y, normal.x); // Sidestep right
                 } else {
-                    avoidForce = new Vector2(-normal.y, normal.x);
+                    // Sidestep left
+                    avoidForce = new Vector2(normal.y, -normal.x); // Sidestep left
                 }
 
+                // Avoidance force, scale it by distance to the obstacle
                 float dst = fixture.getBody().getPosition().dst(monster.body.getPosition());
-                desiredVelocity.add(avoidForce.scl( (150/dst/dst)));
+                desiredVelocity.add(avoidForce.scl((150 / dst / dst)));
             }
             return fraction;
         }, currentPosition, rayEnd);

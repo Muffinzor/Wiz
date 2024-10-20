@@ -12,14 +12,15 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import wizardo.game.Display.MenuTable;
 import wizardo.game.Screens.Hub.HubScreen;
 import wizardo.game.Screens.MainMenu.MainMenuScreen;
+import wizardo.game.Screens.Settings.SettingsScreen;
 import wizardo.game.Wizardo;
 
 import java.util.ArrayList;
 
 public class EscapeMenuTable extends MenuTable {
 
-    public EscapeMenuTable(Stage stage, Skin skin, ArrayList<Button> buttons, Wizardo game) {
-        super(stage, skin, buttons, game);
+    public EscapeMenuTable(Stage stage, Skin skin, Wizardo game) {
+        super(stage, skin, game);
         table = new Table();
 
         resize();
@@ -85,11 +86,9 @@ public class EscapeMenuTable extends MenuTable {
         settingsButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                System.out.println("No settings");
+                game.skipToScreen(new SettingsScreen(game));
             }
         });
-
-
 
         EscapeMenuButton exitButton = new EscapeMenuButton("Quit", skin);
         buttons.add(exitButton);

@@ -57,7 +57,7 @@ public class KeyboardMouseListener_HUB implements InputProcessor {
         }
 
         if (keycode == Input.Keys.ESCAPE) {
-            screen.game.setOverScreen(new EscapeScreen(screen.game));
+            screen.game.addNewScreen(new EscapeScreen(screen.game));
         }
 
         return true;

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class YesOrNoTable {
 
-    public YesOrNoTable(Stage stage, Skin mainMenuSkin, ArrayList<Button> buttons, Wizardo game) {
+    public YesOrNoTable(Stage stage, Skin mainMenuSkin, Wizardo game) {
 
     }
 }

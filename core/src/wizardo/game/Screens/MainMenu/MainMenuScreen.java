@@ -13,8 +13,8 @@ import wizardo.game.Audio.Music.MusicPlayer;
 import wizardo.game.Wizardo;
 
 public class MainMenuScreen extends BaseScreen {
-    private String musicFilePath = "MainMenuScreen/Abbesses.mp3";
-    private Skin mainMenuSkin = new Skin(Gdx.files.internal("MainMenuScreen/MainMenuSkin/MainMenuSkin.json"));
+    private String musicFilePath = "Screens/MainMenuScreen/Abbesses.mp3";
+    private Skin mainMenuSkin = new Skin(Gdx.files.internal("Screens/MainMenuScreen/MainMenuSkin/MainMenuSkin.json"));
 
     private Sprite background;
     private final Sprite title;
@@ -26,14 +26,14 @@ public class MainMenuScreen extends BaseScreen {
 
         stage = new Stage(new ScreenViewport(uiCamera));
 
-        background = new Sprite(new Texture("MainMenuScreen/MainBackground.png"));
+        background = new Sprite(new Texture("Screens/MainMenuScreen/MainBackground.png"));
         background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-        title = new Sprite(new Texture("MainMenuScreen/Title.png"));
+        title = new Sprite(new Texture("Screens/MainMenuScreen/Title.png"));
         title.setSize(600 * screenRatio, 150 * screenRatio);
         title.setPosition(Gdx.graphics.getWidth()/2f - title.getWidth()/2f, 600 * screenRatio);
 
-        menuTable = new MainMenuTable(stage, mainMenuSkin, buttons, game);
+        menuTable = new MainMenuTable(stage, mainMenuSkin, game);
         inputProcessor = new KeyboardMouseListener_TABLEMENU(this);
         controllerAdapter = new ControllerListener_MAINMENU(this);
     }
@@ -87,7 +87,7 @@ public class MainMenuScreen extends BaseScreen {
 
         stage.getViewport().update(width, height, true);
         menuTable.dispose();
-        menuTable = new MainMenuTable(stage, mainMenuSkin, buttons, game);
+        menuTable = new MainMenuTable(stage, mainMenuSkin, game);
     }
 
 }

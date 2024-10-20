@@ -3,7 +3,6 @@ package wizardo.game.Controls;
 import com.badlogic.gdx.InputAdapter;
 import wizardo.game.Audio.Sounds.SoundPlayer;
 import wizardo.game.Screens.BaseScreen;
-import wizardo.game.Screens.MainMenu.MainMenuScreen;
 
 import static wizardo.game.Screens.BaseScreen.controllerActive;
 import static wizardo.game.Screens.BaseScreen.inputMultiplexer;

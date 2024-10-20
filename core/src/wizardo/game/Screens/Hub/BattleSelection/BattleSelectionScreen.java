@@ -3,7 +3,6 @@ package wizardo.game.Screens.Hub.BattleSelection;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import wizardo.game.Screens.BaseScreen;
 import wizardo.game.Wizardo;
@@ -14,13 +13,12 @@ public class BattleSelectionScreen extends BaseScreen {
 
     BattleSelectionTable table;
 
-    private Skin mainMenuSkin = new Skin(Gdx.files.internal("MainMenuScreen/MainMenuSkin/MainMenuSkin.json"));
+    private Skin mainMenuSkin = new Skin(Gdx.files.internal("Screens/MainMenuScreen/MainMenuSkin/MainMenuSkin.json"));
 
     public BattleSelectionScreen(Wizardo game) {
         super(game);
         stage = new Stage(new ScreenViewport(uiCamera));
-        buttons = new ArrayList<>();
-        table = new BattleSelectionTable(stage, mainMenuSkin, buttons, game);
+        table = new BattleSelectionTable(stage, mainMenuSkin, game);
     }
 
     @Override

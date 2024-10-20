@@ -12,15 +12,18 @@ import java.util.Map;
 import static wizardo.game.Maps.MapGeneration.ChunkPaths.chunkPaths;
 import static wizardo.game.Maps.MapGeneration.ChunkPaths.fillChunks;
 import static wizardo.game.Utils.Constants.PPM;
+import static wizardo.game.Wizardo.player;
 
 public class MapManager {
+
+    public int chunksLoaded = 0;
 
     public Wizardo game;
     public BattleScreen screen;
     public OrthographicCamera camera;
 
     public static final int CHUNK_SIZE = 2048;
-    public static final int INITIAL_GRID_SIZE = 1; // 9x9
+    public static final int INITIAL_GRID_SIZE = 2; // 9x9
 
     int startingTileX = 0;
     int startingTileY = 0;
@@ -59,10 +62,11 @@ public class MapManager {
     }
 
     private void setPlayerStartPosition() {
-        screen.playerPawn.body.setTransform(1024f / PPM, 1024f / PPM, 0);
+        player.pawn.body.setTransform(1024f / PPM, 1024f / PPM, 0);
     }
 
     private void loadMapChunk(String mapPath, int chunkX, int chunkY) {
+        chunksLoaded ++;
         String chunkKey = chunkKey(chunkX, chunkY);
         if (!chunks.containsKey(chunkKey)) {
             MapChunk newChunk;

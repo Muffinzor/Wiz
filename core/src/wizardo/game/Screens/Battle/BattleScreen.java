@@ -2,39 +2,37 @@ package wizardo.game.Screens.Battle;
 
 import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import wizardo.game.Display.DisplayManager;
-import wizardo.game.Lighting.LightManager;
-import wizardo.game.Maps.Hub.HubChunk;
-import wizardo.game.Maps.MapGeneration.MapChunk;
 import wizardo.game.Maps.MapGeneration.MapManager;
 import wizardo.game.Monsters.Monster;
+import wizardo.game.Monsters.MonsterManager;
 import wizardo.game.Monsters.TEST_MONSTER;
 import wizardo.game.Player.Pawn;
+import wizardo.game.Player.Player;
 import wizardo.game.Screens.BaseScreen;
+import wizardo.game.Spells.Fire.Fireball.Fireball_Spell;
+import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Spell;
+import wizardo.game.Spells.Frost.Frozenorb.Frozenorb_Spell;
+import wizardo.game.Spells.Frost.Icespear.Icespear_Projectile;
+import wizardo.game.Spells.Frost.Icespear.Icespear_Spell;
+import wizardo.game.Spells.SpellManager;
 import wizardo.game.Wizardo;
 
 import java.util.ArrayList;
 
 import static wizardo.game.Utils.Constants.PPM;
-import static wizardo.game.Wizardo.createNewWorld;
-import static wizardo.game.Wizardo.world;
+import static wizardo.game.Wizardo.*;
 
 public class BattleScreen extends BaseScreen {
 
-    ArrayList<Monster> monsters = new ArrayList<>();
+    boolean initialized;
 
     public Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
 
-    public Pawn playerPawn;
-
-    TEST_MONSTER monster;
-    TEST_MONSTER monster1;TEST_MONSTER monster2;
-
     MapManager mapManager;
-
 
     public BattleScreen(Wizardo game, String biome) {
         super(game);
@@ -47,38 +45,46 @@ public class BattleScreen extends BaseScreen {
 
         createNewWorld();
         rayHandler = new RayHandler(world);
+        rayHandler.setCulling(false);
         rayHandler.setAmbientLight(0.3f);
 
-        playerPawn = new Pawn(this);
-        playerPawn.createPawn(new Vector2(500,500));
+        Pawn playerPawn = new Pawn(this);
+        playerPawn.createPawn(new Vector2(1000f/PPM,1000f/PPM));
+        player.pawn = playerPawn;
+
 
         mapManager = new MapManager(biome, game, this);
 
+        monsterManager = new MonsterManager(this);
+        spellManager = new SpellManager(this);
+
         cursorTexturePath = "Cursors/Battle_Cursor.png";
 
-
-        for (int i = 0; i < 60; i++) {
-            Monster monster = new TEST_MONSTER(this, new Vector2(i * 5, i * 5));
-            monsters.add(monster);
+        for (int i = 0; i < 200; i++) {
+            Monster monster = new TEST_MONSTER(this, new Vector2(i/32f, i/32f));
+            monsterManager.addMonster(monster);
         }
+
     }
 
     @Override
     public void render(float delta) {
+        if(!initialized) {
+            initialized = true;
+            player.spellbook.equippedSpells.add(new Fireball_Spell());
+        }
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         if(paused) {
             delta = 0;
+        } else {
+            world.step(1 / 30f, 6, 2);
         }
-
-        for(Monster monster : monsters) {
-            monster.update(delta);
-        }
-
-        world.step(1 / 30f, 2, 1);
-
-        mapManager.update(playerPawn.getBodyX() * PPM, playerPawn.getBodyY() * PPM);
+        mapManager.update(player.pawn.getPosition().x * PPM, player.pawn.getPosition().y * PPM);
         mapManager.render(delta);
 
-        playerPawn.update(delta);
+        player.pawn.update(delta);
+        spellManager.update(delta);
+        monsterManager.update(delta);
         updateCamera();
 
         displayManager.update(delta);
@@ -96,12 +102,12 @@ public class BattleScreen extends BaseScreen {
     @Override
     public void pause() {
         paused = true;
-        playerPawn.stop();
+        player.pawn.stop();
     }
 
     public void hide() {
         paused = true;
-        playerPawn.stop();
+        player.pawn.stop();
     }
 
     @Override
@@ -110,8 +116,8 @@ public class BattleScreen extends BaseScreen {
     }
 
     public void updateCamera() {
-        float targetX = playerPawn.body.getPosition().x * PPM;
-        float targetY = playerPawn.body.getPosition().y * PPM;
+        float targetX = player.pawn.body.getPosition().x * PPM;
+        float targetY = player.pawn.body.getPosition().y * PPM;
 
         // Lerp'd
         mainCamera.position.x += (targetX - mainCamera.position.x) * 0.03f;

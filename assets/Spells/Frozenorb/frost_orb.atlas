@@ -1,0 +1,11 @@
+frost_orb.png
+size:2048,512
+repeat:none
+frost1
+bounds:892,0,446,384
+frost2
+bounds:0,0,446,384
+frost3
+bounds:1338,0,446,384
+frost4
+bounds:446,0,446,384

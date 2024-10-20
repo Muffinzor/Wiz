@@ -1,0 +1,11 @@
+arcane_orb.png
+size:2048,512
+repeat:none
+arcane1
+bounds:892,0,446,384
+arcane2
+bounds:0,0,446,384
+arcane3
+bounds:1338,0,446,384
+arcane4
+bounds:446,0,446,384

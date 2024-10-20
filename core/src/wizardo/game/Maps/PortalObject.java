@@ -41,7 +41,7 @@ public class PortalObject extends TriggerObject {
     }
 
     public void handleCollision() {
-        chunk.screen.game.setOverScreen(new BattleSelectionScreen(chunk.screen.game));
+        chunk.screen.game.addNewScreen(new BattleSelectionScreen(chunk.screen.game));
     }
 
     public void drawSprite() {

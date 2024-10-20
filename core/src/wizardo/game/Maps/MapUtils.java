@@ -25,8 +25,8 @@ public class MapUtils {
         Rectangle rectangle = object.getRectangle();
         float width = rectangle.width;
         float height = rectangle.height;
-        float x = rectangle.x + chunk.x_pos + width / 2; // Box2D uses center position
-        float y = rectangle.y + chunk.y_pos + height / 2; // Box2D uses center position
+        float x = rectangle.x + chunk.x_pos + width / 2;
+        float y = rectangle.y + chunk.y_pos + height / 2; //center position
         bodyDef.position.set(x / PPM, y / PPM);
         Body body = world.createBody(bodyDef);
         body.setUserData("Obstacle");
@@ -34,7 +34,6 @@ public class MapUtils {
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(width / 2 / PPM, height / 2 / PPM);
 
-        // Create fixture definition
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.filter.categoryBits = OBSTACLE;
         fixtureDef.shape = shape;

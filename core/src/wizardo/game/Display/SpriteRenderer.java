@@ -10,6 +10,7 @@ import java.util.Map;
 
 public class SpriteRenderer {
 
+    public ArrayList<Sprite> under_sprites;
     public ArrayList<Sprite> regular_sorted_sprites;
     public ArrayList<Sprite> ui_sprites;
     public Map<Sprite, Float> spritePositionMap;
@@ -18,20 +19,24 @@ public class SpriteRenderer {
     public SpriteBatch batch;
 
     public SpriteRenderer(BaseScreen screen) {
+        under_sprites = new ArrayList<>();
         regular_sorted_sprites = new ArrayList<>();
         spritePositionMap = new HashMap<>();
         ui_sprites = new ArrayList<>();
         pool = new SpritePool();
         this.screen = screen;
-        batch = new SpriteBatch();
-
     }
-
     public void renderSprites() {
+        batch = screen.displayManager.mainBatch;
         batch.begin();
         batch.setProjectionMatrix(screen.mainCamera.combined);
 
         sortRegularSprites();
+
+        for (Sprite sprite : under_sprites) {
+            sprite.draw(batch);
+            pool.poolSprite(sprite);
+        }
 
         for (Sprite sprite : regular_sorted_sprites) {
             sprite.draw(batch);
@@ -55,6 +60,7 @@ public class SpriteRenderer {
     }
 
     public void clearSpriteArrays() {
+        under_sprites.clear();
         regular_sorted_sprites.clear();
         ui_sprites.clear();
     }
@@ -71,5 +77,8 @@ public class SpriteRenderer {
 
             return Float.compare(y2, y1);
         });
+        spritePositionMap.clear();
     }
+
+
 }

@@ -2,7 +2,6 @@ package wizardo.game.Screens.EscapeMenu.Controls;
 
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.ControllerAdapter;
-import com.badlogic.gdx.controllers.ControllerListener;
 import wizardo.game.Screens.EscapeMenu.EscapeScreen;
 
 import static wizardo.game.Screens.BaseScreen.controllerActive;

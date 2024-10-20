@@ -16,6 +16,7 @@ import com.badlogic.gdx.graphics.Cursor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -23,10 +24,14 @@ import wizardo.game.Controls.ControllerListener_TABLEMENU;
 import wizardo.game.Display.DisplayManager;
 import wizardo.game.Display.MenuTable;
 import wizardo.game.Lighting.LightManager;
-import wizardo.game.Player.Pawn;
+import wizardo.game.Monsters.MonsterManager;
+import wizardo.game.Player.Player;
 import wizardo.game.Screens.Battle.BattleScreen;
 import wizardo.game.Screens.Battle.Controls.ControllerListener_BATTLE;
 import wizardo.game.Screens.Battle.Controls.KeyboardMouseListener_BATTLE;
+import wizardo.game.Screens.Character.CharacterScreen;
+import wizardo.game.Screens.Character.Controls.ControllerListener_CHARACTERSCREEN;
+import wizardo.game.Screens.Character.Controls.KeyboardMouseListener_CHARACTERSCREEN;
 import wizardo.game.Screens.EscapeMenu.Controls.ControllerListener_ESCAPE;
 import wizardo.game.Screens.EscapeMenu.Controls.KeyboardMouseListener_ESCAPE;
 import wizardo.game.Screens.EscapeMenu.EscapeScreen;
@@ -37,6 +42,8 @@ import wizardo.game.Screens.Hub.HubScreen;
 import wizardo.game.Screens.MainMenu.Controls.ControllerListener_MAINMENU;
 import wizardo.game.Controls.KeyboardMouseListener_TABLEMENU;
 import wizardo.game.Screens.MainMenu.MainMenuScreen;
+import wizardo.game.Screens.Settings.SettingsScreen;
+import wizardo.game.Spells.SpellManager;
 import wizardo.game.Wizardo;
 
 import java.util.ArrayList;
@@ -60,13 +67,15 @@ public abstract class BaseScreen implements Screen {
 
     public DisplayManager displayManager;
     public LightManager lightManager;
+    public SpellManager spellManager;
+    public MonsterManager monsterManager;
+
     public ArrayList<Animation> animations;
     public OrthographicCamera mainCamera;
     public OrthographicCamera uiCamera;
 
     public Stage stage;
     public MenuTable menuTable;
-    protected ArrayList<Button> buttons;
     protected String cursorTexturePath;
 
 
@@ -77,12 +86,12 @@ public abstract class BaseScreen implements Screen {
         uiCamera = game.uiCamera;
         this.batch = new SpriteBatch();
         animations = new ArrayList<>();
-        buttons = new ArrayList<>();
         displayManager = new DisplayManager(this);
         lightManager = new LightManager(this);
 
         cursorTexturePath = "Cursors/Menu_Cursor.png";
         Gdx.input.setInputProcessor(inputMultiplexer);
+        globalCD = 0;
 
     }
 
@@ -179,20 +188,59 @@ public abstract class BaseScreen implements Screen {
             controllerAdapter = new ControllerListener_TABLEMENU(this);
         }
 
+        if(this instanceof SettingsScreen) {
+            inputProcessor = new KeyboardMouseListener_TABLEMENU(this);
+            controllerAdapter = new ControllerListener_TABLEMENU(this);
+        }
+
         if(this instanceof EscapeScreen) {
             inputProcessor = new KeyboardMouseListener_ESCAPE( (EscapeScreen) this);
             controllerAdapter = new ControllerListener_ESCAPE( (EscapeScreen) this);
         }
 
         if(this instanceof BattleScreen) {
-            inputProcessor = new KeyboardMouseListener_BATTLE((BattleScreen) this);
-            controllerAdapter = new ControllerListener_BATTLE((BattleScreen) this);
+            inputProcessor = new KeyboardMouseListener_BATTLE( (BattleScreen) this);
+            controllerAdapter = new ControllerListener_BATTLE( (BattleScreen) this);
+        }
+
+        if(this instanceof CharacterScreen) {
+            inputProcessor = new KeyboardMouseListener_CHARACTERSCREEN( (CharacterScreen) this);
+            controllerAdapter = new ControllerListener_CHARACTERSCREEN( (CharacterScreen) this);
         }
 
         for (Controller controller : Controllers.getControllers()) {
             controller.addListener(controllerAdapter);
         }
         inputMultiplexer.addProcessor(inputProcessor);
+    }
+
+    public Sprite getSprite() {
+        return displayManager.spriteRenderer.pool.getSprite();
+    }
+
+    /**
+     * adds the sprite to the sorted sprites list to be rendered
+     * @param sprite
+     */
+    public void addSortedSprite(Sprite sprite) {
+        displayManager.spriteRenderer.regular_sorted_sprites.add(sprite);
+    }
+
+    /**
+     * adds the sprite to the under-everything-else sprites list to be rendered
+     * @param sprite
+     */
+    public void addUnderSprite(Sprite sprite) {
+        displayManager.spriteRenderer.under_sprites.add(sprite);
+    }
+
+    /**
+     * adds frame to the sorting map, it will be sorted according to its center position instead of bottom-left coordinate
+     * @param frame frame to be sorted from center coordinate
+     * @param y_pos the center y position of the frame
+     */
+    public void centerSort(Sprite frame, float y_pos) {
+        displayManager.spriteRenderer.spritePositionMap.put(frame, y_pos);
     }
 
 

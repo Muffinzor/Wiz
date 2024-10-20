@@ -22,8 +22,8 @@ public class MainMenuTable extends MenuTable {
 
     private int lastHoveredButtonIndex = -1;
 
-    public MainMenuTable(Stage stage, Skin skin, ArrayList<Button> buttons, Wizardo game) {
-        super(stage, skin, buttons, game);
+    public MainMenuTable(Stage stage, Skin skin, Wizardo game) {
+        super(stage, skin, game);
         this.game = game;
 
         resize();
@@ -31,7 +31,6 @@ public class MainMenuTable extends MenuTable {
     }
 
     public void setPosition() {
-        System.out.println(screenRatio);
         int x = Gdx.graphics.getWidth()/2;
         int y = Gdx.graphics.getHeight()/2 - (int)(200 * screenRatio);
         table.setPosition(x,y);
@@ -72,7 +71,7 @@ public class MainMenuTable extends MenuTable {
             public void clicked(InputEvent event, float x, float y) {
                 table.clearChildren();
                 SoundPlayer.getSoundPlayer().playSound("Sounds/click_1.mp3", 1);
-                game.setOverScreen(new HubScreen(game));
+                game.addNewScreen(new HubScreen(game));
             }
         });
 
@@ -138,7 +137,7 @@ public class MainMenuTable extends MenuTable {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 SoundPlayer.getSoundPlayer().playSound("Sounds/click_1.mp3", 1);
-                Gdx.app.exit();
+                Wizardo.exit();
             }
         });
     }
@@ -185,7 +184,7 @@ public class MainMenuTable extends MenuTable {
         table.clearChildren();
         table = null;
         switch (selectedButtonIndex) {
-            case 0 -> game.setOverScreen(new HubScreen(game));
+            case 0 -> game.addNewScreen(new HubScreen(game));
             case 1 -> System.out.println("Nope");
             case 2 -> Gdx.app.exit();
         }

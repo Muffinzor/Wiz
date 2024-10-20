@@ -7,11 +7,13 @@ import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Screens.BaseScreen;
 import wizardo.game.Utils.BodyFactory;
+import wizardo.game.Wizardo;
 
 import static wizardo.game.Display.DisplayUtils.getLight;
 import static wizardo.game.Display.DisplayUtils.getSprite;
 import static wizardo.game.Screens.BaseScreen.controllerActive;
 import static wizardo.game.Utils.Constants.PPM;
+import static wizardo.game.Wizardo.player;
 import static wizardo.game.Wizardo.world;
 
 public class Pawn {
@@ -72,7 +74,6 @@ public class Pawn {
         }
     }
 
-
     public void createPawn(Vector2 position) {
         body = BodyFactory.playerBody(position);
         createLight();
@@ -105,7 +106,9 @@ public class Pawn {
         if(!movementVector.isZero()) {
             movementVector.nor();
         }
-        body.setLinearVelocity(movementVector.cpy().scl(5));
+        if(player != null) {
+            body.setLinearVelocity(movementVector.cpy().scl(player.runSpeed));
+        }
     }
 
     public void createLight() {
@@ -118,6 +121,10 @@ public class Pawn {
         light.pointLight.setPosition(body.getPosition().scl(PPM));
     }
 
+    public Vector2 getPosition() {
+        return new Vector2(body.getPosition());
+    }
+
     public float getBodyX() {
         return body.getPosition().x;
     }
@@ -127,7 +134,9 @@ public class Pawn {
     }
 
     public void dispose() {
-        world.destroyBody(body);
+        if(body != null) {
+            world.destroyBody(body);
+        }
         body = null;
     }
 

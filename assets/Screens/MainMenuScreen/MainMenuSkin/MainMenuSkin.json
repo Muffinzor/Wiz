@@ -1,5 +1,11 @@
 {
 com.badlogic.gdx.graphics.g2d.BitmapFont: {
+	DamageNumbers: {
+		file: PixelOperator8(3).fnt
+		scaledSize: -1
+		markupEnabled: false
+		flip: false
+	}
 	LemonShake: {
 		file: Lemon Shake Shake.fnt
 		scaledSize: -1
@@ -24,6 +30,20 @@ com.badlogic.gdx.graphics.Color: {
 com.badlogic.gdx.scenes.scene2d.ui.ProgressBar$ProgressBarStyle: {
 	default-horizontal: {
 		background: WoodButton
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle: {
+	default-horizontal: {
+		backgroundOver: BlackBar
+		backgroundDown: BlackBar
+		background: BlackBar
+		knob: knob
+	}
+	Basic_Slider: {
+		backgroundOver: BlackBar
+		backgroundDown: BlackBar
+		background: BlackBar
+		knob: knob
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {

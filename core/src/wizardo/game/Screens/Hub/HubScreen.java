@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import wizardo.game.Maps.Hub.HubChunk;
 import wizardo.game.Maps.MapGeneration.MapChunk;
 import wizardo.game.Player.Pawn;
+import wizardo.game.Player.Player;
 import wizardo.game.Screens.BaseScreen;
 import wizardo.game.Wizardo;
 
@@ -38,7 +39,8 @@ public class HubScreen extends BaseScreen {
         rayHandler.setAmbientLight(0.3f);
 
         playerPawn = new Pawn(this);
-        playerPawn.createPawn(new Vector2(1000,1000));
+        playerPawn.createPawn(new Vector2(1000f/PPM,1000f/PPM));
+        Wizardo.player = new Player(playerPawn);
 
         cursorTexturePath = "Cursors/Battle_Cursor.png";
     }

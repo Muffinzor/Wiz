@@ -61,7 +61,7 @@ public class ControllerListener_HUB extends ControllerAdapter {
 
         switch (buttonIndex) {
             case 6: //Options - PS4
-                screen.game.setOverScreen(new EscapeScreen(screen.game));
+                screen.game.addNewScreen(new EscapeScreen(screen.game));
                 return true;
         }
 

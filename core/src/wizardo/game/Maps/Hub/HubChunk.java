@@ -3,11 +3,14 @@ package wizardo.game.Maps.Hub;
 
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
+import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Maps.LayerObject;
 import wizardo.game.Maps.MapGeneration.MapChunk;
 import wizardo.game.Maps.PortalObject;
 import wizardo.game.Screens.BaseScreen;
 import wizardo.game.Wizardo;
+
+import static wizardo.game.Wizardo.world;
 
 public class HubChunk extends MapChunk {
 
@@ -33,6 +36,14 @@ public class HubChunk extends MapChunk {
     @Override
     public void createBodies() {
 
+    }
+
+    @Override
+    public void disposeBodies() {
+        for (Body body : bodies) {
+            world.destroyBody(body);
+        }
+        bodies.clear();
     }
 
     public void initialize() {

@@ -19,8 +19,8 @@ import java.util.ArrayList;
 
 public class BattleSelectionTable extends MenuTable {
 
-    public BattleSelectionTable(Stage stage, Skin skin, ArrayList<Button> buttons, Wizardo game) {
-        super(stage, skin, buttons, game);
+    public BattleSelectionTable(Stage stage, Skin skin, Wizardo game) {
+        super(stage, skin, game);
         resize();
     }
 

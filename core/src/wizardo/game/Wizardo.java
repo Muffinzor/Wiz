@@ -6,18 +6,22 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import wizardo.game.Player.Player;
 import wizardo.game.Screens.BaseScreen;
 import wizardo.game.Screens.LoadingScreen.LoadingScreen;
 import wizardo.game.Utils.Contacts.WizContactListener;
 
 import java.util.Stack;
 
+import static wizardo.game.SettingsPref.loadVolume;
+import static wizardo.game.SettingsPref.saveVolume;
+
 public class Wizardo extends Game {
 
-
 	private Stack<BaseScreen> screenStack;
-	public BaseScreen currentScreen;
+	public static BaseScreen currentScreen;
 	public static World world;
+	public static Player player;
 	public static WizContactListener contactListener;
 	public static AssetManager assetManager;
 	public OrthographicCamera mainCamera;
@@ -31,9 +35,9 @@ public class Wizardo extends Game {
 		uiCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		assetManager = new AssetManager();
 		contactListener = new WizContactListener();
-		setOverScreen(new LoadingScreen(this));
+		loadVolume();
+		addNewScreen(new LoadingScreen(this));
 	}
-
 
 	/**
 	 * Renders all the screens in the stack
@@ -47,7 +51,7 @@ public class Wizardo extends Game {
 			screenStack.peek().render(Gdx.graphics.getDeltaTime());
 		}
 	}
-	
+
 	@Override
 	public void dispose () {
 		while (!screenStack.isEmpty()) {
@@ -62,13 +66,27 @@ public class Wizardo extends Game {
 	 * Swap to new screen, puts current screen on top of stack
 	 * @param newScreen screen to switch to
 	 */
-	public void setOverScreen(BaseScreen newScreen) {
+	public void addNewScreen(BaseScreen newScreen) {
 		if (!screenStack.isEmpty()) {
 			screenStack.peek().removeInputs();
 			screenStack.peek().pause();
 		}
 		screenStack.push(newScreen);
 		currentScreen = newScreen;
+		setScreen(newScreen);
+	}
+
+	/**
+	 * Swap to a new screen without adding the origin to the screen stack
+	 * @param newScreen
+	 */
+	public void skipToScreen(BaseScreen newScreen) {
+		if (!screenStack.isEmpty()) {
+			screenStack.pop().dispose();
+		}
+		currentScreen.removeInputs();
+		currentScreen = newScreen;
+		screenStack.push(newScreen);
 		setScreen(newScreen);
 	}
 
@@ -103,12 +121,21 @@ public class Wizardo extends Game {
 		}
 	}
 
+	public static BaseScreen getCurrentScreen() {
+		return currentScreen;
+	}
+
 	public static void createNewWorld() {
 		if(world != null) {
 			world.dispose();
 		}
 		world = new World(new Vector2(0,0), false);
 		world.setContactListener(contactListener);
+	}
+
+	public static void exit() {
+		saveVolume();
+		Gdx.app.exit();
 	}
 
 }

@@ -1,0 +1,156 @@
+{
+com.badlogic.gdx.graphics.g2d.BitmapFont: {
+	Messy16: {
+		file: Colorfiction - Messy(9).fnt
+		scaledSize: -1
+		markupEnabled: false
+		flip: false
+	}
+	Messy20: {
+		file: Colorfiction - Messy(10).fnt
+		scaledSize: -1
+		markupEnabled: false
+		flip: false
+	}
+}
+com.badlogic.gdx.graphics.Color: {
+	Black: {
+		r: 0
+		g: 0
+		b: 0
+		a: 1
+	}
+	White: {
+		r: 1
+		g: 1
+		b: 1
+		a: 1
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle: {
+	default: {
+		checkboxOn: frostbolt_checked
+		checkboxOff: frostbolt_checked_over
+		font: Messy16
+	}
+	frostbolt: {
+		checkboxOn: frostbolt_checked
+		checkboxOff: frostbolt_normal
+		checkboxOnOver: frostbolt_checked_over
+		checkboxOver: frostbolt_over
+		checkboxOnDisabled: frostbolt_disabled
+		checkboxOffDisabled: frostbolt_disabled
+		font: Messy16
+	}
+	icespear: {
+		checkboxOn: icespear_checked
+		checkboxOff: icespear_normal
+		checkboxOnOver: icespear_checked_over
+		checkboxOver: icespear_over
+		checkboxOnDisabled: icespear_disabled
+		checkboxOffDisabled: icespear_disabled
+		font: Messy16
+	}
+	frozenorb: {
+		checkboxOn: orb_checked
+		checkboxOff: orb_normal
+		checkboxOnOver: orb_checked_over
+		checkboxOver: orb_over
+		checkboxOnDisabled: orb_disabled
+		checkboxOffDisabled: orb_disabled
+		font: Messy16
+	}
+	fireball: {
+		checkboxOn: fireball_checked
+		checkboxOff: fireball_normal
+		checkboxOnOver: fireball_checked_over
+		checkboxOver: fireball_over
+		checkboxOnDisabled: fireball_disabled
+		checkboxOffDisabled: fireball_disabled
+		font: Messy16
+	}
+	flamejet: {
+		checkboxOn: flamejet_checked
+		checkboxOff: flamejet_normal
+		checkboxOnOver: flamejet_checked_over
+		checkboxOver: flamejet_over
+		checkboxOnDisabled: flamejet_disabled
+		checkboxOffDisabled: flamejet_disabled
+		font: Messy16
+	}
+	overheat: {
+		checkboxOn: overheat_checked
+		checkboxOff: overheat_normal
+		checkboxOnOver: overheat_checked_over
+		checkboxOver: overheat_over
+		checkboxOnDisabled: overheat_disabled
+		checkboxOffDisabled: overheat_disabled
+		font: Messy16
+	}
+	chainlightning: {
+		checkboxOn: chainlightning_checked
+		checkboxOff: chainlightning_normal
+		checkboxOnOver: chainlightning_checked_over
+		checkboxOver: chainlightning_over
+		checkboxOnDisabled: chainlightning_disabled
+		checkboxOffDisabled: chainlightning_disabled
+		font: Messy16
+	}
+	thunderstorm: {
+		checkboxOn: thunderstorm_checked
+		checkboxOff: thunderstorm_normal
+		checkboxOnOver: thunderstorm_checked_over
+		checkboxOver: thunderstorm_over
+		checkboxOnDisabled: thunderstorm_disabled
+		checkboxOffDisabled: thunderstorm_disabled
+		font: Messy16
+	}
+	chargedbolt: {
+		checkboxOn: chargedbolt_checked
+		checkboxOff: chargedbolt_normal
+		checkboxOnOver: chargedbolt_checked_over
+		checkboxOver: chargedbolt_over
+		checkboxOnDisabled: chargedbolt_disabled
+		checkboxOffDisabled: chargedbolt_disabled
+		font: Messy16
+	}
+	arcanemissile: {
+		checkboxOn: arcanemissile_checked
+		checkboxOff: arcanemissile_normal
+		checkboxOnOver: arcanemissile_checked_over
+		checkboxOver: arcanemissile_over
+		checkboxOnDisabled: arcanemissile_disabled
+		checkboxOffDisabled: arcanemissile_disabled
+		font: Messy16
+	}
+	energybeam: {
+		checkboxOn: beam_checked
+		checkboxOff: beam_normal
+		checkboxOnOver: beam_checked_over
+		checkboxOver: beam_over
+		checkboxOnDisabled: beam_disabled
+		checkboxOffDisabled: beam_disabled
+		font: Messy16
+	}
+	rifts: {
+		checkboxOn: rifts_checked
+		checkboxOff: rifts_normal
+		checkboxOnOver: rifts_checked_over
+		checkboxOver: rifts_over
+		checkboxOnDisabled: rifts_disabled
+		checkboxOffDisabled: rifts_disabled
+		font: Messy16
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
+	default: {
+		font: Messy20
+		fontColor: Black
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle: {
+	default: {
+		label: default
+	}
+}
+}

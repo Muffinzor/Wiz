@@ -1,13 +1,12 @@
 package wizardo.game.Lighting;
 
-import box2dLight.RayHandler;
 import wizardo.game.Screens.BaseScreen;
 
 import java.util.ArrayDeque;
 
 public class LightPool {
 
-    private final ArrayDeque<RoundLight> array;
+    protected final ArrayDeque<RoundLight> array;
     BaseScreen screen;
 
     public LightPool(BaseScreen screen) {

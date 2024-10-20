@@ -18,10 +18,10 @@ public abstract class MenuTable {
 
     public int selectedButtonIndex;
 
-    public MenuTable(Stage stage, Skin skin, ArrayList<Button> buttons, Wizardo game) {
+    public MenuTable(Stage stage, Skin skin, Wizardo game) {
         this.stage = stage;
         this.skin = skin;
-        this.buttons = buttons;
+        this.buttons = new ArrayList<>();
         this.game = game;
         selectedButtonIndex = -1;
         table = new Table();
