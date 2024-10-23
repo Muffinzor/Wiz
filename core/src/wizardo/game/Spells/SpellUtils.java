@@ -1,5 +1,16 @@
 package wizardo.game.Spells;
 
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.QueryCallback;
+import wizardo.game.Monsters.Monster;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+import static wizardo.game.Wizardo.world;
+
 public class SpellUtils {
 
     public static enum Spell_Element {
@@ -22,5 +33,86 @@ public class SpellUtils {
         CHARGEDBOLTS,
         CHAIN,
         THUNDERSTORM
+    }
+
+    public static String getSpellString(Spell_Name spell) {
+        String s = "";
+        switch(spell) {
+            case FROSTBOLT -> s = "Frostbolts";
+            case ICESPEAR -> s = "Icespear";
+            case FROZENORB -> s = "Frozen Orb";
+            case FLAMEJET -> s = "Flamejet";
+            case FIREBALL -> s = "Fireball";
+            case OVERHEAT -> s = "Overheat";
+            case CHARGEDBOLTS -> s = "Chargedbolts";
+            case CHAIN -> s = "Chain";
+            case THUNDERSTORM -> s = "Storm";
+            case MISSILES -> s = "Missiles";
+            case BEAM -> s = "Beam";
+            case RIFTS -> s = "Rifts";
+        }
+        return s;
+    }
+
+    public static boolean hasLineOfSight(Vector2 origin, Vector2 target) {
+
+        AtomicBoolean clearLOS = new AtomicBoolean(true);
+
+        world.rayCast((fixture, point, normal, fraction) -> {
+
+            short obstacleCategory = 0x0010;
+
+            if ((fixture.getFilterData().categoryBits & obstacleCategory) != 0) {
+                clearLOS.set(false);
+                return 0; // Stop raycast
+            }
+            return 1; // Continue raycast
+        }, origin, target);
+
+        return clearLOS.get();
+    }
+    public static Vector2 getRandomVectorInRadius(Vector2 areaCenter, float radius) {
+        float randomAngle = MathUtils.random(0, MathUtils.PI2); // Random angle in radians
+        float randomRadius = (float) Math.sqrt(MathUtils.random(0f, 1f)) * radius; // Adjusted random radius for uniform distribution
+        float offsetX = randomRadius * MathUtils.cos(randomAngle); // X offset
+        float offsetY = randomRadius * MathUtils.sin(randomAngle); // Y offset
+
+        // Calculate the randomized coordinates
+        float x = areaCenter.x + offsetX;
+        float y = areaCenter.y + offsetY;
+
+        return new Vector2(x, y);
+    }
+
+
+    public static ArrayList<Monster> findMonstersInRangeOfVector(Vector2 origin, float radius) {
+        ArrayList<Monster> monstersInRange = new ArrayList<>();
+
+        // Define the AABB
+        float lowerX = origin.x - radius;
+        float lowerY = origin.y - radius;
+        float upperX = origin.x + radius;
+        float upperY = origin.y + radius;
+
+        QueryCallback callback = fixture -> {
+
+            if (fixture.getBody().getUserData() instanceof Monster monster) {
+                Vector2 monsterPosition = fixture.getBody().getPosition();
+
+                float distance = origin.dst(monsterPosition);
+
+                if (distance <= radius && monster.hp > 0) {
+                    monstersInRange.add(monster);
+                }
+            }
+            return true; // Continue the query
+        };
+
+        world.QueryAABB(callback, lowerX, lowerY, upperX, upperY);
+
+        HashSet<Monster> seenMonsters = new HashSet<>();
+        monstersInRange.removeIf(monster -> !seenMonsters.add(monster));
+
+        return monstersInRange;
     }
 }

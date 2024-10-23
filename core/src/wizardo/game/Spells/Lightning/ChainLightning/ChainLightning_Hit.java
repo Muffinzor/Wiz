@@ -1,0 +1,284 @@
+package wizardo.game.Spells.Lightning.ChainLightning;
+
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.QueryCallback;
+import com.badlogic.gdx.physics.box2d.World;
+import wizardo.game.Lighting.RoundLight;
+import wizardo.game.Monsters.Monster;
+import wizardo.game.Resources.SpellAnims.ChainLightningAnims;
+import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Explosion;
+import wizardo.game.Spells.Lightning.ChargedBolts.ChargedBolts_Spell;
+import wizardo.game.Spells.Spell;
+import wizardo.game.Spells.SpellUtils;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+
+import static wizardo.game.Spells.SpellUtils.Spell_Element.FROST;
+import static wizardo.game.Utils.Constants.PPM;
+import static wizardo.game.Wizardo.currentScreen;
+import static wizardo.game.Wizardo.world;
+
+public class ChainLightning_Hit extends ChainLightning_Spell {
+
+    boolean alreadyChained;
+
+    public Monster monsterFrom;
+    public Monster monsterTo;
+
+    public ArrayList<Monster> inRange;
+    public ArrayList<Monster> monstersHit = new ArrayList<>();
+
+    boolean flipX;
+    boolean flipY;
+
+    public Animation<Sprite> longAnim;
+
+    int frameCounter = 0;
+
+    public ChainLightning_Hit(Monster target) {
+        monsterTo = target;
+
+        flipX = MathUtils.randomBoolean();
+        flipY = MathUtils.randomBoolean();
+
+    }
+
+    public void update(float delta) {
+        if(!initialized) {
+            initialized = true;
+            pickAnim();
+
+            if(nested_spell != null) {
+                nested_projectiles();
+            }
+            frostbolts(monsterTo);
+        }
+
+        if(currentHits < maxHits && !alreadyChained && stateTime > 0.03f) {
+            alreadyChained = true;
+            inRange = findMonstersInRange(monsterTo.body, radius);
+            if(!inRange.isEmpty()) {
+                singleChain();
+            }
+        }
+
+        stateTime += delta;
+        drawFrame(delta);
+
+        if(stateTime > 0.3f) {
+            screen.spellManager.toRemove(this);
+        }
+    }
+
+    public void drawFrame(float delta) {
+        frameCounter++;
+
+        Sprite frame = screen.getSprite();
+
+        Vector2 origin = new Vector2(originBody.getPosition().scl(PPM));
+        Vector2 target = new Vector2(monsterTo.body.getPosition().scl(PPM));
+
+        Vector2 direction = target.sub(origin);
+        float distance = direction.len();
+        float angle = direction.angleDeg();
+
+        if(frameCounter > 4 && delta > 0) {
+            createLights(direction, distance);
+            frameCounter = 0;
+        }
+
+
+        if(distance > 150) {
+            frame.set(longAnim.getKeyFrame(stateTime, true));
+        } else {
+            frame.set(anim.getKeyFrame(stateTime, true));
+        }
+
+        frame.setSize(distance, 90);
+        frame.setOrigin(0,frame.getHeight() / 2f);
+        frame.setRotation(angle);
+        frame.flip(flipX, flipY);
+        frame.setPosition(originBody.getPosition().x * PPM, originBody.getPosition().y * PPM - frame.getHeight() / 2);
+
+        screen.addSortedSprite(frame);
+
+    }
+
+    public void singleChain() {
+
+        Monster target = normalTargeting();
+
+        if(target != null) {
+            ChainLightning_Hit chain = new ChainLightning_Hit(target);
+            chain.setNextChain(this);
+            chain.setElements(this);
+            chain.screen = screen;
+            monstersHit.add(target);
+            chain.monstersHit = monstersHit;
+            screen.spellManager.toAdd(chain);
+        }
+
+    }
+
+    public Monster normalTargeting() {
+
+        Monster newTarget = null;
+        float dst = Float.MAX_VALUE;
+
+        for(Monster monster : inRange) {
+            if(monster.body.getPosition().dst(monsterTo.body.getPosition()) < dst) {
+                newTarget = monster;
+                dst = monster.body.getPosition().dst(monsterTo.body.getPosition());
+            }
+        }
+
+        return newTarget;
+    }
+
+    public void setNextChain(ChainLightning_Hit thisHit) {
+        maxHits = thisHit.maxHits;
+        currentHits = thisHit.currentHits + 1;
+
+        nested_spell = thisHit.nested_spell;
+        monsterFrom = thisHit.monsterTo;
+        originBody = monsterFrom.body;
+
+
+        frostbolts = thisHit.frostbolts;
+    }
+
+    public void createLights(Vector2 direction, float distance) {
+        Vector2 unitDirection = new Vector2(direction);
+        if (unitDirection.len() > 0) {
+            unitDirection.nor();
+        }
+        Vector2 step = unitDirection.scl(20f / PPM);
+        int numLights = (int) distance / 20;
+
+        for (int i = 0; i < numLights; i++) {
+            Vector2 position = new Vector2(originBody.getPosition()).add(step.x * i, step.y * i);
+            RoundLight light = screen.lightManager.pool.getLight();
+            light.setLight(red,green,blue,1,23, position);
+            light.dimKill(0.1f);
+            screen.lightManager.addLight(light);
+        }
+    }
+
+    public void pickAnim() {
+        switch(anim_element) {
+            case LIGHTNING -> {
+                anim = ChainLightningAnims.chainlightning_lightning_anim;
+                longAnim = ChainLightningAnims.chainlightning_long_lightning_anim;
+                red = 0.2f;
+                green = 0.2f;
+            }
+            case FROST -> {
+                anim = ChainLightningAnims.chainlightning_lightning_anim;
+                longAnim = ChainLightningAnims.chainlightning_long_lightning_anim;
+                green = 0.3f;
+                blue = 0.45f;
+            }
+        }
+    }
+
+    public ArrayList<Monster> findMonstersInRange(Body body, float radius) {
+        // List to hold found monsters
+        ArrayList<Monster> monstersInRange = new ArrayList<>();
+
+        // Define the AABB that covers the circular area
+        float lowerX = body.getPosition().x - radius;
+        float lowerY = body.getPosition().y - radius;
+        float upperX = body.getPosition().x + radius;
+        float upperY = body.getPosition().y + radius;
+
+        // Use an anonymous QueryCallback
+        QueryCallback callback = fixture -> {
+            // Check if the fixture belongs to a monster
+            if (fixture.getBody().getUserData() instanceof Monster monster) {
+                Vector2 monsterPosition = fixture.getBody().getPosition();
+
+                // Calculate the distance from the player to the monster
+                float distance = body.getPosition().dst(monsterPosition);
+
+
+                // Check if the distance is within the radius
+                if (distance <= radius && monster.body != body && !monstersHit.contains(monster) && monster.hp > 0) {
+                    boolean LOS = SpellUtils.hasLineOfSight(body.getPosition(), monster.body.getPosition());
+                    if(LOS) {
+                        monstersInRange.add(monster);
+                    }
+                }
+            }
+            return true; // Continue the query
+        };
+
+        // Perform the query using the AABB
+        world.QueryAABB(callback, lowerX, lowerY, upperX, upperY);
+
+        HashSet<Monster> seenMonsters = new HashSet<>();
+        monstersInRange.removeIf(monster -> !seenMonsters.add(monster));
+
+        return monstersInRange;
+    }
+
+
+
+    public void nested_projectiles() {
+        float procRate = getProcRate();
+        float quantity = getQuantity();
+
+        if(Math.random() >= procRate) {
+            for (int i = 0; i < quantity; i++) {
+                Spell proj = nested_spell.clone();
+                Vector2 target = SpellUtils.getRandomVectorInRadius(monsterTo.body.getPosition(), 1);
+                proj.spawnPosition = new Vector2(monsterTo.body.getPosition());
+                proj.targetPosition = target;
+                proj.setElements(this);
+                screen.spellManager.toAdd(proj);
+            }
+        }
+
+    }
+
+    public float getProcRate() {
+        float procRate = 1;
+        float level = (float) (getLvl() + nested_spell.getLvl()) / 2;
+        if(nested_spell instanceof ChargedBolts_Spell) {
+            procRate = 0.8f - level * .05f;
+        }
+        return procRate;
+    }
+    public int getQuantity() {
+        int quantity = 1;
+        if(nested_spell instanceof ChargedBolts_Spell) {
+            quantity = 2 + nested_spell.getLvl();
+        }
+        return quantity;
+    }
+    /**
+     * NEED PROC RATE
+     * @param monster
+     */
+    public void frostbolts(Monster monster) {
+
+        if(frostbolts) {
+            float procTreshold = 0.5f;
+            if(Math.random() >= procTreshold) {
+
+                Vector2 adjusted = SpellUtils.getRandomVectorInRadius(monster.body.getPosition(), 0.5f);
+                Frostbolt_Explosion explosion = new Frostbolt_Explosion();
+                explosion.targetPosition = new Vector2(adjusted);
+                explosion.screen = screen;
+                explosion.setElements(this);
+                explosion.anim_element = SpellUtils.Spell_Element.LIGHTNING;
+                screen.spellManager.toAdd(explosion);
+
+            }
+        }
+    }
+}

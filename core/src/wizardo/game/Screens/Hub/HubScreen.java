@@ -37,6 +37,7 @@ public class HubScreen extends BaseScreen {
         createNewWorld();
         rayHandler = new RayHandler(world);
         rayHandler.setAmbientLight(0.3f);
+        lightManager.rayHandler = rayHandler;
 
         playerPawn = new Pawn(this);
         playerPawn.createPawn(new Vector2(1000f/PPM,1000f/PPM));

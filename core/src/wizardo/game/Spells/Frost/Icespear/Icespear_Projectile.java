@@ -6,14 +6,16 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.Monster;
-import wizardo.game.Screens.Battle.BattleScreen;
 import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Explosion;
+import wizardo.game.Spells.Hybrid.CelestialStrike.CelestialStrike_Hit;
+import wizardo.game.Spells.Hybrid.CelestialStrike.CelestialStrike_Spell;
+import wizardo.game.Spells.Spell;
+import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyFactory;
 
 import static wizardo.game.Resources.SpellAnims.IcespearAnims.icespear_anim_frost;
 import static wizardo.game.Utils.Constants.PPM;
-import static wizardo.game.Wizardo.currentScreen;
-import static wizardo.game.Wizardo.world;
+import static wizardo.game.Wizardo.*;
 
 public class Icespear_Projectile extends Icespear_Spell {
 
@@ -26,8 +28,6 @@ public class Icespear_Projectile extends Icespear_Spell {
     float timerBeforeSplit;
     float duration;
     Monster splitMonster;
-
-    public boolean frostbolt = true;
 
     public Icespear_Projectile(Vector2 spawnPosition, Vector2 targetPosition) {
 
@@ -78,16 +78,24 @@ public class Icespear_Projectile extends Icespear_Spell {
         Icespear_Hit hit = new Icespear_Hit(body.getPosition(), rotation);
         screen.spellManager.toAdd(hit);
 
-        if(frostbolt) {
-            float chanceToProc = 0.95f;
+        if(nested_spell != null) {
+            float chanceToProc = 0.5f;
+            int quantity = 2 + nested_spell.getLvl();
             if(Math.random() > chanceToProc) {
-                Frostbolt_Explosion explosion = new Frostbolt_Explosion(monster.body.getPosition());
-                screen.spellManager.toAdd(explosion);
+                for (int i = 0; i < quantity; i++) {
+                    Spell proj = nested_spell.clone();
+                    proj.setElements(this);
+                    proj.screen = screen;
+                    proj.spawnPosition = new Vector2(monster.body.getPosition());
+                    proj.targetPosition = SpellUtils.getRandomVectorInRadius(monster.body.getPosition(), 0.5f);
+                    screen.spellManager.toAdd(proj);
+                }
             }
         }
     }
 
     public void split() {
+        celestialStrike();
         currentSplits++;
         normalSplit();
     }
@@ -103,6 +111,7 @@ public class Icespear_Projectile extends Icespear_Spell {
             Vector2 direction = new Vector2(MathUtils.cosDeg(angle), MathUtils.sinDeg(angle));
             Icespear_Projectile spear = new Icespear_Projectile(body.getPosition(), body.getPosition().cpy().add(direction));
             spear.currentSplits = currentSplits;
+            spear.screen = screen;
             spear.stateTime = stateTime;
             spear.setNextSpear(this);
             screen.spellManager.toAdd(spear);
@@ -129,7 +138,7 @@ public class Icespear_Projectile extends Icespear_Spell {
 
         Vector2 offset = new Vector2(direction.cpy().scl(1));
         Vector2 adjustedSpawn = new Vector2(spawnPosition.add(offset));
-        body = BodyFactory.spellProjectileBody(adjustedSpawn, 8, true);
+        body = BodyFactory.spellProjectileCircleBody(adjustedSpawn, 8, true);
         body.setUserData(this);
 
         Vector2 velocity = direction.scl(speed);
@@ -145,5 +154,19 @@ public class Icespear_Projectile extends Icespear_Spell {
 
     public void adjustLight() {
         light.pointLight.setPosition(body.getPosition().scl(PPM));
+    }
+
+    public void celestialStrike() {
+        if(celestialStrike) {
+            float level = (getLvl() + player.spellbook.thunderstorm_lvl + player.spellbook.frozenorb_lvl) / 3f;
+            float procRate = .85f - level * 0.05f;
+
+            if(Math.random() >= procRate) {
+                CelestialStrike_Hit strike = new CelestialStrike_Hit();
+                strike.targetPosition = new Vector2(body.getPosition());
+                strike.screen = screen;
+                screen.spellManager.toAdd(strike);
+            }
+        }
     }
 }

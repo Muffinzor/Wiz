@@ -5,10 +5,8 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
-import wizardo.game.Audio.Sounds.SoundPlayer;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.Monster;
-import wizardo.game.Screens.Battle.BattleScreen;
 import wizardo.game.Utils.BodyFactory;
 import static wizardo.game.Resources.SpellAnims.FrostboltAnims.frostbolt_anim_frost;
 import static wizardo.game.Utils.Constants.PPM;
@@ -54,7 +52,9 @@ public class Frostbolt_Projectile extends Frostbolt_Spell{
 
         if(hasCollided) {
 
-            Frostbolt_Explosion explosion = new Frostbolt_Explosion(body.getPosition());
+            Frostbolt_Explosion explosion = new Frostbolt_Explosion();
+            explosion.targetPosition = new Vector2(body.getPosition());
+            explosion.setElements(this);
             screen.spellManager.toAdd(explosion);
             world.destroyBody(body);
             body = null;
@@ -98,7 +98,7 @@ public class Frostbolt_Projectile extends Frostbolt_Spell{
 
         Vector2 offset = new Vector2(direction.cpy().scl(1));
         Vector2 adjustedSpawn = new Vector2(spawnPosition.add(offset));
-        body = BodyFactory.spellProjectileBody(adjustedSpawn, 5, true);
+        body = BodyFactory.spellProjectileCircleBody(adjustedSpawn, 5, true);
         body.setUserData(this);
 
         Vector2 velocity = direction.scl(speed);

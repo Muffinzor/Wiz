@@ -33,6 +33,9 @@ public abstract class Monster {
 
     boolean initialized;
 
+    public float thunderImmunityTimer = 0;
+
+
     public Monster(BattleScreen screen, Vector2 position) {
         this.screen = screen;
         this.position = new Vector2(position);
@@ -45,7 +48,7 @@ public abstract class Monster {
         if(!initialized) {
             initialize();
         }
-        stateTime += delta;
+        timers(delta);
         drawFrame();
 
         if(hp <= 0) {
@@ -99,6 +102,11 @@ public abstract class Monster {
             //world.destroyBody(body);
             //body = null;
         }
+    }
+
+    public void timers(float delta) {
+        thunderImmunityTimer -= delta;
+        stateTime += delta;
     }
 
     public abstract void initialize();

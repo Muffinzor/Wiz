@@ -1,5 +1,6 @@
 package wizardo.game.Utils;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 
@@ -61,7 +62,7 @@ public class BodyFactory {
 
         return body;
     }
-    public static Body spellProjectileBody(Vector2 position, float radius, boolean isSensor) {
+    public static Body spellProjectileCircleBody(Vector2 position, float radius, boolean isSensor) {
         Body body;
         BodyDef def = new BodyDef();
 
@@ -80,6 +81,42 @@ public class BodyFactory {
 
         fixtureDef.filter.categoryBits = SPELL;
         fixtureDef.filter.maskBits = SPELL_MASK;
+
+        body.createFixture(fixtureDef);
+        shape.dispose();
+
+        return body;
+    }
+    public static Body spellProjectileDiamondBody(Vector2 position, float width, float height, float angle, boolean sensor) {
+
+        Body body;
+        BodyDef def = new BodyDef();
+
+        def.type = BodyDef.BodyType.DynamicBody;
+
+
+        def.position.set(position.x, position.y);
+        def.angle = angle * MathUtils.degRad; // Convert angle to radians if it's in degrees
+        def.fixedRotation = true;
+        body = world.createBody(def);
+
+        PolygonShape shape = new PolygonShape();
+
+        // Define the vertices of the diamond shape
+        Vector2[] vertices = new Vector2[4];
+        vertices[0] = new Vector2(0, height / 2 / PPM); // Top
+        vertices[1] = new Vector2(-width / 2 / PPM, 0); // Left
+        vertices[2] = new Vector2(0, -height / 2 / PPM); // Bottom
+        vertices[3] = new Vector2(width / 2 / PPM, 0); // Right
+
+        shape.set(vertices);
+
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = shape;
+        fixtureDef.filter.categoryBits = SPELL;
+        fixtureDef.filter.maskBits = SPELL_MASK;
+
+        fixtureDef.isSensor = sensor;
 
         body.createFixture(fixtureDef);
         shape.dispose();

@@ -57,7 +57,7 @@ public class ControllerListener_ESCAPE extends ControllerAdapter {
         }
 
         if (buttonIndex == 0) {
-            screen.menuTable.clickSelectedButton();
+            screen.menuTable.pressSelectedButton();
             return true;
         }
         return false;

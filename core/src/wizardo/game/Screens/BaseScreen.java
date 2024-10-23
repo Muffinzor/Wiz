@@ -78,7 +78,6 @@ public abstract class BaseScreen implements Screen {
     public MenuTable menuTable;
     protected String cursorTexturePath;
 
-
     public BaseScreen(Wizardo game) {
 
         this.game = game;
@@ -146,7 +145,14 @@ public abstract class BaseScreen implements Screen {
 
     public void setCursorTexture() {
         Pixmap pixmap = new Pixmap(Gdx.files.internal(cursorTexturePath));
-        Cursor customCursor = Gdx.graphics.newCursor(pixmap, 0, 0);
+        Cursor customCursor;
+        if(this instanceof BattleScreen) {
+            int hotspotX = pixmap.getWidth() / 2;
+            int hotspotY = pixmap.getHeight() / 2;
+            customCursor = Gdx.graphics.newCursor(pixmap, hotspotX, hotspotY);
+        } else {
+            customCursor = Gdx.graphics.newCursor(pixmap, 0, 0);
+        }
         Gdx.graphics.setCursor(customCursor);
         pixmap.dispose();
     }

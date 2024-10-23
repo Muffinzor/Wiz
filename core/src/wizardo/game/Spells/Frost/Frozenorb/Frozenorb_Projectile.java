@@ -8,6 +8,15 @@ import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.Monster;
 import wizardo.game.Resources.SpellAnims.FrozenorbAnims;
 import wizardo.game.Screens.Battle.BattleScreen;
+import wizardo.game.Spells.Arcane.ArcaneMissiles.ArcaneMissile_Spell;
+import wizardo.game.Spells.Arcane.EnergyBeam.EnergyBeam_Spell;
+import wizardo.game.Spells.Fire.Flamejet.Flamejet_Spell;
+import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Spell;
+import wizardo.game.Spells.Frost.Icespear.Icespear_Spell;
+import wizardo.game.Spells.Lightning.ChainLightning.ChainLightning_Spell;
+import wizardo.game.Spells.Lightning.ChargedBolts.ChargedBolts_Spell;
+import wizardo.game.Spells.Spell;
+import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyFactory;
 
 import static wizardo.game.Utils.Constants.PPM;
@@ -23,6 +32,9 @@ public class Frozenorb_Projectile extends Frozenorb_Spell {
     int frameCounter = 0;
     int rotation;
 
+    int castCounter = 0;
+    float castInterval = 0.05f;
+
     public Frozenorb_Projectile(Vector2 spawnPosition, Vector2 targetPosition) {
         this.spawnPosition = new Vector2(spawnPosition);
         this.targetPosition = new Vector2(targetPosition);
@@ -33,9 +45,11 @@ public class Frozenorb_Projectile extends Frozenorb_Spell {
 
     public void update(float delta) {
         if(!initialized) {
+            pickAnim();
             createBody();
             createLight();
             //setInterval();
+            castInterval = getInterval();
             initialized = true;
         }
 
@@ -46,6 +60,10 @@ public class Frozenorb_Projectile extends Frozenorb_Spell {
         adjustMovement();
         adjustLight();
         adjustScale();
+
+        if(nested_spell != null && scale == 1 && delta > 0) {
+            shootProjectiles();
+        }
 
     }
 
@@ -75,7 +93,7 @@ public class Frozenorb_Projectile extends Frozenorb_Spell {
             spawnPosition = new Vector2(spawnPosition.add(offset));
         }
 
-        body = BodyFactory.spellProjectileBody(spawnPosition, 20, true);
+        body = BodyFactory.spellProjectileCircleBody(spawnPosition, 20, true);
         body.setUserData(this);
 
         Vector2 velocity = new Vector2(direction.scl(speed));
@@ -84,7 +102,7 @@ public class Frozenorb_Projectile extends Frozenorb_Spell {
 
     public void createLight() {
         light = screen.lightManager.pool.getLight();
-        light.setLight(0,0,0.5f, 1, 200, body.getPosition());
+        light.setLight(red,green,blue, 1, 200, body.getPosition());
         screen.lightManager.addLight(light);
     }
 
@@ -125,5 +143,63 @@ public class Frozenorb_Projectile extends Frozenorb_Spell {
                 }
             }
         }
+    }
+
+    public void shootProjectiles() {
+        if(stateTime > castInterval * castCounter) {
+            Spell proj = nested_spell.clone();
+            proj.setElements(this);
+            proj.screen = screen;
+            proj.originBody = body;
+            proj.spawnPosition = body.getPosition();
+            proj.targetPosition = SpellUtils.getRandomVectorInRadius(body.getPosition(), 2.5f);
+            screen.spellManager.toAdd(proj);
+            castCounter++;
+        }
+
+
+    }
+
+    public void pickAnim() {
+        switch(anim_element) {
+            case FROST -> {
+                anim = FrozenorbAnims.frozenorb_anim_frost;
+                blue = 0.5f;
+            }
+            case FIRE -> {
+                anim = FrozenorbAnims.frozenorb_anim_fire;
+                red = 0.5f;
+                green = 0.25f;
+            }
+            case LIGHTNING -> {
+                anim = FrozenorbAnims.frozenorb_anim_lightning;
+                red = 0.3f;
+                green = 0.25f;
+                if(bonus_element == SpellUtils.Spell_Element.FROST) {
+                    red = 0.1f;
+                    green = 0.6f;
+                    blue = 0.9f;
+                }
+            }
+            case ARCANE -> {
+                anim = FrozenorbAnims.frozenorb_anim_arcane;
+                red = 0.6f;
+                green = 0.15f;
+                blue = 0.9f;
+            }
+
+        }
+    }
+
+    public float getInterval() {
+        float interval = 1;
+        float level = (getLvl() + nested_spell.getLvl()) / 2f;
+        if(nested_spell instanceof ChainLightning_Spell) {
+            interval = 0.85f - 0.05f * level;
+        }
+        if(nested_spell instanceof Frostbolt_Spell) {
+            interval = 0.5f - 0.02f * level;
+        }
+        return interval;
     }
 }

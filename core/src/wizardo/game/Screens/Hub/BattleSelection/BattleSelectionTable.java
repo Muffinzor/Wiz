@@ -26,12 +26,20 @@ public class BattleSelectionTable extends MenuTable {
 
     @Override
     public void navigateDown() {
-
+        selectedButtonIndex--;
+        if(selectedButtonIndex < 0) {
+            selectedButtonIndex = buttons.size() - 1;
+        }
+        updateButtonStates();
     }
 
     @Override
     public void navigateUp() {
-
+        selectedButtonIndex++;
+        if(selectedButtonIndex > buttons.size() - 1 ) {
+            selectedButtonIndex = 0;
+        }
+        updateButtonStates();
     }
 
     @Override
@@ -45,8 +53,21 @@ public class BattleSelectionTable extends MenuTable {
     }
 
     @Override
-    public void clickSelectedButton() {
+    public void pressSelectedButton() {
+        table.clearChildren();
+        table = null;
+        switch (selectedButtonIndex) {
+            case 0 -> game.freshScreen(new BattleScreen(game, "Dungeon"));
+            case 1 -> System.out.println("Nope");
+            case 2 -> game.setPreviousScreen();
+        }
+    }
 
+    public void updateButtonStates() {
+        for (int i = 0; i < buttons.size(); i++) {
+            Button button = buttons.get(i);
+            button.setChecked(i == selectedButtonIndex);
+        }
     }
 
     public void setPosition() {
@@ -140,5 +161,6 @@ public class BattleSelectionTable extends MenuTable {
     public void resize() {
         setPosition();
         createButtons();
+        updateButtonStates();
     }
 }

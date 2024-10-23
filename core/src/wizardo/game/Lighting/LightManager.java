@@ -16,7 +16,6 @@ public class LightManager {
     public LightManager(BaseScreen screen) {
 
         this.screen = screen;
-        rayHandler = screen.rayHandler;
         pool = new LightPool(screen);
         activeLights = new ArrayList<>();
 

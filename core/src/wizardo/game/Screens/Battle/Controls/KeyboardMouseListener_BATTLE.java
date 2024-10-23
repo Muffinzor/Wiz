@@ -8,6 +8,7 @@ import wizardo.game.Screens.Character.CharacterScreen;
 import wizardo.game.Screens.EscapeMenu.EscapeScreen;
 
 import static wizardo.game.Screens.BaseScreen.controllerActive;
+import static wizardo.game.Wizardo.currentScreen;
 import static wizardo.game.Wizardo.player;
 
 public class KeyboardMouseListener_BATTLE implements InputProcessor {
@@ -59,7 +60,8 @@ public class KeyboardMouseListener_BATTLE implements InputProcessor {
         }
 
         if (keycode == Input.Keys.C) {
-            screen.game.addNewScreen(new CharacterScreen(screen.game));
+            CharacterScreen char_screen = new CharacterScreen(screen.game);
+            screen.game.addNewScreen(char_screen);
         }
 
         if (keycode == Input.Keys.ESCAPE) {

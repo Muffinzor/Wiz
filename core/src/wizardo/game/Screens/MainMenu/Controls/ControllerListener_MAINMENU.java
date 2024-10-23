@@ -58,7 +58,7 @@ public class ControllerListener_MAINMENU extends ControllerAdapter  {
         }
 
         if (buttonIndex == 0) {
-            screen.menuTable.clickSelectedButton();
+            screen.menuTable.pressSelectedButton();
             return true;
         }
         return false;

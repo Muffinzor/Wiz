@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import wizardo.game.Spells.SpellUtils.*;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 
 public class MasteryButton extends CheckBox {
@@ -16,13 +17,15 @@ public class MasteryButton extends CheckBox {
     Spell_Name spell;
     Skin skin;
     CheckBoxStyle style;
-    HashSet<Spell_Name> parts;
+    MasteryTable table;
+    ArrayList<Spell_Name> parts;
 
-    public MasteryButton(String text, Skin skin, Spell_Name spell, HashSet<Spell_Name> parts) {
+    public MasteryButton(String text, Skin skin, Spell_Name spell, MasteryTable table) {
         super(text, skin);
         this.skin = skin;
         this.spell = spell;
-        this.parts = parts;
+        this.parts = table.parts;
+        this.table = table;
         pickStyle();
         adjustSize();
         addClickListener(spell);
@@ -55,7 +58,7 @@ public class MasteryButton extends CheckBox {
         CheckBox.CheckBoxStyle newStyle = new CheckBox.CheckBoxStyle();
         newStyle.checkboxOn = new TextureRegionDrawable(((TextureRegionDrawable) style.checkboxOn).getRegion());
         newStyle.checkboxOff = new TextureRegionDrawable(((TextureRegionDrawable) style.checkboxOff).getRegion());
-        newStyle.checkboxOver = new TextureRegionDrawable(((TextureRegionDrawable) style.checkboxOn).getRegion());
+        newStyle.checkboxOver = new TextureRegionDrawable(((TextureRegionDrawable) style.checkboxOver).getRegion());
         newStyle.checkboxOnOver = new TextureRegionDrawable(((TextureRegionDrawable) style.checkboxOnOver).getRegion());
         newStyle.checkboxOffDisabled = new TextureRegionDrawable(((TextureRegionDrawable) style.checkboxOffDisabled).getRegion());
         newStyle.checkboxOnDisabled = new TextureRegionDrawable(((TextureRegionDrawable) style.checkboxOnDisabled).getRegion());
@@ -87,16 +90,24 @@ public class MasteryButton extends CheckBox {
 
     }
 
+    public void handleClick() {
+        if(!isDisabled()) {
+            if(parts.contains(spell)) {
+                parts.remove(spell);
+            } else {
+                parts.add(spell);
+            }
+            table.updateCheckBoxes();
+        }
+    }
+
     public void addClickListener(Spell_Name spell) {
 
         this.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if(parts.contains(spell)) {
-                    parts.remove(spell);
-                } else {
-                    parts.add(spell);
-                }
+                handleClick();
+                table.mixingTable.updateButtons();
             }
         });
     }

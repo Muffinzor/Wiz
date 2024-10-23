@@ -2,6 +2,7 @@ package wizardo.game.Screens.Character.Controls;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
+import wizardo.game.Display.MenuTable;
 import wizardo.game.Screens.Battle.BattleScreen;
 import wizardo.game.Screens.Character.CharacterScreen;
 import wizardo.game.Screens.EscapeMenu.EscapeScreen;

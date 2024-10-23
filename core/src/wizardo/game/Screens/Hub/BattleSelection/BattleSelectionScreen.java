@@ -11,14 +11,12 @@ import java.util.ArrayList;
 
 public class BattleSelectionScreen extends BaseScreen {
 
-    BattleSelectionTable table;
-
     private Skin mainMenuSkin = new Skin(Gdx.files.internal("Screens/MainMenuScreen/MainMenuSkin/MainMenuSkin.json"));
 
     public BattleSelectionScreen(Wizardo game) {
         super(game);
         stage = new Stage(new ScreenViewport(uiCamera));
-        table = new BattleSelectionTable(stage, mainMenuSkin, game);
+        menuTable = new BattleSelectionTable(stage, mainMenuSkin, game);
     }
 
     @Override

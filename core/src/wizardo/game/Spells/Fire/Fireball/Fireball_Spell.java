@@ -4,10 +4,13 @@ import wizardo.game.Spells.Spell;
 
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.currentScreen;
+import static wizardo.game.Wizardo.player;
 
 public class Fireball_Spell extends Spell {
 
     public Fireball_Spell() {
+
+        name = "Fireball";
 
         dmg = 60;
         cooldown = 2;
@@ -27,6 +30,11 @@ public class Fireball_Spell extends Spell {
     @Override
     public void dispose() {
 
+    }
+
+    @Override
+    public int getLvl() {
+        return player.spellbook.fireball_lvl;
     }
 
 }

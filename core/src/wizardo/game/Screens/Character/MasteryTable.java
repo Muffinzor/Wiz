@@ -3,6 +3,7 @@ package wizardo.game.Screens.Character;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -11,40 +12,40 @@ import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Wizardo;
 
 
+import java.util.ArrayList;
 import java.util.HashSet;
 
 import static wizardo.game.Resources.Skins.masteryTableSkin;
 import static wizardo.game.Spells.SpellUtils.Spell_Name.*;
-import static wizardo.game.Wizardo.currentScreen;
 import static wizardo.game.Wizardo.player;
 
 public class MasteryTable extends MenuTable {
 
-    public HashSet<SpellUtils.Spell_Name> parts;
+    public ArrayList<SpellUtils.Spell_Name> parts;
 
+    public MixingTable mixingTable;
 
     public MasteryTable(Stage stage, Skin skin, Wizardo game) {
         super(stage, skin, game);
-        parts = new HashSet<>();
+        parts = new ArrayList<>();
 
-        createTable();
-        FrostButtons(-8, -4);
-        FireButtons(-8, -4);
-        LightningButtons(-8, -4);
-        ArcaneButtons(-8, -4);
+        createSpellButtonsTable();
+        createMixingTable();
+
+        updateCheckBoxes();
 
     }
 
-    public void createTable() {
+    public void createSpellButtonsTable() {
         adjustFontSize();
         float xRatio = Gdx.graphics.getWidth() / 1920f;
         float yRatio = Gdx.graphics.getHeight() / 1080f;
 
-        float width = 535f * xRatio;
+        float width = 575f * xRatio;
         float height = 500f * yRatio;
 
-        int x_pos = Math.round(1350 * xRatio);
-        int y_pos = Math.round(400 * yRatio);
+        int x_pos = Math.round(1330 * xRatio);
+        int y_pos = Math.round(500 * yRatio);
 
         table = new Table();
         table.setPosition(x_pos, y_pos);
@@ -53,15 +54,30 @@ public class MasteryTable extends MenuTable {
         stage.addActor(table);
 
         table.setDebug(true);
+
+        int bottomPad = Math.round(-8 * yRatio);
+        int topPad = Math.round(-4 * yRatio);
+
+        FrostButtons(bottomPad, topPad);
+        FireButtons(bottomPad, topPad);
+        LightningButtons(bottomPad, topPad);
+        ArcaneButtons(bottomPad, topPad);
+    }
+    public void createMixingTable() {
+        mixingTable = new MixingTable(stage, skin, game, this);
     }
 
     public void FrostButtons(int bottomPad, int topPad) {
-        MasteryButton frostbolts_button = new MasteryButton("", masteryTableSkin, FROSTBOLT, parts);
-        table.add(frostbolts_button).expand().padBottom(bottomPad).padTop(topPad).fillX();
-        MasteryButton icespear_button = new MasteryButton("", masteryTableSkin, ICESPEAR, parts);
-        table.add(icespear_button).expand().padBottom(bottomPad).padTop(topPad).fillX();
-        MasteryButton orb_button = new MasteryButton("", masteryTableSkin, FROZENORB, parts);
-        table.add(orb_button).expand().padBottom(bottomPad).padTop(topPad).fillX();
+        MasteryButton frostbolts_button = new MasteryButton("", masteryTableSkin, FROSTBOLT, this);
+        table.add(frostbolts_button).expand().padBottom(bottomPad).padTop(topPad);
+        MasteryButton icespear_button = new MasteryButton("", masteryTableSkin, ICESPEAR, this);
+        table.add(icespear_button).expand().padBottom(bottomPad).padTop(topPad);
+        MasteryButton orb_button = new MasteryButton("", masteryTableSkin, FROZENORB, this);
+        table.add(orb_button).expand().padBottom(bottomPad).padTop(topPad);
+
+        buttons.add(frostbolts_button);
+        buttons.add(icespear_button);
+        buttons.add(orb_button);
 
         table.row();
 
@@ -85,12 +101,16 @@ public class MasteryTable extends MenuTable {
 
     }
     public void FireButtons(int bottomPad, int topPad) {
-        MasteryButton flamejet_button = new MasteryButton("", masteryTableSkin, FLAMEJET, parts);
-        table.add(flamejet_button).expand().padBottom(bottomPad).padTop(topPad).fillX();
-        MasteryButton fireball_button = new MasteryButton("", masteryTableSkin, FIREBALL, parts);
-        table.add(fireball_button).expand().padBottom(bottomPad).padTop(topPad).fillX();
-        MasteryButton overheat_button = new MasteryButton("", masteryTableSkin, OVERHEAT, parts);
-        table.add(overheat_button).expand().padBottom(bottomPad).padTop(topPad).fillX();
+        MasteryButton flamejet_button = new MasteryButton("", masteryTableSkin, FLAMEJET, this);
+        table.add(flamejet_button).expand().padBottom(bottomPad).padTop(topPad);
+        MasteryButton fireball_button = new MasteryButton("", masteryTableSkin, FIREBALL, this);
+        table.add(fireball_button).expand().padBottom(bottomPad).padTop(topPad);
+        MasteryButton overheat_button = new MasteryButton("", masteryTableSkin, OVERHEAT, this);
+        table.add(overheat_button).expand().padBottom(bottomPad).padTop(topPad);
+
+        buttons.add(flamejet_button);
+        buttons.add(fireball_button);
+        buttons.add(overheat_button);
 
         table.row();
 
@@ -113,12 +133,16 @@ public class MasteryTable extends MenuTable {
         table.row();
     }
     public void LightningButtons(int bottomPad, int topPad) {
-        MasteryButton chargedbolt_button = new MasteryButton("", masteryTableSkin, CHARGEDBOLTS, parts);
-        table.add(chargedbolt_button).expand().padBottom(bottomPad).padTop(topPad).fillX();
-        MasteryButton chain_button = new MasteryButton("", masteryTableSkin, CHAIN, parts);
-        table.add(chain_button).expand().padBottom(bottomPad).padTop(topPad).fillX();
-        MasteryButton thunder_button = new MasteryButton("", masteryTableSkin, THUNDERSTORM, parts);
-        table.add(thunder_button).expand().padBottom(bottomPad).padTop(topPad).fillX();
+        MasteryButton chargedbolt_button = new MasteryButton("", masteryTableSkin, CHARGEDBOLTS, this);
+        table.add(chargedbolt_button).expand().padBottom(bottomPad).padTop(topPad);
+        MasteryButton chain_button = new MasteryButton("", masteryTableSkin, CHAIN, this);
+        table.add(chain_button).expand().padBottom(bottomPad).padTop(topPad);
+        MasteryButton thunder_button = new MasteryButton("", masteryTableSkin, THUNDERSTORM, this);
+        table.add(thunder_button).expand().padBottom(bottomPad).padTop(topPad);
+
+        buttons.add(chargedbolt_button);
+        buttons.add(chain_button);
+        buttons.add(thunder_button);
 
         table.row();
 
@@ -141,12 +165,16 @@ public class MasteryTable extends MenuTable {
         table.row();
     }
     public void ArcaneButtons(int bottomPad, int topPad) {
-        MasteryButton missiles_buttons = new MasteryButton("", masteryTableSkin, MISSILES, parts);
-        table.add(missiles_buttons).expand().padBottom(bottomPad).padTop(topPad).fillX();
-        MasteryButton beam_buttom = new MasteryButton("", masteryTableSkin, BEAM, parts);
-        table.add(beam_buttom).expand().padBottom(bottomPad).padTop(topPad).fillX();
-        MasteryButton rifts_button = new MasteryButton("", masteryTableSkin, RIFTS, parts);
-        table.add(rifts_button).expand().padBottom(bottomPad).padTop(topPad).fillX();
+        MasteryButton missiles_buttons = new MasteryButton("", masteryTableSkin, MISSILES, this);
+        table.add(missiles_buttons).expand().padBottom(bottomPad).padTop(topPad);
+        MasteryButton beam_buttom = new MasteryButton("", masteryTableSkin, BEAM, this);
+        table.add(beam_buttom).expand().padBottom(bottomPad).padTop(topPad);
+        MasteryButton rifts_button = new MasteryButton("", masteryTableSkin, RIFTS, this);
+        table.add(rifts_button).expand().padBottom(bottomPad).padTop(topPad);
+
+        buttons.add(missiles_buttons);
+        buttons.add(beam_buttom);
+        buttons.add(rifts_button);
 
         table.row();
 
@@ -169,6 +197,51 @@ public class MasteryTable extends MenuTable {
         table.row();
     }
 
+    public void updateCheckBoxes() {
+
+        int checks = 0;
+        for(Button button : buttons) {
+            if(button.isChecked()) {
+                checks++;
+            }
+        }
+
+        boolean frost = buttons.getFirst().isChecked() || buttons.get(1).isChecked() || buttons.get(2).isChecked();
+        boolean fire = buttons.get(3).isChecked() || buttons.get(4).isChecked() || buttons.get(5).isChecked();
+        boolean lightning = buttons.get(6).isChecked() || buttons.get(7).isChecked() || buttons.get(8).isChecked();
+        boolean arcane = buttons.get(9).isChecked() || buttons.get(10).isChecked() || buttons.get(11).isChecked();
+
+        buttons.getFirst().setDisabled(fire && lightning || fire && arcane || lightning && arcane || checks == 3 && !buttons.getFirst().isChecked() ||
+                player.spellbook.frostbolt_lvl < 1);
+        buttons.get(1).setDisabled(fire && lightning || fire && arcane || lightning && arcane || checks == 3 && !buttons.get(1).isChecked() ||
+                player.spellbook.icespear_lvl < 1);
+        buttons.get(2).setDisabled(fire && lightning || fire && arcane || lightning && arcane || checks == 3 && !buttons.get(2).isChecked() ||
+                player.spellbook.frozenorb_lvl < 1);
+
+        buttons.get(3).setDisabled(frost && lightning || frost && arcane || lightning && arcane || checks == 3 && !buttons.get(3).isChecked() ||
+                player.spellbook.flamejet_lvl < 1);
+        buttons.get(4).setDisabled(frost && lightning || frost && arcane || lightning && arcane || checks == 3 && !buttons.get(4).isChecked() ||
+                player.spellbook.fireball_lvl < 1);
+        buttons.get(5).setDisabled(frost && lightning || frost && arcane || lightning && arcane || checks == 3 && !buttons.get(5).isChecked() ||
+                player.spellbook.overheat_lvl < 1);
+
+        buttons.get(6).setDisabled(frost && fire || frost && arcane || fire && arcane || checks == 3 && !buttons.get(6).isChecked() ||
+                player.spellbook.chargedbolt_lvl < 1);
+        buttons.get(7).setDisabled(frost && fire || frost && arcane || fire && arcane || checks == 3 && !buttons.get(7).isChecked() ||
+                player.spellbook.chainlightning_lvl < 1);
+        buttons.get(8).setDisabled(frost && fire || frost && arcane || fire && arcane || checks == 3 && !buttons.get(8).isChecked() ||
+                player.spellbook.thunderstorm_lvl < 1);
+
+        buttons.get(9).setDisabled(frost && fire || frost && lightning || fire && lightning || checks == 3 && !buttons.get(9).isChecked() ||
+                player.spellbook.arcanemissile_lvl < 1);
+        buttons.get(10).setDisabled(frost && fire || frost && lightning || fire && lightning || checks == 3 && !buttons.get(10).isChecked() ||
+                player.spellbook.energybeam_lvl < 1);
+        buttons.get(11).setDisabled(frost && fire || frost && lightning || fire && lightning || checks == 3 && !buttons.get(11).isChecked() ||
+                player.spellbook.rift_lvl < 1);
+
+
+    }
+
     public void adjustFontSize() {
         float scale = Math.max(Gdx.graphics.getWidth() / 1920f, 0.75f);
         BitmapFont font = skin.getFont("Messy20");
@@ -176,95 +249,6 @@ public class MasteryTable extends MenuTable {
         skin.get("default", Label.LabelStyle.class).font = font;
     }
 
-    public void TESTBUTTONS() {
-
-
-
-        table.row();
-
-        for (int j = 0; j < 3; j++) {
-            Label label = new Label("Frostbolts", skin);
-            table.add(label);
-        }
-
-        table.row();
-
-        for (int x = 0; x < 3; x++) {
-            Label label = new Label("Mastery : 1", skin);
-            table.add(label);
-        }
-
-        table.row();
-
-        MasteryButton button3 = new MasteryButton("", masteryTableSkin, FLAMEJET, parts);
-        table.add(button3).expand().padBottom(-8).padTop(-4).fillX();
-        MasteryButton button4 = new MasteryButton("", masteryTableSkin, FIREBALL, parts);
-        table.add(button4).expand().padBottom(-8).padTop(-4).fillX();
-        MasteryButton button5 = new MasteryButton("", masteryTableSkin, OVERHEAT, parts);
-        table.add(button5).expand().padBottom(-8).padTop(-4).fillX();
-
-        table.row();
-
-        for (int j = 0; j < 3; j++) {
-            Label label = new Label("Frostbolts", skin);
-            table.add(label);
-        }
-
-        table.row();
-
-        for (int x = 0; x < 3; x++) {
-            Label label = new Label("Mastery : 1", skin);
-            table.add(label);
-        }
-
-        table.row();
-
-        MasteryButton button7 = new MasteryButton("", masteryTableSkin, CHARGEDBOLTS, parts);
-        table.add(button7).expand().padBottom(-8).padTop(-4).fillX();
-        MasteryButton button8 = new MasteryButton("", masteryTableSkin, CHAIN, parts);
-        table.add(button8).expand().padBottom(-8).padTop(-4).fillX();
-        MasteryButton button9 = new MasteryButton("", masteryTableSkin, THUNDERSTORM, parts);
-        table.add(button9).expand().padBottom(-8).padTop(-4).fillX();
-
-        table.row();
-
-        for (int j = 0; j < 3; j++) {
-            Label label = new Label("Frostbolts", skin);
-            table.add(label);
-        }
-
-        table.row();
-
-        for (int x = 0; x < 3; x++) {
-            Label label = new Label("Mastery : 1", skin);
-            table.add(label);
-        }
-
-        table.row();
-
-        MasteryButton button10 = new MasteryButton("", masteryTableSkin, MISSILES, parts);
-        table.add(button10).expand().padBottom(-8).padTop(-4).fillX();
-        MasteryButton button11 = new MasteryButton("", masteryTableSkin, BEAM, parts);
-        table.add(button11).expand().padBottom(-8).padTop(-4).fillX();
-        MasteryButton button12 = new MasteryButton("", masteryTableSkin, RIFTS, parts);
-        table.add(button12).expand().padBottom(-8).padTop(-4).fillX();
-
-        table.row();
-
-        for (int j = 0; j < 3; j++) {
-            Label label = new Label("Frostbolts", skin);
-            table.add(label);
-        }
-
-        table.row();
-
-        for (int x = 0; x < 3; x++) {
-            Label label = new Label("Mastery : 1", skin);
-            table.add(label);
-        }
-
-        table.row();
-    }
 
     @Override
     public void navigateDown() {
@@ -287,12 +271,18 @@ public class MasteryTable extends MenuTable {
     }
 
     @Override
-    public void clickSelectedButton() {
+    public void pressSelectedButton() {
 
     }
 
     @Override
     public void resize() {
 
+    }
+
+    public void dispose() {
+        mixingTable.dispose();
+        table.clear();
+        table.remove();
     }
 }

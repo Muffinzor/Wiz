@@ -142,6 +142,26 @@ com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle: {
 		font: Messy16
 	}
 }
+com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
+	create_button: {
+		imageUp: create_normal
+		imageDown: create_down
+		imageOver: create_over
+		imageDisabled: create_disabled
+	}
+	forget_button: {
+		imageUp: forget_normal
+		imageDown: forget_down
+		imageOver: forget_over
+		imageDisabled: forget_disabled
+	}
+	clear_button: {
+		imageUp: clear_normal
+		imageDown: clear_down
+		imageOver: clear_over
+		imageDisabled: forget_disabled
+	}
+}
 com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 	default: {
 		font: Messy20

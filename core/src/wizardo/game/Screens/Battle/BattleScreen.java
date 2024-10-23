@@ -11,18 +11,12 @@ import wizardo.game.Monsters.Monster;
 import wizardo.game.Monsters.MonsterManager;
 import wizardo.game.Monsters.TEST_MONSTER;
 import wizardo.game.Player.Pawn;
-import wizardo.game.Player.Player;
 import wizardo.game.Screens.BaseScreen;
-import wizardo.game.Spells.Fire.Fireball.Fireball_Spell;
-import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Spell;
-import wizardo.game.Spells.Frost.Frozenorb.Frozenorb_Spell;
-import wizardo.game.Spells.Frost.Icespear.Icespear_Projectile;
-import wizardo.game.Spells.Frost.Icespear.Icespear_Spell;
 import wizardo.game.Spells.SpellManager;
 import wizardo.game.Wizardo;
 
-import java.util.ArrayList;
-
+import static wizardo.game.Spells.SpellBank.FrostLightning_Spells.frostliteSpells;
+import static wizardo.game.Spells.SpellBank.Frost_Spells.frostspells;
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.*;
 
@@ -47,6 +41,7 @@ public class BattleScreen extends BaseScreen {
         rayHandler = new RayHandler(world);
         rayHandler.setCulling(false);
         rayHandler.setAmbientLight(0.3f);
+        lightManager.rayHandler = rayHandler;
 
         Pawn playerPawn = new Pawn(this);
         playerPawn.createPawn(new Vector2(1000f/PPM,1000f/PPM));
@@ -61,7 +56,7 @@ public class BattleScreen extends BaseScreen {
         cursorTexturePath = "Cursors/Battle_Cursor.png";
 
         for (int i = 0; i < 200; i++) {
-            Monster monster = new TEST_MONSTER(this, new Vector2(i/32f, i/32f));
+            Monster monster = new TEST_MONSTER(this, new Vector2((float) (Math.random() * 4000/32), (float) (Math.random() * 4000/32)));
             monsterManager.addMonster(monster);
         }
 
@@ -70,8 +65,8 @@ public class BattleScreen extends BaseScreen {
     @Override
     public void render(float delta) {
         if(!initialized) {
+            player.spellbook.equippedSpells.add(frostspells[6]);
             initialized = true;
-            player.spellbook.equippedSpells.add(new Fireball_Spell());
         }
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         if(paused) {
@@ -91,7 +86,7 @@ public class BattleScreen extends BaseScreen {
         lightManager.update(delta);
 
         Matrix4 debugMatrix = mainCamera.combined.cpy().scl(PPM);
-        debugRenderer.render(world, debugMatrix);
+        //debugRenderer.render(world, debugMatrix);
     }
 
     @Override

@@ -5,6 +5,7 @@ import wizardo.game.Spells.Spell;
 
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.currentScreen;
+import static wizardo.game.Wizardo.player;
 
 public class Icespear_Spell extends Spell {
 
@@ -15,7 +16,11 @@ public class Icespear_Spell extends Spell {
 
     int maxCollisions = 5;
 
+    public boolean celestialStrike;
+
     public Icespear_Spell() {
+
+        name = "Ice Spear";
 
         dmg = 50;
         speed = 400f/PPM;
@@ -26,9 +31,15 @@ public class Icespear_Spell extends Spell {
     public void update(float delta) {
         stateTime += delta;
 
-        Icespear_Projectile spear = new Icespear_Projectile(getSpawnPosition(), getTargetPosition());
-        currentScreen.spellManager.toAdd(spear);
-        currentScreen.spellManager.toRemove(this);
+
+        if(delta > 0) {
+            Icespear_Projectile spear = new Icespear_Projectile(getSpawnPosition(), getTargetPosition());
+            spear.nested_spell = nested_spell;
+            spear.celestialStrike = celestialStrike;
+            spear.setElements(this);
+            currentScreen.spellManager.toAdd(spear);
+            currentScreen.spellManager.toRemove(this);
+        }
 
     }
 
@@ -38,11 +49,20 @@ public class Icespear_Spell extends Spell {
         maxSplits = spear.maxSplits;
         castByPawn = spear.castByPawn;
         speed = spear.speed;
+        celestialStrike = spear.celestialStrike;
+
+        nested_spell = spear.nested_spell;
+        setElements(spear);
     }
 
 
     @Override
     public void dispose() {
 
+    }
+
+    @Override
+    public int getLvl() {
+        return player.spellbook.icespear_lvl;
     }
 }

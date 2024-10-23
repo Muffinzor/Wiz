@@ -88,7 +88,7 @@ public class Fireball_Projectile extends Fireball_Spell {
 
         Vector2 offset = new Vector2(direction.cpy().scl(1));
         Vector2 adjustedSpawn = new Vector2(spawnPosition.add(offset));
-        body = BodyFactory.spellProjectileBody(adjustedSpawn, 10, true);
+        body = BodyFactory.spellProjectileCircleBody(adjustedSpawn, 10, true);
         body.setUserData(this);
 
         /*

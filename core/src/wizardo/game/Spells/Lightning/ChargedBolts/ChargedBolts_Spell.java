@@ -1,0 +1,74 @@
+package wizardo.game.Spells.Lightning.ChargedBolts;
+
+import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Spell;
+import wizardo.game.Spells.Spell;
+import wizardo.game.Spells.SpellUtils;
+
+import static wizardo.game.Utils.Constants.PPM;
+import static wizardo.game.Wizardo.currentScreen;
+import static wizardo.game.Wizardo.player;
+
+public class ChargedBolts_Spell extends Spell {
+
+    public float duration;
+    public int maxCollisions;
+
+    public int bolts;
+
+    public boolean frostbolts;
+
+
+    public ChargedBolts_Spell() {
+
+        name = "Charged Bolts";
+
+        duration = 2.5f;
+        cooldown = .75f;
+        dmg = 20;
+        speed = 70f/PPM;
+        bolts = 3;
+
+        main_element = SpellUtils.Spell_Element.LIGHTNING;
+
+
+    }
+    @Override
+    public void update(float delta) {
+
+        if(spawnPosition != null) {
+            bolts = 1;
+        } else {
+            bolts = 2 + getLvl();
+        }
+
+        if(delta > 0) {
+
+            for (int i = 0; i < bolts; i++) {
+                ChargedBolts_Projectile bolt = new ChargedBolts_Projectile(getSpawnPosition(), getTargetPosition());
+                bolt.setNext(this);
+                bolt.setElements(this);
+                bolt.anim_element = anim_element;
+                currentScreen.spellManager.toAdd(bolt);
+            }
+
+            currentScreen.spellManager.toRemove(this);
+
+        }
+
+    }
+
+    public void setNext(ChargedBolts_Spell thisBolt) {
+        frostbolts = thisBolt.frostbolts;
+
+    }
+
+    @Override
+    public void dispose() {
+
+    }
+
+    @Override
+    public int getLvl() {
+        return player.spellbook.chargedbolt_lvl;
+    }
+}

@@ -63,13 +63,17 @@ public class MonsterManager {
      */
     public void updateDeadMonsters(float delta) {
         for(Monster monster : dyingMonsters) {
-            if(monster.body != null) {
+
+            if(monster.body.isActive()) {
                 monster.deathPosition = new Vector2(monster.body.getPosition());
-                world.destroyBody(monster.body);
-                monster.body = null;
+                monster.body.setActive(false);
             }
             monster.drawDeathFrame(delta);
             monster.stateTime += delta;
+
+            if(monster.alpha <= 0) {
+                world.destroyBody(monster.body);
+            }
         }
 
         dyingMonsters.removeIf(monster -> monster.alpha <= 0);

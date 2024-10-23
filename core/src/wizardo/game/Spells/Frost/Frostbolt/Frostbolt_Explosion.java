@@ -13,18 +13,18 @@ import wizardo.game.Display.Text.FloatingDamage;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.Monster;
 import wizardo.game.Screens.Battle.BattleScreen;
+import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyFactory;
 
 import static wizardo.game.Resources.Skins.mainMenuSkin;
-import static wizardo.game.Resources.SpellAnims.FrostboltAnims.frostbolt_anim_frost;
-import static wizardo.game.Resources.SpellAnims.FrostboltAnims.frostbolt_explosion_anim_frost;
+import static wizardo.game.Resources.SpellAnims.FrostboltAnims.*;
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.currentScreen;
 import static wizardo.game.Wizardo.world;
 
 public class Frostbolt_Explosion extends Frostbolt_Spell{
 
-    Animation<Sprite> anim = frostbolt_explosion_anim_frost;
+    Animation<Sprite> anim;
 
     Body body;
     RoundLight light;
@@ -35,30 +35,27 @@ public class Frostbolt_Explosion extends Frostbolt_Spell{
 
     int soundType;
 
-    public Frostbolt_Explosion(Vector2 targetPosition) {
+    public Frostbolt_Explosion() {
         super();
-        this.targetPosition = targetPosition;
-        rotation = MathUtils.random(360);
-        flipX = MathUtils.randomBoolean();
-        flipY = MathUtils.randomBoolean();
-
         soundType = MathUtils.random(1,3);
         soundPath = "Sounds/Spells/IceExplosion" + soundType + ".wav";
 
-        screen = currentScreen;
     }
 
     public void update(float delta) {
-        stateTime += delta;
-
-        drawFrame();
 
         if(!initialized) {
+            initialize();
+            pickAnim();
             createBody();
             createLight();
+
             playSound(body.getPosition());
             initialized = true;
         }
+
+        drawFrame();
+        stateTime += delta;
 
         if(stateTime >= 0.25f) {
             if(body != null) {
@@ -72,10 +69,16 @@ public class Frostbolt_Explosion extends Frostbolt_Spell{
         }
     }
 
+    public void initialize() {
+        rotation = MathUtils.random(360);
+        flipX = MathUtils.randomBoolean();
+        flipY = MathUtils.randomBoolean();
+    }
+
 
     public void drawFrame() {
 
-        Sprite frame = screen.displayManager.spriteRenderer.pool.getSprite();
+        Sprite frame = screen.getSprite();
         frame.set(anim.getKeyFrame(stateTime, false));
         frame.setCenter(targetPosition.x * PPM, targetPosition.y * PPM);
         frame.rotate(rotation);
@@ -103,9 +106,24 @@ public class Frostbolt_Explosion extends Frostbolt_Spell{
 
     public void createLight() {
         light = screen.lightManager.pool.getLight();
-        light.setLight(0,0,0.8f,1,100, body.getPosition());
+        switch(anim_element) {
+            case FROST -> light.setLight(0,0,0.8f,1,100, body.getPosition());
+            case LIGHTNING -> light.setLight(0,0.5f,0.6f,1f,100, body.getPosition());
+        }
+
         light.toLightManager();
         light.dimKill(0.02f);
+    }
+
+    public void pickAnim() {
+
+        if(anim_element == SpellUtils.Spell_Element.LIGHTNING) {
+            anim = frostbolt_explosion_anim_lightning;
+        }
+        if(anim_element == SpellUtils.Spell_Element.FROST || anim_element == null) {
+            anim = frostbolt_explosion_anim_frost;
+        }
+
     }
 
     public void dispose() {

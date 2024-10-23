@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import wizardo.game.Screens.BaseScreen;
+import wizardo.game.Screens.MainMenu.MainMenuTable;
 import wizardo.game.Wizardo;
 
 import static wizardo.game.Resources.Skins.masteryTableSkin;
@@ -41,6 +42,7 @@ public class CharacterScreen extends BaseScreen {
 
         stage.act(delta);
         stage.draw();
+
     }
 
     @Override
@@ -55,8 +57,10 @@ public class CharacterScreen extends BaseScreen {
 
     @Override
     public void resize(int width, int height) {
-        stage.clear();
+        super.resize(width, height);
+
+        stage.getViewport().update(width, height, true);
+        mastery_table.dispose();
         mastery_table = new MasteryTable(stage, masteryTableSkin, game);
-        System.out.println("LOL");
     }
 }

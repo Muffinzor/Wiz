@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import wizardo.game.Wizardo;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public abstract class MenuTable {
 
@@ -14,7 +15,7 @@ public abstract class MenuTable {
     public Stage stage;
     public Skin skin;
     public Table table;
-    public ArrayList<Button> buttons;
+    public List<Button> buttons;
 
     public int selectedButtonIndex;
 
@@ -32,7 +33,7 @@ public abstract class MenuTable {
     public abstract void navigateLeft();
     public abstract void navigateRight();
 
-    public abstract void clickSelectedButton();
+    public abstract void pressSelectedButton();
 
     public abstract void resize();
 

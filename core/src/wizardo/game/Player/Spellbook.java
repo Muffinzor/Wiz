@@ -8,22 +8,24 @@ public class Spellbook {
 
     public ArrayList<Spell> equippedSpells;
     public ArrayList<Spell> knownSpells;
+    public Spell defensive_spell;
+    public Spell utility_spell;
 
-    public int frostbolt_lvl = 0;
-    public int icespear_lvl = 0;
-    public int frozenorb_lvl = 0;
+    public int frostbolt_lvl = 1;
+    public int icespear_lvl = 1;
+    public int frozenorb_lvl = 1;
 
-    public int fireball_lvl = 0;
-    public int flamejet_lvl = 0;
-    public int overheat_lvl = 0;
+    public int fireball_lvl = 1;
+    public int flamejet_lvl = 1;
+    public int overheat_lvl = 1;
 
-    public int chainlightning_lvl = 0;
-    public int chargedbolt_lvl = 0;
-    public int thunderstorm_lvl = 0;
+    public int chainlightning_lvl = 1;
+    public int chargedbolt_lvl = 1;
+    public int thunderstorm_lvl = 1;
 
-    public int arcanemissile_lvl = 0;
-    public int energybeam_lvl = 0;
-    public int rift_lvl = 0;
+    public int arcanemissile_lvl = 1;
+    public int energybeam_lvl = 1;
+    public int rift_lvl = 1;
 
     public Spellbook() {
         equippedSpells = new ArrayList<>();

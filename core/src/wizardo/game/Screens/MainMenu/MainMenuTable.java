@@ -180,7 +180,7 @@ public class MainMenuTable extends MenuTable {
         updateButtonStates();
     }
 
-    public void clickSelectedButton() {
+    public void pressSelectedButton() {
         table.clearChildren();
         table = null;
         switch (selectedButtonIndex) {

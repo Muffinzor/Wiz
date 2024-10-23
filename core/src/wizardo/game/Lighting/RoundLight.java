@@ -26,7 +26,7 @@ public class RoundLight {
     public RoundLight(BaseScreen screen) {
         this.screen = screen;
         rayHandler = screen.rayHandler;
-        pointLight = new PointLight(rayHandler, 15, Color.WHITE, 0, 0, 0);
+        pointLight = new PointLight(rayHandler, 20, Color.WHITE, 0, 0, 0);
     }
 
     public void update(float delta) {

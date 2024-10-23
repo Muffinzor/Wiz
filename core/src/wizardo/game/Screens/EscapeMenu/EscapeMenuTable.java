@@ -148,13 +148,13 @@ public class EscapeMenuTable extends MenuTable {
         updateButtonStates();
     }
 
-    public void clickSelectedButton() {
+    public void pressSelectedButton() {
         table.clearChildren();
         table = null;
         switch (selectedButtonIndex) {
             case 0 -> game.setPreviousScreen();
             case 1 -> System.out.println("Nope");
-            case 2 -> Gdx.app.exit();
+            case 2 -> game.freshScreen(new MainMenuScreen(game));
         }
     }
 

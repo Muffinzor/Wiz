@@ -7,14 +7,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import wizardo.game.Resources.DecorResources.GeneralDecorResources;
 import wizardo.game.Resources.MonsterResources.SkeletonAnims;
-import wizardo.game.Resources.SpellAnims.FireballAnims;
-import wizardo.game.Resources.SpellAnims.FrostboltAnims;
-import wizardo.game.Resources.SpellAnims.FrozenorbAnims;
-import wizardo.game.Resources.SpellAnims.IcespearAnims;
+import wizardo.game.Resources.SpellAnims.*;
 import wizardo.game.Screens.BaseScreen;
 import wizardo.game.Screens.MainMenu.MainMenuScreen;
 import wizardo.game.Wizardo;
 
+import static wizardo.game.Spells.SpellBank.AllSpells.createAllSpells;
 import static wizardo.game.Wizardo.assetManager;
 
 public class LoadingScreen extends BaseScreen {
@@ -42,7 +40,7 @@ public class LoadingScreen extends BaseScreen {
 
         if (assetManager.update() && !assetsFinishedLoading) {
             loadAnims();
-            System.out.println("Loading Complete!");
+            createAllSpells();
             assetsFinishedLoading = true;
             game.addNewScreen(new MainMenuScreen(game));
         }
@@ -79,7 +77,17 @@ public class LoadingScreen extends BaseScreen {
         FrostboltAnims.loadAtlas();
         IcespearAnims.loadAtlas();
         FrozenorbAnims.loadAtlas();
+        FlamejetAnims.loadAtlas();
         FireballAnims.loadAtlas();
+        OverheatAnims.loadAtlas();
+        ChargedboltsAnims.loadAtlas();
+        ChainLightningAnims.loadAtlas();
+        ThunderstormAnims.loadAtlas();
+        ArcaneMissileAnims.loadAtlas();
+        RiftsAnims.loadAtlas();
+
+        BlizzardAnims.loadAtlas();
+        CelestialStrikeAnims.loadAtlas();
 
         GeneralDecorResources.loadAtlas();
 
@@ -90,10 +98,21 @@ public class LoadingScreen extends BaseScreen {
         FrostboltAnims.loadAnimations();
         IcespearAnims.loadAnimations();
         FrozenorbAnims.loadAnimations();
+        FlamejetAnims.loadAnimations();
         FireballAnims.loadAnimations();
+        OverheatAnims.loadAnimations();
+        ChargedboltsAnims.loadAnimations();
+        ChainLightningAnims.loadAnimations();
+        ThunderstormAnims.loadAnimations();
+        ArcaneMissileAnims.loadAnimations();
+        RiftsAnims.loadAnimations();
+
+        BlizzardAnims.loadAnimations();
+        CelestialStrikeAnims.loadAnimations();
 
         GeneralDecorResources.loadAnimations();
 
         SkeletonAnims.loadAnimations();
     }
+
 }

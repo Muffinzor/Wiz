@@ -59,7 +59,7 @@ public class ControllerListener_BATTLE extends ControllerAdapter {
 
     @Override
     public boolean buttonDown(Controller controller, int buttonIndex) {
-        System.out.println("HUB SCREEN : Button " + buttonIndex + " pressed");
+        System.out.println("BATTLE SCREEN : Button " + buttonIndex + " pressed");
         screen.globalCD = 0.3f;
 
         switch (buttonIndex) {

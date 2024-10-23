@@ -1,5 +1,6 @@
 package wizardo.game.Spells;
 
+import com.badlogic.gdx.math.MathUtils;
 import wizardo.game.Screens.BaseScreen;
 import wizardo.game.Screens.Battle.BattleScreen;
 
@@ -17,6 +18,9 @@ public class SpellManager {
 
     private float cooldown1;
     private float cooldown2;
+    private float cooldown3;
+    private float defensive_cooldown;
+    private float utility_cooldown;
 
 
     public SpellManager(BaseScreen screen) {
@@ -24,6 +28,12 @@ public class SpellManager {
         activeSpells = new ArrayList<>();
         spellsToRemove = new ArrayList<>();
         this.screen = screen;
+
+
+        cooldown1 = MathUtils.random(1f);
+        cooldown2 = MathUtils.random(1f);
+        cooldown3 = MathUtils.random(1f);
+
     }
 
 
@@ -48,7 +58,7 @@ public class SpellManager {
 
     public void castSpell(float delta) {
         cooldown1 -= delta;
-        if (cooldown1 <= 0) {
+        if (cooldown1 <= 0 && !player.spellbook.equippedSpells.isEmpty()) {
             activeSpells.add(player.spellbook.equippedSpells.getFirst().clone());
             cooldown1 = player.spellbook.equippedSpells.getFirst().cooldown;
         }
@@ -57,6 +67,12 @@ public class SpellManager {
         if (cooldown2 <= 0 && player.spellbook.equippedSpells.size() > 1) {
             activeSpells.add(player.spellbook.equippedSpells.get(1).clone());
             cooldown2 = player.spellbook.equippedSpells.get(1).cooldown;
+        }
+
+        cooldown3 -= delta;
+        if (cooldown3 <= 0 && player.spellbook.equippedSpells.size() > 2) {
+            activeSpells.add(player.spellbook.equippedSpells.get(2).clone());
+            cooldown3 = player.spellbook.equippedSpells.get(2).cooldown;
         }
     }
 
