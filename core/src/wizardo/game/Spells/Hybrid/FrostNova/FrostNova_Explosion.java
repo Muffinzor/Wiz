@@ -83,7 +83,7 @@ public class FrostNova_Explosion extends FrostNova_Spell {
     }
     public void createLight() {
         light = screen.lightManager.pool.getLight();
-        light.setLight(0,0.35f, 0.75f, 1, 200, targetPosition);
+        light.setLight(0,0.35f, 0.75f, 1, 250, targetPosition);
         screen.lightManager.addLight(light);
         light.dimKill(0.01f);
     }
