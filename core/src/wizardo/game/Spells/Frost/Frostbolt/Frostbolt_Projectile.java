@@ -54,7 +54,7 @@ public class Frostbolt_Projectile extends Frostbolt_Spell{
 
             Frostbolt_Explosion explosion = new Frostbolt_Explosion();
             explosion.targetPosition = new Vector2(body.getPosition());
-            explosion.setElements(this);
+            explosion.inherit(this);
             screen.spellManager.toAdd(explosion);
             world.destroyBody(body);
             body = null;

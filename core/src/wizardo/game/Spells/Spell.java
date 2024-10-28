@@ -38,6 +38,7 @@ public abstract class Spell implements Cloneable {
     public float red = 0;
     public float green = 0;
     public float blue = 0;
+    public float lightAlpha = 1;
 
 
     public Vector2 spawnPosition;
@@ -138,10 +139,13 @@ public abstract class Spell implements Cloneable {
     public void setElements(Spell spellParent) {
         if(main_element != spellParent.main_element) {
             this.bonus_element = spellParent.main_element;
-        } else if(spellParent.bonus_element != null) {
+        }
+        if(this.bonus_element == null && spellParent.bonus_element != null) {
             bonus_element = spellParent.bonus_element;
         }
-        anim_element = spellParent.anim_element;
+        if(anim_element == null) {
+            anim_element = spellParent.anim_element;
+        }
     }
 
     public boolean alreadyCrafted() {
@@ -241,5 +245,9 @@ public abstract class Spell implements Cloneable {
     }
 
     public abstract int getLvl();
+
+    public void inherit(Spell parent) {
+        this.screen = parent.screen;
+    }
 
 }

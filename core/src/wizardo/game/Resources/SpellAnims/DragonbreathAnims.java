@@ -1,0 +1,41 @@
+package wizardo.game.Resources.SpellAnims;
+
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+
+import static wizardo.game.Wizardo.assetManager;
+
+public class DragonbreathAnims {
+
+    public static Animation<Sprite> dragonbreath_anim_fire;
+    public static Animation<Sprite> dragonbreath_anim_frost;
+
+    public static String dragonbreath_atlas_path_fire = "Spells/Dragonbreath/Fire/DragonBreath.atlas";
+    public static String dragonbreath_atlas_path_frost = "Spells/Dragonbreath/Frost/DragonBreath.atlas";
+
+    public static void loadAnimations() {
+
+        TextureAtlas atlas = assetManager.get(dragonbreath_atlas_path_fire, TextureAtlas.class);
+
+        Sprite[] frames = new Sprite[96];
+        for (int i = 0; i < frames.length; i++) {
+            frames[i] = atlas.createSprite("shatter" + (i+1));
+        }
+        dragonbreath_anim_fire = new Animation<>(0.015f, frames);
+
+        TextureAtlas atlas_frost = assetManager.get(dragonbreath_atlas_path_frost, TextureAtlas.class);
+
+        Sprite[] frames_frost = new Sprite[96];
+        for (int i = 0; i < frames_frost.length; i++) {
+            frames_frost[i] = atlas_frost.createSprite("shatter" + (i+1));
+        }
+        dragonbreath_anim_frost = new Animation<>(0.015f, frames_frost);
+
+    }
+
+    public static void loadAtlas() {
+        assetManager.load(dragonbreath_atlas_path_fire, TextureAtlas.class);
+        assetManager.load(dragonbreath_atlas_path_frost, TextureAtlas.class);
+    }
+}

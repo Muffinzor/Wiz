@@ -16,6 +16,7 @@ import wizardo.game.Utils.BodyFactory;
 import static wizardo.game.Resources.SpellAnims.ChargedboltsAnims.*;
 import static wizardo.game.Resources.SpellAnims.FrostboltAnims.frostbolt_explosion_anim_frost;
 import static wizardo.game.Resources.SpellAnims.FrostboltAnims.frostbolt_explosion_anim_lightning;
+import static wizardo.game.Spells.SpellUtils.Spell_Element.FROST;
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.*;
 
@@ -69,10 +70,10 @@ public class ChargedBolts_Projectile extends ChargedBolts_Spell {
 
     public void update(float delta) {
         if(!initialized) {
+            pickAnim();
             initialized = true;
             createBody();
             createLight();
-            pickAnim();
         }
 
         stateTime += delta;
@@ -85,7 +86,7 @@ public class ChargedBolts_Projectile extends ChargedBolts_Spell {
                 light = null;
             }
             alpha -= 0.05f;
-        } else {
+        } else if (delta > 0){
             wobble(delta);
         }
 
@@ -150,13 +151,8 @@ public class ChargedBolts_Projectile extends ChargedBolts_Spell {
 
     public void createLight() {
         light = screen.lightManager.pool.getLight();
-        switch(anim_element) {
-            case LIGHTNING -> light.setLight(0.4f, 0.4f, 0, 1f, 25, body.getPosition());
-            case FROST -> light.setLight(0.4f, 0.6f, 0.3f, 1f, 25, body.getPosition());
-        }
-
+        light.setLight(red, green, blue, 0.85f, 25, body.getPosition());
         screen.lightManager.addLight(light);
-
     }
 
     public void adjustLight() {
@@ -187,7 +183,7 @@ public class ChargedBolts_Projectile extends ChargedBolts_Spell {
     private void frostbolts(Monster monster) {
         if(frostbolts) {
 
-            float procTreshold = .5f;
+            float procTreshold = .825f - player.spellbook.frostbolt_lvl * .025f;
             if(Math.random() >= procTreshold) {
                 Frostbolt_Explosion explosion = new Frostbolt_Explosion();
                 explosion.targetPosition = new Vector2(monster.body.getPosition());
@@ -212,6 +208,11 @@ public class ChargedBolts_Projectile extends ChargedBolts_Spell {
                 anim = chargedbolt_lightning_anim;
                 red = 0.4f;
                 green = 0.4f;
+                if(bonus_element == FROST) {
+                    red = 0;
+                    green = 0.5f;
+                    blue = 0.6f;
+                }
             }
         }
 

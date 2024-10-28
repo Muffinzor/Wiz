@@ -7,6 +7,7 @@ import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import static wizardo.game.Wizardo.currentScreen;
 import static wizardo.game.Wizardo.player;
@@ -18,6 +19,8 @@ public class ChainLightning_Spell extends Spell {
     public float radius = 5;
 
     public boolean frostbolts;
+
+    boolean randomTarget;
 
 
     public ChainLightning_Spell() {
@@ -43,20 +46,26 @@ public class ChainLightning_Spell extends Spell {
                 center = new Vector2(getSpawnPosition().add(direction));
             } else {
                 center = new Vector2(originBody.getPosition());
+                randomTarget = true;
             }
 
 
-            ArrayList<Monster> inRange = SpellUtils.findMonstersInRangeOfVector(center, 3);
+            ArrayList<Monster> inRange = SpellUtils.findMonstersInRangeOfVector(center, 5);
 
             if (!inRange.isEmpty()) {
 
                 float dst = Float.MAX_VALUE;
                 Monster target = null;
-                for (Monster monster : inRange) {
-                    float toOrigin = monster.body.getPosition().dst(getSpawnPosition());
-                    if (toOrigin < dst && SpellUtils.hasLineOfSight(monster.body.getPosition(), getSpawnPosition())) {
-                        dst = toOrigin;
-                        target = monster;
+                if(randomTarget) {
+                    int index = (int) (Math.random() * inRange.size());
+                    target = inRange.get(index);
+                } else {
+                    for (Monster monster : inRange) {
+                        float toOrigin = monster.body.getPosition().dst(getSpawnPosition());
+                        if (toOrigin < dst && SpellUtils.hasLineOfSight(monster.body.getPosition(), getSpawnPosition())) {
+                            dst = toOrigin;
+                            target = monster;
+                        }
                     }
                 }
 

@@ -7,12 +7,14 @@ import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.Monster;
 import wizardo.game.Resources.SpellAnims.FlamejetAnims;
+import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Explosion;
 import wizardo.game.Spells.SpellManager;
+import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyFactory;
 
+import static wizardo.game.Spells.SpellUtils.Spell_Element.FIRE;
 import static wizardo.game.Utils.Constants.PPM;
-import static wizardo.game.Wizardo.currentScreen;
-import static wizardo.game.Wizardo.world;
+import static wizardo.game.Wizardo.*;
 
 public class Flamejet_Projectile extends Flamejet_Spell {
 
@@ -24,19 +26,15 @@ public class Flamejet_Projectile extends Flamejet_Spell {
 
     float distance = 5f;
 
-    public Flamejet_Projectile(Vector2 spawnPosition, Vector2 targetPosition) {
-        this.spawnPosition = new Vector2(spawnPosition);
-        this.targetPosition = new Vector2(targetPosition);
-
-        screen = currentScreen;
+    public Flamejet_Projectile() {
 
         flipX = MathUtils.randomBoolean();
 
-        anim = FlamejetAnims.flamejet_fire_anim;
     }
 
     public void update(float delta) {
         if(!initialized) {
+            lightAlpha = 0.75f - (1/cooldown) * 0.015f;
             initialized = true;
             pickAnim();
             createBody();
@@ -50,7 +48,7 @@ public class Flamejet_Projectile extends Flamejet_Spell {
             body.setLinearVelocity(0,0);
         }
 
-        if(!body.getLinearVelocity().isZero()) {
+        if(!body.getLinearVelocity().isZero() && delta > 0) {
             createLight();
         }
 
@@ -65,6 +63,7 @@ public class Flamejet_Projectile extends Flamejet_Spell {
     }
 
     public void handleCollision(Monster monster) {
+        frostbolts(monster);
         monster.hp -= dmg;
     }
 
@@ -83,7 +82,7 @@ public class Flamejet_Projectile extends Flamejet_Spell {
         frame.flip(flipX, false);
 
         Vector2 center = getSpriteCenter(frame);
-        screen.centerSort(frame, center.y - 25);
+        screen.centerSort(frame, center.y - 45);
     }
 
     public void createBody() {
@@ -94,14 +93,16 @@ public class Flamejet_Projectile extends Flamejet_Spell {
             direction = new Vector2(1,0);
         }
 
-        if(flames > 1) {
-            float angleVariation = Math.min(flames * 5, 25);
+
+        if(!icespear) {
+            float angleVariation = Math.min(5f / cooldown, 25);
             float randomAngle = MathUtils.random(-angleVariation, angleVariation);
             direction.rotateDeg(randomAngle);
         }
 
-        //Vector2 offset = new Vector2(direction.cpy().scl(1));
-        Vector2 adjustedSpawn = new Vector2(spawnPosition);
+
+        Vector2 offset = new Vector2(direction.cpy().scl(1f));
+        Vector2 adjustedSpawn = new Vector2(spawnPosition.add(offset));
         body = BodyFactory.spellProjectileCircleBody(adjustedSpawn, 25, true);
         body.setUserData(this);
 
@@ -112,23 +113,52 @@ public class Flamejet_Projectile extends Flamejet_Spell {
 
     public void createDetector(Vector2 velocity) {
         Collision_Detector detector = new Collision_Detector(velocity, this);
+        detector.screen = screen;
         screen.spellManager.toAdd(detector);
     }
 
     public void createLight() {
-        float lightIntensity = 0.75f - flames * 0.035f;
         RoundLight light = screen.lightManager.pool.getLight();
-        light.setLight(0.5f, 0.2f, 0, lightIntensity, 75, body.getPosition());
+        light.setLight(red, green, blue, lightAlpha, 75, body.getPosition());
         screen.lightManager.addLight(light);
         light.dimKill(0.02f);
     }
 
-    public void pickAnim() {
-        if(MathUtils.randomBoolean()) {
-            anim = FlamejetAnims.flamejet_fire_anim;
-        } else {
-            anim = FlamejetAnims.flamejet_fire_anim2;
+    public void frostbolts(Monster monster) {
+        if(frostbolts) {
+            float procRate = .92f - player.spellbook.frostbolt_lvl * 0.02f;
+            if(Math.random() >= procRate) {
+                Frostbolt_Explosion explosion = new Frostbolt_Explosion();
+                explosion.screen = screen;
+                explosion.targetPosition = SpellUtils.getRandomVectorInRadius(monster.body.getPosition(), 0.5f);
+                explosion.setElements(this);
+                explosion.anim_element = FIRE;
+                screen.spellManager.toAdd(explosion);
+            }
         }
+    }
+
+    public void pickAnim() {
+        switch(anim_element) {
+            case FIRE -> {
+                if(MathUtils.randomBoolean()) {
+                    anim = FlamejetAnims.flamejet_fire_anim;
+                } else {
+                    anim = FlamejetAnims.flamejet_fire_anim2;
+                }
+                red = 0.5f;
+                green = 0.2f;
+            }
+            case FROST -> {
+                if(MathUtils.randomBoolean()) {
+                    anim = FlamejetAnims.flamejet_frost_anim;
+                } else {
+                    anim = FlamejetAnims.flamejet_frost_anim2;
+                }
+                blue = 0.5f;
+            }
+        }
+
     }
 
     public float getDistanceFromSpawn() {

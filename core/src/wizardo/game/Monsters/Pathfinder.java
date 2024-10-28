@@ -63,7 +63,11 @@ public class Pathfinder {
             return fraction;
         }, currentPosition, rayEnd);
 
-        monster.body.setLinearVelocity(desiredVelocity.nor().scl(monster.speed));
+        float trueSpeed = monster.speed;
+        if(monster.slowedTimer > 0) {
+            trueSpeed = monster.speed * monster.slowRatio;
+        }
+        monster.body.setLinearVelocity(desiredVelocity.nor().scl(trueSpeed));
     }
 
 

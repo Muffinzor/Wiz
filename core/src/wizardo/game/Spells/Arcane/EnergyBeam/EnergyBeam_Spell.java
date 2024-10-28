@@ -1,6 +1,7 @@
 package wizardo.game.Spells.Arcane.EnergyBeam;
 
 import wizardo.game.Spells.Spell;
+import wizardo.game.Spells.SpellUtils;
 
 import static wizardo.game.Wizardo.currentScreen;
 import static wizardo.game.Wizardo.player;
@@ -12,6 +13,8 @@ public class EnergyBeam_Spell extends Spell {
         name = "Energy Beam";
 
         cooldown = 2.5f;
+
+        main_element = SpellUtils.Spell_Element.ARCANE;
 
     }
 

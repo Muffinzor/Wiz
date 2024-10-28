@@ -45,6 +45,7 @@ public class CelestialStrike_Hit extends CelestialStrike_Spell {
         Sprite frame = screen.getSprite();
         frame.set(anim.getKeyFrame(stateTime, false));
         frame.setOrigin(frame.getWidth()/2f, 0);
+        frame.setScale(1.2f);
         frame.setCenter(targetPosition.x * PPM, targetPosition.y * PPM + 115);
         frame.flip(flipX, false);
         screen.addSortedSprite(frame);

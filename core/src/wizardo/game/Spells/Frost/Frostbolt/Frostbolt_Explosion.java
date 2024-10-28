@@ -109,19 +109,52 @@ public class Frostbolt_Explosion extends Frostbolt_Spell{
         switch(anim_element) {
             case FROST -> light.setLight(0,0,0.8f,1,100, body.getPosition());
             case LIGHTNING -> light.setLight(0,0.5f,0.6f,1f,100, body.getPosition());
+            case FIRE -> light.setLight(0,0.3f,0.85f,1f,100, body.getPosition());
+
         }
 
         light.toLightManager();
-        light.dimKill(0.02f);
+        light.dimKill(0.015f);
     }
 
     public void pickAnim() {
+
+        switch(anim_element) {
+            case FROST -> {
+                if(bonus_element == SpellUtils.Spell_Element.FIRE) {
+                    if(MathUtils.randomBoolean()) {
+                        anim = frostbolt_explosion_anim_fire1;
+                    } else {
+                        anim = frostbolt_explosion_anim_fire2;
+                    }
+                } else {
+                    anim = frostbolt_explosion_anim_frost;
+                }
+                blue = 0.8f;
+            }
+            case FIRE -> {
+                if(MathUtils.randomBoolean()) {
+                    anim = frostbolt_explosion_anim_fire1;
+                } else {
+                    anim = frostbolt_explosion_anim_fire2;
+                }
+                blue = 1f;
+            }
+        }
+
 
         if(anim_element == SpellUtils.Spell_Element.LIGHTNING) {
             anim = frostbolt_explosion_anim_lightning;
         }
         if(anim_element == SpellUtils.Spell_Element.FROST || anim_element == null) {
             anim = frostbolt_explosion_anim_frost;
+        }
+        if(anim_element == SpellUtils.Spell_Element.FIRE) {
+            if(MathUtils.randomBoolean()) {
+                anim = frostbolt_explosion_anim_fire1;
+            } else {
+                anim = frostbolt_explosion_anim_fire2;
+            }
         }
 
     }

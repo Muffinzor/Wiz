@@ -87,7 +87,9 @@ public class LoadingScreen extends BaseScreen {
         RiftsAnims.loadAtlas();
 
         BlizzardAnims.loadAtlas();
+        FrostNovaAnims.loadAtlas();
         CelestialStrikeAnims.loadAtlas();
+        DragonbreathAnims.loadAtlas();
 
         GeneralDecorResources.loadAtlas();
 
@@ -108,7 +110,9 @@ public class LoadingScreen extends BaseScreen {
         RiftsAnims.loadAnimations();
 
         BlizzardAnims.loadAnimations();
+        FrostNovaAnims.loadAnimations();
         CelestialStrikeAnims.loadAnimations();
+        DragonbreathAnims.loadAnimations();
 
         GeneralDecorResources.loadAnimations();
 

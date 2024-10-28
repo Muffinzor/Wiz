@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Screens.Battle.BattleScreen;
 
-import static wizardo.game.Resources.SpellAnims.IcespearAnims.icespear_hit_anim_frost;
+import static wizardo.game.Resources.SpellAnims.IcespearAnims.*;
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.currentScreen;
 
@@ -18,13 +18,15 @@ public class Icespear_Hit extends Icespear_Spell {
         this.targetPosition = new Vector2(targetPosition);
         this.rotation = rotation;
 
-        anim = icespear_hit_anim_frost;
         createLight();
 
-        screen = currentScreen;
     }
 
     public void update(float delta) {
+        if(!initialized) {
+            pickAnim();
+            initialized = true;
+        }
 
         drawFrame();
 
@@ -36,6 +38,20 @@ public class Icespear_Hit extends Icespear_Spell {
 
     }
 
+    public void pickAnim() {
+        switch(anim_element) {
+            case FROST -> {
+                anim = icespear_hit_anim_frost;
+                green = 0.15f;
+                blue = 0.5f;
+            }
+            case FIRE -> {
+                anim = icespear_hit_anim_fire;
+                red = 0.7f;
+                green = 0.3f;
+            }
+        }
+    }
     public void createLight() {
         light = currentScreen.lightManager.pool.getLight();
         light.setLight(0,0,0.5f,1, 25, targetPosition);
@@ -48,7 +64,7 @@ public class Icespear_Hit extends Icespear_Spell {
         frame.set(anim.getKeyFrame(stateTime, true));
         frame.setCenter(targetPosition.x * PPM, targetPosition.y * PPM);
         frame.rotate(rotation - 45 + 180);
-        currentScreen.displayManager.spriteRenderer.regular_sorted_sprites.add(frame);
+        screen.displayManager.spriteRenderer.regular_sorted_sprites.add(frame);
 
     }
 

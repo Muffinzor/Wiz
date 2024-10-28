@@ -14,10 +14,11 @@ public class Blizzard_Spell extends Spell {
     public float blizz_radius;
 
     public float interval;
-    public float frequency = 40f;
+    public float frequency = 80;
     public float duration = 4f;
 
     public boolean frostbolts;
+    public boolean frozenorb;
 
     public Blizzard_Spell() {
 

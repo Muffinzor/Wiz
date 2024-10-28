@@ -30,15 +30,11 @@ public class Frostbolt_Spell extends Spell {
             projectiles = 1;
         }
 
-        if(delta > 0) {
-
-            for (int i = 0; i < projectiles; i++) {
-                Frostbolt_Projectile bolt = new Frostbolt_Projectile(getSpawnPosition(), getTargetPosition());
-                bolt.setElements(this);
-                currentScreen.spellManager.toAdd(bolt);
-                currentScreen.spellManager.toRemove(this);
-            }
-
+        for (int i = 0; i < projectiles; i++) {
+            Frostbolt_Projectile bolt = new Frostbolt_Projectile(getSpawnPosition(), getTargetPosition());
+            bolt.inherit(this);
+            currentScreen.spellManager.toAdd(bolt);
+            currentScreen.spellManager.toRemove(this);
         }
 
     }
@@ -49,5 +45,10 @@ public class Frostbolt_Spell extends Spell {
 
     public int getLvl() {
         return player.spellbook.frostbolt_lvl;
+    }
+
+    public void inherit(Frostbolt_Spell parent) {
+        this.screen = parent.screen;
+        this.setElements(parent);
     }
 }

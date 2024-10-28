@@ -2,6 +2,7 @@ package wizardo.game.Spells.Hybrid.CelestialStrike;
 
 import com.badlogic.gdx.math.Vector2;
 import wizardo.game.Spells.Spell;
+import wizardo.game.Spells.SpellUtils;
 
 import static wizardo.game.Wizardo.currentScreen;
 
@@ -14,6 +15,9 @@ public class CelestialStrike_Spell extends Spell {
     public CelestialStrike_Spell() {
 
         cooldown = 3;
+
+        main_element = SpellUtils.Spell_Element.LIGHTNING;
+        bonus_element = SpellUtils.Spell_Element.FROST;
 
     }
 

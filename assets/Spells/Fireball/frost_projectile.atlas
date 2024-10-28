@@ -1,0 +1,15 @@
+frost_projectile.png
+size:512,64
+repeat:none
+Fireball1
+bounds:230,2,74,55
+Fireball2
+bounds:78,2,74,55
+Fireball3
+bounds:382,2,74,55
+Fireball4
+bounds:154,2,74,55
+Fireball5
+bounds:2,2,74,55
+Fireball6
+bounds:306,2,74,55

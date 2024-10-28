@@ -11,16 +11,16 @@ public class Spellbook {
     public Spell defensive_spell;
     public Spell utility_spell;
 
-    public int frostbolt_lvl = 1;
+    public int frostbolt_lvl = 3;
     public int icespear_lvl = 1;
-    public int frozenorb_lvl = 1;
+    public int frozenorb_lvl = 5;
 
-    public int fireball_lvl = 1;
-    public int flamejet_lvl = 1;
+    public int fireball_lvl = 3;
+    public int flamejet_lvl = 5;
     public int overheat_lvl = 1;
 
-    public int chainlightning_lvl = 1;
-    public int chargedbolt_lvl = 1;
+    public int chainlightning_lvl = 5;
+    public int chargedbolt_lvl = 5;
     public int thunderstorm_lvl = 1;
 
     public int arcanemissile_lvl = 1;

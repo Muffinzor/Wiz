@@ -1,5 +1,6 @@
 package wizardo.game.Monsters;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
@@ -34,6 +35,10 @@ public abstract class Monster {
     boolean initialized;
 
     public float thunderImmunityTimer = 0;
+    public float freezeImmunityTimer = 0;
+    public float freezeTimer = 0;
+    public float slowedTimer = 0;
+    public float slowRatio = 1;
 
 
     public Monster(BattleScreen screen, Vector2 position) {
@@ -67,7 +72,7 @@ public abstract class Monster {
                 frameCounter = 0;
             }
 
-            if(delta == 0) {
+            if(delta == 0 || freezeTimer > 0) {
                 body.setLinearVelocity(0,0);
             }
         }
@@ -80,6 +85,13 @@ public abstract class Monster {
         frame.setCenter(body.getPosition().x * PPM, body.getPosition().y * PPM);
         boolean flip = player.pawn.getBodyX() < body.getPosition().x;
         frame.flip(flip, false);
+        if(freezeTimer > 0) {
+            Color tint = new Color(0.3f, 0.3f, 1.0f, 1.0f);
+            frame.setColor(tint);
+        } else if(slowedTimer > 0) {
+            Color tint = new Color(0.5f, 0.5f, 1.0f, 1.0f);
+            frame.setColor(tint);
+        }
         screen.displayManager.spriteRenderer.regular_sorted_sprites.add(frame);
     }
 
@@ -106,7 +118,29 @@ public abstract class Monster {
 
     public void timers(float delta) {
         thunderImmunityTimer -= delta;
-        stateTime += delta;
+        freezeTimer -= delta;
+        freezeImmunityTimer -= delta;
+        slowedTimer -= delta;
+
+        if(freezeTimer <= 0) {
+            stateTime += delta;
+        }
+    }
+
+    /**
+     * slows monster
+     * @param duration in seconds
+     * @param ratio between 0 and 1.0f
+     */
+    public void applySlow(float duration, float ratio) {
+        slowedTimer = duration;
+        slowRatio = ratio;
+    }
+
+
+    public void applyFreeze(float duration, float immunity) {
+        freezeTimer = duration;
+        freezeImmunityTimer = immunity;
     }
 
     public abstract void initialize();

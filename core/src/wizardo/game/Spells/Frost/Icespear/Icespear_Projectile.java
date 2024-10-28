@@ -6,6 +6,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.Monster;
+import wizardo.game.Resources.SpellAnims.IcespearAnims;
+import wizardo.game.Spells.Fire.Fireball.Fireball_Explosion;
+import wizardo.game.Spells.Fire.Flamejet.Flamejet_Spell;
+import wizardo.game.Spells.Fire.Overheat.Overheat_miniExplosion;
 import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Explosion;
 import wizardo.game.Spells.Hybrid.CelestialStrike.CelestialStrike_Hit;
 import wizardo.game.Spells.Hybrid.CelestialStrike.CelestialStrike_Spell;
@@ -13,6 +17,7 @@ import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyFactory;
 
+import static wizardo.game.Resources.SpellAnims.IcespearAnims.icespear_anim_fire;
 import static wizardo.game.Resources.SpellAnims.IcespearAnims.icespear_anim_frost;
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.*;
@@ -37,13 +42,11 @@ public class Icespear_Projectile extends Icespear_Spell {
 
         duration = MathUtils.random(0.5f, 0.75f);
 
-        anim = icespear_anim_frost;
-
-        screen = currentScreen;
     }
 
     public void update(float delta) {
         if(!initialized) {
+            pickAnim();
             createBody();
             createLight();
             initialized = true;
@@ -59,7 +62,7 @@ public class Icespear_Projectile extends Icespear_Spell {
             destroyed = true;
         }
 
-        if(destroyed) {
+        if(destroyed || stateTime > 1.5f) {
             world.destroyBody(body);
             light.dimKill(0.2f);
             screen.spellManager.toRemove(this);
@@ -76,6 +79,7 @@ public class Icespear_Projectile extends Icespear_Spell {
         }
 
         Icespear_Hit hit = new Icespear_Hit(body.getPosition(), rotation);
+        hit.setElements(this);
         screen.spellManager.toAdd(hit);
 
         if(nested_spell != null) {
@@ -97,7 +101,16 @@ public class Icespear_Projectile extends Icespear_Spell {
     public void split() {
         celestialStrike();
         currentSplits++;
-        normalSplit();
+
+        if(overheat && currentSplits == 1) {
+            overheatSplit();
+        } else if(fireball && currentSplits == 2) {
+            fireballSplit();
+        } else {
+            normalSplit();
+        }
+
+
     }
 
     public void normalSplit() {
@@ -111,10 +124,11 @@ public class Icespear_Projectile extends Icespear_Spell {
             Vector2 direction = new Vector2(MathUtils.cosDeg(angle), MathUtils.sinDeg(angle));
             Icespear_Projectile spear = new Icespear_Projectile(body.getPosition(), body.getPosition().cpy().add(direction));
             spear.currentSplits = currentSplits;
-            spear.screen = screen;
             spear.stateTime = stateTime;
             spear.setNextSpear(this);
             screen.spellManager.toAdd(spear);
+
+            flamejetSplit(direction);
         }
     }
 
@@ -127,6 +141,22 @@ public class Icespear_Projectile extends Icespear_Spell {
         screen.displayManager.spriteRenderer.regular_sorted_sprites.add(frame);
 
     }
+
+    public void pickAnim() {
+        switch(anim_element) {
+            case FROST -> {
+                anim = icespear_anim_frost;
+                green = 0.15f;
+                blue = 0.5f;
+            }
+            case FIRE -> {
+                anim = icespear_anim_fire;
+                red = 0.7f;
+                green = 0.3f;
+            }
+        }
+    }
+
 
     public void createBody() {
         direction = new Vector2(targetPosition.cpy().sub(spawnPosition));
@@ -148,7 +178,7 @@ public class Icespear_Projectile extends Icespear_Spell {
 
     public void createLight() {
         light = screen.lightManager.pool.getLight();
-        light.setLight(0,0.1f,0.5f,1,25, body.getPosition());
+        light.setLight(red,green,blue,1,25, body.getPosition());
         light.toLightManager();
     }
 
@@ -168,5 +198,36 @@ public class Icespear_Projectile extends Icespear_Spell {
                 screen.spellManager.toAdd(strike);
             }
         }
+    }
+
+    public void flamejetSplit(Vector2 direction) {
+        if(flamejet) {
+            Flamejet_Spell jet = new Flamejet_Spell();
+            jet.frostbolts = frostbolts;
+            jet.spawnPosition = new Vector2(body.getPosition());
+            jet.targetPosition = new Vector2(body.getPosition().add(direction));
+            jet.icespear = true;
+            jet.setElements(this);
+            screen.spellManager.toAdd(jet);
+        }
+    }
+
+    public void fireballSplit() {
+        Fireball_Explosion explosion = new Fireball_Explosion();
+        explosion.setElements(this);
+        explosion.frostbolts = frostbolts;
+        if(flamejet) {
+            explosion.nested_spell = new Flamejet_Spell();
+        }
+        explosion.targetPosition = new Vector2(body.getPosition());
+        screen.spellManager.toAdd(explosion);
+    }
+
+    public void overheatSplit() {
+        Overheat_miniExplosion explosion = new Overheat_miniExplosion();
+        explosion.setElements(this);
+        explosion.fireball = true;
+        explosion.targetPosition = new Vector2(body.getPosition());
+        screen.spellManager.toAdd(explosion);
     }
 }

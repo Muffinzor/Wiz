@@ -26,6 +26,8 @@ public class Thunderstorm_Spell extends Spell {
         interval = 1/frequency;
 
         cooldown = 8f;
+
+        main_element = SpellUtils.Spell_Element.LIGHTNING;
     }
 
 

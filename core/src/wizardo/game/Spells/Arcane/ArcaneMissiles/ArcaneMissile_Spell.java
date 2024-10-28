@@ -1,6 +1,7 @@
 package wizardo.game.Spells.Arcane.ArcaneMissiles;
 
 import wizardo.game.Spells.Spell;
+import wizardo.game.Spells.SpellUtils;
 
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.currentScreen;
@@ -15,6 +16,8 @@ public class ArcaneMissile_Spell extends Spell {
         dmg = 35;
         speed = 225f/PPM;
         cooldown = 0.75f;
+
+        main_element = SpellUtils.Spell_Element.ARCANE;
 
     }
 

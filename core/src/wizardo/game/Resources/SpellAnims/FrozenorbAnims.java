@@ -31,7 +31,7 @@ public class FrozenorbAnims {
 
         Sprite[] fire_frames = new Sprite[4];
         for (int i = 0; i < fire_frames.length; i++) {
-            fire_frames[i] = fire_atlas.createSprite("fire" + (i + 1));
+            fire_frames[i] = fire_atlas.createSprite("fireorb" + (i + 1));
         }
         frozenorb_anim_fire = new Animation<>(0.03f, fire_frames);
 

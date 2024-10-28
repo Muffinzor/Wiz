@@ -38,9 +38,7 @@ public class Frozenorb_Projectile extends Frozenorb_Spell {
     public Frozenorb_Projectile(Vector2 spawnPosition, Vector2 targetPosition) {
         this.spawnPosition = new Vector2(spawnPosition);
         this.targetPosition = new Vector2(targetPosition);
-        anim = FrozenorbAnims.frozenorb_anim_frost;
         rotation = MathUtils.random(360);
-        screen = currentScreen;
     }
 
     public void update(float delta) {
@@ -61,7 +59,7 @@ public class Frozenorb_Projectile extends Frozenorb_Spell {
         adjustLight();
         adjustScale();
 
-        if(nested_spell != null && scale == 1 && delta > 0) {
+        if(nested_spell != null && scale > 0.75f && delta > 0) {
             shootProjectiles();
         }
 
@@ -148,16 +146,27 @@ public class Frozenorb_Projectile extends Frozenorb_Spell {
     public void shootProjectiles() {
         if(stateTime > castInterval * castCounter) {
             Spell proj = nested_spell.clone();
-            proj.setElements(this);
-            proj.screen = screen;
-            proj.originBody = body;
-            proj.spawnPosition = body.getPosition();
-            proj.targetPosition = SpellUtils.getRandomVectorInRadius(body.getPosition(), 2.5f);
+
+            setProj(proj);
+
             screen.spellManager.toAdd(proj);
             castCounter++;
         }
 
 
+    }
+
+    public void setProj(Spell proj) {
+
+        proj.setElements(this);
+        proj.screen = screen;
+        proj.originBody = body;
+        proj.spawnPosition = body.getPosition();
+        proj.targetPosition = SpellUtils.getRandomVectorInRadius(body.getPosition(), 2.5f);
+
+        if(proj instanceof Flamejet_Spell) {
+            proj.lightAlpha = 0.3f + getInterval() * 1.5f;
+        }
     }
 
     public void pickAnim() {
@@ -195,10 +204,16 @@ public class Frozenorb_Projectile extends Frozenorb_Spell {
         float interval = 1;
         float level = (getLvl() + nested_spell.getLvl()) / 2f;
         if(nested_spell instanceof ChainLightning_Spell) {
-            interval = 0.85f - 0.05f * level;
+            interval = 0.65f - 0.05f * level;
         }
         if(nested_spell instanceof Frostbolt_Spell) {
-            interval = 0.5f - 0.02f * level;
+            interval = 0.25f - 0.02f * level;
+        }
+        if(nested_spell instanceof ChargedBolts_Spell) {
+            interval = 0.21f - 0.02f * level;
+        }
+        if(nested_spell instanceof Flamejet_Spell) {
+            interval = 0.15f - 0.0125f * level;
         }
         return interval;
     }

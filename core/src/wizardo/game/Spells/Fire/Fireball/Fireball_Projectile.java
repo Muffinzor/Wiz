@@ -9,6 +9,7 @@ import wizardo.game.Monsters.Monster;
 import wizardo.game.Resources.SpellAnims.FireballAnims;
 import wizardo.game.Utils.BodyFactory;
 
+import static wizardo.game.Spells.SpellUtils.Spell_Element.FIRE;
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.currentScreen;
 import static wizardo.game.Wizardo.world;
@@ -30,12 +31,11 @@ public class Fireball_Projectile extends Fireball_Spell {
 
         screen = currentScreen;
 
-        anim = FireballAnims.fireball_anim_fire;
-
     }
 
     public void update(float delta) {
         if(!initialized) {
+            picKAnim();
             createBody();
             createLight();
             initialized = true;
@@ -60,7 +60,9 @@ public class Fireball_Projectile extends Fireball_Spell {
 
     public void explode() {
         if(hasCollided || stateTime > 3) {
-            Fireball_Explosion explosion = new Fireball_Explosion(body.getPosition());
+            Fireball_Explosion explosion = new Fireball_Explosion();
+            explosion.targetPosition = new Vector2(body.getPosition());
+            explosion.inherit(this);
             screen.spellManager.toAdd(explosion);
             world.destroyBody(body);
             body = null;
@@ -97,17 +99,35 @@ public class Fireball_Projectile extends Fireball_Spell {
             float randomAngle = MathUtils.random(-angleVariation, angleVariation);
             direction.rotateDeg(randomAngle);
         }
-
         */
+
         Vector2 velocity = direction.scl(speed);
         body.setLinearVelocity(velocity);
         rotation = velocity.angleDeg();
     }
     public void createLight() {
         light = screen.lightManager.pool.getLight();
-        light.setLight(1, 0.4f, 0, 0.8f, 100, spawnPosition);
+        light.setLight(red, green, blue, lightAlpha, 150, spawnPosition);
     }
     public void adjustLight() {
         light.pointLight.setPosition(body.getPosition().scl(PPM));
+    }
+
+    public void picKAnim() {
+        switch(anim_element) {
+            case FIRE -> {
+                anim = FireballAnims.fireball_anim_fire;
+                red = 1f;
+                green = 0.4f;
+                lightAlpha = 0.8f;
+            }
+            case FROST -> {
+                anim = FireballAnims.fireball_anim_frost;
+                red = 0.1f;
+                green = 0.3f;
+                blue = 0.8f;
+                lightAlpha = 0.8f;
+            }
+        }
     }
 }

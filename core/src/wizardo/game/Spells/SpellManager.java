@@ -46,6 +46,9 @@ public class SpellManager {
     public void update(float delta) {
         castSpell(delta);
 
+        for(Spell spell : spellsToCast) {
+            spell.screen = screen;
+        }
         activeSpells.addAll(spellsToCast);
         spellsToCast.clear();
 
@@ -59,19 +62,19 @@ public class SpellManager {
     public void castSpell(float delta) {
         cooldown1 -= delta;
         if (cooldown1 <= 0 && !player.spellbook.equippedSpells.isEmpty()) {
-            activeSpells.add(player.spellbook.equippedSpells.getFirst().clone());
+            spellsToCast.add(player.spellbook.equippedSpells.getFirst().clone());
             cooldown1 = player.spellbook.equippedSpells.getFirst().cooldown;
         }
 
         cooldown2 -= delta;
         if (cooldown2 <= 0 && player.spellbook.equippedSpells.size() > 1) {
-            activeSpells.add(player.spellbook.equippedSpells.get(1).clone());
+            spellsToCast.add(player.spellbook.equippedSpells.get(1).clone());
             cooldown2 = player.spellbook.equippedSpells.get(1).cooldown;
         }
 
         cooldown3 -= delta;
         if (cooldown3 <= 0 && player.spellbook.equippedSpells.size() > 2) {
-            activeSpells.add(player.spellbook.equippedSpells.get(2).clone());
+            spellsToCast.add(player.spellbook.equippedSpells.get(2).clone());
             cooldown3 = player.spellbook.equippedSpells.get(2).cooldown;
         }
     }

@@ -5,9 +5,7 @@ import wizardo.game.Spells.Frost.Frozenorb.Frozenorb_Spell;
 import wizardo.game.Spells.Frost.Icespear.Icespear_Spell;
 import wizardo.game.Spells.Hybrid.Blizzard.Blizzard_Spell;
 import wizardo.game.Spells.Hybrid.CelestialStrike.CelestialStrike_Spell;
-import wizardo.game.Spells.Lightning.ChainLightning.ChainLightning_Hit;
 import wizardo.game.Spells.Lightning.ChainLightning.ChainLightning_Spell;
-import wizardo.game.Spells.Lightning.ChargedBolts.ChargedBolts_Projectile;
 import wizardo.game.Spells.Lightning.ChargedBolts.ChargedBolts_Spell;
 import wizardo.game.Spells.Lightning.Thunderstorm.Thunderstorm_Spell;
 import wizardo.game.Spells.Spell;
@@ -108,11 +106,31 @@ public class FrostLightning_Spells {
 
         // 11. ChainLightning + Chargedbolts + FrozenOrb
 
+        Frozenorb_Spell frostlite11 = new Frozenorb_Spell();
+        ChainLightning_Spell chain11 = new ChainLightning_Spell();
+        chain11.nested_spell = new ChargedBolts_Spell();
+        frostlite11.nested_spell = chain11;
+        frostlite11.anim_element = SpellUtils.Spell_Element.LIGHTNING;
+        frostlite11.spellParts.add(CHAIN);
+        frostlite11.spellParts.add(CHARGEDBOLTS);
+        frostlite11.spellParts.add(FROZENORB);
+        frostliteSpells[11] = frostlite11;
+
         // 12. ChainLightning + Thunderstorm + Frostbolts
+
+        Thunderstorm_Spell frostlite12 = new Thunderstorm_Spell();
+        ChainLightning_Spell chain12 = new ChainLightning_Spell();
+        chain12.frostbolts = true;
+        frostlite12.nested_spell = chain12;
+        frostlite12.anim_element = SpellUtils.Spell_Element.LIGHTNING;
+        frostlite12.spellParts.add(CHAIN);
+        frostlite12.spellParts.add(THUNDERSTORM);
+        frostlite12.spellParts.add(FROSTBOLT);
+        frostliteSpells[12] = frostlite12;
 
         // 13. ChainLightning + Thunderstorm + Icespear
 
-        // 14. ChainLightning + Thunderstorm + Frozenorb
+        // 14. ChainLightning + Thunderstorm + FrozenOrb
 
         CelestialStrike_Spell frostlite14 = new CelestialStrike_Spell();
         frostlite14.chain = true;
@@ -121,11 +139,87 @@ public class FrostLightning_Spells {
         frostlite14.spellParts.add(FROZENORB);
         frostliteSpells[14] = frostlite14;
 
+        // 15. ChainLightning + Frostbolts + Icespear
+
+        // 16. ChainLightning + Frostbolts + FrozenOrb
+
+        Frozenorb_Spell frostlite16 = new Frozenorb_Spell();
+        ChainLightning_Spell chain16 = new ChainLightning_Spell();
+        chain16.frostbolts = true;
+        frostlite16.nested_spell = chain16;
+        frostlite16.anim_element = SpellUtils.Spell_Element.LIGHTNING;
+        frostlite16.bonus_element = SpellUtils.Spell_Element.FROST;
+        frostlite16.spellParts.add(CHAIN);
+        frostlite16.spellParts.add(FROSTBOLT);
+        frostlite16.spellParts.add(FROZENORB);
+        frostliteSpells[16] = frostlite16;
+
+        // 17. ChainLightning + Icespear + Frozenorb
+
+        // 18. Thunderstorm + Frozenorb + Chargedbolt
+
+        CelestialStrike_Spell frostlite18 = new CelestialStrike_Spell();
+        frostlite18.chargedbolts = true;
+        frostlite18.spellParts.add(THUNDERSTORM);
+        frostlite18.spellParts.add(CHARGEDBOLTS);
+        frostlite18.spellParts.add(FROZENORB);
+        frostliteSpells[18] = frostlite18;
+
+        // 19. Thunderstorm + Frozenorb + Icespear
+
+        // 20. Thunderstorm + Frozenorb + Frostbolts
+
+        CelestialStrike_Spell frostlite20 = new CelestialStrike_Spell();
+        frostlite20.frostbolts = true;
+        frostlite20.spellParts.add(THUNDERSTORM);
+        frostlite20.spellParts.add(FROSTBOLT);
+        frostlite20.spellParts.add(FROZENORB);
+        frostliteSpells[20] = frostlite20;
+
+        // 21. Thunderstorm + Chargedbolts + Frostbolts
+
+        Thunderstorm_Spell frostlite21 = new Thunderstorm_Spell();
+        ChargedBolts_Spell proj21 = new ChargedBolts_Spell();
+        proj21.frostbolts = true;
+        frostlite21.nested_spell = frostliteSpells[0];
+        frostlite21.anim_element = SpellUtils.Spell_Element.LIGHTNING;
+        frostlite21.spellParts.add(THUNDERSTORM);
+        frostlite21.spellParts.add(CHARGEDBOLTS);
+        frostlite21.spellParts.add(FROSTBOLT);
+        frostliteSpells[21] = frostlite21;
+
+        // 22. Thunderstorm + Chargedbolts + Icespear
+
+        // 23. Thunderstorm + Icespear + Frostbolts
+
+        Blizzard_Spell frostlite23 = new Blizzard_Spell();
+        frostlite23.frostbolts = true;
+        frostlite23.spellParts.add(THUNDERSTORM);
+        frostlite23.spellParts.add(ICESPEAR);
+        frostlite23.spellParts.add(FROSTBOLT);
+        frostliteSpells[23] = frostlite23;
+
+        // 24. Icespear + Chargedbolts + Frostbolts
+
+        // 25. Frozenorb + Chargedbolts + Frostbolts
+
+        Frozenorb_Spell frostlite25 = new Frozenorb_Spell();
+        frostlite25.nested_spell = frostliteSpells[0];
+        frostlite25.anim_element = SpellUtils.Spell_Element.LIGHTNING;
+        frostlite25.bonus_element = SpellUtils.Spell_Element.FROST;
+        frostlite25.spellParts.add(FROZENORB);
+        frostlite25.spellParts.add(CHARGEDBOLTS);
+        frostlite25.spellParts.add(FROSTBOLT);
+        frostliteSpells[25] = frostlite25;
+
+        // 26. Frozenorb + Icespear + Chargedbolts
+
+
 
 
         for (Spell frostLiteSpell : frostliteSpells) {
 
-            if(frostLiteSpell != null) {
+            if(frostLiteSpell != null && frostLiteSpell.bonus_element == null) {
 
                 if (frostLiteSpell.main_element == SpellUtils.Spell_Element.LIGHTNING) {
                     frostLiteSpell.bonus_element = SpellUtils.Spell_Element.FROST;

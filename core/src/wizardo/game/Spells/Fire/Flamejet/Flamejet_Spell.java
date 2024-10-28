@@ -1,37 +1,48 @@
 package wizardo.game.Spells.Fire.Flamejet;
 
+import com.badlogic.gdx.math.Vector2;
 import wizardo.game.Spells.Spell;
 
+import static wizardo.game.Spells.SpellUtils.Spell_Element.FIRE;
 import static wizardo.game.Wizardo.currentScreen;
 import static wizardo.game.Wizardo.player;
 
 public class Flamejet_Spell extends Spell {
 
-    int flames = 2;
+    public boolean frostbolts;
+    public boolean icespear;
 
     public Flamejet_Spell() {
 
         name = "Flamejet";
 
         speed = 20;
-        cooldown = 0.5f;
-        dmg = 20;
+        cooldown = 0.075f;
+        dmg = 25;
+
+        main_element = FIRE;
 
     }
 
     @Override
     public void update(float delta) {
 
-        if(spawnPosition != null) {
-            flames = 1;
-        }
-
         if(delta > 0) {
-            Flamejet_Projectile flame = new Flamejet_Projectile(getSpawnPosition(), getTargetPosition());
+            Flamejet_Projectile flame = new Flamejet_Projectile();
+            flame.spawnPosition = new Vector2(getSpawnPosition());
+            flame.targetPosition = new Vector2(getTargetPosition());
+            flame.setFlame(this);
+            flame.setElements(this);
             currentScreen.spellManager.toAdd(flame);
             currentScreen.spellManager.toRemove(this);
         }
 
+    }
+
+    public void setFlame(Flamejet_Spell thisFlame) {
+        frostbolts = thisFlame.frostbolts;
+        icespear = thisFlame.icespear;
+        lightAlpha = thisFlame.lightAlpha;
     }
 
     @Override

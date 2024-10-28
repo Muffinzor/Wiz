@@ -88,6 +88,7 @@ public class Thunderstorm_Hit extends Thunderstorm_Spell {
                 Spell proj = nested_spell.clone();
                 proj.setElements(this);
                 proj.screen = screen;
+                proj.originBody = body;
                 proj.spawnPosition = new Vector2(body.getPosition());
                 proj.targetPosition = SpellUtils.getRandomVectorInRadius(body.getPosition(), getProjRadius());
                 screen.spellManager.toAdd(proj);

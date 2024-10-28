@@ -2,6 +2,7 @@ package wizardo.game.Spells.Frost.Icespear;
 
 import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Projectile;
 import wizardo.game.Spells.Spell;
+import wizardo.game.Spells.SpellUtils;
 
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.currentScreen;
@@ -18,6 +19,11 @@ public class Icespear_Spell extends Spell {
 
     public boolean celestialStrike;
 
+    public boolean flamejet;
+    public boolean frostbolts;
+    public boolean fireball;
+    public boolean overheat; //for Icespear+Overheat+Fireball
+
     public Icespear_Spell() {
 
         name = "Ice Spear";
@@ -26,21 +32,18 @@ public class Icespear_Spell extends Spell {
         speed = 400f/PPM;
         cooldown = 1.5f;
 
+        main_element = SpellUtils.Spell_Element.FROST;
+
     }
 
     public void update(float delta) {
         stateTime += delta;
+        setup();
 
-
-        if(delta > 0) {
-            Icespear_Projectile spear = new Icespear_Projectile(getSpawnPosition(), getTargetPosition());
-            spear.nested_spell = nested_spell;
-            spear.celestialStrike = celestialStrike;
-            spear.setElements(this);
-            currentScreen.spellManager.toAdd(spear);
-            currentScreen.spellManager.toRemove(this);
-        }
-
+        Icespear_Projectile spear = new Icespear_Projectile(getSpawnPosition(), getTargetPosition());
+        spear.inherit(this);
+        screen.spellManager.toAdd(spear);
+        screen.spellManager.toRemove(this);
     }
 
     public void setNextSpear(Icespear_Spell spear) {
@@ -49,10 +52,8 @@ public class Icespear_Spell extends Spell {
         maxSplits = spear.maxSplits;
         castByPawn = spear.castByPawn;
         speed = spear.speed;
-        celestialStrike = spear.celestialStrike;
 
-        nested_spell = spear.nested_spell;
-        setElements(spear);
+        this.inherit(spear);
     }
 
 
@@ -64,5 +65,21 @@ public class Icespear_Spell extends Spell {
     @Override
     public int getLvl() {
         return player.spellbook.icespear_lvl;
+    }
+
+    public void inherit(Icespear_Spell parent) {
+        this.nested_spell = parent.nested_spell;
+        this.fireball = parent.fireball;
+        this.overheat = parent.overheat;
+        this.celestialStrike = parent.celestialStrike;
+        this.flamejet = parent.flamejet;
+        this.frostbolts = parent.frostbolts;
+        this.setElements(parent);
+
+        this.maxSplits = parent.maxSplits;
+    }
+
+    public void setup() {
+
     }
 }

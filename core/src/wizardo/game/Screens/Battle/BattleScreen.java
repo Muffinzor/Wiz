@@ -12,9 +12,13 @@ import wizardo.game.Monsters.MonsterManager;
 import wizardo.game.Monsters.TEST_MONSTER;
 import wizardo.game.Player.Pawn;
 import wizardo.game.Screens.BaseScreen;
+import wizardo.game.Spells.Fire.Fireball.Fireball_Spell;
+import wizardo.game.Spells.Frost.Icespear.Icespear_Spell;
+import wizardo.game.Spells.Hybrid.DragonBreath.DragonBreath_Spell;
 import wizardo.game.Spells.SpellManager;
 import wizardo.game.Wizardo;
 
+import static wizardo.game.Spells.SpellBank.FrostFire_Spells.frostfireSpells;
 import static wizardo.game.Spells.SpellBank.FrostLightning_Spells.frostliteSpells;
 import static wizardo.game.Spells.SpellBank.Frost_Spells.frostspells;
 import static wizardo.game.Utils.Constants.PPM;
@@ -55,8 +59,8 @@ public class BattleScreen extends BaseScreen {
 
         cursorTexturePath = "Cursors/Battle_Cursor.png";
 
-        for (int i = 0; i < 200; i++) {
-            Monster monster = new TEST_MONSTER(this, new Vector2((float) (Math.random() * 4000/32), (float) (Math.random() * 4000/32)));
+        for (int i = 0; i < 500; i++) {
+            Monster monster = new TEST_MONSTER(this, new Vector2((float) (Math.random() * 3000/32), (float) (Math.random() * 3000/32)));
             monsterManager.addMonster(monster);
         }
 
@@ -65,7 +69,7 @@ public class BattleScreen extends BaseScreen {
     @Override
     public void render(float delta) {
         if(!initialized) {
-            player.spellbook.equippedSpells.add(frostspells[6]);
+            player.spellbook.equippedSpells.add(frostfireSpells[17]);
             initialized = true;
         }
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
