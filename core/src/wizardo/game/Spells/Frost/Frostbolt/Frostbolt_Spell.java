@@ -10,13 +10,15 @@ public class Frostbolt_Spell extends Spell {
 
     public int projectiles = 3;
 
+    public boolean missile;
+
     public Frostbolt_Spell() {
 
         name = "Frostbolts";
 
         speed = 7;
         radius = 25;
-        dmg = 15;
+        baseDmg = 15;
         cooldown = 1f;
 
         main_element = SpellUtils.Spell_Element.FROST;
@@ -33,6 +35,7 @@ public class Frostbolt_Spell extends Spell {
         for (int i = 0; i < projectiles; i++) {
             Frostbolt_Projectile bolt = new Frostbolt_Projectile(getSpawnPosition(), getTargetPosition());
             bolt.inherit(this);
+            bolt.missile = missile;
             currentScreen.spellManager.toAdd(bolt);
             currentScreen.spellManager.toRemove(this);
         }
@@ -45,6 +48,13 @@ public class Frostbolt_Spell extends Spell {
 
     public int getLvl() {
         return player.spellbook.frostbolt_lvl;
+    }
+
+    @Override
+    public int getDmg() {
+        int dmg = baseDmg;
+        dmg += 5 * getLvl();
+        return dmg;
     }
 
     public void inherit(Frostbolt_Spell parent) {

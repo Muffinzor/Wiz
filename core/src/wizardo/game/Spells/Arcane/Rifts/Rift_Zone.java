@@ -15,13 +15,11 @@ public class Rift_Zone extends Rifts_Spell {
     public Rift_Zone(Vector2 targetPosition) {
         this.targetPosition = new Vector2(targetPosition);
 
-        screen = currentScreen;
-
-        anim = RiftsAnims.rift_zone_anim_arcane;
     }
 
     public void update(float delta) {
         if(!initialized) {
+            pickAnim();
             initialized = true;
             createLight();
         }
@@ -33,6 +31,7 @@ public class Rift_Zone extends Rifts_Spell {
             screen.spellManager.toRemove(this);
         } else if(stateTime > 0.5f) {
             Rift_Explosion explosion = new Rift_Explosion(targetPosition);
+            explosion.setRift(this);
             screen.spellManager.toAdd(explosion);
             screen.spellManager.toRemove(this);
         }
@@ -52,5 +51,22 @@ public class Rift_Zone extends Rifts_Spell {
         light.setLight(1, .4f, .6f, 0.75f, 80, targetPosition);
         light.dimKill(0.015f);
         screen.lightManager.addLight(light);
+    }
+
+    public void pickAnim() {
+        switch (anim_element) {
+            case ARCANE -> {
+                anim = RiftsAnims.rift_zone_anim_arcane;
+                red = 1;
+                green = 0.4f;
+                blue = 0.6f;
+            }
+            case FROST -> {
+                anim = RiftsAnims.rift_zone_anim_frost;
+                red = 0.1f;
+                green = 0.15f;
+                blue = 0.8f;
+            }
+        }
     }
 }

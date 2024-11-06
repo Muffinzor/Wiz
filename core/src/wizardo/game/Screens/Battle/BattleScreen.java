@@ -18,9 +18,13 @@ import wizardo.game.Spells.Hybrid.DragonBreath.DragonBreath_Spell;
 import wizardo.game.Spells.SpellManager;
 import wizardo.game.Wizardo;
 
+import static wizardo.game.Spells.SpellBank.Arcane_Spells.arcanespells;
+import static wizardo.game.Spells.SpellBank.Fire_Spells.firespells;
+import static wizardo.game.Spells.SpellBank.FrostArcane_Spells.frostarcaneSpells;
 import static wizardo.game.Spells.SpellBank.FrostFire_Spells.frostfireSpells;
 import static wizardo.game.Spells.SpellBank.FrostLightning_Spells.frostliteSpells;
 import static wizardo.game.Spells.SpellBank.Frost_Spells.frostspells;
+import static wizardo.game.Spells.SpellBank.Lightning_Spells.litespells;
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.*;
 
@@ -69,7 +73,7 @@ public class BattleScreen extends BaseScreen {
     @Override
     public void render(float delta) {
         if(!initialized) {
-            player.spellbook.equippedSpells.add(frostfireSpells[8]);
+            player.spellbook.equippedSpells.add(frostarcaneSpells[2]);
             initialized = true;
         }
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -90,7 +94,7 @@ public class BattleScreen extends BaseScreen {
         lightManager.update(delta);
 
         Matrix4 debugMatrix = mainCamera.combined.cpy().scl(PPM);
-        //debugRenderer.render(world, debugMatrix);
+        debugRenderer.render(world, debugMatrix);
     }
 
     @Override

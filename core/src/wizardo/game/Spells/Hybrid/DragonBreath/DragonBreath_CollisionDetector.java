@@ -48,6 +48,11 @@ public class DragonBreath_CollisionDetector extends Spell {
         return 0;
     }
 
+    @Override
+    public int getDmg() {
+        return 0;
+    }
+
     public void createBody() {
         spawnPosition = new Vector2(proj.getPosition());
         body = BodyFactory.spellProjectileCircleBody(spawnPosition, 2, true);

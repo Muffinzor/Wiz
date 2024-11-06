@@ -1,25 +1,16 @@
 package wizardo.game.Spells.Frost.Frostbolt;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import wizardo.game.Audio.Sounds.SoundPlayer;
-import wizardo.game.Display.Text.FloatingDamage;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.Monster;
-import wizardo.game.Screens.Battle.BattleScreen;
 import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyFactory;
 
-import static wizardo.game.Resources.Skins.mainMenuSkin;
 import static wizardo.game.Resources.SpellAnims.FrostboltAnims.*;
 import static wizardo.game.Utils.Constants.PPM;
-import static wizardo.game.Wizardo.currentScreen;
 import static wizardo.game.Wizardo.world;
 
 public class Frostbolt_Explosion extends Frostbolt_Spell{
@@ -83,19 +74,14 @@ public class Frostbolt_Explosion extends Frostbolt_Spell{
         frame.setCenter(targetPosition.x * PPM, targetPosition.y * PPM);
         frame.rotate(rotation);
         frame.flip(flipX, flipY);
-        screen.centerSort(frame, targetPosition.y);
+        screen.centerSort(frame, targetPosition.y * PPM - 25);
         screen.displayManager.spriteRenderer.regular_sorted_sprites.add(frame);
 
     }
 
     public void handleCollision(Monster monster) {
-        monster.hp -= dmg;
-
-        /**
-        FloatingDamage text = screen.displayManager.textManager.pool.getDmgText();
-        text.setAll("25", monster.body.getPosition().scl(PPM), mainMenuSkin.getFont("DamageNumbers"), Color.WHITE);
-        screen.displayManager.textManager.addDmgText(text);
-         */
+        dealDmg(monster);
+        monster.applySlow(2.5f, 0.7f);
 
     }
 

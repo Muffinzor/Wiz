@@ -27,6 +27,8 @@ public class Thunderstorm_Spell extends Spell {
 
         cooldown = 8f;
 
+        baseDmg = 60;
+
         main_element = SpellUtils.Spell_Element.LIGHTNING;
     }
 
@@ -81,5 +83,12 @@ public class Thunderstorm_Spell extends Spell {
     @Override
     public int getLvl() {
         return player.spellbook.thunderstorm_lvl;
+    }
+
+    @Override
+    public int getDmg() {
+        int dmg = baseDmg;
+        dmg += 30 * getLvl();
+        return dmg;
     }
 }

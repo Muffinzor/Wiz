@@ -13,6 +13,6 @@ public class EnergyBeamAnims {
     public static Sprite fireTile = new Sprite(new Texture("Spells/EnergyBeam/body_fire.png"));
     public static Sprite fireEndTile = new Sprite(new Texture("Spells/EnergyBeam/end_fire.png"));
 
-    public static Sprite coldTile = new Sprite(new Texture("Spells/EnergyBeam/body_frost.png"));
-    public static Sprite coldEndTile = new Sprite(new Texture("Spells/EnergyBeam/end_frost.png"));
+    public static Sprite frostTile = new Sprite(new Texture("Spells/EnergyBeam/body_frost.png"));
+    public static Sprite frostEndTile = new Sprite(new Texture("Spells/EnergyBeam/end_frost.png"));
 }

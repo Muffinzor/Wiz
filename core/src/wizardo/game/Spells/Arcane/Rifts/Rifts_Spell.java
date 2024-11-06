@@ -19,12 +19,14 @@ public class Rifts_Spell extends Spell {
     public float spread = 4.5f;
     public float radius = 50;
 
+    public boolean frostbolt;
+
     public Rifts_Spell() {
 
         name = "Rifts";
 
         cooldown = 5f;
-        dmg = 15;
+        baseDmg = 24;
 
         main_element = SpellUtils.Spell_Element.ARCANE;
 
@@ -66,6 +68,7 @@ public class Rifts_Spell extends Spell {
 
             if(randomTarget != null) {
                 Rift_Zone rift = new Rift_Zone(randomTarget);
+                rift.setRift(this);
                 currentScreen.spellManager.toAdd(rift);
             }
 
@@ -108,4 +111,18 @@ public class Rifts_Spell extends Spell {
     public int getLvl() {
         return player.spellbook.rift_lvl;
     }
+
+    public void setRift(Rifts_Spell parent) {
+        frostbolt = parent.frostbolt;
+        setElements(parent);
+
+    }
+
+    @Override
+    public int getDmg() {
+        int dmg = baseDmg;
+        dmg += 4 * getLvl();
+        return dmg;
+    }
 }
+

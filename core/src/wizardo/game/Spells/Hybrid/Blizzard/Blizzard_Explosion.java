@@ -11,7 +11,6 @@ import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Explosion;
 import wizardo.game.Utils.BodyFactory;
 
 import static wizardo.game.Utils.Constants.PPM;
-import static wizardo.game.Wizardo.currentScreen;
 import static wizardo.game.Wizardo.world;
 
 public class Blizzard_Explosion extends Blizzard_Spell {
@@ -50,7 +49,7 @@ public class Blizzard_Explosion extends Blizzard_Spell {
     }
 
     public void handleCollision(Monster monster) {
-        monster.hp -= dmg;
+        dealDmg(monster);
     }
 
     public void createBody() {

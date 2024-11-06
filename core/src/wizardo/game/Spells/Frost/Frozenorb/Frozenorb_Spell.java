@@ -10,6 +10,7 @@ import static wizardo.game.Wizardo.player;
 public class Frozenorb_Spell extends Spell {
 
     public float duration = 6f;
+    public boolean frostnova;
 
     public Frozenorb_Spell() {
 
@@ -17,7 +18,7 @@ public class Frozenorb_Spell extends Spell {
 
         speed = 60f/PPM;
         cooldown = 8f;
-        dmg = 1;
+        baseDmg = 50;   // per second
 
         main_element = SpellUtils.Spell_Element.FROST;
 
@@ -46,9 +47,17 @@ public class Frozenorb_Spell extends Spell {
         this.nested_spell = parent.nested_spell;
         this.speed = parent.speed;
         this.duration = parent.duration;
+        this.frostnova = parent.frostnova;
 
         this.screen = parent.screen;
         this.setElements(parent);
+    }
+
+    @Override
+    public int getDmg() {
+        int dmg = baseDmg;
+        dmg += 10 * getLvl();
+        return dmg;
     }
 
 }

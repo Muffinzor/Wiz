@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Lighting.RoundLight;
+import wizardo.game.Monsters.Monster;
 import wizardo.game.Resources.SpellAnims.ThunderstormAnims;
 import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Spell;
 import wizardo.game.Spells.Lightning.ChargedBolts.ChargedBolts_Spell;
@@ -57,6 +58,10 @@ public class Thunderstorm_Hit extends Thunderstorm_Spell {
         }
     }
 
+    public void handleCollision(Monster monster) {
+        dealDmg(monster);
+    }
+
     public void drawFrame() {
         Sprite frame = screen.getSprite();
         frame.set(anim.getKeyFrame(stateTime, false));
@@ -79,20 +84,23 @@ public class Thunderstorm_Hit extends Thunderstorm_Spell {
     }
 
     public void nestedProjectiles() {
+        if(nested_spell != null) {
 
-        float procRate = getProcRate();
-        int quantity = getQuantity();
+            float procRate = getProcRate();
+            int quantity = getQuantity();
 
-        if(Math.random() >= procRate) {
-            for (int i = 0; i < quantity; i++) {
-                Spell proj = nested_spell.clone();
-                proj.setElements(this);
-                proj.screen = screen;
-                proj.originBody = body;
-                proj.spawnPosition = new Vector2(body.getPosition());
-                proj.targetPosition = SpellUtils.getRandomVectorInRadius(body.getPosition(), getProjRadius());
-                screen.spellManager.toAdd(proj);
+            if (Math.random() >= procRate) {
+                for (int i = 0; i < quantity; i++) {
+                    Spell proj = nested_spell.clone();
+                    proj.setElements(this);
+                    proj.screen = screen;
+                    proj.originBody = body;
+                    proj.spawnPosition = new Vector2(body.getPosition());
+                    proj.targetPosition = SpellUtils.getRandomVectorInRadius(body.getPosition(), getProjRadius());
+                    screen.spellManager.toAdd(proj);
+                }
             }
+
         }
     }
 

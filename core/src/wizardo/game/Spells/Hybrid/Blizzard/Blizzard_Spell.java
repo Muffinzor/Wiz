@@ -1,7 +1,6 @@
 package wizardo.game.Spells.Hybrid.Blizzard;
 
 import com.badlogic.gdx.math.Vector2;
-import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Explosion;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 
@@ -22,10 +21,12 @@ public class Blizzard_Spell extends Spell {
 
     public Blizzard_Spell() {
 
+        name = "Blizzard";
+
         cooldown = 6;
 
         speed = 15;
-        dmg = 25;
+        baseDmg = 24;
 
         blizz_radius = 20;
         radius = 40;
@@ -82,7 +83,14 @@ public class Blizzard_Spell extends Spell {
 
     @Override
     public int getLvl() {
-        return 0;
+        return 1;
+    }
+
+    @Override
+    public int getDmg() {
+        int dmg = baseDmg;
+        dmg += 8 * player.spellbook.icespear_lvl;
+        return dmg;
     }
 
 

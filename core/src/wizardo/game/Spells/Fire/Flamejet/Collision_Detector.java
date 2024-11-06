@@ -50,6 +50,11 @@ public class Collision_Detector extends Spell {
         return 0;
     }
 
+    @Override
+    public int getDmg() {
+        return 0;
+    }
+
     public void createBody() {
         spawnPosition = new Vector2(proj.body.getPosition());
         body = BodyFactory.spellProjectileCircleBody(proj.body.getPosition(), 2, true);

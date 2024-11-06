@@ -1,7 +1,6 @@
 package wizardo.game.Spells.Hybrid.FrostNova;
 
 import com.badlogic.gdx.math.Vector2;
-import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Spell;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 
@@ -13,7 +12,9 @@ public class FrostNova_Spell extends Spell {
 
     public FrostNova_Spell() {
 
-        dmg = 20;
+        name = "Frost Nova";
+
+        baseDmg = 45;
         cooldown = 5f;
 
         main_element = SpellUtils.Spell_Element.FROST;
@@ -41,4 +42,13 @@ public class FrostNova_Spell extends Spell {
     public int getLvl() {
         return 0;
     }
+
+
+    @Override
+    public int getDmg() {
+        int dmg = baseDmg;
+        dmg += 15 * player.spellbook.overheat_lvl;
+        return dmg;
+    }
+
 }

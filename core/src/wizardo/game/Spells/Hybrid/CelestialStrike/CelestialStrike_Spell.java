@@ -5,6 +5,7 @@ import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 
 import static wizardo.game.Wizardo.currentScreen;
+import static wizardo.game.Wizardo.player;
 
 public class CelestialStrike_Spell extends Spell {
 
@@ -13,6 +14,10 @@ public class CelestialStrike_Spell extends Spell {
     public boolean chain;
 
     public CelestialStrike_Spell() {
+
+        name = "Celestial Strike";
+
+        baseDmg = 120;
 
         cooldown = 3;
 
@@ -53,5 +58,12 @@ public class CelestialStrike_Spell extends Spell {
     @Override
     public int getLvl() {
         return 0;
+    }
+
+    @Override
+    public int getDmg() {
+        int dmg = baseDmg;
+        dmg += 20 * player.spellbook.thunderstorm_lvl;
+        return dmg;
     }
 }

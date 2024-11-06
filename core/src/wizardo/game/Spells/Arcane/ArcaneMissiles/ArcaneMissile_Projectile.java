@@ -53,6 +53,10 @@ public class ArcaneMissile_Projectile extends ArcaneMissile_Spell {
 
     }
 
+    public void handleCollision(Monster monster) {
+        dealDmg(monster);
+    }
+
     public void drawFrame() {
         Sprite frame = screen.getSprite();
         frame.set(anim.getKeyFrame(stateTime, true));

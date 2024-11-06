@@ -18,7 +18,7 @@ public class Overheat_miniExplosion extends Overheat_Spell{
 
     public Overheat_miniExplosion() {
 
-        this.dmg = dmg/2f;
+        this.baseDmg = baseDmg/2;
         radius = radius/2f;
 
     }
@@ -45,6 +45,7 @@ public class Overheat_miniExplosion extends Overheat_Spell{
     }
 
     public void handleCollision(Monster monster) {
+        dealDmg(monster);
         fireball(monster);
     }
 

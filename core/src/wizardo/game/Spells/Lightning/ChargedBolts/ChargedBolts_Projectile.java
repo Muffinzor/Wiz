@@ -7,15 +7,11 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.Monster;
-import wizardo.game.Resources.SpellAnims.ChainLightningAnims;
-import wizardo.game.Resources.SpellAnims.ChargedboltsAnims;
 import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Explosion;
 import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyFactory;
 
 import static wizardo.game.Resources.SpellAnims.ChargedboltsAnims.*;
-import static wizardo.game.Resources.SpellAnims.FrostboltAnims.frostbolt_explosion_anim_frost;
-import static wizardo.game.Resources.SpellAnims.FrostboltAnims.frostbolt_explosion_anim_lightning;
 import static wizardo.game.Spells.SpellUtils.Spell_Element.FROST;
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.*;
@@ -102,10 +98,11 @@ public class ChargedBolts_Projectile extends ChargedBolts_Spell {
 
         frostbolts(monster);
 
-        monster.hp -= dmg;
+        dealDmg(monster);
     }
 
     public void handleCollision(Fixture fix) {
+
         collisions += 100;
         body.setLinearVelocity(0,0);
     }

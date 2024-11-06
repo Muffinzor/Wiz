@@ -8,9 +8,13 @@ import static wizardo.game.Wizardo.player;
 
 public class EnergyBeam_Spell extends Spell {
 
+    public boolean frostbolt;
+
     public EnergyBeam_Spell() {
 
         name = "Energy Beam";
+
+        baseDmg = 80;
 
         cooldown = 2.5f;
 
@@ -24,6 +28,8 @@ public class EnergyBeam_Spell extends Spell {
         if(delta > 0) {
 
             EnergyBeam_Projectile beam = new EnergyBeam_Projectile(getSpawnPosition(), getTargetPosition());
+            beam.frostbolt = frostbolt;
+            beam.setElements(this);
             currentScreen.spellManager.toAdd(beam);
             currentScreen.spellManager.toRemove(this);
 
@@ -39,5 +45,12 @@ public class EnergyBeam_Spell extends Spell {
     @Override
     public int getLvl() {
         return player.spellbook.energybeam_lvl;
+    }
+
+    @Override
+    public int getDmg() {
+        int dmg = baseDmg;
+        dmg += getLvl() * 20;
+        return dmg;
     }
 }

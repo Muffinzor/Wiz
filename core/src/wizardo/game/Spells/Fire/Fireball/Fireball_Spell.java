@@ -4,7 +4,6 @@ import wizardo.game.Spells.Spell;
 
 import static wizardo.game.Spells.SpellUtils.Spell_Element.FIRE;
 import static wizardo.game.Utils.Constants.PPM;
-import static wizardo.game.Wizardo.currentScreen;
 import static wizardo.game.Wizardo.player;
 
 public class Fireball_Spell extends Spell {
@@ -16,9 +15,9 @@ public class Fireball_Spell extends Spell {
 
         name = "Fireball";
 
-        dmg = 10;
+        baseDmg = 50;
         cooldown = 2;
-        radius = 75;
+        radius = 45;
         speed = 200f/PPM;
 
         main_element = FIRE;
@@ -53,6 +52,13 @@ public class Fireball_Spell extends Spell {
 
         setElements(parent);
         this.screen = parent.screen;
+    }
+
+    @Override
+    public int getDmg() {
+        int dmg = baseDmg;
+        dmg += 15 * getLvl();
+        return dmg;
     }
 
 }

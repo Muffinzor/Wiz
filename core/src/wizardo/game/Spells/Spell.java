@@ -1,32 +1,26 @@
 package wizardo.game.Spells;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import wizardo.game.Account.Unlocked;
 import wizardo.game.Audio.Sounds.SoundPlayer;
+import wizardo.game.Display.Text.FloatingDamage;
 import wizardo.game.Monsters.Monster;
 import wizardo.game.Screens.BaseScreen;
-import wizardo.game.Screens.Battle.BattleScreen;
-import wizardo.game.Spells.Fire.Fireball.Fireball_Spell;
-import wizardo.game.Spells.Fire.Flamejet.Flamejet_Spell;
-import wizardo.game.Spells.Fire.Overheat.Overheat_Spell;
-import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Spell;
-import wizardo.game.Spells.Frost.Frozenorb.Frozenorb_Spell;
-import wizardo.game.Spells.Frost.Icespear.Icespear_Spell;
-import wizardo.game.Spells.Lightning.ChainLightning.ChainLightning_Spell;
-import wizardo.game.Spells.Lightning.ChargedBolts.ChargedBolts_Spell;
 import wizardo.game.Spells.SpellUtils.*;
-import wizardo.game.Wizardo;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 
+import static wizardo.game.GameSettings.dmg_text_on;
 import static wizardo.game.GameSettings.sound_volume;
+import static wizardo.game.Resources.Skins.mainMenuSkin;
 import static wizardo.game.Screens.BaseScreen.controllerActive;
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.currentScreen;
@@ -51,7 +45,8 @@ public abstract class Spell implements Cloneable {
     public String soundPath;
     public String name;
 
-    public float dmg;
+    public int baseDmg;
+    public float dmgVariance = 0.15f;   //      0.85 - 1.15 by default
     public float speed;
     public float radius;
     public float cooldown;
@@ -148,6 +143,10 @@ public abstract class Spell implements Cloneable {
         }
     }
 
+    /**
+     * finds if the spell is already somewhere in the inventory of the player
+     * @return
+     */
     public boolean alreadyCrafted() {
 
         boolean alreadyCrafted = false;
@@ -246,8 +245,52 @@ public abstract class Spell implements Cloneable {
 
     public abstract int getLvl();
 
-    public void inherit(Spell parent) {
-        this.screen = parent.screen;
+    /**
+     * Base dmg of the spell, according to current masteries
+     * @return
+     */
+    public abstract int getDmg();
+
+
+    /**
+     * Dmg after scaling modifiers, elemental + allDmg
+     * @return
+     */
+    public int getScaledDmg() {
+        float scaledDmg = getDmg();
+        switch(main_element) {
+            case ARCANE -> scaledDmg *= (1 + player.spellbook.arcaneBonusDmg);
+            case FROST -> scaledDmg *= (1 + player.spellbook.frostBonusDmg);
+            case FIRE -> scaledDmg *= (1 + player.spellbook.fireBonusDmg);
+            case LIGHTNING -> scaledDmg *= (1 + player.spellbook.lightningBonusDmg);
+        }
+        if(bonus_element != null) {
+            switch (bonus_element) {
+                case ARCANE -> scaledDmg *= (1 + player.spellbook.arcaneBonusDmg / 2);
+                case FROST -> scaledDmg *= (1 + player.spellbook.frostBonusDmg / 2);
+                case FIRE -> scaledDmg *= (1 + player.spellbook.fireBonusDmg / 2);
+                case LIGHTNING -> scaledDmg *= (1 + player.spellbook.lightningBonusDmg / 2);
+            }
+        }
+        scaledDmg *= (1 + player.spellbook.allBonusDmg);
+        return (int) scaledDmg;
+    }
+
+    public void dealDmg(Monster monster) {
+        float dmg = getScaledDmg();
+        float randomFactor = MathUtils.random(1 - dmgVariance, 1 + dmgVariance);
+        dmg *= randomFactor;
+        monster.hp -= dmg;
+
+        String s = "" + (int)dmg;
+
+        if(dmg_text_on) {
+            FloatingDamage text = screen.displayManager.textManager.pool.getDmgText();
+            Vector2 randomPosition = SpellUtils.getRandomVectorInRadius(monster.body.getPosition(), 0.2f);
+            text.setAll(s, randomPosition.scl(PPM), mainMenuSkin.getFont("DamageNumbers"), Color.RED);
+            screen.displayManager.textManager.addDmgText(text);
+        }
+
     }
 
 }

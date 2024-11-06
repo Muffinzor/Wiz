@@ -9,6 +9,7 @@ public class SettingsPref {
     private static final String MUSIC_KEY = "music_volume";
     private static final String SOUND_KEY = "sound_volume";
     private static final float DEFAULT_VOLUME = 1f;
+    private static final boolean DMG_TEXT_ON = true;
 
     private static Preferences prefs;
 

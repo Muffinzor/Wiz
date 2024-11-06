@@ -61,7 +61,7 @@ public class Overheat_Explosion extends Overheat_Spell {
     }
 
     public void handleCollision(Monster monster) {
-        monster.hp -= dmg;
+        dealDmg(monster);
 
         fireball(monster);
     }
@@ -71,6 +71,7 @@ public class Overheat_Explosion extends Overheat_Spell {
         frame.set(anim.getKeyFrame(stateTime, false));
         frame.setCenter(body.getPosition().x * PPM, body.getPosition().y * PPM);
         frame.setRotation(rotation);
+        frame.setScale(1.2f);
         frame.flip(flipX, flipY);
         screen.centerSort(frame, body.getPosition().y * PPM - 30);
         screen.addSortedSprite(frame);
@@ -146,8 +147,8 @@ public class Overheat_Explosion extends Overheat_Spell {
 
             if(Math.random() >= procRate) {
                 Overheat_TriggerExplosion fireball = new Overheat_TriggerExplosion();
+                fireball.frozenorb = frozenorb;
                 fireball.setElements(this);
-                fireball.frozenorb = true;
                 fireball.targetPosition = monster.body.getPosition();
                 screen.spellManager.toAdd(fireball);
             }
@@ -167,6 +168,7 @@ public class Overheat_Explosion extends Overheat_Spell {
                 proj.targetPosition = SpellUtils.getRandomVectorInRadius(body.getPosition(), 5);
                 proj.spawnPosition = new Vector2(body.getPosition());
                 screen.spellManager.toAdd(proj);
+
             }
         }
 

@@ -23,9 +23,16 @@ public class Spellbook {
     public int chargedbolt_lvl = 5;
     public int thunderstorm_lvl = 1;
 
-    public int arcanemissile_lvl = 1;
+    public int arcanemissile_lvl = 10;
     public int energybeam_lvl = 1;
-    public int rift_lvl = 1;
+    public int rift_lvl = 5;
+
+    public float arcaneBonusDmg;
+    public float frostBonusDmg;
+    public float fireBonusDmg;
+    public float lightningBonusDmg;
+    public float allBonusDmg;
+
 
     public Spellbook() {
         equippedSpells = new ArrayList<>();

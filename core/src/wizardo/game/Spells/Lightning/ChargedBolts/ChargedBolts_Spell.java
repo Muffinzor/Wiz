@@ -1,6 +1,5 @@
 package wizardo.game.Spells.Lightning.ChargedBolts;
 
-import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Spell;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 
@@ -24,7 +23,7 @@ public class ChargedBolts_Spell extends Spell {
 
         duration = 2.5f;
         cooldown = .75f;
-        dmg = 20;
+        baseDmg = 12;
         speed = 70f/PPM;
         bolts = 3;
 
@@ -70,5 +69,12 @@ public class ChargedBolts_Spell extends Spell {
     @Override
     public int getLvl() {
         return player.spellbook.chargedbolt_lvl;
+    }
+
+    @Override
+    public int getDmg() {
+        int dmg = baseDmg;
+        dmg += 4 * getLvl();
+        return dmg;
     }
 }

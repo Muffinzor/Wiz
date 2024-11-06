@@ -159,6 +159,9 @@ public class ChainLightning_Hit extends ChainLightning_Spell {
         }
         Vector2 step = unitDirection.scl(20f / PPM);
         int numLights = (int) distance / 20;
+        if(numLights < 1) {
+            numLights = 1;
+        }
 
         for (int i = 0; i < numLights; i++) {
             Vector2 position = new Vector2(originBody.getPosition()).add(step.x * i, step.y * i);

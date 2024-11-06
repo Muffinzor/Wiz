@@ -1,11 +1,9 @@
 package wizardo.game.Spells.Frost.Icespear;
 
-import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Projectile;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 
 import static wizardo.game.Utils.Constants.PPM;
-import static wizardo.game.Wizardo.currentScreen;
 import static wizardo.game.Wizardo.player;
 
 public class Icespear_Spell extends Spell {
@@ -28,7 +26,7 @@ public class Icespear_Spell extends Spell {
 
         name = "Ice Spear";
 
-        dmg = 50;
+        baseDmg = 32;
         speed = 400f/PPM;
         cooldown = 1.5f;
 
@@ -78,6 +76,14 @@ public class Icespear_Spell extends Spell {
 
         this.maxSplits = parent.maxSplits;
     }
+
+    @Override
+    public int getDmg() {
+        int dmg = baseDmg;
+        dmg += 8 * getLvl();
+        return dmg;
+    }
+
 
     public void setup() {
 

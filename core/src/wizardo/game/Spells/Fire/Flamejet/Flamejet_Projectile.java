@@ -8,7 +8,6 @@ import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.Monster;
 import wizardo.game.Resources.SpellAnims.FlamejetAnims;
 import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Explosion;
-import wizardo.game.Spells.SpellManager;
 import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyFactory;
 
@@ -63,8 +62,8 @@ public class Flamejet_Projectile extends Flamejet_Spell {
     }
 
     public void handleCollision(Monster monster) {
+        dealDmg(monster);
         frostbolts(monster);
-        monster.hp -= dmg;
     }
 
     public void drawFrame() {

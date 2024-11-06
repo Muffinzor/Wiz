@@ -2,7 +2,6 @@ package wizardo.game.Spells.Hybrid.FrostNova;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.Monster;
@@ -54,7 +53,7 @@ public class FrostNova_Explosion extends FrostNova_Spell {
     }
 
     public void handleCollision(Monster monster) {
-        monster.hp -= dmg;
+        dealDmg(monster);
 
         if(monster.freezeImmunityTimer <= 0) {
             monster.applyFreeze(freezeDuration, 1 + freezeDuration * 2);

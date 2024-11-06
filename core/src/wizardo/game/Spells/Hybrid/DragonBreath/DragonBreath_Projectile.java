@@ -53,6 +53,7 @@ public class DragonBreath_Projectile extends DragonBreath_Spell {
     }
 
     public void handleCollision(Monster monster) {
+        dealDmg(monster);
         if(frostbolts) {
             frostbolts(monster);
         }
@@ -118,12 +119,13 @@ public class DragonBreath_Projectile extends DragonBreath_Spell {
             if(body.isActive()) {
                 RoundLight light = screen.lightManager.pool.getLight();
                 float ownAlpha = 0.75f + stateTime * 2;
-                light.setLight(red, green, blue, ownAlpha, 75, body.getPosition());
+                light.setLight(red, green, blue, ownAlpha, 95, body.getPosition());
                 light.dimKill(0.0125f);
                 screen.lightManager.addLight(light);
             }
         }
     }
+
     public void pickAnim() {
         switch(anim_element) {
             case FIRE -> {

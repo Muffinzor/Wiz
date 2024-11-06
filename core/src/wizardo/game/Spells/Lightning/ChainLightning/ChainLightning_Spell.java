@@ -2,12 +2,10 @@ package wizardo.game.Spells.Lightning.ChainLightning;
 
 import com.badlogic.gdx.math.Vector2;
 import wizardo.game.Monsters.Monster;
-import wizardo.game.Spells.Lightning.ChargedBolts.ChargedBolts_Spell;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 import static wizardo.game.Wizardo.currentScreen;
 import static wizardo.game.Wizardo.player;
@@ -28,7 +26,7 @@ public class ChainLightning_Spell extends Spell {
         name = "Chain Lightning";
 
         cooldown = 1.2f;
-        dmg = 35;
+        baseDmg = 35;
 
         main_element = SpellUtils.Spell_Element.LIGHTNING;
 
@@ -106,5 +104,12 @@ public class ChainLightning_Spell extends Spell {
     @Override
     public int getLvl() {
         return player.spellbook.chainlightning_lvl;
+    }
+
+    @Override
+    public int getDmg() {
+        int dmg = baseDmg;
+        dmg += 15 * getLvl();
+        return dmg;
     }
 }

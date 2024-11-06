@@ -4,6 +4,8 @@ import com.badlogic.gdx.math.Vector2;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 
+import static wizardo.game.Wizardo.player;
+
 public class DragonBreath_Spell extends Spell {
 
     public boolean frostbolts;
@@ -13,7 +15,7 @@ public class DragonBreath_Spell extends Spell {
 
         name = "Dragon's Breath";
 
-        dmg = 150;
+        baseDmg = 120;
 
         cooldown = 4f;
 
@@ -44,4 +46,13 @@ public class DragonBreath_Spell extends Spell {
     public int getLvl() {
         return 0;
     }
+
+    @Override
+    public int getDmg() {
+        int dmg = baseDmg;
+        dmg += 15 * player.spellbook.flamejet_lvl;
+        dmg += 15 * player.spellbook.overheat_lvl;
+        return dmg;
+    }
+
 }

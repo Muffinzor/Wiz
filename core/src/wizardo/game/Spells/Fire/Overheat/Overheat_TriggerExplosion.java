@@ -13,6 +13,7 @@ import wizardo.game.Utils.BodyFactory;
 import static wizardo.game.Resources.SpellAnims.IcespearAnims.icespear_anim_fire;
 import static wizardo.game.Resources.SpellAnims.IcespearAnims.icespear_anim_frost;
 import static wizardo.game.Utils.Constants.PPM;
+import static wizardo.game.Wizardo.player;
 import static wizardo.game.Wizardo.world;
 
 public class Overheat_TriggerExplosion extends Spell {
@@ -36,12 +37,15 @@ public class Overheat_TriggerExplosion extends Spell {
 
         radius = 40;
 
+        baseDmg = player.spellbook.fireball_lvl * 35;
+
     }
 
 
     @Override
     public void update(float delta) {
         if(!initialized) {
+
             initialized = true;
             pickAnim();
             createBody();
@@ -69,6 +73,7 @@ public class Overheat_TriggerExplosion extends Spell {
     }
 
     public void handleCollision(Monster monster) {
+        dealDmg(monster);
         if(frozenorb && monster.freezeImmunityTimer <= 0) {
             monster.applyFreeze(2, 4);
         }
@@ -108,5 +113,10 @@ public class Overheat_TriggerExplosion extends Spell {
     @Override
     public int getLvl() {
         return 0;
+    }
+
+    @Override
+    public int getDmg() {
+        return player.spellbook.fireball_lvl * 25;
     }
 }

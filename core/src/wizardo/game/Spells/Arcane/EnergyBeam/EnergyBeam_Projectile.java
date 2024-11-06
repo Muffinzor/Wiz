@@ -1,16 +1,19 @@
 package wizardo.game.Spells.Arcane.EnergyBeam;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Lighting.RoundLight;
+import wizardo.game.Monsters.Monster;
+import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Explosion;
+import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyFactory;
 
-import static wizardo.game.Resources.SpellAnims.EnergyBeamAnims.arcaneEndTile;
-import static wizardo.game.Resources.SpellAnims.EnergyBeamAnims.arcaneTile;
+import static wizardo.game.Resources.SpellAnims.EnergyBeamAnims.*;
+import static wizardo.game.Spells.SpellUtils.Spell_Element.*;
 import static wizardo.game.Utils.Constants.PPM;
-import static wizardo.game.Wizardo.currentScreen;
-import static wizardo.game.Wizardo.world;
+import static wizardo.game.Wizardo.*;
 
 public class EnergyBeam_Projectile extends EnergyBeam_Spell {
 
@@ -30,13 +33,13 @@ public class EnergyBeam_Projectile extends EnergyBeam_Spell {
 
         screen = currentScreen;
 
-        bodyTile = arcaneTile;
-        endTile = arcaneEndTile;
+
 
     }
 
     public void update(float delta) {
         if(!initialized) {
+            pickAnim();
             initialized = true;
             createBody();
         }
@@ -56,13 +59,17 @@ public class EnergyBeam_Projectile extends EnergyBeam_Spell {
         }
     }
 
+    public void handleCollision(Monster monster) {
+        dealDmg(monster);
+        frostbolts(monster);
+    }
+
     public void drawFrame() {
 
         float length = body.getPosition().dst(spawnPosition.x, spawnPosition.y);
         Vector2 originPosition = new Vector2 (spawnPosition.cpy().add(direction.cpy().nor().scl(7.5f/PPM)));
         Vector2 startFrame = new Vector2 (spawnPosition.cpy().add(direction.cpy().nor().scl(-12.5f/PPM)));
 
-        System.out.println(length);
 
         //Start of laser
         Sprite frame = screen.getSprite();
@@ -128,9 +135,63 @@ public class EnergyBeam_Projectile extends EnergyBeam_Spell {
     public void createLight(float delta) {
         if(!hasCollided && delta > 0) {
             RoundLight light = screen.lightManager.pool.getLight();
-            light.setLight(0.4f, 0.1f, 0.8f, 0.7f, 125, body.getPosition());
+            light.setLight(red, green, blue, lightAlpha, 125, body.getPosition());
             screen.lightManager.addLight(light);
             light.dimKill(0.01f);
+        }
+    }
+
+    public void pickAnim() {
+        lightAlpha = 0.7f;
+        switch (anim_element) {
+            case ARCANE -> {
+                bodyTile = arcaneTile;
+                endTile = arcaneEndTile;
+                red = 0.4f;
+                green = 0.1f;
+                blue = 0.8f;
+            }
+            case FIRE -> {
+                bodyTile = fireTile;
+                endTile = fireEndTile;
+                red = 0.6f;
+                green = 0.2f;
+            }
+            case LIGHTNING -> {
+                bodyTile = lightningTile;
+                endTile = lightningEndTile;
+                red = 0.4f;
+                green = 0.15f;
+            }
+            case FROST -> {
+                bodyTile = frostTile;
+                endTile = frostEndTile;
+                blue = 0.8f;
+                green = 0.2f;
+            }
+        }
+    }
+
+    public void frostbolts(Monster monster) {
+        if(frostbolt) {
+            int random = MathUtils.random(1,3);
+
+            monster.applySlow(3, 0.7f);
+
+            float procTreshold = .825f - .025f * player.spellbook.frostbolt_lvl;
+            if (Math.random() > procTreshold) {
+                Vector2 randomSpawn = SpellUtils.getRandomVectorInRadius(monster.body.getPosition(), 0.75f);
+
+                Frostbolt_Explosion explosion = new Frostbolt_Explosion();
+                explosion.setElements(this);
+                switch(random) {
+                    case 1 -> explosion.anim_element = FIRE;
+                    case 2 -> explosion.anim_element = FROST;
+                    case 3 -> explosion.anim_element = LIGHTNING;
+                }
+                explosion.targetPosition = randomSpawn;
+                screen.spellManager.toAdd(explosion);
+            }
         }
     }
 }

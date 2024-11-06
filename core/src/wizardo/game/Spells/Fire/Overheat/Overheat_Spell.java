@@ -3,7 +3,6 @@ package wizardo.game.Spells.Fire.Overheat;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 
-import static wizardo.game.Wizardo.currentScreen;
 import static wizardo.game.Wizardo.player;
 
 public class Overheat_Spell extends Spell {
@@ -16,9 +15,9 @@ public class Overheat_Spell extends Spell {
 
         name = "Overheat";
 
-        radius = 175;
+        radius = 200;
         cooldown = 4f;
-        dmg = 100;
+        baseDmg = 125;
 
         main_element = SpellUtils.Spell_Element.FIRE;
     }
@@ -45,5 +44,12 @@ public class Overheat_Spell extends Spell {
     @Override
     public int getLvl() {
         return player.spellbook.overheat_lvl;
+    }
+
+    @Override
+    public int getDmg() {
+        int dmg = baseDmg;
+        dmg += 25 * getLvl();
+        return dmg;
     }
 }

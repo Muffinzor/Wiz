@@ -57,7 +57,7 @@ public class Fireball_Explosion extends Fireball_Spell {
     }
 
     public void handleCollision(Monster monster) {
-        monster.hp -= dmg;
+        dealDmg(monster);
 
         frozenOrb(monster);
     }

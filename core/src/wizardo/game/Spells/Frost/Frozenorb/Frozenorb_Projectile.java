@@ -8,11 +8,10 @@ import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.Monster;
 import wizardo.game.Resources.SpellAnims.FrozenorbAnims;
 import wizardo.game.Screens.Battle.BattleScreen;
-import wizardo.game.Spells.Arcane.ArcaneMissiles.ArcaneMissile_Spell;
-import wizardo.game.Spells.Arcane.EnergyBeam.EnergyBeam_Spell;
 import wizardo.game.Spells.Fire.Flamejet.Flamejet_Spell;
 import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Spell;
 import wizardo.game.Spells.Frost.Icespear.Icespear_Spell;
+import wizardo.game.Spells.Hybrid.FrostNova.FrostNova_Explosion;
 import wizardo.game.Spells.Lightning.ChainLightning.ChainLightning_Spell;
 import wizardo.game.Spells.Lightning.ChargedBolts.ChargedBolts_Spell;
 import wizardo.game.Spells.Spell;
@@ -34,6 +33,8 @@ public class Frozenorb_Projectile extends Frozenorb_Spell {
 
     int castCounter = 0;
     float castInterval = 0.05f;
+
+    boolean frostNovaSpent;
 
     public Frozenorb_Projectile(Vector2 spawnPosition, Vector2 targetPosition) {
         this.spawnPosition = new Vector2(spawnPosition);
@@ -58,6 +59,10 @@ public class Frozenorb_Projectile extends Frozenorb_Spell {
         adjustMovement();
         adjustLight();
         adjustScale();
+
+        if(frostnova && scale < 0.5f) {
+            frostNova();
+        }
 
         if(nested_spell != null && scale > 0.75f && delta > 0) {
             shootProjectiles();
@@ -128,6 +133,7 @@ public class Frozenorb_Projectile extends Frozenorb_Spell {
     }
 
     public void areaDmg(float delta) {
+
         if(delta > 0) {
             frameCounter++;
             if (frameCounter == 5) {
@@ -136,7 +142,7 @@ public class Frozenorb_Projectile extends Frozenorb_Spell {
                 BattleScreen screen = (BattleScreen) currentScreen;
                 for (Monster monster : screen.monsterManager.liveMonsters) {
                     if (monster.body.getPosition().dst(body.getPosition()) < radius) {
-                        monster.hp -= dmg * 5;
+                        monster.hp -= baseDmg/12f;
                     }
                 }
             }
@@ -159,7 +165,6 @@ public class Frozenorb_Projectile extends Frozenorb_Spell {
     public void setProj(Spell proj) {
 
         proj.setElements(this);
-        proj.screen = screen;
         proj.originBody = body;
         proj.spawnPosition = body.getPosition();
         proj.targetPosition = SpellUtils.getRandomVectorInRadius(body.getPosition(), 2.5f);
@@ -203,6 +208,7 @@ public class Frozenorb_Projectile extends Frozenorb_Spell {
     public float getInterval() {
         float interval = 1;
         float level = (getLvl() + nested_spell.getLvl()) / 2f;
+
         if(nested_spell instanceof ChainLightning_Spell) {
             interval = 0.65f - 0.05f * level;
         }
@@ -215,6 +221,31 @@ public class Frozenorb_Projectile extends Frozenorb_Spell {
         if(nested_spell instanceof Flamejet_Spell) {
             interval = 0.15f - 0.0125f * level;
         }
+        if(nested_spell instanceof Icespear_Spell) {
+            interval = 0.15f - 0.01f * level;
+        }
+
         return interval;
+    }
+
+    public void frostNova() {
+        if(!frostNovaSpent) {
+            FrostNova_Explosion nova = new FrostNova_Explosion();
+            nova.setElements(this);
+            nova.targetPosition = new Vector2(body.getPosition());
+            screen.spellManager.toAdd(nova);
+
+            if(nested_spell instanceof Frostbolt_Spell) {
+                nova.frostbolts = true;
+            } else if(nested_spell instanceof Icespear_Spell) {
+                int projs = 10 + nested_spell.getLvl() * 2;
+                for (int i = 0; i < projs; i++) {
+                    Spell spear = nested_spell.clone();
+                    setProj(spear);
+                    screen.spellManager.toAdd(spear);
+                }
+            }
+            frostNovaSpent = true;
+        }
     }
 }

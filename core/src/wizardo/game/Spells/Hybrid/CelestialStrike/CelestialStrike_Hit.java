@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import wizardo.game.Lighting.RoundLight;
+import wizardo.game.Monsters.Monster;
 import wizardo.game.Resources.SpellAnims.CelestialStrikeAnims;
 import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Explosion;
 import wizardo.game.Spells.Frost.Frozenorb.Frozenorb_Spell;
@@ -39,6 +40,10 @@ public class CelestialStrike_Hit extends CelestialStrike_Spell {
         if(stateTime >= anim.getAnimationDuration()) {
             screen.spellManager.toRemove(this);
         }
+    }
+
+    public void handleCollision(Monster monster) {
+        dealDmg(monster);
     }
 
     public void drawSprite() {

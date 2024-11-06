@@ -198,11 +198,27 @@ public class FrostFire_Spells {
         frostfire18.spellParts.add(FROSTBOLT);
         frostfireSpells[18] = frostfire18;
 
-        // 17. Flamejet + Frozenorb + Icespear
+        // 19. Flamejet + Frozenorb + Icespear
 
-        // 18. Overheat + Frozenorb + Icespear
+        Frozenorb_Spell frostfire19 = new Frozenorb_Spell();
+        Icespear_Spell spear19 = new Icespear_Spell();
+        spear19.flamejet = true;
+        frostfire19.anim_element = FIRE;
+        frostfire19.nested_spell = spear19;
+        frostfire19.spellParts.add(FLAMEJET);
+        frostfire19.spellParts.add(FROZENORB);
+        frostfire19.spellParts.add(ICESPEAR);
+        frostfireSpells[19] = frostfire19;
 
-        // 19. Overheat + Frozenorb + Frostbolts
+        // 20. Overheat + Frozenorb + Icespear
+
+        Frozenorb_Spell frostfire20 = new Frozenorb_Spell();
+        frostfire20.nested_spell = new Icespear_Spell();
+        frostfire20.frostnova = true;
+        frostfire20.anim_element = FROST;
+        frostfireSpells[20] = frostfire20;
+
+        // 21. Overheat + Frozenorb + Frostbolts
 
         // 20. Overheat + Icespear + Frostbolts
 

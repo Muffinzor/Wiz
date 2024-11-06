@@ -7,7 +7,12 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.Monster;
+import wizardo.game.Spells.Spell;
+import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyFactory;
+
+import java.util.ArrayList;
+
 import static wizardo.game.Resources.SpellAnims.FrostboltAnims.frostbolt_anim_frost;
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.currentScreen;
@@ -21,6 +26,9 @@ public class Frostbolt_Projectile extends Frostbolt_Spell{
     private RoundLight light;
     private float rotation;
     private Vector2 direction;
+
+    Monster targetMonster;
+    boolean targetLocked;
 
     public Frostbolt_Projectile(Vector2 spawnPosition, Vector2 targetPosition) {
 
@@ -50,6 +58,10 @@ public class Frostbolt_Projectile extends Frostbolt_Spell{
         drawFrame();
         updateLight();
 
+        if(missile) {
+            arcaneTarget();
+        }
+
         if(hasCollided) {
 
             Frostbolt_Explosion explosion = new Frostbolt_Explosion();
@@ -62,7 +74,6 @@ public class Frostbolt_Projectile extends Frostbolt_Spell{
             screen.spellManager.toRemove(this);
 
         } else if(stateTime > 2) {
-
             alpha -= 0.02f;
 
             if(alpha <= 0) {
@@ -127,6 +138,59 @@ public class Frostbolt_Projectile extends Frostbolt_Spell{
         screen.displayManager.spriteRenderer.regular_sorted_sprites.add(frame);
 
     }
+
+    public void arcaneTarget() {
+
+        if(stateTime > 0.1f) {
+
+            ArrayList<Monster> inRange = SpellUtils.findMonstersInRangeOfVector(body.getPosition(), 8);
+
+            if(!targetLocked && !inRange.isEmpty()) {
+                int randomIndex = (int) (Math.random() * inRange.size());
+                targetMonster =  inRange.get(randomIndex);
+                targetLocked = true;
+
+            } else if (targetLocked && targetMonster != null && targetMonster.hp > 0) {
+                Vector2 targetPosition = targetMonster.body.getPosition();
+                Vector2 missilePosition = body.getPosition();
+
+                Vector2 targetDirection = new Vector2(targetPosition).sub(missilePosition);
+                if(targetDirection.len() > 0) {
+                    targetDirection.nor();
+                } else {
+                    targetDirection = new Vector2 (1,0);
+                }
+                float targetAngle = targetDirection.angleDeg();
+                float currentAngle = direction.angleDeg();
+                float angleDiff = targetAngle - currentAngle;
+
+                // Ensure the shortest rotation direction
+                if (angleDiff > 180) {
+                    angleDiff -= 360;
+                } else if (angleDiff < -180) {
+                    angleDiff += 360;
+                }
+
+                // Clamp the angle difference to the maximum allowed increment (5 degrees)
+                float maxRotationPerFrame = 5f;
+                float rotationStep = MathUtils.clamp(angleDiff, -maxRotationPerFrame, maxRotationPerFrame);
+
+                // Apply the rotation step to the current direction
+                direction.rotateDeg(rotationStep);
+
+                if (direction.len() > 0) {
+                    direction.nor().scl(speed);
+                } else {
+                    direction = new Vector2(1,0);
+                }
+                body.setLinearVelocity(direction);
+                rotation = direction.angleDeg();
+            } else if (targetMonster != null && targetMonster.hp <= 0) {
+                targetLocked = false;
+            }
+        }
+    }
+
 
     public void dispose() {
 

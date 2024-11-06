@@ -6,13 +6,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.Monster;
-import wizardo.game.Resources.SpellAnims.IcespearAnims;
 import wizardo.game.Spells.Fire.Fireball.Fireball_Explosion;
 import wizardo.game.Spells.Fire.Flamejet.Flamejet_Spell;
 import wizardo.game.Spells.Fire.Overheat.Overheat_miniExplosion;
-import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Explosion;
 import wizardo.game.Spells.Hybrid.CelestialStrike.CelestialStrike_Hit;
-import wizardo.game.Spells.Hybrid.CelestialStrike.CelestialStrike_Spell;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyFactory;
@@ -71,7 +68,7 @@ public class Icespear_Projectile extends Icespear_Spell {
 
     public void handleCollision(Monster monster) {
 
-        monster.hp -= dmg;
+        dealDmg(monster);
 
         if(timerBeforeSplit >= minimumTimeForSplit) {
             canSplit = true;
