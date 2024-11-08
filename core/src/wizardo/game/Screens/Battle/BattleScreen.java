@@ -15,6 +15,7 @@ import wizardo.game.Screens.BaseScreen;
 import wizardo.game.Spells.Fire.Fireball.Fireball_Spell;
 import wizardo.game.Spells.Frost.Icespear.Icespear_Spell;
 import wizardo.game.Spells.Hybrid.DragonBreath.DragonBreath_Spell;
+import wizardo.game.Spells.Hybrid.Orbit.Orbit_Spell;
 import wizardo.game.Spells.SpellManager;
 import wizardo.game.Wizardo;
 
@@ -63,7 +64,7 @@ public class BattleScreen extends BaseScreen {
 
         cursorTexturePath = "Cursors/Battle_Cursor.png";
 
-        for (int i = 0; i < 500; i++) {
+        for (int i = 0; i < 150; i++) {
             Monster monster = new TEST_MONSTER(this, new Vector2((float) (Math.random() * 3000/32), (float) (Math.random() * 3000/32)));
             monsterManager.addMonster(monster);
         }
@@ -73,7 +74,7 @@ public class BattleScreen extends BaseScreen {
     @Override
     public void render(float delta) {
         if(!initialized) {
-            player.spellbook.equippedSpells.add(frostarcaneSpells[2]);
+            player.spellbook.equippedSpells.add(frostarcaneSpells[11]);
             initialized = true;
         }
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);

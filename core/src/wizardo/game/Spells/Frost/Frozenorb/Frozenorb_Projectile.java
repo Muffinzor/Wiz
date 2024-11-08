@@ -8,6 +8,7 @@ import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.Monster;
 import wizardo.game.Resources.SpellAnims.FrozenorbAnims;
 import wizardo.game.Screens.Battle.BattleScreen;
+import wizardo.game.Spells.Arcane.ArcaneMissiles.ArcaneMissile_Spell;
 import wizardo.game.Spells.Fire.Flamejet.Flamejet_Spell;
 import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Spell;
 import wizardo.game.Spells.Frost.Icespear.Icespear_Spell;
@@ -73,7 +74,7 @@ public class Frozenorb_Projectile extends Frozenorb_Spell {
     public void adjustLight() {
         light.pointLight.setPosition(body.getPosition().x * PPM, body.getPosition().y * PPM);
         if(scale < 1 && scale > 0.97) {
-            light.dimKill(0.02f);
+            light.dimKill(0.01f);
         }
     }
 
@@ -223,6 +224,9 @@ public class Frozenorb_Projectile extends Frozenorb_Spell {
         }
         if(nested_spell instanceof Icespear_Spell) {
             interval = 0.15f - 0.01f * level;
+        }
+        if(nested_spell instanceof ArcaneMissile_Spell) {
+            interval = 0.3f - 0.0125f * level;
         }
 
         return interval;

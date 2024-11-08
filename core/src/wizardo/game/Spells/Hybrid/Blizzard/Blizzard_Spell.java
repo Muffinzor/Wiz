@@ -18,6 +18,9 @@ public class Blizzard_Spell extends Spell {
 
     public boolean frostbolts;
     public boolean frozenorb;
+    public boolean rift;
+
+    public Vector2 blizzard_center;
 
     public Blizzard_Spell() {
 
@@ -29,7 +32,7 @@ public class Blizzard_Spell extends Spell {
         baseDmg = 24;
 
         blizz_radius = 20;
-        radius = 40;
+        radius = 25;
 
         interval = 1/frequency;
 
@@ -43,7 +46,12 @@ public class Blizzard_Spell extends Spell {
 
         if(!initialized && delta > 0) {
             initialized = true;
-            screen = currentScreen;
+            if(rift) {
+                blizzard_center = getTargetPosition();
+                blizz_radius = 5;
+            } else {
+                blizzard_center = player.pawn.getPosition();
+            }
         }
 
         stateTime += delta;
@@ -54,7 +62,7 @@ public class Blizzard_Spell extends Spell {
             int attempts = 0;
             while (randomTarget == null && attempts < 10) {
                 attempts++;
-                Vector2 attempt = SpellUtils.getRandomVectorInRadius(player.pawn.getPosition(), blizz_radius);
+                Vector2 attempt = SpellUtils.getRandomVectorInRadius(blizzard_center, blizz_radius);
                 if (!isPositionOverlappingWithObstacle(attempt)) {
                     randomTarget = attempt;
                 }

@@ -27,6 +27,9 @@ public class ArcaneMissile_Spell extends Spell {
         if(delta > 0) {
 
             int missiles = 2;
+            if(originBody != player.pawn.body) {
+                missiles = 1;
+            }
 
             for (int i = 0; i < missiles; i++) {
                 ArcaneMissile_Projectile missile = new ArcaneMissile_Projectile(getSpawnPosition(), getTargetPosition());

@@ -32,6 +32,7 @@ public class Frost_Spells {
 
         Icespear_Spell frost3 = new Icespear_Spell();
         frost3.anim_element = SpellUtils.Spell_Element.FROST;
+        frost3.frostbolts = true;
         frost3.spellParts.add(ICESPEAR);
         frost3.spellParts.add(FROSTBOLT);
         frostspells[3] = frost3;

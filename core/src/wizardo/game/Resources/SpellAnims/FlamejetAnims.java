@@ -19,6 +19,11 @@ public class FlamejetAnims {
     public static String flamejet_frost_atlas_path = "Spells/Flamejet/frost1.atlas";
     public static String flamejet_frost_atlas_path2 = "Spells/Flamejet/frost2.atlas";
 
+
+    public static Animation<Sprite> flamejet_arcane_anim;
+    public static String flamejet_arcane_atlas_path = "Spells/Flamejet/arcane1.atlas";
+
+
     public static void loadAnimations() {
 
         TextureAtlas fire_atlas = assetManager.get(flamejet_fire_atlas_path, TextureAtlas.class);
@@ -52,6 +57,15 @@ public class FlamejetAnims {
         }
         flamejet_frost_anim2 = new Animation<>(0.012f, frost_frames2);
 
+
+        TextureAtlas arcane_atlas = assetManager.get(flamejet_arcane_atlas_path, TextureAtlas.class);
+
+        Sprite[] arcane_frames = new Sprite[63];
+        for (int i = 0; i < arcane_frames.length; i++) {
+            arcane_frames[i] = arcane_atlas.createSprite("arcane" + (i+1));
+        }
+        flamejet_arcane_anim = new Animation<>(0.012f, arcane_frames);
+
     }
 
     public static void loadAtlas() {
@@ -59,5 +73,6 @@ public class FlamejetAnims {
         assetManager.load(flamejet_fire_atlas_path2, TextureAtlas.class);
         assetManager.load(flamejet_frost_atlas_path, TextureAtlas.class);
         assetManager.load(flamejet_frost_atlas_path2, TextureAtlas.class);
+        assetManager.load(flamejet_arcane_atlas_path, TextureAtlas.class);
     }
 }

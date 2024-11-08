@@ -1,4 +1,4 @@
-package wizardo.game.Spells.Arcane.EnergyBeam;
+package wizardo.game.Spells.Hybrid.EnergyRain;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
@@ -6,14 +6,13 @@ import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.Monster;
 import wizardo.game.Resources.SpellAnims.OverheatAnims;
-import wizardo.game.Spells.Hybrid.EnergyRain.EnergyRain_Spell;
 import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyFactory;
 
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.world;
 
-public class EnergyBeam_Explosion extends EnergyRain_Spell {
+public class EnergyRain_Explosion extends EnergyRain_Spell {
 
     Body body;
     RoundLight light;
@@ -22,7 +21,7 @@ public class EnergyBeam_Explosion extends EnergyRain_Spell {
     boolean flipX;
     boolean flipY;
 
-    public EnergyBeam_Explosion() {
+    public EnergyRain_Explosion() {
 
         anim_element = SpellUtils.Spell_Element.FROST;
 
@@ -63,7 +62,7 @@ public class EnergyBeam_Explosion extends EnergyRain_Spell {
         Sprite frame = screen.getSprite();
         frame.set(anim.getKeyFrame(stateTime, false));
         frame.setCenter(body.getPosition().x * PPM, body.getPosition().y * PPM);
-        frame.setScale(1.35f);
+        frame.setScale(1.75f);
         frame.setRotation(rotation);
         frame.flip(flipX, flipY);
         screen.centerSort(frame, body.getPosition().y * PPM - 10);

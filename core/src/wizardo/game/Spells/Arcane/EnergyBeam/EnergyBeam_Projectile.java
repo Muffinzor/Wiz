@@ -22,6 +22,7 @@ public class EnergyBeam_Projectile extends EnergyBeam_Spell {
     float rotation;
 
     Body body;
+    Body frozenorbBody;
     Sprite bodyTile;
     Sprite endTile;
     float alpha = 1;
@@ -32,8 +33,6 @@ public class EnergyBeam_Projectile extends EnergyBeam_Spell {
         this.targetPosition = new Vector2(targetPosition);
 
         screen = currentScreen;
-
-
 
     }
 
@@ -48,6 +47,7 @@ public class EnergyBeam_Projectile extends EnergyBeam_Spell {
 
         drawFrame();
         createLight(delta);
+        frozenOrbBodies();
 
         if(stateTime > 0.2f && delta > 0) {
             alpha -= 0.03f;
@@ -122,14 +122,6 @@ public class EnergyBeam_Projectile extends EnergyBeam_Spell {
         Vector2 velocity = direction.cpy().scl(150);
         body.setLinearVelocity(velocity);
 
-        /**
-        if(frozenorb) {
-            float rad = 15 + 10 * player.spellbook.frozenorbLvl;
-            frozenorbBody = BodyFactory.spellLightBody(world, bodySpawn, rad, 0, 0, false, true);
-            frozenorbBody.setUserData(this);
-            frozenorbBody.setLinearVelocity(velocity);
-        }
-         */
     }
 
     public void createLight(float delta) {
@@ -138,6 +130,14 @@ public class EnergyBeam_Projectile extends EnergyBeam_Spell {
             light.setLight(red, green, blue, lightAlpha, 125, body.getPosition());
             screen.lightManager.addLight(light);
             light.dimKill(0.01f);
+        }
+    }
+
+    public void frozenOrbBodies() {
+        if(frozenorb) {
+            EnergyBeam_FreezeBody freezeBody = new EnergyBeam_FreezeBody();
+            freezeBody.targetPosition = body.getPosition();
+            screen.spellManager.toAdd(freezeBody);
         }
     }
 

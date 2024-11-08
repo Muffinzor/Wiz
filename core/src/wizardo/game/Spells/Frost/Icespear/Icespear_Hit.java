@@ -50,6 +50,12 @@ public class Icespear_Hit extends Icespear_Spell {
                 red = 0.7f;
                 green = 0.3f;
             }
+            case ARCANE -> {
+                anim = icespear_hit_anim_arcane;
+                red = 0.2f;
+                green = 0.3f;
+                blue = 0.75f;
+            }
         }
     }
     public void createLight() {

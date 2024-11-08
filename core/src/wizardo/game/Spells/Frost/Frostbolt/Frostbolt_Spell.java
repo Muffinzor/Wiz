@@ -11,6 +11,7 @@ public class Frostbolt_Spell extends Spell {
     public int projectiles = 3;
 
     public boolean missile;
+    public boolean rifts;
 
     public Frostbolt_Spell() {
 
@@ -36,6 +37,7 @@ public class Frostbolt_Spell extends Spell {
             Frostbolt_Projectile bolt = new Frostbolt_Projectile(getSpawnPosition(), getTargetPosition());
             bolt.inherit(this);
             bolt.missile = missile;
+            bolt.rifts = rifts;
             currentScreen.spellManager.toAdd(bolt);
             currentScreen.spellManager.toRemove(this);
         }

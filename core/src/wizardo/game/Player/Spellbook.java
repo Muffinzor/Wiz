@@ -1,5 +1,6 @@
 package wizardo.game.Player;
 
+import wizardo.game.Spells.Hybrid.Orbit.Orbit_Spell;
 import wizardo.game.Spells.Spell;
 
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ public class Spellbook {
 
     public int frostbolt_lvl = 3;
     public int icespear_lvl = 1;
-    public int frozenorb_lvl = 5;
+    public int frozenorb_lvl = 10;
 
     public int fireball_lvl = 3;
     public int flamejet_lvl = 5;
@@ -37,5 +38,14 @@ public class Spellbook {
     public Spellbook() {
         equippedSpells = new ArrayList<>();
         knownSpells = new ArrayList<>();
+    }
+
+    public boolean orbitIsEquipped() {
+        for(Spell spell : equippedSpells) {
+            if(spell instanceof Orbit_Spell) {
+                return true;
+            }
+        }
+        return false;
     }
 }

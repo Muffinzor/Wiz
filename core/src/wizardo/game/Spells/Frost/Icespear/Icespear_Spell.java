@@ -16,10 +16,12 @@ public class Icespear_Spell extends Spell {
     int maxCollisions = 5;
 
     public boolean celestialStrike;
-
+    public boolean arcaneMissile;
     public boolean flamejet;
     public boolean frostbolts;
     public boolean fireball;
+    public boolean beam;
+    public boolean rift;
     public boolean overheat; //for Icespear+Overheat+Fireball
 
     public Icespear_Spell() {
@@ -67,10 +69,13 @@ public class Icespear_Spell extends Spell {
 
     public void inherit(Icespear_Spell parent) {
         this.nested_spell = parent.nested_spell;
+        this.arcaneMissile = parent.arcaneMissile;
         this.fireball = parent.fireball;
         this.overheat = parent.overheat;
         this.celestialStrike = parent.celestialStrike;
         this.flamejet = parent.flamejet;
+        this.beam = parent.beam;
+        this.rift = parent.rift;
         this.frostbolts = parent.frostbolts;
         this.setElements(parent);
 

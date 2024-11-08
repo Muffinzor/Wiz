@@ -6,16 +6,20 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.Monster;
+import wizardo.game.Spells.Arcane.Rifts.Rift_Zone;
+import wizardo.game.Spells.Arcane.Rifts.Rifts_Spell;
 import wizardo.game.Spells.Fire.Fireball.Fireball_Explosion;
 import wizardo.game.Spells.Fire.Flamejet.Flamejet_Spell;
 import wizardo.game.Spells.Fire.Overheat.Overheat_miniExplosion;
+import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Explosion;
 import wizardo.game.Spells.Hybrid.CelestialStrike.CelestialStrike_Hit;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyFactory;
 
-import static wizardo.game.Resources.SpellAnims.IcespearAnims.icespear_anim_fire;
-import static wizardo.game.Resources.SpellAnims.IcespearAnims.icespear_anim_frost;
+import java.util.ArrayList;
+
+import static wizardo.game.Resources.SpellAnims.IcespearAnims.*;
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.*;
 
@@ -66,6 +70,9 @@ public class Icespear_Projectile extends Icespear_Spell {
         }
     }
 
+    /**
+     * BESOIN FAIRE PROC RATE
+     */
     public void handleCollision(Monster monster) {
 
         dealDmg(monster);
@@ -93,6 +100,11 @@ public class Icespear_Projectile extends Icespear_Spell {
                 }
             }
         }
+
+        rift(monster);
+        frostbolts();
+
+
     }
 
     public void split() {
@@ -103,11 +115,11 @@ public class Icespear_Projectile extends Icespear_Spell {
             overheatSplit();
         } else if(fireball && currentSplits == 2) {
             fireballSplit();
+        } else if(arcaneMissile) {
+            arcaneSplit();
         } else {
             normalSplit();
         }
-
-
     }
 
     public void normalSplit() {
@@ -129,12 +141,39 @@ public class Icespear_Projectile extends Icespear_Spell {
         }
     }
 
+    public void arcaneSplit() {
+        int shards = 2;
+        ArrayList<Monster> inRange = SpellUtils.findMonstersInRangeOfVector(body.getPosition(), 5);
+        inRange.remove(splitMonster);
+        if(!inRange.isEmpty()) {
+            for (int i = 0; i < shards; i++) {
+                int index = (int) (Math.random() * inRange.size());
+                Monster target = inRange.get(index);
+
+                Icespear_Projectile spear = new Icespear_Projectile(body.getPosition(), target.body.getPosition());
+
+                spear.currentSplits = currentSplits;
+                spear.stateTime = stateTime;
+                spear.setNextSpear(this);
+                screen.spellManager.toAdd(spear);
+
+                Vector2 direction = new Vector2(MathUtils.cosDeg(rotation), MathUtils.sinDeg(rotation));
+                flamejetSplit(direction);
+
+            }
+        }
+    }
+
     public void drawFrame() {
+
 
         Sprite frame = screen.displayManager.spriteRenderer.pool.getSprite();
         frame.set(anim.getKeyFrame(stateTime, true));
         frame.setCenter(body.getPosition().x * PPM, body.getPosition().y * PPM);
         frame.rotate(rotation + 180);
+        if(beam) {
+            frame.setScale(2.5f);
+        }
         screen.displayManager.spriteRenderer.regular_sorted_sprites.add(frame);
 
     }
@@ -151,6 +190,12 @@ public class Icespear_Projectile extends Icespear_Spell {
                 red = 0.7f;
                 green = 0.3f;
             }
+            case ARCANE -> {
+                anim = icespear_anim_arcane;
+                red = 0.2f;
+                green = 0.3f;
+                blue = 0.75f;
+            }
         }
     }
 
@@ -163,19 +208,32 @@ public class Icespear_Projectile extends Icespear_Spell {
             direction = new Vector2(1,0);
         }
 
+        int radius = 8;
+        float actualSpeed = speed;
+        if(beam) {
+            radius = 20;
+            actualSpeed += actualSpeed/2;
+        }
+
         Vector2 offset = new Vector2(direction.cpy().scl(1));
         Vector2 adjustedSpawn = new Vector2(spawnPosition.add(offset));
-        body = BodyFactory.spellProjectileCircleBody(adjustedSpawn, 8, true);
+        body = BodyFactory.spellProjectileCircleBody(adjustedSpawn, radius, true);
         body.setUserData(this);
 
-        Vector2 velocity = direction.scl(speed);
+
+        Vector2 velocity = direction.scl(actualSpeed);
         body.setLinearVelocity(velocity);
         rotation = velocity.angleDeg();
     }
 
     public void createLight() {
+        int radius = 25;
+        if(beam) {
+            radius = 75;
+        }
+
         light = screen.lightManager.pool.getLight();
-        light.setLight(red,green,blue,1,25, body.getPosition());
+        light.setLight(red,green,blue,1,radius, body.getPosition());
         light.toLightManager();
     }
 
@@ -226,5 +284,32 @@ public class Icespear_Projectile extends Icespear_Spell {
         explosion.fireball = true;
         explosion.targetPosition = new Vector2(body.getPosition());
         screen.spellManager.toAdd(explosion);
+    }
+
+    public void rift(Monster monster) {
+        if(rift) {
+            float procTreshold = 0.833f - .033f * player.spellbook.rift_lvl;
+
+            if(Math.random() >= procTreshold) {
+                Rift_Zone rift = new Rift_Zone(body.getPosition());
+                rift.frostbolt = frostbolts;
+                //rift.frozenorb = frozenrift;
+                rift.setElements(this);
+                screen.spellManager.toAdd(rift);
+            }
+        }
+    }
+
+    public void frostbolts() {
+        if(frostbolts) {
+            float procTreshold = 0.85f - .05f * player.spellbook.frostbolt_lvl;
+
+            if(Math.random() >= procTreshold) {
+                Frostbolt_Explosion explosion = new Frostbolt_Explosion();
+                explosion.targetPosition = new Vector2(body.getPosition());
+                explosion.setElements(this);
+                screen.spellManager.toAdd(explosion);
+            }
+        }
     }
 }

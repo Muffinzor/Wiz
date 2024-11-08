@@ -139,8 +139,13 @@ public abstract class Monster {
 
 
     public void applyFreeze(float duration, float immunity) {
-        freezeTimer = duration;
-        freezeImmunityTimer = immunity;
+        if(freezeImmunityTimer <= 0) {
+            freezeTimer = duration;
+            freezeImmunityTimer = immunity;
+        } else {
+            slowedTimer = duration;
+            slowRatio = 0.75f;
+        }
     }
 
     public abstract void initialize();

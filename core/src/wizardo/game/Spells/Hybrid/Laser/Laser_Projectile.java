@@ -10,6 +10,7 @@ import wizardo.game.Spells.Arcane.Rifts.Rift_Zone;
 import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Explosion;
 import wizardo.game.Utils.BodyFactory;
 
+import static wizardo.game.Spells.SpellUtils.Spell_Element.ARCANE;
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.player;
 
@@ -28,7 +29,7 @@ public class Laser_Projectile extends Laser_Spell {
     float rotation;
 
     public Laser_Projectile() {
-
+        main_element = ARCANE;
     }
 
     public void update(float delta) {

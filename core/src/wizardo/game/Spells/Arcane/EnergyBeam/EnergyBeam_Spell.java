@@ -9,6 +9,7 @@ import static wizardo.game.Wizardo.player;
 public class EnergyBeam_Spell extends Spell {
 
     public boolean frostbolt;
+    public boolean frozenorb;
 
     public EnergyBeam_Spell() {
 
@@ -29,6 +30,7 @@ public class EnergyBeam_Spell extends Spell {
 
             EnergyBeam_Projectile beam = new EnergyBeam_Projectile(getSpawnPosition(), getTargetPosition());
             beam.frostbolt = frostbolt;
+            beam.frozenorb = frozenorb;
             beam.setElements(this);
             currentScreen.spellManager.toAdd(beam);
             currentScreen.spellManager.toRemove(this);

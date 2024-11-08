@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.Monster;
+import wizardo.game.Spells.Arcane.Rifts.Rift_Zone;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyFactory;
@@ -14,9 +15,9 @@ import wizardo.game.Utils.BodyFactory;
 import java.util.ArrayList;
 
 import static wizardo.game.Resources.SpellAnims.FrostboltAnims.frostbolt_anim_frost;
+import static wizardo.game.Spells.SpellUtils.Spell_Element.FROST;
 import static wizardo.game.Utils.Constants.PPM;
-import static wizardo.game.Wizardo.currentScreen;
-import static wizardo.game.Wizardo.world;
+import static wizardo.game.Wizardo.*;
 
 public class Frostbolt_Projectile extends Frostbolt_Spell{
 
@@ -87,6 +88,7 @@ public class Frostbolt_Projectile extends Frostbolt_Spell{
 
     public void handleCollision(Monster monster) {
         hasCollided = true;
+        rift();
     }
 
     public void handleCollision(Fixture obstacle) {
@@ -187,6 +189,18 @@ public class Frostbolt_Projectile extends Frostbolt_Spell{
                 rotation = direction.angleDeg();
             } else if (targetMonster != null && targetMonster.hp <= 0) {
                 targetLocked = false;
+            }
+        }
+    }
+
+    public void rift() {
+        if(rifts) {
+            float procRate = 0.85f - 0.05f * player.spellbook.rift_lvl;
+            if(Math.random() >= procRate) {
+                Rift_Zone rift = new Rift_Zone(new Vector2(body.getPosition()));
+                rift.setElements(this);
+                rift.anim_element = FROST;
+                screen.spellManager.toAdd(rift);
             }
         }
     }

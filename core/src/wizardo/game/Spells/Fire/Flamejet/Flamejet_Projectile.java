@@ -156,6 +156,12 @@ public class Flamejet_Projectile extends Flamejet_Spell {
                 }
                 blue = 0.5f;
             }
+            case ARCANE -> {
+                anim = FlamejetAnims.flamejet_arcane_anim;
+                red = 0.2f;
+                green = 0.3f;
+                blue = 0.75f;
+            }
         }
 
     }
