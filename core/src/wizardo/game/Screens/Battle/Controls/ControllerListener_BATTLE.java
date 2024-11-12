@@ -24,20 +24,26 @@ public class ControllerListener_BATTLE extends ControllerAdapter {
     @Override
     public boolean axisMoved(Controller controller, int axisIndex, float value) {
 
-        switch(axisIndex) {
-            case 0, 1 -> {
-
-            }
-        }
-
-
-
-        if(Math.abs(value) < 0.1f) {
-            value = 0;
-        } else if (!controllerActive) {
+        if(!controllerActive && value > 0.1f) {
             controllerActive = true;
             screen.hideCursor();
         }
+
+        switch(axisIndex) {
+            case 0, 1 -> {
+                if (Math.abs(value) < 0.1f) {
+                    value = 0;
+                }
+            }
+            case 2, 3 -> {
+                if (Math.abs(value) < 0.05f) {
+                    value = 0;
+                }
+            }
+
+        }
+
+
 
         if (axisIndex == 0) {
             pawn.moveX(value);
@@ -47,7 +53,6 @@ public class ControllerListener_BATTLE extends ControllerAdapter {
             pawn.aimX(value);
         } else if (axisIndex == 3) {
             pawn.aimY(-value);
-
         }
 
         // Left joystick: Axis 0 = left/right, Axis 1 = up/down

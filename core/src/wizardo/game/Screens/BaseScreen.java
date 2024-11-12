@@ -163,6 +163,9 @@ public abstract class BaseScreen implements Screen {
     public void show() {
         setInputs();
         setCursorTexture();
+        if(controllerActive) {
+            hideCursor();
+        }
     }
 
     @Override
