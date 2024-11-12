@@ -27,5 +27,8 @@ public class EnergyBeamAnims {
     public static Sprite energyrain_tile_fire = new Sprite(new Texture("Spells/EnergyRain/shorterTileFire.png"));
     public static Sprite energyrain_end_fire = new Sprite(new Texture("Spells/EnergyRain/shorterEndFire.png"));
 
+    public static Sprite energyrain_tile_lightning = new Sprite(new Texture("Spells/EnergyRain/shorterTileLightning.png"));
+    public static Sprite energyrain_end_lightning = new Sprite(new Texture("Spells/EnergyRain/shorterEndLightning.png"));
+
 
 }

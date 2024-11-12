@@ -10,25 +10,31 @@ import com.badlogic.gdx.physics.box2d.World;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.Monster;
 import wizardo.game.Resources.SpellAnims.ChainLightningAnims;
+import wizardo.game.Spells.Arcane.Rifts.Rift_Zone;
+import wizardo.game.Spells.Arcane.Rifts.Rifts_Spell;
 import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Explosion;
 import wizardo.game.Spells.Lightning.ChargedBolts.ChargedBolts_Spell;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
+import wizardo.game.Utils.BodyFactory;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 
+import static wizardo.game.Spells.SpellUtils.Spell_Element.ARCANE;
 import static wizardo.game.Spells.SpellUtils.Spell_Element.FROST;
 import static wizardo.game.Utils.Constants.PPM;
-import static wizardo.game.Wizardo.currentScreen;
-import static wizardo.game.Wizardo.world;
+import static wizardo.game.Wizardo.*;
 
 public class ChainLightning_Hit extends ChainLightning_Spell {
 
     boolean alreadyChained;
+    Body body;
 
     public Monster monsterFrom;
     public Monster monsterTo;
+    public boolean firstChain;
 
     public ArrayList<Monster> inRange;
     public ArrayList<Monster> monstersHit = new ArrayList<>();
@@ -57,6 +63,10 @@ public class ChainLightning_Hit extends ChainLightning_Spell {
                 nested_projectiles();
             }
             frostbolts(monsterTo);
+            rifts(monsterTo);
+            laserBody();
+            dealDmg(monsterTo);
+
         }
 
         if(currentHits < maxHits && !alreadyChained && stateTime > 0.03f) {
@@ -72,6 +82,9 @@ public class ChainLightning_Hit extends ChainLightning_Spell {
 
         if(stateTime > 0.3f) {
             screen.spellManager.toRemove(this);
+            if(beam) {
+                world.destroyBody(body);
+            }
         }
     }
 
@@ -109,9 +122,33 @@ public class ChainLightning_Hit extends ChainLightning_Spell {
 
     }
 
+    public void handleCollision(Monster monster) {
+        boolean monsterFromIsNull = monsterFrom == null;
+        if(monster.body != monsterTo.body && monsterFromIsNull) {
+            dealDmg(monster);
+        } else if(monster.body != monsterTo.body && monster.body != monsterFrom.body) {
+            dealDmg(monster);
+        }
+
+        if(rifts) {
+            float procTreshold = 0.9333f - 0.0333f * player.spellbook.rift_lvl;
+
+            if(Math.random() >= procTreshold) {
+                Rift_Zone rift = new Rift_Zone(monster.body.getPosition());
+                rift.setElements(this);
+                screen.spellManager.toAdd(rift);
+            }
+        }
+    }
+
     public void singleChain() {
 
-        Monster target = normalTargeting();
+        Monster target;
+        if(arcaneMissile) {
+            target = missileTargeting();
+        } else {
+            target = normalTargeting();
+        }
 
         if(target != null) {
             ChainLightning_Hit chain = new ChainLightning_Hit(target);
@@ -138,6 +175,18 @@ public class ChainLightning_Hit extends ChainLightning_Spell {
         }
 
         return newTarget;
+
+    }
+
+    public Monster missileTargeting() {
+
+        inRange.sort((m1, m2) -> Float.compare(m2.hp, m1.hp));
+        int index = MathUtils.random(0, Math.min(3, inRange.size() - 1));
+
+        Monster newTarget = inRange.get(index);
+        monstersHit.clear();
+
+        return newTarget;
     }
 
     public void setNextChain(ChainLightning_Hit thisHit) {
@@ -148,8 +197,10 @@ public class ChainLightning_Hit extends ChainLightning_Spell {
         monsterFrom = thisHit.monsterTo;
         originBody = monsterFrom.body;
 
-
+        beam = thisHit.beam;
         frostbolts = thisHit.frostbolts;
+        arcaneMissile = thisHit.arcaneMissile;
+        rifts = thisHit.rifts;
     }
 
     public void createLights(Vector2 direction, float distance) {
@@ -172,19 +223,58 @@ public class ChainLightning_Hit extends ChainLightning_Spell {
         }
     }
 
+    public void laserBody() {
+        if(beam) {
+            // Calculate the direction vector from originBody to monsterTo
+            Vector2 direction = monsterTo.body.getPosition().sub(originBody.getPosition());
+            float distance = direction.len();  // Get the length of the direction vector
+            float angle = direction.angleDeg();  // Get the angle of the direction vector
+
+            // Calculate the midpoint between originBody and monsterTo
+            Vector2 origin = new Vector2(originBody.getPosition());
+            Vector2 target = new Vector2(monsterTo.body.getPosition());
+            Vector2 midpoint = origin.cpy().lerp(target, 0.5f);  // Get the midpoint
+
+            // Create the rectangle body with the midpoint as the position
+            body = BodyFactory.spellRectangleBody(midpoint, distance, 0.35f, angle, true);
+            body.setUserData(this);
+        }
+    }
+
     public void pickAnim() {
+        if(beam) {
+            anim = ChainLightningAnims.chainlightning_beam_anim;
+            longAnim = ChainLightningAnims.chainlightning_long_beam_anim;
+            red = 1f;
+            green = 0.3f;
+            blue = 0.85f;
+            return;
+        }
         switch(anim_element) {
             case LIGHTNING -> {
                 anim = ChainLightningAnims.chainlightning_lightning_anim;
                 longAnim = ChainLightningAnims.chainlightning_long_lightning_anim;
-                red = 0.2f;
-                green = 0.2f;
+                if(arcaneMissile) {
+                    red = 1f;
+                    green = 0.3f;
+                    blue = 0.85f;
+                } else {
+                    red = 0.2f;
+                    green = 0.2f;
+                }
             }
             case FROST -> {
                 anim = ChainLightningAnims.chainlightning_lightning_anim;
                 longAnim = ChainLightningAnims.chainlightning_long_lightning_anim;
                 green = 0.3f;
                 blue = 0.45f;
+            }
+            case ARCANE -> {
+                anim = ChainLightningAnims.chainlightning_lightning_anim;
+                longAnim = ChainLightningAnims.chainlightning_long_lightning_anim;
+                red = 1f;
+                green = 0.3f;
+                blue = 0.85f;
             }
         }
     }
@@ -281,6 +371,18 @@ public class ChainLightning_Hit extends ChainLightning_Spell {
                 explosion.anim_element = SpellUtils.Spell_Element.LIGHTNING;
                 screen.spellManager.toAdd(explosion);
 
+            }
+        }
+    }
+    public void rifts(Monster monster) {
+
+        if(rifts) {
+            float level = (getLvl() + player.spellbook.rift_lvl)/2f;
+            float procRate = 0.9f - 0.025f * level;
+            if(Math.random() >= procRate) {
+                Rift_Zone rift = new Rift_Zone(monster.body.getPosition());
+                rift.setElements(this);
+                screen.spellManager.toAdd(rift);
             }
         }
     }

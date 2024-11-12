@@ -23,6 +23,7 @@ public abstract class Monster {
     public int frameCounter;
 
     public Body body;
+    public float bodyRadius;
     public float speed;
     public Vector2 position;
     public Vector2 deathPosition;

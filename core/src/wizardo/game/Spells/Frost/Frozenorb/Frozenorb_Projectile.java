@@ -13,12 +13,14 @@ import wizardo.game.Spells.Fire.Flamejet.Flamejet_Spell;
 import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Spell;
 import wizardo.game.Spells.Frost.Icespear.Icespear_Spell;
 import wizardo.game.Spells.Hybrid.FrostNova.FrostNova_Explosion;
+import wizardo.game.Spells.Hybrid.Laser.Laser_Spell;
 import wizardo.game.Spells.Lightning.ChainLightning.ChainLightning_Spell;
 import wizardo.game.Spells.Lightning.ChargedBolts.ChargedBolts_Spell;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyFactory;
 
+import static wizardo.game.Spells.SpellUtils.Spell_Element.FROST;
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.currentScreen;
 import static wizardo.game.Wizardo.world;
@@ -45,11 +47,13 @@ public class Frozenorb_Projectile extends Frozenorb_Spell {
 
     public void update(float delta) {
         if(!initialized) {
+            radius = 2.85f * 0.15f * getLvl();
             pickAnim();
             createBody();
             createLight();
-            //setInterval();
-            castInterval = getInterval();
+            if(nested_spell != null) {
+                castInterval = getInterval();
+            }
             initialized = true;
         }
 
@@ -106,7 +110,7 @@ public class Frozenorb_Projectile extends Frozenorb_Spell {
 
     public void createLight() {
         light = screen.lightManager.pool.getLight();
-        light.setLight(red,green,blue, 1, 200, body.getPosition());
+        light.setLight(red,green,blue, 1, radius * 2 * PPM, body.getPosition());
         screen.lightManager.addLight(light);
     }
 
@@ -139,11 +143,13 @@ public class Frozenorb_Projectile extends Frozenorb_Spell {
             frameCounter++;
             if (frameCounter == 5) {
                 frameCounter = 0;
-                float radius = 3;
                 BattleScreen screen = (BattleScreen) currentScreen;
                 for (Monster monster : screen.monsterManager.liveMonsters) {
                     if (monster.body.getPosition().dst(body.getPosition()) < radius) {
                         monster.hp -= baseDmg/12f;
+                        if(anim_element == FROST) {
+                            monster.applySlow(2, slowRatio - 0.025f * getLvl());
+                        }
                     }
                 }
             }
@@ -190,7 +196,7 @@ public class Frozenorb_Projectile extends Frozenorb_Spell {
                 anim = FrozenorbAnims.frozenorb_anim_lightning;
                 red = 0.3f;
                 green = 0.25f;
-                if(bonus_element == SpellUtils.Spell_Element.FROST) {
+                if(bonus_element == FROST) {
                     red = 0.1f;
                     green = 0.6f;
                     blue = 0.9f;
@@ -227,6 +233,9 @@ public class Frozenorb_Projectile extends Frozenorb_Spell {
         }
         if(nested_spell instanceof ArcaneMissile_Spell) {
             interval = 0.3f - 0.0125f * level;
+        }
+        if(nested_spell instanceof Laser_Spell) {
+            interval = 0.2f - 0.015f * level;
         }
 
         return interval;

@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.Monster;
 import wizardo.game.Resources.SpellAnims.ThunderstormAnims;
+import wizardo.game.Spells.Arcane.Rifts.Rift_Zone;
 import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Spell;
 import wizardo.game.Spells.Lightning.ChargedBolts.ChargedBolts_Spell;
 import wizardo.game.Spells.Spell;
@@ -14,13 +15,11 @@ import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyFactory;
 
 import static wizardo.game.Utils.Constants.PPM;
-import static wizardo.game.Wizardo.currentScreen;
-import static wizardo.game.Wizardo.world;
+import static wizardo.game.Wizardo.*;
 
 public class Thunderstorm_Hit extends Thunderstorm_Spell {
 
     boolean initialized;
-    Vector2 adjustedPosition;
 
     Body body;
     RoundLight light;
@@ -33,12 +32,12 @@ public class Thunderstorm_Hit extends Thunderstorm_Spell {
 
         flipX = MathUtils.randomBoolean();
 
-        anim = ThunderstormAnims.thunder_lightning_anim;
     }
 
     public void update(float delta) {
         if(!initialized) {
             initialized = true;
+            pickAnim();
             createBody();
             createLight();
             nestedProjectiles();
@@ -60,6 +59,7 @@ public class Thunderstorm_Hit extends Thunderstorm_Spell {
 
     public void handleCollision(Monster monster) {
         dealDmg(monster);
+        rifts(monster);
     }
 
     public void drawFrame() {
@@ -71,14 +71,32 @@ public class Thunderstorm_Hit extends Thunderstorm_Spell {
         screen.addSortedSprite(frame);
     }
 
+    public void pickAnim() {
+        lightAlpha = 0.8f;
+        switch(anim_element) {
+            case LIGHTNING -> {
+                anim = ThunderstormAnims.thunder_lightning_anim;
+                red = 0.9f;
+                green = 0.9f;
+                blue = 0.4f;
+            }
+            case ARCANE -> {
+                anim = ThunderstormAnims.thunder_arcane_anim;
+                red = 0.7f;
+                green = 0.2f;
+                blue = 0.9f;
+            }
+        }
+    }
+
     public void createBody() {
-        adjustedPosition = new Vector2(SpellUtils.getRandomVectorInRadius(targetPosition, 15f/PPM));
+        Vector2 adjustedPosition = new Vector2(SpellUtils.getRandomVectorInRadius(targetPosition, 15f/PPM));
         body = BodyFactory.spellExplosionBody(adjustedPosition, radius);
         body.setUserData(this);
     }
     public void createLight() {
         light = screen.lightManager.pool.getLight();
-        light.setLight(0.9f, 0.9f, 0.4f, 0.8f, 160, adjustedPosition);
+        light.setLight(red, green, blue, lightAlpha, 160, body.getPosition());
         screen.lightManager.addLight(light);
         light.dimKill(0.015f);
     }
@@ -101,6 +119,17 @@ public class Thunderstorm_Hit extends Thunderstorm_Spell {
                 }
             }
 
+        }
+    }
+
+    public void rifts(Monster monster) {
+        if(rifts) {
+            float procRate = 0.925f - 0.025f * player.spellbook.rift_lvl;
+            if(Math.random() >= procRate) {
+                Rift_Zone rift = new Rift_Zone(monster.body.getPosition());
+                rift.setElements(this);
+                screen.spellManager.toAdd(rift);
+            }
         }
     }
 

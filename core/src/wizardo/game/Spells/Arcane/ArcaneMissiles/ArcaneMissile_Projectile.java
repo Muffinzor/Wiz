@@ -6,6 +6,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.Monster;
+import wizardo.game.Spells.Arcane.Rifts.Rift_Zone;
+import wizardo.game.Spells.Frost.Icespear.Icespear_Projectile;
+import wizardo.game.Spells.Lightning.ChargedBolts.ChargedBolts_Spell;
 import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyFactory;
 
@@ -14,12 +17,13 @@ import java.util.ArrayList;
 import static wizardo.game.Resources.SpellAnims.ArcaneMissileAnims.arcanemissile_arcane_anim;
 import static wizardo.game.Spells.SpellUtils.hasLineOfSight;
 import static wizardo.game.Utils.Constants.PPM;
-import static wizardo.game.Wizardo.currentScreen;
+import static wizardo.game.Wizardo.*;
 
 public class ArcaneMissile_Projectile extends ArcaneMissile_Spell {
 
     Body body;
     RoundLight light;
+    float scale = 1;
 
     float rotation;
     Vector2 direction;
@@ -28,19 +32,22 @@ public class ArcaneMissile_Projectile extends ArcaneMissile_Spell {
     boolean targetLocked;
 
     int collisions = 0;
+    int collisionsToSplit;
+    boolean canSplit;
+    boolean hasCollided;
+    public boolean hasSplit;
 
 
     public ArcaneMissile_Projectile(Vector2 spawnPosition, Vector2 targetPosition) {
         this.spawnPosition = new Vector2(spawnPosition);
         this.targetPosition = new Vector2(targetPosition);
 
-        screen = currentScreen;
-
         anim = arcanemissile_arcane_anim;
     }
 
     public void update(float delta) {
         if(!initialized) {
+            collisionsToSplit = MathUtils.random(1, 5);
             initialized = true;
             createBody();
             createLight();
@@ -51,10 +58,44 @@ public class ArcaneMissile_Projectile extends ArcaneMissile_Spell {
         adjustLight();
         arcaneTargeting();
 
+        if(scale <= 0.1f) {
+            light.dimKill(0.1f);
+            world.destroyBody(body);
+            screen.spellManager.toRemove(this);
+        }
+        if(stateTime >= 2.5f || hasCollided) {
+            scale -= 0.02f;
+        }
+
+        if(canSplit) {
+            split();
+        }
+
     }
 
     public void handleCollision(Monster monster) {
+        collisions++;
         dealDmg(monster);
+
+        if(icespear && collisions >= collisionsToSplit) {
+            canSplit = true;
+        }
+
+        if(rift && scale >= 0.05f) {
+            float procRate = 0.925f - 0.025f * player.spellbook.rift_lvl;
+            if(Math.random() >= procRate) {
+                Rift_Zone rift = new Rift_Zone(body.getPosition());
+                if(riftBolts) {
+                    ChargedBolts_Spell bolt = new ChargedBolts_Spell();
+                    bolt.arcaneMissile = true;
+                    rift.nested_spell = bolt;
+                }
+                rift.setElements(this);
+                screen.spellManager.toAdd(rift);
+                scale -= (0.5f - 0.025f * player.spellbook.rift_lvl);
+            }
+
+        }
     }
 
     public void drawFrame() {
@@ -62,6 +103,9 @@ public class ArcaneMissile_Projectile extends ArcaneMissile_Spell {
         frame.set(anim.getKeyFrame(stateTime, true));
         frame.setCenter(body.getPosition().x * PPM, body.getPosition().y * PPM);
         frame.rotate(rotation);
+        if(scale < 1) {
+            frame.setScale(scale);
+        }
         screen.centerSort(frame, body.getPosition().y * PPM - 20);
         screen.addSortedSprite(frame);
     }
@@ -154,5 +198,26 @@ public class ArcaneMissile_Projectile extends ArcaneMissile_Spell {
             targetLocked = false;
         }
 
+    }
+
+    public void split() {
+        world.destroyBody(body);
+        light.dimKill(0.5f);
+        screen.spellManager.toRemove(this);
+
+        int missiles = 2 + player.spellbook.icespear_lvl / 5;
+        float initialAngle = rotation;
+        float halfCone = 12f * missiles / 2;
+        float stepSize = 12f * missiles / (missiles - 1);
+
+        for (int i = 0; i < missiles; i++) {
+            float angle = initialAngle - halfCone + (stepSize * i);
+            Vector2 direction = new Vector2(MathUtils.cosDeg(angle), MathUtils.sinDeg(angle));
+            ArcaneMissile_Projectile missile = new ArcaneMissile_Projectile(body.getPosition(), body.getPosition().cpy().add(direction));
+            missile.hasSplit = true;
+            missile.setElements(this);
+            missile.setMissile(this);
+            screen.spellManager.toAdd(missile);
+        }
     }
 }

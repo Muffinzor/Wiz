@@ -24,8 +24,6 @@ public class EnergyRain_Projectile extends EnergyRain_Spell {
 
         speed = 35;
 
-        anim_element = FROST;
-
     }
 
     public void update(float delta) {
@@ -53,7 +51,7 @@ public class EnergyRain_Projectile extends EnergyRain_Spell {
         if(alpha <= 0.1f) {
             world.destroyBody(body);
             screen.spellManager.toRemove(this);
-        } else if(!body.isActive()) {
+        } else if(!body.isActive() && delta > 0) {
             alpha -= 0.05f;
         }
 
@@ -101,12 +99,26 @@ public class EnergyRain_Projectile extends EnergyRain_Spell {
             case ARCANE -> {
                 tile = EnergyBeamAnims.energyrain_tile_arcane;
                 endTile = EnergyBeamAnims.energyrain_end_arcane;
+                red = 0.7f;
+                blue = 0.9f;
             }
             case FROST -> {
                 tile = EnergyBeamAnims.energyrain_tile_frost;
                 endTile = EnergyBeamAnims.energyrain_end_frost;
                 red = 0.2f;
                 blue = 0.9f;
+            }
+            case LIGHTNING -> {
+                tile = EnergyBeamAnims.energyrain_tile_lightning;
+                endTile = EnergyBeamAnims.energyrain_end_lightning;
+                red = 0.5f;
+                green = 0.3f;
+            }
+            case FIRE -> {
+                tile = EnergyBeamAnims.energyrain_tile_fire;
+                endTile = EnergyBeamAnims.energyrain_end_fire;
+                red = 0.6f;
+                green = 0.15f;
             }
         }
     }
@@ -151,6 +163,7 @@ public class EnergyRain_Projectile extends EnergyRain_Spell {
         explosion.targetPosition = new Vector2(targetPosition);
         explosion.setElements(this);
         explosion.frostbolt = frostbolt;
+        explosion.chargedbolts = chargedbolts;
         screen.spellManager.toAdd(explosion);
     }
 

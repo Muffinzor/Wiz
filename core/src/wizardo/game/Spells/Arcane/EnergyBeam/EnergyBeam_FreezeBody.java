@@ -1,14 +1,19 @@
 package wizardo.game.Spells.Arcane.EnergyBeam;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Monsters.Monster;
+import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Explosion;
 import wizardo.game.Spells.Spell;
+import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyFactory;
 
 import static wizardo.game.Wizardo.player;
 import static wizardo.game.Wizardo.world;
 
 public class EnergyBeam_FreezeBody extends Spell {
+
+    public boolean frostbolt;
 
     Body body;
 
@@ -20,6 +25,7 @@ public class EnergyBeam_FreezeBody extends Spell {
     public void update(float delta) {
         if(!initialized) {
             createBody();
+            frostbolts();
             initialized = true;
         }
 
@@ -56,5 +62,17 @@ public class EnergyBeam_FreezeBody extends Spell {
     @Override
     public int getDmg() {
         return 0;
+    }
+
+    public void frostbolts() {
+        if(frostbolt) {
+            int quantity = 2 + player.spellbook.frostbolt_lvl/2;
+            for (int i = 0; i < quantity; i++) {
+                Frostbolt_Explosion explosion = new Frostbolt_Explosion();
+                explosion.targetPosition = SpellUtils.getRandomVectorInRadius(body.getPosition(), 3);
+                explosion.setElements(this);
+                screen.spellManager.toAdd(explosion);
+            }
+        }
     }
 }

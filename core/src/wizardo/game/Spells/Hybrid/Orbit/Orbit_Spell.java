@@ -15,6 +15,8 @@ public class Orbit_Spell extends Spell {
 
     public float speed = 2.5f;
 
+    public boolean frostbolt;
+
     public Orbit_Spell() {
         name = "Orbit";
         anim_element = FROST;
@@ -43,6 +45,7 @@ public class Orbit_Spell extends Spell {
             Vector2 startPos = new Vector2(x, y);
             Orbit_Projectile orb = new Orbit_Projectile(startPos, angle);
             orb.setElements(this);
+            orb.frostbolt = frostbolt;
             orb.orbitRadius = orbitRadius;
             screen.spellManager.toAdd(orb);
 

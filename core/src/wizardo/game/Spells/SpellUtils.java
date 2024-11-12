@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import static wizardo.game.Utils.Methods.isPositionOverlappingWithObstacle;
 import static wizardo.game.Wizardo.world;
 
 public class SpellUtils {
@@ -71,6 +72,13 @@ public class SpellUtils {
 
         return clearLOS.get();
     }
+
+    /**
+     * randomizes a vector in a radius
+     * @param areaCenter
+     * @param radius
+     * @return Vector with randomized coordinates
+     */
     public static Vector2 getRandomVectorInRadius(Vector2 areaCenter, float radius) {
         float randomAngle = MathUtils.random(0, MathUtils.PI2); // Random angle in radians
         float randomRadius = (float) Math.sqrt(MathUtils.random(0f, 1f)) * radius; // Adjusted random radius for uniform distribution
@@ -82,6 +90,24 @@ public class SpellUtils {
         float y = areaCenter.y + offsetY;
 
         return new Vector2(x, y);
+    }
+
+    /**
+     * returns a randomized position that does not collide with obstacles, if it can find one quickly
+     * @param target center of the search circle
+     * @return null if nothing is found
+     */
+    public static Vector2 getClearRandomPosition(Vector2 target, float radius) {
+        Vector2 randomTarget = null;
+        int attempts = 0;
+        while (randomTarget == null && attempts < 10) {
+            attempts++;
+            Vector2 attempt = SpellUtils.getRandomVectorInRadius(target, radius);
+            if (!isPositionOverlappingWithObstacle(attempt) || attempts == 10) {
+                randomTarget = attempt;
+            }
+        }
+        return randomTarget;
     }
 
 

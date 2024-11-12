@@ -72,17 +72,20 @@ public class Laser_Spell extends Spell {
     }
 
     public void setup() {
-        lasers = 3 + (player.spellbook.arcanemissile_lvl-1)/2;
 
         if(originBody == null) {
             originBody = player.pawn.body;
+            lasers = 3 + (player.spellbook.arcanemissile_lvl-1)/2;
+        } else {
+            lasers = 1;
         }
 
         inRange = SpellUtils.findMonstersInRangeOfVector(originBody.getPosition(), 10);
-        inRange.sort((m1, m2) -> Float.compare(m2.hp, m1.hp));
-
-        if(inRange.size() > lasers) {
-            inRange.subList(lasers, inRange.size()).clear();
+        if(originBody == player.pawn.body) {
+            inRange.sort((m1, m2) -> Float.compare(m2.hp, m1.hp));
+            if (inRange.size() > lasers) {
+                inRange.subList(lasers, inRange.size()).clear();
+            }
         }
     }
 
@@ -90,6 +93,8 @@ public class Laser_Spell extends Spell {
         setElements(parent);
         frostbolt = parent.frostbolt;
         rifts = parent.rifts;
+        chargedbolt = parent.chargedbolt;
+        thunderstorm = parent.thunderstorm;
     }
 
     public void selectTarget() {
@@ -110,7 +115,7 @@ public class Laser_Spell extends Spell {
 
     @Override
     public int getLvl() {
-        return 0;
+        return (player.spellbook.energybeam_lvl + player.spellbook.arcanemissile_lvl)/2;
     }
 
 

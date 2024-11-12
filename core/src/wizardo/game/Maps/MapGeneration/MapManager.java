@@ -25,8 +25,8 @@ public class MapManager {
     public static final int CHUNK_SIZE = 2048;
     public static final int INITIAL_GRID_SIZE = 2; // 9x9
 
-    int startingTileX = 0;
-    int startingTileY = 0;
+    int startingTileX = 50;
+    int startingTileY = 50;
 
     Map<String, MapChunk> chunks = new HashMap<>();
 
@@ -62,7 +62,8 @@ public class MapManager {
     }
 
     private void setPlayerStartPosition() {
-        player.pawn.body.setTransform(1024f / PPM, 1024f / PPM, 0);
+        player.pawn.body.setTransform((1524f / PPM) * startingTileX, (1524f / PPM) * startingTileY, 0);
+        camera.position.set(player.pawn.getPosition().scl(PPM), 0);
     }
 
     private void loadMapChunk(String mapPath, int chunkX, int chunkY) {

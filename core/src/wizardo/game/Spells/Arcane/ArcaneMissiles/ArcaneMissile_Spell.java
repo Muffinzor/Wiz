@@ -9,6 +9,11 @@ import static wizardo.game.Wizardo.player;
 
 public class ArcaneMissile_Spell extends Spell {
 
+    public boolean rift;
+    public boolean riftBolts; //for Missiles + rifts + chargedbolts
+    public boolean icespear;
+
+
     public ArcaneMissile_Spell() {
 
         name = "Arcane Missiles";
@@ -26,19 +31,27 @@ public class ArcaneMissile_Spell extends Spell {
 
         if(delta > 0) {
 
-            int missiles = 2;
-            if(originBody != player.pawn.body) {
+            int missiles = 1 + player.spellbook.arcanemissile_lvl / 3;
+            if(targetPosition != null) {
                 missiles = 1;
             }
 
             for (int i = 0; i < missiles; i++) {
                 ArcaneMissile_Projectile missile = new ArcaneMissile_Projectile(getSpawnPosition(), getTargetPosition());
+                missile.setElements(this);
+                missile.setMissile(this);
                 currentScreen.spellManager.toAdd(missile);
             }
             currentScreen.spellManager.toRemove(this);
 
         }
 
+    }
+
+    public void setMissile(ArcaneMissile_Spell parent) {
+        rift = parent.rift;
+        riftBolts = parent.riftBolts;
+        icespear = parent.icespear;
     }
 
     @Override

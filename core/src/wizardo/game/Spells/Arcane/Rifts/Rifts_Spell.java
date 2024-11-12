@@ -20,6 +20,9 @@ public class Rifts_Spell extends Spell {
     public float radius = 50;
 
     public boolean frostbolt;
+    public boolean chargedbolt;
+    public boolean chainlightning;
+    public boolean arcanemissiles;
 
     public Rifts_Spell() {
 
@@ -113,9 +116,13 @@ public class Rifts_Spell extends Spell {
     }
 
     public void setRift(Rifts_Spell parent) {
+        lightAlpha = parent.lightAlpha;
         frostbolt = parent.frostbolt;
+        chargedbolt = parent.chargedbolt;
+        chainlightning = parent.chainlightning;
+        arcanemissiles = parent.arcanemissiles;
+        nested_spell = parent.nested_spell;
         setElements(parent);
-
     }
 
     @Override

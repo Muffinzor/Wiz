@@ -19,6 +19,9 @@ public class EnergyRain_Spell extends Spell {
     public float interval;
 
     public boolean frostbolt;
+    public boolean chargedbolts;
+
+    public boolean riftTargeting;
 
     public EnergyRain_Spell() {
         name = "Energy Rain";
@@ -41,16 +44,11 @@ public class EnergyRain_Spell extends Spell {
 
         if(stateTime >= projectilesSent * interval) {
 
-            Monster target = findTarget();
-            if(target != null) {
-                Vector2 randomPosition = getRandomizedPosition(target);
-                EnergyRain_Projectile beam = new EnergyRain_Projectile();
-                beam.setElements(this);
-                beam.targetPosition = randomPosition;
-                beam.frostbolt = frostbolt;
-                screen.spellManager.toAdd(beam);
+            if(riftTargeting) {
+                riftTargeting();
+            } else {
+                regularTargeting();
             }
-            projectilesSent++;
 
         }
 
@@ -72,11 +70,14 @@ public class EnergyRain_Spell extends Spell {
 
     @Override
     public int getDmg() {
-        return baseDmg += player.spellbook.energybeam_lvl * 25;
+        return baseDmg + player.spellbook.energybeam_lvl * 25;
     }
 
     public void setup() {
         projectiles = 6 + player.spellbook.rift_lvl * 2;
+        if(riftTargeting) {
+            targetPosition = getTargetPosition();
+        }
     }
 
     public Monster findTarget() {
@@ -99,5 +100,29 @@ public class EnergyRain_Spell extends Spell {
             }
         }
         return randomTarget;
+    }
+
+    public void regularTargeting() {
+        Monster target = findTarget();
+        if(target != null) {
+            Vector2 randomPosition = getRandomizedPosition(target);
+            EnergyRain_Projectile beam = new EnergyRain_Projectile();
+            beam.setElements(this);
+            beam.targetPosition = randomPosition;
+            beam.frostbolt = frostbolt;
+            beam.chargedbolts = chargedbolts;
+            screen.spellManager.toAdd(beam);
+        }
+        projectilesSent++;
+    }
+    public void riftTargeting() {
+        Vector2 randomTarget = SpellUtils.getRandomVectorInRadius(targetPosition, 3.5f);
+        EnergyRain_Projectile beam = new EnergyRain_Projectile();
+        beam.setElements(this);
+        beam.targetPosition = randomTarget;
+        beam.frostbolt = frostbolt;
+        beam.chargedbolts = chargedbolts;
+        screen.spellManager.toAdd(beam);
+        projectilesSent++;
     }
 }

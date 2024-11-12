@@ -18,7 +18,30 @@ public class RiftsAnims {
     public static String rift_zone_atlas_path_frost = "Spells/Rifts/Frost/zone_frost.atlas";
     public static String rift_explosion_atlas_path_frost = "Spells/Rifts/Frost/explosion_frost.atlas";
 
+    public static Animation<Sprite> rift_zone_anim_lightning;
+    public static Animation<Sprite> rift_explosion_anim_lightning;
+    public static String rift_zone_atlas_path_lightning = "Spells/Rifts/Lightning/zone_lightning.atlas";
+    public static String rift_explosion_atlas_path_lightning = "Spells/Rifts/Lightning/explosion_lightning.atlas";
+
     public static void loadAnimations() {
+
+        TextureAtlas lite_projectile_atlas = assetManager.get(rift_zone_atlas_path_lightning, TextureAtlas.class);
+        TextureAtlas lite_explosion_atlas = assetManager.get(rift_explosion_atlas_path_lightning, TextureAtlas.class);
+
+        Sprite[] lite_zone = new Sprite[108];
+        for (int i = 0; i < lite_zone.length; i++) {
+            lite_zone[i] = lite_projectile_atlas.createSprite("rift" + (i+1));
+        }
+        rift_zone_anim_lightning = new Animation<>(0.025f, lite_zone);
+
+        Sprite[] lite_explosion = new Sprite[54];
+        for (int i = 0; i < lite_explosion.length; i++) {
+            lite_explosion[i] = lite_explosion_atlas.createSprite("arcaneexplosion" + (i+1));
+        }
+        rift_explosion_anim_lightning = new Animation<>(0.02f, lite_explosion);
+
+
+
         TextureAtlas arc_projectile_atlas = assetManager.get(rift_zone_atlas_path_arcane, TextureAtlas.class);
         TextureAtlas arc_explosion_atlas = assetManager.get(rift_explosion_atlas_path_arcane, TextureAtlas.class);
 
@@ -58,5 +81,8 @@ public class RiftsAnims {
 
         assetManager.load(rift_zone_atlas_path_frost, TextureAtlas.class);
         assetManager.load(rift_explosion_atlas_path_frost, TextureAtlas.class);
+
+        assetManager.load(rift_zone_atlas_path_lightning, TextureAtlas.class);
+        assetManager.load(rift_explosion_atlas_path_lightning, TextureAtlas.class);
     }
 }

@@ -37,8 +37,6 @@ public class Blizzard_Spell extends Spell {
         interval = 1/frequency;
 
         main_element = SpellUtils.Spell_Element.FROST;
-        bonus_element = SpellUtils.Spell_Element.LIGHTNING;
-        anim_element = SpellUtils.Spell_Element.FROST;
     }
 
     @Override

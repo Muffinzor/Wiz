@@ -7,6 +7,8 @@ import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.Monster;
 import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Explosion;
+import wizardo.game.Spells.Lightning.ChargedBolts.ChargedBolts_Spell;
+import wizardo.game.Spells.Lightning.Thunderstorm.Thunderstorm_Hit;
 import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyFactory;
 
@@ -22,10 +24,11 @@ public class EnergyBeam_Projectile extends EnergyBeam_Spell {
     float rotation;
 
     Body body;
-    Body frozenorbBody;
     Sprite bodyTile;
     Sprite endTile;
     float alpha = 1;
+    int frameCounter;
+    int chainFrameInterval;
 
     public EnergyBeam_Projectile(Vector2 spawnPosition, Vector2 targetPosition) {
 
@@ -48,6 +51,7 @@ public class EnergyBeam_Projectile extends EnergyBeam_Spell {
         drawFrame();
         createLight(delta);
         frozenOrbBodies();
+        chainLightning();
 
         if(stateTime > 0.2f && delta > 0) {
             alpha -= 0.03f;
@@ -62,6 +66,8 @@ public class EnergyBeam_Projectile extends EnergyBeam_Spell {
     public void handleCollision(Monster monster) {
         dealDmg(monster);
         frostbolts(monster);
+        chargedbolts();
+        thunderstorm(monster);
     }
 
     public void drawFrame() {
@@ -136,6 +142,8 @@ public class EnergyBeam_Projectile extends EnergyBeam_Spell {
     public void frozenOrbBodies() {
         if(frozenorb) {
             EnergyBeam_FreezeBody freezeBody = new EnergyBeam_FreezeBody();
+            freezeBody.setElements(this);
+            freezeBody.frostbolt = frostbolt;
             freezeBody.targetPosition = body.getPosition();
             screen.spellManager.toAdd(freezeBody);
         }
@@ -193,5 +201,57 @@ public class EnergyBeam_Projectile extends EnergyBeam_Spell {
                 screen.spellManager.toAdd(explosion);
             }
         }
+    }
+
+    public void chargedbolts() {
+        if(chargedbolts) {
+            float procRate = .9f - 0.05f * player.spellbook.chargedbolt_lvl;
+            if(Math.random() >= procRate) {
+                int quantity = 3 + player.spellbook.chargedbolt_lvl/2;
+                for (int i = 0; i < quantity; i++) {
+                    ChargedBolts_Spell bolt = new ChargedBolts_Spell();
+                    bolt.spawnPosition = new Vector2(body.getPosition());
+                    bolt.targetPosition = SpellUtils.getRandomVectorInRadius(body.getPosition(), 2);
+                    bolt.setElements(this);
+                    screen.spellManager.toAdd(bolt);
+                }
+            }
+        }
+    }
+
+    public void chainLightning() {
+        if(chainlightning) {
+            int level = (getLvl() + player.spellbook.chainlightning_lvl) /2;
+            if (level >= 8) {
+                chainFrameInterval = 1;
+            } else if (level >= 4) {
+                chainFrameInterval = 2;
+            } else {
+                chainFrameInterval = 3;
+            }
+
+            frameCounter++;
+            if (frameCounter >= chainFrameInterval) {
+                EnergyBeam_ChainLightningBody chainBody = new EnergyBeam_ChainLightningBody();
+                chainBody.chargedbolts = chargedbolts;
+                chainBody.targetPosition = new Vector2(body.getPosition());
+                chainBody.setElements(this);
+                screen.spellManager.toAdd(chainBody);
+                frameCounter = 0;
+            }
+        }
+    }
+
+    public void thunderstorm(Monster monster) {
+        if(thunderstorm) {
+            int level = (getLvl() + player.spellbook.thunderstorm_lvl) / 2;
+            float procRate = 0.825f - 0.025f * level;
+            if(Math.random() >= procRate) {
+                Thunderstorm_Hit thunder = new Thunderstorm_Hit(monster.body.getPosition());
+                thunder.setElements(this);
+                screen.spellManager.toAdd(thunder);
+            }
+        }
+
     }
 }

@@ -24,7 +24,7 @@ public class Blizzard_Explosion extends Blizzard_Spell {
 
     public Blizzard_Explosion() {
 
-        anim = BlizzardAnims.blizzard_hit_anim;
+
 
     }
 
@@ -34,6 +34,7 @@ public class Blizzard_Explosion extends Blizzard_Spell {
             flipY = MathUtils.randomBoolean();
             rotation = MathUtils.random(360);
             initialized = true;
+            pickAnim();
             createBody();
             createLight();
             frostbolts();
@@ -52,6 +53,22 @@ public class Blizzard_Explosion extends Blizzard_Spell {
         dealDmg(monster);
     }
 
+    public void pickAnim() {
+        switch(anim_element) {
+            case FROST -> {
+                anim = BlizzardAnims.blizzard_hit_anim;
+                green = 0.4f;
+                blue = 0.75f;
+            }
+            case ARCANE -> {
+                anim = BlizzardAnims.blizzard_hit_anim_arcane;
+                red = 0.7f;
+                green = 0.2f;
+                blue = 0.95f;
+            }
+        }
+    }
+
     public void createBody() {
         body = BodyFactory.spellExplosionBody(targetPosition, radius);
         body.setUserData(this);
@@ -59,7 +76,7 @@ public class Blizzard_Explosion extends Blizzard_Spell {
 
     public void createLight() {
         light = screen.lightManager.pool.getLight();
-        light.setLight(red, 0.4f, 0.75f, 1, 50, body.getPosition());
+        light.setLight(red, green, blue, 1, 50, body.getPosition());
         light.dimKill(0.03f);
         screen.lightManager.addLight(light);
     }

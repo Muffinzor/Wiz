@@ -70,6 +70,9 @@ public class Icespear_Hit extends Icespear_Spell {
         frame.set(anim.getKeyFrame(stateTime, true));
         frame.setCenter(targetPosition.x * PPM, targetPosition.y * PPM);
         frame.rotate(rotation - 45 + 180);
+        if(beam) {
+            frame.setScale(1.5f);
+        }
         screen.displayManager.spriteRenderer.regular_sorted_sprites.add(frame);
 
     }

@@ -25,7 +25,7 @@ public class Pawn {
 
     private Vector2 movementVector;
     public Vector2 targetVector;
-    public Sprite controllerTargetSprite;
+
 
     public RoundLight light;
 
@@ -34,14 +34,13 @@ public class Pawn {
         stateTime = 0;
         movementVector = new Vector2(0,0);
         targetVector = new Vector2(1,0);
-        controllerTargetSprite = new Sprite(new Texture("Cursors/Controller_Cursor.png"));
+
 
     }
 
     public void update(float delta) {
         stateTime += delta;
         drawSprite();
-        drawControllerTarget();
 
         movement();
         adjustLight();
@@ -52,26 +51,6 @@ public class Pawn {
         frame.set(PlayerResources.playerWalk.getKeyFrame(stateTime, true));
         frame.setCenter(body.getPosition().x * PPM, body.getPosition().y * PPM + 5);
         screen.displayManager.spriteRenderer.regular_sorted_sprites.add(frame);
-    }
-
-
-    public void drawControllerTarget() {
-        if(controllerActive) {
-            Vector2 playerPosition = body.getPosition();
-            if(targetVector.len() > 0.1f) {
-                targetVector.nor();
-            }
-            float aimRadius = 5;
-            Vector2 aimPosition = new Vector2(targetVector).scl(aimRadius);
-            Vector2 cursorPosition = playerPosition.add(aimPosition);
-
-            Sprite frame = getSprite(screen);
-            frame.set(controllerTargetSprite);
-            frame.setCenter(cursorPosition.x * PPM, cursorPosition.y * PPM);
-            float angle = targetVector.angleDeg();
-            frame.setRotation(angle - 45);
-            screen.displayManager.spriteRenderer.ui_sprites.add(frame);
-        }
     }
 
     public void createPawn(Vector2 position) {

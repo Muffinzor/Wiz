@@ -7,6 +7,7 @@ import wizardo.game.Spells.Arcane.Rifts.Rifts_Spell;
 import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Spell;
 import wizardo.game.Spells.Frost.Frozenorb.Frozenorb_Spell;
 import wizardo.game.Spells.Frost.Icespear.Icespear_Spell;
+import wizardo.game.Spells.Hybrid.ArcaneArtillery.ArcaneArtillery_Spell;
 import wizardo.game.Spells.Hybrid.Blizzard.Blizzard_Spell;
 import wizardo.game.Spells.Hybrid.EnergyRain.EnergyRain_Spell;
 import wizardo.game.Spells.Hybrid.Laser.Laser_Spell;
@@ -14,6 +15,7 @@ import wizardo.game.Spells.Hybrid.Orbit.Orbit_Spell;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 
+import static wizardo.game.Spells.SpellBank.Arcane_Spells.arcanespells;
 import static wizardo.game.Spells.SpellUtils.Spell_Element.*;
 import static wizardo.game.Spells.SpellUtils.Spell_Name.*;
 
@@ -73,7 +75,6 @@ public class FrostArcane_Spells {
         Icespear_Spell frostarcane5 = new Icespear_Spell();
         frostarcane5.anim_element = FROST;
         frostarcane5.rift = true;
-        frostarcane5.frostbolts = true;
         frostarcane5.spellParts.add(ICESPEAR);
         frostarcane5.spellParts.add(RIFTS);
         frostarcaneSpells[5] = frostarcane5;
@@ -128,12 +129,172 @@ public class FrostArcane_Spells {
 
         EnergyRain_Spell frostarcane11 = new EnergyRain_Spell();
         frostarcane11.frostbolt = true;
+        frostarcane11.spellParts.add(FROSTBOLT);
+        frostarcane11.spellParts.add(BEAM);
+        frostarcane11.spellParts.add(RIFTS);
         frostarcaneSpells[11] = frostarcane11;
 
+        // 12. Frostbolt + Icespear + ArcaneMissile
 
+        Icespear_Spell frostarcane12 = new Icespear_Spell();
+        frostarcane12.arcaneMissile = true;
+        frostarcane12.frostbolts = true;
+        frostarcane12.anim_element = FROST;
+        frostarcane12.spellParts.add(FROSTBOLT);
+        frostarcane12.spellParts.add(MISSILES);
+        frostarcane12.spellParts.add(ICESPEAR);
+        frostarcaneSpells[12] = frostarcane12;
 
+        // 13. Frostbolt + Icespear + Beam
 
+        Icespear_Spell frostarcane13 = new Icespear_Spell();
+        frostarcane13.beam = true;
+        frostarcane13.frostbolts = true;
+        frostarcane13.anim_element = FROST;
+        frostarcane13.spellParts.add(FROSTBOLT);
+        frostarcane13.spellParts.add(BEAM);
+        frostarcane13.spellParts.add(ICESPEAR);
+        frostarcaneSpells[13] = frostarcane13;
 
+        // 14. Frostbolt + Icespear + Rifts
+
+        Icespear_Spell frostarcane14 = new Icespear_Spell();
+        frostarcane14.rift = true;
+        frostarcane14.frostbolts = true;
+        frostarcane14.anim_element = FROST;
+        frostarcane14.spellParts.add(FROSTBOLT);
+        frostarcane14.spellParts.add(RIFTS);
+        frostarcane14.spellParts.add(ICESPEAR);
+        frostarcaneSpells[14] = frostarcane14;
+
+        // 15. Frostbolt + Frozenorb + ArcaneMissile
+
+        Frozenorb_Spell frostarcane15 = new Frozenorb_Spell();
+        frostarcane15.nested_spell = frostarcaneSpells[0];
+        frostarcane15.anim_element = FROST;
+        frostarcane15.spellParts.add(FROSTBOLT);
+        frostarcane15.spellParts.add(FROZENORB);
+        frostarcane15.spellParts.add(MISSILES);
+        frostarcaneSpells[15] = frostarcane15;
+
+        // 16. Frostbolt + Frozenorb + Beam
+
+        EnergyBeam_Spell frostarcane16 = new EnergyBeam_Spell();
+        frostarcane16.frozenorb = true;
+        frostarcane16.frostbolt = true;
+        frostarcane16.anim_element = FROST;
+        frostarcane16.spellParts.add(FROSTBOLT);
+        frostarcane16.spellParts.add(FROZENORB);
+        frostarcane16.spellParts.add(BEAM);
+        frostarcaneSpells[16] = frostarcane16;
+
+        // 17. Frostbolt + Frozenorb + Rift
+
+        Orbit_Spell frostarcane17 = new Orbit_Spell();
+        frostarcane17.frostbolt = true;
+        frostarcane17.spellParts.add(FROSTBOLT);
+        frostarcane17.spellParts.add(FROZENORB);
+        frostarcane17.spellParts.add(RIFTS);
+        frostarcaneSpells[17] = frostarcane17;
+
+        // 18. Icespear + Frozenorb + ArcaneMissiles
+
+        Frozenorb_Spell frostarcane18 = new Frozenorb_Spell();
+        frostarcane18.nested_spell = frostarcaneSpells[3];
+        frostarcane18.anim_element = ARCANE;
+        frostarcane18.spellParts.add(ICESPEAR);
+        frostarcane18.spellParts.add(FROZENORB);
+        frostarcane18.spellParts.add(MISSILES);
+        frostarcaneSpells[18] = frostarcane18;
+
+        // 19. Icespear + Frozenorb + Beam
+
+        Icespear_Spell frostarcane19 = new Icespear_Spell();
+        frostarcane19.frozenorb = true;
+        frostarcane19.beam = true;
+        frostarcane19.anim_element = FROST;
+        frostarcane19.spellParts.add(ICESPEAR);
+        frostarcane19.spellParts.add(FROZENORB);
+        frostarcane19.spellParts.add(BEAM);
+        frostarcaneSpells[19] = frostarcane19;
+
+        // 20. Icespear + Frozenorb + Rift
+
+        Frozenorb_Spell frostarcane20 = new Frozenorb_Spell();
+        Icespear_Spell spear20 = new Icespear_Spell();
+        spear20.maxSplits = 0;
+        spear20.duration = 0.5f;
+        spear20.rift = true;
+        frostarcane20.nested_spell = spear20;
+        frostarcane20.anim_element = FROST;
+        frostarcane20.spellParts.add(ICESPEAR);
+        frostarcane20.spellParts.add(FROZENORB);
+        frostarcane20.spellParts.add(RIFTS);
+        frostarcaneSpells[20] = frostarcane20;
+
+        // 21. Icespear + ArcaneMissiles + Beam
+
+        Icespear_Spell frostarcane21 = new Icespear_Spell();
+        frostarcane21.indestructible = true;
+        frostarcane21.arcaneMissile = true;
+        frostarcane21.anim_element = ARCANE;
+        frostarcane21.speed *= 2f;
+        frostarcane21.duration = 2;
+        frostarcane21.spellParts.add(ICESPEAR);
+        frostarcane21.spellParts.add(MISSILES);
+        frostarcane21.spellParts.add(BEAM);
+        frostarcaneSpells[21] = frostarcane21;
+
+        // 22. Icespear + ArcaneMissiles + Rift
+
+        ArcaneMissile_Spell frostarcane22 = new ArcaneMissile_Spell();
+        frostarcane22.icespear = true;
+        frostarcane22.rift = true;
+        frostarcane22.anim_element = ARCANE;
+        frostarcane22.spellParts.add(ICESPEAR);
+        frostarcane22.spellParts.add(MISSILES);
+        frostarcane22.spellParts.add(RIFTS);
+        frostarcaneSpells[22] = frostarcane22;
+
+        // 23. Icespear + Beam + Rift
+
+        Blizzard_Spell frostarcane23 = new Blizzard_Spell();
+        frostarcane23.rift = true;
+        frostarcane23.anim_element = ARCANE;
+        frostarcane23.spellParts.add(ICESPEAR);
+        frostarcane23.spellParts.add(BEAM);
+        frostarcane23.spellParts.add(RIFTS);
+        frostarcaneSpells[23] = frostarcane23;
+
+        // 24. Frozenorb + Arcanemissile + Beam
+
+        Frozenorb_Spell frostarcane24 = new Frozenorb_Spell();
+        frostarcane24.nested_spell = arcanespells[3];
+        frostarcane24.anim_element = ARCANE;
+        frostarcane24.spellParts.add(FROZENORB);
+        frostarcane24.spellParts.add(MISSILES);
+        frostarcane24.spellParts.add(BEAM);
+        frostarcaneSpells[24] = frostarcane24;
+
+        // 25. Frozenorb + ArcaneMissile + Rift
+
+        Frozenorb_Spell frostarcane25 = new Frozenorb_Spell();
+        frostarcane25.nested_spell = arcanespells[4];
+        frostarcane25.anim_element = ARCANE;
+        frostarcane25.spellParts.add(FROZENORB);
+        frostarcane25.spellParts.add(MISSILES);
+        frostarcane25.spellParts.add(RIFTS);
+        frostarcaneSpells[25] = frostarcane25;
+
+        // 26. Frozenorb + Beam + Rift
+
+        ArcaneArtillery_Spell frostarcane26 = new ArcaneArtillery_Spell();
+        frostarcane26.frozenorb = true;
+        frostarcane26.anim_element = FROST;
+        frostarcane26.spellParts.add(FROZENORB);
+        frostarcane26.spellParts.add(BEAM);
+        frostarcane26.spellParts.add(RIFTS);
+        frostarcaneSpells[26] = frostarcane26;
 
         for (Spell frostfireSpell : frostarcaneSpells) {
 

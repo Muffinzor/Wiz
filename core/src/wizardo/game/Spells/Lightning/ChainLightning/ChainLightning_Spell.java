@@ -7,21 +7,28 @@ import wizardo.game.Spells.SpellUtils;
 
 import java.util.ArrayList;
 
+import static wizardo.game.Screens.BaseScreen.controllerActive;
 import static wizardo.game.Wizardo.currentScreen;
 import static wizardo.game.Wizardo.player;
 
 public class ChainLightning_Spell extends Spell {
 
-    public int maxHits = 6;
+    public int maxHits = 12;
     public int currentHits = 1;
     public float radius = 5;
 
     public boolean frostbolts;
+    public boolean arcaneMissile;
+    public boolean rifts;
+    public boolean beam;
 
     boolean randomTarget;
 
 
     public ChainLightning_Spell() {
+
+        raycasted = true;
+        aimReach = 5;
 
         name = "Chain Lightning";
 
@@ -29,6 +36,7 @@ public class ChainLightning_Spell extends Spell {
         baseDmg = 35;
 
         main_element = SpellUtils.Spell_Element.LIGHTNING;
+
 
     }
 
@@ -39,14 +47,17 @@ public class ChainLightning_Spell extends Spell {
 
             Vector2 center;
             if(targetPosition == null) {
-                Vector2 direction = new Vector2(getTargetPosition().sub(getSpawnPosition()));
-                direction.nor().scl(4);
-                center = new Vector2(getSpawnPosition().add(direction));
+                if(!controllerActive) {
+                    Vector2 direction = new Vector2(getTargetPosition().sub(getSpawnPosition()));
+                    direction.nor().scl(4);
+                    center = new Vector2(getSpawnPosition().add(direction));
+                } else {
+                    center = getTargetPosition();
+                }
             } else {
                 center = new Vector2(originBody.getPosition());
                 randomTarget = true;
             }
-
 
             ArrayList<Monster> inRange = SpellUtils.findMonstersInRangeOfVector(center, 5);
 
@@ -59,7 +70,7 @@ public class ChainLightning_Spell extends Spell {
                     target = inRange.get(index);
                 } else {
                     for (Monster monster : inRange) {
-                        float toOrigin = monster.body.getPosition().dst(getSpawnPosition());
+                        float toOrigin = monster.body.getPosition().dst(center);
                         if (toOrigin < dst && SpellUtils.hasLineOfSight(monster.body.getPosition(), getSpawnPosition())) {
                             dst = toOrigin;
                             target = monster;
@@ -69,7 +80,7 @@ public class ChainLightning_Spell extends Spell {
 
                 if (target != null) {
                     ChainLightning_Hit chain = new ChainLightning_Hit(target);
-                    chain.screen = currentScreen;
+                    chain.firstChain = true;
                     chain.monstersHit.add(target);
                     chain.setChain(this);
                     chain.setElements(this);
@@ -93,6 +104,9 @@ public class ChainLightning_Spell extends Spell {
     public void setChain(ChainLightning_Spell parentChain) {
         nested_spell = parentChain.nested_spell;
         frostbolts = parentChain.frostbolts;
+        rifts = parentChain.rifts;
+        beam = parentChain.beam;
+        arcaneMissile = parentChain.arcaneMissile;
     }
 
 

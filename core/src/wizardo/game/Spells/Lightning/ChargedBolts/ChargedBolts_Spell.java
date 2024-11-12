@@ -15,6 +15,7 @@ public class ChargedBolts_Spell extends Spell {
     public int bolts;
 
     public boolean frostbolts;
+    public boolean arcaneMissile;
 
 
     public ChargedBolts_Spell() {
@@ -58,6 +59,7 @@ public class ChargedBolts_Spell extends Spell {
 
     public void setNext(ChargedBolts_Spell thisBolt) {
         frostbolts = thisBolt.frostbolts;
+        arcaneMissile = thisBolt.arcaneMissile;
 
     }
 

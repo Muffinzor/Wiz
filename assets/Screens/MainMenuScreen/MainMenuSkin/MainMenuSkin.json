@@ -14,10 +14,28 @@ com.badlogic.gdx.graphics.g2d.BitmapFont: {
 	}
 }
 com.badlogic.gdx.graphics.Color: {
+	LightBlue: {
+		r: 0.27450982
+		g: 0.6666667
+		b: 1
+		a: 1
+	}
+	LightPink: {
+		r: 1
+		g: 0.4392157
+		b: 0.80784315
+		a: 1
+	}
 	LightYellow: {
 		r: 1
 		g: 0.84705883
 		b: 0.25490198
+		a: 1
+	}
+	LightOrange: {
+		r: 1
+		g: 0.4745098
+		b: 0.29411766
 		a: 1
 	}
 	White: {

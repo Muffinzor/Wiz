@@ -10,6 +10,9 @@ public class EnergyBeam_Spell extends Spell {
 
     public boolean frostbolt;
     public boolean frozenorb;
+    public boolean chargedbolts;
+    public boolean chainlightning;
+    public boolean thunderstorm;
 
     public EnergyBeam_Spell() {
 
@@ -30,7 +33,10 @@ public class EnergyBeam_Spell extends Spell {
 
             EnergyBeam_Projectile beam = new EnergyBeam_Projectile(getSpawnPosition(), getTargetPosition());
             beam.frostbolt = frostbolt;
+            beam.chargedbolts = chargedbolts;
             beam.frozenorb = frozenorb;
+            beam.chainlightning = chainlightning;
+            beam.thunderstorm = thunderstorm;
             beam.setElements(this);
             currentScreen.spellManager.toAdd(beam);
             currentScreen.spellManager.toRemove(this);
@@ -55,4 +61,5 @@ public class EnergyBeam_Spell extends Spell {
         dmg += getLvl() * 20;
         return dmg;
     }
+
 }

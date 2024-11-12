@@ -3,17 +3,20 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.RayCastCallback;
 import wizardo.game.Account.Unlocked;
 import wizardo.game.Audio.Sounds.SoundPlayer;
 import wizardo.game.Display.Text.FloatingDamage;
 import wizardo.game.Monsters.Monster;
 import wizardo.game.Screens.BaseScreen;
 import wizardo.game.Spells.SpellUtils.*;
+import wizardo.game.Utils.BodyFactory;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,10 +26,12 @@ import static wizardo.game.GameSettings.sound_volume;
 import static wizardo.game.Resources.Skins.mainMenuSkin;
 import static wizardo.game.Screens.BaseScreen.controllerActive;
 import static wizardo.game.Utils.Constants.PPM;
-import static wizardo.game.Wizardo.currentScreen;
-import static wizardo.game.Wizardo.player;
+import static wizardo.game.Wizardo.*;
 
 public abstract class Spell implements Cloneable {
+
+    public boolean raycasted;
+    public int aimReach = 15;
 
     public Animation<Sprite> anim;
     public float red = 0;
@@ -112,12 +117,78 @@ public abstract class Spell implements Cloneable {
                 Vector3 mouseUnprojected = currentScreen.mainCamera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
                 return new Vector2(mouseUnprojected.x / PPM, mouseUnprojected.y / PPM);
             } else {
-                Vector3 mouseUnprojected = currentScreen.mainCamera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
-                return new Vector2(mouseUnprojected.x / PPM, mouseUnprojected.y / PPM);
+                return controllerAimAssist();
             }
         } else {
             return targetPosition;
         }
+    }
+
+    public Vector2 controllerAimAssist() {
+        Vector2 target;
+        if(raycasted) {
+            Monster closestTargeted = rayCastTargeting();
+            if (closestTargeted != null) {
+                target = new Vector2(closestTargeted.body.getPosition());
+            } else {
+                Vector2 direction = new Vector2(player.pawn.targetVector);
+                if (direction.isZero()) {
+                    direction.set(0, 1);
+                }
+                direction.setLength(5);
+                target = new Vector2(player.pawn.body.getPosition().add(direction));
+            }
+        } else {
+            Vector2 direction = new Vector2(player.pawn.targetVector);
+            if (direction.isZero()) {
+                direction.set(0, 1);
+            }
+            direction.setLength(5);
+            target = new Vector2(player.pawn.body.getPosition().add(direction));
+        }
+        return target;
+    }
+
+    public Monster rayCastTargeting() {
+        Vector2 direction = new Vector2(player.pawn.targetVector);
+        if (direction.isZero()) {
+            direction.set(0, 1);
+        }
+        direction.setLength(aimReach);
+        float angleRange = 10;
+        int RAY_COUNT = 11;
+        final Monster[] targetLock = {null};
+        final float[] shortestDistance = {Float.MAX_VALUE};
+
+
+        RayCastCallback callback = (fixture, point, _, _) -> {
+            Body body = fixture.getBody();
+
+            if (body.getUserData() instanceof Monster) {
+                float distance = player.pawn.body.getPosition().dst(point);
+
+                if (distance < shortestDistance[0]) {
+                    shortestDistance[0] = distance;
+                    targetLock[0] = (Monster) body.getUserData();
+                }
+                return -1;
+            }
+            return 0;
+        };
+
+
+        for (int i = 0; i < RAY_COUNT; i++) {
+            float angleOffset = -angleRange + i * (2 * angleRange / (RAY_COUNT - 1));
+            Vector2 rotatedDirection = direction.cpy().rotateDeg(angleOffset);  // Convert radians to degrees
+
+            Vector2 endPoint =  player.pawn.body.getPosition().cpy().add(rotatedDirection);
+
+            world.rayCast(callback, player.pawn.body.getPosition(), endPoint);
+        }
+
+
+
+        return targetLock[0];
     }
 
     public void playSound(Vector2 position) {
@@ -282,15 +353,26 @@ public abstract class Spell implements Cloneable {
         dmg *= randomFactor;
         monster.hp -= dmg;
 
-        String s = "" + (int)dmg;
-
         if(dmg_text_on) {
-            FloatingDamage text = screen.displayManager.textManager.pool.getDmgText();
-            Vector2 randomPosition = SpellUtils.getRandomVectorInRadius(monster.body.getPosition(), 0.2f);
-            text.setAll(s, randomPosition.scl(PPM), mainMenuSkin.getFont("DamageNumbers"), Color.RED);
-            screen.displayManager.textManager.addDmgText(text);
+            dmgText( (int)dmg, monster);
+        }
+    }
+
+    public void dmgText(int dmg, Monster monster) {
+        String s = "" + dmg;
+
+        Color color = Color.RED;
+        switch(anim_element) {
+            case FIRE -> color = mainMenuSkin.getColor("LightOrange");
+            case FROST -> color = mainMenuSkin.getColor("LightBlue");
+            case ARCANE -> color = mainMenuSkin.getColor("LightPink");
+            case LIGHTNING -> color = mainMenuSkin.getColor("LightYellow");
         }
 
+        FloatingDamage text = screen.displayManager.textManager.pool.getDmgText();
+        Vector2 randomPosition = SpellUtils.getRandomVectorInRadius(monster.body.getPosition(), 0.2f);
+        text.setAll(s, randomPosition.scl(PPM), mainMenuSkin.getFont("DamageNumbers"), color);
+        screen.displayManager.textManager.addDmgText(text);
     }
 
 }

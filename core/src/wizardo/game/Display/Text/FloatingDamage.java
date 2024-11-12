@@ -14,8 +14,8 @@ public class FloatingDamage extends FloatingText {
     public void update(float delta) {
         stateTime += delta;
         y_increase += 0.3f;
-        if(stateTime >= 0.2f) {
-            alpha -= .2f;
+        if(stateTime >= 0.1f) {
+            alpha -= .1f;
             stateTime = 0;
         }
 

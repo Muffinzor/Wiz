@@ -8,6 +8,8 @@ import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.Monster;
 import wizardo.game.Resources.SpellAnims.FrozenorbAnims;
 import wizardo.game.Spells.Arcane.Rifts.Rift_Zone;
+import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Explosion;
+import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyFactory;
 
 import static wizardo.game.Spells.SpellUtils.Spell_Element.FROST;
@@ -26,8 +28,6 @@ public class Orbit_Projectile extends Orbit_Spell {
     int rotation;
 
     float animTime;
-
-    boolean BOMBS = true;
 
     public Orbit_Projectile(Vector2 spawnPosition, float angle) {
         this.spawnPosition = new Vector2(spawnPosition);
@@ -69,6 +69,7 @@ public class Orbit_Projectile extends Orbit_Spell {
     public void handleCollision(Monster monster) {
         dealDmg(monster);
         bombs();
+        frostbolts(monster);
     }
 
     public void drawFrame() {
@@ -109,6 +110,16 @@ public class Orbit_Projectile extends Orbit_Spell {
             rift.setElements(this);
             rift.anim_element = FROST;
             screen.spellManager.toAdd(rift);
+        }
+    }
+
+    public void frostbolts(Monster monster) {
+        float procRate = 0.95f - 0.05f * player.spellbook.frostbolt_lvl;
+        if(Math.random() >= procRate) {
+            Frostbolt_Explosion explosion = new Frostbolt_Explosion();
+            explosion.targetPosition = SpellUtils.getRandomVectorInRadius(monster.body.getPosition(), 1);
+            explosion.setElements(this);
+            screen.spellManager.toAdd(explosion);
         }
     }
 

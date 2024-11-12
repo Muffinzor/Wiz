@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Resources.SpellAnims.RiftsAnims;
+import wizardo.game.Spells.Spell;
 
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.currentScreen;
@@ -14,7 +15,6 @@ public class Rift_Zone extends Rifts_Spell {
 
     public Rift_Zone(Vector2 targetPosition) {
         this.targetPosition = new Vector2(targetPosition);
-
     }
 
     public void update(float delta) {
@@ -67,6 +67,13 @@ public class Rift_Zone extends Rifts_Spell {
                 green = 0.15f;
                 blue = 0.8f;
             }
+            case LIGHTNING -> {
+                anim = RiftsAnims.rift_zone_anim_lightning;
+                red = 0.5f;
+                green = 0.25f;
+            }
         }
     }
+
+
 }

@@ -11,6 +11,8 @@ import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Explosion;
 import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyFactory;
 
+import java.util.ArrayList;
+
 import static wizardo.game.Resources.SpellAnims.ChargedboltsAnims.*;
 import static wizardo.game.Spells.SpellUtils.Spell_Element.FROST;
 import static wizardo.game.Utils.Constants.PPM;
@@ -36,6 +38,9 @@ public class ChargedBolts_Projectile extends ChargedBolts_Spell {
     private Vector2 currentWobbleOffset;
     private Vector2 targetWobbleOffset;
     private float wobbleChangeInterval;
+
+    private Monster targetMonster;
+    private boolean targetLocked;
 
     public ChargedBolts_Projectile(Vector2 spawnPosition, Vector2 targetPosition) {
 
@@ -84,6 +89,10 @@ public class ChargedBolts_Projectile extends ChargedBolts_Spell {
             alpha -= 0.05f;
         } else if (delta > 0){
             wobble(delta);
+        }
+
+        if(arcaneMissile && stateTime < 3) {
+            arcaneTarget();
         }
 
         if(alpha <= 0) {
@@ -158,6 +167,54 @@ public class ChargedBolts_Projectile extends ChargedBolts_Spell {
         }
     }
 
+    public void arcaneTarget() {
+        if(stateTime > 0.5f) {
+
+            if(!targetLocked) {
+
+                ArrayList<Monster> inRange = SpellUtils.findMonstersInRangeOfVector(body.getPosition(), 3);
+
+                if(!inRange.isEmpty()) {
+                    targetMonster = inRange.get(MathUtils.random(inRange.size() - 1));
+                    targetLocked = true;
+                }
+
+            } else if (targetLocked && targetMonster != null && targetMonster.hp > 0) {
+                Vector2 targetPosition = targetMonster.body.getPosition();
+                Vector2 missilePosition = body.getPosition();
+
+                Vector2 targetDirection = new Vector2(targetPosition).sub(missilePosition);
+                if(targetDirection.len() > 0 ) {
+                    targetDirection.nor();
+                }
+                float targetAngle = targetDirection.angleDeg();
+                float currentAngle = direction.angleDeg();
+                float angleDiff = targetAngle - currentAngle;
+
+                // Ensure the shortest rotation direction
+                if (angleDiff > 180) {
+                    angleDiff -= 360;
+                } else if (angleDiff < -180) {
+                    angleDiff += 360;
+                }
+
+                // Clamp the angle difference to the maximum allowed
+                float maxRotationPerFrame = 5f;
+                float rotationStep = MathUtils.clamp(angleDiff, -maxRotationPerFrame, maxRotationPerFrame);
+
+                direction.rotateDeg(rotationStep);
+
+                if (direction.len() > 0) {
+                    direction.nor().scl(speed);
+                }
+                body.setLinearVelocity(direction);
+            } else if (targetMonster != null && targetMonster.hp <= 0) {
+                targetLocked = false;
+            }
+        }
+    }
+
+
 
     private void wobble(float delta) {
         if (stateTime >= nextWobbleTime) {
@@ -210,6 +267,11 @@ public class ChargedBolts_Projectile extends ChargedBolts_Spell {
                     green = 0.5f;
                     blue = 0.6f;
                 }
+            }
+            case ARCANE -> {
+                anim = chargedbolt_arcane_anim;
+                red = 0.6f;
+                blue = 0.9f;
             }
         }
 

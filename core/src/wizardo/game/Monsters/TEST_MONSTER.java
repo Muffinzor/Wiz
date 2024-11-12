@@ -13,8 +13,10 @@ public class TEST_MONSTER extends Monster {
     public TEST_MONSTER(BattleScreen screen, Vector2 position) {
         super(screen, position);
         speed = 20f/PPM;
-        hp = 150;
-        maxHP = 150;
+        hp = 301;
+        maxHP = 301;
+
+        bodyRadius = 10;
 
         stateTime = (float) Math.random();
         walk_anim = SkeletonAnims.skelly_walk_T1;
@@ -29,7 +31,7 @@ public class TEST_MONSTER extends Monster {
     }
 
     public void createBody() {
-        body = BodyFactory.monsterBody(position, 10);
+        body = BodyFactory.monsterBody(position, bodyRadius);
         body.setUserData(this);
     }
 }

@@ -24,13 +24,12 @@ public class Blizzard_Projectile extends Blizzard_Spell {
 
         this.targetPosition = new Vector2(targetPosition);
 
-        anim = IcespearAnims.icespear_anim_frost;
-
     }
 
     public void update(float delta) {
         if(!initialized) {
             initialized = true;
+            pickAnim();
             setStartingPosition();
             createBody();
             createLight();
@@ -46,6 +45,7 @@ public class Blizzard_Projectile extends Blizzard_Spell {
             hit.targetPosition = new Vector2(body.getPosition());
             hit.screen = screen;
             hit.frostbolts = frostbolts;
+            hit.setElements(this);
             screen.spellManager.toAdd(hit);
             light.kill();
             world.destroyBody(body);
@@ -75,6 +75,22 @@ public class Blizzard_Projectile extends Blizzard_Spell {
         startingPosition.set(targetPosition.x + offsetX, targetPosition.y + offsetY);
     }
 
+    public void pickAnim() {
+        switch(anim_element) {
+            case FROST -> {
+                anim = IcespearAnims.icespear_anim_frost;
+                green = 0.4f;
+                blue = 0.7f;
+            }
+            case ARCANE -> {
+                anim = IcespearAnims.icespear_anim_arcane;
+                red = 0.75f;
+                green = 0.2f;
+                blue = 0.9f;
+            }
+        }
+    }
+
     public void createBody() {
         body = BodyFactory.spellProjectileCircleBody(startingPosition, 1, true);
         body.setUserData(this);
@@ -89,7 +105,7 @@ public class Blizzard_Projectile extends Blizzard_Spell {
 
     public void createLight() {
         light = screen.lightManager.pool.getLight();
-        light.setLight(0, 0.4f, 0.7f,1, 25, body.getPosition());
+        light.setLight(red, green, blue,1, 25, body.getPosition());
     }
 
     public void adjustLight() {

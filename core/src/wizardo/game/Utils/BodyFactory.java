@@ -123,6 +123,34 @@ public class BodyFactory {
 
         return body;
     }
+    public static Body spellRectangleBody(Vector2 position, float width, float height, float angle, boolean sensor) {
+
+        Body body;
+        BodyDef def = new BodyDef();
+
+        def.type = BodyDef.BodyType.StaticBody;
+
+        def.position.set(position.x, position.y);
+        def.angle = angle * MathUtils.degRad;
+        def.fixedRotation = true;
+        body = world.createBody(def);
+
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(width / 2, height);
+
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = shape;
+        fixtureDef.filter.categoryBits = SPELL;
+        fixtureDef.filter.maskBits = SPELL_MASK;
+
+        fixtureDef.isSensor = sensor;
+
+        body.createFixture(fixtureDef);
+        shape.dispose();
+
+        return body;
+    }
+
     public static Body spellExplosionBody(Vector2 position, float radius) {
         Body body;
         BodyDef def = new BodyDef();

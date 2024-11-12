@@ -26,14 +26,18 @@ import static wizardo.game.Wizardo.*;
 public class Icespear_Projectile extends Icespear_Spell {
 
     boolean destroyed;
+    boolean hasSplit;
     Body body;
     RoundLight light;
+    boolean lightKilled;
     Vector2 direction;
     float rotation;
 
     float timerBeforeSplit;
-    float duration;
     Monster splitMonster;
+
+    float scale = 1;
+
 
     public Icespear_Projectile(Vector2 spawnPosition, Vector2 targetPosition) {
 
@@ -41,12 +45,11 @@ public class Icespear_Projectile extends Icespear_Spell {
         this.targetPosition = new Vector2(targetPosition);
         timerBeforeSplit = 0;
 
-        duration = MathUtils.random(0.5f, 0.75f);
-
     }
 
     public void update(float delta) {
         if(!initialized) {
+            duration = duration * MathUtils.random(0.75f, 1);
             pickAnim();
             createBody();
             createLight();
@@ -58,15 +61,29 @@ public class Icespear_Projectile extends Icespear_Spell {
         adjustLight();
         drawFrame();
 
-        if(canSplit && currentSplits < maxSplits) {
+        if(canSplit && currentSplits < maxSplits && !hasSplit) {
             split();
-            destroyed = true;
+            if(indestructible) {
+                hasSplit = true;
+            } else {
+                destroyed = true;
+            }
         }
 
-        if(destroyed || stateTime > 1.5f) {
+        if(destroyed || scale <= 0.05f) {
             world.destroyBody(body);
-            light.dimKill(0.2f);
             screen.spellManager.toRemove(this);
+            if(!lightKilled) {
+                light.kill();
+            }
+        }
+
+        if(stateTime >= duration) {
+            scale -= 0.05f;
+            if(!lightKilled) {
+                light.dimKill(0.05f);
+                lightKilled = true;
+            }
         }
     }
 
@@ -75,34 +92,44 @@ public class Icespear_Projectile extends Icespear_Spell {
      */
     public void handleCollision(Monster monster) {
 
+        if(frozenorb) {
+            float duration = 0.8f + 0.2f * player.spellbook.frozenorb_lvl;
+            monster.applyFreeze(duration, duration * 2);
+        }
+
         dealDmg(monster);
 
-        if(timerBeforeSplit >= minimumTimeForSplit) {
-            canSplit = true;
-            splitMonster = monster;
-        }
+        if(scale > 0.5f) {
 
-        Icespear_Hit hit = new Icespear_Hit(body.getPosition(), rotation);
-        hit.setElements(this);
-        screen.spellManager.toAdd(hit);
+            if (timerBeforeSplit >= minimumTimeForSplit) {
+                canSplit = true;
+                splitMonster = monster;
+            }
 
-        if(nested_spell != null) {
-            float chanceToProc = 0.5f;
-            int quantity = 2 + nested_spell.getLvl();
-            if(Math.random() > chanceToProc) {
-                for (int i = 0; i < quantity; i++) {
-                    Spell proj = nested_spell.clone();
-                    proj.setElements(this);
-                    proj.screen = screen;
-                    proj.spawnPosition = new Vector2(monster.body.getPosition());
-                    proj.targetPosition = SpellUtils.getRandomVectorInRadius(monster.body.getPosition(), 0.5f);
-                    screen.spellManager.toAdd(proj);
+            Icespear_Hit hit = new Icespear_Hit(body.getPosition(), rotation);
+            hit.beam = beam;
+            hit.setElements(this);
+            screen.spellManager.toAdd(hit);
+
+            if (nested_spell != null) {
+                float chanceToProc = 0.5f;
+                int quantity = 2 + nested_spell.getLvl();
+                if (Math.random() > chanceToProc) {
+                    for (int i = 0; i < quantity; i++) {
+                        Spell proj = nested_spell.clone();
+                        proj.setElements(this);
+                        proj.screen = screen;
+                        proj.spawnPosition = new Vector2(monster.body.getPosition());
+                        proj.targetPosition = SpellUtils.getRandomVectorInRadius(monster.body.getPosition(), 0.5f);
+                        screen.spellManager.toAdd(proj);
+                    }
                 }
             }
-        }
 
-        rift(monster);
-        frostbolts();
+            rift();
+            frostbolts();
+
+        }
 
 
     }
@@ -116,7 +143,12 @@ public class Icespear_Projectile extends Icespear_Spell {
         } else if(fireball && currentSplits == 2) {
             fireballSplit();
         } else if(arcaneMissile) {
-            arcaneSplit();
+            ArrayList<Monster> inRange = SpellUtils.findMonstersInRangeOfVector(body.getPosition(), 5);
+            if(!inRange.isEmpty()) {
+                arcaneSplit(inRange);
+            } else {
+                normalSplit();
+            }
         } else {
             normalSplit();
         }
@@ -141,9 +173,8 @@ public class Icespear_Projectile extends Icespear_Spell {
         }
     }
 
-    public void arcaneSplit() {
+    public void arcaneSplit(ArrayList<Monster> inRange) {
         int shards = 2;
-        ArrayList<Monster> inRange = SpellUtils.findMonstersInRangeOfVector(body.getPosition(), 5);
         inRange.remove(splitMonster);
         if(!inRange.isEmpty()) {
             for (int i = 0; i < shards; i++) {
@@ -171,14 +202,17 @@ public class Icespear_Projectile extends Icespear_Spell {
         frame.set(anim.getKeyFrame(stateTime, true));
         frame.setCenter(body.getPosition().x * PPM, body.getPosition().y * PPM);
         frame.rotate(rotation + 180);
-        if(beam) {
-            frame.setScale(2.5f);
+        if(scale != 1) {
+            frame.setScale(scale);
         }
         screen.displayManager.spriteRenderer.regular_sorted_sprites.add(frame);
 
     }
 
     public void pickAnim() {
+        if(beam) {
+            scale = 2.5f;
+        }
         switch(anim_element) {
             case FROST -> {
                 anim = icespear_anim_frost;
@@ -286,14 +320,13 @@ public class Icespear_Projectile extends Icespear_Spell {
         screen.spellManager.toAdd(explosion);
     }
 
-    public void rift(Monster monster) {
+    public void rift() {
         if(rift) {
-            float procTreshold = 0.833f - .033f * player.spellbook.rift_lvl;
+            float procTreshold = 0.883f - .033f * player.spellbook.rift_lvl;
 
             if(Math.random() >= procTreshold) {
                 Rift_Zone rift = new Rift_Zone(body.getPosition());
                 rift.frostbolt = frostbolts;
-                //rift.frozenorb = frozenrift;
                 rift.setElements(this);
                 screen.spellManager.toAdd(rift);
             }

@@ -8,6 +8,9 @@ import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.Monster;
 import wizardo.game.Spells.Arcane.Rifts.Rift_Zone;
 import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Explosion;
+import wizardo.game.Spells.Lightning.ChargedBolts.ChargedBolts_Spell;
+import wizardo.game.Spells.Lightning.Thunderstorm.Thunderstorm_Hit;
+import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyFactory;
 
 import static wizardo.game.Spells.SpellUtils.Spell_Element.ARCANE;
@@ -50,6 +53,8 @@ public class Laser_Projectile extends Laser_Spell {
         dealDmg(monster);
         rifts(monster);
         frostbolts(monster);
+        chargedbolts(monster);
+        thunderstorm(monster);
     }
 
     public void drawFrame() {
@@ -130,7 +135,7 @@ public class Laser_Projectile extends Laser_Spell {
     public void frostbolts(Monster monster) {
         if(frostbolt) {
 
-            float procTreshold = 1 - .0333f * player.spellbook.frostbolt_lvl;
+            float procTreshold = 0.9833f - .0333f * player.spellbook.frostbolt_lvl;
             if(monster == target) {
                 procTreshold -= .35f;
             }
@@ -142,6 +147,44 @@ public class Laser_Projectile extends Laser_Spell {
                 screen.spellManager.toAdd(explosion);
             }
 
+        }
+    }
+
+    public void chargedbolts(Monster monster) {
+        if(chargedbolt) {
+
+            float procTreshold = 0.9833f - .0333f * player.spellbook.chargedbolt_lvl;
+            if(monster == target) {
+                procTreshold -= .35f;
+            }
+
+            if(Math.random() > procTreshold) {
+                int quantity = 2 + player.spellbook.chargedbolt_lvl/3;
+                for (int i = 0; i < quantity; i++) {
+                    ChargedBolts_Spell bolt = new ChargedBolts_Spell();
+                    bolt.spawnPosition = new Vector2(monster.body.getPosition());
+                    bolt.targetPosition = SpellUtils.getRandomVectorInRadius(monster.body.getPosition(), 2);
+                    bolt.setElements(this);
+                    screen.spellManager.toAdd(bolt);
+                }
+            }
+
+        }
+    }
+
+    public void thunderstorm(Monster monster) {
+        if(thunderstorm) {
+
+            float procTreshold = 1 - .025f * player.spellbook.thunderstorm_lvl;
+            if(monster == target) {
+                procTreshold -= .2f;
+            }
+
+            if(Math.random() > procTreshold) {
+                Thunderstorm_Hit thunder = new Thunderstorm_Hit(monster.body.getPosition());
+                thunder.setElements(this);
+                screen.spellManager.toAdd(thunder);
+            }
         }
     }
 

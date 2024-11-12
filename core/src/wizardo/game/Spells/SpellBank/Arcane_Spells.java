@@ -11,6 +11,7 @@ import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Spell;
 import wizardo.game.Spells.Frost.Frozenorb.Frozenorb_Spell;
 import wizardo.game.Spells.Frost.Icespear.Icespear_Spell;
 import wizardo.game.Spells.Hybrid.DragonBreath.DragonBreath_Spell;
+import wizardo.game.Spells.Hybrid.EnergyRain.EnergyRain_Spell;
 import wizardo.game.Spells.Hybrid.Laser.Laser_Spell;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
@@ -45,11 +46,18 @@ public class Arcane_Spells {
         arcane3.spellParts.add(BEAM);
         arcanespells[3] = arcane3;
 
-        //arcane4.anim_element = ARCANE;
-        //arcanespells[4] = arcane4;
+        ArcaneMissile_Spell arcane4 = new ArcaneMissile_Spell();
+        arcane4.rift = true;
+        arcane4.spellParts.add(MISSILES);
+        arcane4.spellParts.add(RIFTS);
+        arcane4.anim_element = ARCANE;
+        arcanespells[4] = arcane4;
 
-        //arcane5.anim_element = ARCANE;
-        //arcanespells[5] = arcane5;
+        EnergyRain_Spell arcane5 = new EnergyRain_Spell();
+        arcane5.anim_element = ARCANE;
+        arcane5.spellParts.add(RIFTS);
+        arcane5.spellParts.add(BEAM);
+        arcanespells[5] = arcane5;
 
         Laser_Spell arcane6 = new Laser_Spell();
         arcane6.anim_element = ARCANE;

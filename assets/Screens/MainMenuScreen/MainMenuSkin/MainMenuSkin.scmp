@@ -131,12 +131,42 @@ jsonData: {
 		{
 			class: com.ray3k.skincomposer.data.ColorData
 			color: {
+				r: 0.27450982
+				g: 0.6666667
+				b: 1
+				a: 1
+			}
+			name: LightBlue
+		}
+		{
+			class: com.ray3k.skincomposer.data.ColorData
+			color: {
+				r: 1
+				g: 0.4392157
+				b: 0.80784315
+				a: 1
+			}
+			name: LightPink
+		}
+		{
+			class: com.ray3k.skincomposer.data.ColorData
+			color: {
 				r: 1
 				g: 0.84705883
 				b: 0.25490198
 				a: 1
 			}
 			name: LightYellow
+		}
+		{
+			class: com.ray3k.skincomposer.data.ColorData
+			color: {
+				r: 1
+				g: 0.4745098
+				b: 0.29411766
+				a: 1
+			}
+			name: LightOrange
 		}
 		{
 			class: com.ray3k.skincomposer.data.ColorData
@@ -2036,7 +2066,7 @@ preferences: {
 		value: 30
 	}
 }
-saveFile: D:/WizOnline/assets/MainMenuScreen/MainMenuSkin/MainMenuSkin.scmp
+saveFile: D:/WizOnline/assets/Screens/MainMenuScreen/MainMenuSkin/MainMenuSkin.scmp
 version: 58
 sceneComposer: null
 }

@@ -14,6 +14,9 @@ public class Icespear_Spell extends Spell {
     boolean canSplit;
 
     int maxCollisions = 5;
+    public float duration = 1.5f;
+    public boolean indestructible;
+
 
     public boolean celestialStrike;
     public boolean arcaneMissile;
@@ -23,6 +26,7 @@ public class Icespear_Spell extends Spell {
     public boolean beam;
     public boolean rift;
     public boolean overheat; //for Icespear+Overheat+Fireball
+    public boolean frozenorb; // for Icespear+Frozenorb+Beam
 
     public Icespear_Spell() {
 
@@ -41,20 +45,12 @@ public class Icespear_Spell extends Spell {
         setup();
 
         Icespear_Projectile spear = new Icespear_Projectile(getSpawnPosition(), getTargetPosition());
-        spear.inherit(this);
+        spear.setNextSpear(this);
         screen.spellManager.toAdd(spear);
         screen.spellManager.toRemove(this);
     }
 
-    public void setNextSpear(Icespear_Spell spear) {
-        minimumTimeForSplit = spear.minimumTimeForSplit;
-        maxCollisions = spear.maxCollisions;
-        maxSplits = spear.maxSplits;
-        castByPawn = spear.castByPawn;
-        speed = spear.speed;
 
-        this.inherit(spear);
-    }
 
 
     @Override
@@ -67,19 +63,25 @@ public class Icespear_Spell extends Spell {
         return player.spellbook.icespear_lvl;
     }
 
-    public void inherit(Icespear_Spell parent) {
+    public void setNextSpear(Icespear_Spell parent) {
         this.nested_spell = parent.nested_spell;
         this.arcaneMissile = parent.arcaneMissile;
         this.fireball = parent.fireball;
         this.overheat = parent.overheat;
+        this.frozenorb = parent.frozenorb;
         this.celestialStrike = parent.celestialStrike;
         this.flamejet = parent.flamejet;
         this.beam = parent.beam;
         this.rift = parent.rift;
         this.frostbolts = parent.frostbolts;
         this.setElements(parent);
+        this.duration = parent.duration;
 
         this.maxSplits = parent.maxSplits;
+        this.indestructible = parent.indestructible;
+        this.speed = parent.speed;
+        this.maxCollisions = parent.maxCollisions;
+        this.minimumTimeForSplit = parent.minimumTimeForSplit;
     }
 
     @Override

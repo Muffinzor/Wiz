@@ -83,6 +83,8 @@ public abstract class BaseScreen implements Screen {
         this.game = game;
         mainCamera = game.mainCamera;
         uiCamera = game.uiCamera;
+        uiCamera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        uiCamera.update();
         this.batch = new SpriteBatch();
         animations = new ArrayList<>();
         displayManager = new DisplayManager(this);

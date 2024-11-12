@@ -10,6 +10,7 @@ import static wizardo.game.Wizardo.player;
 public class Frozenorb_Spell extends Spell {
 
     public float duration = 6f;
+    public float slowRatio = 0.8f;
     public boolean frostnova;
 
     public Frozenorb_Spell() {
