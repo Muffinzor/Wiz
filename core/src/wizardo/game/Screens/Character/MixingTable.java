@@ -147,8 +147,6 @@ public class MixingTable extends MenuTable {
                     masteryTable.updateCheckBoxes();
                     updateButtons();
 
-                    System.out.println(player.spellbook.equippedSpells);
-                    System.out.println(player.spellbook.knownSpells);
 
                 }
 
@@ -233,19 +231,19 @@ public class MixingTable extends MenuTable {
 
     public String getPartsString() {
 
-        String s = "";
+        StringBuilder s = new StringBuilder();
         if(!parts.isEmpty()) {
             int counter = 0;
             for(SpellUtils.Spell_Name part : parts) {
-                s += getSpellString(part);
+                s.append(getSpellString(part));
                 if((counter == 0 && parts.size() > 1) || (counter == 1 && parts.size() > 2)) {
-                    s += " + ";
+                    s.append(" + ");
                 }
                 counter++;
             }
         }
 
-        return s;
+        return s.toString();
     }
 
 }
