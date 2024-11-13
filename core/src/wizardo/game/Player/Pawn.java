@@ -23,7 +23,7 @@ public class Pawn {
     public Body body;
     private float stateTime;
 
-    private Vector2 movementVector;
+    public Vector2 movementVector;
     public Vector2 targetVector;
 
 

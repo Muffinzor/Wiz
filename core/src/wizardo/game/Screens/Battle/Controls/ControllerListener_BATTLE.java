@@ -16,6 +16,9 @@ public class ControllerListener_BATTLE extends ControllerAdapter {
     Pawn pawn;
     BattleScreen screen;
 
+    public float last_x_value = 0;
+    public float last_y_value = 0;
+
     public ControllerListener_BATTLE(BattleScreen screen) {
         this.pawn = player.pawn;
         this.screen = screen;
@@ -24,6 +27,8 @@ public class ControllerListener_BATTLE extends ControllerAdapter {
     @Override
     public boolean axisMoved(Controller controller, int axisIndex, float value) {
 
+        System.out.println("last Y : " + last_y_value + "last X : " + last_x_value);
+
         if(!controllerActive && value > 0.1f) {
             controllerActive = true;
             screen.hideCursor();
@@ -31,11 +36,17 @@ public class ControllerListener_BATTLE extends ControllerAdapter {
 
         switch(axisIndex) {
             case 0, 1 -> {
-                if (Math.abs(value) < 0.1f) {
+                if (Math.abs(value) < 0.05f) {
                     value = 0;
                 }
             }
             case 2, 3 -> {
+                if(axisIndex == 2) {
+                    last_x_value = Math.abs(value);
+                } else {
+                    last_y_value = Math.abs(value);
+                }
+
                 if (Math.abs(value) < 0.05f) {
                     value = 0;
                 }

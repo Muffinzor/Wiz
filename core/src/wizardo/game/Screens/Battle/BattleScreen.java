@@ -84,7 +84,7 @@ public class BattleScreen extends BaseScreen {
     @Override
     public void render(float delta) {
         if(!initialized) {
-            player.spellbook.equippedSpells.add(firespells[1]);
+            player.spellbook.equippedSpells.add(firespells[0]);
             initialized = true;
         }
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -107,6 +107,7 @@ public class BattleScreen extends BaseScreen {
 
         Matrix4 debugMatrix = mainCamera.combined.cpy().scl(PPM);
         //debugRenderer.render(world, debugMatrix);
+
     }
 
     @Override
@@ -181,4 +182,5 @@ public class BattleScreen extends BaseScreen {
             displayManager.spriteRenderer.ui_sprites.add(frame);
         }
     }
+
 }
