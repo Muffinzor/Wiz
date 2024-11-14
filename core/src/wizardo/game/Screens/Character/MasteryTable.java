@@ -197,6 +197,9 @@ public class MasteryTable extends MenuTable {
         table.row();
     }
 
+    /**
+     * Checks if mastery buttons should be disabled
+     */
     public void updateCheckBoxes() {
 
         int checks = 0;
