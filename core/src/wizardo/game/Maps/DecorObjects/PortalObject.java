@@ -1,9 +1,11 @@
-package wizardo.game.Maps;
+package wizardo.game.Maps.DecorObjects;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.MapObject;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Maps.MapGeneration.MapChunk;
+import wizardo.game.Maps.MapUtils;
+import wizardo.game.Maps.TriggerObject;
 import wizardo.game.Resources.DecorResources.GeneralDecorResources;
 import wizardo.game.Screens.Hub.BattleSelection.BattleSelectionScreen;
 
@@ -15,9 +17,11 @@ public class PortalObject extends TriggerObject {
 
     public RoundLight light;
     boolean touched;
+    boolean active;
 
-    public PortalObject(MapChunk chunk, MapObject object) {
+    public PortalObject(MapChunk chunk, MapObject object, boolean active) {
         super(chunk, object);
+        this.active = active;
     }
 
     public void update(float delta) {
@@ -25,6 +29,9 @@ public class PortalObject extends TriggerObject {
             initialized = true;
             createBody();
             createLight();
+            if(!active) {
+                body.setActive(false);
+            }
         }
 
         stateTime += delta;
@@ -34,7 +41,7 @@ public class PortalObject extends TriggerObject {
 
     @Override
     public void dispose() {
-        light.pointLight.remove();
+        light.kill();
         light = null;
         world.destroyBody(body);
         body = null;
@@ -47,6 +54,7 @@ public class PortalObject extends TriggerObject {
     public void drawSprite() {
         Sprite frame = getSprite(chunk.screen);
         frame.set(GeneralDecorResources.blue_portal_anim.getKeyFrame(stateTime, true));
+        frame.setAlpha(0.8f);
         frame.setCenter(body.getPosition().x * PPM, body.getPosition().y * PPM);
         chunk.screen.displayManager.spriteRenderer.regular_sorted_sprites.add(frame);
     }

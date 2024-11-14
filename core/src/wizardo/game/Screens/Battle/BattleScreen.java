@@ -64,7 +64,6 @@ public class BattleScreen extends BaseScreen {
         playerPawn.createPawn(new Vector2(1000f/PPM,1000f/PPM));
         player.pawn = playerPawn;
 
-
         mapManager = new MapManager(biome, game, this);
 
         monsterManager = new MonsterManager(this);
@@ -99,11 +98,11 @@ public class BattleScreen extends BaseScreen {
         player.pawn.update(delta);
         spellManager.update(delta);
         monsterManager.update(delta);
-        updateCamera();
 
         drawControllerTarget();
         displayManager.update(delta);
         lightManager.update(delta);
+        updateCamera();  // must be after displayManager.update
 
         Matrix4 debugMatrix = mainCamera.combined.cpy().scl(PPM);
         //debugRenderer.render(world, debugMatrix);

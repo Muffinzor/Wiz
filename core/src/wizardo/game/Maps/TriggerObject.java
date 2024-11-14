@@ -7,7 +7,6 @@ import wizardo.game.Maps.MapGeneration.MapChunk;
 public abstract class TriggerObject extends LayerObject{
 
     public Body body;
-    public float stateTime;
     
     public TriggerObject(MapChunk chunk, MapObject object) {
         super(chunk, object);

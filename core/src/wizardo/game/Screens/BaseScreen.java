@@ -18,6 +18,7 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import wizardo.game.Controls.ControllerListener_TABLEMENU;
@@ -48,6 +49,8 @@ import wizardo.game.Wizardo;
 
 import java.util.ArrayList;
 
+import static wizardo.game.Wizardo.player;
+
 public abstract class BaseScreen implements Screen {
 
     public static InputMultiplexer inputMultiplexer = new InputMultiplexer();
@@ -73,6 +76,7 @@ public abstract class BaseScreen implements Screen {
     public ArrayList<Animation> animations;
     public OrthographicCamera mainCamera;
     public OrthographicCamera uiCamera;
+    public Vector2 cameraOffSet;
 
     public Stage stage;
     public MenuTable menuTable;
@@ -83,8 +87,7 @@ public abstract class BaseScreen implements Screen {
         this.game = game;
         mainCamera = game.mainCamera;
         uiCamera = game.uiCamera;
-        uiCamera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        uiCamera.update();
+        cameraOffSet = new Vector2();
         this.batch = new SpriteBatch();
         animations = new ArrayList<>();
         displayManager = new DisplayManager(this);

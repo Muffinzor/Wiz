@@ -26,6 +26,7 @@ public class Wizardo extends Game {
 	public static AssetManager assetManager;
 	public OrthographicCamera mainCamera;
 	public OrthographicCamera uiCamera;
+	public OrthographicCamera mapCamera;
 	
 	@Override
 	public void create () {
@@ -33,6 +34,7 @@ public class Wizardo extends Game {
 		screenStack = new Stack<>();
 		mainCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		uiCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		mapCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		assetManager = new AssetManager();
 		contactListener = new WizContactListener();
 		loadVolume();

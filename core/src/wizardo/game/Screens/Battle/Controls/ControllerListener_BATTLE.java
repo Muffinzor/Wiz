@@ -19,6 +19,9 @@ public class ControllerListener_BATTLE extends ControllerAdapter {
     public float last_x_value = 0;
     public float last_y_value = 0;
 
+    boolean ignoreLowerInput;
+    float magnitude;
+
     public ControllerListener_BATTLE(BattleScreen screen) {
         this.pawn = player.pawn;
         this.screen = screen;
@@ -36,18 +39,21 @@ public class ControllerListener_BATTLE extends ControllerAdapter {
 
         switch(axisIndex) {
             case 0, 1 -> {
-                if (Math.abs(value) < 0.05f) {
+                if (Math.abs(value) < 0.1f) {
                     value = 0;
                 }
             }
             case 2, 3 -> {
+
+
                 if(axisIndex == 2) {
                     last_x_value = Math.abs(value);
                 } else {
                     last_y_value = Math.abs(value);
                 }
+                magnitude = last_y_value + last_x_value;
 
-                if (Math.abs(value) < 0.05f) {
+                if (magnitude < 0.05f) {
                     value = 0;
                 }
             }
@@ -61,8 +67,10 @@ public class ControllerListener_BATTLE extends ControllerAdapter {
         } else if (axisIndex == 1) {
             pawn.moveY(value);
         } else if (axisIndex == 2) {
+            if(magnitude > 0.75f)
             pawn.aimX(value);
         } else if (axisIndex == 3) {
+            if(magnitude > 0.75f)
             pawn.aimY(-value);
         }
 

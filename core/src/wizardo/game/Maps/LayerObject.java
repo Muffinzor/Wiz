@@ -8,6 +8,7 @@ public abstract class LayerObject {
     public boolean initialized;
     public MapChunk chunk;
     public MapObject object;
+    public float stateTime;
 
     public LayerObject(MapChunk chunk, MapObject object) {
         this.chunk = chunk;

@@ -13,6 +13,40 @@ import static wizardo.game.Wizardo.world;
 public class MapUtils {
 
     /**
+     *
+     * @param chunk
+     * @param object
+     * @param radius
+     * @return
+     */
+    public static Body createCircleDecorBody(MapChunk chunk, MapObject object, float radius) {
+        Body body;
+        BodyDef def = new BodyDef();
+
+        float x = object.getProperties().get("x", Float.class) + chunk.x_pos;
+        float y = object.getProperties().get("y", Float.class) + chunk.y_pos;
+
+        def.type = BodyDef.BodyType.StaticBody;
+        def.position.set(x/PPM, y/PPM);
+        def.fixedRotation = true;
+        body = world.createBody(def);
+
+        CircleShape shape = new CircleShape();
+        shape.setRadius(radius / PPM);
+
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = shape;
+        fixtureDef.filter.categoryBits = DECOR;
+        fixtureDef.filter.maskBits = DECOR_MASK;
+        fixtureDef.isSensor = true;
+
+        body.createFixture(fixtureDef);
+        shape.dispose();
+
+        return body;
+    }
+
+    /**
      * Creates an impassable body to the shape of the Object passed in argument,
      * adds it to the chunk's list of bodies to keep its reference
      * @param chunk the tilemap chunk where the object is found

@@ -80,8 +80,7 @@ public class Flamejet_Projectile extends Flamejet_Spell {
         frame.setScale(1, scale);
         frame.flip(flipX, false);
 
-        Vector2 center = getSpriteCenter(frame);
-        screen.centerSort(frame, center.y - 45);
+        screen.centerSort(frame, originBody.getPosition().y * PPM);
     }
 
     public void createBody() {

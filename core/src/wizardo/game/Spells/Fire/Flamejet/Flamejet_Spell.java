@@ -26,6 +26,9 @@ public class Flamejet_Spell extends Spell {
 
     @Override
     public void update(float delta) {
+        if(originBody == null) {
+            originBody = player.pawn.body;
+        }
 
         if(delta > 0) {
             Flamejet_Projectile flame = new Flamejet_Projectile();
@@ -43,6 +46,7 @@ public class Flamejet_Spell extends Spell {
         frostbolts = thisFlame.frostbolts;
         icespear = thisFlame.icespear;
         lightAlpha = thisFlame.lightAlpha;
+        originBody = thisFlame.originBody;
     }
 
     @Override

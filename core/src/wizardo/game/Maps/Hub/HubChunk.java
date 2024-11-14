@@ -6,7 +6,7 @@ import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Maps.LayerObject;
 import wizardo.game.Maps.MapGeneration.MapChunk;
-import wizardo.game.Maps.PortalObject;
+import wizardo.game.Maps.DecorObjects.PortalObject;
 import wizardo.game.Screens.BaseScreen;
 import wizardo.game.Wizardo;
 
@@ -50,7 +50,7 @@ public class HubChunk extends MapChunk {
         MapObjects obstacles = map.getLayers().get("ObstacleBodies").getObjects();
         for(MapObject object : obstacles) {
             if("Portal".equals(object.getName())) {
-                PortalObject portal = new PortalObject(this, object);
+                PortalObject portal = new PortalObject(this, object, true);
                 layerObjects.add(portal);
             }
         }
