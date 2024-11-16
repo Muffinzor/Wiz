@@ -1,0 +1,91 @@
+{
+com.badlogic.gdx.graphics.g2d.BitmapFont: {
+	DamageNumbers: {
+		file: PixelOperator8(3).fnt
+		scaledSize: -1
+		markupEnabled: false
+		flip: false
+	}
+	LemonShake: {
+		file: Lemon Shake Shake.fnt
+		scaledSize: -1
+		markupEnabled: false
+		flip: false
+	}
+}
+com.badlogic.gdx.graphics.Color: {
+	LightBlue: {
+		r: 0.27450982
+		g: 0.6666667
+		b: 1
+		a: 1
+	}
+	LightOrange: {
+		r: 1
+		g: 0.4745098
+		b: 0.29411766
+		a: 1
+	}
+	LightPink: {
+		r: 1
+		g: 0.4392157
+		b: 0.80784315
+		a: 1
+	}
+	LightTeal: {
+		r: 0.23137255
+		g: 0.9764706
+		b: 0.79607844
+		a: 1
+	}
+	LightYellow: {
+		r: 1
+		g: 0.84705883
+		b: 0.25490198
+		a: 1
+	}
+	White: {
+		r: 1
+		g: 1
+		b: 1
+		a: 1
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.ProgressBar$ProgressBarStyle: {
+	default-horizontal: {
+		background: WoodButton
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle: {
+	default-horizontal: {
+		backgroundOver: BlackBar
+		backgroundDown: BlackBar
+		background: BlackBar
+		knob: knob
+	}
+	Basic_Slider: {
+		backgroundOver: BlackBar
+		backgroundDown: BlackBar
+		background: BlackBar
+		knob: knob
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
+	default: {
+		font: LemonShake
+		fontColor: LightYellow
+		overFontColor: LightYellow
+		up: WoodButton
+		over: WoodButtonHovered
+	}
+	WoodButton: {
+		font: LemonShake
+		fontColor: LightYellow
+		overFontColor: LightYellow
+		checkedFontColor: LightYellow
+		up: WoodButton
+		over: WoodButtonHovered
+		checked: WoodButtonHovered
+	}
+}
+}

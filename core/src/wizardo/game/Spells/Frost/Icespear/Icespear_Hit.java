@@ -18,13 +18,12 @@ public class Icespear_Hit extends Icespear_Spell {
         this.targetPosition = new Vector2(targetPosition);
         this.rotation = rotation;
 
-        createLight();
-
     }
 
     public void update(float delta) {
         if(!initialized) {
             pickAnim();
+            createLight();
             initialized = true;
         }
 
@@ -56,13 +55,19 @@ public class Icespear_Hit extends Icespear_Spell {
                 green = 0.3f;
                 blue = 0.75f;
             }
+            case LIGHTNING -> {
+                anim = icespear_hit_anim_lightning;
+                green = 0.5f;
+                blue = 0.65f;
+            }
         }
     }
     public void createLight() {
         light = currentScreen.lightManager.pool.getLight();
         light.setLight(0,0,0.5f,1, 25, targetPosition);
         light.toLightManager();
-        light.dimKill(0.05f);    }
+        light.dimKill(0.05f);
+    }
 
     public void drawFrame() {
 

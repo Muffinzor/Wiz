@@ -21,7 +21,27 @@ public class IcespearAnims {
     public static Animation<Sprite> icespear_hit_anim_arcane;
     public static String icespear_atlas_path_arcane = "Spells/Icespear/Icespear_Arcane.atlas";
 
+
+    public static Animation<Sprite> icespear_anim_lightning;
+    public static Animation<Sprite> icespear_hit_anim_lightning;
+    public static String icespear_atlas_path_lightning = "Spells/Icespear/Icespear_Lightning.atlas";
+
     public static void loadAnimations() {
+        TextureAtlas lite_atlas = assetManager.get(icespear_atlas_path_lightning, TextureAtlas.class);
+
+        Sprite[] lite_frames = new Sprite[8];
+        for (int i = 0; i < lite_frames.length; i++) {
+            lite_frames[i] = lite_atlas.createSprite("spear" + (i+1));
+        }
+        icespear_anim_lightning = new Animation<>(0.1f, lite_frames);
+
+        Sprite[] litehit_frames = new Sprite[16];
+        for (int i = 0; i < litehit_frames.length; i++) {
+            litehit_frames[i] = lite_atlas.createSprite("hit" + (i+1));
+        }
+        icespear_hit_anim_lightning = new Animation<>(0.015f, litehit_frames);
+
+
         TextureAtlas atlas = assetManager.get(icespear_atlas_path_frost, TextureAtlas.class);
 
         Sprite[] spear_frames = new Sprite[8];
@@ -73,5 +93,6 @@ public class IcespearAnims {
         assetManager.load(icespear_atlas_path_frost, TextureAtlas.class);
         assetManager.load(icespear_atlas_path_fire, TextureAtlas.class);
         assetManager.load(icespear_atlas_path_arcane, TextureAtlas.class);
+        assetManager.load(icespear_atlas_path_lightning, TextureAtlas.class);
     }
 }

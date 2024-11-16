@@ -29,8 +29,8 @@ public class Frozenorb_Spell extends Spell {
 
         Frozenorb_Projectile orb = new Frozenorb_Projectile(getSpawnPosition(), getTargetPosition());
         orb.inherit(this);
-        currentScreen.spellManager.toAdd(orb);
-        currentScreen.spellManager.toRemove(this);
+        screen.spellManager.toAdd(orb);
+        screen.spellManager.toRemove(this);
 
     }
 
@@ -50,7 +50,6 @@ public class Frozenorb_Spell extends Spell {
         this.duration = parent.duration;
         this.frostnova = parent.frostnova;
 
-        this.screen = parent.screen;
         this.setElements(parent);
     }
 

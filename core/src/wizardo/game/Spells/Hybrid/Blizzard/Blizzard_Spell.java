@@ -14,7 +14,7 @@ public class Blizzard_Spell extends Spell {
 
     public float interval;
     public float frequency = 80;
-    public float duration = 4f;
+    public float duration = 6f;
 
     public boolean frostbolts;
     public boolean frozenorb;
@@ -26,7 +26,7 @@ public class Blizzard_Spell extends Spell {
 
         name = "Blizzard";
 
-        cooldown = 6;
+        cooldown = 12;
 
         speed = 15;
         baseDmg = 24;

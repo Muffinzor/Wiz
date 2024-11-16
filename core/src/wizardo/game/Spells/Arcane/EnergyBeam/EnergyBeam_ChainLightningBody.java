@@ -42,7 +42,7 @@ public class EnergyBeam_ChainLightningBody extends Spell {
     }
 
     public void sendLightning() {
-        ArrayList<Monster> inRange = SpellUtils.findMonstersInRangeOfVector(body.getPosition(), 4);
+        ArrayList<Monster> inRange = SpellUtils.findMonstersInRangeOfVector(body.getPosition(), 4, true);
         if(!inRange.isEmpty()) {
             int index = MathUtils.random(0, inRange.size() - 1);
             Monster target = inRange.get(index);

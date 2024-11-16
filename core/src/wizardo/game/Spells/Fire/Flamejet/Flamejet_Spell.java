@@ -17,7 +17,7 @@ public class Flamejet_Spell extends Spell {
         name = "Flamejet";
 
         speed = 20;
-        cooldown = 0.075f;
+        cooldown = 0.1f;
         baseDmg = 12;
 
         main_element = FIRE;

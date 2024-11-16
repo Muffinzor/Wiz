@@ -123,7 +123,7 @@ public class Frostbolt_Explosion extends Frostbolt_Spell{
             case LIGHTNING -> {
                 anim = frostbolt_explosion_anim_lightning;
                 green = 0.5f;
-                blue = 0.6f;
+                blue = 0.65f;
             }
         }
     }

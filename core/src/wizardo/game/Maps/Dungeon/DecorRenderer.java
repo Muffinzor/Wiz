@@ -30,7 +30,7 @@ public class DecorRenderer {
                     frame.set(DungeonDecorResources.pillar_sprite);
                     RectangleMapObject rectObject = (RectangleMapObject) object;
                     float x = rectObject.getRectangle().x + chunk.x_pos;
-                    float y = rectObject.getRectangle().y + chunk.y_pos - 4;
+                    float y = rectObject.getRectangle().y + chunk.y_pos;
                     frame.setPosition(x, y);
                     chunk.screen.addSortedSprite(frame);
                     chunk.screen.centerSort(frame, y + 30);

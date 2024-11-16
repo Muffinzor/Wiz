@@ -147,7 +147,7 @@ public class Rift_Explosion extends Rifts_Spell {
             float procRate = 0.95f - 0.05f * player.spellbook.chainlightning_lvl;
             if (Math.random() >= procRate) {
                 Monster target = null;
-                ArrayList<Monster> inRange = SpellUtils.findMonstersInRangeOfVector(body.getPosition(), 3);
+                ArrayList<Monster> inRange = SpellUtils.findMonstersInRangeOfVector(body.getPosition(), 3, true);
                 if(!inRange.isEmpty()) {
                     Collections.shuffle(inRange);
                     for(Monster monster : inRange) {

@@ -17,7 +17,7 @@ public class Fireball_Spell extends Spell {
 
         baseDmg = 50;
         cooldown = 2;
-        radius = 45;
+        radius = 75;
         speed = 200f/PPM;
 
         main_element = FIRE;

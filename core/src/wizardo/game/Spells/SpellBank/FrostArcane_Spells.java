@@ -128,6 +128,7 @@ public class FrostArcane_Spells {
         // 11. Frostbolt + Beam + Rifts
 
         EnergyRain_Spell frostarcane11 = new EnergyRain_Spell();
+        frostarcane11.anim_element = FROST;
         frostarcane11.frostbolt = true;
         frostarcane11.spellParts.add(FROSTBOLT);
         frostarcane11.spellParts.add(BEAM);

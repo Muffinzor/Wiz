@@ -17,7 +17,6 @@ public class RoundLight {
     public float radius;
 
     public PointLight pointLight;
-    boolean kill;
     float dimSpeed;
 
     RayHandler rayHandler;

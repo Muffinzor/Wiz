@@ -142,11 +142,31 @@ jsonData: {
 			class: com.ray3k.skincomposer.data.ColorData
 			color: {
 				r: 1
+				g: 0.4745098
+				b: 0.29411766
+				a: 1
+			}
+			name: LightOrange
+		}
+		{
+			class: com.ray3k.skincomposer.data.ColorData
+			color: {
+				r: 1
 				g: 0.4392157
 				b: 0.80784315
 				a: 1
 			}
 			name: LightPink
+		}
+		{
+			class: com.ray3k.skincomposer.data.ColorData
+			color: {
+				r: 0.24313726
+				g: 1
+				b: 0.92156863
+				a: 1
+			}
+			name: LightTeal
 		}
 		{
 			class: com.ray3k.skincomposer.data.ColorData
@@ -157,16 +177,6 @@ jsonData: {
 				a: 1
 			}
 			name: LightYellow
-		}
-		{
-			class: com.ray3k.skincomposer.data.ColorData
-			color: {
-				r: 1
-				g: 0.4745098
-				b: 0.29411766
-				a: 1
-			}
-			name: LightOrange
 		}
 		{
 			class: com.ray3k.skincomposer.data.ColorData

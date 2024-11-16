@@ -80,7 +80,7 @@ public class Laser_Spell extends Spell {
             lasers = 1;
         }
 
-        inRange = SpellUtils.findMonstersInRangeOfVector(originBody.getPosition(), 10);
+        inRange = SpellUtils.findMonstersInRangeOfVector(originBody.getPosition(), 10, true);
         if(originBody == player.pawn.body) {
             inRange.sort((m1, m2) -> Float.compare(m2.hp, m1.hp));
             if (inRange.size() > lasers) {

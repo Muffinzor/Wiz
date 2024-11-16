@@ -86,6 +86,9 @@ public class Rifts_Spell extends Spell {
     }
 
 
+    /**
+     * A REFAIRE SELON NEW CONTROLLER AIM ASSIST
+     */
     public void setTargetPosition() {
         if(null == targetPosition) {
             Vector2 temp = getTargetPosition();
@@ -97,7 +100,7 @@ public class Rifts_Spell extends Spell {
                 direction.set(1,0);
             }
             targetPosition = new Vector2(playerPos.add(direction.scl(8)));
-            ArrayList<Monster> inRange = SpellUtils.findMonstersInRangeOfVector(targetPosition, 8);
+            ArrayList<Monster> inRange = SpellUtils.findMonstersInRangeOfVector(targetPosition, 8, false);
             if(!inRange.isEmpty()) {
                 float dst = Float.MAX_VALUE;
                 for(Monster monster: inRange) {

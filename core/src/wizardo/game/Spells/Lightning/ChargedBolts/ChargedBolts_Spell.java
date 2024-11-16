@@ -16,6 +16,8 @@ public class ChargedBolts_Spell extends Spell {
 
     public boolean frostbolts;
     public boolean arcaneMissile;
+    public boolean spear;
+    public boolean flamejet;
 
 
     public ChargedBolts_Spell() {
@@ -37,6 +39,7 @@ public class ChargedBolts_Spell extends Spell {
 
         if(spawnPosition != null) {
             bolts = 1;
+            speed = 45f/PPM;
         } else {
             bolts = 2 + getLvl();
         }
@@ -47,7 +50,6 @@ public class ChargedBolts_Spell extends Spell {
                 ChargedBolts_Projectile bolt = new ChargedBolts_Projectile(getSpawnPosition(), getTargetPosition());
                 bolt.setNext(this);
                 bolt.setElements(this);
-                bolt.anim_element = anim_element;
                 currentScreen.spellManager.toAdd(bolt);
             }
 
@@ -60,7 +62,10 @@ public class ChargedBolts_Spell extends Spell {
     public void setNext(ChargedBolts_Spell thisBolt) {
         frostbolts = thisBolt.frostbolts;
         arcaneMissile = thisBolt.arcaneMissile;
-
+        flamejet = thisBolt.flamejet;
+        spear = thisBolt.spear;
+        speed = thisBolt.speed;
+        duration = thisBolt.duration;
     }
 
     @Override

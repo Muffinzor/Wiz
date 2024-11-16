@@ -93,7 +93,7 @@ public abstract class Monster {
             Color tint = new Color(0.5f, 0.5f, 1.0f, 1.0f);
             frame.setColor(tint);
         }
-        screen.displayManager.spriteRenderer.regular_sorted_sprites.add(frame);
+        screen.addSortedSprite(frame);
     }
 
     public void drawDeathFrame(float delta) {

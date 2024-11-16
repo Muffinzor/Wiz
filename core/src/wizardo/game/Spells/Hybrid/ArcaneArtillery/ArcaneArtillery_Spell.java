@@ -29,7 +29,7 @@ public class ArcaneArtillery_Spell extends Spell {
     @Override
     public void update(float delta) {
 
-        ArrayList<Monster> inRange = SpellUtils.findMonstersInRangeOfVector(player.pawn.getPosition(), 15);
+        ArrayList<Monster> inRange = SpellUtils.findMonstersInRangeOfVector(player.pawn.getPosition(), 15, false);
         if(!inRange.isEmpty()) {
             Monster target = inRange.getFirst();
             for (int i = 1; i < inRange.size(); i++) {

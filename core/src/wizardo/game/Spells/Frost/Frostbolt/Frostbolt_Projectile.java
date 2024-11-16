@@ -145,7 +145,7 @@ public class Frostbolt_Projectile extends Frostbolt_Spell{
 
         if(stateTime > 0.1f) {
 
-            ArrayList<Monster> inRange = SpellUtils.findMonstersInRangeOfVector(body.getPosition(), 8);
+            ArrayList<Monster> inRange = SpellUtils.findMonstersInRangeOfVector(body.getPosition(), 8, true);
 
             if(!targetLocked && !inRange.isEmpty()) {
                 int randomIndex = (int) (Math.random() * inRange.size());

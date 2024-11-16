@@ -119,7 +119,6 @@ public class LightningArcane_Spells {
         litearcane9.spellParts.add(CHAIN);
         litearcaneSpells[9] = litearcane9;
 
-
         // 10. Chargedbolts + ChainLightning + Beam
 
         EnergyBeam_Spell litearcane10 = new EnergyBeam_Spell();

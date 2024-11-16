@@ -114,19 +114,23 @@ public class Fireball_Projectile extends Fireball_Spell {
     }
 
     public void picKAnim() {
+        lightAlpha = 0.8f;
         switch(anim_element) {
             case FIRE -> {
                 anim = FireballAnims.fireball_anim_fire;
                 red = 1f;
                 green = 0.4f;
-                lightAlpha = 0.8f;
             }
             case FROST -> {
                 anim = FireballAnims.fireball_anim_frost;
                 red = 0.1f;
                 green = 0.3f;
                 blue = 0.8f;
-                lightAlpha = 0.8f;
+            }
+            case LIGHTNING -> {
+                anim = FireballAnims.fireball_anim_lightning;
+                red = 0.75f;
+                green = 0.5f;
             }
         }
     }

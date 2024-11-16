@@ -81,7 +81,7 @@ public class EnergyRain_Spell extends Spell {
     }
 
     public Monster findTarget() {
-        ArrayList<Monster> inRange = SpellUtils.findMonstersInRangeOfVector(player.pawn.getPosition(), radius);
+        ArrayList<Monster> inRange = SpellUtils.findMonstersInRangeOfVector(player.pawn.getPosition(), radius, false);
         if(!inRange.isEmpty()) {
             int index = (int) (Math.random() * inRange.size());
             return inRange.get(index);

@@ -8,7 +8,9 @@ import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.Monster;
 import wizardo.game.Resources.SpellAnims.ThunderstormAnims;
 import wizardo.game.Spells.Arcane.Rifts.Rift_Zone;
+import wizardo.game.Spells.Fire.Flamejet.Flamejet_Spell;
 import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Spell;
+import wizardo.game.Spells.Hybrid.ForkedLightning.ForkedLightning_Spell;
 import wizardo.game.Spells.Lightning.ChargedBolts.ChargedBolts_Spell;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
@@ -86,6 +88,16 @@ public class Thunderstorm_Hit extends Thunderstorm_Spell {
                 green = 0.2f;
                 blue = 0.9f;
             }
+            case FROST -> {
+                anim = ThunderstormAnims.thunder_frost_anim;
+                green = 0.5f;
+                blue = 0.65f;
+            }
+            case FIRE -> {
+                anim = ThunderstormAnims.thunder_fire_anim;
+                red = 0.75f;
+                green = 0.3f;
+            }
         }
     }
 
@@ -95,6 +107,14 @@ public class Thunderstorm_Hit extends Thunderstorm_Spell {
         body.setUserData(this);
     }
     public void createLight() {
+        for (int i = 1; i < 5; i++) {
+            RoundLight lighty = screen.lightManager.pool.getLight();
+            Vector2 position = new Vector2(body.getPosition().x, body.getPosition().y + i);
+            lighty.setLight(red, green, blue, lightAlpha, 50, position);
+            screen.lightManager.addLight(lighty);
+            lighty.dimKill(0.015f);
+        }
+
         light = screen.lightManager.pool.getLight();
         light.setLight(red, green, blue, lightAlpha, 160, body.getPosition());
         screen.lightManager.addLight(light);
@@ -145,6 +165,12 @@ public class Thunderstorm_Hit extends Thunderstorm_Spell {
         if(nested_spell instanceof ChargedBolts_Spell) {
             procRate = 0.525f - level * .025f;
         }
+        if(nested_spell instanceof Flamejet_Spell) {
+            procRate = 0.675f - level * 0.025f;
+        }
+        if(nested_spell instanceof ForkedLightning_Spell) {
+            procRate = 0;
+        }
         return procRate;
     }
     public int getQuantity() {
@@ -153,7 +179,14 @@ public class Thunderstorm_Hit extends Thunderstorm_Spell {
             quantity = 2 + nested_spell.getLvl();
         }
         if(nested_spell instanceof Frostbolt_Spell) {
-            quantity = 2 + nested_spell.getLvl();
+            quantity = 2 + nested_spell.getLvl()/2;
+        }
+        if(nested_spell instanceof Flamejet_Spell) {
+            quantity = 2 + nested_spell.getLvl()/2;
+        }
+        if(nested_spell instanceof ForkedLightning_Spell) {
+            float level = (player.spellbook.chainlightning_lvl + player.spellbook.flamejet_lvl)/2f;
+            quantity = (int) (1 + level/5);
         }
         return quantity;
     }

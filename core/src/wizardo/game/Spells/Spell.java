@@ -3,7 +3,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -16,7 +15,6 @@ import wizardo.game.Display.Text.FloatingDamage;
 import wizardo.game.Monsters.Monster;
 import wizardo.game.Screens.BaseScreen;
 import wizardo.game.Spells.SpellUtils.*;
-import wizardo.game.Utils.BodyFactory;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -38,7 +36,7 @@ public abstract class Spell implements Cloneable {
     public float green = 0;
     public float blue = 0;
     public float lightAlpha = 1;
-
+    public Color textColor = null;
 
     public Vector2 spawnPosition;
     public Vector2 targetPosition;
@@ -203,6 +201,7 @@ public abstract class Spell implements Cloneable {
     }
 
     public void setElements(Spell spellParent) {
+        textColor = spellParent.textColor;
         if(main_element != spellParent.main_element) {
             this.bonus_element = spellParent.main_element;
         }
@@ -218,9 +217,9 @@ public abstract class Spell implements Cloneable {
      * finds if the spell is already somewhere in the inventory of the player
      * @return
      */
-    public boolean alreadyCrafted() {
+    public boolean alreadyOwned() {
 
-        boolean alreadyCrafted = false;
+        boolean alreadyOwned = false;
 
         ArrayList<Spell> spells_in_inventory = new ArrayList<>();
         spells_in_inventory.addAll(player.spellbook.equippedSpells);
@@ -236,11 +235,11 @@ public abstract class Spell implements Cloneable {
         for(Spell spell : spells_in_inventory) {
             Collections.sort(spell.spellParts);
             if(spell.spellParts.equals(this.spellParts)) {
-                alreadyCrafted = true;
+                alreadyOwned = true;
             }
         }
 
-        return alreadyCrafted;
+        return alreadyOwned;
     }
 
     /**
@@ -249,7 +248,7 @@ public abstract class Spell implements Cloneable {
      */
     public boolean canMix() {
 
-        boolean duplicate = this.alreadyCrafted();
+        boolean duplicate = this.alreadyOwned();
         boolean spaceInEquipped = player.spellbook.equippedSpells.size() < Unlocked.max_equipped_spells;
         boolean spaceInKnown = player.spellbook.knownSpells.size() < Unlocked.max_known_spells;
         boolean sameTypeEquipped = false;
@@ -362,11 +361,15 @@ public abstract class Spell implements Cloneable {
         String s = "" + dmg;
 
         Color color = Color.RED;
-        switch(anim_element) {
-            case FIRE -> color = mainMenuSkin.getColor("LightOrange");
-            case FROST -> color = mainMenuSkin.getColor("LightBlue");
-            case ARCANE -> color = mainMenuSkin.getColor("LightPink");
-            case LIGHTNING -> color = mainMenuSkin.getColor("LightYellow");
+        if(textColor != null) {
+            color = textColor;
+        } else {
+            switch(anim_element) {
+                case FIRE -> color = mainMenuSkin.getColor("LightOrange");
+                case FROST -> color = mainMenuSkin.getColor("LightBlue");
+                case ARCANE -> color = mainMenuSkin.getColor("LightPink");
+                case LIGHTNING -> color = mainMenuSkin.getColor("LightYellow");
+            }
         }
 
         FloatingDamage text = screen.displayManager.textManager.pool.getDmgText();

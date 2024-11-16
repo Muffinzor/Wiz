@@ -151,7 +151,7 @@ public class ArcaneMissile_Projectile extends ArcaneMissile_Spell {
     public void arcaneTargeting() {
         if(!targetLocked && !screen.monsterManager.liveMonsters.isEmpty()) {
 
-            ArrayList<Monster> inRange = SpellUtils.findMonstersInRangeOfVector(body.getPosition(), 6);
+            ArrayList<Monster> inRange = SpellUtils.findMonstersInRangeOfVector(body.getPosition(), 6, true);
 
             float max = 0;
             for(Monster monster : inRange) {

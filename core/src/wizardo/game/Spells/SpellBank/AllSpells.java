@@ -18,6 +18,8 @@ import static wizardo.game.Spells.SpellBank.FrostLightning_Spells.frostliteSpell
 import static wizardo.game.Spells.SpellBank.Frost_Spells.*;
 import static wizardo.game.Spells.SpellBank.LightningArcane_Spells.createLightningArcane_Spells;
 import static wizardo.game.Spells.SpellBank.LightningArcane_Spells.litearcaneSpells;
+import static wizardo.game.Spells.SpellBank.LightningFire_Spells.createLightningFire_Spells;
+import static wizardo.game.Spells.SpellBank.LightningFire_Spells.litefireSpells;
 import static wizardo.game.Spells.SpellBank.Lightning_Spells.createLightning_Spells;
 import static wizardo.game.Spells.SpellBank.Lightning_Spells.litespells;
 
@@ -50,6 +52,9 @@ public class AllSpells {
 
         createLightningArcane_Spells();
         allSpells.addAll(Arrays.asList(litearcaneSpells));
+
+        createLightningFire_Spells();
+        allSpells.addAll(Arrays.asList(litefireSpells));
 
     }
 }

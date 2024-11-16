@@ -1,5 +1,6 @@
 package wizardo.game.Monsters;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Screens.Battle.BattleScreen;
@@ -39,6 +40,7 @@ public class MonsterManager {
     }
 
     public void addMonster(Monster monster) {
+        monster.update(Gdx.graphics.getDeltaTime());
         liveMonsters.add(monster);
     }
 

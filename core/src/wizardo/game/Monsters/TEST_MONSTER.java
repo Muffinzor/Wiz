@@ -13,8 +13,8 @@ public class TEST_MONSTER extends Monster {
     public TEST_MONSTER(BattleScreen screen, Vector2 position) {
         super(screen, position);
         speed = 20f/PPM;
-        hp = 301;
-        maxHP = 301;
+        hp = 150;
+        maxHP = 350;
 
         bodyRadius = 10;
 

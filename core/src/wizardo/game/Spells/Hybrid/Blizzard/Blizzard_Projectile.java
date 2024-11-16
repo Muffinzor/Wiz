@@ -47,7 +47,7 @@ public class Blizzard_Projectile extends Blizzard_Spell {
             hit.frostbolts = frostbolts;
             hit.setElements(this);
             screen.spellManager.toAdd(hit);
-            light.kill();
+            light.dimKill(0.5f);
             world.destroyBody(body);
             screen.spellManager.toRemove(this);
         }
@@ -106,6 +106,7 @@ public class Blizzard_Projectile extends Blizzard_Spell {
     public void createLight() {
         light = screen.lightManager.pool.getLight();
         light.setLight(red, green, blue,1, 25, body.getPosition());
+        screen.lightManager.addLight(light);
     }
 
     public void adjustLight() {

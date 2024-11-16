@@ -8,6 +8,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.Monster;
 import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Explosion;
+import wizardo.game.Spells.Frost.Icespear.Icespear_Projectile;
 import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyFactory;
 
@@ -22,14 +23,17 @@ public class ChargedBolts_Projectile extends ChargedBolts_Spell {
 
     Body body;
     RoundLight light;
+    boolean lightKilled;
     float alpha = 1;
     int collisions = 0;
+    boolean canSplit;
+    float directionAngle;
+    boolean canExplode;
 
     public int rotation;
     public boolean reverseRotation;
     public boolean flipX;
     public boolean flipY;
-
 
     public Vector2 direction;
     private Vector2 perpendicular;
@@ -65,8 +69,6 @@ public class ChargedBolts_Projectile extends ChargedBolts_Spell {
 
         main_element = SpellUtils.Spell_Element.LIGHTNING;
 
-        screen = currentScreen;
-
     }
 
     public void update(float delta) {
@@ -77,26 +79,56 @@ public class ChargedBolts_Projectile extends ChargedBolts_Spell {
             createLight();
         }
 
+        if(canSplit) {
+            split();
+            if(!lightKilled) {
+
+                lightKilled = true;
+            }
+            world.destroyBody(body);
+            screen.spellManager.toRemove(this);
+            return;
+        }
+
+        if(canExplode) {
+            explode();
+            if(!lightKilled) {
+                light.dimKill(0.5f);
+                lightKilled = true;
+            }
+            world.destroyBody(body);
+            screen.spellManager.toRemove(this);
+            return;
+        }
+
         stateTime += delta;
         drawFrame();
-        adjustLight();
+        if(!canSplit && alpha >= 0.05f) {
+            adjustLight();
+        }
 
-        if(stateTime > 3 || collisions > 5) {
-            if(alpha == 1) {
-                light.dimKill(0.05f);
-                light = null;
+        if(stateTime > duration || collisions > 5) {
+            if(!lightKilled) {
+                light.dimKill(0.03f);
+                lightKilled = true;
             }
-            alpha -= 0.05f;
+            if(delta > 0) {
+                alpha -= 0.05f;
+            }
         } else if (delta > 0){
             wobble(delta);
         }
 
-        if(arcaneMissile && stateTime < 3) {
+        if(arcaneMissile && stateTime < duration) {
             arcaneTarget();
         }
 
         if(alpha <= 0) {
             world.destroyBody(body);
+            if(!lightKilled) {
+                light.kill();
+                lightKilled = true;
+            }
             screen.spellManager.toRemove(this);
         }
 
@@ -104,14 +136,13 @@ public class ChargedBolts_Projectile extends ChargedBolts_Spell {
 
     public void handleCollision(Monster monster) {
         collisions ++;
-
         frostbolts(monster);
-
         dealDmg(monster);
+        canSplit = canSplit() && stateTime > 0.2f;
+        canExplode = canExplode() && stateTime > 0.2f;
     }
 
     public void handleCollision(Fixture fix) {
-
         collisions += 100;
         body.setLinearVelocity(0,0);
     }
@@ -152,12 +183,46 @@ public class ChargedBolts_Projectile extends ChargedBolts_Spell {
         direction.rotateDeg(randomAngle);
 
         Vector2 velocity = direction.scl(speed);
+        directionAngle = velocity.angleDeg();
         body.setLinearVelocity(velocity);
+    }
+
+    public boolean canSplit() {
+        if(spear) {
+            float procRate = 0.95f - 0.05f * player.spellbook.icespear_lvl;
+            return Math.random() >= procRate;
+        }
+        return false;
+    }
+    public boolean canExplode() {
+        if(flamejet) {
+            return Math.random() >= 0.8f;
+        }
+        return false;
+    }
+
+    public void split() {
+        int bolts = 2;
+        float initialAngle = directionAngle;
+        float halfCone = 24f * bolts / 2;
+        float stepSize = 24f * bolts / (bolts - 1);
+
+        for (int i = 0; i < bolts; i++) {
+            float angle = initialAngle - halfCone + (stepSize * i);
+            Vector2 direction = new Vector2(MathUtils.cosDeg(angle), MathUtils.sinDeg(angle));
+            ChargedBolts_Spell bolt = new ChargedBolts_Spell();
+            bolt.spawnPosition = new Vector2(body.getPosition());
+            bolt.targetPosition = new Vector2(body.getPosition().cpy().add(direction));
+            bolt.setNext(this);
+            bolt.duration = duration - stateTime;
+            bolt.setElements(this);
+            screen.spellManager.toAdd(bolt);
+        }
     }
 
     public void createLight() {
         light = screen.lightManager.pool.getLight();
-        light.setLight(red, green, blue, 0.85f, 25, body.getPosition());
+        light.setLight(red, green, blue, lightAlpha, 25, body.getPosition());
         screen.lightManager.addLight(light);
     }
 
@@ -172,7 +237,7 @@ public class ChargedBolts_Projectile extends ChargedBolts_Spell {
 
             if(!targetLocked) {
 
-                ArrayList<Monster> inRange = SpellUtils.findMonstersInRangeOfVector(body.getPosition(), 3);
+                ArrayList<Monster> inRange = SpellUtils.findMonstersInRangeOfVector(body.getPosition(), 3, true);
 
                 if(!inRange.isEmpty()) {
                     targetMonster = inRange.get(MathUtils.random(inRange.size() - 1));
@@ -230,8 +295,13 @@ public class ChargedBolts_Projectile extends ChargedBolts_Spell {
 
     }
 
+    public void explode() {
+        ChargedBolts_Explosion explosion = new ChargedBolts_Explosion(body.getPosition());
+        explosion.setElements(this);
+        screen.spellManager.toAdd(explosion);
+    }
+
     /**
-     * NEED TO PROC RATE
      * @param monster
      */
     private void frostbolts(Monster monster) {
@@ -241,6 +311,7 @@ public class ChargedBolts_Projectile extends ChargedBolts_Spell {
             if(Math.random() >= procTreshold) {
                 Frostbolt_Explosion explosion = new Frostbolt_Explosion();
                 explosion.targetPosition = new Vector2(monster.body.getPosition());
+                explosion.lightAlpha = 0.6f;
                 explosion.screen = screen;
                 explosion.setElements(this);
                 explosion.anim_element = SpellUtils.Spell_Element.LIGHTNING;
@@ -254,24 +325,28 @@ public class ChargedBolts_Projectile extends ChargedBolts_Spell {
         switch (anim_element) {
             case FROST -> {
                 anim = chargedbolt_frost_anim;
-                red = 0.4f;
-                green = 0.6f;
-                blue = 0.3f;
+                green = 0.5f;
+                blue = 0.65f;
             }
             case LIGHTNING -> {
                 anim = chargedbolt_lightning_anim;
                 red = 0.4f;
                 green = 0.4f;
                 if(bonus_element == FROST) {
-                    red = 0;
+                    anim = chargedbolt_frost_anim;
                     green = 0.5f;
-                    blue = 0.6f;
+                    blue = 0.65f;
                 }
             }
             case ARCANE -> {
                 anim = chargedbolt_arcane_anim;
                 red = 0.6f;
                 blue = 0.9f;
+            }
+            case FIRE -> {
+                anim = chargedbolt_fire_anim;
+                red = 0.6f;
+                green = 0.15f;
             }
         }
 

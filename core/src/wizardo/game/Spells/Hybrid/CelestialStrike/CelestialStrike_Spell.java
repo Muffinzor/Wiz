@@ -1,6 +1,7 @@
 package wizardo.game.Spells.Hybrid.CelestialStrike;
 
 import com.badlogic.gdx.math.Vector2;
+import wizardo.game.Resources.Skins;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 
@@ -26,6 +27,7 @@ public class CelestialStrike_Spell extends Spell {
 
         main_element = SpellUtils.Spell_Element.LIGHTNING;
         bonus_element = SpellUtils.Spell_Element.FROST;
+        textColor = Skins.light_teal;
 
     }
 

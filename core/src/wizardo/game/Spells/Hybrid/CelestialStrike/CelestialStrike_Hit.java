@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.Monster;
+import wizardo.game.Resources.Skins;
 import wizardo.game.Resources.SpellAnims.CelestialStrikeAnims;
 import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Explosion;
 import wizardo.game.Spells.Frost.Frozenorb.Frozenorb_Spell;
@@ -94,7 +95,7 @@ public class CelestialStrike_Hit extends CelestialStrike_Spell {
         }
         orb.speed = 0;
         orb.anim_element = SpellUtils.Spell_Element.LIGHTNING;
-        orb.bonus_element = FROST;
+        orb.textColor = Skins.light_teal;
         orb.duration = 1.5f;
         orb.spawnPosition = new Vector2(targetPosition);
         screen.spellManager.toAdd(orb);

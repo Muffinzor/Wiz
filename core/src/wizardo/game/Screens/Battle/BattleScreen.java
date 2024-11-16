@@ -14,11 +14,13 @@ import wizardo.game.Monsters.Monster;
 import wizardo.game.Monsters.MonsterManager;
 import wizardo.game.Monsters.TEST_MONSTER;
 import wizardo.game.Player.Pawn;
+import wizardo.game.Resources.Skins;
 import wizardo.game.Screens.BaseScreen;
 import wizardo.game.Spells.Fire.Fireball.Fireball_Spell;
 import wizardo.game.Spells.Frost.Icespear.Icespear_Spell;
 import wizardo.game.Spells.Hybrid.ArcaneArtillery.ArcaneArtillery_Spell;
 import wizardo.game.Spells.Hybrid.DragonBreath.DragonBreath_Spell;
+import wizardo.game.Spells.Hybrid.MeteorShower.MeteorShower_Spell;
 import wizardo.game.Spells.Hybrid.Orbit.Orbit_Spell;
 import wizardo.game.Spells.SpellManager;
 import wizardo.game.Spells.SpellUtils;
@@ -32,7 +34,10 @@ import static wizardo.game.Spells.SpellBank.FrostFire_Spells.frostfireSpells;
 import static wizardo.game.Spells.SpellBank.FrostLightning_Spells.frostliteSpells;
 import static wizardo.game.Spells.SpellBank.Frost_Spells.frostspells;
 import static wizardo.game.Spells.SpellBank.LightningArcane_Spells.litearcaneSpells;
+import static wizardo.game.Spells.SpellBank.LightningFire_Spells.litefireSpells;
 import static wizardo.game.Spells.SpellBank.Lightning_Spells.litespells;
+import static wizardo.game.Spells.SpellUtils.Spell_Element.FIRE;
+import static wizardo.game.Spells.SpellUtils.Spell_Element.LIGHTNING;
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.*;
 
@@ -73,7 +78,7 @@ public class BattleScreen extends BaseScreen {
         controllerTargetSprite = new Sprite(new Texture("Cursors/Controller_Cursor.png"));
 
         for (int i = 0; i < 300; i++) {
-            Vector2 random = SpellUtils.getRandomVectorInRadius(player.pawn.getPosition(), 30);
+            Vector2 random = SpellUtils.getRandomVectorInRadius(player.pawn.getPosition(), 40);
             Monster monster = new TEST_MONSTER(this, random);
             monsterManager.addMonster(monster);
         }
@@ -82,10 +87,12 @@ public class BattleScreen extends BaseScreen {
 
     @Override
     public void render(float delta) {
+
         if(!initialized) {
-            player.spellbook.equippedSpells.add(firespells[0]);
+            player.spellbook.equippedSpells.add(litefireSpells[11]);
             initialized = true;
         }
+
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         if(paused) {
             delta = 0;
@@ -167,7 +174,7 @@ public class BattleScreen extends BaseScreen {
             float angle = targetVector.angleRad();
 
             // Define the cursor offset in screen pixels
-            float aimRadiusPixels = 200f;  // Adjust for the desired cursor offset
+            float aimRadiusPixels = 100f;  // Adjust for the desired cursor offset
 
             float cursorX = playerScreenPosition.x + aimRadiusPixels * (float)Math.cos(angle);
             float cursorY = playerScreenPosition.y + aimRadiusPixels * (float)Math.sin(angle);

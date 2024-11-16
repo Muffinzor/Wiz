@@ -18,7 +18,30 @@ public class FireballAnims {
     public static String fireball_frost_atlas_path = "Spells/Fireball/frost_projectile.atlas";
     public static String fireball_frostExplosion_atlas_path = "Spells/Fireball/frost_explosion.atlas";
 
+    public static Animation<Sprite> fireball_anim_lightning;
+    public static Animation<Sprite> fireball_explosion_anim_lightning;
+    public static String fireball_lightning_atlas_path = "Spells/Fireball/lightning_projectile.atlas";
+    public static String fireball_lightningExplosion_atlas_path = "Spells/Fireball/lightning_explosion.atlas";
+
     public static void loadAnimations() {
+        TextureAtlas lite_proj_atlas = assetManager.get(fireball_lightning_atlas_path, TextureAtlas.class);
+        TextureAtlas lite_explosion_atlas = assetManager.get(fireball_lightningExplosion_atlas_path, TextureAtlas.class);
+
+        Sprite[] liteProj_frames = new Sprite[6];
+        for (int i = 0; i < liteProj_frames.length; i++) {
+            liteProj_frames[i] = lite_proj_atlas.createSprite("Fireball" + (i+1));
+        }
+        fireball_anim_lightning = new Animation<>(0.1f, liteProj_frames);
+
+        Sprite[] liteExplosion_frames = new Sprite[63];
+        for (int i = 0; i < liteExplosion_frames.length; i++) {
+            liteExplosion_frames[i] = lite_explosion_atlas.createSprite("fireexplosion" + (i+1));
+        }
+        fireball_explosion_anim_lightning = new Animation<>(0.015f, liteExplosion_frames);
+
+
+
+
         TextureAtlas projectile_atlas = assetManager.get(fireball_fire_atlas_path, TextureAtlas.class);
         TextureAtlas fire_atlas = assetManager.get(fireball_fireExplosion_atlas_path, TextureAtlas.class);
 
@@ -59,6 +82,9 @@ public class FireballAnims {
 
         assetManager.load(fireball_frost_atlas_path, TextureAtlas.class);
         assetManager.load(fireball_frostExplosion_atlas_path, TextureAtlas.class);
+
+        assetManager.load(fireball_lightning_atlas_path, TextureAtlas.class);
+        assetManager.load(fireball_lightningExplosion_atlas_path, TextureAtlas.class);
     }
 
 }

@@ -146,7 +146,7 @@ public class Frozenorb_Projectile extends Frozenorb_Spell {
                 BattleScreen screen = (BattleScreen) currentScreen;
                 for (Monster monster : screen.monsterManager.liveMonsters) {
                     if (monster.body.getPosition().dst(body.getPosition()) < radius) {
-                        monster.hp -= baseDmg/12f;
+                        monster.hp -= getDmg()/12f;
                         if(anim_element == FROST) {
                             monster.applySlow(2, slowRatio - 0.025f * getLvl());
                         }
@@ -194,13 +194,8 @@ public class Frozenorb_Projectile extends Frozenorb_Spell {
             }
             case LIGHTNING -> {
                 anim = FrozenorbAnims.frozenorb_anim_lightning;
-                red = 0.3f;
-                green = 0.25f;
-                if(bonus_element == FROST) {
-                    red = 0.1f;
-                    green = 0.6f;
-                    blue = 0.9f;
-                }
+                green = 0.6f;
+                blue = 0.75f;
             }
             case ARCANE -> {
                 anim = FrozenorbAnims.frozenorb_anim_arcane;

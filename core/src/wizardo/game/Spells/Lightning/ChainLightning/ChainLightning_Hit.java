@@ -12,6 +12,7 @@ import wizardo.game.Monsters.Monster;
 import wizardo.game.Resources.SpellAnims.ChainLightningAnims;
 import wizardo.game.Spells.Arcane.Rifts.Rift_Zone;
 import wizardo.game.Spells.Arcane.Rifts.Rifts_Spell;
+import wizardo.game.Spells.Fire.Fireball.Fireball_Explosion;
 import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Explosion;
 import wizardo.game.Spells.Lightning.ChargedBolts.ChargedBolts_Spell;
 import wizardo.game.Spells.Spell;
@@ -31,6 +32,8 @@ public class ChainLightning_Hit extends ChainLightning_Spell {
 
     boolean alreadyChained;
     Body body;
+    public boolean forked;
+    public float duration = 0.3f;
 
     public Monster monsterFrom;
     public Monster monsterTo;
@@ -64,6 +67,7 @@ public class ChainLightning_Hit extends ChainLightning_Spell {
             }
             frostbolts(monsterTo);
             rifts(monsterTo);
+            fireball(monsterTo);
             laserBody();
             dealDmg(monsterTo);
 
@@ -72,15 +76,19 @@ public class ChainLightning_Hit extends ChainLightning_Spell {
         if(currentHits < maxHits && !alreadyChained && stateTime > 0.03f) {
             alreadyChained = true;
             inRange = findMonstersInRange(monsterTo.body, radius);
-            if(!inRange.isEmpty()) {
+
+            if(splits < maxSplits && inRange.size() > 1) {
+                splitChain();
+            } else if(!inRange.isEmpty()) {
                 singleChain();
             }
+
         }
 
         stateTime += delta;
         drawFrame(delta);
 
-        if(stateTime > 0.3f) {
+        if(stateTime > duration) {
             screen.spellManager.toRemove(this);
             if(beam) {
                 world.destroyBody(body);
@@ -154,28 +162,39 @@ public class ChainLightning_Hit extends ChainLightning_Spell {
             ChainLightning_Hit chain = new ChainLightning_Hit(target);
             chain.setNextChain(this);
             chain.setElements(this);
-            chain.screen = screen;
             monstersHit.add(target);
             chain.monstersHit = monstersHit;
             screen.spellManager.toAdd(chain);
         }
 
     }
+    public void splitChain() {
+        splits++;
+
+        Collections.shuffle(inRange);
+
+        Monster target1 = inRange.removeFirst();
+        Monster target2 = inRange.removeFirst();
+
+        ChainLightning_Hit chain = new ChainLightning_Hit(target1);
+        chain.setNextChain(this);
+        chain.setElements(this);
+        chain.monstersHit = new ArrayList<>(monstersHit);
+        chain.monstersHit.add(target1);
+        screen.spellManager.toAdd(chain);
+
+        ChainLightning_Hit chain2 = new ChainLightning_Hit(target1);
+        chain2.setNextChain(this);
+        chain2.setElements(this);
+        chain2.monstersHit = new ArrayList<>(monstersHit);
+        chain2.monstersHit.add(target2);
+        screen.spellManager.toAdd(chain2);
+
+    }
 
     public Monster normalTargeting() {
-
-        Monster newTarget = null;
-        float dst = Float.MAX_VALUE;
-
-        for(Monster monster : inRange) {
-            if(monster.body.getPosition().dst(monsterTo.body.getPosition()) < dst) {
-                newTarget = monster;
-                dst = monster.body.getPosition().dst(monsterTo.body.getPosition());
-            }
-        }
-
-        return newTarget;
-
+        Collections.shuffle(inRange);
+        return inRange.removeFirst();
     }
 
     public Monster missileTargeting() {
@@ -192,12 +211,15 @@ public class ChainLightning_Hit extends ChainLightning_Spell {
     public void setNextChain(ChainLightning_Hit thisHit) {
         maxHits = thisHit.maxHits;
         currentHits = thisHit.currentHits + 1;
+        splits = thisHit.splits;
+        maxSplits = thisHit.maxSplits;
 
         nested_spell = thisHit.nested_spell;
         monsterFrom = thisHit.monsterTo;
         originBody = monsterFrom.body;
 
         beam = thisHit.beam;
+        fireball = thisHit.fireball;
         frostbolts = thisHit.frostbolts;
         arcaneMissile = thisHit.arcaneMissile;
         rifts = thisHit.rifts;
@@ -215,9 +237,12 @@ public class ChainLightning_Hit extends ChainLightning_Spell {
         }
 
         for (int i = 0; i < numLights; i++) {
+            if(forked && i == 0) {
+                continue;
+            }
             Vector2 position = new Vector2(originBody.getPosition()).add(step.x * i, step.y * i);
             RoundLight light = screen.lightManager.pool.getLight();
-            light.setLight(red,green,blue,1,23, position);
+            light.setLight(red,green,blue,lightAlpha,23, position);
             light.dimKill(0.1f);
             screen.lightManager.addLight(light);
         }
@@ -266,8 +291,8 @@ public class ChainLightning_Hit extends ChainLightning_Spell {
             case FROST -> {
                 anim = ChainLightningAnims.chainlightning_lightning_anim;
                 longAnim = ChainLightningAnims.chainlightning_long_lightning_anim;
-                green = 0.3f;
-                blue = 0.45f;
+                green = 0.65f;
+                blue = 0.65f;
             }
             case ARCANE -> {
                 anim = ChainLightningAnims.chainlightning_lightning_anim;
@@ -275,6 +300,12 @@ public class ChainLightning_Hit extends ChainLightning_Spell {
                 red = 1f;
                 green = 0.3f;
                 blue = 0.85f;
+            }
+            case FIRE -> {
+                anim = ChainLightningAnims.chainlightning_lightning_anim;
+                longAnim = ChainLightningAnims.chainlightning_long_lightning_anim;
+                red = 0.8f;
+                green = 0.25f;
             }
         }
     }
@@ -342,14 +373,14 @@ public class ChainLightning_Hit extends ChainLightning_Spell {
         float procRate = 1;
         float level = (float) (getLvl() + nested_spell.getLvl()) / 2;
         if(nested_spell instanceof ChargedBolts_Spell) {
-            procRate = 0.8f - level * .05f;
+            procRate = 0.85f - level * .05f;
         }
         return procRate;
     }
     public int getQuantity() {
         int quantity = 1;
         if(nested_spell instanceof ChargedBolts_Spell) {
-            quantity = 2 + nested_spell.getLvl();
+            quantity = 3 + nested_spell.getLvl()/2;
         }
         return quantity;
     }
@@ -383,6 +414,19 @@ public class ChainLightning_Hit extends ChainLightning_Spell {
                 Rift_Zone rift = new Rift_Zone(monster.body.getPosition());
                 rift.setElements(this);
                 screen.spellManager.toAdd(rift);
+            }
+        }
+    }
+    public void fireball(Monster monster) {
+
+        if(fireball) {
+            float level = (getLvl() + player.spellbook.fireball_lvl)/2f;
+            float procRate = 0.9f - 0.025f * level;
+            if(Math.random() >= procRate) {
+                Fireball_Explosion explosion = new Fireball_Explosion();
+                explosion.targetPosition = new Vector2(monster.body.getPosition());
+                explosion.setElements(this);
+                screen.spellManager.toAdd(explosion);
             }
         }
     }

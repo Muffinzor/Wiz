@@ -91,6 +91,7 @@ public class LoadingScreen extends BaseScreen {
         CelestialStrikeAnims.loadAtlas();
         DragonbreathAnims.loadAtlas();
         ExplosionsAnims.loadAtlas();
+        MeteorAnims.loadAtlas();
 
         GeneralDecorResources.loadAtlas();
 
@@ -115,6 +116,7 @@ public class LoadingScreen extends BaseScreen {
         CelestialStrikeAnims.loadAnimations();
         DragonbreathAnims.loadAnimations();
         ExplosionsAnims.loadAnimations();
+        MeteorAnims.loadAnimations();
 
         GeneralDecorResources.loadAnimations();
 

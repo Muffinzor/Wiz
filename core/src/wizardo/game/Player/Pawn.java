@@ -49,7 +49,7 @@ public class Pawn {
     public void drawSprite() {
         Sprite frame = getSprite(screen);
         frame.set(PlayerResources.playerWalk.getKeyFrame(stateTime, true));
-        frame.setCenter(body.getPosition().x * PPM, body.getPosition().y * PPM + 5);
+        frame.setCenter(body.getPosition().x * PPM, body.getPosition().y * PPM + 8);
         screen.displayManager.spriteRenderer.regular_sorted_sprites.add(frame);
     }
 

@@ -74,7 +74,7 @@ public class Thunderstorm_Spell extends Spell {
     /** any monster at random within radius */
     public Vector2 randomTargeting() {
         Vector2 target = null;
-        inRange = SpellUtils.findMonstersInRangeOfVector(getSpawnPosition(), radius);
+        inRange = SpellUtils.findMonstersInRangeOfVector(getSpawnPosition(), radius, false);
         if(!inRange.isEmpty()) {
             int attempts = 0;
             while(attempts < 10) {
@@ -92,7 +92,7 @@ public class Thunderstorm_Spell extends Spell {
     /** tries to target higher hp monsters */
     public Vector2 arcaneMissileTargeting() {
         Vector2 target = null;
-        inRange = SpellUtils.findMonstersInRangeOfVector(getSpawnPosition(), radius);
+        inRange = SpellUtils.findMonstersInRangeOfVector(getSpawnPosition(), radius, false);
         if(!inRange.isEmpty()) {
             inRange.sort((m1, m2) -> Float.compare(m2.hp, m1.hp));
             int attempts = 0;

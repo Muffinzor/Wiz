@@ -33,7 +33,6 @@ public class MasteryTable extends MenuTable {
         createMixingTable();
 
         updateCheckBoxes();
-
     }
 
     public void createSpellButtonsTable() {

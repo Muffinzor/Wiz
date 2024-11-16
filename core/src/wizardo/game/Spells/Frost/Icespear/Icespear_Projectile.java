@@ -12,7 +12,11 @@ import wizardo.game.Spells.Fire.Fireball.Fireball_Explosion;
 import wizardo.game.Spells.Fire.Flamejet.Flamejet_Spell;
 import wizardo.game.Spells.Fire.Overheat.Overheat_miniExplosion;
 import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Explosion;
+import wizardo.game.Spells.Frost.Frozenorb.Frozenorb_Spell;
 import wizardo.game.Spells.Hybrid.CelestialStrike.CelestialStrike_Hit;
+import wizardo.game.Spells.Lightning.ChainLightning.ChainLightning_Spell;
+import wizardo.game.Spells.Lightning.ChargedBolts.ChargedBolts_Spell;
+import wizardo.game.Spells.Lightning.Thunderstorm.Thunderstorm_Hit;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyFactory;
@@ -20,6 +24,8 @@ import wizardo.game.Utils.BodyFactory;
 import java.util.ArrayList;
 
 import static wizardo.game.Resources.SpellAnims.IcespearAnims.*;
+import static wizardo.game.Spells.SpellUtils.Spell_Element.FROST;
+import static wizardo.game.Spells.SpellUtils.Spell_Element.LIGHTNING;
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.*;
 
@@ -92,7 +98,7 @@ public class Icespear_Projectile extends Icespear_Spell {
      */
     public void handleCollision(Monster monster) {
 
-        if(frozenorb) {
+        if(frozenorb && anim_element == FROST) {
             float duration = 0.8f + 0.2f * player.spellbook.frozenorb_lvl;
             monster.applyFreeze(duration, duration * 2);
         }
@@ -112,8 +118,8 @@ public class Icespear_Projectile extends Icespear_Spell {
             screen.spellManager.toAdd(hit);
 
             if (nested_spell != null) {
-                float chanceToProc = 0.5f;
-                int quantity = 2 + nested_spell.getLvl();
+                float chanceToProc = getProcRate();
+                int quantity = getQuantity();
                 if (Math.random() > chanceToProc) {
                     for (int i = 0; i < quantity; i++) {
                         Spell proj = nested_spell.clone();
@@ -128,14 +134,32 @@ public class Icespear_Projectile extends Icespear_Spell {
 
             rift();
             frostbolts();
-
+            thunderspear();
         }
+    }
 
+    public float getProcRate() {
+        float procRate = 1;
+        float level = (getLvl() + nested_spell.getLvl())/2f;
+        if(nested_spell instanceof ChargedBolts_Spell) {
+            procRate = 0.925f - 0.025f * level;
+        }
+        return procRate;
+    }
 
+    public int getQuantity() {
+        int quantity = 1;
+        int level = getLvl() + nested_spell.getLvl();
+        if(nested_spell instanceof ChargedBolts_Spell) {
+            quantity = 3 + level/2;
+        }
+        return quantity;
     }
 
     public void split() {
         celestialStrike();
+        lightingOrbSplit();
+        thundersplit();
         currentSplits++;
 
         if(overheat && currentSplits == 1) {
@@ -143,7 +167,7 @@ public class Icespear_Projectile extends Icespear_Spell {
         } else if(fireball && currentSplits == 2) {
             fireballSplit();
         } else if(arcaneMissile) {
-            ArrayList<Monster> inRange = SpellUtils.findMonstersInRangeOfVector(body.getPosition(), 5);
+            ArrayList<Monster> inRange = SpellUtils.findMonstersInRangeOfVector(body.getPosition(), 5, true);
             if(!inRange.isEmpty()) {
                 arcaneSplit(inRange);
             } else {
@@ -197,7 +221,6 @@ public class Icespear_Projectile extends Icespear_Spell {
 
     public void drawFrame() {
 
-
         Sprite frame = screen.displayManager.spriteRenderer.pool.getSprite();
         frame.set(anim.getKeyFrame(stateTime, true));
         frame.setCenter(body.getPosition().x * PPM, body.getPosition().y * PPM);
@@ -229,6 +252,11 @@ public class Icespear_Projectile extends Icespear_Spell {
                 red = 0.2f;
                 green = 0.3f;
                 blue = 0.75f;
+            }
+            case LIGHTNING -> {
+                anim = icespear_anim_lightning;
+                green = 0.5f;
+                blue = 0.65f;
             }
         }
     }
@@ -278,13 +306,28 @@ public class Icespear_Projectile extends Icespear_Spell {
     public void celestialStrike() {
         if(celestialStrike) {
             float level = (getLvl() + player.spellbook.thunderstorm_lvl + player.spellbook.frozenorb_lvl) / 3f;
-            float procRate = .85f - level * 0.05f;
+            float procRate = .95f - level * 0.05f;
 
             if(Math.random() >= procRate) {
                 CelestialStrike_Hit strike = new CelestialStrike_Hit();
                 strike.targetPosition = new Vector2(body.getPosition());
                 strike.screen = screen;
                 screen.spellManager.toAdd(strike);
+            }
+        }
+    }
+    public void lightingOrbSplit() {
+        if(frozenorb && anim_element == LIGHTNING) {
+            float procRate = 0.95f - 0.025f * player.spellbook.frozenorb_lvl;
+            if(Math.random() >= procRate) {
+                Frozenorb_Spell orb = new Frozenorb_Spell();
+                orb.setElements(this);
+                orb.nested_spell = new ChainLightning_Spell();
+                orb.duration = 1.5f;
+                orb.speed = 0;
+                orb.spawnPosition = new Vector2(body.getPosition());
+                orb.targetPosition =  new Vector2(body.getPosition().x + 1, body.getPosition().y + 1);
+                screen.spellManager.toAdd(orb);
             }
         }
     }
@@ -342,6 +385,35 @@ public class Icespear_Projectile extends Icespear_Spell {
                 explosion.targetPosition = new Vector2(body.getPosition());
                 explosion.setElements(this);
                 screen.spellManager.toAdd(explosion);
+            }
+        }
+    }
+
+    public void thunderspear() {
+        if(thunderspear) {
+            float chargedboltsProc = 0.95f - 0.05f * player.spellbook.chargedbolt_lvl;
+
+            if(Math.random() >= chargedboltsProc) {
+                int quantity = 3 + player.spellbook.chargedbolt_lvl/2;
+                for (int i = 0; i < quantity; i++) {
+                    ChargedBolts_Spell bolt = new ChargedBolts_Spell();
+                    bolt.setElements(this);
+                    bolt.anim_element = FROST;
+                    bolt.spawnPosition = new Vector2(body.getPosition());
+                    bolt.targetPosition = SpellUtils.getRandomVectorInRadius(body.getPosition(), 3);
+                    screen.spellManager.toAdd(bolt);
+                }
+            }
+        }
+    }
+    public void thundersplit() {
+        if(thunderspear) {
+            float thunderProc = 0.65f - 0.05f * player.spellbook.thunderstorm_lvl;
+            if(Math.random() >= thunderProc) {
+                Thunderstorm_Hit thunder = new Thunderstorm_Hit(body.getPosition());
+                thunder.setElements(this);
+                thunder.anim_element = FROST;
+                screen.spellManager.toAdd(thunder);
             }
         }
     }

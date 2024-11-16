@@ -94,15 +94,15 @@ public class SpellUtils {
 
     /**
      * returns a randomized position that does not collide with obstacles, if it can find one quickly
-     * @param target center of the search circle
+     * @param center center of the search circle
      * @return null if nothing is found
      */
-    public static Vector2 getClearRandomPosition(Vector2 target, float radius) {
+    public static Vector2 getClearRandomPosition(Vector2 center, float radius) {
         Vector2 randomTarget = null;
         int attempts = 0;
         while (randomTarget == null && attempts < 10) {
             attempts++;
-            Vector2 attempt = SpellUtils.getRandomVectorInRadius(target, radius);
+            Vector2 attempt = SpellUtils.getRandomVectorInRadius(center, radius);
             if (!isPositionOverlappingWithObstacle(attempt) || attempts == 10) {
                 randomTarget = attempt;
             }
@@ -110,8 +110,24 @@ public class SpellUtils {
         return randomTarget;
     }
 
+    /**
+     * returns the coordinate at a certain distance of an origin, in the direction of target
+     * @param origin
+     * @param target
+     * @param distance
+     * @return
+     */
+    public static Vector2 getTargetVector(Vector2 origin, Vector2 target, float distance) {
+        Vector2 direction = new Vector2(target).sub(origin);
 
-    public static ArrayList<Monster> findMonstersInRangeOfVector(Vector2 origin, float radius) {
+        direction.nor();
+        direction.scl(distance);
+
+        return new Vector2(origin).add(direction);
+    }
+
+
+    public static ArrayList<Monster> findMonstersInRangeOfVector(Vector2 origin, float radius, boolean need_LoS) {
         ArrayList<Monster> monstersInRange = new ArrayList<>();
 
         // Define the AABB
@@ -128,7 +144,11 @@ public class SpellUtils {
                 float distance = origin.dst(monsterPosition);
 
                 if (distance <= radius && monster.hp > 0) {
-                    monstersInRange.add(monster);
+                    if(need_LoS && hasLineOfSight(origin, monster.body.getPosition())) {
+                        monstersInRange.add(monster);
+                    } else if (!need_LoS ){
+                        monstersInRange.add(monster);
+                    }
                 }
             }
             return true; // Continue the query

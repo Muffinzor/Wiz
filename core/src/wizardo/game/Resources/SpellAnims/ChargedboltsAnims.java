@@ -17,10 +17,29 @@ public class ChargedboltsAnims {
     public static Animation<Sprite> chargedbolt_arcane_anim;
     public static String chargedbolt_atlas_path_arcane = "Spells/ChargedBolts/arcane.atlas";
 
+    public static Animation<Sprite> chargedbolt_fire_anim;
+    public static String chargedbolt_atlas_path_fire = "Spells/ChargedBolts/fire.atlas";
+
+    public static Animation<Sprite> chargedbolt_explosion_anim;
+    public static String chargedbolt_atlas_path_explosion = "Spells/ChargedBolts/fire_explosion.atlas";
+
     public static void loadAnimations() {
 
-        TextureAtlas lightning_atlas = assetManager.get(chargedbolt_atlas_path_lightning, TextureAtlas.class);
+        TextureAtlas fire_atlas = assetManager.get(chargedbolt_atlas_path_fire, TextureAtlas.class);
+        Sprite[] fire_frames = new Sprite[21];
+        for (int i = 0; i < fire_frames.length; i++) {
+            fire_frames[i] = fire_atlas.createSprite("charged_bolt" + (i+1));
+        }
+        chargedbolt_fire_anim = new Animation<>(0.03f, fire_frames);
 
+        TextureAtlas explosionAtlas = new TextureAtlas(chargedbolt_atlas_path_explosion);
+        Sprite[] explosionFrames = new Sprite[63];
+        for (int i = 0; i < explosionFrames.length; i++) {
+            explosionFrames[i] = explosionAtlas.createSprite("fire_explosion" + (i + 1));
+        }
+        chargedbolt_explosion_anim = new Animation<>(0.015f, explosionFrames);
+
+        TextureAtlas lightning_atlas = assetManager.get(chargedbolt_atlas_path_lightning, TextureAtlas.class);
         Sprite[] lightning_frames = new Sprite[21];
         for (int i = 0; i < lightning_frames.length; i++) {
             lightning_frames[i] = lightning_atlas.createSprite("charged_bolt" + (i+1));
@@ -49,5 +68,7 @@ public class ChargedboltsAnims {
         assetManager.load(chargedbolt_atlas_path_lightning, TextureAtlas.class);
         assetManager.load(chargedbolt_atlas_path_frost, TextureAtlas.class);
         assetManager.load(chargedbolt_atlas_path_arcane, TextureAtlas.class);
+        assetManager.load(chargedbolt_atlas_path_fire, TextureAtlas.class);
+        assetManager.load(chargedbolt_atlas_path_explosion, TextureAtlas.class);
     }
 }

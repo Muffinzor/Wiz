@@ -10,6 +10,7 @@ import wizardo.game.Resources.SpellAnims.FireballAnims;
 import wizardo.game.Spells.Fire.Flamejet.Flamejet_Spell;
 import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Explosion;
 import wizardo.game.Spells.Frost.Frozenorb.Frozenorb_Spell;
+import wizardo.game.Spells.Lightning.ChargedBolts.ChargedBolts_Spell;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyFactory;
@@ -22,6 +23,7 @@ public class Fireball_Explosion extends Fireball_Spell {
     Body body;
     RoundLight light;
 
+    float frameScale = 1;
     float rotation;
     boolean flipX;
     boolean flipY;
@@ -45,6 +47,7 @@ public class Fireball_Explosion extends Fireball_Spell {
 
         if(stateTime >= 0.15f && body.isActive()) {
             body.setActive(false);
+            light.dimKill(0.01f);
         }
 
         drawFrame();
@@ -73,6 +76,9 @@ public class Fireball_Explosion extends Fireball_Spell {
         } else {
             frame.flip(flipX, false);
         }
+        if(frameScale != 1) {
+            frame.setScale(frameScale);
+        }
         screen.centerSort(frame, body.getPosition().y * PPM - 30);
         screen.displayManager.spriteRenderer.regular_sorted_sprites.add(frame);
 
@@ -87,7 +93,6 @@ public class Fireball_Explosion extends Fireball_Spell {
         light = screen.lightManager.pool.getLight();
         light.setLight(red, green, blue, lightAlpha, 250, body.getPosition());
         light.toLightManager();
-        light.dimKill(0.01f);
     }
 
     public void frostbolts(float delta) {
@@ -146,6 +151,9 @@ public class Fireball_Explosion extends Fireball_Spell {
         if(nested_spell instanceof Flamejet_Spell) {
             quantity = 2 + (int) (level);
         }
+        if(nested_spell instanceof ChargedBolts_Spell) {
+            quantity = 5 + (int) (level);
+        }
 
         return quantity;
     }
@@ -164,7 +172,14 @@ public class Fireball_Explosion extends Fireball_Spell {
                 red = 0.1f;
                 green = 0.3f;
                 blue = 0.8f;
-                lightAlpha = 1f;
+                frameScale = 0.8f;
+            }
+            case LIGHTNING -> {
+                anim = FireballAnims.fireball_explosion_anim_lightning;
+                red = 0.75f;
+                green = 0.5f;
+                lightAlpha = 0.8f;
+                frameScale = 1.2f;
             }
         }
     }
