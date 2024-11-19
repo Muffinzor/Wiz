@@ -1,5 +1,6 @@
 package wizardo.game.Screens.LoadingScreen;
 
+import box2dLight.Light;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
@@ -92,6 +93,7 @@ public class LoadingScreen extends BaseScreen {
         DragonbreathAnims.loadAtlas();
         ExplosionsAnims.loadAtlas();
         MeteorAnims.loadAtlas();
+        LightningHandsAnims.loadAtlas();
 
         GeneralDecorResources.loadAtlas();
 
@@ -117,6 +119,7 @@ public class LoadingScreen extends BaseScreen {
         DragonbreathAnims.loadAnimations();
         ExplosionsAnims.loadAnimations();
         MeteorAnims.loadAnimations();
+        LightningHandsAnims.loadAnimations();
 
         GeneralDecorResources.loadAnimations();
 

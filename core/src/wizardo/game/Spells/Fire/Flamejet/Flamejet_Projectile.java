@@ -168,37 +168,4 @@ public class Flamejet_Projectile extends Flamejet_Spell {
     public float getDistanceFromSpawn() {
         return body.getPosition().dst(spawnPosition);
     }
-
-    public Vector2 getSpriteCenter(Sprite frame) {
-        // Get the width and height of the sprite
-        float spriteWidth = frame.getWidth();
-        float spriteHeight = frame.getHeight();
-
-        // Get the current position (bottom-left corner) of the sprite
-        float x = frame.getX();
-        float y = frame.getY();
-
-        // Calculate the origin point (in local coordinates)
-        float originX = spriteWidth / 2f;  // Horizontal center
-        float originY = 0;                 // Bottom of the sprite (as set in setOrigin)
-
-        // Calculate the offset from the origin to the center of the sprite (before rotation)
-        float offsetX = spriteWidth / 2f;  // The center horizontally
-        float offsetY = spriteHeight / 2f; // The center vertically
-
-        // Apply the rotation to these offsets
-        float rotation = frame.getRotation(); // Rotation in degrees
-        float cosRotation = MathUtils.cosDeg(rotation);
-        float sinRotation = MathUtils.sinDeg(rotation);
-
-        // Rotated offset coordinates
-        float rotatedOffsetX = offsetX * cosRotation - offsetY * sinRotation;
-        float rotatedOffsetY = offsetX * sinRotation + offsetY * cosRotation;
-
-        // Calculate the world position of the center of the sprite
-        float centerX = x + originX + rotatedOffsetX;
-        float centerY = y + originY + rotatedOffsetY;
-
-        return new Vector2(centerX, centerY);
-    }
 }

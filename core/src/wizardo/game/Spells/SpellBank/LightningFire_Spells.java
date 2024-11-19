@@ -16,6 +16,7 @@ import wizardo.game.Spells.Hybrid.ForkedLightning.ForkedLightning_Spell;
 import wizardo.game.Spells.Hybrid.FrostNova.FrostNova_Spell;
 
 import wizardo.game.Spells.Hybrid.Laser.Laser_Spell;
+import wizardo.game.Spells.Hybrid.LightningHands.LightningHands_Spell;
 import wizardo.game.Spells.Hybrid.MeteorShower.MeteorShower_Spell;
 import wizardo.game.Spells.Hybrid.MeteorShower.Meteor_Explosion;
 import wizardo.game.Spells.Lightning.ChainLightning.ChainLightning_Spell;
@@ -116,7 +117,6 @@ public class LightningFire_Spells {
             litefire11.spellParts.add(THUNDERSTORM);
             litefireSpells[11] = litefire11;
 
-
             // 12. Fireball + Chargedbolts + Chainlightning
 
             // 13. Fireball + Chargedbolts + Thunderstorm
@@ -131,6 +131,69 @@ public class LightningFire_Spells {
             litefireSpells[13] = litefire13;
 
             // 14. Fireball + Chainlightning + Thunderstorm
+
+            Fireball_Spell litefire14 = new Fireball_Spell();
+            litefire14.chainThunder = true;
+            litefire14.anim_element = LIGHTNING;
+            litefire14.spellParts.add(FIREBALL);
+            litefire14.spellParts.add(CHAIN);
+            litefire14.spellParts.add(THUNDERSTORM);
+            litefireSpells[14] = litefire14;
+
+            // 15. Overheat + Chargedbolts + Chainlightning
+
+            // 16. Overheat + Chargedbolts + Thunderstorm
+
+            // 17. Overheat + Chainlightning + Thunderstorm
+
+            // 18. Flamejet + Fireball + Chargedbolts
+
+            // 19. Flamejet + Fireball + Chainlightning
+
+            ForkedLightning_Spell litefire19 = new ForkedLightning_Spell();
+            litefire19.fireball = true;
+            litefire19.anim_element = FIRE;
+            litefire19.spellParts.add(FIREBALL);
+            litefire19.spellParts.add(CHAIN);
+            litefire19.spellParts.add(FLAMEJET);
+            litefireSpells[19] = litefire19;
+
+            // 20. Flamejet + Fireball + Thunderstorm
+
+            Fireball_Spell litefire20 = new Fireball_Spell();
+            litefire20.nested_spell = new Flamejet_Spell();
+            litefire20.flameThunder = true;
+            litefire20.anim_element = FIRE;
+            litefire20.spellParts.add(FIREBALL);
+            litefire20.spellParts.add(FLAMEJET);
+            litefire20.spellParts.add(THUNDERSTORM);
+            litefireSpells[20] = litefire20;
+
+            // 21. Flamejet + Overheat + Chargedbolts
+
+            LightningHands_Spell litefire21 = new LightningHands_Spell();
+            litefire21.chargedbolts = true;
+            litefire21.spellParts.add(FLAMEJET);
+            litefire21.spellParts.add(OVERHEAT);
+            litefire21.spellParts.add(CHARGEDBOLTS);
+            litefireSpells[21] = litefire21;
+
+            // 22. Flamejet + Overheat + Chainlightning
+
+            LightningHands_Spell litefire22 = new LightningHands_Spell();
+            litefire22.chainlightning = true;
+            litefire22.spellParts.add(FLAMEJET);
+            litefire22.spellParts.add(OVERHEAT);
+            litefire22.spellParts.add(CHAIN);
+            litefireSpells[22] = litefire22;
+
+            // 23. FLamejet + Overheat + Thunderstorm
+
+            // 24. Fireball + Overheat + Chargedbolts
+
+            // 25. Fireball + Overheat + Chainlightning
+
+            // 26. Fireball + Overheat + Thunderstorm
 
             if(spell != null && spell.bonus_element == null) {
 

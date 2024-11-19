@@ -20,8 +20,10 @@ import wizardo.game.Spells.Fire.Fireball.Fireball_Spell;
 import wizardo.game.Spells.Frost.Icespear.Icespear_Spell;
 import wizardo.game.Spells.Hybrid.ArcaneArtillery.ArcaneArtillery_Spell;
 import wizardo.game.Spells.Hybrid.DragonBreath.DragonBreath_Spell;
+import wizardo.game.Spells.Hybrid.LightningHands.LightningHands_Spell;
 import wizardo.game.Spells.Hybrid.MeteorShower.MeteorShower_Spell;
 import wizardo.game.Spells.Hybrid.Orbit.Orbit_Spell;
+import wizardo.game.Spells.Lightning.ChainLightning.ChainLightning_Spell;
 import wizardo.game.Spells.SpellManager;
 import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Wizardo;
@@ -77,7 +79,7 @@ public class BattleScreen extends BaseScreen {
         cursorTexturePath = "Cursors/Battle_Cursor.png";
         controllerTargetSprite = new Sprite(new Texture("Cursors/Controller_Cursor.png"));
 
-        for (int i = 0; i < 300; i++) {
+        for (int i = 0; i < 0; i++) {
             Vector2 random = SpellUtils.getRandomVectorInRadius(player.pawn.getPosition(), 40);
             Monster monster = new TEST_MONSTER(this, random);
             monsterManager.addMonster(monster);
@@ -89,10 +91,10 @@ public class BattleScreen extends BaseScreen {
     public void render(float delta) {
 
         if(!initialized) {
-            player.spellbook.equippedSpells.add(litefireSpells[11]);
+            player.spellbook.equippedSpells.add(litefireSpells[19]);
+            player.spellbook.equippedSpells.add(litefireSpells[21]);
             initialized = true;
         }
-
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         if(paused) {
             delta = 0;

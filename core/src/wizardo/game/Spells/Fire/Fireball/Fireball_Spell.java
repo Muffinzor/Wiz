@@ -11,6 +11,9 @@ public class Fireball_Spell extends Spell {
     public boolean frostbolts;
     public boolean frozenorb;
 
+    public boolean chainThunder; // fireball + chain + storm
+    public boolean flameThunder; // fireball + flamejet + storm
+
     public Fireball_Spell() {
 
         name = "Fireball";
@@ -47,6 +50,8 @@ public class Fireball_Spell extends Spell {
     public void inherit(Fireball_Spell parent) {
         this.frostbolts = parent.frostbolts;
         this.frozenorb = parent.frozenorb;
+        this.chainThunder = parent.chainThunder;
+        this.flameThunder = parent.flameThunder;
 
         this.nested_spell = parent.nested_spell;
 

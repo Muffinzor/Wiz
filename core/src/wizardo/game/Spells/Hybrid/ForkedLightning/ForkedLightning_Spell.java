@@ -2,6 +2,7 @@ package wizardo.game.Spells.Hybrid.ForkedLightning;
 
 import com.badlogic.gdx.math.Vector2;
 import wizardo.game.Monsters.Monster;
+import wizardo.game.Spells.Fire.Fireball.Fireball_Explosion;
 import wizardo.game.Spells.Lightning.ChainLightning.ChainLightning_Hit;
 import wizardo.game.Spells.Lightning.ChargedBolts.ChargedBolts_Spell;
 import wizardo.game.Spells.Spell;
@@ -11,6 +12,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import static wizardo.game.Screens.BaseScreen.controllerActive;
+import static wizardo.game.Spells.SpellUtils.Spell_Element.FIRE;
+import static wizardo.game.Spells.SpellUtils.Spell_Element.LIGHTNING;
 import static wizardo.game.Wizardo.player;
 
 public class ForkedLightning_Spell extends Spell {
@@ -21,6 +24,7 @@ public class ForkedLightning_Spell extends Spell {
     float targetRadius = 2.5f;
 
     public boolean chargedbolts;
+    public boolean fireball;
 
     public ForkedLightning_Spell() {
 
@@ -39,10 +43,10 @@ public class ForkedLightning_Spell extends Spell {
         }
 
         ArrayList<Monster> inRange = SpellUtils.findMonstersInRangeOfVector(targetPosition, targetRadius, false);
+        inRange.removeIf(monster -> monster.body.equals(originBody));
         inRange.removeIf(monster -> !SpellUtils.hasLineOfSight(monster.body.getPosition(), originBody.getPosition()));
         Collections.shuffle(inRange);
 
-        System.out.println(hits);
 
         for (int i = 0; i < hits; i++) {
             if(inRange.size() >= i+1) {
@@ -53,8 +57,10 @@ public class ForkedLightning_Spell extends Spell {
                 chain.setElements(this);
                 screen.spellManager.toAdd(chain);
                 chargedbolts(inRange.get(i));
+                fireball(inRange.get(i));
             }
         }
+
 
         screen.spellManager.toRemove(this);
 
@@ -67,7 +73,7 @@ public class ForkedLightning_Spell extends Spell {
 
     public void chargedbolts(Monster monster) {
         if(chargedbolts) {
-            float procRate = 0.925f - 0.025f * player.spellbook.chargedbolt_lvl;
+            float procRate = 0.95f - 0.05f * player.spellbook.chargedbolt_lvl;
             int quantity = 3 + player.spellbook.chargedbolt_lvl / 5;
             if (Math.random() >= procRate) {
                 for (int i = 0; i < quantity; i++) {
@@ -78,6 +84,20 @@ public class ForkedLightning_Spell extends Spell {
                     bolt.targetPosition = SpellUtils.getRandomVectorInRadius(monster.body.getPosition(), 2);
                     screen.spellManager.toAdd(bolt);
                 }
+            }
+        }
+    }
+
+    public void fireball(Monster monster) {
+        if(fireball) {
+            float procRate = 0.98f - 0.02f * player.spellbook.fireball_lvl;
+            if(Math.random() >= procRate) {
+                Fireball_Explosion explosion = new Fireball_Explosion();
+                explosion.targetPosition = new Vector2(monster.body.getPosition());
+                explosion.setElements(this);
+                explosion.anim_element = LIGHTNING;
+                explosion.firelite = true;
+                screen.spellManager.toAdd(explosion);
             }
         }
     }

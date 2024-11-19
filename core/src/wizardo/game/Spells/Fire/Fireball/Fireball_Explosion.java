@@ -6,11 +6,14 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.Monster;
+import wizardo.game.Resources.Skins;
 import wizardo.game.Resources.SpellAnims.FireballAnims;
 import wizardo.game.Spells.Fire.Flamejet.Flamejet_Spell;
 import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Explosion;
 import wizardo.game.Spells.Frost.Frozenorb.Frozenorb_Spell;
+import wizardo.game.Spells.Lightning.ChainLightning.ChainLightning_Spell;
 import wizardo.game.Spells.Lightning.ChargedBolts.ChargedBolts_Spell;
+import wizardo.game.Spells.Lightning.Thunderstorm.Thunderstorm_Spell;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyFactory;
@@ -28,6 +31,8 @@ public class Fireball_Explosion extends Fireball_Spell {
     boolean flipX;
     boolean flipY;
 
+    public boolean firelite;
+
     public Fireball_Explosion() {
         rotation = MathUtils.random(360);
         flipX = MathUtils.randomBoolean();
@@ -42,6 +47,7 @@ public class Fireball_Explosion extends Fireball_Spell {
             createLight();
             sendProjectiles();
             initialized = true;
+            thunderstorm();
         }
         stateTime += delta;
 
@@ -158,6 +164,22 @@ public class Fireball_Explosion extends Fireball_Spell {
         return quantity;
     }
 
+    public void thunderstorm() {
+        if(chainThunder || flameThunder) {
+            Thunderstorm_Spell storm = new Thunderstorm_Spell();
+            if(chainThunder) {
+                storm.nested_spell = new ChainLightning_Spell();
+            } else {
+                storm.nested_spell = new Flamejet_Spell();
+            }
+            storm.setElements(this);
+            storm.spawnPosition = new Vector2(body.getPosition());
+            storm.radius = 5;
+            storm.duration = 1;
+            screen.spellManager.toAdd(storm);
+        }
+    }
+
 
     public void picKAnim() {
         switch(anim_element) {
@@ -177,7 +199,12 @@ public class Fireball_Explosion extends Fireball_Spell {
             case LIGHTNING -> {
                 anim = FireballAnims.fireball_explosion_anim_lightning;
                 red = 0.75f;
-                green = 0.5f;
+                if(!firelite) {
+                    green = 0.5f;
+                } else {
+                    green = 0.2f;
+                    textColor = Skins.light_orange;
+                }
                 lightAlpha = 0.8f;
                 frameScale = 1.2f;
             }

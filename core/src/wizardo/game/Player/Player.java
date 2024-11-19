@@ -13,7 +13,7 @@ public class Player {
     public Player(Pawn pawn) {
         this.pawn = pawn;
         this.spellbook = new Spellbook();
-        this.runSpeed = 90f/PPM;
+        this.runSpeed = 80f/PPM;
         this.inventory = new Inventory();
     }
 }
