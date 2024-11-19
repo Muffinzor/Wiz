@@ -17,7 +17,7 @@ public class Spellbook {
     public int frozenorb_lvl = 5;
 
     public int fireball_lvl = 10;
-    public int flamejet_lvl = 5;
+    public int flamejet_lvl = 10;
     public int overheat_lvl = 5;
 
     public int chainlightning_lvl = 5;

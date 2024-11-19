@@ -41,6 +41,7 @@ public abstract class Spell implements Cloneable {
     public Vector2 spawnPosition;
     public Vector2 targetPosition;
     public boolean castByPawn;
+    public Body body;
     public Body originBody;
     public float stateTime = 0;
     public boolean initialized;

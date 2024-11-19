@@ -43,9 +43,7 @@ public class LightningHands_Spell extends Spell {
             lightning.setBolt(this);
             screen.spellManager.toAdd(lightning);
         }
-
         screen.spellManager.toRemove(this);
-
 
     }
 

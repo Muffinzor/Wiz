@@ -9,9 +9,11 @@ import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.Monster;
 import wizardo.game.Resources.Skins;
 import wizardo.game.Resources.SpellAnims.LightningHandsAnims;
+import wizardo.game.Spells.Fire.Flamejet.Collision_Detector;
 import wizardo.game.Spells.Hybrid.ForkedLightning.ForkedLightning_Spell;
 import wizardo.game.Spells.Lightning.ChargedBolts.ChargedBolts_Spell;
 import wizardo.game.Spells.Spell;
+import wizardo.game.Spells.SpellCollision_Detector;
 import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyFactory;
 
@@ -23,7 +25,7 @@ import static wizardo.game.Wizardo.world;
 public class LightningHands_Projectile extends LightningHands_Spell {
 
     Vector2 direction;
-    Body body;
+    Vector2 velocity;
     float rotation;
 
     boolean flipX;
@@ -57,6 +59,7 @@ public class LightningHands_Projectile extends LightningHands_Spell {
     public void update(float delta) {
         if(!initialized) {
             createBody();
+            createDetector(velocity);
             initialized = true;
         }
 
@@ -82,9 +85,6 @@ public class LightningHands_Projectile extends LightningHands_Spell {
         chargedbolts(monster);
     }
 
-    public void handleCollision(Fixture fix) {
-        body.setLinearVelocity(0,0);
-    }
 
     public void drawFrame() {
         Vector2 originPosition = new Vector2(player.pawn.getPosition());
@@ -104,7 +104,7 @@ public class LightningHands_Projectile extends LightningHands_Spell {
         frame.setScale(Xscale, Yscale);
         frame.flip(flipX, flipY);
 
-        screen.addSortedSprite(frame);
+        screen.addUnderSprite(frame);
     }
 
     public void createBody() {
@@ -118,7 +118,7 @@ public class LightningHands_Projectile extends LightningHands_Spell {
         }
 
         rotation = direction.angleDeg();
-        Vector2 velocity = direction.scl(150);
+        velocity = direction.scl(40);
         body.setLinearVelocity(velocity);
 
 
@@ -156,8 +156,10 @@ public class LightningHands_Projectile extends LightningHands_Spell {
         return body.getPosition().dst(spawnPosition) > 9.5f;
     }
 
-    public void setup() {
-
+    public void createDetector(Vector2 velocity) {
+        SpellCollision_Detector detector = new SpellCollision_Detector(velocity, this, 0.5f, 9.5f);
+        detector.screen = screen;
+        screen.spellManager.toAdd(detector);
     }
 
     public void chainlightning(Monster monster) {
