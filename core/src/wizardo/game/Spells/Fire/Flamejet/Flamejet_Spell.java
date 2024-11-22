@@ -1,7 +1,11 @@
 package wizardo.game.Spells.Fire.Flamejet;
 
 import com.badlogic.gdx.math.Vector2;
+import wizardo.game.Monsters.Monster;
 import wizardo.game.Spells.Spell;
+import wizardo.game.Spells.SpellUtils;
+
+import java.util.ArrayList;
 
 import static wizardo.game.Spells.SpellUtils.Spell_Element.FIRE;
 import static wizardo.game.Wizardo.currentScreen;
@@ -11,6 +15,7 @@ public class Flamejet_Spell extends Spell {
 
     public boolean frostbolts;
     public boolean icespear;
+    public boolean arcaneMissile;
 
     public Flamejet_Spell() {
 
@@ -30,6 +35,10 @@ public class Flamejet_Spell extends Spell {
             originBody = player.pawn.body;
         }
 
+        if(arcaneMissile) {
+            arcaneTargeting();
+        }
+
         if(delta > 0) {
             Flamejet_Projectile flame = new Flamejet_Projectile();
             flame.spawnPosition = new Vector2(getSpawnPosition());
@@ -47,6 +56,25 @@ public class Flamejet_Spell extends Spell {
         icespear = thisFlame.icespear;
         lightAlpha = thisFlame.lightAlpha;
         originBody = thisFlame.originBody;
+    }
+
+    public void arcaneTargeting() {
+        ArrayList<Monster> inRange = SpellUtils.findMonstersInRangeOfVector(player.pawn.getPosition(), 5, true);
+        Monster target = null;
+        if(!inRange.isEmpty()) {
+            float dst = Float.MAX_VALUE;
+            for(Monster monster : inRange) {
+                float monsterDst = monster.body.getPosition().dst(player.pawn.getPosition());
+                if(monsterDst < dst) {
+                    dst = monsterDst;
+                    target = monster;
+                }
+            }
+        }
+
+        if(target != null) {
+            targetPosition = new Vector2(target.body.getPosition());
+        }
     }
 
     @Override

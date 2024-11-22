@@ -8,9 +8,11 @@ import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.Monster;
 import wizardo.game.Resources.Skins;
 import wizardo.game.Resources.SpellAnims.FireballAnims;
+import wizardo.game.Spells.Arcane.ArcaneMissiles.ArcaneMissile_Spell;
 import wizardo.game.Spells.Fire.Flamejet.Flamejet_Spell;
 import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Explosion;
 import wizardo.game.Spells.Frost.Frozenorb.Frozenorb_Spell;
+import wizardo.game.Spells.Frost.Icespear.Icespear_Spell;
 import wizardo.game.Spells.Lightning.ChainLightning.ChainLightning_Spell;
 import wizardo.game.Spells.Lightning.ChargedBolts.ChargedBolts_Spell;
 import wizardo.game.Spells.Lightning.Thunderstorm.Thunderstorm_Spell;
@@ -48,6 +50,8 @@ public class Fireball_Explosion extends Fireball_Spell {
             sendProjectiles();
             initialized = true;
             thunderstorm();
+            flamejets();
+            spearOrb();
         }
         stateTime += delta;
 
@@ -68,6 +72,9 @@ public class Fireball_Explosion extends Fireball_Spell {
     public void handleCollision(Monster monster) {
         dealDmg(monster);
 
+        Vector2 direction = monster.body.getPosition().sub(body.getPosition());
+        monster.pathfinder.applyPush(direction, 3, 0.2f, 0.9f);
+
         frozenOrb(monster);
     }
 
@@ -85,7 +92,7 @@ public class Fireball_Explosion extends Fireball_Spell {
         if(frameScale != 1) {
             frame.setScale(frameScale);
         }
-        screen.centerSort(frame, body.getPosition().y * PPM - 30);
+        screen.centerSort(frame, body.getPosition().y * PPM - 10);
         screen.displayManager.spriteRenderer.regular_sorted_sprites.add(frame);
 
     }
@@ -106,12 +113,27 @@ public class Fireball_Explosion extends Fireball_Spell {
         if(frostbolts && stateTime % interval < delta) {
             Vector2 random = SpellUtils.getRandomVectorInRadius(body.getPosition(), 3);
             Frostbolt_Explosion explosion = new Frostbolt_Explosion();
-            explosion.lightAlpha -= interval / 0.15f;
+            //explosion.lightAlpha -= interval / 0.15f;
             explosion.screen = screen;
             explosion.setElements(this);
             explosion.anim_element = SpellUtils.Spell_Element.FIRE;
             explosion.targetPosition = random;
             screen.spellManager.toAdd(explosion);
+        }
+    }
+
+    public void spearOrb() {
+        if(spearOrb) {
+            Frozenorb_Spell orb = new Frozenorb_Spell();
+            orb.duration = 1.2f;
+            orb.spawnPosition = new Vector2(body.getPosition());
+            orb.speed = 0;
+            Icespear_Spell spear = new Icespear_Spell();
+            spear.duration = 0.3f;
+            spear.maxSplits = 0;
+            orb.nested_spell = spear;
+            orb.setElements(this);
+            screen.spellManager.toAdd(orb);
         }
     }
 
@@ -150,6 +172,21 @@ public class Fireball_Explosion extends Fireball_Spell {
         }
     }
 
+    public void flamejets() {
+        if(flamejets) {
+            float level = (getLvl() + player.spellbook.flamejet_lvl) / 2f;
+            int quantity = 2 + (int) (level);
+            for (int i = 0; i < quantity; i++) {
+                Flamejet_Spell flame = new Flamejet_Spell();
+                flame.setElements(this);
+                flame.originBody = body;
+                flame.spawnPosition = new Vector2(body.getPosition());
+                flame.targetPosition = SpellUtils.getRandomVectorInRadius(body.getPosition(), 2);
+                screen.spellManager.toAdd(flame);
+            }
+        }
+    }
+
     public int getProjQuantity() {
         int quantity = 0;
         float level = (getLvl() + nested_spell.getLvl()) / 2f;
@@ -159,6 +196,9 @@ public class Fireball_Explosion extends Fireball_Spell {
         }
         if(nested_spell instanceof ChargedBolts_Spell) {
             quantity = 5 + (int) (level);
+        }
+        if(nested_spell instanceof ArcaneMissile_Spell) {
+            quantity = 2 + (int) (level);
         }
 
         return quantity;
@@ -207,6 +247,12 @@ public class Fireball_Explosion extends Fireball_Spell {
                 }
                 lightAlpha = 0.8f;
                 frameScale = 1.2f;
+            }
+            case ARCANE -> {
+                anim = FireballAnims.fireball_explosion_anim_arcane;
+                red = 0.2f;
+                green = 0.3f;
+                blue = 0.75f;
             }
         }
     }

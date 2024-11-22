@@ -5,7 +5,6 @@ import wizardo.game.Spells.Fire.Flamejet.Flamejet_Spell;
 import wizardo.game.Spells.Fire.Overheat.Overheat_Spell;
 import wizardo.game.Spells.Frost.Frozenorb.Frozenorb_Spell;
 import wizardo.game.Spells.Frost.Icespear.Icespear_Spell;
-import wizardo.game.Spells.Hybrid.DragonBreath.DragonBreath_Projectile;
 import wizardo.game.Spells.Hybrid.DragonBreath.DragonBreath_Spell;
 import wizardo.game.Spells.Hybrid.FrostNova.FrostNova_Spell;
 
@@ -79,7 +78,7 @@ public class FrostFire_Spells {
 
         Overheat_Spell frostfire6 = new Overheat_Spell();
         frostfire6.frostbolts = true;
-        frostfire6.anim_element = FIRE;
+        frostfire6.anim_element = FROST;
         frostfire6.spellParts.add(OVERHEAT);
         frostfire6.spellParts.add(FROSTBOLT);
         frostfireSpells[6] = frostfire6;
@@ -150,7 +149,7 @@ public class FrostFire_Spells {
 
         Icespear_Spell frostfire13 = new Icespear_Spell();
         frostfire13.anim_element = FIRE;
-        frostfire13.overheat = true;
+        frostfire13.overheatBall = true;
         frostfire13.spellParts.add(FIREBALL);
         frostfire13.spellParts.add(OVERHEAT);
         frostfire13.spellParts.add(ICESPEAR);
@@ -179,11 +178,23 @@ public class FrostFire_Spells {
 
         // 16. Flamejet + Overheat + Icespear
 
+        Icespear_Spell frostfire16 = new Icespear_Spell();
+        frostfire16.flamejet = true;
+        frostfire16.anim_element = FIRE;
+        frostfire16.overheat = true;
+        frostfire16.spellParts.add(FLAMEJET);
+        frostfire16.spellParts.add(OVERHEAT);
+        frostfire16.spellParts.add(ICESPEAR);
+        frostfireSpells[16] = frostfire16;
+
         // 17. Flamejet + Overheat + Frozenorb
 
         DragonBreath_Spell frostfire17 = new DragonBreath_Spell();
         frostfire17.frozenorb = true;
         frostfire17.anim_element = FROST;
+        frostfire17.spellParts.add(FLAMEJET);
+        frostfire17.spellParts.add(OVERHEAT);
+        frostfire17.spellParts.add(FROZENORB);
         frostfireSpells[17] = frostfire17;
 
         // 18. Flamejet + FrozenOrb + Frostbolts
@@ -210,23 +221,80 @@ public class FrostFire_Spells {
         frostfire19.spellParts.add(ICESPEAR);
         frostfireSpells[19] = frostfire19;
 
-        // 20. Overheat + Frozenorb + Icespear
+        // 20. Flamejet + Icespear + Frostbolts
 
-        Frozenorb_Spell frostfire20 = new Frozenorb_Spell();
-        frostfire20.nested_spell = new Icespear_Spell();
-        frostfire20.frostnova = true;
+        Icespear_Spell frostfire20 = new Icespear_Spell();
         frostfire20.anim_element = FROST;
+        frostfire20.flamejet = true;
+        frostfire20.frostbolts = true;
+        frostfire20.spellParts.add(FLAMEJET);
+        frostfire20.spellParts.add(FROSTBOLT);
+        frostfire20.spellParts.add(ICESPEAR);
         frostfireSpells[20] = frostfire20;
 
-        // 21. Overheat + Frozenorb + Frostbolts
+        // 21. Fireball + Icespear + Frostbolts
 
-        // 20. Overheat + Icespear + Frostbolts
+        Icespear_Spell frostfire21 = new Icespear_Spell();
+        frostfire21.anim_element = FROST;
+        frostfire21.fireball = true;
+        frostfire21.frostbolts = true;
+        frostfire21.spellParts.add(ICESPEAR);
+        frostfire21.spellParts.add(FIREBALL);
+        frostfire21.spellParts.add(FROSTBOLT);
+        frostfireSpells[21] = frostfire21;
 
-        // 21. FrozenOrb + Icespear + Fireball
+        // 22. Fireball + Frostbolts + Frozenorb
 
-        // 22. Frozenorb + Frostbolts + Fireball
+        Fireball_Spell frostfire22 = new Fireball_Spell();
+        frostfire22.frozenorb = true;
+        frostfire22.frostbolts = true;
+        frostfire22.anim_element = FROST;
+        frostfire22.spellParts.add(FROZENORB);
+        frostfire22.spellParts.add(FIREBALL);
+        frostfire22.spellParts.add(FROSTBOLT);
+        frostfireSpells[22] = frostfire22;
 
-        // 23. Icespear + Frostbolts + Fireball
+        // 23. Fireball + Icespear + Frozenorb
+
+        Fireball_Spell frostfire23 = new Fireball_Spell();
+        frostfire23.spearOrb = true;
+        frostfire23.frozenorb = true;
+        frostfire23.anim_element = FROST;
+        frostfire23.spellParts.add(FROZENORB);
+        frostfire23.spellParts.add(FIREBALL);
+        frostfire23.spellParts.add(ICESPEAR);
+        frostfireSpells[23] = frostfire23;
+
+        // 24. Overheat + Frostbolts + Icespear
+
+        Overheat_Spell frostfire24 = new Overheat_Spell();
+        frostfire24.anim_element = FROST;
+        frostfire24.frostbolts = true;
+        frostfire24.icespear = true;
+        frostfire24.spellParts.add(OVERHEAT);
+        frostfire24.spellParts.add(FROSTBOLT);
+        frostfire24.spellParts.add(ICESPEAR);
+        frostfireSpells[24] = frostfire24;
+
+        // 25. Overheat + Frostbolts + Frozenorb
+
+        FrostNova_Spell frostfire25 = new FrostNova_Spell();
+        frostfire25.frostbolts = true;
+        frostfire25.spellParts.add(OVERHEAT);
+        frostfire25.spellParts.add(FROZENORB);
+        frostfire25.spellParts.add(FROSTBOLT);
+        frostfireSpells[25] = frostfire25;
+
+        // 26. Overheat + Frozenorb + Icespear
+
+        Frozenorb_Spell frostfire26 = new Frozenorb_Spell();
+        frostfire26.nested_spell = new Icespear_Spell();
+        frostfire26.frostnova = true;
+        frostfire26.anim_element = FROST;
+        frostfire26.spellParts.add(OVERHEAT);
+        frostfire26.spellParts.add(FROZENORB);
+        frostfire26.spellParts.add(ICESPEAR);
+        frostfireSpells[26] = frostfire26;
 
 
         for (Spell frostfireSpell : frostfireSpells) {

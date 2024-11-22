@@ -132,6 +132,12 @@ public class Fireball_Projectile extends Fireball_Spell {
                 red = 0.75f;
                 green = 0.75f;
             }
+            case ARCANE -> {
+                anim = FireballAnims.fireball_anim_arcane;
+                red = 0.2f;
+                green = 0.3f;
+                blue = 0.75f;
+            }
         }
     }
 }

@@ -23,7 +23,28 @@ public class FireballAnims {
     public static String fireball_lightning_atlas_path = "Spells/Fireball/lightning_projectile.atlas";
     public static String fireball_lightningExplosion_atlas_path = "Spells/Fireball/lightning_explosion.atlas";
 
+    public static Animation<Sprite> fireball_anim_arcane;
+    public static Animation<Sprite> fireball_explosion_anim_arcane;
+    public static String fireball_arcane_atlas_path = "Spells/Fireball/arcane_projectile.atlas";
+    public static String fireball_arcaneExplosion_atlas_path = "Spells/Fireball/arcane_explosion.atlas";
+
     public static void loadAnimations() {
+        TextureAtlas arc_proj_atlas = assetManager.get(fireball_arcane_atlas_path, TextureAtlas.class);
+        TextureAtlas arc_explosion_atlas = assetManager.get(fireball_arcaneExplosion_atlas_path, TextureAtlas.class);
+
+        Sprite[] arcProj_frames = new Sprite[6];
+        for (int i = 0; i < arcProj_frames.length; i++) {
+            arcProj_frames[i] = arc_proj_atlas.createSprite("Fireball" + (i+1));
+        }
+        fireball_anim_arcane = new Animation<>(0.1f, arcProj_frames);
+
+        Sprite[] arcExplosion_frames = new Sprite[62];
+        for (int i = 0; i < arcExplosion_frames.length; i++) {
+            arcExplosion_frames[i] = arc_explosion_atlas.createSprite("explosion" + (i+1));
+        }
+        fireball_explosion_anim_arcane = new Animation<>(0.015f, arcExplosion_frames);
+
+
         TextureAtlas lite_proj_atlas = assetManager.get(fireball_lightning_atlas_path, TextureAtlas.class);
         TextureAtlas lite_explosion_atlas = assetManager.get(fireball_lightningExplosion_atlas_path, TextureAtlas.class);
 
@@ -41,7 +62,6 @@ public class FireballAnims {
 
 
 
-
         TextureAtlas projectile_atlas = assetManager.get(fireball_fire_atlas_path, TextureAtlas.class);
         TextureAtlas fire_atlas = assetManager.get(fireball_fireExplosion_atlas_path, TextureAtlas.class);
 
@@ -56,7 +76,6 @@ public class FireballAnims {
             fireExplosion_frames[i] = fire_atlas.createSprite("explosion" + (i+1));
         }
         fireball_explosion_anim_fire = new Animation<>(0.015f, fireExplosion_frames);
-
 
 
         TextureAtlas frost_projectile_atlas = assetManager.get(fireball_frost_atlas_path, TextureAtlas.class);
@@ -85,6 +104,9 @@ public class FireballAnims {
 
         assetManager.load(fireball_lightning_atlas_path, TextureAtlas.class);
         assetManager.load(fireball_lightningExplosion_atlas_path, TextureAtlas.class);
+
+        assetManager.load(fireball_arcane_atlas_path, TextureAtlas.class);
+        assetManager.load(fireball_arcaneExplosion_atlas_path, TextureAtlas.class);
     }
 
 }

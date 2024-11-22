@@ -149,6 +149,7 @@ public class ArcaneArtillery_Projectile extends ArcaneArtillery_Spell {
         explosion.targetPosition = new Vector2(targetPosition);
         explosion.setElements(this);
         explosion.frozenorb = frozenorb;
+        explosion.thunderstorm = thunderstorm;
         screen.spellManager.toAdd(explosion);
     }
 

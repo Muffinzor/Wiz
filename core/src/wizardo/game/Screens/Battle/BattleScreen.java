@@ -30,6 +30,7 @@ import wizardo.game.Wizardo;
 
 import static wizardo.game.Display.DisplayUtils.getSprite;
 import static wizardo.game.Spells.SpellBank.Arcane_Spells.arcanespells;
+import static wizardo.game.Spells.SpellBank.FireArcane_Spells.firearcaneSpells;
 import static wizardo.game.Spells.SpellBank.Fire_Spells.firespells;
 import static wizardo.game.Spells.SpellBank.FrostArcane_Spells.frostarcaneSpells;
 import static wizardo.game.Spells.SpellBank.FrostFire_Spells.frostfireSpells;
@@ -91,10 +92,10 @@ public class BattleScreen extends BaseScreen {
     public void render(float delta) {
 
         if(!initialized) {
-            player.spellbook.equippedSpells.add(litefireSpells[19]);
-            player.spellbook.equippedSpells.add(litefireSpells[21]);
+            player.spellbook.equippedSpells.add(litearcaneSpells[13]);
             initialized = true;
         }
+
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         if(paused) {
             delta = 0;

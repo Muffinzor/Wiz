@@ -25,7 +25,8 @@ public class Icespear_Spell extends Spell {
     public boolean fireball;
     public boolean beam;
     public boolean rift;
-    public boolean overheat; //for Icespear+Overheat+Fireball
+    public boolean overheat;
+    public boolean overheatBall; //for Icespear+Overheat+Fireball
     public boolean frozenorb; // for Icespear+Frozenorb+Beam
     public boolean thunderspear; // for Icespear+Thunderstorm+Chargedbolts;
 
@@ -68,8 +69,9 @@ public class Icespear_Spell extends Spell {
         this.nested_spell = parent.nested_spell;
         this.arcaneMissile = parent.arcaneMissile;
         this.fireball = parent.fireball;
-        this.overheat = parent.overheat;
+        this.overheatBall = parent.overheatBall;
         this.frozenorb = parent.frozenorb;
+        this.overheat = parent.overheat;
         this.celestialStrike = parent.celestialStrike;
         this.flamejet = parent.flamejet;
         this.beam = parent.beam;

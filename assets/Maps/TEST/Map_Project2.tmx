@@ -70,8 +70,8 @@
 </data>
  </layer>
  <objectgroup id="2" name="ObstacleBodies">
-  <object id="48" name="Pillar" x="896" y="1066" width="64" height="54"/>
-  <object id="77" name="Pillar" x="704" y="1066" width="64" height="54"/>
+  <object id="48" name="Pillar" x="896" y="1056" width="64" height="64"/>
+  <object id="77" name="Pillar" x="704" y="1056" width="64" height="64"/>
  </objectgroup>
  <objectgroup id="3" name="DecorBodies">
   <object id="34" name="Portal" x="1024" y="1017" width="7" height="7"/>

@@ -13,8 +13,9 @@ public class TEST_MONSTER extends Monster {
     public TEST_MONSTER(BattleScreen screen, Vector2 position) {
         super(screen, position);
         speed = 20f/PPM;
-        hp = 350;
-        maxHP = 350;
+        hp = 750;
+        maxHP = 750;
+        massValue = 5f;
 
         bodyRadius = 10;
 
@@ -30,8 +31,4 @@ public class TEST_MONSTER extends Monster {
         speed = speed * MathUtils.random(0.9f, 1.1f);
     }
 
-    public void createBody() {
-        body = BodyFactory.monsterBody(position, bodyRadius);
-        body.setUserData(this);
-    }
 }

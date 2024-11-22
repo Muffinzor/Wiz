@@ -16,12 +16,12 @@ import static wizardo.game.Wizardo.player;
 public class ArcaneArtillery_Spell extends Spell {
 
     public boolean frozenorb;
+    public boolean thunderstorm;
 
     public ArcaneArtillery_Spell() {
         name = "Arcane Artillery";
 
         main_element = ARCANE;
-        anim_element = FROST;
 
         cooldown = 5;
     }
@@ -41,6 +41,7 @@ public class ArcaneArtillery_Spell extends Spell {
             projectile.targetPosition = new Vector2(target.body.getPosition());
             projectile.setElements(this);
             projectile.frozenorb = frozenorb;
+            projectile.thunderstorm = thunderstorm;
             screen.spellManager.toAdd(projectile);
         }
 

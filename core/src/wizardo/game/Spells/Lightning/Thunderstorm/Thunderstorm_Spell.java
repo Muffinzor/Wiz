@@ -23,6 +23,7 @@ public class Thunderstorm_Spell extends Spell {
 
     public boolean arcaneMissile;
     public boolean rifts;
+    public boolean overheat;
 
     public Thunderstorm_Spell() {
 
@@ -60,6 +61,7 @@ public class Thunderstorm_Spell extends Spell {
                 Thunderstorm_Hit thunder = new Thunderstorm_Hit(target);
                 thunder.setElements(this);
                 thunder.rifts = rifts;
+                thunder.overheat = overheat;
                 thunder.nested_spell = nested_spell;
                 screen.spellManager.toAdd(thunder);
             }

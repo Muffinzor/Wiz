@@ -5,13 +5,16 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.Monster;
+import wizardo.game.Resources.SpellAnims.ExplosionsAnims;
 import wizardo.game.Resources.SpellAnims.OverheatAnims;
 import wizardo.game.Spells.Fire.Fireball.Fireball_Explosion;
 import wizardo.game.Spells.Spell;
+import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyFactory;
 
 import static wizardo.game.Resources.SpellAnims.IcespearAnims.icespear_anim_fire;
 import static wizardo.game.Resources.SpellAnims.IcespearAnims.icespear_anim_frost;
+import static wizardo.game.Spells.SpellUtils.Spell_Element.*;
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.player;
 import static wizardo.game.Wizardo.world;
@@ -20,6 +23,7 @@ public class Overheat_TriggerExplosion extends Spell {
 
     Body body;
     RoundLight light;
+    float delayFuse;
 
     boolean flipX;
     boolean flipY;
@@ -31,6 +35,8 @@ public class Overheat_TriggerExplosion extends Spell {
 
     public Overheat_TriggerExplosion() {
 
+        delayFuse = MathUtils.random(0, 0.2f);
+
         flipX = MathUtils.randomBoolean();
         flipY = MathUtils.randomBoolean();
         rotation = MathUtils.random(360);
@@ -39,21 +45,31 @@ public class Overheat_TriggerExplosion extends Spell {
 
         baseDmg = player.spellbook.fireball_lvl * 35;
 
+        main_element = FIRE;
+
     }
 
 
     @Override
     public void update(float delta) {
-        if(!initialized) {
+        stateTime += delta;
+        if(stateTime < delayFuse) {
+            return;
+        }
 
+        if(!initialized) {
             initialized = true;
             pickAnim();
             createBody();
             createLight();
+            sendProjs();
         }
 
         drawFrame();
-        stateTime += delta;
+
+        if(body.isActive() && stateTime > 0.2f + delayFuse) {
+            body.setActive(false);
+        }
 
         if(stateTime >= anim.getAnimationDuration()) {
             world.destroyBody(body);
@@ -68,6 +84,7 @@ public class Overheat_TriggerExplosion extends Spell {
         frame.setCenter(body.getPosition().x * PPM, body.getPosition().y * PPM);
         frame.flip(flipX, flipY);
         frame.setRotation(rotation);
+        frame.setScale(0.75f);
         screen.centerSort(frame, body.getPosition().y * PPM - 10);
         screen.addSortedSprite(frame);
     }
@@ -83,6 +100,7 @@ public class Overheat_TriggerExplosion extends Spell {
         body = BodyFactory.spellExplosionBody(targetPosition, radius);
         body.setUserData(this);
     }
+
     public void createLight() {
         light = screen.lightManager.pool.getLight();
         light.setLight(red,green,blue,lightAlpha, 100, body.getPosition());
@@ -93,15 +111,33 @@ public class Overheat_TriggerExplosion extends Spell {
     public void pickAnim() {
         switch(anim_element) {
             case FROST -> {
-                anim = OverheatAnims.minifireball_anim_frost;
+                anim = ExplosionsAnims.getExplosionAnim(FROST);
                 green = 0.15f;
                 blue = 0.5f;
             }
             case FIRE -> {
-                anim = OverheatAnims.minifireball_anim_fire;
+                anim = ExplosionsAnims.getExplosionAnim(FIRE);
                 red = 0.7f;
                 green = 0.3f;
             }
+            case LIGHTNING -> {
+                anim = ExplosionsAnims.getExplosionAnim(LIGHTNING);
+                red = 0.25f;
+                green = 0.2f;
+            }
+        }
+    }
+
+    public void sendProjs() {
+        if(nested_spell != null) {
+            for (int i = 0; i < 3; i++) {
+                Spell clone = nested_spell.clone();
+                clone.spawnPosition = body.getPosition();
+                clone.targetPosition = SpellUtils.getRandomVectorInRadius(body.getPosition(), 2);
+                clone.setElements(this);
+                screen.spellManager.toAdd(clone);
+            }
+
         }
     }
 

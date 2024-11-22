@@ -62,6 +62,8 @@ public class LightningArcane_Spells {
         ChainLightning_Spell litearcane3 = new ChainLightning_Spell();
         litearcane3.anim_element = LIGHTNING;
         litearcane3.arcaneMissile = true;
+        litearcane3.spellParts.add(CHAIN);
+        litearcane3.spellParts.add(MISSILES);
         litearcaneSpells[3] = litearcane3;
 
         // 4. Chain + Beam
@@ -95,7 +97,7 @@ public class LightningArcane_Spells {
 
         EnergyBeam_Spell litearcane7 = new EnergyBeam_Spell();
         litearcane7.thunderstorm = true;
-        litearcane7.anim_element = LIGHTNING;
+        litearcane7.anim_element = ARCANE;
         litearcane7.spellParts.add(THUNDERSTORM);
         litearcane7.spellParts.add(BEAM);
         litearcaneSpells[7] = litearcane7;
@@ -130,7 +132,6 @@ public class LightningArcane_Spells {
         litearcane10.spellParts.add(CHAIN);
         litearcaneSpells[10] = litearcane10;
 
-
         // 11. Chargedbolts + ChainLightning + Rifts
 
         Rifts_Spell litearcane11 = new Rifts_Spell();
@@ -153,6 +154,15 @@ public class LightningArcane_Spells {
         litearcaneSpells[12] = litearcane12;
 
         // 13. Chargedbolts + Thunderstorm + Beam
+
+        EnergyBeam_Spell litearcane13 = new EnergyBeam_Spell();
+        litearcane13.anim_element = ARCANE;
+        litearcane13.chargedbolts = true;
+        litearcane13.thunderstorm = true;
+        litearcane13.spellParts.add(CHARGEDBOLTS);
+        litearcane13.spellParts.add(BEAM);
+        litearcane13.spellParts.add(THUNDERSTORM);
+        litearcaneSpells[13] = litearcane13;
 
         // 14. Chargedbolts + Thunderstorm + Rifts
 
@@ -190,6 +200,15 @@ public class LightningArcane_Spells {
         litearcaneSpells[16] = litearcane16;
 
         // 17. Chainlightning + Thunderstorm + Rifts
+
+        Thunderstorm_Spell litearcane17 = new Thunderstorm_Spell();
+        litearcane17.rifts = true;
+        litearcane17.anim_element = LIGHTNING;
+        litearcane17.nested_spell = new ChainLightning_Spell();
+        litearcane17.spellParts.add(RIFTS);
+        litearcane17.spellParts.add(CHAIN);
+        litearcane17.spellParts.add(THUNDERSTORM);
+        litearcaneSpells[17] = litearcane17;
 
         // 18. Chargedbolts + ArcaneMissiles + Beam
 
@@ -268,6 +287,12 @@ public class LightningArcane_Spells {
         // 25. ArcaneMissiles + Rifts + Thunderstorm
 
         ArcaneArtillery_Spell litearcane25 = new ArcaneArtillery_Spell();
+        litearcane25.anim_element = ARCANE;
+        litearcane25.thunderstorm = true;
+        litearcane25.spellParts.add(RIFTS);
+        litearcane25.spellParts.add(MISSILES);
+        litearcane25.spellParts.add(THUNDERSTORM);
+        litearcaneSpells[25] = litearcane25;
 
         // 26. Rifts + Beam + Thunderstorm
 

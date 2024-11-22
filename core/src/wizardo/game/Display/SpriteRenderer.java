@@ -12,6 +12,7 @@ public class SpriteRenderer {
 
     public ArrayList<Sprite> under_sprites;
     public ArrayList<Sprite> regular_sorted_sprites;
+    public ArrayList<Sprite> over_sprites;
     public ArrayList<Sprite> ui_sprites;
     public Map<Sprite, Float> spritePositionMap;
     public SpritePool pool;
@@ -20,6 +21,7 @@ public class SpriteRenderer {
 
     public SpriteRenderer(BaseScreen screen) {
         under_sprites = new ArrayList<>();
+        over_sprites = new ArrayList<>();
         regular_sorted_sprites = new ArrayList<>();
         spritePositionMap = new HashMap<>();
         ui_sprites = new ArrayList<>();
@@ -43,6 +45,11 @@ public class SpriteRenderer {
             pool.poolSprite(sprite);
         }
 
+        for (Sprite sprite : over_sprites) {
+            sprite.draw(batch);
+            pool.poolSprite(sprite);
+        }
+
         batch.end();
     }
 
@@ -61,6 +68,7 @@ public class SpriteRenderer {
 
     public void clearSpriteArrays() {
         under_sprites.clear();
+        over_sprites.clear();
         regular_sorted_sprites.clear();
         ui_sprites.clear();
     }

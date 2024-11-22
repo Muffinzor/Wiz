@@ -9,6 +9,7 @@ import wizardo.game.Monsters.Monster;
 import wizardo.game.Resources.SpellAnims.ThunderstormAnims;
 import wizardo.game.Spells.Arcane.Rifts.Rift_Zone;
 import wizardo.game.Spells.Fire.Flamejet.Flamejet_Spell;
+import wizardo.game.Spells.Fire.Overheat.Overheat_Explosion;
 import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Spell;
 import wizardo.game.Spells.Hybrid.ForkedLightning.ForkedLightning_Spell;
 import wizardo.game.Spells.Lightning.ChargedBolts.ChargedBolts_Spell;
@@ -43,6 +44,7 @@ public class Thunderstorm_Hit extends Thunderstorm_Spell {
             createBody();
             createLight();
             nestedProjectiles();
+            overheat();
         }
 
         drawFrame();
@@ -61,7 +63,10 @@ public class Thunderstorm_Hit extends Thunderstorm_Spell {
 
     public void handleCollision(Monster monster) {
         dealDmg(monster);
-        rifts(monster);
+        //rifts(monster);
+
+        Vector2 direction = monster.body.getPosition().cpy().sub(body.getPosition());
+        monster.pathfinder.applyPush(direction, 4, 0.4f, 0.9f);
     }
 
     public void drawFrame() {
@@ -81,6 +86,9 @@ public class Thunderstorm_Hit extends Thunderstorm_Spell {
                 red = 0.9f;
                 green = 0.9f;
                 blue = 0.4f;
+                if(rifts && nested_spell != null) {
+                    lightAlpha = 0.65f;      // for rifts + thunder + chargedbolts/chain
+                }
             }
             case ARCANE -> {
                 anim = ThunderstormAnims.thunder_arcane_anim;
@@ -103,7 +111,7 @@ public class Thunderstorm_Hit extends Thunderstorm_Spell {
 
     public void createBody() {
         Vector2 adjustedPosition = new Vector2(SpellUtils.getRandomVectorInRadius(targetPosition, 15f/PPM));
-        body = BodyFactory.spellExplosionBody(adjustedPosition, radius);
+        body = BodyFactory.spellExplosionBody(adjustedPosition, 40);
         body.setUserData(this);
     }
     public void createLight() {
@@ -131,7 +139,6 @@ public class Thunderstorm_Hit extends Thunderstorm_Spell {
                 for (int i = 0; i < quantity; i++) {
                     Spell proj = nested_spell.clone();
                     proj.setElements(this);
-                    proj.screen = screen;
                     proj.originBody = body;
                     proj.spawnPosition = new Vector2(body.getPosition());
                     proj.targetPosition = SpellUtils.getRandomVectorInRadius(body.getPosition(), getProjRadius());
@@ -149,6 +156,18 @@ public class Thunderstorm_Hit extends Thunderstorm_Spell {
                 Rift_Zone rift = new Rift_Zone(monster.body.getPosition());
                 rift.setElements(this);
                 screen.spellManager.toAdd(rift);
+            }
+        }
+    }
+
+    public void overheat() {
+        if(overheat) {
+            float procRate = 0.99f - 0.01f * player.spellbook.overheat_lvl;
+            if(Math.random() >= procRate) {
+                Overheat_Explosion explosion = new Overheat_Explosion(body.getPosition());
+                explosion.thunderstorm = true;
+                explosion.setElements(this);
+                screen.spellManager.toAdd(explosion);
             }
         }
     }

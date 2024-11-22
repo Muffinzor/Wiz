@@ -9,9 +9,15 @@ import wizardo.game.Monsters.Monster;
 import wizardo.game.Resources.SpellAnims.OverheatAnims;
 import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Explosion;
 import wizardo.game.Spells.Frost.Icespear.Icespear_Spell;
+import wizardo.game.Spells.Lightning.ChainLightning.ChainLightning_Hit;
+import wizardo.game.Spells.Lightning.ChainLightning.ChainLightning_Spell;
+import wizardo.game.Spells.Lightning.ChargedBolts.ChargedBolts_Spell;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyFactory;
+
+import java.util.ArrayList;
+import java.util.Collections;
 
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.*;
@@ -64,6 +70,14 @@ public class Overheat_Explosion extends Overheat_Spell {
         dealDmg(monster);
 
         fireball(monster);
+
+        Vector2 direction = monster.body.getPosition().sub(body.getPosition());
+        if(thunderstorm) {
+            float strength = 10 + 0.5f * player.spellbook.thunderstorm_lvl;
+            monster.pathfinder.applyPush(direction, strength, 0.75f, 0.89f);
+        } else {
+            monster.pathfinder.applyPush(direction, 5, 0.3f, 0.92f);
+        }
     }
 
     public void drawFrame() {
@@ -89,12 +103,20 @@ public class Overheat_Explosion extends Overheat_Spell {
                 red = 0.7f;
                 green = 0.3f;
             }
+            case LIGHTNING -> {
+                anim = OverheatAnims.overheat_anim_lightning;
+                red = 0.5f;
+                green = 0.45f;
+            }
         }
     }
 
     public void createBody() {
         if(targetPosition == null) {
             targetPosition = new Vector2(player.pawn.body.getPosition());
+        }
+        if(thunderstorm) {
+            radius = radius - 20;
         }
         body = BodyFactory.spellExplosionBody(targetPosition, radius);
         body.setUserData(this);
@@ -137,26 +159,70 @@ public class Overheat_Explosion extends Overheat_Spell {
 
             }
         }
+
     }
 
     public void fireball(Monster monster) {
-        if(fireball) {
 
+        if(fireball) {
             float level = (getLvl() + player.spellbook.fireball_lvl)/2f;
-            float procRate = 0.8f - 0.05f * level;
+            float procRate = 0.85f - 0.025f * level;
 
             if(Math.random() >= procRate) {
                 Overheat_TriggerExplosion fireball = new Overheat_TriggerExplosion();
                 fireball.frozenorb = frozenorb;
+                fireball.nested_spell = nested_spell;
                 fireball.setElements(this);
-                fireball.targetPosition = monster.body.getPosition();
+                fireball.targetPosition = new Vector2(monster.body.getPosition());
                 screen.spellManager.toAdd(fireball);
+            }
+        }
+
+    }
+
+    public void chainLightning() {
+        int quantity = 2 + player.spellbook.chainlightning_lvl / 5;
+        ArrayList<Monster> possibleTargets = SpellUtils.findMonstersInRangeOfVector(getSpawnPosition(), 5, true);
+        if(!possibleTargets.isEmpty()) {
+            Collections.shuffle(possibleTargets);
+            for (int i = 0; i < quantity; i++) {
+                if(!possibleTargets.isEmpty()) {
+                    ChainLightning_Hit chain = new ChainLightning_Hit(possibleTargets.removeFirst());
+                    chain.setElements(this);
+                    chain.fireball = fireball;
+                    if(chargedbolts) {
+                        chain.nested_spell = new ChargedBolts_Spell();
+                    }
+                    chain.originBody = body;
+                    screen.spellManager.toAdd(chain);
+                }
+            }
+        }
+    }
+
+    public void icespear() {
+        if(icespear) {
+            int quantity = 9 + 3 * player.spellbook.icespear_lvl;
+            for (int i = 0; i < quantity; i++) {
+                Icespear_Spell spear = new Icespear_Spell();
+                spear.duration = 1f;
+                spear.maxSplits = 0;
+                spear.frostbolts = frostbolts;
+                spear.setElements(this);
+                spear.spawnPosition = new Vector2(body.getPosition());
+                spear.targetPosition = SpellUtils.getRandomVectorInRadius(body.getPosition(), 2);
+                screen.spellManager.toAdd(spear);
             }
         }
     }
 
     public void sendProjectiles() {
         immediateFrostbolts();
+        icespear();
+
+        if(chainlightning) {
+            chainLightning();
+        }
 
         if(nested_spell != null) {
 

@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import wizardo.game.Spells.Arcane.Rifts.Rift_Zone;
 import wizardo.game.Spells.Frost.Frozenorb.Frozenorb_Spell;
 import wizardo.game.Spells.Hybrid.EnergyRain.EnergyRain_Explosion;
+import wizardo.game.Spells.Lightning.Thunderstorm.Thunderstorm_Spell;
 import wizardo.game.Spells.SpellUtils;
 
 import static wizardo.game.Spells.SpellUtils.getClearRandomPosition;
@@ -24,8 +25,8 @@ public class ArcaneArtillery_Explosion extends ArcaneArtillery_Spell {
 
     public void update(float delta) {
         if(!initialized) {
-            frozenorb = true;
             frozenOrb();
+            thunderstorm();
             initialized = true;
         }
 
@@ -65,6 +66,18 @@ public class ArcaneArtillery_Explosion extends ArcaneArtillery_Spell {
             orb.duration = 3;
             orb.setElements(this);
             screen.spellManager.toAdd(orb);
+        }
+    }
+
+    public void thunderstorm() {
+        if(thunderstorm) {
+            Thunderstorm_Spell storm = new Thunderstorm_Spell();
+            storm.setElements(this);
+            storm.spawnPosition = new Vector2(targetPosition);
+            storm.arcaneMissile = true;
+            storm.radius = 5;
+            storm.duration = 1.5f;
+            screen.spellManager.toAdd(storm);
         }
     }
 

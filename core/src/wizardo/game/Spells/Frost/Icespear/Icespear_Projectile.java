@@ -7,9 +7,10 @@ import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.Monster;
 import wizardo.game.Spells.Arcane.Rifts.Rift_Zone;
-import wizardo.game.Spells.Arcane.Rifts.Rifts_Spell;
 import wizardo.game.Spells.Fire.Fireball.Fireball_Explosion;
 import wizardo.game.Spells.Fire.Flamejet.Flamejet_Spell;
+import wizardo.game.Spells.Fire.Overheat.Overheat_Explosion;
+import wizardo.game.Spells.Fire.Overheat.Overheat_TriggerExplosion;
 import wizardo.game.Spells.Fire.Overheat.Overheat_miniExplosion;
 import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Explosion;
 import wizardo.game.Spells.Frost.Frozenorb.Frozenorb_Spell;
@@ -97,6 +98,9 @@ public class Icespear_Projectile extends Icespear_Spell {
      * BESOIN FAIRE PROC RATE
      */
     public void handleCollision(Monster monster) {
+        if(overheat) {
+            overheatChance();
+        }
 
         if(frozenorb && anim_element == FROST) {
             float duration = 0.8f + 0.2f * player.spellbook.frozenorb_lvl;
@@ -162,7 +166,7 @@ public class Icespear_Projectile extends Icespear_Spell {
         thundersplit();
         currentSplits++;
 
-        if(overheat && currentSplits == 1) {
+        if(overheatBall && currentSplits == 1) {
             overheatSplit();
         } else if(fireball && currentSplits == 2) {
             fireballSplit();
@@ -415,6 +419,16 @@ public class Icespear_Projectile extends Icespear_Spell {
                 thunder.anim_element = FROST;
                 screen.spellManager.toAdd(thunder);
             }
+        }
+    }
+
+    public void overheatChance() {
+        float procRate = 1 - .05f * player.spellbook.overheat_lvl;
+        if(Math.random() >= procRate) {
+            Overheat_TriggerExplosion explosion = new Overheat_TriggerExplosion();
+            explosion.setElements(this);
+            explosion.targetPosition = new Vector2(body.getPosition());
+            screen.spellManager.toAdd(explosion);
         }
     }
 }

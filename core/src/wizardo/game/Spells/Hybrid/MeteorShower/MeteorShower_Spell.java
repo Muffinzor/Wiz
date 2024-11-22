@@ -22,6 +22,7 @@ public class MeteorShower_Spell extends Spell {
 
     public boolean thunderstorm;
     public boolean rift;
+    public boolean overheat;
 
     public float showerRadius = 16;
 
@@ -99,6 +100,8 @@ public class MeteorShower_Spell extends Spell {
 
     public void setMeteor(MeteorShower_Spell parentSpell) {
         this.nested_spell = parentSpell.nested_spell;
+        this.overheat = parentSpell.overheat;
+        this.thunderstorm = parentSpell.thunderstorm;
     }
 
     @Override

@@ -6,9 +6,11 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Resources.SpellAnims.MeteorAnims;
+import wizardo.game.Spells.Fire.Overheat.Overheat_Explosion;
 import wizardo.game.Utils.BodyFactory;
 
 import static wizardo.game.Utils.Constants.PPM;
+import static wizardo.game.Wizardo.player;
 import static wizardo.game.Wizardo.world;
 
 public class Meteor_Projectile extends MeteorShower_Spell {
@@ -59,10 +61,25 @@ public class Meteor_Projectile extends MeteorShower_Spell {
     }
 
     public void explode() {
-        Meteor_Explosion explosion = new Meteor_Explosion(targetPosition);
-        explosion.setElements(this);
-        explosion.setMeteor(this);
-        screen.spellManager.toAdd(explosion);
+        if(overheat) {
+            float procRate = 0.975f - 0.025f * player.spellbook.overheat_lvl;
+            if(Math.random() > procRate) {
+                Overheat_Explosion explosion = new Overheat_Explosion(targetPosition);
+                explosion.thunderstorm = thunderstorm;
+                explosion.setElements(this);
+                screen.spellManager.toAdd(explosion);
+            } else {
+                Meteor_Explosion explosion = new Meteor_Explosion(targetPosition);
+                explosion.setElements(this);
+                explosion.setMeteor(this);
+                screen.spellManager.toAdd(explosion);
+            }
+        } else {
+            Meteor_Explosion explosion = new Meteor_Explosion(targetPosition);
+            explosion.setElements(this);
+            explosion.setMeteor(this);
+            screen.spellManager.toAdd(explosion);
+        }
     }
 
     public void drawFrame() {

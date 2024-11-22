@@ -107,11 +107,11 @@ public class FrostArcane_Spells {
         // 9. Frostbolt + ArcaneMissile + Beam
 
         Laser_Spell frostarcane9 = new Laser_Spell();
+        frostarcane9.anim_element = FROST;
         frostarcane9.frostbolt = true;
         frostarcane9.spellParts.add(FROSTBOLT);
         frostarcane9.spellParts.add(MISSILES);
         frostarcane9.spellParts.add(BEAM);
-        frostarcane9.anim_element = FROST;
         frostarcaneSpells[9] = frostarcane9;
 
         // 10. Frostbolt + ArcaneMissile + Rifts

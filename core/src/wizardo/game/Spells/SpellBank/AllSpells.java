@@ -7,6 +7,8 @@ import java.util.Arrays;
 
 import static wizardo.game.Spells.SpellBank.Arcane_Spells.arcanespells;
 import static wizardo.game.Spells.SpellBank.Arcane_Spells.createArcane_Spells;
+import static wizardo.game.Spells.SpellBank.FireArcane_Spells.createFireArcane_Spells;
+import static wizardo.game.Spells.SpellBank.FireArcane_Spells.firearcaneSpells;
 import static wizardo.game.Spells.SpellBank.Fire_Spells.createFire_Spells;
 import static wizardo.game.Spells.SpellBank.Fire_Spells.firespells;
 import static wizardo.game.Spells.SpellBank.FrostArcane_Spells.createFrostArcane_Spells;
@@ -55,6 +57,9 @@ public class AllSpells {
 
         createLightningFire_Spells();
         allSpells.addAll(Arrays.asList(litefireSpells));
+
+        createFireArcane_Spells();
+        allSpells.addAll(Arrays.asList(firearcaneSpells));
 
     }
 }

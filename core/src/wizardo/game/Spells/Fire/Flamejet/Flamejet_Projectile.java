@@ -55,7 +55,7 @@ public class Flamejet_Projectile extends Flamejet_Spell {
             body.setActive(false);
         }
 
-        if(stateTime > 1) {
+        if(stateTime > anim.getAnimationDuration()) {
             world.destroyBody(body);
             screen.spellManager.toRemove(this);
         }
@@ -72,7 +72,6 @@ public class Flamejet_Projectile extends Flamejet_Spell {
         frame.setOrigin(frame.getWidth()/2f, 0);
         frame.setRotation(rotation - 90);
         frame.setPosition(spawnPosition.x * PPM - frame.getWidth()/2f, spawnPosition.y * PPM);
-        screen.addSortedSprite(frame);
 
         float dst = spawnPosition.dst(body.getPosition()) + 2;
         float totalLength = frame.getHeight();
@@ -80,7 +79,12 @@ public class Flamejet_Projectile extends Flamejet_Spell {
         frame.setScale(1, scale);
         frame.flip(flipX, false);
 
-        screen.centerSort(frame, originBody.getPosition().y * PPM);
+        if(scale < 0.9f) {
+            screen.addSortedSprite(frame);
+        } else {
+            screen.addOverSprite(frame);
+        }
+        //screen.centerSort(frame, originBody.getPosition().y * PPM);
     }
 
     public void createBody() {

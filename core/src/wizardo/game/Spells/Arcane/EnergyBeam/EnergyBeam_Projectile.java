@@ -30,6 +30,8 @@ public class EnergyBeam_Projectile extends EnergyBeam_Spell {
     int frameCounter;
     int chainFrameInterval;
 
+    int monstersHit = 0;
+
     public EnergyBeam_Projectile(Vector2 spawnPosition, Vector2 targetPosition) {
 
         this.spawnPosition = new Vector2(spawnPosition);
@@ -68,6 +70,7 @@ public class EnergyBeam_Projectile extends EnergyBeam_Spell {
         frostbolts(monster);
         chargedbolts();
         thunderstorm(monster);
+        monstersHit ++;
     }
 
     public void drawFrame() {
@@ -186,8 +189,11 @@ public class EnergyBeam_Projectile extends EnergyBeam_Spell {
 
             monster.applySlow(3, 0.7f);
 
-            float procTreshold = .825f - .025f * player.spellbook.frostbolt_lvl;
-            if (Math.random() > procTreshold) {
+            float procRate = .825f - .025f * player.spellbook.frostbolt_lvl;
+            if(monstersHit == 0) {
+                procRate = 0;
+            }
+            if (Math.random() > procRate) {
                 Vector2 randomSpawn = SpellUtils.getRandomVectorInRadius(monster.body.getPosition(), 0.75f);
 
                 Frostbolt_Explosion explosion = new Frostbolt_Explosion();
@@ -206,6 +212,9 @@ public class EnergyBeam_Projectile extends EnergyBeam_Spell {
     public void chargedbolts() {
         if(chargedbolts) {
             float procRate = .9f - 0.05f * player.spellbook.chargedbolt_lvl;
+            if(monstersHit == 0) {
+                procRate = 0;
+            }
             if(Math.random() >= procRate) {
                 int quantity = 3 + player.spellbook.chargedbolt_lvl/2;
                 for (int i = 0; i < quantity; i++) {
@@ -246,6 +255,9 @@ public class EnergyBeam_Projectile extends EnergyBeam_Spell {
         if(thunderstorm) {
             int level = (getLvl() + player.spellbook.thunderstorm_lvl) / 2;
             float procRate = 0.825f - 0.025f * level;
+            if(monstersHit == 0) {
+                procRate = 0;
+            }
             if(Math.random() >= procRate) {
                 Thunderstorm_Hit thunder = new Thunderstorm_Hit(monster.body.getPosition());
                 thunder.setElements(this);

@@ -18,7 +18,7 @@ public class ChargedBolts_Spell extends Spell {
     public boolean arcaneMissile;
     public boolean spear;
     public boolean flamejet;
-
+    public boolean overheat;
 
     public ChargedBolts_Spell() {
 
@@ -42,6 +42,10 @@ public class ChargedBolts_Spell extends Spell {
             speed = 45f/PPM;
         } else {
             bolts = 2 + getLvl();
+            if(overheat) {
+                bolts = Math.max(bolts/2, 2);
+
+            }
         }
 
         if(delta > 0) {
@@ -63,6 +67,7 @@ public class ChargedBolts_Spell extends Spell {
         frostbolts = thisBolt.frostbolts;
         arcaneMissile = thisBolt.arcaneMissile;
         flamejet = thisBolt.flamejet;
+        overheat = thisBolt.overheat;
         spear = thisBolt.spear;
         speed = thisBolt.speed;
         duration = thisBolt.duration;
@@ -82,6 +87,11 @@ public class ChargedBolts_Spell extends Spell {
     public int getDmg() {
         int dmg = baseDmg;
         dmg += 4 * getLvl();
-        return dmg;
+        if(overheat) {
+            return dmg * 2;
+        } else {
+            return dmg;
+        }
+
     }
 }

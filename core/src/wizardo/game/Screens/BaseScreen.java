@@ -240,6 +240,10 @@ public abstract class BaseScreen implements Screen {
         displayManager.spriteRenderer.regular_sorted_sprites.add(sprite);
     }
 
+    public void addOverSprite(Sprite sprite) {
+        displayManager.spriteRenderer.over_sprites.add(sprite);
+    }
+
     /**
      * adds the sprite to the under-everything-else sprites list to be rendered
      * @param sprite

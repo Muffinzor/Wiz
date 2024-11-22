@@ -1,7 +1,14 @@
 package wizardo.game.Spells.Fire.Overheat;
 
+import wizardo.game.Monsters.Monster;
+import wizardo.game.Spells.Lightning.ChainLightning.ChainLightning_Hit;
+import wizardo.game.Spells.Lightning.ChainLightning.ChainLightning_Spell;
+import wizardo.game.Spells.Lightning.Thunderstorm.Thunderstorm_Hit;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
+
+import java.util.ArrayList;
+import java.util.Collections;
 
 import static wizardo.game.Wizardo.player;
 
@@ -10,6 +17,10 @@ public class Overheat_Spell extends Spell {
     public boolean frostbolts;
     public boolean frozenorb;
     public boolean fireball;
+    public boolean thunderstorm;
+    public boolean chainlightning;
+    public boolean chargedbolts;
+    public boolean icespear;
 
     public Overheat_Spell() {
 
@@ -29,10 +40,21 @@ public class Overheat_Spell extends Spell {
         explosion.frostbolts = frostbolts;
         explosion.fireball = fireball;
         explosion.frozenorb = frozenorb;
+        explosion.icespear = icespear;
+        explosion.chargedbolts = chargedbolts;
+        explosion.thunderstorm = thunderstorm;
+        explosion.chainlightning = chainlightning;
         explosion.setElements(this);
         explosion.nested_spell = nested_spell;
         screen.spellManager.toAdd(explosion);
         screen.spellManager.toRemove(this);
+
+        if(thunderstorm) {
+            Thunderstorm_Hit thunder = new Thunderstorm_Hit(player.pawn.getPosition());
+            thunder.setElements(this);
+            screen.spellManager.toAdd(thunder);
+        }
+
 
     }
 
@@ -52,4 +74,5 @@ public class Overheat_Spell extends Spell {
         dmg += 25 * getLvl();
         return dmg;
     }
+
 }

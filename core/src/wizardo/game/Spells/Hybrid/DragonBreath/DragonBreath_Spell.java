@@ -10,6 +10,7 @@ public class DragonBreath_Spell extends Spell {
 
     public boolean frostbolts;
     public boolean frozenorb;
+    public boolean fireball;
 
     public DragonBreath_Spell() {
 

@@ -14,6 +14,7 @@ public class LightningHands_Spell extends Spell {
 
     public boolean chainlightning;
     public boolean chargedbolts;
+    public boolean thunderstorm;
 
     public LightningHands_Spell() {
 

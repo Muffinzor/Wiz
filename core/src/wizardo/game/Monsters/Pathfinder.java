@@ -7,68 +7,95 @@ import static wizardo.game.Wizardo.player;
 import static wizardo.game.Wizardo.world;
 
 public class Pathfinder {
-
     Monster monster;
     Vector2 currentPosition;
     Vector2 targetPosition;
     Body playerBody;
 
-    Vector2 lastSidestepDirection;
+    // Push-back handling
+    Vector2 pushBackForce = new Vector2();
+    float pushBackTimer = 0; // Time remaining for push-back effect
+    float pushDecayRate = 0;
+
+    int frameCounter = 0;
 
     public Pathfinder(Monster monster) {
         this.monster = monster;
         playerBody = player.pawn.body;
         currentPosition = new Vector2();
-        lastSidestepDirection = new Vector2();
     }
 
-    public void update() {
+    public void update(float delta) {
+
         currentPosition.set(monster.body.getPosition());
-        this.targetPosition = new Vector2(playerBody.getPosition());
-        Vector2 targetDirection = targetPosition.cpy().sub(currentPosition).nor();
-        detectObstacles(targetDirection);
+        targetPosition = new Vector2(playerBody.getPosition());
+
+        frameCounter++;
+        if(frameCounter >= 10) {
+            monster.body.setLinearVelocity(getMovementVector());
+            frameCounter = 0;
+        }
+
+        if (pushBackTimer > 0) {
+            pushBackTimer -= delta;
+            if(delta > 0) {
+                monster.body.setLinearVelocity(pushBackForce);
+                pushBackForce.scl(pushDecayRate);
+            }
+        } else {
+            pushBackForce.setZero();
+        }
+
+
+        if(delta == 0) {
+            monster.body.setLinearVelocity(0,0);
+        }
+
     }
 
-    private void detectObstacles(Vector2 direction) {
-        Vector2 desiredVelocity = new Vector2();
+    public void applyPush(Vector2 pushDirection, float strength, float duration, float decayRate) {
+        pushBackForce.set(pushDirection.nor().scl(strength));
+        pushBackTimer = duration;
+        pushDecayRate = decayRate;
+    }
 
-        float rayLength = 500;
-        Vector2 rayEnd = currentPosition.cpy().add(direction.scl(rayLength));
-        desiredVelocity.set(targetPosition.cpy().sub(currentPosition).nor().scl(monster.speed));
+    private Vector2 getMovementVector() {
 
+        Vector2 direction = targetPosition.cpy().sub(currentPosition);
+        Vector2 desiredVelocity = targetPosition.cpy().sub(currentPosition).nor().scl(monster.speed);
+
+        if(monster.freezeTimer > 0) {
+            desiredVelocity.set(0,0);
+        }
+
+        // Handle obstacle avoidance
         world.rayCast((fixture, point, normal, fraction) -> {
             if (fixture.getBody().getUserData() != null && fixture.getBody().getUserData().equals("Obstacle")) {
                 Vector2 avoidForce;
 
-
                 Vector2 obstacleToMonster = currentPosition.cpy().sub(fixture.getBody().getPosition());
                 Vector2 obstacleToPlayer = targetPosition.cpy().sub(fixture.getBody().getPosition());
 
-                // Cross product to determine relative position of player to obstacle
                 float cross = obstacleToMonster.crs(obstacleToPlayer);
-
-                // If the cross product is positive, sidestep to the right, otherwise to the left
                 if (cross > 0) {
-                    // Sidestep right
-                    avoidForce = new Vector2(-normal.y, normal.x); // Sidestep right
+                    avoidForce = new Vector2(-normal.y, normal.x);
                 } else {
-                    // Sidestep left
-                    avoidForce = new Vector2(normal.y, -normal.x); // Sidestep left
+                    avoidForce = new Vector2(normal.y, -normal.x);
                 }
 
-                // Avoidance force, scale it by distance to the obstacle
                 float dst = fixture.getBody().getPosition().dst(monster.body.getPosition());
-                desiredVelocity.add(avoidForce.scl((150 / dst / dst)));
+                desiredVelocity.add(avoidForce.scl((150 / (dst * dst))));
             }
             return fraction;
-        }, currentPosition, rayEnd);
+        }, currentPosition, currentPosition.cpy().add(direction.scl(500))); // Ray length: 500
+
+        // Combine push-back and desired velocity
 
         float trueSpeed = monster.speed;
         if(monster.slowedTimer > 0) {
-            trueSpeed = monster.speed * monster.slowRatio;
+            trueSpeed *= monster.slowRatio;
         }
-        monster.body.setLinearVelocity(desiredVelocity.nor().scl(trueSpeed));
+
+        return desiredVelocity.nor().scl(trueSpeed);
     }
-
-
 }

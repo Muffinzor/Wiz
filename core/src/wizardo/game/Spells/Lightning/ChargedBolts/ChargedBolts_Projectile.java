@@ -82,7 +82,7 @@ public class ChargedBolts_Projectile extends ChargedBolts_Spell {
         if(canSplit) {
             split();
             if(!lightKilled) {
-
+                light.dimKill(0.5f);
                 lightKilled = true;
             }
             world.destroyBody(body);
@@ -135,7 +135,9 @@ public class ChargedBolts_Projectile extends ChargedBolts_Spell {
     }
 
     public void handleCollision(Monster monster) {
-        collisions ++;
+        if(!overheat) {
+            collisions++;
+        }
         frostbolts(monster);
         dealDmg(monster);
         canSplit = canSplit() && stateTime > 0.2f;
@@ -151,13 +153,17 @@ public class ChargedBolts_Projectile extends ChargedBolts_Spell {
 
         Sprite frame = screen.displayManager.spriteRenderer.pool.getSprite();
         frame.set(anim.getKeyFrame(stateTime, true));
-        frame.setCenter(body.getPosition().x * PPM, body.getPosition().y * PPM);
+
         frame.rotate(rotation);
         if(alpha < 1) {
             frame.setAlpha(alpha);
         }
+        if(overheat) {
+            frame.setScale(2);
+        }
+        frame.setCenter(body.getPosition().x * PPM, body.getPosition().y * PPM);
 
-        screen.centerSort(frame, body.getPosition().y * PPM);
+        screen.centerSort(frame, body.getPosition().y * PPM - 10);
         screen.displayManager.spriteRenderer.regular_sorted_sprites.add(frame);
 
     }
@@ -175,7 +181,11 @@ public class ChargedBolts_Projectile extends ChargedBolts_Spell {
         Vector2 offset = new Vector2(direction.cpy().scl(0.25f));
         Vector2 adjustedSpawn = new Vector2(spawnPosition.add(offset));
 
-        body = BodyFactory.spellProjectileCircleBody(adjustedSpawn, 10, true);
+        float bodyRadius = 10;
+        if(overheat) {
+            bodyRadius = 25;
+        }
+        body = BodyFactory.spellProjectileCircleBody(adjustedSpawn, bodyRadius, true);
         body.setUserData(this);
 
         float angleVariation = Math.min(2f * bolts, 20);
@@ -221,8 +231,12 @@ public class ChargedBolts_Projectile extends ChargedBolts_Spell {
     }
 
     public void createLight() {
+        float lightRadius = 25;
+        if(overheat) {
+            lightRadius = 50;
+        }
         light = screen.lightManager.pool.getLight();
-        light.setLight(red, green, blue, lightAlpha, 25, body.getPosition());
+        light.setLight(red, green, blue, lightAlpha, lightRadius, body.getPosition());
         screen.lightManager.addLight(light);
     }
 
@@ -284,6 +298,9 @@ public class ChargedBolts_Projectile extends ChargedBolts_Spell {
     private void wobble(float delta) {
         if (stateTime >= nextWobbleTime) {
             float wobbleAmount = MathUtils.random(-0.07f, 0.07f);
+            if(overheat) {
+                wobbleAmount *= 1.5f;
+            }
             targetWobbleOffset = perpendicular.cpy().scl(wobbleAmount);
             nextWobbleTime += wobbleChangeInterval;
         }

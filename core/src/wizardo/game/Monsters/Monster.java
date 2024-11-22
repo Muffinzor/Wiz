@@ -3,10 +3,13 @@ package wizardo.game.Monsters;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.MassData;
 import wizardo.game.Screens.BaseScreen;
 import wizardo.game.Screens.Battle.BattleScreen;
+import wizardo.game.Utils.BodyFactory;
 
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.player;
@@ -23,6 +26,7 @@ public abstract class Monster {
     public int frameCounter;
 
     public Body body;
+    public float massValue;
     public float bodyRadius;
     public float speed;
     public Vector2 position;
@@ -68,16 +72,24 @@ public abstract class Monster {
         if(body != null) {
 
             frameCounter++;
-            if (frameCounter == 10) {
-                pathfinder.update();
+            if (frameCounter == 1) {
+                pathfinder.update(delta);
                 frameCounter = 0;
-            }
-
-            if(delta == 0 || freezeTimer > 0) {
-                body.setLinearVelocity(0,0);
             }
         }
 
+    }
+
+    public void createBody() {
+        body = BodyFactory.monsterBody(position, bodyRadius);
+        body.setUserData(this);
+        MassData mass = new MassData();
+        float massMin = massValue * 0.8f;
+        float massMax = massValue * 1.2f;
+        float newMass = MathUtils.random(massMin, massMax);
+        massValue = newMass;
+        mass.mass = newMass;
+        body.setMassData(mass);
     }
 
     public void drawFrame() {
@@ -87,10 +99,10 @@ public abstract class Monster {
         boolean flip = player.pawn.getBodyX() < body.getPosition().x;
         frame.flip(flip, false);
         if(freezeTimer > 0) {
-            Color tint = new Color(0.3f, 0.3f, 1.0f, 1.0f);
+            Color tint = new Color(0.3f, 0.3f, 0.8f, 1.0f);
             frame.setColor(tint);
         } else if(slowedTimer > 0) {
-            Color tint = new Color(0.5f, 0.5f, 1.0f, 1.0f);
+            Color tint = new Color(0.5f, 0.5f, 0.8f, 1.0f);
             frame.setColor(tint);
         }
         screen.addSortedSprite(frame);
@@ -138,7 +150,6 @@ public abstract class Monster {
         slowRatio = ratio;
     }
 
-
     public void applyFreeze(float duration, float immunity) {
         if(freezeImmunityTimer <= 0) {
             freezeTimer = duration;
@@ -148,6 +159,5 @@ public abstract class Monster {
             slowRatio = 0.75f;
         }
     }
-
     public abstract void initialize();
 }
