@@ -6,9 +6,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import wizardo.game.Lighting.RoundLight;
-import wizardo.game.Monsters.Monster;
+import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Spells.Arcane.Rifts.Rift_Zone;
-import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyFactory;
 
@@ -109,7 +108,7 @@ public class Frostbolt_Projectile extends Frostbolt_Spell{
             direction.rotateDeg(randomAngle);
         }
 
-        Vector2 offset = new Vector2(direction.cpy().scl(1));
+        Vector2 offset = new Vector2(direction.cpy().scl(0.5f));
         Vector2 adjustedSpawn = new Vector2(spawnPosition.add(offset));
         body = BodyFactory.spellProjectileCircleBody(adjustedSpawn, 5, true);
         body.setUserData(this);

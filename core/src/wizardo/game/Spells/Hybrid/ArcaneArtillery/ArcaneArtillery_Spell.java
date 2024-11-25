@@ -1,16 +1,13 @@
 package wizardo.game.Spells.Hybrid.ArcaneArtillery;
 
 import com.badlogic.gdx.math.Vector2;
-import wizardo.game.Monsters.Monster;
-import wizardo.game.Spells.Arcane.ArcaneMissiles.ArcaneMissile_Projectile;
-import wizardo.game.Spells.Arcane.ArcaneMissiles.ArcaneMissile_Spell;
+import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 
 import java.util.ArrayList;
 
 import static wizardo.game.Spells.SpellUtils.Spell_Element.ARCANE;
-import static wizardo.game.Spells.SpellUtils.Spell_Element.FROST;
 import static wizardo.game.Wizardo.player;
 
 public class ArcaneArtillery_Spell extends Spell {

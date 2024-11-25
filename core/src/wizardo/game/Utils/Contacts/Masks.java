@@ -33,5 +33,7 @@ public class Masks {
 
     public static final short DECOR_MASK = (short) ( SPELL | MONSTER_PROJECTILE | PAWN | MONSTER );
 
+    public static final short MONSTER_PROJECTILE_MASK = (short) (PAWN | SPELL | OBSTACLE | DECOR);
+
 
 }

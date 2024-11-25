@@ -4,12 +4,12 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Lighting.RoundLight;
-import wizardo.game.Monsters.Monster;
-import wizardo.game.Resources.SpellAnims.OverheatAnims;
+import wizardo.game.Monsters.MonsterArchetypes.Monster;
+import wizardo.game.Resources.SpellAnims.ExplosionsAnims;
 import wizardo.game.Spells.Hybrid.EnergyRain.EnergyRain_Spell;
-import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyFactory;
 
+import static wizardo.game.Spells.SpellUtils.Spell_Element.ARCANE;
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.world;
 
@@ -24,7 +24,7 @@ public class EnergyBeam_Explosion extends EnergyRain_Spell {
 
     public EnergyBeam_Explosion() {
 
-        anim_element = SpellUtils.Spell_Element.FROST;
+        main_element = ARCANE;
 
         rotation = MathUtils.random(360);
         flipX = MathUtils.randomBoolean();
@@ -63,19 +63,31 @@ public class EnergyBeam_Explosion extends EnergyRain_Spell {
         Sprite frame = screen.getSprite();
         frame.set(anim.getKeyFrame(stateTime, false));
         frame.setCenter(body.getPosition().x * PPM, body.getPosition().y * PPM);
-        frame.setScale(1.35f);
-        frame.setRotation(rotation);
-        frame.flip(flipX, flipY);
+        frame.flip(flipX, false);
+        frame.setScale(1.2f);
         screen.centerSort(frame, body.getPosition().y * PPM - 10);
         screen.addSortedSprite(frame);
     }
 
     public void pickAnim() {
+        anim = ExplosionsAnims.getExplosionAnim(anim_element);
         switch(anim_element) {
             case FROST -> {
-                anim = OverheatAnims.minifireball_anim_frost;
                 red = 0.2f;
                 blue = 0.9f;
+            }
+            case FIRE -> {
+                red = 0.75f;
+                blue = 0.2f;
+            }
+            case ARCANE -> {
+                red = 0.7f;
+                green = 0.15f;
+                blue = 0.9f;
+            }
+            case LIGHTNING -> {
+                red = 0.45f;
+                green = 0.4f;
             }
         }
     }

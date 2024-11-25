@@ -4,16 +4,12 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Lighting.RoundLight;
-import wizardo.game.Monsters.Monster;
+import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Resources.SpellAnims.ExplosionsAnims;
-import wizardo.game.Resources.SpellAnims.OverheatAnims;
-import wizardo.game.Spells.Fire.Fireball.Fireball_Explosion;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyFactory;
 
-import static wizardo.game.Resources.SpellAnims.IcespearAnims.icespear_anim_fire;
-import static wizardo.game.Resources.SpellAnims.IcespearAnims.icespear_anim_frost;
 import static wizardo.game.Spells.SpellUtils.Spell_Element.*;
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.player;

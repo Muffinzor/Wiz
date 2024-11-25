@@ -3,7 +3,7 @@ package wizardo.game.Spells.Fire.Overheat;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Lighting.RoundLight;
-import wizardo.game.Monsters.Monster;
+import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Resources.SpellAnims.OverheatAnims;
 import wizardo.game.Utils.BodyFactory;
 

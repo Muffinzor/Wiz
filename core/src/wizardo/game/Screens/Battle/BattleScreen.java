@@ -7,40 +7,19 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import wizardo.game.Maps.MapGeneration.MapManager;
-import wizardo.game.Monsters.Monster;
-import wizardo.game.Monsters.MonsterManager;
-import wizardo.game.Monsters.TEST_MONSTER;
+import wizardo.game.Monsters.*;
+import wizardo.game.Monsters.MonsterArchetypes.Monster;
+import wizardo.game.Monsters.MonsterProjectiles.MonsterProjectile;
+import wizardo.game.Monsters.MonsterProjectiles.MonsterProjectileManager;
 import wizardo.game.Player.Pawn;
-import wizardo.game.Resources.Skins;
 import wizardo.game.Screens.BaseScreen;
-import wizardo.game.Spells.Fire.Fireball.Fireball_Spell;
-import wizardo.game.Spells.Frost.Icespear.Icespear_Spell;
-import wizardo.game.Spells.Hybrid.ArcaneArtillery.ArcaneArtillery_Spell;
-import wizardo.game.Spells.Hybrid.DragonBreath.DragonBreath_Spell;
-import wizardo.game.Spells.Hybrid.LightningHands.LightningHands_Spell;
-import wizardo.game.Spells.Hybrid.MeteorShower.MeteorShower_Spell;
-import wizardo.game.Spells.Hybrid.Orbit.Orbit_Spell;
-import wizardo.game.Spells.Lightning.ChainLightning.ChainLightning_Spell;
 import wizardo.game.Spells.SpellManager;
 import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Wizardo;
 
-import static wizardo.game.Display.DisplayUtils.getSprite;
-import static wizardo.game.Spells.SpellBank.Arcane_Spells.arcanespells;
-import static wizardo.game.Spells.SpellBank.FireArcane_Spells.firearcaneSpells;
-import static wizardo.game.Spells.SpellBank.Fire_Spells.firespells;
-import static wizardo.game.Spells.SpellBank.FrostArcane_Spells.frostarcaneSpells;
-import static wizardo.game.Spells.SpellBank.FrostFire_Spells.frostfireSpells;
-import static wizardo.game.Spells.SpellBank.FrostLightning_Spells.frostliteSpells;
 import static wizardo.game.Spells.SpellBank.Frost_Spells.frostspells;
-import static wizardo.game.Spells.SpellBank.LightningArcane_Spells.litearcaneSpells;
-import static wizardo.game.Spells.SpellBank.LightningFire_Spells.litefireSpells;
-import static wizardo.game.Spells.SpellBank.Lightning_Spells.litespells;
-import static wizardo.game.Spells.SpellUtils.Spell_Element.FIRE;
-import static wizardo.game.Spells.SpellUtils.Spell_Element.LIGHTNING;
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.*;
 
@@ -48,6 +27,8 @@ public class BattleScreen extends BaseScreen {
 
     boolean initialized;
     Sprite controllerTargetSprite;
+
+    public MonsterProjectileManager monsterProjManager;
 
     public Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
 
@@ -60,7 +41,7 @@ public class BattleScreen extends BaseScreen {
         mainCamera.viewportHeight = Gdx.graphics.getHeight();
         mainCamera.position.set(950, 950, 0);
 
-        mainCamera.zoom = 1f;
+        mainCamera.zoom = 1;
 
         createNewWorld();
         rayHandler = new RayHandler(world);
@@ -76,15 +57,17 @@ public class BattleScreen extends BaseScreen {
 
         monsterManager = new MonsterManager(this);
         spellManager = new SpellManager(this);
+        monsterProjManager = new MonsterProjectileManager(this);
 
         cursorTexturePath = "Cursors/Battle_Cursor.png";
         controllerTargetSprite = new Sprite(new Texture("Cursors/Controller_Cursor.png"));
 
-        for (int i = 0; i < 500; i++) {
-            Vector2 random = SpellUtils.getRandomVectorInRadius(player.pawn.getPosition(), 40);
-            Monster monster = new TEST_MONSTER(this, random);
+        for (int i = 0; i < 10; i++) {
+            Vector2 random = SpellUtils.getRandomVectorInRadius(player.pawn.getPosition(), 15);
+            Monster monster = new TEST_RANGED(this, random);
             monsterManager.addMonster(monster);
         }
+
 
     }
 
@@ -92,7 +75,7 @@ public class BattleScreen extends BaseScreen {
     public void render(float delta) {
 
         if(!initialized) {
-            player.spellbook.equippedSpells.add(litearcaneSpells[13]);
+            player.spellbook.equippedSpells.add(frostspells[0]);
             initialized = true;
         }
 
@@ -108,6 +91,7 @@ public class BattleScreen extends BaseScreen {
         player.pawn.update(delta);
         spellManager.update(delta);
         monsterManager.update(delta);
+        monsterProjManager.update(delta);
 
         drawControllerTarget();
         displayManager.update(delta);

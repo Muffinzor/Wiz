@@ -150,7 +150,6 @@ public class BodyFactory {
 
         return body;
     }
-
     public static Body spellExplosionBody(Vector2 position, float radius) {
         Body body;
         BodyDef def = new BodyDef();
@@ -170,6 +169,33 @@ public class BodyFactory {
 
         fixtureDef.filter.categoryBits = SPELL;
         fixtureDef.filter.maskBits = SPELL_MASK;
+
+        body.createFixture(fixtureDef);
+        shape.dispose();
+
+        return body;
+    }
+
+    public static Body monsterProjectileBody (Vector2 position, float radius) {
+
+        Body body;
+        BodyDef def = new BodyDef();
+
+        def.type = BodyDef.BodyType.DynamicBody;
+
+        def.position.set(position.x, position.y);
+        def.fixedRotation = true;
+        body = world.createBody(def);
+
+        CircleShape shape = new CircleShape();
+        shape.setRadius(radius / PPM);
+
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = shape;
+        fixtureDef.filter.categoryBits = MONSTER_PROJECTILE;
+        fixtureDef.filter.maskBits = MONSTER_PROJECTILE_MASK;
+
+        fixtureDef.isSensor = true;
 
         body.createFixture(fixtureDef);
         shape.dispose();

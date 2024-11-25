@@ -5,12 +5,11 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Lighting.RoundLight;
-import wizardo.game.Monsters.Monster;
+import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Resources.SpellAnims.OverheatAnims;
 import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Explosion;
 import wizardo.game.Spells.Frost.Icespear.Icespear_Spell;
 import wizardo.game.Spells.Lightning.ChainLightning.ChainLightning_Hit;
-import wizardo.game.Spells.Lightning.ChainLightning.ChainLightning_Spell;
 import wizardo.game.Spells.Lightning.ChargedBolts.ChargedBolts_Spell;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
@@ -74,9 +73,9 @@ public class Overheat_Explosion extends Overheat_Spell {
         Vector2 direction = monster.body.getPosition().sub(body.getPosition());
         if(thunderstorm) {
             float strength = 10 + 0.5f * player.spellbook.thunderstorm_lvl;
-            monster.pathfinder.applyPush(direction, strength, 0.75f, 0.89f);
+            monster.movementManager.applyPush(direction, strength, 0.75f, 0.89f);
         } else {
-            monster.pathfinder.applyPush(direction, 5, 0.3f, 0.92f);
+            monster.movementManager.applyPush(direction, 5, 0.3f, 0.92f);
         }
     }
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="64" height="64" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="78">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="64" height="64" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="92">
  <tileset firstgid="1" source="Dungeon_Plus.tsx"/>
  <layer id="1" name="Tile Layer 1" width="64" height="64">
   <data encoding="csv">
@@ -72,6 +72,20 @@
  <objectgroup id="2" name="ObstacleBodies">
   <object id="48" name="Pillar" x="896" y="1056" width="64" height="64"/>
   <object id="77" name="Pillar" x="704" y="1056" width="64" height="64"/>
+  <object id="78" name="Pillar" x="896" y="1312" width="64" height="64"/>
+  <object id="79" name="Pillar" x="704" y="1312" width="64" height="64"/>
+  <object id="80" name="Pillar" x="896" y="1600" width="64" height="64"/>
+  <object id="81" name="Pillar" x="704" y="1600" width="64" height="64"/>
+  <object id="82" name="Pillar" x="896" y="1856" width="64" height="64"/>
+  <object id="83" name="Pillar" x="704" y="1856" width="64" height="64"/>
+  <object id="84" name="Pillar" x="480" y="1056" width="64" height="64"/>
+  <object id="85" name="Pillar" x="288" y="1056" width="64" height="64"/>
+  <object id="86" name="Pillar" x="480" y="1312" width="64" height="64"/>
+  <object id="87" name="Pillar" x="288" y="1312" width="64" height="64"/>
+  <object id="88" name="Pillar" x="480" y="1600" width="64" height="64"/>
+  <object id="89" name="Pillar" x="288" y="1600" width="64" height="64"/>
+  <object id="90" name="Pillar" x="480" y="1856" width="64" height="64"/>
+  <object id="91" name="Pillar" x="288" y="1856" width="64" height="64"/>
  </objectgroup>
  <objectgroup id="3" name="DecorBodies">
   <object id="34" name="Portal" x="1024" y="1017" width="7" height="7"/>

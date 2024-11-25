@@ -1,14 +1,8 @@
 package wizardo.game.Spells.Fire.Overheat;
 
-import wizardo.game.Monsters.Monster;
-import wizardo.game.Spells.Lightning.ChainLightning.ChainLightning_Hit;
-import wizardo.game.Spells.Lightning.ChainLightning.ChainLightning_Spell;
 import wizardo.game.Spells.Lightning.Thunderstorm.Thunderstorm_Hit;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
-
-import java.util.ArrayList;
-import java.util.Collections;
 
 import static wizardo.game.Wizardo.player;
 

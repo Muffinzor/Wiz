@@ -1,7 +1,7 @@
 package wizardo.game.Spells.Hybrid.Laser;
 
 import com.badlogic.gdx.math.Vector2;
-import wizardo.game.Monsters.Monster;
+import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 

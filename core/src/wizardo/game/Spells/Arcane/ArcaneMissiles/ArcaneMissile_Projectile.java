@@ -5,9 +5,8 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Lighting.RoundLight;
-import wizardo.game.Monsters.Monster;
+import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Spells.Arcane.Rifts.Rift_Zone;
-import wizardo.game.Spells.Frost.Icespear.Icespear_Projectile;
 import wizardo.game.Spells.Lightning.ChargedBolts.ChargedBolts_Spell;
 import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyFactory;
@@ -62,12 +61,14 @@ public class ArcaneMissile_Projectile extends ArcaneMissile_Spell {
             light.dimKill(0.1f);
             world.destroyBody(body);
             screen.spellManager.toRemove(this);
+            return;
         }
+
         if(stateTime >= 2.5f || hasCollided) {
             scale -= 0.02f;
         }
 
-        if(canSplit) {
+        if(canSplit && !hasSplit) {
             split();
         }
 
@@ -78,7 +79,7 @@ public class ArcaneMissile_Projectile extends ArcaneMissile_Spell {
         dealDmg(monster);
 
         if(icespear && collisions >= collisionsToSplit) {
-            canSplit = true;
+           canSplit = true;
         }
 
         if(rift && scale >= 0.05f) {

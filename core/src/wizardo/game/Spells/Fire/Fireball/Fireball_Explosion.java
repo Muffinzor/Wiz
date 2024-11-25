@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Lighting.RoundLight;
-import wizardo.game.Monsters.Monster;
+import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Resources.Skins;
 import wizardo.game.Resources.SpellAnims.FireballAnims;
 import wizardo.game.Spells.Arcane.ArcaneMissiles.ArcaneMissile_Spell;
@@ -73,7 +73,7 @@ public class Fireball_Explosion extends Fireball_Spell {
         dealDmg(monster);
 
         Vector2 direction = monster.body.getPosition().sub(body.getPosition());
-        monster.pathfinder.applyPush(direction, 3, 0.2f, 0.9f);
+        monster.movementManager.applyPush(direction, 3, 0.2f, 0.9f);
 
         frozenOrb(monster);
     }

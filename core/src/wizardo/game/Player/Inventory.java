@@ -7,8 +7,8 @@ public class Inventory {
 
     public Inventory() {
 
-        dual_reagents = 1;
-        triple_reagents = 0;
+        dual_reagents = 30;
+        triple_reagents = 30;
 
     }
 

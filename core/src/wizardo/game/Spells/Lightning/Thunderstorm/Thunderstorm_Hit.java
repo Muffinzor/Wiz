@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Lighting.RoundLight;
-import wizardo.game.Monsters.Monster;
+import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Resources.SpellAnims.ThunderstormAnims;
 import wizardo.game.Spells.Arcane.Rifts.Rift_Zone;
 import wizardo.game.Spells.Fire.Flamejet.Flamejet_Spell;
@@ -66,7 +66,7 @@ public class Thunderstorm_Hit extends Thunderstorm_Spell {
         //rifts(monster);
 
         Vector2 direction = monster.body.getPosition().cpy().sub(body.getPosition());
-        monster.pathfinder.applyPush(direction, 4, 0.4f, 0.9f);
+        monster.movementManager.applyPush(direction, 3, 0.3f, 0.91f);
     }
 
     public void drawFrame() {

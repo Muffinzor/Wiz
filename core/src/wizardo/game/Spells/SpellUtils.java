@@ -3,7 +3,7 @@ package wizardo.game.Spells;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.QueryCallback;
-import wizardo.game.Monsters.Monster;
+import wizardo.game.Monsters.MonsterArchetypes.Monster;
 
 import java.util.ArrayList;
 import java.util.HashSet;

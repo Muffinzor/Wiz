@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Lighting.RoundLight;
-import wizardo.game.Monsters.Monster;
+import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Resources.SpellAnims.RiftsAnims;
 import wizardo.game.Spells.Lightning.ChainLightning.ChainLightning_Hit;
 import wizardo.game.Spells.Lightning.ChargedBolts.ChargedBolts_Spell;
@@ -83,8 +83,6 @@ public class Rift_Explosion extends Rifts_Spell {
     public void createBody() {
         body = BodyFactory.spellExplosionBody(targetPosition, radius);
         body.setUserData(this);
-        System.out.println(body.getPosition());
-        System.out.println(player.pawn.body.getPosition());
     }
 
     public void createLight() {

@@ -2,14 +2,13 @@ package wizardo.game.Spells.Arcane.EnergyBeam;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.Body;
-import wizardo.game.Monsters.Monster;
+import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Spells.Lightning.ChainLightning.ChainLightning_Hit;
 import wizardo.game.Spells.Lightning.ChargedBolts.ChargedBolts_Spell;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyFactory;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import static wizardo.game.Wizardo.player;

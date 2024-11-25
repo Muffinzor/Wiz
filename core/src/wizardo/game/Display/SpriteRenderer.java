@@ -6,6 +6,7 @@ import wizardo.game.Screens.BaseScreen;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class SpriteRenderer {
@@ -29,11 +30,14 @@ public class SpriteRenderer {
         this.screen = screen;
     }
     public void renderSprites() {
+        sortRegularSprites();
+        roundSpritePositions(regular_sorted_sprites);
+        roundSpritePositions(under_sprites);
+        roundSpritePositions(over_sprites);
+
         batch = screen.displayManager.mainBatch;
         batch.begin();
         batch.setProjectionMatrix(screen.mainCamera.combined);
-
-        sortRegularSprites();
 
         for (Sprite sprite : under_sprites) {
             sprite.draw(batch);
@@ -86,6 +90,14 @@ public class SpriteRenderer {
             return Float.compare(y2, y1);
         });
         spritePositionMap.clear();
+    }
+
+    public void roundSpritePositions(List<Sprite> sprites) {
+        for (Sprite sprite : sprites) {
+            int roundedX = (int) sprite.getX();
+            int roundedY = (int) sprite.getY();
+            sprite.setPosition(roundedX, roundedY);
+        }
     }
 
 

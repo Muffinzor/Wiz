@@ -1,7 +1,7 @@
 package wizardo.game.Spells.Hybrid.ForkedLightning;
 
 import com.badlogic.gdx.math.Vector2;
-import wizardo.game.Monsters.Monster;
+import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Spells.Fire.Fireball.Fireball_Explosion;
 import wizardo.game.Spells.Lightning.ChainLightning.ChainLightning_Hit;
 import wizardo.game.Spells.Lightning.ChargedBolts.ChargedBolts_Spell;
@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import static wizardo.game.Screens.BaseScreen.controllerActive;
-import static wizardo.game.Spells.SpellUtils.Spell_Element.FIRE;
 import static wizardo.game.Spells.SpellUtils.Spell_Element.LIGHTNING;
 import static wizardo.game.Wizardo.player;
 

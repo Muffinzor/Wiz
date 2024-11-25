@@ -4,8 +4,9 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import wizardo.game.Lighting.RoundLight;
-import wizardo.game.Monsters.Monster;
+import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Explosion;
 import wizardo.game.Spells.Lightning.ChargedBolts.ChargedBolts_Spell;
 import wizardo.game.Spells.Lightning.Thunderstorm.Thunderstorm_Hit;
@@ -20,6 +21,7 @@ import static wizardo.game.Wizardo.*;
 public class EnergyBeam_Projectile extends EnergyBeam_Spell {
 
     boolean hasCollided;
+    boolean hasExploded;
     Vector2 direction;
     float rotation;
 
@@ -59,6 +61,11 @@ public class EnergyBeam_Projectile extends EnergyBeam_Spell {
             alpha -= 0.03f;
         }
 
+        if(hasCollided && !hasExploded) {
+            explode();
+            hasExploded = true;
+        }
+
         if(alpha < 0.03f) {
             world.destroyBody(body);
             screen.spellManager.toRemove(this);
@@ -71,6 +78,18 @@ public class EnergyBeam_Projectile extends EnergyBeam_Spell {
         chargedbolts();
         thunderstorm(monster);
         monstersHit ++;
+    }
+
+    public void handleCollision(Fixture fix) {
+        hasCollided = true;
+        body.setLinearVelocity(0,0);
+    }
+
+    public void explode() {
+        EnergyBeam_Explosion explosion = new EnergyBeam_Explosion();
+        explosion.targetPosition = new Vector2(body.getPosition());
+        explosion.setElements(this);
+        screen.spellManager.toAdd(explosion);
     }
 
     public void drawFrame() {

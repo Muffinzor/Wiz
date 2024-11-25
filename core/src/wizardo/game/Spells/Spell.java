@@ -12,7 +12,7 @@ import com.badlogic.gdx.physics.box2d.RayCastCallback;
 import wizardo.game.Account.Unlocked;
 import wizardo.game.Audio.Sounds.SoundPlayer;
 import wizardo.game.Display.Text.FloatingDamage;
-import wizardo.game.Monsters.Monster;
+import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Screens.BaseScreen;
 import wizardo.game.Spells.SpellUtils.*;
 
