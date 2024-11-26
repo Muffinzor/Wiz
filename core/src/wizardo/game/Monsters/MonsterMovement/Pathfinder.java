@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
+import wizardo.game.Monsters.MonsterUtils;
 import wizardo.game.Spells.SpellUtils;
 
 import static wizardo.game.Utils.Constants.PPM;
@@ -24,7 +25,7 @@ public class Pathfinder {
 
         Vector2 direction = new Vector2(player.pawn.getPosition().sub(monster.body.getPosition()));
 
-        if(SpellUtils.hasLineOfSight(monster.body.getPosition(), player.pawn.getPosition())) {
+        if(MonsterUtils.hasCompleteLoS(monster)) {
             return direction;
         } else {
             return avoidObstacle(direction, false);

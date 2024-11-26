@@ -3,6 +3,7 @@ package wizardo.game.Monsters;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
+import wizardo.game.Monsters.MonsterAttack.AttackManager;
 import wizardo.game.Monsters.MonsterMovement.MovementManager;
 import wizardo.game.Monsters.MonsterStateManager.MeleeStateManager;
 import wizardo.game.Resources.MonsterResources.SkeletonAnims;
@@ -29,6 +30,7 @@ public class TEST_MONSTER extends Monster {
 
         state = MonsterUtils.MONSTER_STATE.ADVANCING;
         stateManager = new MeleeStateManager();
+        attackManager = new AttackManager(this, 3);
     }
 
     @Override

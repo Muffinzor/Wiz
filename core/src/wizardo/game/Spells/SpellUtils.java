@@ -14,14 +14,14 @@ import static wizardo.game.Wizardo.world;
 
 public class SpellUtils {
 
-    public static enum Spell_Element {
+    public enum Spell_Element {
         ARCANE,
         FROST,
         FIRE,
         LIGHTNING
     }
 
-    public static enum Spell_Name {
+    public enum Spell_Name {
         FROSTBOLT,
         ICESPEAR,
         FROZENORB,
@@ -71,6 +71,7 @@ public class SpellUtils {
         }, origin, target);
 
         return clearLOS.get();
+
     }
 
     /**

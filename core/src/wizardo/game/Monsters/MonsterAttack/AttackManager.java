@@ -1,5 +1,6 @@
 package wizardo.game.Monsters.MonsterAttack;
 
+import com.badlogic.gdx.math.MathUtils;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 
 import static wizardo.game.Monsters.MonsterUtils.MONSTER_STATE.ATTACKING;
@@ -12,8 +13,8 @@ public class AttackManager {
 
     public AttackManager(Monster monster, float attackCD) {
         this.monster = monster;
-        this.timer = attackCD;
-        this.attackCD = attackCD;
+        this.timer = attackCD * MathUtils.random(0.8f, 1.2f);
+        this.attackCD = attackCD * MathUtils.random(0.9f, 1.1f);
     }
 
     public void update(float delta) {

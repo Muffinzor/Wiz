@@ -1,7 +1,8 @@
-package wizardo.game.Monsters.MonsterProjectiles;
+package wizardo.game.Monsters.MonsterSpells;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Screens.Battle.BattleScreen;
@@ -10,24 +11,24 @@ import wizardo.game.Utils.BodyFactory;
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.player;
 
-public abstract class MonsterProjectile {
+public abstract class MonsterSpell {
 
     public Body body;
     public RoundLight light;
     public Monster originMonster;
 
-    boolean initialized;
-    float stateTime;
-    float speed;
-    float radius;
-    float rotation;
+    public boolean initialized;
+    public float stateTime;
+    public float speed;
+    public float radius;
+    public float rotation;
     public Vector2 spawnPosition;
     public Vector2 targetPosition;
     public Vector2 direction;
 
-    BattleScreen screen;
+    public BattleScreen screen;
 
-    public MonsterProjectile(Vector2 spawnPosition, Monster monster) {
+    public MonsterSpell(Vector2 spawnPosition, Monster monster) {
         this.spawnPosition = new Vector2(spawnPosition);
         this.originMonster = monster;
     }
@@ -35,6 +36,7 @@ public abstract class MonsterProjectile {
 
     public void update(float delta) {
         if(!initialized) {
+            pickAnim();
             createBody();
             createLight();
             initialized = true;
@@ -44,12 +46,26 @@ public abstract class MonsterProjectile {
         drawFrame();
         adjustLight();
 
+        checkState();
+
+    }
+
+    public abstract void checkState();
+    public abstract void pickAnim();
+
+
+    public void handleCollision(Fixture fix) {
+
+    }
+
+    public void handleCollision(Body playerBody) {
+
     }
 
     public abstract void drawFrame();
 
     public void adjustLight() {
-        light.pointLight.setPosition(body.getPosition().scl(PPM));
+
     }
 
     public void createBody() {

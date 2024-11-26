@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import wizardo.game.Resources.DecorResources.GeneralDecorResources;
 import wizardo.game.Resources.MonsterResources.AcolyteAnims;
+import wizardo.game.Resources.MonsterResources.MonsterProjectiles.SmallProjectileAnims;
 import wizardo.game.Resources.MonsterResources.SkeletonAnims;
 import wizardo.game.Resources.MonsterResources.SkeletonGiantAnims;
 import wizardo.game.Resources.SpellAnims.*;
@@ -102,6 +103,8 @@ public class LoadingScreen extends BaseScreen {
         SkeletonAnims.loadAtlas();
         SkeletonGiantAnims.loadAtlas();
         AcolyteAnims.loadAtlas();
+
+        SmallProjectileAnims.loadAtlas();
     }
 
     public void loadAnims() {
@@ -130,6 +133,8 @@ public class LoadingScreen extends BaseScreen {
         SkeletonAnims.loadAnimations();
         SkeletonGiantAnims.loadAnimations();
         AcolyteAnims.loadAnimations();
+
+        SmallProjectileAnims.loadAnimations();
     }
 
 }

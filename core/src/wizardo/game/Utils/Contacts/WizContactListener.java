@@ -3,9 +3,11 @@ package wizardo.game.Utils.Contacts;
 import com.badlogic.gdx.physics.box2d.*;
 import wizardo.game.Maps.TriggerObject;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
+import wizardo.game.Monsters.MonsterSpells.MonsterSpell;
 import wizardo.game.Spells.Spell;
 
 import static wizardo.game.Utils.Contacts.Masks.*;
+import static wizardo.game.Wizardo.player;
 
 public class WizContactListener implements ContactListener {
 
@@ -22,6 +24,9 @@ public class WizContactListener implements ContactListener {
 
         boolean f1isSpell = (f1.getFilterData().categoryBits & SPELL) != 0;
         boolean f2isSpell = (f2.getFilterData().categoryBits & SPELL) != 0;
+
+        boolean f1isMonsterSpell = (f1.getFilterData().categoryBits & MONSTER_PROJECTILE) != 0;
+        boolean f2isMonsterSpell = (f2.getFilterData().categoryBits & MONSTER_PROJECTILE) != 0;
 
         boolean f1isObstacle = (f1.getFilterData().categoryBits & OBSTACLE) != 0;
         boolean f2isObstacle = (f2.getFilterData().categoryBits & OBSTACLE) != 0;
@@ -57,6 +62,28 @@ public class WizContactListener implements ContactListener {
                 spell.handleCollision(f2);
             } else {
                 Spell spell = (Spell) f2.getBody().getUserData();
+                spell.handleCollision(f1);
+            }
+        }
+
+        /* MONSTER SPELL + PLAYER */
+        if(f1isMonsterSpell && f2isPawn || f2isMonsterSpell && f1isPawn) {
+            if(f1isMonsterSpell) {
+                MonsterSpell spell = (MonsterSpell) f1.getBody().getUserData();
+                spell.handleCollision(player.pawn.body);
+            } else {
+                MonsterSpell spell = (MonsterSpell) f2.getBody().getUserData();
+                spell.handleCollision(player.pawn.body);
+            }
+        }
+
+        /* MONSTER SPELL + OBSTACLE */
+        if(f1isMonsterSpell && f2isObstacle || f2isMonsterSpell && f1isObstacle) {
+            if(f1isMonsterSpell) {
+                MonsterSpell spell = (MonsterSpell) f1.getBody().getUserData();
+                spell.handleCollision(f2);
+            } else {
+                MonsterSpell spell = (MonsterSpell) f2.getBody().getUserData();
                 spell.handleCollision(f1);
             }
         }

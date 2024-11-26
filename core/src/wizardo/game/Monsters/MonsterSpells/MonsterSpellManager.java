@@ -1,17 +1,17 @@
-package wizardo.game.Monsters.MonsterProjectiles;
+package wizardo.game.Monsters.MonsterSpells;
 
 import wizardo.game.Screens.Battle.BattleScreen;
 
 import java.util.ArrayList;
 
-public class MonsterProjectileManager {
+public class MonsterSpellManager {
 
     BattleScreen screen;
-    ArrayList<MonsterProjectile> projsToCast;
-    ArrayList<MonsterProjectile> activeProjs;
-    ArrayList<MonsterProjectile> projsToRemove;
+    ArrayList<MonsterSpell> projsToCast;
+    ArrayList<MonsterSpell> activeProjs;
+    ArrayList<MonsterSpell> projsToRemove;
 
-    public MonsterProjectileManager(BattleScreen screen) {
+    public MonsterSpellManager(BattleScreen screen) {
         this.screen = screen;
 
         projsToCast = new ArrayList<>();
@@ -21,31 +21,31 @@ public class MonsterProjectileManager {
 
     public void update(float delta) {
 
-        for(MonsterProjectile proj : projsToCast) {
+        for(MonsterSpell proj : projsToCast) {
            proj.screen = screen;
         }
 
         activeProjs.addAll(projsToCast);
         projsToCast.clear();
 
-        for(MonsterProjectile proj : activeProjs) {
+        for(MonsterSpell proj : activeProjs) {
             proj.update(delta);
         }
 
         disposeFinishedProjs();
     }
 
-    public void toAdd(MonsterProjectile proj) {
+    public void toAdd(MonsterSpell proj) {
         projsToCast.add(proj);
     }
 
-    public void toRemove(MonsterProjectile proj) {
+    public void toRemove(MonsterSpell proj) {
         projsToRemove.add(proj);
     }
 
     public void disposeFinishedProjs() {
         activeProjs.removeAll(projsToRemove);
-        for(MonsterProjectile proj : projsToRemove) {
+        for(MonsterSpell proj : projsToRemove) {
             proj.dispose();
         }
         projsToRemove.clear();

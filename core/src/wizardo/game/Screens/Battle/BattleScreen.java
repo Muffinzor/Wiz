@@ -11,10 +11,10 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import wizardo.game.Maps.MapGeneration.MapManager;
 import wizardo.game.Monsters.*;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
-import wizardo.game.Monsters.MonsterProjectiles.MonsterProjectile;
-import wizardo.game.Monsters.MonsterProjectiles.MonsterProjectileManager;
+import wizardo.game.Monsters.MonsterSpells.MonsterSpellManager;
 import wizardo.game.Player.Pawn;
 import wizardo.game.Screens.BaseScreen;
+import wizardo.game.Spells.BlankSpell;
 import wizardo.game.Spells.SpellManager;
 import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Wizardo;
@@ -28,7 +28,7 @@ public class BattleScreen extends BaseScreen {
     boolean initialized;
     Sprite controllerTargetSprite;
 
-    public MonsterProjectileManager monsterProjManager;
+    public MonsterSpellManager monsterProjManager;
 
     public Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
 
@@ -39,7 +39,7 @@ public class BattleScreen extends BaseScreen {
 
         mainCamera.viewportWidth = Gdx.graphics.getWidth();
         mainCamera.viewportHeight = Gdx.graphics.getHeight();
-        mainCamera.position.set(950, 950, 0);
+        mainCamera.position.set(0, 0, 0);
 
         mainCamera.zoom = 1;
 
@@ -57,7 +57,7 @@ public class BattleScreen extends BaseScreen {
 
         monsterManager = new MonsterManager(this);
         spellManager = new SpellManager(this);
-        monsterProjManager = new MonsterProjectileManager(this);
+        monsterProjManager = new MonsterSpellManager(this);
 
         cursorTexturePath = "Cursors/Battle_Cursor.png";
         controllerTargetSprite = new Sprite(new Texture("Cursors/Controller_Cursor.png"));
@@ -68,6 +68,11 @@ public class BattleScreen extends BaseScreen {
             monsterManager.addMonster(monster);
         }
 
+        for (int i = 0; i < 40; i++) {
+            Vector2 random = SpellUtils.getRandomVectorInRadius(player.pawn.getPosition(), 15);
+            Monster monster = new TEST_MONSTER(this, random);
+            monsterManager.addMonster(monster);
+        }
 
     }
 
@@ -75,7 +80,7 @@ public class BattleScreen extends BaseScreen {
     public void render(float delta) {
 
         if(!initialized) {
-            player.spellbook.equippedSpells.add(frostspells[0]);
+            player.spellbook.equippedSpells.add(new BlankSpell());
             initialized = true;
         }
 

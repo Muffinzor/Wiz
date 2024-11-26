@@ -2,6 +2,7 @@ package wizardo.game.Monsters.MonsterStateManager;
 
 import com.badlogic.gdx.math.MathUtils;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
+import wizardo.game.Monsters.MonsterUtils;
 import wizardo.game.Spells.SpellUtils;
 
 import static wizardo.game.Monsters.MonsterUtils.MONSTER_STATE.*;
@@ -14,6 +15,8 @@ public class RangedStateManager implements StateManager {
     float minDst;
     float shootDst;
 
+    int frameCounter;
+
     public RangedStateManager(Monster monster, float minDst, float shootDst) {
         this.monster = monster;
         this.minDst = MathUtils.random(minDst, minDst * 1.6f);
@@ -21,14 +24,20 @@ public class RangedStateManager implements StateManager {
     }
 
     public void updateState() {
+        frameCounter ++;
+        if(frameCounter >= 20) {
+            frameCounter = 0;
 
-        float actualDst = player.pawn.getPosition().dst(monster.body.getPosition());
-        boolean hasLoS = SpellUtils.hasLineOfSight(player.pawn.getPosition(), monster.body.getPosition());
+            float actualDst = player.pawn.getPosition().dst(monster.body.getPosition());
+            boolean hasLoS = MonsterUtils.hasCompleteLoS(monster);
+            //boolean hasLoS = SpellUtils.hasLineOfSight(player.pawn.getPosition(), monster.body.getPosition());
 
-        if(hasLoS) {
-            hasLoS(actualDst);
-        } else {
-            monster.state = ADVANCING;
+            if (hasLoS) {
+                hasLoS(actualDst);
+            } else {
+                monster.state = ADVANCING;
+            }
+
         }
 
     }
