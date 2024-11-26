@@ -62,14 +62,14 @@ public class BattleScreen extends BaseScreen {
         cursorTexturePath = "Cursors/Battle_Cursor.png";
         controllerTargetSprite = new Sprite(new Texture("Cursors/Controller_Cursor.png"));
 
-        for (int i = 0; i < 10; i++) {
-            Vector2 random = SpellUtils.getRandomVectorInRadius(player.pawn.getPosition(), 15);
+        for (int i = 0; i < 50; i++) {
+            Vector2 random = SpellUtils.getRandomVectorInRadius(player.pawn.getPosition(), 35);
             Monster monster = new TEST_RANGED(this, random);
             monsterManager.addMonster(monster);
         }
 
-        for (int i = 0; i < 40; i++) {
-            Vector2 random = SpellUtils.getRandomVectorInRadius(player.pawn.getPosition(), 15);
+        for (int i = 0; i < 500; i++) {
+            Vector2 random = SpellUtils.getRandomVectorInRadius(player.pawn.getPosition(), 35);
             Monster monster = new TEST_MONSTER(this, random);
             monsterManager.addMonster(monster);
         }

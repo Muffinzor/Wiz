@@ -66,7 +66,7 @@ public class SmallProjectile extends MonsterSpell {
         frame.setCenter(body.getPosition().x * PPM, body.getPosition().y * PPM);
         frame.setRotation(rotation);
         frame.setScale(0.8f);
-        screen.centerSort(frame, body.getPosition().y * PPM - 15);
+        screen.centerSort(frame, body.getPosition().y * PPM - 25);
         screen.addSortedSprite(frame);
     }
 

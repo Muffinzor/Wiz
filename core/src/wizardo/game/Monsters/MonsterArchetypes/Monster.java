@@ -111,7 +111,7 @@ public abstract class Monster {
 
     public void createLight(float size, float alpha) {
         light = screen.lightManager.pool.getLight();
-        light.setLight(0,0,0,alpha,size, body.getPosition());
+        light.setLight(0,0,0.3f,alpha,size, body.getPosition());
         screen.lightManager.addLight(light);
     }
 
