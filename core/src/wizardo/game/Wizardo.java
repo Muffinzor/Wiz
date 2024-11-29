@@ -13,8 +13,7 @@ import wizardo.game.Utils.Contacts.WizContactListener;
 
 import java.util.Stack;
 
-import static wizardo.game.SettingsPref.loadVolume;
-import static wizardo.game.SettingsPref.saveVolume;
+import static wizardo.game.SettingsPref.*;
 
 public class Wizardo extends Game {
 
@@ -37,7 +36,7 @@ public class Wizardo extends Game {
 		mapCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		assetManager = new AssetManager();
 		contactListener = new WizContactListener();
-		loadVolume();
+		loadSettings();
 		addNewScreen(new LoadingScreen(this));
 	}
 
@@ -136,7 +135,7 @@ public class Wizardo extends Game {
 	}
 
 	public static void exit() {
-		saveVolume();
+		saveSettings();
 		Gdx.app.exit();
 	}
 

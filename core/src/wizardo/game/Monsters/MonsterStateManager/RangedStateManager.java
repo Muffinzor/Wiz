@@ -23,14 +23,14 @@ public class RangedStateManager implements StateManager {
         this.shootDst = MathUtils.random(shootDst * 0.8f, shootDst * 1.2f);
     }
 
-    public void updateState() {
+    public void updateState(float delta) {
+
         frameCounter ++;
         if(frameCounter >= 20) {
             frameCounter = 0;
 
             float actualDst = player.pawn.getPosition().dst(monster.body.getPosition());
             boolean hasLoS = MonsterUtils.hasCompleteLoS(monster);
-            //boolean hasLoS = SpellUtils.hasLineOfSight(player.pawn.getPosition(), monster.body.getPosition());
 
             if (hasLoS) {
                 hasLoS(actualDst);

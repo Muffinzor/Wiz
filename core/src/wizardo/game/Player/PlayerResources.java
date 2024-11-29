@@ -11,7 +11,7 @@ public class PlayerResources {
         TextureAtlas atlas = new TextureAtlas("Player/Player_Atlas.atlas");
         Sprite[] frames = new Sprite[4];
         for (int i = 0; i < frames.length; i++) {
-            frames[i] = atlas.createSprite("Wiz_Walk" + i);
+            frames[i] = atlas.createSprite("walk" + i);
         }
         playerWalk = new Animation<>(0.2f, frames);
     }

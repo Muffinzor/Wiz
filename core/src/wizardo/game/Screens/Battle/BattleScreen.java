@@ -11,7 +11,7 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import wizardo.game.Maps.MapGeneration.MapManager;
 import wizardo.game.Monsters.*;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
-import wizardo.game.Monsters.MonsterSpells.MonsterSpellManager;
+import wizardo.game.Monsters.MonsterActions.MonsterSpellManager;
 import wizardo.game.Player.Pawn;
 import wizardo.game.Screens.BaseScreen;
 import wizardo.game.Spells.BlankSpell;
@@ -20,6 +20,8 @@ import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Wizardo;
 
 import static wizardo.game.Spells.SpellBank.Frost_Spells.frostspells;
+import static wizardo.game.Spells.SpellBank.LightningArcane_Spells.litearcaneSpells;
+import static wizardo.game.Spells.SpellBank.Lightning_Spells.litespells;
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.*;
 
@@ -28,7 +30,7 @@ public class BattleScreen extends BaseScreen {
     boolean initialized;
     Sprite controllerTargetSprite;
 
-    public MonsterSpellManager monsterProjManager;
+    public MonsterSpellManager monsterSpellManager;
 
     public Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
 
@@ -57,20 +59,27 @@ public class BattleScreen extends BaseScreen {
 
         monsterManager = new MonsterManager(this);
         spellManager = new SpellManager(this);
-        monsterProjManager = new MonsterSpellManager(this);
+        monsterSpellManager = new MonsterSpellManager(this);
 
         cursorTexturePath = "Cursors/Battle_Cursor.png";
         controllerTargetSprite = new Sprite(new Texture("Cursors/Controller_Cursor.png"));
 
         for (int i = 0; i < 50; i++) {
-            Vector2 random = SpellUtils.getRandomVectorInRadius(player.pawn.getPosition(), 35);
-            Monster monster = new TEST_RANGED(this, random);
+            Vector2 random = SpellUtils.getRandomVectorInRadius(player.pawn.getPosition(), 65);
+            Monster monster = new TEST_BIGMONSTER(this, random);
             monsterManager.addMonster(monster);
         }
 
         for (int i = 0; i < 500; i++) {
-            Vector2 random = SpellUtils.getRandomVectorInRadius(player.pawn.getPosition(), 35);
-            Monster monster = new TEST_MONSTER(this, random);
+            Vector2 random = SpellUtils.getRandomVectorInRadius(player.pawn.getPosition(), 65);
+            Monster monster = new TEST_MELEE(this, random);
+            monsterManager.addMonster(monster);
+        }
+
+
+        for (int i = 0; i < 25; i++) {
+            Vector2 random = SpellUtils.getRandomVectorInRadius(player.pawn.getPosition(), 65);
+            Monster monster = new TEST_RANGED(this, random);
             monsterManager.addMonster(monster);
         }
 
@@ -80,7 +89,7 @@ public class BattleScreen extends BaseScreen {
     public void render(float delta) {
 
         if(!initialized) {
-            player.spellbook.equippedSpells.add(new BlankSpell());
+            player.spellbook.equippedSpells.add(litearcaneSpells[15]);
             initialized = true;
         }
 
@@ -96,7 +105,7 @@ public class BattleScreen extends BaseScreen {
         player.pawn.update(delta);
         spellManager.update(delta);
         monsterManager.update(delta);
-        monsterProjManager.update(delta);
+        monsterSpellManager.update(delta);
 
         drawControllerTarget();
         displayManager.update(delta);

@@ -50,7 +50,6 @@ public class Pathfinder {
 
         Vector2 desiredDirection = new Vector2(direction);
         float dst = desiredDirection.len();
-        System.out.println(dst);
         if(backwards) {
             dst = 6;
         }

@@ -1,5 +1,6 @@
 package wizardo.game.Resources.MonsterResources;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -11,6 +12,9 @@ public class SkeletonAnims {
     public static Animation<Sprite> skelly_walk_T1;
     public static Animation<Sprite> skelly_death_T1;
     public static String skelly_atlas_path = "Monsters/Skelly/Skelly.atlas";
+
+    public static Sprite bone = new Sprite(new Texture("bone.png"));
+    public static Sprite bigBone = new Sprite(new Texture("bigBone.png"));
 
     public static void loadAnimations() {
         TextureAtlas atlas = assetManager.get(skelly_atlas_path, TextureAtlas.class);

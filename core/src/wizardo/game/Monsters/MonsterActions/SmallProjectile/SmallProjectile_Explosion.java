@@ -1,4 +1,4 @@
-package wizardo.game.Monsters.MonsterSpells.SmallProjectile;
+package wizardo.game.Monsters.MonsterActions.SmallProjectile;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -26,9 +26,9 @@ public class SmallProjectile_Explosion extends SmallProjectile {
     }
 
     @Override
-    public void checkState() {
+    public void checkState(float delta) {
         if(stateTime >= anim.getAnimationDuration()) {
-            screen.monsterProjManager.toRemove(this);
+            screen.monsterSpellManager.toRemove(this);
         }
     }
 

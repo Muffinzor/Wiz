@@ -47,7 +47,7 @@ public class Frozenorb_Projectile extends Frozenorb_Spell {
 
     public void update(float delta) {
         if(!initialized) {
-            radius = 2.85f * 0.15f * getLvl();
+            radius = 2.85f + 0.15f * getLvl();
             pickAnim();
             createBody();
             createLight();
@@ -76,9 +76,12 @@ public class Frozenorb_Projectile extends Frozenorb_Spell {
     }
 
     public void adjustLight() {
-        light.pointLight.setPosition(body.getPosition().x * PPM, body.getPosition().y * PPM);
-        if(scale < 1 && scale > 0.97) {
+        if(light != null) {
+            light.pointLight.setPosition(body.getPosition().x * PPM, body.getPosition().y * PPM);
+        }
+        if((hasCollided || stateTime >= duration) && light != null) {
             light.dimKill(0.01f);
+            light = null;
         }
     }
 
@@ -109,8 +112,9 @@ public class Frozenorb_Projectile extends Frozenorb_Spell {
     }
 
     public void createLight() {
+        float lightRadius = 120 + 10 * getLvl();
         light = screen.lightManager.pool.getLight();
-        light.setLight(red,green,blue, 1, radius * 2 * PPM, body.getPosition());
+        light.setLight(red,green,blue, 1, lightRadius, body.getPosition());
         screen.lightManager.addLight(light);
     }
 
@@ -124,6 +128,7 @@ public class Frozenorb_Projectile extends Frozenorb_Spell {
         frame.setRotation(rotation);
         frame.setCenter(body.getPosition().x * PPM, body.getPosition().y * PPM);
         screen.displayManager.spriteRenderer.regular_sorted_sprites.add(frame);
+        screen.centerSort(frame, body.getPosition().y * PPM - 20);
     }
 
     public void adjustScale() {
@@ -165,7 +170,6 @@ public class Frozenorb_Projectile extends Frozenorb_Spell {
             screen.spellManager.toAdd(proj);
             castCounter++;
         }
-
 
     }
 

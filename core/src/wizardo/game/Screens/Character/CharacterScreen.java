@@ -52,7 +52,7 @@ public class CharacterScreen extends BaseScreen {
 
     @Override
     public void dispose() {
-
+        mastery_table.dispose();
     }
 
     @Override

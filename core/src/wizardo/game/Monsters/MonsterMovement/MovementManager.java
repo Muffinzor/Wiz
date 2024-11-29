@@ -9,7 +9,7 @@ public class MovementManager {
     Pathfinder pathfinder;
 
     Vector2 pushBackForce = new Vector2();
-    float pushBackTimer = 0;
+    public float pushBackTimer = 0;
     float pushDecayRate = 0;
     int frameCounter = 0;
 

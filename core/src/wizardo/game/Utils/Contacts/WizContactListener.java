@@ -3,7 +3,7 @@ package wizardo.game.Utils.Contacts;
 import com.badlogic.gdx.physics.box2d.*;
 import wizardo.game.Maps.TriggerObject;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
-import wizardo.game.Monsters.MonsterSpells.MonsterSpell;
+import wizardo.game.Monsters.MonsterActions.MonsterSpell;
 import wizardo.game.Spells.Spell;
 
 import static wizardo.game.Utils.Contacts.Masks.*;

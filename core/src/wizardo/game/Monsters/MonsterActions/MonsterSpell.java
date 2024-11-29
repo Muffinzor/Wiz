@@ -1,4 +1,4 @@
-package wizardo.game.Monsters.MonsterSpells;
+package wizardo.game.Monsters.MonsterActions;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -8,7 +8,6 @@ import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Screens.Battle.BattleScreen;
 import wizardo.game.Utils.BodyFactory;
 
-import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.player;
 
 public abstract class MonsterSpell {
@@ -28,17 +27,14 @@ public abstract class MonsterSpell {
 
     public BattleScreen screen;
 
-    public MonsterSpell(Vector2 spawnPosition, Monster monster) {
-        this.spawnPosition = new Vector2(spawnPosition);
+    public MonsterSpell(Monster monster) {
         this.originMonster = monster;
     }
 
 
     public void update(float delta) {
         if(!initialized) {
-            pickAnim();
-            createBody();
-            createLight();
+            initialize();
             initialized = true;
         }
 
@@ -46,13 +42,11 @@ public abstract class MonsterSpell {
         drawFrame();
         adjustLight();
 
-        checkState();
+        checkState(delta);
 
     }
 
-    public abstract void checkState();
-    public abstract void pickAnim();
-
+    public abstract void checkState(float delta);
 
     public void handleCollision(Fixture fix) {
 
@@ -67,6 +61,8 @@ public abstract class MonsterSpell {
     public void adjustLight() {
 
     }
+
+    public abstract void initialize();
 
     public void createBody() {
 
@@ -86,7 +82,6 @@ public abstract class MonsterSpell {
         body.setLinearVelocity(velocity);
 
     }
-    public abstract void createLight();
 
     public abstract void dispose();
 

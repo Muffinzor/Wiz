@@ -1,11 +1,11 @@
-package wizardo.game.Monsters.MonsterSpells.SmallProjectile;
+package wizardo.game.Monsters.MonsterActions.SmallProjectile;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
-import wizardo.game.Monsters.MonsterSpells.MonsterSpell;
+import wizardo.game.Monsters.MonsterActions.MonsterSpell;
 import wizardo.game.Resources.MonsterResources.MonsterProjectiles.SmallProjectileAnims;
 
 import static wizardo.game.Utils.Constants.PPM;
@@ -22,26 +22,27 @@ public class SmallProjectile extends MonsterSpell {
     float blue;
 
     public SmallProjectile(Vector2 spawnPosition, Monster monster) {
-        super(spawnPosition, monster);
+        super(monster);
+
+        this.spawnPosition = new Vector2(spawnPosition);
 
         speed = 7;
         radius = 8;
     }
 
     @Override
-    public void checkState() {
+    public void checkState(float delta) {
 
         if(hasCollided || stateTime > 2.5f) {
             SmallProjectile_Explosion hit = new SmallProjectile_Explosion(body.getPosition(), originMonster);
-            screen.monsterProjManager.toAdd(hit);
+            screen.monsterSpellManager.toAdd(hit);
             world.destroyBody(body);
             light.dimKill(0.5f);
-            screen.monsterProjManager.toRemove(this);
+            screen.monsterSpellManager.toRemove(this);
         }
 
     }
 
-    @Override
     public void pickAnim() {
         sprite = SmallProjectileAnims.small_green;
         red = 0.2f;
@@ -70,7 +71,6 @@ public class SmallProjectile extends MonsterSpell {
         screen.addSortedSprite(frame);
     }
 
-    @Override
     public void createLight() {
         light = screen.lightManager.pool.getLight();
         light.setLight(red, green, blue, 0.8f, 35, body.getPosition());
@@ -79,6 +79,13 @@ public class SmallProjectile extends MonsterSpell {
 
     public void adjustLight() {
         light.pointLight.setPosition(body.getPosition().scl(PPM));
+    }
+
+    @Override
+    public void initialize() {
+        pickAnim();
+        createBody();
+        createLight();
     }
 
     @Override

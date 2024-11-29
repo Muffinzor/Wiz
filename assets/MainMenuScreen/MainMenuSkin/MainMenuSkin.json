@@ -33,9 +33,9 @@ com.badlogic.gdx.graphics.Color: {
 		a: 1
 	}
 	LightTeal: {
-		r: 0.23137255
-		g: 0.9764706
-		b: 0.79607844
+		r: 0.24313726
+		g: 1
+		b: 0.92156863
 		a: 1
 	}
 	LightYellow: {
@@ -49,6 +49,13 @@ com.badlogic.gdx.graphics.Color: {
 		g: 1
 		b: 1
 		a: 1
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle: {
+	checkbox_default: {
+		checkboxOn: Check_on
+		checkboxOff: Check_off
+		font: DamageNumbers
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.ProgressBar$ProgressBarStyle: {

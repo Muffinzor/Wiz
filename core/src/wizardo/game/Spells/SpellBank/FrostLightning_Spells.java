@@ -254,13 +254,14 @@ public class FrostLightning_Spells {
         frostlite22.textColor = Skins.light_teal;
         frostlite22.spellParts.add(THUNDERSTORM);
         frostlite22.spellParts.add(ICESPEAR);
-        frostlite22.spellParts.add(FROSTBOLT);
+        frostlite22.spellParts.add(CHARGEDBOLTS);
         frostliteSpells[22] = frostlite22;
 
         // 23. Thunderstorm + Icespear + Frostbolts
 
         Blizzard_Spell frostlite23 = new Blizzard_Spell();
         frostlite23.frostbolts = true;
+        frostlite23.anim_element = FROST;
         frostlite23.spellParts.add(THUNDERSTORM);
         frostlite23.spellParts.add(ICESPEAR);
         frostlite23.spellParts.add(FROSTBOLT);

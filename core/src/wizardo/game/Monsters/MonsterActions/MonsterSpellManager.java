@@ -1,4 +1,4 @@
-package wizardo.game.Monsters.MonsterSpells;
+package wizardo.game.Monsters.MonsterActions;
 
 import wizardo.game.Screens.Battle.BattleScreen;
 

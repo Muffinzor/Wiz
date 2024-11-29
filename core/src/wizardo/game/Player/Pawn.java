@@ -1,17 +1,14 @@
 package wizardo.game.Player;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Screens.BaseScreen;
 import wizardo.game.Utils.BodyFactory;
-import wizardo.game.Wizardo;
 
 import static wizardo.game.Display.DisplayUtils.getLight;
 import static wizardo.game.Display.DisplayUtils.getSprite;
-import static wizardo.game.Screens.BaseScreen.controllerActive;
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.player;
 import static wizardo.game.Wizardo.world;
@@ -26,30 +23,56 @@ public class Pawn {
     public Vector2 movementVector;
     public Vector2 targetVector;
 
+    Vector2 pushBackForce = new Vector2();
+    float pushBackTimer = 0;
+    float pushDecayRate = 0;
 
     public RoundLight light;
+
+
 
     public Pawn(BaseScreen screen) {
         this.screen = screen;
         stateTime = 0;
         movementVector = new Vector2(0,0);
         targetVector = new Vector2(1,0);
-
-
     }
 
     public void update(float delta) {
         stateTime += delta;
-        drawSprite();
+        drawFrame();
 
-        movement();
+        if(pushBackTimer > 0) {
+            pushPlayer(delta);
+        } else {
+            movement();
+        }
+
         adjustLight();
     }
 
-    public void drawSprite() {
+    public void applyPush(Vector2 pushDirection, float strength, float duration, float decayRate) {
+        float pushStrength = strength;
+        float pushDuration = duration;
+        pushBackForce.set(pushDirection.nor().scl(pushStrength));
+        pushBackTimer = pushDuration;
+        pushDecayRate = decayRate;
+    }
+
+    public void pushPlayer(float delta) {
+        body.setLinearVelocity(pushBackForce);
+        pushBackForce.scl(pushDecayRate);
+        pushBackTimer -= delta;
+    }
+
+
+    public void drawFrame() {
         Sprite frame = getSprite(screen);
         frame.set(PlayerResources.playerWalk.getKeyFrame(stateTime, true));
-        frame.setCenter(body.getPosition().x * PPM, body.getPosition().y * PPM + 8);
+        if(player.pawn.pushBackTimer > 0) {
+            frame.setColor(0.75f,0,0,1);
+        }
+        frame.setPosition(body.getPosition().x * PPM - frame.getWidth()/2f, body.getPosition().y * PPM - 8);
         screen.displayManager.spriteRenderer.regular_sorted_sprites.add(frame);
     }
 

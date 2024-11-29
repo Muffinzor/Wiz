@@ -51,6 +51,18 @@ com.badlogic.gdx.graphics.Color: {
 		a: 1
 	}
 }
+com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle: {
+	default: {
+		checkboxOn: Check_on
+		checkboxOff: Check_off
+		font: DamageNumbers
+	}
+	checkbox_default: {
+		checkboxOn: Check_on
+		checkboxOff: Check_off
+		font: DamageNumbers
+	}
+}
 com.badlogic.gdx.scenes.scene2d.ui.ProgressBar$ProgressBarStyle: {
 	default-horizontal: {
 		background: WoodButton

@@ -4,19 +4,18 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Slider;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import wizardo.game.Audio.Sounds.SoundPlayer;
 import wizardo.game.Display.MenuTable;
+import wizardo.game.GameSettings;
 import wizardo.game.Screens.MainMenu.MainMenuButton;
 import wizardo.game.Wizardo;
 
 import java.util.ArrayList;
 
+import static wizardo.game.GameSettings.dmg_text_on;
 import static wizardo.game.GameSettings.sound_volume;
 import static wizardo.game.Resources.Skins.mainMenuSkin;
 
@@ -29,6 +28,7 @@ public class SettingsTable extends MenuTable {
         stage.addActor(table);
 
         volume_slider();
+        dmg_numbers_checkbox();
         quitButton();
 
     }
@@ -46,6 +46,23 @@ public class SettingsTable extends MenuTable {
 
         table.row();
         table.add(volumeSlider).width(400);
+    }
+
+    public void dmg_numbers_checkbox() {
+        CheckBox checkBox = new CheckBox("Damage Text", mainMenuSkin);
+
+        checkBox.setChecked(dmg_text_on);
+
+        checkBox.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                dmg_text_on = !dmg_text_on;
+            }
+        });
+
+        table.row();
+        table.add(checkBox);
+
     }
 
     public void quitButton() {

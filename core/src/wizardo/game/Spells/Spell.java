@@ -194,7 +194,7 @@ public abstract class Spell implements Cloneable {
         float dst_factor = 1;
         float dst = player.pawn.body.getPosition().dst(position);
         dst_factor -= dst * 0.025f;
-        SoundPlayer.getSoundPlayer().playSound(soundPath, dst_factor * sound_volume);
+        SoundPlayer.getSoundPlayer().playSound(soundPath, sound_volume);
     }
 
     public String toString() {

@@ -110,7 +110,7 @@ public class Frostbolt_Projectile extends Frostbolt_Spell{
 
         Vector2 offset = new Vector2(direction.cpy().scl(0.5f));
         Vector2 adjustedSpawn = new Vector2(spawnPosition.add(offset));
-        body = BodyFactory.spellProjectileCircleBody(adjustedSpawn, 5, true);
+        body = BodyFactory.spellProjectileCircleBody(adjustedSpawn, 8, true);
         body.setUserData(this);
 
         Vector2 velocity = direction.scl(speed);

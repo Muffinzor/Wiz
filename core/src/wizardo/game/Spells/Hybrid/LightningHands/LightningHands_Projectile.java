@@ -130,7 +130,6 @@ public class LightningHands_Projectile extends LightningHands_Spell {
             if(numLights < 1) {
                 numLights = 1;
             }
-            System.out.println(numLights);
 
             for (int i = 0; i <= numLights; i++) {
                 float t = i / (float) numLights; // Interpolation factor (0 to 1)

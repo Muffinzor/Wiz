@@ -2,6 +2,6 @@ package wizardo.game.Monsters.MonsterStateManager;
 
 public interface StateManager {
 
-    public void updateState();
+    public void updateState(float delta);
 
 }

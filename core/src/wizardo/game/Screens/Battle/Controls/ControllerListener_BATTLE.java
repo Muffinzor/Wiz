@@ -30,8 +30,6 @@ public class ControllerListener_BATTLE extends ControllerAdapter {
     @Override
     public boolean axisMoved(Controller controller, int axisIndex, float value) {
 
-        System.out.println("last Y : " + last_y_value + "last X : " + last_x_value);
-
         if(!controllerActive && value > 0.1f) {
             controllerActive = true;
             screen.hideCursor();

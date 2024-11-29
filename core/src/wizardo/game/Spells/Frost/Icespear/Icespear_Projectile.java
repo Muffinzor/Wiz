@@ -6,6 +6,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
+import wizardo.game.Resources.Colors;
+import wizardo.game.Resources.Skins;
 import wizardo.game.Spells.Arcane.Rifts.Rift_Zone;
 import wizardo.game.Spells.Fire.Fireball.Fireball_Explosion;
 import wizardo.game.Spells.Fire.Flamejet.Flamejet_Spell;
@@ -343,6 +345,9 @@ public class Icespear_Projectile extends Icespear_Spell {
             jet.targetPosition = new Vector2(body.getPosition().add(direction));
             jet.icespear = true;
             jet.setElements(this);
+            if(frostbolts) {
+                jet.textColor = Skins.light_blue;
+            }
             screen.spellManager.toAdd(jet);
         }
     }

@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import wizardo.game.Monsters.MonsterArchetypes.MonsterRanged;
 import wizardo.game.Monsters.MonsterAttack.AttackManager;
 import wizardo.game.Monsters.MonsterMovement.MovementManager;
-import wizardo.game.Monsters.MonsterSpells.SmallProjectile.SmallProjectile;
+import wizardo.game.Monsters.MonsterActions.SmallProjectile.SmallProjectile;
 import wizardo.game.Monsters.MonsterStateManager.RangedStateManager;
 import wizardo.game.Resources.MonsterResources.AcolyteAnims;
 import wizardo.game.Resources.MonsterResources.SkeletonAnims;
@@ -18,15 +18,16 @@ public class TEST_RANGED extends MonsterRanged {
     public TEST_RANGED(BattleScreen screen, Vector2 position) {
         super(screen, position);
         speed = 25f/PPM;
-        hp = 750;
-        maxHP = 750;
-        massValue = 150f;
+        hp = 1000;
+        maxHP = 1000;
+        massValue = 75;
 
         bodyRadius = 12;
+        height = 32;
 
         stateTime = (float) Math.random();
-        walk_anim = AcolyteAnims.acolyte_walk_T1;
-        death_anim = SkeletonAnims.skelly_death_T1;
+        walk_anim = AcolyteAnims.acolyte_walk_blue;
+        death_anim = AcolyteAnims.acolyte_death_blue;
 
         movementManager = new MovementManager(this);
         stateManager = new RangedStateManager(this, 4.5f, 12f);
@@ -38,7 +39,7 @@ public class TEST_RANGED extends MonsterRanged {
     @Override
     public void launchAttack() {
         SmallProjectile proj = new SmallProjectile(body.getPosition(), this);
-        screen.monsterProjManager.toAdd(proj);
+        screen.monsterSpellManager.toAdd(proj);
     }
 
     @Override

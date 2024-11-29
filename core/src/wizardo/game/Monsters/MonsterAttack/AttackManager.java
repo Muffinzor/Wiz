@@ -20,7 +20,7 @@ public class AttackManager {
     public void update(float delta) {
         timer -= delta;
 
-        if(monster.state == ATTACKING && timer <= 0) {
+        if(monster.state == ATTACKING && timer <= 0 && monster.movementManager.pushBackTimer <= 0) {
             monster.launchAttack();
             timer = attackCD;
         }

@@ -27,6 +27,8 @@ public abstract class Monster {
     public Animation<Sprite> walk_anim;
     public Animation<Sprite> attack_anim;
     public Animation<Sprite> death_anim;
+    public boolean deathFrameFlip;
+    public Sprite weaponSprite;
     public float alpha = 1;
 
     public float stateTime;
@@ -42,6 +44,8 @@ public abstract class Monster {
     public float massValue;
     public boolean heavy;
     public float bodyRadius;
+    public float height;
+    public float width;
     public float speed;
     public Vector2 directionVector;
     public Vector2 position;
@@ -74,10 +78,11 @@ public abstract class Monster {
         }
         timers(delta);
         drawFrame();
-        stateManager.updateState();
+        stateManager.updateState(delta);
         attackManager.update(delta);
 
         if(hp <= 0) {
+            deathFrameFlip = player.pawn.getBodyX() < body.getPosition().x;
             dead = true;
             stateTime = 0;
         }
@@ -145,8 +150,9 @@ public abstract class Monster {
         }
         Sprite frame = screen.displayManager.spriteRenderer.pool.getSprite();
         frame.set(death_anim.getKeyFrame(stateTime, false));
-        frame.setCenter(deathPosition.x * PPM, deathPosition.y * PPM);
+        frame.setPosition(body.getPosition().x * PPM - frame.getWidth()/2, body.getPosition().y * PPM - bodyRadius);
         frame.setAlpha(alpha);
+        frame.flip(deathFrameFlip, false);
         screen.displayManager.spriteRenderer.under_sprites.add(frame);
     }
 

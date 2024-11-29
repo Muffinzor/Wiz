@@ -19,7 +19,7 @@ public class BodyFactory {
         Body body = world.createBody(def);
 
         CircleShape shape = new CircleShape();
-        shape.setRadius(8.0f / PPM);
+        shape.setRadius(12f / PPM);
 
         FixtureDef fixt = new FixtureDef();
         fixt.filter.categoryBits = PAWN;

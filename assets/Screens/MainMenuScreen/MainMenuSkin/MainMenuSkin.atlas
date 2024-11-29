@@ -27,9 +27,23 @@ BlackBar
   index: -1
 knob
   rotate: false
-  xy: 1, 97
+  xy: 77, 97
   size: 20, 20
   orig: 20, 20
+  offset: 0, 0
+  index: -1
+Check_off
+  rotate: false
+  xy: 1, 65
+  size: 74, 52
+  orig: 74, 52
+  offset: 0, 0
+  index: -1
+Check_on
+  rotate: false
+  xy: 1, 10
+  size: 74, 53
+  orig: 74, 53
   offset: 0, 0
   index: -1
 WoodButton
