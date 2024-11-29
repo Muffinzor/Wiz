@@ -54,8 +54,12 @@ public class EnergyBeam_Projectile extends EnergyBeam_Spell {
 
         drawFrame();
         createLight(delta);
-        frozenOrbBodies();
+        frozenOrbBodies(delta);
         chainLightning();
+
+        if(body.isActive() && body.getLinearVelocity().isZero()) {
+            body.setActive(false);
+        }
 
         if(stateTime > 0.2f && delta > 0) {
             alpha -= 0.03f;
@@ -161,8 +165,8 @@ public class EnergyBeam_Projectile extends EnergyBeam_Spell {
         }
     }
 
-    public void frozenOrbBodies() {
-        if(frozenorb) {
+    public void frozenOrbBodies(float delta) {
+        if(frozenorb && body.isActive() && delta > 0) {
             EnergyBeam_FreezeBody freezeBody = new EnergyBeam_FreezeBody();
             freezeBody.setElements(this);
             freezeBody.frostbolt = frostbolt;

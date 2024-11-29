@@ -1,7 +1,9 @@
 package wizardo.game.Player;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Screens.BaseScreen;
@@ -74,6 +76,14 @@ public class Pawn {
         }
         frame.setPosition(body.getPosition().x * PPM - frame.getWidth()/2f, body.getPosition().y * PPM - 8);
         screen.displayManager.spriteRenderer.regular_sorted_sprites.add(frame);
+
+        Vector3 mouseUnprojected = screen.mainCamera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
+        Vector2 mousePosition = new Vector2(mouseUnprojected.x, mouseUnprojected.y);
+
+        if(mousePosition.x < body.getPosition().x * PPM) {
+            frame.flip(true, false);
+        }
+
     }
 
     public void createPawn(Vector2 position) {
