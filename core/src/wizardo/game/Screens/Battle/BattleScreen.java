@@ -19,6 +19,7 @@ import wizardo.game.Spells.SpellManager;
 import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Wizardo;
 
+import static wizardo.game.Spells.SpellBank.Fire_Spells.firespells;
 import static wizardo.game.Spells.SpellBank.Frost_Spells.frostspells;
 import static wizardo.game.Spells.SpellBank.LightningArcane_Spells.litearcaneSpells;
 import static wizardo.game.Spells.SpellBank.Lightning_Spells.litespells;
@@ -43,7 +44,7 @@ public class BattleScreen extends BaseScreen {
         mainCamera.viewportHeight = Gdx.graphics.getHeight();
         mainCamera.position.set(0, 0, 0);
 
-        mainCamera.zoom = 1;
+        mainCamera.zoom = 1f;
 
         createNewWorld();
         rayHandler = new RayHandler(world);
@@ -64,20 +65,20 @@ public class BattleScreen extends BaseScreen {
         cursorTexturePath = "Cursors/Battle_Cursor.png";
         controllerTargetSprite = new Sprite(new Texture("Cursors/Controller_Cursor.png"));
 
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 0; i++) {
             Vector2 random = SpellUtils.getRandomVectorInRadius(player.pawn.getPosition(), 65);
             Monster monster = new TEST_BIGMONSTER(this, random);
             monsterManager.addMonster(monster);
         }
 
-        for (int i = 0; i < 500; i++) {
+        for (int i = 0; i < 0; i++) {
             Vector2 random = SpellUtils.getRandomVectorInRadius(player.pawn.getPosition(), 65);
             Monster monster = new TEST_MELEE(this, random);
             monsterManager.addMonster(monster);
         }
 
 
-        for (int i = 0; i < 25; i++) {
+        for (int i = 0; i < 0; i++) {
             Vector2 random = SpellUtils.getRandomVectorInRadius(player.pawn.getPosition(), 65);
             Monster monster = new TEST_RANGED(this, random);
             monsterManager.addMonster(monster);
@@ -89,7 +90,7 @@ public class BattleScreen extends BaseScreen {
     public void render(float delta) {
 
         if(!initialized) {
-            player.spellbook.equippedSpells.add(litearcaneSpells[15]);
+            player.spellbook.equippedSpells.add(firespells[1]);
             initialized = true;
         }
 

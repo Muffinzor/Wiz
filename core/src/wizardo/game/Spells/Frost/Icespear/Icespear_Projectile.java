@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Resources.Colors;
@@ -82,7 +83,8 @@ public class Icespear_Projectile extends Icespear_Spell {
             world.destroyBody(body);
             screen.spellManager.toRemove(this);
             if(!lightKilled) {
-                light.kill();
+                light.dimKill(0.5f);
+                lightKilled = true;
             }
         }
 
@@ -141,6 +143,12 @@ public class Icespear_Projectile extends Icespear_Spell {
             frostbolts();
             thunderspear();
         }
+    }
+
+    public void handleCollision(Fixture fixture) {
+        destroyed = true;
+        Icespear_Break hit = new Icespear_Break(body.getPosition());
+        screen.spellManager.toAdd(hit);
     }
 
     public float getProcRate() {
@@ -301,7 +309,7 @@ public class Icespear_Projectile extends Icespear_Spell {
 
         light = screen.lightManager.pool.getLight();
         light.setLight(red,green,blue,1,radius, body.getPosition());
-        light.toLightManager();
+        screen.lightManager.addLight(light);
     }
 
     public void adjustLight() {

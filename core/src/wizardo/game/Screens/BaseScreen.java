@@ -122,15 +122,12 @@ public abstract class BaseScreen implements Screen {
 
     public void hideCursor() {
 
-        if(!mouseInvisible) {
+        mouseInvisible = true;
+        Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
+        Cursor invisibleCursor = Gdx.graphics.newCursor(pixmap, 0, 0);
+        Gdx.graphics.setCursor(invisibleCursor);
+        pixmap.dispose();
 
-            mouseInvisible = true;
-            Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
-            Cursor invisibleCursor = Gdx.graphics.newCursor(pixmap, 0, 0);
-            Gdx.graphics.setCursor(invisibleCursor);
-            pixmap.dispose();
-
-        }
     }
 
     public void showCursor() {

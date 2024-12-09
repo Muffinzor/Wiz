@@ -10,7 +10,7 @@ import wizardo.game.Utils.BodyFactory;
 
 import static wizardo.game.Wizardo.player;
 
-public abstract class MonsterSpell {
+public abstract class MonsterSpell implements Cloneable {
 
     public Body body;
     public RoundLight light;
@@ -64,6 +64,7 @@ public abstract class MonsterSpell {
 
     public abstract void initialize();
 
+    /** Default set up for projectile **/
     public void createBody() {
 
         if(targetPosition == null) {
@@ -85,4 +86,14 @@ public abstract class MonsterSpell {
 
     public abstract void dispose();
 
+    @Override
+    public MonsterSpell clone() {
+        try {
+            MonsterSpell clone = (MonsterSpell) super.clone();
+            // TODO: copy mutable state here, so the clone can't change the internals of the original
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
+    }
 }

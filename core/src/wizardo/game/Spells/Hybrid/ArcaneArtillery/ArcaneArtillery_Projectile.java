@@ -43,7 +43,7 @@ public class ArcaneArtillery_Projectile extends ArcaneArtillery_Spell {
             explode();
             body.setLinearVelocity(0,0);
             body.setActive(false);
-            light.kill();
+            light.dimKill(0.5f);
         } else if (body.isActive() && delta > 0) {
             moreLights(delta);
         }

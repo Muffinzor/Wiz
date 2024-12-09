@@ -1,0 +1,37 @@
+{
+com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
+	fireball_fire: {
+		imageUp: fireball_fire
+	}
+	fireball_frost: {
+		imageUp: fireball_frost
+	}
+	fireball_arcane: {
+		imageUp: fireball_arcane
+	}
+	fireball_lightning: {
+		imageUp: fireball_lightning
+	}
+	flamejet_fire: {
+		imageUp: flamejet_fire
+	}
+	flamejet_frost: {
+		imageUp: flamejet_frost
+	}
+	flamejet_arcane: {
+		imageUp: flamejet_arcane
+	}
+	rift_fire: {
+		imageUp: rift_fire
+	}
+	rift_frost: {
+		imageUp: rift_frost
+	}
+	rift_arcane: {
+		imageUp: rift_arcane
+	}
+	rift_lightning: {
+		imageUp: rift_lightning
+	}
+}
+}

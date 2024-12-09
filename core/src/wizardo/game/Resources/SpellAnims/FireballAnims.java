@@ -91,7 +91,7 @@ public class FireballAnims {
         for (int i = 0; i < frostExplosion_frames.length; i++) {
             frostExplosion_frames[i] = frost_atlas.createSprite("explosion" + (i+1));
         }
-        fireball_explosion_anim_frost = new Animation<>(0.015f, frostExplosion_frames);
+        fireball_explosion_anim_frost = new Animation<>(0.012f, frostExplosion_frames);
 
     }
 

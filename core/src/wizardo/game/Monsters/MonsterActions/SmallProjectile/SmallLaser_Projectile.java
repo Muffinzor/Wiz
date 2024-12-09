@@ -11,7 +11,7 @@ import wizardo.game.Resources.MonsterResources.MonsterProjectiles.SmallProjectil
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.world;
 
-public class SmallProjectile extends MonsterSpell {
+public class SmallLaser_Projectile extends MonsterSpell {
 
     boolean hasCollided;
 
@@ -21,7 +21,7 @@ public class SmallProjectile extends MonsterSpell {
     float green;
     float blue;
 
-    public SmallProjectile(Vector2 spawnPosition, Monster monster) {
+    public SmallLaser_Projectile(Vector2 spawnPosition, Monster monster) {
         super(monster);
 
         this.spawnPosition = new Vector2(spawnPosition);
@@ -34,7 +34,7 @@ public class SmallProjectile extends MonsterSpell {
     public void checkState(float delta) {
 
         if(hasCollided || stateTime > 2.5f) {
-            SmallProjectile_Explosion hit = new SmallProjectile_Explosion(body.getPosition(), originMonster);
+            SmallLaser_Explosion hit = new SmallLaser_Explosion(body.getPosition(), originMonster);
             screen.monsterSpellManager.toAdd(hit);
             world.destroyBody(body);
             light.dimKill(0.5f);

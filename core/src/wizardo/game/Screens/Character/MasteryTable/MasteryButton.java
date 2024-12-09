@@ -1,16 +1,18 @@
-package wizardo.game.Screens.Character;
+package wizardo.game.Screens.Character.MasteryTable;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+
 import wizardo.game.Spells.SpellUtils.*;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+
+import static wizardo.game.Screens.BaseScreen.controllerActive;
 
 public class MasteryButton extends CheckBox {
 
@@ -22,6 +24,7 @@ public class MasteryButton extends CheckBox {
 
     public MasteryButton(String text, Skin skin, Spell_Name spell, MasteryTable table) {
         super(text, skin);
+
         this.skin = skin;
         this.spell = spell;
         this.parts = table.parts;
@@ -29,6 +32,7 @@ public class MasteryButton extends CheckBox {
         pickStyle();
         adjustSize();
         addClickListener(spell);
+
     }
 
     public void pickStyle() {
@@ -91,14 +95,27 @@ public class MasteryButton extends CheckBox {
     }
 
     public void handleClick() {
+
+        if(controllerActive) {
+
+            this.setChecked(!isChecked());
+        }
+
         if(!isDisabled()) {
+
             if(parts.contains(spell)) {
                 parts.remove(spell);
             } else {
                 parts.add(spell);
             }
             table.updateCheckBoxes();
+            table.mixingTable.updateButtons();
+
         }
+    }
+
+    public void handleHover() {
+
     }
 
     public void addClickListener(Spell_Name spell) {
@@ -110,6 +127,10 @@ public class MasteryButton extends CheckBox {
                 table.mixingTable.updateButtons();
             }
         });
+    }
+
+    public String toString() {
+        return spell.name();
     }
 
 }

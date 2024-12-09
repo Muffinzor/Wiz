@@ -38,8 +38,8 @@ public class Frostbolt_Spell extends Spell {
             bolt.inherit(this);
             bolt.missile = missile;
             bolt.rifts = rifts;
-            currentScreen.spellManager.toAdd(bolt);
-            currentScreen.spellManager.toRemove(this);
+            screen.spellManager.toAdd(bolt);
+            screen.spellManager.toRemove(this);
         }
 
     }

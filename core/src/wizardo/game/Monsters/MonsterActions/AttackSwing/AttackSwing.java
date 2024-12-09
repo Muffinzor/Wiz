@@ -21,8 +21,8 @@ public class AttackSwing extends MonsterSpell {
     float swingDuration = 0.2f;
     float swingProgress; // 0 to 1
 
-    float startAngle = 45;
-    float endAngle = -45;
+    float startAngle = 40;
+    float endAngle = -40;
     float currentAngle; // interpolation from progress
 
     boolean hasHit;

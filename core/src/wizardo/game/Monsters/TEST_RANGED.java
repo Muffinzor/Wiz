@@ -2,13 +2,13 @@ package wizardo.game.Monsters;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import wizardo.game.Monsters.MonsterActions.SmallProjectile.SmallLaser_Action;
 import wizardo.game.Monsters.MonsterArchetypes.MonsterRanged;
 import wizardo.game.Monsters.MonsterAttack.AttackManager;
 import wizardo.game.Monsters.MonsterMovement.MovementManager;
-import wizardo.game.Monsters.MonsterActions.SmallProjectile.SmallProjectile;
+import wizardo.game.Monsters.MonsterActions.SmallProjectile.SmallLaser_Projectile;
 import wizardo.game.Monsters.MonsterStateManager.RangedStateManager;
 import wizardo.game.Resources.MonsterResources.AcolyteAnims;
-import wizardo.game.Resources.MonsterResources.SkeletonAnims;
 import wizardo.game.Screens.Battle.BattleScreen;
 
 import static wizardo.game.Utils.Constants.PPM;
@@ -34,12 +34,8 @@ public class TEST_RANGED extends MonsterRanged {
         attackManager = new AttackManager(this, 6f);
 
         state = MonsterUtils.MONSTER_STATE.ADVANCING;
-    }
 
-    @Override
-    public void launchAttack() {
-        SmallProjectile proj = new SmallProjectile(body.getPosition(), this);
-        screen.monsterSpellManager.toAdd(proj);
+        projectile = new SmallLaser_Action(this);
     }
 
     @Override

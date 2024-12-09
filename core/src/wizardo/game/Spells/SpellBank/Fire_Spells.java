@@ -3,14 +3,12 @@ package wizardo.game.Spells.SpellBank;
 import wizardo.game.Spells.Fire.Fireball.Fireball_Spell;
 import wizardo.game.Spells.Fire.Flamejet.Flamejet_Spell;
 import wizardo.game.Spells.Fire.Overheat.Overheat_Spell;
-import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Explosion;
-import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Spell;
-import wizardo.game.Spells.Frost.Frozenorb.Frozenorb_Spell;
-import wizardo.game.Spells.Frost.Icespear.Icespear_Spell;
+
 import wizardo.game.Spells.Hybrid.DragonBreath.DragonBreath_Spell;
 import wizardo.game.Spells.Spell;
-import wizardo.game.Spells.SpellUtils;
 
+
+import static wizardo.game.Resources.Spell_Icons.*;
 import static wizardo.game.Spells.SpellUtils.Spell_Element.FIRE;
 import static wizardo.game.Spells.SpellUtils.Spell_Name.*;
 

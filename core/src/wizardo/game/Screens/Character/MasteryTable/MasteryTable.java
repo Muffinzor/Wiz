@@ -1,4 +1,4 @@
-package wizardo.game.Screens.Character;
+package wizardo.game.Screens.Character.MasteryTable;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -8,12 +8,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import wizardo.game.Display.MenuTable;
+import wizardo.game.Screens.Character.CharacterScreen;
 import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Wizardo;
 
 
 import java.util.ArrayList;
-import java.util.HashSet;
 
 import static wizardo.game.Resources.Skins.masteryTableSkin;
 import static wizardo.game.Spells.SpellUtils.Spell_Name.*;
@@ -25,14 +25,16 @@ public class MasteryTable extends MenuTable {
 
     public MixingTable mixingTable;
 
-    public MasteryTable(Stage stage, Skin skin, Wizardo game) {
+    public CharacterScreen screen;
+
+    public MasteryButton[][] buttonsMatrix;
+    public int x_position = 0;
+    public int y_position = 0;
+
+    public MasteryTable(Stage stage, Skin skin, Wizardo game, CharacterScreen screen) {
         super(stage, skin, game);
-        parts = new ArrayList<>();
-
-        createSpellButtonsTable();
-        createMixingTable();
-
-        updateCheckBoxes();
+        this.screen = screen;
+        resize();
     }
 
     public void createSpellButtonsTable() {
@@ -78,6 +80,10 @@ public class MasteryTable extends MenuTable {
         buttons.add(icespear_button);
         buttons.add(orb_button);
 
+        buttonsMatrix[0][0] = frostbolts_button;
+        buttonsMatrix[1][0] = icespear_button;
+        buttonsMatrix[2][0] = orb_button;
+
         table.row();
 
         Label frostbolts = new Label("Frostbolts", skin);
@@ -111,6 +117,10 @@ public class MasteryTable extends MenuTable {
         buttons.add(fireball_button);
         buttons.add(overheat_button);
 
+        buttonsMatrix[0][1] = flamejet_button;
+        buttonsMatrix[1][1] = fireball_button;
+        buttonsMatrix[2][1] = overheat_button;
+
         table.row();
 
         Label flamejet = new Label("Flamejet", skin);
@@ -142,6 +152,10 @@ public class MasteryTable extends MenuTable {
         buttons.add(chargedbolt_button);
         buttons.add(chain_button);
         buttons.add(thunder_button);
+
+        buttonsMatrix[0][2] = chargedbolt_button;
+        buttonsMatrix[1][2] = chain_button;
+        buttonsMatrix[2][2] = thunder_button;
 
         table.row();
 
@@ -175,6 +189,10 @@ public class MasteryTable extends MenuTable {
         buttons.add(beam_buttom);
         buttons.add(rifts_button);
 
+        buttonsMatrix[0][3] = missiles_buttons;
+        buttonsMatrix[1][3] = beam_buttom;
+        buttonsMatrix[2][3] = rifts_button;
+
         table.row();
 
         Label missiles = new Label("Arcane Missiles", skin);
@@ -197,7 +215,7 @@ public class MasteryTable extends MenuTable {
     }
 
     /**
-     * Checks if mastery buttons should be disabled
+     * Checks if some mastery buttons should be disabled
      */
     public void updateCheckBoxes() {
 
@@ -251,35 +269,72 @@ public class MasteryTable extends MenuTable {
         skin.get("default", Label.LabelStyle.class).font = font;
     }
 
+    public void updateSelectedButton() {
+
+        screen.selectedButton = buttonsMatrix[x_position][y_position];
+
+    }
+
 
     @Override
     public void navigateDown() {
-
+        y_position --;
+        if(y_position < 0) {
+            y_position = 0;
+        }
+        updateSelectedButton();
     }
 
     @Override
     public void navigateUp() {
-
+        y_position ++;
+        if(y_position > 3) {
+            screen.activeTable = mixingTable;
+            if(x_position <= 1) {
+                mixingTable.x_pos = 0;
+            } else {
+                mixingTable.x_pos = 1;
+            }
+            mixingTable.updateSelectedButton();
+            return;
+        }
+        updateSelectedButton();
     }
 
     @Override
     public void navigateLeft() {
-
+        x_position --;
+        if(x_position < 0) {
+            x_position = 0;
+        }
+        updateSelectedButton();
     }
 
     @Override
     public void navigateRight() {
-
+        x_position ++;
+        if(x_position > 2) {
+            x_position = 2;
+        }
+        updateSelectedButton();
     }
 
     @Override
     public void pressSelectedButton() {
-
+        buttonsMatrix[x_position][y_position].handleClick();
     }
 
     @Override
     public void resize() {
+        table.clear();
+        table.remove();
+        parts = new ArrayList<>();
+        buttonsMatrix = new MasteryButton[3][4];
 
+        createSpellButtonsTable();
+        createMixingTable();
+
+        updateCheckBoxes();
     }
 
     public void dispose() {

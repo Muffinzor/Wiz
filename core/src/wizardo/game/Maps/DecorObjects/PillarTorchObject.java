@@ -52,6 +52,7 @@ public class PillarTorchObject extends LayerObject {
     public void createLight() {
         light = chunk.screen.lightManager.pool.getLight();
         light.setLight(0.7f, 0.3f, 0, 1, 45, new Vector2(x,y + 0.3f));
+        chunk.screen.lightManager.addLight(light);
     }
 
     public void drawFrame() {
@@ -63,7 +64,6 @@ public class PillarTorchObject extends LayerObject {
 
     @Override
     public void dispose() {
-        light.kill();
-        light = null;
+        light.dimKill(0.5f);
     }
 }

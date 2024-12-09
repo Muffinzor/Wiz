@@ -26,7 +26,19 @@ public class IcespearAnims {
     public static Animation<Sprite> icespear_hit_anim_lightning;
     public static String icespear_atlas_path_lightning = "Spells/Icespear/Icespear_Lightning.atlas";
 
+    public static Animation<Sprite> icespear_break;
+    public static String icespear_break_path = "Spells/Icespear/icespear_break.atlas";
+
     public static void loadAnimations() {
+        TextureAtlas IceSpearHit = assetManager.get(icespear_break_path, TextureAtlas.class);
+
+        Sprite[] IceSpearHitFrames = new Sprite[54];
+        for (int i = 0; i < IceSpearHitFrames.length; i++) {
+            IceSpearHitFrames[i] = IceSpearHit.createSprite("icespearHit" + (i+1));
+            IceSpearHitFrames[i].setScale(0.15f);
+        }
+        icespear_break = new Animation<>(0.008f, IceSpearHitFrames);
+
         TextureAtlas lite_atlas = assetManager.get(icespear_atlas_path_lightning, TextureAtlas.class);
 
         Sprite[] lite_frames = new Sprite[8];
@@ -94,5 +106,6 @@ public class IcespearAnims {
         assetManager.load(icespear_atlas_path_fire, TextureAtlas.class);
         assetManager.load(icespear_atlas_path_arcane, TextureAtlas.class);
         assetManager.load(icespear_atlas_path_lightning, TextureAtlas.class);
+        assetManager.load(icespear_break_path, TextureAtlas.class);
     }
 }

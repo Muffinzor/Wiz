@@ -125,7 +125,7 @@ public class ChargedBolts_Projectile extends ChargedBolts_Spell {
         if(alpha <= 0) {
             world.destroyBody(body);
             if(!lightKilled) {
-                light.kill();
+                light.dimKill(0.5f);
                 lightKilled = true;
             }
             screen.spellManager.toRemove(this);

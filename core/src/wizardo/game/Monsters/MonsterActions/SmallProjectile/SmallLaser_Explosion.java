@@ -9,14 +9,14 @@ import wizardo.game.Resources.MonsterResources.MonsterProjectiles.SmallProjectil
 
 import static wizardo.game.Utils.Constants.PPM;
 
-public class SmallProjectile_Explosion extends SmallProjectile {
+public class SmallLaser_Explosion extends SmallLaser_Projectile {
 
     Animation<Sprite> anim;
     boolean flipX;
     boolean flipY;
     int rotation;
 
-    public SmallProjectile_Explosion(Vector2 spawnPosition, Monster monster) {
+    public SmallLaser_Explosion(Vector2 spawnPosition, Monster monster) {
         super(spawnPosition, monster);
 
         flipX = MathUtils.randomBoolean();

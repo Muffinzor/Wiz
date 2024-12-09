@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import wizardo.game.Resources.CharacterScreenResources;
 import wizardo.game.Resources.DecorResources.GeneralDecorResources;
 import wizardo.game.Resources.MonsterResources.AcolyteAnims;
 import wizardo.game.Resources.MonsterResources.MonsterProjectiles.SmallProjectileAnims;
@@ -105,6 +106,8 @@ public class LoadingScreen extends BaseScreen {
         AcolyteAnims.loadAtlas();
 
         SmallProjectileAnims.loadAtlas();
+
+        CharacterScreenResources.loadAtlas();
     }
 
     public void loadAnims() {
@@ -135,6 +138,8 @@ public class LoadingScreen extends BaseScreen {
         AcolyteAnims.loadAnimations();
 
         SmallProjectileAnims.loadAnimations();
+
+        CharacterScreenResources.loadAnimations();
     }
 
 }

@@ -32,6 +32,7 @@ public abstract class Spell implements Cloneable {
     public int aimReach = 15;
 
     public Animation<Sprite> anim;
+    public Sprite spell_icon;
     public float red = 0;
     public float green = 0;
     public float blue = 0;
@@ -45,7 +46,6 @@ public abstract class Spell implements Cloneable {
     public Body originBody;
     public float stateTime = 0;
     public boolean initialized;
-    public boolean finished;
     public String soundPath;
     public String name;
 

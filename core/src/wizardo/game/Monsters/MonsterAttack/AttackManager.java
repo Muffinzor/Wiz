@@ -27,7 +27,4 @@ public class AttackManager {
 
     }
 
-    public void launchAttack() {
-
-    }
 }

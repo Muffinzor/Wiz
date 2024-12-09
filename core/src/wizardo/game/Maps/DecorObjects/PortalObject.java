@@ -41,7 +41,7 @@ public class PortalObject extends TriggerObject {
 
     @Override
     public void dispose() {
-        light.kill();
+        light.dimKill(0.5f);
         light = null;
         world.destroyBody(body);
         body = null;
@@ -67,5 +67,6 @@ public class PortalObject extends TriggerObject {
     public void createLight() {
         light = new RoundLight(chunk.screen);
         light.setLight(0,0,0.4f,0.8f,125, body.getPosition());
+        chunk.screen.lightManager.addLight(light);
     }
 }

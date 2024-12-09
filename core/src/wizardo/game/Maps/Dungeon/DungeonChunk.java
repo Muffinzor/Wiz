@@ -54,6 +54,7 @@ public class DungeonChunk extends MapChunk {
 
         } else {
             disposeBodies();
+            disposeDecor();
         }
 
     }
@@ -92,6 +93,12 @@ public class DungeonChunk extends MapChunk {
             world.destroyBody(body);
         }
         bodies.clear();
+    }
+    public void disposeDecor() {
+        for (LayerObject object : layerObjects) {
+            object.dispose();
+        }
+        layerObjects.clear();
     }
 
     public void initialize() {

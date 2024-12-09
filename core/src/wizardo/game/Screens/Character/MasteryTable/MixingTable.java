@@ -1,4 +1,4 @@
-package wizardo.game.Screens.Character;
+package wizardo.game.Screens.Character.MasteryTable;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -6,14 +6,12 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
-import wizardo.game.Account.Unlocked;
 import wizardo.game.Display.MenuTable;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Wizardo;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 
 import static wizardo.game.Resources.Skins.masteryTableSkin;
 import static wizardo.game.Spells.SpellMixer.getMixedSpell;
@@ -27,11 +25,12 @@ public class MixingTable extends MenuTable {
     public ImageButton mixButton;
     public ImageButton clearButton;
 
-
     public Table labelTable;
     public Label spell_parts;
     public Label status;
 
+    Button[] buttonMatrix = new Button[2];
+    public int x_pos;
 
     public MasteryTable masteryTable;
 
@@ -43,6 +42,7 @@ public class MixingTable extends MenuTable {
 
         create_mixButton();
         create_clearButton();
+        //create_forgetButton();
 
         createLabelTable();
         createLabels();
@@ -96,6 +96,10 @@ public class MixingTable extends MenuTable {
         table.setDebug(true);
     }
 
+    public void updateSelectedButton() {
+        masteryTable.screen.selectedButton = buttonMatrix[x_pos];
+    }
+
     public void updateButtons() {
         mixButton.setDisabled(parts.isEmpty());
         clearButton.setDisabled(parts.isEmpty());
@@ -131,6 +135,8 @@ public class MixingTable extends MenuTable {
         mixButton.setStyle(newStyle);
 
         table.add(mixButton);
+        buttonMatrix[0] = mixButton;
+
         mixButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -145,6 +151,7 @@ public class MixingTable extends MenuTable {
                         button.setChecked(false);
                     }
                     masteryTable.updateCheckBoxes();
+                    masteryTable.screen.equippedSpells_table.resize();
                     updateButtons();
 
 
@@ -171,6 +178,7 @@ public class MixingTable extends MenuTable {
 
         clearButton.setStyle(newStyle);
         table.add(clearButton);
+        buttonMatrix[1] = clearButton;
         clearButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -192,7 +200,15 @@ public class MixingTable extends MenuTable {
 
     @Override
     public void navigateDown() {
-
+        masteryTable.screen.activeTable = masteryTable;
+        if(x_pos < 1) {
+            masteryTable.x_position = 0;
+            masteryTable.y_position = 3;
+        } else {
+            masteryTable.x_position = 2;
+            masteryTable.y_position = 3;
+        }
+        masteryTable.updateSelectedButton();
     }
 
     @Override
@@ -202,17 +218,53 @@ public class MixingTable extends MenuTable {
 
     @Override
     public void navigateLeft() {
-
+        x_pos--;
+        if(x_pos < 0) {
+            masteryTable.screen.activeTable = masteryTable.screen.equippedSpells_table;
+            if(player.spellbook.equippedSpells.size() > 1) {
+                masteryTable.screen.equippedSpells_table.x_position = 1;
+            } else {
+                masteryTable.screen.equippedSpells_table.x_position = 0;
+            }
+            masteryTable.screen.equippedSpells_table.y_position = 0;
+            masteryTable.screen.equippedSpells_table.updateSelectedButton();
+            return;
+        }
+        updateSelectedButton();
     }
 
     @Override
     public void navigateRight() {
-
+        x_pos++;
+        if(x_pos > 1) {
+            x_pos = 1;
+        }
+        updateSelectedButton();
     }
 
     @Override
     public void pressSelectedButton() {
+        if(x_pos == 0 && !mixButton.isDisabled()) {
+            Spell spell = getMixedSpell(parts);
+            spell.learn();
 
+            parts.clear();
+            for (Button button : masteryTable.buttons) {
+                button.setChecked(false);
+            }
+            masteryTable.updateCheckBoxes();
+            masteryTable.screen.equippedSpells_table.resize();
+            updateButtons();
+        }
+
+        if(x_pos == 1 && !clearButton.isDisabled()) {
+            parts.clear();
+            for (Button button : masteryTable.buttons) {
+                button.setChecked(false);
+            }
+            masteryTable.updateCheckBoxes();
+            updateButtons();
+        }
     }
 
     @Override

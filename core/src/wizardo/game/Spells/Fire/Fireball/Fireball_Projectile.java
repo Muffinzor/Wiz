@@ -33,6 +33,7 @@ public class Fireball_Projectile extends Fireball_Spell {
     }
 
     public void update(float delta) {
+
         if(!initialized) {
             picKAnim();
             createBody();
@@ -65,7 +66,7 @@ public class Fireball_Projectile extends Fireball_Spell {
             screen.spellManager.toAdd(explosion);
             world.destroyBody(body);
             body = null;
-            light.kill();
+            light.dimKill(0.5f);
             screen.spellManager.toRemove(this);
         }
     }
@@ -80,6 +81,7 @@ public class Fireball_Projectile extends Fireball_Spell {
     }
 
     public void createBody() {
+
         direction = new Vector2(targetPosition.cpy().sub(spawnPosition));
         if(direction.len() > 0) {
             direction.nor();
@@ -107,6 +109,7 @@ public class Fireball_Projectile extends Fireball_Spell {
     public void createLight() {
         light = screen.lightManager.pool.getLight();
         light.setLight(red, green, blue, lightAlpha, 150, spawnPosition);
+        screen.lightManager.addLight(light);
     }
     public void adjustLight() {
         light.pointLight.setPosition(body.getPosition().scl(PPM));

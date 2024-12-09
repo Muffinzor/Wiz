@@ -70,7 +70,7 @@ public class Frostbolt_Projectile extends Frostbolt_Spell{
             screen.spellManager.toAdd(explosion);
             world.destroyBody(body);
             body = null;
-            light.kill();
+            light.dimKill(0.5f);
             screen.spellManager.toRemove(this);
 
         } else if(stateTime > 2) {
@@ -79,7 +79,7 @@ public class Frostbolt_Projectile extends Frostbolt_Spell{
             if(alpha <= 0) {
                 world.destroyBody(body);
                 body = null;
-                light.kill();
+                light.dimKill(0.5f);
                 screen.spellManager.toRemove(this);
             }
         }
@@ -121,6 +121,7 @@ public class Frostbolt_Projectile extends Frostbolt_Spell{
     public void createLight() {
         light = screen.lightManager.pool.getLight();
         light.setLight(0,0,0.8f,1,25, body.getPosition());
+        screen.lightManager.addLight(light);
     }
 
     public void updateLight() {

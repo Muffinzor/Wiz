@@ -5,6 +5,7 @@ import com.badlogic.gdx.controllers.ControllerAdapter;
 import wizardo.game.Player.Pawn;
 import wizardo.game.Player.Player;
 import wizardo.game.Screens.Battle.BattleScreen;
+import wizardo.game.Screens.Character.CharacterScreen;
 import wizardo.game.Screens.EscapeMenu.EscapeScreen;
 
 import static wizardo.game.Screens.BaseScreen.controllerActive;
@@ -19,7 +20,6 @@ public class ControllerListener_BATTLE extends ControllerAdapter {
     public float last_x_value = 0;
     public float last_y_value = 0;
 
-    boolean ignoreLowerInput;
     float magnitude;
 
     public ControllerListener_BATTLE(BattleScreen screen) {
@@ -65,10 +65,10 @@ public class ControllerListener_BATTLE extends ControllerAdapter {
         } else if (axisIndex == 1) {
             pawn.moveY(value);
         } else if (axisIndex == 2) {
-            if(magnitude > 0.75f)
+            if(magnitude > 0.5f)
             pawn.aimX(value);
         } else if (axisIndex == 3) {
-            if(magnitude > 0.75f)
+            if(magnitude > 0.5f)
             pawn.aimY(-value);
         }
 
@@ -85,9 +85,13 @@ public class ControllerListener_BATTLE extends ControllerAdapter {
         screen.globalCD = 0.3f;
 
         switch (buttonIndex) {
-            case 6: //Options - PS4
+            case 6: // Options - PS4
                 screen.game.addNewScreen(new EscapeScreen(screen.game));
                 return true;
+
+            case 3: // Y or Triangle
+                CharacterScreen char_screen = new CharacterScreen(screen.game);
+                screen.game.addNewScreen(char_screen);
         }
 
         if (buttonIndex == 0) {

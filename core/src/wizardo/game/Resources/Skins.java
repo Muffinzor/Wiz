@@ -8,6 +8,7 @@ public class Skins {
 
     public static Skin mainMenuSkin = new Skin(Gdx.files.internal("Screens/MainMenuScreen/MainMenuSkin/MainMenuSkin.json"));
     public static Skin masteryTableSkin = new Skin(Gdx.files.internal("Screens/CharacterScreen/MasteryTable/MasteryTable_Skin.json"));
+    public static Skin bookTableSkin = new Skin(Gdx.files.internal("Screens/CharacterScreen/BookTable/BookTableSkin.json"));
 
 
     public static Color light_orange = mainMenuSkin.getColor("LightOrange");
