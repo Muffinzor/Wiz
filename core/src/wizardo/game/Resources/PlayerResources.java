@@ -1,4 +1,4 @@
-package wizardo.game.Player;
+package wizardo.game.Resources;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -8,10 +8,10 @@ public class PlayerResources {
 
     public static Animation<Sprite> playerWalk;
     static {
-        TextureAtlas atlas = new TextureAtlas("Player/Player_Atlas.atlas");
+        TextureAtlas atlas = new TextureAtlas("Player/Player_thinLine.atlas");
         Sprite[] frames = new Sprite[4];
         for (int i = 0; i < frames.length; i++) {
-            frames[i] = atlas.createSprite("walk" + i);
+            frames[i] = atlas.createSprite("walk_thin" + i);
         }
         playerWalk = new Animation<>(0.2f, frames);
     }

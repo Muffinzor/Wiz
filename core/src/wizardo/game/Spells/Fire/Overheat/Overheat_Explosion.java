@@ -30,6 +30,8 @@ public class Overheat_Explosion extends Overheat_Spell {
     boolean flipY;
     int rotation;
 
+    public boolean small; // spawned from superBolt
+
     public Overheat_Explosion(Vector2 targetPosition) {
 
         this.targetPosition = new Vector2(targetPosition);
@@ -85,6 +87,9 @@ public class Overheat_Explosion extends Overheat_Spell {
         frame.setCenter(body.getPosition().x * PPM, body.getPosition().y * PPM);
         frame.setRotation(rotation);
         frame.setScale(1.2f);
+        if(small) {
+            frame.setScale(0.6f);
+        }
         frame.flip(flipX, flipY);
         screen.centerSort(frame, body.getPosition().y * PPM - 30);
         screen.addSortedSprite(frame);
@@ -114,7 +119,9 @@ public class Overheat_Explosion extends Overheat_Spell {
         if(targetPosition == null) {
             targetPosition = new Vector2(player.pawn.body.getPosition());
         }
-        if(thunderstorm) {
+        if(small) {
+            radius = radius/2.4f;
+        } else if(thunderstorm) {
             radius = radius - 20;
         }
         body = BodyFactory.spellExplosionBody(targetPosition, radius);
@@ -122,8 +129,12 @@ public class Overheat_Explosion extends Overheat_Spell {
     }
 
     public void createLight() {
+        float lightRadius = 250;
+        if(small) {
+            lightRadius = 150;
+        }
         light = screen.lightManager.pool.getLight();
-        light.setLight(red, green, blue, lightAlpha, 250, targetPosition);
+        light.setLight(red, green, blue, lightAlpha, lightRadius, targetPosition);
         light.dimKill(0.015f);
         screen.lightManager.addLight(light);
     }

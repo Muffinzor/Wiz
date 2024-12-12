@@ -33,5 +33,17 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 	rift_lightning: {
 		imageUp: rift_lightning
 	}
+	chainlightning_fire: {
+		imageUp: chainlightning_fire
+	}
+	chainlightning_frost: {
+		imageUp: chainlightning_frost
+	}
+	chainlightning_arcane: {
+		imageUp: chainlightning_arcane
+	}
+	chainlightning_lightning: {
+		imageUp: chainlightning_lightning
+	}
 }
 }

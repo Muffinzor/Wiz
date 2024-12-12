@@ -3,6 +3,7 @@ package wizardo.game.Spells.SpellBank;
 import wizardo.game.Spells.Fire.Fireball.Fireball_Spell;
 import wizardo.game.Spells.Fire.Flamejet.Flamejet_Spell;
 import wizardo.game.Spells.Fire.Overheat.Overheat_Spell;
+import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Spell;
 import wizardo.game.Spells.Frost.Frozenorb.Frozenorb_Spell;
 import wizardo.game.Spells.Frost.Icespear.Icespear_Spell;
 import wizardo.game.Spells.Hybrid.DragonBreath.DragonBreath_Spell;
@@ -136,10 +137,9 @@ public class FrostFire_Spells {
 
         // 12. Fireball + Overheat + Frostbolts
 
-        Overheat_Spell frostfire12 = new Overheat_Spell();
-        frostfire12.anim_element = FROST;
-        frostfire12.fireball = true;
-        frostfire12.frostbolts = true;
+        Frostbolt_Spell frostfire12 = new Frostbolt_Spell();
+        frostfire12.anim_element = FIRE;
+        frostfire12.superBolt = true;
         frostfire12.spellParts.add(FIREBALL);
         frostfire12.spellParts.add(OVERHEAT);
         frostfire12.spellParts.add(FROSTBOLT);

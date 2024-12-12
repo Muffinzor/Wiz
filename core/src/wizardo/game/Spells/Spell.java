@@ -128,7 +128,7 @@ public abstract class Spell implements Cloneable {
         if(raycasted) {
             Monster closestTargeted = rayCastTargeting();
             if (closestTargeted != null) {
-                target = new Vector2(closestTargeted.body.getPosition());
+                target = new Vector2(closestTargeted.body.getPosition().scl(0.9999f)); // Scaled to avoid crashy comparisons
             } else {
                 Vector2 direction = new Vector2(player.pawn.targetVector);
                 if (direction.isZero()) {
@@ -145,6 +145,7 @@ public abstract class Spell implements Cloneable {
             direction.setLength(5);
             target = new Vector2(player.pawn.body.getPosition().add(direction));
         }
+
         return target;
     }
 
@@ -158,7 +159,6 @@ public abstract class Spell implements Cloneable {
         int RAY_COUNT = 11;
         final Monster[] targetLock = {null};
         final float[] shortestDistance = {Float.MAX_VALUE};
-
 
         RayCastCallback callback = (fixture, point, _, _) -> {
             Body body = fixture.getBody();

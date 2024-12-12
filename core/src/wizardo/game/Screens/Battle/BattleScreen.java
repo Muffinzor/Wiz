@@ -20,6 +20,7 @@ import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Wizardo;
 
 import static wizardo.game.Spells.SpellBank.Fire_Spells.firespells;
+import static wizardo.game.Spells.SpellBank.FrostFire_Spells.frostfireSpells;
 import static wizardo.game.Spells.SpellBank.Frost_Spells.frostspells;
 import static wizardo.game.Spells.SpellBank.LightningArcane_Spells.litearcaneSpells;
 import static wizardo.game.Spells.SpellBank.Lightning_Spells.litespells;
@@ -65,20 +66,20 @@ public class BattleScreen extends BaseScreen {
         cursorTexturePath = "Cursors/Battle_Cursor.png";
         controllerTargetSprite = new Sprite(new Texture("Cursors/Controller_Cursor.png"));
 
-        for (int i = 0; i < 0; i++) {
-            Vector2 random = SpellUtils.getRandomVectorInRadius(player.pawn.getPosition(), 65);
+        for (int i = 0; i < 2; i++) {
+            Vector2 random = SpellUtils.getRandomVectorInRadius(player.pawn.getPosition(), 35);
             Monster monster = new TEST_BIGMONSTER(this, random);
             monsterManager.addMonster(monster);
         }
 
-        for (int i = 0; i < 0; i++) {
-            Vector2 random = SpellUtils.getRandomVectorInRadius(player.pawn.getPosition(), 65);
+        for (int i = 0; i < 20; i++) {
+            Vector2 random = SpellUtils.getRandomVectorInRadius(player.pawn.getPosition(), 35);
             Monster monster = new TEST_MELEE(this, random);
             monsterManager.addMonster(monster);
         }
 
 
-        for (int i = 0; i < 0; i++) {
+        for (int i = 0; i < 10; i++) {
             Vector2 random = SpellUtils.getRandomVectorInRadius(player.pawn.getPosition(), 65);
             Monster monster = new TEST_RANGED(this, random);
             monsterManager.addMonster(monster);

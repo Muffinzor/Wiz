@@ -55,7 +55,7 @@ public class FrostLightning_Spells {
 
         ChainLightning_Spell frostlite3 = new ChainLightning_Spell();
         frostlite3.frostbolts = true;
-        frostlite3.anim_element = LIGHTNING;
+        frostlite3.anim_element = FROST;
         frostlite3.spellParts.add(CHAIN);
         frostlite3.spellParts.add(FROSTBOLT);
         frostliteSpells[3] = frostlite3;

@@ -1,12 +1,11 @@
 package wizardo.game.Screens.LoadingScreen;
 
-import box2dLight.Light;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import wizardo.game.Resources.CharacterScreenResources;
+import wizardo.game.Resources.ScreenResources.CharacterScreenResources;
 import wizardo.game.Resources.DecorResources.GeneralDecorResources;
 import wizardo.game.Resources.MonsterResources.AcolyteAnims;
 import wizardo.game.Resources.MonsterResources.MonsterProjectiles.SmallProjectileAnims;

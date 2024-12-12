@@ -8,12 +8,14 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Spells.Arcane.Rifts.Rift_Zone;
+import wizardo.game.Spells.Fire.Overheat.Overheat_Explosion;
 import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyFactory;
 
 import java.util.ArrayList;
 
 import static wizardo.game.Resources.SpellAnims.FrostboltAnims.frostbolt_anim_frost;
+import static wizardo.game.Spells.SpellUtils.Spell_Element.FIRE;
 import static wizardo.game.Spells.SpellUtils.Spell_Element.FROST;
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.*;
@@ -36,7 +38,7 @@ public class Frostbolt_Projectile extends Frostbolt_Spell{
         this.targetPosition = targetPosition;
         direction = new Vector2(targetPosition.cpy().sub(spawnPosition));
 
-        speed = speed * MathUtils.random(0.85f, 1.15f);
+        speed = speed * MathUtils.random(0.9f, 1.1f);
         soundPath = "Sounds/Spells/IceThrow1.wav";
 
         screen = currentScreen;
@@ -64,10 +66,12 @@ public class Frostbolt_Projectile extends Frostbolt_Spell{
 
         if(hasCollided) {
 
-            Frostbolt_Explosion explosion = new Frostbolt_Explosion();
-            explosion.targetPosition = new Vector2(body.getPosition());
-            explosion.inherit(this);
-            screen.spellManager.toAdd(explosion);
+            if(superBolt) {
+                superExplosion();
+            } else {
+                regularExplosion();
+            }
+
             world.destroyBody(body);
             body = null;
             light.dimKill(0.5f);
@@ -88,6 +92,26 @@ public class Frostbolt_Projectile extends Frostbolt_Spell{
     public void handleCollision(Monster monster) {
         hasCollided = true;
         rift();
+    }
+
+    public void regularExplosion() {
+        Frostbolt_Explosion explosion = new Frostbolt_Explosion();
+        explosion.targetPosition = new Vector2(body.getPosition());
+        explosion.inherit(this);
+        screen.spellManager.toAdd(explosion);
+    }
+
+    public void superExplosion() {
+        float procRate = 0.98f - 0.01f * (player.spellbook.overheat_lvl + player.spellbook.fireball_lvl);
+        if(Math.random() > procRate) {
+            Overheat_Explosion mini_overheat = new Overheat_Explosion(new Vector2(body.getPosition()));
+            mini_overheat.setElements(this);
+            mini_overheat.small = true;
+            mini_overheat.fireball = true;
+            screen.spellManager.toAdd(mini_overheat);
+        } else {
+            regularExplosion();
+        }
     }
 
     public void handleCollision(Fixture obstacle) {
@@ -119,8 +143,14 @@ public class Frostbolt_Projectile extends Frostbolt_Spell{
     }
 
     public void createLight() {
+        if(superBolt) {
+            red = 0.8f;
+            green = 0.15f;
+        } else {
+            blue = 0.8f;
+        }
         light = screen.lightManager.pool.getLight();
-        light.setLight(0,0,0.8f,1,25, body.getPosition());
+        light.setLight(red,green,blue,1,25, body.getPosition());
         screen.lightManager.addLight(light);
     }
 
@@ -136,6 +166,9 @@ public class Frostbolt_Projectile extends Frostbolt_Spell{
         frame.rotate(rotation);
         if(alpha < 1) {
             frame.setAlpha(alpha);
+        }
+        if(anim_element.equals(FIRE)) {
+            frame.setColor(1,0,0,alpha);
         }
         screen.displayManager.spriteRenderer.regular_sorted_sprites.add(frame);
 

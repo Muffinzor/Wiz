@@ -222,6 +222,7 @@ public abstract class BaseScreen implements Screen {
         for (Controller controller : Controllers.getControllers()) {
             controller.addListener(controllerAdapter);
         }
+
         inputMultiplexer.addProcessor(inputProcessor);
     }
 

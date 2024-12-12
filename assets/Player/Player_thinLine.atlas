@@ -1,0 +1,11 @@
+Player_thinLine.png
+size:256,64
+repeat:none
+walk_thin0
+bounds:36,2,32,48
+walk_thin1
+bounds:104,2,32,48
+walk_thin2
+bounds:70,2,32,48
+walk_thin3
+bounds:2,2,32,48

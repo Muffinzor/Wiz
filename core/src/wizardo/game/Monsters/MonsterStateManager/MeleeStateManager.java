@@ -25,7 +25,6 @@ public class MeleeStateManager implements StateManager {
         frameCounter ++;
 
         if(monster.state == CHARGING) {
-            System.out.println("CHARGING");
             float actualDst = player.pawn.getPosition().dst(monster.body.getPosition());
             if(actualDst < monster.attackRange) {
                 monster.state = ATTACKING;

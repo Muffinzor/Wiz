@@ -54,7 +54,7 @@ public class MasteryTable extends MenuTable {
         table.setHeight(height);
         stage.addActor(table);
 
-        table.setDebug(true);
+        //table.setDebug(true);
 
         int bottomPad = Math.round(-8 * yRatio);
         int topPad = Math.round(-4 * yRatio);
@@ -270,9 +270,7 @@ public class MasteryTable extends MenuTable {
     }
 
     public void updateSelectedButton() {
-
         screen.selectedButton = buttonsMatrix[x_position][y_position];
-
     }
 
 
@@ -290,11 +288,7 @@ public class MasteryTable extends MenuTable {
         y_position ++;
         if(y_position > 3) {
             screen.activeTable = mixingTable;
-            if(x_position <= 1) {
-                mixingTable.x_pos = 0;
-            } else {
-                mixingTable.x_pos = 1;
-            }
+            mixingTable.x_pos = x_position;
             mixingTable.updateSelectedButton();
             return;
         }
@@ -304,10 +298,36 @@ public class MasteryTable extends MenuTable {
     @Override
     public void navigateLeft() {
         x_position --;
-        if(x_position < 0) {
-            x_position = 0;
+        if(x_position < 0 && player.spellbook.knownSpells.isEmpty()) {
+            swapToEquippedTable();
+            return;
+        } else if(x_position < 0) {
+            screen.activeTable = screen.knownSpells_table;
+            if(player.spellbook.knownSpells.size() == 1) {
+                screen.knownSpells_table.x_pos = 0;
+            } else {
+                screen.knownSpells_table.x_pos = 1;
+            }
+            screen.knownSpells_table.y_pos = 0;
+            screen.knownSpells_table.updateSelectedButton();
+            return;
         }
         updateSelectedButton();
+    }
+
+    public void swapToEquippedTable() {
+        screen.activeTable = screen.equippedSpells_table;
+        if(player.spellbook.equippedSpells.size() == 1) {
+            screen.equippedSpells_table.x_position = 0;
+            screen.equippedSpells_table.y_position = 0;
+            screen.equippedSpells_table.updateSelectedButton();
+        }
+
+        if(player.spellbook.equippedSpells.size() > 1) {
+            screen.equippedSpells_table.x_position = 1;
+            screen.equippedSpells_table.y_position = 0;
+            screen.equippedSpells_table.updateSelectedButton();
+        }
     }
 
     @Override
@@ -338,6 +358,7 @@ public class MasteryTable extends MenuTable {
     }
 
     public void dispose() {
+        System.out.println("MASTERY TABLE DISPOSE METHOD");
         mixingTable.dispose();
         table.clear();
         table.remove();

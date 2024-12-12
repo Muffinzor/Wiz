@@ -20,7 +20,7 @@ public class FrostNovaAnims {
         for (int i = 0; i < frames.length; i++) {
             frames[i] = atlas.createSprite("frostnova" + (i+1));
         }
-        frostnova_anim = new Animation<>(0.015f, frames);
+        frostnova_anim = new Animation<>(0.0125f, frames);
 
     }
 

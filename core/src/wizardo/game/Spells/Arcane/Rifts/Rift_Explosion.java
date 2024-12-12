@@ -78,6 +78,7 @@ public class Rift_Explosion extends Rifts_Spell {
         frame.flip(flipX, flipY);
         frame.setRotation(rotation);
         screen.addSortedSprite(frame);
+        screen.centerSort(frame, body.getPosition().y * PPM - 10);
     }
 
     public void createBody() {

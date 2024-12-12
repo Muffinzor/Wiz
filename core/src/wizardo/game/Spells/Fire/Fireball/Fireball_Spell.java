@@ -35,6 +35,7 @@ public class Fireball_Spell extends Spell {
 
         Fireball_Projectile ball = new Fireball_Projectile(getSpawnPosition(), getTargetPosition());
         ball.inherit(this);
+        ball.castByPawn = true;
         screen.spellManager.toAdd(ball);
         screen.spellManager.toRemove(this);
     }
@@ -58,6 +59,7 @@ public class Fireball_Spell extends Spell {
         this.spearOrb = parent.spearOrb;
 
         this.nested_spell = parent.nested_spell;
+        this.castByPawn = parent.castByPawn;
 
         setElements(parent);
         this.screen = parent.screen;

@@ -39,7 +39,6 @@ public class Fireball_Explosion extends Fireball_Spell {
         rotation = MathUtils.random(360);
         flipX = MathUtils.randomBoolean();
         flipY = MathUtils.randomBoolean();
-
     }
 
     public void update(float delta) {
@@ -103,6 +102,9 @@ public class Fireball_Explosion extends Fireball_Spell {
     }
 
     public void createLight() {
+        if(castByPawn) {
+            lightAlpha = 1;
+        }
         light = screen.lightManager.pool.getLight();
         light.setLight(red, green, blue, lightAlpha, 250, body.getPosition());
         light.toLightManager();

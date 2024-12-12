@@ -60,7 +60,7 @@ public class LightningArcane_Spells {
         // 3. Chain + ArcaneMissiles
 
         ChainLightning_Spell litearcane3 = new ChainLightning_Spell();
-        litearcane3.anim_element = LIGHTNING;
+        litearcane3.anim_element = ARCANE;
         litearcane3.arcaneMissile = true;
         litearcane3.spellParts.add(CHAIN);
         litearcane3.spellParts.add(MISSILES);

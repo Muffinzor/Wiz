@@ -60,7 +60,7 @@ public class ChainLightning_Spell extends Spell {
 
             shootLightning(center, inRange);
 
-            currentScreen.spellManager.toRemove(this);
+            screen.spellManager.toRemove(this);
 
         }
     }
@@ -70,7 +70,7 @@ public class ChainLightning_Spell extends Spell {
         if(spear) {
             baseDmg += player.spellbook.icespear_lvl * 5;
             for (int i = 0; i < 2; i++) {
-                maxHits = maxHits - (1 + player.spellbook.icespear_lvl/5);
+                maxHits = maxHits - (player.spellbook.icespear_lvl/4);
             }
             maxSplits = 1 + player.spellbook.icespear_lvl / 4;
             radius = 3;

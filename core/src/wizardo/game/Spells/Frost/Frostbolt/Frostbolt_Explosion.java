@@ -6,10 +6,13 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
+import wizardo.game.Resources.Skins;
+import wizardo.game.Resources.SpellAnims.ExplosionsAnims;
 import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyFactory;
 
 import static wizardo.game.Resources.SpellAnims.FrostboltAnims.*;
+import static wizardo.game.Spells.SpellUtils.Spell_Element.FIRE;
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.world;
 
@@ -61,6 +64,7 @@ public class Frostbolt_Explosion extends Frostbolt_Spell{
     }
 
     public void initialize() {
+        textColor = Skins.light_blue;
         rotation = MathUtils.random(360);
         flipX = MathUtils.randomBoolean();
         flipY = MathUtils.randomBoolean();
@@ -74,6 +78,9 @@ public class Frostbolt_Explosion extends Frostbolt_Spell{
         frame.setCenter(targetPosition.x * PPM, targetPosition.y * PPM);
         frame.rotate(rotation);
         frame.flip(flipX, flipY);
+        if(anim_element.equals(FIRE)) {
+            frame.setScale(0.65f);
+        }
         screen.centerSort(frame, targetPosition.y * PPM - 25);
         screen.displayManager.spriteRenderer.regular_sorted_sprites.add(frame);
 
@@ -81,7 +88,10 @@ public class Frostbolt_Explosion extends Frostbolt_Spell{
 
     public void handleCollision(Monster monster) {
         dealDmg(monster);
-        monster.applySlow(2.5f, 0.7f);
+
+        if(!anim_element.equals(FIRE)) {
+            monster.applySlow(2.5f, 0.7f);
+        }
 
     }
 
@@ -101,7 +111,7 @@ public class Frostbolt_Explosion extends Frostbolt_Spell{
 
         switch(anim_element) {
             case FROST -> {
-                if(bonus_element == SpellUtils.Spell_Element.FIRE) {
+                if(bonus_element == FIRE) {
                     if(MathUtils.randomBoolean()) {
                         anim = frostbolt_explosion_anim_fire1;
                     } else {
@@ -113,12 +123,10 @@ public class Frostbolt_Explosion extends Frostbolt_Spell{
                 blue = 0.8f;
             }
             case FIRE -> {
-                if(MathUtils.randomBoolean()) {
-                    anim = frostbolt_explosion_anim_fire1;
-                } else {
-                    anim = frostbolt_explosion_anim_fire2;
-                }
-                blue = 1f;
+                anim = ExplosionsAnims.getExplosionAnim(FIRE);
+                red = 0.85f;
+                green = 0.25f;
+                textColor = Skins.light_orange;
             }
             case LIGHTNING -> {
                 anim = frostbolt_explosion_anim_lightning;

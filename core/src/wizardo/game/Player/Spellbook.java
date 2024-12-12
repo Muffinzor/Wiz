@@ -20,7 +20,7 @@ public class Spellbook {
     public int flamejet_lvl = 10;
     public int overheat_lvl = 5;
 
-    public int chainlightning_lvl = 5;
+    public int chainlightning_lvl = 10;
     public int chargedbolt_lvl = 10;
     public int thunderstorm_lvl = 5;
 

@@ -12,6 +12,7 @@ public class Frostbolt_Spell extends Spell {
 
     public boolean missile;
     public boolean rifts;
+    public boolean superBolt; // Frostbolt + Fireball + Overheat
 
     public Frostbolt_Spell() {
 
@@ -38,6 +39,7 @@ public class Frostbolt_Spell extends Spell {
             bolt.inherit(this);
             bolt.missile = missile;
             bolt.rifts = rifts;
+            bolt.superBolt = superBolt;
             screen.spellManager.toAdd(bolt);
             screen.spellManager.toRemove(this);
         }
@@ -56,6 +58,9 @@ public class Frostbolt_Spell extends Spell {
     public int getDmg() {
         int dmg = baseDmg;
         dmg += 5 * getLvl();
+        if(superBolt) {
+            dmg += 5 * player.spellbook.fireball_lvl;
+        }
         return dmg;
     }
 

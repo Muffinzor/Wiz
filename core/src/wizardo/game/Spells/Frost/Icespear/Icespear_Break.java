@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import wizardo.game.Lighting.RoundLight;
-import wizardo.game.Resources.CharacterScreenResources;
 import wizardo.game.Resources.SpellAnims.IcespearAnims;
 import wizardo.game.Spells.Spell;
 
