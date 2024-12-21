@@ -53,7 +53,7 @@ public class Frost_Spells {
 
         Frozenorb_Spell frost6 = new Frozenorb_Spell();
         Icespear_Spell spear6 = new Icespear_Spell();
-        spear6.nested_spell = new Frostbolt_Explosion();
+        spear6.frostbolts = true;
         frost6.anim_element = SpellUtils.Spell_Element.FROST;
         frost6.nested_spell = spear6;
         frost6.spellParts.add(FROZENORB);

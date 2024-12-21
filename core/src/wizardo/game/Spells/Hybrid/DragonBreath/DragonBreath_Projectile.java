@@ -6,6 +6,10 @@ import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Resources.SpellAnims.DragonbreathAnims;
+import wizardo.game.Spells.Arcane.Rifts.Rift_Zone;
+import wizardo.game.Spells.Fire.Fireball.Fireball_Explosion;
+import wizardo.game.Spells.Fire.Flamejet.Flamejet_Spell;
+import wizardo.game.Spells.Fire.Overheat.Overheat_TriggerExplosion;
 import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Explosion;
 import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyFactory;
@@ -14,11 +18,15 @@ import java.util.ArrayList;
 
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.player;
+import static wizardo.game.Wizardo.world;
 
 public class DragonBreath_Projectile extends DragonBreath_Spell {
 
     ArrayList<Body> bodies;
     public boolean bodiesInactive;
+
+    int fireballProcs = 0;
+    public int maxFireballProcs = 5;
 
     float angle;
 
@@ -50,12 +58,23 @@ public class DragonBreath_Projectile extends DragonBreath_Spell {
                 body.setActive(false);
             }
         }
+
+        if(stateTime >= anim.getAnimationDuration()) {
+            for (Body body : bodies) {
+                world.destroyBody(body);
+            }
+            screen.spellManager.toRemove(this);
+        }
     }
 
     public void handleCollision(Monster monster) {
         dealDmg(monster);
         if(frostbolts) {
             frostbolts(monster);
+        }
+
+        if(rift) {
+            rift(monster);
         }
 
         if(frozenorb) {
@@ -65,11 +84,25 @@ public class DragonBreath_Projectile extends DragonBreath_Spell {
                 monster.applySlow(4, 0.75f);
             }
         }
+
+        if(fireball) {
+            fireball(monster);
+        }
+    }
+
+    public void rift(Monster monster) {
+        float procRate = 0.985f - 0.015f * player.spellbook.rift_lvl;
+        if(Math.random() >= procRate) {
+            Rift_Zone rift = new Rift_Zone(monster.body.getPosition());
+            rift.setElements(this);
+            rift.nested_spell = new Flamejet_Spell();
+            screen.spellManager.toAdd(rift);
+        }
     }
 
     public void frostbolts(Monster monster) {
         float level = (getLvl() + player.spellbook.frostbolt_lvl)/2f;
-        float procRate = 0.75f - 0.05f * level;
+        float procRate = 0.925f - 0.025f * level;
         if(Math.random() >= procRate) {
             Frostbolt_Explosion explosion = new Frostbolt_Explosion();
             explosion.targetPosition = new Vector2(monster.body.getPosition());
@@ -77,6 +110,18 @@ public class DragonBreath_Projectile extends DragonBreath_Spell {
             screen.spellManager.toAdd(explosion);
         }
     }
+
+    public void fireball(Monster monster) {
+        float procRate = .985f - (0.005f * player.spellbook.fireball_lvl);
+        if(fireballProcs < maxFireballProcs && Math.random() >= procRate) {
+            Fireball_Explosion explosion1 = new Fireball_Explosion();
+            explosion1.targetPosition = new Vector2(monster.body.getPosition());
+            explosion1.setElements(this);
+            screen.spellManager.toAdd(explosion1);
+            fireballProcs ++;
+        }
+    }
+
     public void drawFrame() {
         Sprite frame = screen.getSprite();
         frame.set(anim.getKeyFrame(stateTime, false));

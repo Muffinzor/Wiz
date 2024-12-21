@@ -1,110 +1,460 @@
 
 BookTableSkin.png
-size: 1024, 1024
+size: 2048, 2048
 format: RGBA8888
 filter: Linear, Linear
 repeat: none
-chainlightning_arcane
+arcaneartillery_arcane
   rotate: false
-  xy: 131, 131
+  xy: 131, 651
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-chainlightning_fire
-  rotate: false
-  xy: 261, 261
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-chainlightning_frost
-  rotate: false
-  xy: 391, 391
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-chainlightning_lightning
-  rotate: false
-  xy: 521, 521
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-fireball_arcane
-  rotate: false
-  xy: 1, 521
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-fireball_fire
-  rotate: false
-  xy: 1, 391
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-fireball_frost
+arcaneartillery_fire
   rotate: false
   xy: 131, 521
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-fireball_lightning
-  rotate: false
-  xy: 1, 261
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-flamejet_arcane
+arcaneartillery_frost
   rotate: false
   xy: 131, 391
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-flamejet_fire
+arcanemissile_arcane
   rotate: false
-  xy: 261, 521
+  xy: 1689, 1817
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-flamejet_frost
+arcanemissile_fire
+  rotate: false
+  xy: 1559, 1557
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+blizzard_arcane
+  rotate: false
+  xy: 1429, 1557
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+blizzard_frost
+  rotate: false
+  xy: 1559, 1687
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+celestial_strike
+  rotate: false
+  xy: 1819, 1557
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+chainlightning_arcane
+  rotate: false
+  xy: 649, 1817
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+chainlightning_fire
+  rotate: false
+  xy: 1, 911
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+chainlightning_frost
+  rotate: false
+  xy: 519, 1557
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+chainlightning_lightning
+  rotate: false
+  xy: 649, 1687
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+chargedbolt_arcane
+  rotate: false
+  xy: 779, 1817
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+chargedbolt_fire
+  rotate: false
+  xy: 1, 781
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+chargedbolt_frost
+  rotate: false
+  xy: 649, 1557
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+chargedbolt_lightning
+  rotate: false
+  xy: 779, 1687
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+dragonbreath_fire
+  rotate: false
+  xy: 131, 1301
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+dragonbreath_frost
+  rotate: false
+  xy: 131, 1171
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+energybeam_arcane
+  rotate: false
+  xy: 1169, 1557
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+energybeam_fire
+  rotate: false
+  xy: 1299, 1687
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+energybeam_frost
+  rotate: false
+  xy: 1429, 1817
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+energybeam_lightning
   rotate: false
   xy: 1, 131
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-rift_arcane
+energyrain_arcane
   rotate: false
   xy: 131, 261
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
+energyrain_fire
+  rotate: false
+  xy: 131, 131
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+energyrain_frost
+  rotate: false
+  xy: 131, 1
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+fireball_arcane
+  rotate: false
+  xy: 259, 1817
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+fireball_fire
+  rotate: false
+  xy: 1, 1301
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+fireball_frost
+  rotate: false
+  xy: 259, 1687
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+fireball_lightning
+  rotate: false
+  xy: 389, 1817
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+flamejet_arcane
+  rotate: false
+  xy: 1, 1171
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+flamejet_fire
+  rotate: false
+  xy: 259, 1557
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+flamejet_frost
+  rotate: false
+  xy: 389, 1687
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+forked_lightning
+  rotate: false
+  xy: 1, 1689
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+frostbolt_fire
+  rotate: false
+  xy: 1299, 1817
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+frostbolt_frost
+  rotate: false
+  xy: 1, 261
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+frostnova_frost
+  rotate: false
+  xy: 1819, 1687
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+frozenorb_arcane
+  rotate: false
+  xy: 909, 1817
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+frozenorb_coldlite
+  rotate: false
+  xy: 261, 1427
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+frozenorb_fire
+  rotate: false
+  xy: 1, 651
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+frozenorb_frost
+  rotate: false
+  xy: 779, 1557
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+frozenorb_lightning
+  rotate: false
+  xy: 909, 1687
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+icespear_arcane
+  rotate: false
+  xy: 1299, 1557
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+icespear_fire
+  rotate: false
+  xy: 1429, 1687
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+icespear_frost
+  rotate: false
+  xy: 1559, 1817
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+icespear_lightning
+  rotate: false
+  xy: 1, 1
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+laser_arcane
+  rotate: false
+  xy: 1039, 1817
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+laser_fire
+  rotate: false
+  xy: 1, 521
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+laser_frost
+  rotate: false
+  xy: 909, 1557
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+laser_lightning
+  rotate: false
+  xy: 1039, 1687
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+lightning_hands
+  rotate: false
+  xy: 1, 1431
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+meteorshower_fire
+  rotate: false
+  xy: 131, 1041
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+meteorshower_lightning
+  rotate: false
+  xy: 131, 911
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+orbitingice
+  rotate: false
+  xy: 261, 1297
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+overheat_fire
+  rotate: false
+  xy: 1689, 1687
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+overheat_frost
+  rotate: false
+  xy: 1819, 1817
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+overheat_lightning
+  rotate: false
+  xy: 1689, 1557
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+repulsionfield
+  rotate: false
+  xy: 131, 781
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+rift_arcane
+  rotate: false
+  xy: 519, 1817
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
 rift_fire
   rotate: false
-  xy: 261, 391
+  xy: 1, 1041
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 rift_frost
   rotate: false
-  xy: 391, 521
+  xy: 389, 1557
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 rift_lightning
   rotate: false
-  xy: 1, 1
+  xy: 519, 1687
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+thunderstorm_arcane
+  rotate: false
+  xy: 1169, 1817
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+thunderstorm_fire
+  rotate: false
+  xy: 1, 391
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+thunderstorm_frost_selected_over
+  rotate: false
+  xy: 1039, 1557
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+thunderstorm_lightning_selected_over
+  rotate: false
+  xy: 1169, 1687
   size: 128, 128
   orig: 128, 128
   offset: 0, 0

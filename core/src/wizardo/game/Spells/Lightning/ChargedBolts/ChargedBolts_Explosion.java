@@ -30,7 +30,6 @@ public class ChargedBolts_Explosion extends Spell {
         this.targetPosition = new Vector2(targetPosition);
 
         main_element = FIRE;
-        bonus_element = LIGHTNING;
         anim = ChargedboltsAnims.chargedbolt_explosion_anim;
 
         radius = 35;

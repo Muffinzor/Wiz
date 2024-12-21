@@ -82,6 +82,7 @@ public class Thunderstorm_Spell extends Spell {
                 attempts++;
                 if(inRange.get(index).thunderImmunityTimer <= 0) {
                     target = inRange.get(index).body.getPosition();
+                    inRange.get(index).thunderImmunityTimer = 0.5f;
                     break;
                 }
             }

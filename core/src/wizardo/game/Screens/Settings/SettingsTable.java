@@ -15,8 +15,7 @@ import wizardo.game.Wizardo;
 
 import java.util.ArrayList;
 
-import static wizardo.game.GameSettings.dmg_text_on;
-import static wizardo.game.GameSettings.sound_volume;
+import static wizardo.game.GameSettings.*;
 import static wizardo.game.Resources.Skins.mainMenuSkin;
 
 public class SettingsTable extends MenuTable {
@@ -29,6 +28,9 @@ public class SettingsTable extends MenuTable {
 
         volume_slider();
         dmg_numbers_checkbox();
+        healthbars_checkbox();
+        zoom();
+        debug_camera_checkbox();
         quitButton();
 
     }
@@ -63,6 +65,59 @@ public class SettingsTable extends MenuTable {
         table.row();
         table.add(checkBox);
 
+    }
+
+    public void debug_camera_checkbox() {
+        CheckBox checkBox = new CheckBox("Debug Camera", mainMenuSkin);
+
+        checkBox.setChecked(debug_camera);
+
+        checkBox.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                debug_camera = !debug_camera;
+            }
+        });
+
+        table.row();
+        table.add(checkBox);
+    }
+
+    public void healthbars_checkbox() {
+        CheckBox checkBox = new CheckBox("Monster Healthbars", mainMenuSkin);
+
+        checkBox.setChecked(monster_health_bars);
+
+        checkBox.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                monster_health_bars = !monster_health_bars;
+            }
+        });
+
+        table.row();
+        table.add(checkBox);
+    }
+
+    public void zoom() {
+        CheckBox checkBox = new CheckBox("Zoom", mainMenuSkin);
+
+        checkBox.setChecked(zoom);
+
+        checkBox.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                zoom = !zoom;
+                if(zoom) {
+                    game.mainCamera.zoom = 0.8f;
+                } else {
+                    game.mainCamera.zoom = 1f;
+                }
+            }
+        });
+
+        table.row();
+        table.add(checkBox);
     }
 
     public void quitButton() {

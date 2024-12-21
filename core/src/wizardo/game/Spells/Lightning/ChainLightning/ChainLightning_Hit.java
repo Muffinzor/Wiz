@@ -284,7 +284,7 @@ public class ChainLightning_Hit extends ChainLightning_Spell {
                     green = 0.2f;
                 }
             }
-            case FROST -> {
+            case FROST, COLDLITE -> {
                 anim = ChainLightningAnims.chainlightning_lightning_anim;
                 longAnim = ChainLightningAnims.chainlightning_long_lightning_anim;
                 green = 0.65f;
@@ -297,7 +297,7 @@ public class ChainLightning_Hit extends ChainLightning_Spell {
                 green = 0.3f;
                 blue = 0.85f;
             }
-            case FIRE -> {
+            case FIRE, FIRELITE -> {
                 anim = ChainLightningAnims.chainlightning_lightning_anim;
                 longAnim = ChainLightningAnims.chainlightning_long_lightning_anim;
                 red = 0.8f;
@@ -369,14 +369,14 @@ public class ChainLightning_Hit extends ChainLightning_Spell {
         float procRate = 1;
         float level = (float) (getLvl() + nested_spell.getLvl()) / 2;
         if(nested_spell instanceof ChargedBolts_Spell) {
-            procRate = 0.85f - level * .05f;
+            procRate = 0.875f - level * .025f;
         }
         return procRate;
     }
     public int getQuantity() {
         int quantity = 1;
         if(nested_spell instanceof ChargedBolts_Spell) {
-            quantity = 3 + nested_spell.getLvl()/2;
+            quantity = 2 + nested_spell.getLvl()/3;
         }
         return quantity;
     }
@@ -395,7 +395,6 @@ public class ChainLightning_Hit extends ChainLightning_Spell {
                 explosion.targetPosition = new Vector2(adjusted);
                 explosion.screen = screen;
                 explosion.setElements(this);
-                explosion.anim_element = SpellUtils.Spell_Element.LIGHTNING;
                 screen.spellManager.toAdd(explosion);
 
             }

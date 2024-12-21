@@ -30,12 +30,10 @@ public class ArcaneArtillery_Projectile extends ArcaneArtillery_Spell {
         if(!initialized) {
             pickAnim();
             createBody();
-            createLight();
             initialized = true;
         }
 
         drawFrame();
-        adjustLight();
 
         stateTime += delta;
 
@@ -43,7 +41,6 @@ public class ArcaneArtillery_Projectile extends ArcaneArtillery_Spell {
             explode();
             body.setLinearVelocity(0,0);
             body.setActive(false);
-            light.dimKill(0.5f);
         } else if (body.isActive() && delta > 0) {
             moreLights(delta);
         }
@@ -51,7 +48,7 @@ public class ArcaneArtillery_Projectile extends ArcaneArtillery_Spell {
         if(alpha <= 0.1f) {
             world.destroyBody(body);
             screen.spellManager.toRemove(this);
-        } else if(!body.isActive()) {
+        } else if(!body.isActive() && delta > 0) {
             alpha -= 0.05f;
         }
 
@@ -106,6 +103,12 @@ public class ArcaneArtillery_Projectile extends ArcaneArtillery_Spell {
                 red = 0.2f;
                 blue = 0.9f;
             }
+            case FIRE -> {
+                tile = EnergyBeamAnims.energyrain_tile_fire;
+                endTile = EnergyBeamAnims.energyrain_end_fire;
+                red = 0.75f;
+                green = 0.15f;
+            }
         }
     }
     public void createBody() {
@@ -119,10 +122,6 @@ public class ArcaneArtillery_Projectile extends ArcaneArtillery_Spell {
         body.setLinearVelocity(velocity);
     }
 
-    public void createLight() {
-        light = screen.lightManager.pool.getLight();
-        light.setLight(red,green,blue,lightAlpha,100, spawnPosition);
-    }
     public void adjustLight() {
         light.pointLight.setPosition(body.getPosition().scl(PPM));
     }
@@ -149,6 +148,9 @@ public class ArcaneArtillery_Projectile extends ArcaneArtillery_Spell {
         explosion.targetPosition = new Vector2(targetPosition);
         explosion.setElements(this);
         explosion.frozenorb = frozenorb;
+        explosion.arcaneMissiles = arcaneMissiles;
+        explosion.rift = rift;
+        explosion.megaRift = megaRift;
         explosion.thunderstorm = thunderstorm;
         screen.spellManager.toAdd(explosion);
     }

@@ -132,7 +132,7 @@ public class Fireball_Projectile extends Fireball_Spell {
             case LIGHTNING -> {
                 anim = FireballAnims.fireball_anim_lightning;
                 red = 0.75f;
-                green = 0.75f;
+                green = 0.55f;
             }
             case ARCANE -> {
                 anim = FireballAnims.fireball_anim_arcane;

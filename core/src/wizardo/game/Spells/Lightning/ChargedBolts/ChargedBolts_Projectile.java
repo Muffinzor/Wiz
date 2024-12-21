@@ -327,10 +327,9 @@ public class ChargedBolts_Projectile extends ChargedBolts_Spell {
             if(Math.random() >= procTreshold) {
                 Frostbolt_Explosion explosion = new Frostbolt_Explosion();
                 explosion.targetPosition = new Vector2(monster.body.getPosition());
-                explosion.lightAlpha = 0.6f;
+                explosion.lightAlpha = 0.8f;
                 explosion.screen = screen;
                 explosion.setElements(this);
-                explosion.anim_element = SpellUtils.Spell_Element.LIGHTNING;
                 screen.spellManager.toAdd(explosion);
             }
 
@@ -339,7 +338,8 @@ public class ChargedBolts_Projectile extends ChargedBolts_Spell {
 
     public void pickAnim() {
         switch (anim_element) {
-            case FROST -> {
+
+            case FROST, COLDLITE -> {
                 anim = chargedbolt_frost_anim;
                 green = 0.5f;
                 blue = 0.65f;
@@ -348,18 +348,14 @@ public class ChargedBolts_Projectile extends ChargedBolts_Spell {
                 anim = chargedbolt_lightning_anim;
                 red = 0.4f;
                 green = 0.4f;
-                if(bonus_element == FROST) {
-                    anim = chargedbolt_frost_anim;
-                    green = 0.5f;
-                    blue = 0.65f;
-                }
+
             }
             case ARCANE -> {
                 anim = chargedbolt_arcane_anim;
                 red = 0.6f;
                 blue = 0.9f;
             }
-            case FIRE -> {
+            case FIRE, FIRELITE -> {
                 anim = chargedbolt_fire_anim;
                 red = 0.6f;
                 green = 0.15f;

@@ -49,6 +49,7 @@ public class Frozenorb_Spell extends Spell {
         this.speed = parent.speed;
         this.duration = parent.duration;
         this.frostnova = parent.frostnova;
+        this.lightAlpha = parent.lightAlpha;
 
         this.setElements(parent);
     }

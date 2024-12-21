@@ -44,6 +44,7 @@ public class EnergyRain_Projectile extends EnergyRain_Spell {
             body.setLinearVelocity(0,0);
             body.setActive(false);
             light.dimKill(0.5f);
+            light = null;
         } else if (body.isActive() && delta > 0) {
             moreLights(delta);
         }
@@ -136,9 +137,12 @@ public class EnergyRain_Projectile extends EnergyRain_Spell {
     public void createLight() {
         light = screen.lightManager.pool.getLight();
         light.setLight(red,green,blue,lightAlpha,100, spawnPosition);
+        screen.lightManager.addLight(light);
     }
     public void adjustLight() {
-        light.pointLight.setPosition(body.getPosition().scl(PPM));
+        if(light != null) {
+            light.pointLight.setPosition(body.getPosition().scl(PPM));
+        }
     }
 
     public void moreLights(float delta) {
@@ -163,6 +167,7 @@ public class EnergyRain_Projectile extends EnergyRain_Spell {
         explosion.targetPosition = new Vector2(targetPosition);
         explosion.setElements(this);
         explosion.frostbolt = frostbolt;
+        explosion.flamejet = flamejet;
         explosion.chargedbolts = chargedbolts;
         screen.spellManager.toAdd(explosion);
     }

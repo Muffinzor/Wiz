@@ -23,7 +23,27 @@ public class RiftsAnims {
     public static String rift_zone_atlas_path_lightning = "Spells/Rifts/Lightning/zone_lightning.atlas";
     public static String rift_explosion_atlas_path_lightning = "Spells/Rifts/Lightning/explosion_lightning.atlas";
 
+    public static Animation<Sprite> rift_zone_anim_fire;
+    public static Animation<Sprite> rift_explosion_anim_fire;
+    public static String rift_zone_atlas_path_fire = "Spells/Rifts/Fire/zone_fire.atlas";
+    public static String rift_explosion_atlas_path_fire = "Spells/Rifts/Fire/explosion_fire.atlas";
+
     public static void loadAnimations() {
+
+        TextureAtlas fire_projectile_atlas = assetManager.get(rift_zone_atlas_path_fire, TextureAtlas.class);
+        TextureAtlas fire_explosion_atlas = assetManager.get(rift_explosion_atlas_path_fire, TextureAtlas.class);
+
+        Sprite[] fire_zone = new Sprite[108];
+        for (int i = 0; i < fire_zone.length; i++) {
+            fire_zone[i] = fire_projectile_atlas.createSprite("rift" + (i+1));
+        }
+        rift_zone_anim_fire = new Animation<>(0.025f, fire_zone);
+
+        Sprite[] fire_explosion = new Sprite[54];
+        for (int i = 0; i < fire_explosion.length; i++) {
+            fire_explosion[i] = fire_explosion_atlas.createSprite("arcaneexplosion" + (i+1));
+        }
+        rift_explosion_anim_fire = new Animation<>(0.02f, fire_explosion);
 
         TextureAtlas lite_projectile_atlas = assetManager.get(rift_zone_atlas_path_lightning, TextureAtlas.class);
         TextureAtlas lite_explosion_atlas = assetManager.get(rift_explosion_atlas_path_lightning, TextureAtlas.class);
@@ -84,5 +104,8 @@ public class RiftsAnims {
 
         assetManager.load(rift_zone_atlas_path_lightning, TextureAtlas.class);
         assetManager.load(rift_explosion_atlas_path_lightning, TextureAtlas.class);
+
+        assetManager.load(rift_zone_atlas_path_fire, TextureAtlas.class);
+        assetManager.load(rift_explosion_atlas_path_fire, TextureAtlas.class);
     }
 }

@@ -14,6 +14,11 @@ public class ArcaneArtillery_Spell extends Spell {
 
     public boolean frozenorb;
     public boolean thunderstorm;
+    public boolean rift;
+
+    public boolean arcaneMissiles; // Beam + Overheat + Missiles
+
+    public boolean megaRift; // Beam + Overheat + Rift
 
     public ArcaneArtillery_Spell() {
         name = "Arcane Artillery";
@@ -38,6 +43,9 @@ public class ArcaneArtillery_Spell extends Spell {
             projectile.targetPosition = new Vector2(target.body.getPosition());
             projectile.setElements(this);
             projectile.frozenorb = frozenorb;
+            projectile.megaRift = megaRift;
+            projectile.rift = rift;
+            projectile.arcaneMissiles = arcaneMissiles;
             projectile.thunderstorm = thunderstorm;
             screen.spellManager.toAdd(projectile);
         }

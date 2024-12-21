@@ -17,17 +17,17 @@ public class CelestialStrike_Spell extends Spell {
     public CelestialStrike_Spell() {
 
         raycasted = true;
-        aimReach = 15;
+        aimReach = 22;
 
         name = "Celestial Strike";
 
         baseDmg = 120;
 
-        cooldown = 3;
+        cooldown = 1.6f;
 
         main_element = SpellUtils.Spell_Element.LIGHTNING;
-        bonus_element = SpellUtils.Spell_Element.FROST;
-        textColor = Skins.light_teal;
+
+        anim_element = SpellUtils.Spell_Element.COLDLITE;
 
     }
 

@@ -13,8 +13,7 @@ import wizardo.game.Spells.Lightning.Thunderstorm.Thunderstorm_Spell;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 
-import static wizardo.game.Spells.SpellUtils.Spell_Element.FROST;
-import static wizardo.game.Spells.SpellUtils.Spell_Element.LIGHTNING;
+import static wizardo.game.Spells.SpellUtils.Spell_Element.*;
 import static wizardo.game.Spells.SpellUtils.Spell_Name.*;
 
 
@@ -28,7 +27,7 @@ public class FrostLightning_Spells {
 
         ChargedBolts_Spell frostlite0 = new ChargedBolts_Spell();
         frostlite0.frostbolts = true;
-        frostlite0.anim_element = FROST;
+        frostlite0.anim_element = COLDLITE;
         frostlite0.spellParts.add(CHARGEDBOLTS);
         frostlite0.spellParts.add(FROSTBOLT);
         frostliteSpells[0] = frostlite0;
@@ -82,7 +81,7 @@ public class FrostLightning_Spells {
 
         Thunderstorm_Spell frostlite6 = new Thunderstorm_Spell();
         frostlite6.nested_spell = new Frostbolt_Explosion();
-        frostlite6.anim_element = LIGHTNING;
+        frostlite6.anim_element = FROST;
         frostlite6.spellParts.add(FROSTBOLT);
         frostlite6.spellParts.add(THUNDERSTORM);
         frostliteSpells[6] = frostlite6;
@@ -119,7 +118,7 @@ public class FrostLightning_Spells {
         ChainLightning_Spell frostlite10 = new ChainLightning_Spell();
         frostlite10.spear = true;
         frostlite10.nested_spell = new ChargedBolts_Spell();
-        frostlite10.anim_element = FROST;
+        frostlite10.anim_element = LIGHTNING;
         frostlite10.spellParts.add(CHAIN);
         frostlite10.spellParts.add(CHARGEDBOLTS);
         frostlite10.spellParts.add(ICESPEAR);
@@ -143,7 +142,7 @@ public class FrostLightning_Spells {
         ChainLightning_Spell chain12 = new ChainLightning_Spell();
         chain12.frostbolts = true;
         frostlite12.nested_spell = chain12;
-        frostlite12.anim_element = LIGHTNING;
+        frostlite12.anim_element = FROST;
         frostlite12.spellParts.add(CHAIN);
         frostlite12.spellParts.add(THUNDERSTORM);
         frostlite12.spellParts.add(FROSTBOLT);
@@ -187,8 +186,7 @@ public class FrostLightning_Spells {
         ChainLightning_Spell chain16 = new ChainLightning_Spell();
         chain16.frostbolts = true;
         frostlite16.nested_spell = chain16;
-        frostlite16.anim_element = LIGHTNING;
-        frostlite16.bonus_element = FROST;
+        frostlite16.anim_element = COLDLITE;
         frostlite16.spellParts.add(CHAIN);
         frostlite16.spellParts.add(FROSTBOLT);
         frostlite16.spellParts.add(FROZENORB);

@@ -15,6 +15,8 @@ public class OverheatAnims {
     public static String overheat_atlas_path_frost = "Spells/Overheat/frost.atlas";
     public static Animation<Sprite> overheat_anim_lightning;
     public static String overheat_atlas_path_lightning = "Spells/Overheat/lightning.atlas";
+    public static Animation<Sprite> overheat_anim_coldlite;
+    public static String overheat_atlas_path_coldlite = "Spells/Overheat/coldlite.atlas";
 
 
     /** Mini Fireball anims */
@@ -29,6 +31,14 @@ public class OverheatAnims {
         TextureAtlas fire = assetManager.get(overheat_atlas_path_fire, TextureAtlas.class);
         TextureAtlas frost = assetManager.get(overheat_atlas_path_frost, TextureAtlas.class);
         TextureAtlas lite = assetManager.get(overheat_atlas_path_lightning, TextureAtlas.class);
+        TextureAtlas coldlite = assetManager.get(overheat_atlas_path_coldlite, TextureAtlas.class);
+
+        Sprite[] coldlite_frames = new Sprite[32];
+        for (int i = 0; i < coldlite_frames.length; i++) {
+            coldlite_frames[i] = coldlite.createSprite("litenova" + (i+1));
+        }
+        overheat_anim_coldlite = new Animation<>(0.012f, coldlite_frames);
+
 
         Sprite[] lite_frames = new Sprite[32];
         for (int i = 0; i < lite_frames.length; i++) {
@@ -71,8 +81,10 @@ public class OverheatAnims {
         assetManager.load(overheat_atlas_path_fire, TextureAtlas.class);
         assetManager.load(overheat_atlas_path_lightning, TextureAtlas.class);
         assetManager.load(overheat_atlas_path_frost, TextureAtlas.class);
+        assetManager.load(overheat_atlas_path_coldlite, TextureAtlas.class);
         assetManager.load(minifireball_atlas_path_fire, TextureAtlas.class);
         assetManager.load(minifireball_atlas_path_frost, TextureAtlas.class);
+
 
     }
 }

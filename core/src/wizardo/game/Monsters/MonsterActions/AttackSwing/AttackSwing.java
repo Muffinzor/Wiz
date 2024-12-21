@@ -1,5 +1,6 @@
 package wizardo.game.Monsters.MonsterActions.AttackSwing;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
@@ -53,6 +54,9 @@ public class AttackSwing extends MonsterSpell {
 
     @Override
     public void checkState(float delta) {
+        if(monster.slowedTimer > 0) {
+            stateTime -= delta * (1 - monster.slowRatio);
+        }
         swingProgress = Math.min(stateTime / swingDuration, 1f);
         currentAngle = Interpolation.smooth.apply(startAngle, endAngle, swingProgress);
 
@@ -75,6 +79,12 @@ public class AttackSwing extends MonsterSpell {
         frame.setPosition(originMonster.body.getPosition().x * PPM, originMonster.body.getPosition().y * PPM);
         frame.setRotation(currentAngle);
         frame.flip(false, flipY);
+
+        if(monster.slowedTimer > 0) {
+            Color tint = new Color(0.5f, 0.5f, 0.8f, 1.0f);
+            frame.setColor(tint);
+        }
+
         screen.addSortedSprite(frame);
         screen.centerSort(frame, originMonster.body.getPosition().y * PPM - originMonster.height/2);
     }

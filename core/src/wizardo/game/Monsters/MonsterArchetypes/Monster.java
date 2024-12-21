@@ -1,6 +1,7 @@
 package wizardo.game.Monsters.MonsterArchetypes;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
@@ -16,6 +17,7 @@ import wizardo.game.Screens.BaseScreen;
 import wizardo.game.Screens.Battle.BattleScreen;
 import wizardo.game.Utils.BodyFactory;
 
+import static wizardo.game.GameSettings.monster_health_bars;
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.player;
 import static wizardo.game.Wizardo.world;
@@ -54,6 +56,7 @@ public abstract class Monster {
     public float hp;
     public float maxHP;
     public boolean dead;
+    public boolean spaghettified;  // Dead from blackhole
 
     public boolean initialized;
 
@@ -62,6 +65,9 @@ public abstract class Monster {
     public float freezeTimer = 0;
     public float slowedTimer = 0;
     public float slowRatio = 1;
+
+    public static Sprite greenHP = new Sprite(new Texture("Monsters/hpbar.png"));
+    public static Sprite redHP = new Sprite(new Texture("Monsters/redbar.png"));
 
 
     public Monster(BattleScreen screen, Vector2 position) {
@@ -78,6 +84,7 @@ public abstract class Monster {
         }
         timers(delta);
         drawFrame();
+        drawHealthBar();
         stateManager.updateState(delta);
         attackManager.update(delta);
 
@@ -141,6 +148,26 @@ public abstract class Monster {
         screen.addSortedSprite(frame);
     }
 
+    public void drawHealthBar() {
+        if(monster_health_bars && hp < maxHP && !spaghettified) {
+            float healthPercentage = hp / maxHP;
+            float greenWidth = Math.max(2, width * healthPercentage);
+            float newHeight = Math.min(height / 10, 4);
+
+            Sprite frame = screen.getSprite();
+            frame.set(redHP);
+            frame.setSize(width, newHeight);
+            frame.setPosition((body.getPosition().x * PPM) - width / 2, (body.getPosition().y * PPM) + height / 2);
+            screen.addPostLightningSprite(frame);
+
+            Sprite frame2 = screen.getSprite();
+            frame2.set(greenHP);
+            frame2.setSize(greenWidth, newHeight);
+            frame2.setPosition((body.getPosition().x * PPM) - width / 2, (body.getPosition().y * PPM) + height / 2);
+            screen.addPostLightningSprite(frame2);
+        }
+    }
+
     public void drawDeathFrame(float delta) {
         if(delta > 0) {
             alpha -= 0.005f;
@@ -148,12 +175,15 @@ public abstract class Monster {
                 alpha = 0;
             }
         }
-        Sprite frame = screen.displayManager.spriteRenderer.pool.getSprite();
-        frame.set(death_anim.getKeyFrame(stateTime, false));
-        frame.setPosition(body.getPosition().x * PPM - frame.getWidth()/2, body.getPosition().y * PPM - bodyRadius);
-        frame.setAlpha(alpha);
-        frame.flip(deathFrameFlip, false);
-        screen.displayManager.spriteRenderer.under_sprites.add(frame);
+        if(!spaghettified) {
+            Sprite frame = screen.displayManager.spriteRenderer.pool.getSprite();
+            frame.set(death_anim.getKeyFrame(stateTime, false));
+            frame.setPosition(body.getPosition().x * PPM - frame.getWidth() / 2, body.getPosition().y * PPM - bodyRadius);
+            frame.setAlpha(alpha);
+            frame.flip(deathFrameFlip, false);
+            screen.centerSort(frame, body.getPosition().y * PPM - bodyRadius + 10);
+            screen.displayManager.spriteRenderer.regular_sorted_sprites.add(frame);
+        }
     }
 
     public void dispose() {

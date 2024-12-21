@@ -11,10 +11,11 @@ public class DragonBreath_Spell extends Spell {
     public boolean frostbolts;
     public boolean frozenorb;
     public boolean fireball;
+    public boolean rift;
 
     public DragonBreath_Spell() {
 
-        name = "Dragon's Breath";
+        name = "Dragonbreath";
 
         baseDmg = 120;
 
@@ -32,6 +33,8 @@ public class DragonBreath_Spell extends Spell {
         dragonbreath.targetPosition = new Vector2(getTargetPosition());
         dragonbreath.frostbolts = frostbolts;
         dragonbreath.frozenorb = frozenorb;
+        dragonbreath.fireball = fireball;
+        dragonbreath.rift = rift;
         dragonbreath.setElements(this);
         screen.spellManager.toAdd(dragonbreath);
         screen.spellManager.toRemove(this);

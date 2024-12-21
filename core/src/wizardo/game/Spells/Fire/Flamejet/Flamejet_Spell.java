@@ -16,14 +16,19 @@ public class Flamejet_Spell extends Spell {
     public boolean frostbolts;
     public boolean icespear;
     public boolean arcaneMissile;
+    public boolean rift;
+
+    public float interval;
+    public int quantity = 1;
+    int flamesCast;
 
     public Flamejet_Spell() {
 
         name = "Flamejet";
 
         speed = 20;
-        cooldown = 0.1f;
-        baseDmg = 12;
+        cooldown = 0.6f;
+        baseDmg = 25;
 
         main_element = FIRE;
 
@@ -31,35 +36,60 @@ public class Flamejet_Spell extends Spell {
 
     @Override
     public void update(float delta) {
+        if(!initialized) {
+            setup();
+            initialized = true;
+        }
+
         if(originBody == null) {
             originBody = player.pawn.body;
         }
 
-        if(arcaneMissile) {
-            arcaneTargeting();
+        if(arcaneMissile && targetPosition == null) {
+            ArrayList<Monster> inRange = SpellUtils.findMonstersInRangeOfVector(player.pawn.getPosition(), 5, true);
+            if(inRange.isEmpty()) {
+                screen.spellManager.toRemove(this);
+                return;
+            } else {
+                arcaneTargeting(inRange);
+            }
         }
 
-        if(delta > 0) {
+        if(stateTime >= interval * flamesCast) {
             Flamejet_Projectile flame = new Flamejet_Projectile();
             flame.spawnPosition = new Vector2(getSpawnPosition());
             flame.targetPosition = new Vector2(getTargetPosition());
             flame.setFlame(this);
             flame.setElements(this);
-            currentScreen.spellManager.toAdd(flame);
-            currentScreen.spellManager.toRemove(this);
+            screen.spellManager.toAdd(flame);
+            flamesCast++;
+        }
+
+        stateTime += delta;
+
+        if(flamesCast >= quantity) {
+            screen.spellManager.toRemove(this);
         }
 
     }
 
+    public void setup() {
+        if(targetPosition == null) {
+            quantity = 1 + Math.min(player.spellbook.flamejet_lvl/2, 5);
+        }
+        interval = cooldown / quantity;
+    }
+
     public void setFlame(Flamejet_Spell thisFlame) {
+        quantity = thisFlame.quantity;
         frostbolts = thisFlame.frostbolts;
         icespear = thisFlame.icespear;
+        rift = thisFlame.rift;
         lightAlpha = thisFlame.lightAlpha;
         originBody = thisFlame.originBody;
     }
 
-    public void arcaneTargeting() {
-        ArrayList<Monster> inRange = SpellUtils.findMonstersInRangeOfVector(player.pawn.getPosition(), 5, true);
+    public void arcaneTargeting(ArrayList<Monster> inRange) {
         Monster target = null;
         if(!inRange.isEmpty()) {
             float dst = Float.MAX_VALUE;

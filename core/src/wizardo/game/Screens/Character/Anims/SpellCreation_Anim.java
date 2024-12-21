@@ -110,10 +110,10 @@ public class SpellCreation_Anim extends Screen_Anim {
     public void pickAnim() {
 
         switch(element) {
-            case FIRE -> anim1 = CharacterScreenResources.fire_anim;
+            case FIRE, FIRELITE -> anim1 = CharacterScreenResources.fire_anim;
             case FROST -> anim1 = CharacterScreenResources.frost_anim;
             case ARCANE -> anim1 = CharacterScreenResources.arcane_anim;
-            case LIGHTNING -> anim1 = CharacterScreenResources.lightning_anim;
+            case LIGHTNING, COLDLITE -> anim1 = CharacterScreenResources.lightning_anim;
         }
 
         switch(element) {
@@ -121,14 +121,14 @@ public class SpellCreation_Anim extends Screen_Anim {
                 anim2 = FrostNovaAnims.frostnova_anim;
                 scale2 = 1.4f;
             }
-            case FROST -> {
+            case FROST, COLDLITE -> {
                 anim2 = FrostNovaAnims.frostnova_anim;
                 scale2 = 1.6f;
             }
             case ARCANE -> {
                 anim2 = CharacterScreenResources.arcane_anim;
             }
-            case LIGHTNING -> {
+            case LIGHTNING, FIRELITE -> {
                 anim2 = OverheatAnims.overheat_anim_lightning;
                 scale2 = 1.8f;
             }

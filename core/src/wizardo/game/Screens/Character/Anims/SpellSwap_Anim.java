@@ -84,10 +84,10 @@ public class SpellSwap_Anim extends Screen_Anim {
 
     public void pickAnim() {
         switch(element) {
-            case FIRE -> anim2 = CharacterScreenResources.fire_anim;
+            case FIRE, FIRELITE -> anim2 = CharacterScreenResources.fire_anim;
             case FROST -> anim2 = CharacterScreenResources.frost_anim;
             case ARCANE -> anim2 = CharacterScreenResources.arcane_anim;
-            case LIGHTNING -> anim2 = CharacterScreenResources.lightning_anim;
+            case LIGHTNING, COLDLITE -> anim2 = CharacterScreenResources.lightning_anim;
         }
     }
 

@@ -12,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.RayCastCallback;
 import wizardo.game.Account.Unlocked;
 import wizardo.game.Audio.Sounds.SoundPlayer;
 import wizardo.game.Display.Text.FloatingDamage;
+import wizardo.game.Monsters.MonsterActions.MonsterSpell;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Screens.BaseScreen;
 import wizardo.game.Spells.SpellUtils.*;
@@ -78,6 +79,10 @@ public abstract class Spell implements Cloneable {
     }
 
     public void handleCollision(Fixture obstacle) {
+
+    }
+
+    public void handleCollision(MonsterSpell monsterSpell) {
 
     }
 
@@ -155,8 +160,8 @@ public abstract class Spell implements Cloneable {
             direction.set(0, 1);
         }
         direction.setLength(aimReach);
-        float angleRange = 10;
-        int RAY_COUNT = 11;
+        float angleRange = 16;
+        int RAY_COUNT = 13;
         final Monster[] targetLock = {null};
         final float[] shortestDistance = {Float.MAX_VALUE};
 
@@ -370,11 +375,20 @@ public abstract class Spell implements Cloneable {
                 case FROST -> color = mainMenuSkin.getColor("LightBlue");
                 case ARCANE -> color = mainMenuSkin.getColor("LightPink");
                 case LIGHTNING -> color = mainMenuSkin.getColor("LightYellow");
+                case COLDLITE -> color = mainMenuSkin.getColor("LightTeal");
+                case FIRELITE -> {
+                    if(MathUtils.randomBoolean()) {
+                        color = mainMenuSkin.getColor("LightOrange");
+                    } else {
+                        color = mainMenuSkin.getColor("LightYellow");
+                    }
+                }
             }
         }
 
         FloatingDamage text = screen.displayManager.textManager.pool.getDmgText();
-        Vector2 randomPosition = SpellUtils.getRandomVectorInRadius(monster.body.getPosition(), 0.2f);
+        Vector2 monsterTextHeight = new Vector2(monster.body.getPosition().x, monster.body.getPosition().y + monster.height/PPM/2);
+        Vector2 randomPosition = SpellUtils.getRandomVectorInRadius(monsterTextHeight, 0.5f);
         text.setAll(s, randomPosition.scl(PPM), mainMenuSkin.getFont("DamageNumbers"), color);
         screen.displayManager.textManager.addDmgText(text);
     }

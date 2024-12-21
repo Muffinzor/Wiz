@@ -289,6 +289,7 @@ public class LightningArcane_Spells {
         ArcaneArtillery_Spell litearcane25 = new ArcaneArtillery_Spell();
         litearcane25.anim_element = ARCANE;
         litearcane25.thunderstorm = true;
+        litearcane25.rift = true;
         litearcane25.spellParts.add(RIFTS);
         litearcane25.spellParts.add(MISSILES);
         litearcane25.spellParts.add(THUNDERSTORM);

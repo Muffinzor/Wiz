@@ -32,11 +32,11 @@ public class Orbit_Projectile extends Orbit_Spell {
     public Orbit_Projectile(Vector2 spawnPosition, float angle) {
         this.spawnPosition = new Vector2(spawnPosition);
         this.angle = angle;
-        radius = 18;
+        radius = 24;
         duration = 6;
 
         rotation = MathUtils.random(360);
-        anim = FrozenorbAnims.frozenorb_anim_frost;
+        anim = FrozenorbAnims.orbit_anim;
     }
 
     public void update(float delta) {
@@ -52,11 +52,14 @@ public class Orbit_Projectile extends Orbit_Spell {
         float x = player.pawn.getBodyX() + orbitRadius * MathUtils.cos(angle);
         float y = player.pawn.getBodyY() + orbitRadius * MathUtils.sin(angle);
         body.setTransform(x, y, body.getAngle());
+        if(delta > 0) {
+            rotation -= 5;
+        }
 
         adjustLight();
         drawFrame();
 
-        if(alpha <= 0.1f) {
+        if(alpha <= 0.02f) {
             world.destroyBody(body);
             screen.spellManager.toRemove(this);
         } else if(stateTime >= duration) {
@@ -76,13 +79,12 @@ public class Orbit_Projectile extends Orbit_Spell {
         Sprite frame = screen.getSprite();
         frame.set(anim.getKeyFrame(stateTime + animTime, true));
         frame.setRotation(rotation);
-        rotation -= 5;
 
         if(alpha < 1) {
             frame.setAlpha(alpha);
         }
 
-        frame.setScale(0.4f);
+        frame.setScale(1);
 
         frame.setCenter(body.getPosition().x * PPM, body.getPosition().y * PPM);
         screen.centerSort(frame, body.getPosition().y * PPM - 20);
@@ -95,7 +97,7 @@ public class Orbit_Projectile extends Orbit_Spell {
     }
     public void createLight() {
         light = screen.lightManager.pool.getLight();
-        light.setLight(0.2f, 0, 0.8f, lightAlpha, 55, body.getPosition());
+        light.setLight(0.0f, 0, 0.9f, lightAlpha, 75, body.getPosition());
         screen.lightManager.addLight(light);
     }
 

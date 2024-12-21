@@ -7,6 +7,10 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
+import wizardo.game.Spells.Arcane.Rifts.Rift_Zone;
+import wizardo.game.Spells.Fire.Fireball.Fireball_Explosion;
+import wizardo.game.Spells.Fire.Flamejet.Flamejet_Spell;
+import wizardo.game.Spells.Fire.Overheat.Overheat_Explosion;
 import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Explosion;
 import wizardo.game.Spells.Lightning.ChargedBolts.ChargedBolts_Spell;
 import wizardo.game.Spells.Lightning.Thunderstorm.Thunderstorm_Hit;
@@ -81,6 +85,8 @@ public class EnergyBeam_Projectile extends EnergyBeam_Spell {
         frostbolts(monster);
         chargedbolts();
         thunderstorm(monster);
+        flamejets();
+        fireball(monster);
         monstersHit ++;
     }
 
@@ -206,9 +212,63 @@ public class EnergyBeam_Projectile extends EnergyBeam_Spell {
         }
     }
 
+    public void flamejets() {
+        if(flamejet) {
+            float procRate = 0.833f - 0.033f * player.spellbook.flamejet_lvl;
+
+            if(Math.random() >= procRate) {
+                int jets = MathUtils.random(2,4);
+                float totalConeAngle = Math.min(jets * 15, 60);
+                float halfConeAngle = totalConeAngle / 2;
+                float stepSize = totalConeAngle / (jets - 1);
+                float initialAngle = direction.angleDeg();
+
+                for (int i = 0; i < jets; i++) {
+                    Vector2 newDirection;
+
+                    float angle = initialAngle - halfConeAngle + (stepSize * i);
+                    newDirection = new Vector2(MathUtils.cosDeg(angle), MathUtils.sinDeg(angle));
+
+
+                    Flamejet_Spell jet = new Flamejet_Spell();
+                    jet.setElements(this);
+                    jet.spawnPosition = new Vector2(body.getPosition());
+                    jet.targetPosition = new Vector2(body.getPosition().add(newDirection));
+                    screen.spellManager.toAdd(jet);
+                }
+
+            }
+        }
+    }
+
+    public void fireball(Monster monster) {
+        if(fireball && monster.heavy) {
+            if(overheat) {
+                float procRate = 0.84f - 0.04f * player.spellbook.overheat_lvl;
+                if(Math.random() >= procRate) {
+                    Overheat_Explosion overheat = new Overheat_Explosion(new Vector2(body.getPosition()));
+                    overheat.setElements(this);
+                    overheat.radius = overheat.radius - 30;
+                    screen.spellManager.toAdd(overheat);
+                }
+            }
+            Fireball_Explosion explosion = new Fireball_Explosion();
+            explosion.setElements(this);
+            explosion.flamejets = flamejet;
+            explosion.targetPosition = new Vector2(body.getPosition());
+            screen.spellManager.toAdd(explosion);
+
+            hasCollided = true;
+            body.setLinearVelocity(0,0);
+
+            if(rift) {
+                rifts(monster);
+            }
+        }
+    }
+
     public void frostbolts(Monster monster) {
         if(frostbolt) {
-            int random = MathUtils.random(1,3);
 
             monster.applySlow(3, 0.7f);
 
@@ -221,14 +281,19 @@ public class EnergyBeam_Projectile extends EnergyBeam_Spell {
 
                 Frostbolt_Explosion explosion = new Frostbolt_Explosion();
                 explosion.setElements(this);
-                switch(random) {
-                    case 1 -> explosion.anim_element = FIRE;
-                    case 2 -> explosion.anim_element = FROST;
-                    case 3 -> explosion.anim_element = LIGHTNING;
-                }
+
                 explosion.targetPosition = randomSpawn;
                 screen.spellManager.toAdd(explosion);
             }
+        }
+    }
+
+    public void rifts(Monster monster) {
+        int quantity = 4 + player.spellbook.rift_lvl/3;
+        for (int i = 0; i < quantity; i++) {
+            Rift_Zone rift = new Rift_Zone(SpellUtils.getRandomVectorInRadius(monster.body.getPosition(), 3.5f));
+            rift.setElements(this);
+            screen.spellManager.toAdd(rift);
         }
     }
 

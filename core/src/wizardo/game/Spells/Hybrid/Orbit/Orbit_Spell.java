@@ -13,7 +13,7 @@ public class Orbit_Spell extends Spell {
     public int orbs = 3;
     public float orbitRadius = 5;
 
-    public float speed = 2.5f;
+    public float speed = 2f;
 
     public boolean frostbolt;
 

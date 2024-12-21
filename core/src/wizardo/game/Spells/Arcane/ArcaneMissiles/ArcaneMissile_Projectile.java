@@ -13,7 +13,9 @@ import wizardo.game.Utils.BodyFactory;
 
 import java.util.ArrayList;
 
-import static wizardo.game.Resources.SpellAnims.ArcaneMissileAnims.arcanemissile_arcane_anim;
+import static wizardo.game.Resources.SpellAnims.ArcaneMissileAnims.arcanemissile_anim_arcane;
+import static wizardo.game.Resources.SpellAnims.ArcaneMissileAnims.arcanemissile_anim_fire;
+import static wizardo.game.Spells.SpellUtils.Spell_Element.ARCANE;
 import static wizardo.game.Spells.SpellUtils.hasLineOfSight;
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.*;
@@ -41,13 +43,14 @@ public class ArcaneMissile_Projectile extends ArcaneMissile_Spell {
         this.spawnPosition = new Vector2(spawnPosition);
         this.targetPosition = new Vector2(targetPosition);
 
-        anim = arcanemissile_arcane_anim;
+
     }
 
     public void update(float delta) {
         if(!initialized) {
             collisionsToSplit = MathUtils.random(1, 5);
             initialized = true;
+            pickAnim();
             createBody();
             createLight();
         }
@@ -56,6 +59,8 @@ public class ArcaneMissile_Projectile extends ArcaneMissile_Spell {
         drawFrame();
         adjustLight();
         arcaneTargeting();
+
+        scale -= 0.0035f;
 
         if(scale <= 0.1f) {
             light.dimKill(0.1f);
@@ -77,6 +82,7 @@ public class ArcaneMissile_Projectile extends ArcaneMissile_Spell {
     public void handleCollision(Monster monster) {
         collisions++;
         dealDmg(monster);
+        scale -= 0.05f;
 
         if(icespear && collisions >= collisionsToSplit) {
            canSplit = true;
@@ -95,7 +101,18 @@ public class ArcaneMissile_Projectile extends ArcaneMissile_Spell {
                 screen.spellManager.toAdd(rift);
                 scale -= (0.5f - 0.025f * player.spellbook.rift_lvl);
             }
+        }
 
+        if(overheat && scale > 0) {
+            scale -= 0.2f;
+            float procRate = scale;
+            if(scale > 0.2f && Math.random() >= procRate) {
+                ArcaneMissile_Explosion explosion = new ArcaneMissile_Explosion(body.getPosition());
+                explosion.setElements(this);
+                explosion.flamejet = flamejet;
+                screen.spellManager.toAdd(explosion);
+                scale = 0;
+            }
         }
     }
 
@@ -109,6 +126,22 @@ public class ArcaneMissile_Projectile extends ArcaneMissile_Spell {
         }
         screen.centerSort(frame, body.getPosition().y * PPM - 20);
         screen.addSortedSprite(frame);
+    }
+
+    public void pickAnim(){
+        switch (anim_element) {
+            case ARCANE -> {
+                anim = arcanemissile_anim_arcane;
+                red = 0.6f;
+                green = 0.1f;
+                blue = 0.9f;
+            }
+            case FIRE -> {
+                anim = arcanemissile_anim_fire;
+                red = 0.85f;
+                green = 0.2f;
+            }
+        }
     }
 
     public void createBody() {
@@ -139,7 +172,7 @@ public class ArcaneMissile_Projectile extends ArcaneMissile_Spell {
 
     public void createLight() {
         light = screen.lightManager.pool.getLight();
-        light.setLight(0.6f, 0.1f, 0.9f, 0.75f, 35, body.getPosition());
+        light.setLight(red, green, blue, 0.8f, 35, body.getPosition());
         screen.lightManager.addLight(light);
     }
 

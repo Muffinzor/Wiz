@@ -9,6 +9,8 @@ import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Resources.Skins;
 import wizardo.game.Resources.SpellAnims.FireballAnims;
 import wizardo.game.Spells.Arcane.ArcaneMissiles.ArcaneMissile_Spell;
+import wizardo.game.Spells.Arcane.Rifts.Rift_Zone;
+import wizardo.game.Spells.Arcane.Rifts.Rifts_Spell;
 import wizardo.game.Spells.Fire.Flamejet.Flamejet_Spell;
 import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Explosion;
 import wizardo.game.Spells.Frost.Frozenorb.Frozenorb_Spell;
@@ -49,6 +51,7 @@ public class Fireball_Explosion extends Fireball_Spell {
             sendProjectiles();
             initialized = true;
             thunderstorm();
+            flameRifts();
             flamejets();
             spearOrb();
         }
@@ -111,16 +114,29 @@ public class Fireball_Explosion extends Fireball_Spell {
     }
 
     public void frostbolts(float delta) {
-        float interval = 0.35f - 0.033f * ((getLvl() + player.spellbook.frostbolt_lvl)/2f);
+        float interval = 0.35f - 0.033f * ((getLvl() + player.spellbook.frostbolt_lvl)/1.5f);
         if(frostbolts && stateTime % interval < delta) {
-            Vector2 random = SpellUtils.getRandomVectorInRadius(body.getPosition(), 3);
-            Frostbolt_Explosion explosion = new Frostbolt_Explosion();
-            //explosion.lightAlpha -= interval / 0.15f;
-            explosion.screen = screen;
-            explosion.setElements(this);
-            explosion.anim_element = SpellUtils.Spell_Element.FIRE;
-            explosion.targetPosition = random;
-            screen.spellManager.toAdd(explosion);
+            for (int i = 0; i < 2; i++) {
+                Vector2 random = SpellUtils.getRandomVectorInRadius(body.getPosition(), 3);
+                Frostbolt_Explosion explosion = new Frostbolt_Explosion();
+                //explosion.lightAlpha -= interval / 0.15f;
+                explosion.setElements(this);
+                explosion.targetPosition = random;
+                screen.spellManager.toAdd(explosion);
+            }
+        }
+    }
+
+    public void flameRifts() {
+        if(flameRift) {
+            int quantity = 2 + (player.spellbook.rift_lvl / 4);
+            for (int i = 0; i < quantity; i++) {
+                Vector2 randomPosition = SpellUtils.getClearRandomPosition(body.getPosition(), 3);
+                Rift_Zone rift = new Rift_Zone(randomPosition);
+                rift.setElements(this);
+                rift.nested_spell = new Flamejet_Spell();
+                screen.spellManager.toAdd(rift);
+            }
         }
     }
 

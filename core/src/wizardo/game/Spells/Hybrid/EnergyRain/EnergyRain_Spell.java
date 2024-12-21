@@ -20,6 +20,7 @@ public class EnergyRain_Spell extends Spell {
 
     public boolean frostbolt;
     public boolean chargedbolts;
+    public boolean flamejet;
 
     public boolean riftTargeting;
 
@@ -110,16 +111,18 @@ public class EnergyRain_Spell extends Spell {
             beam.setElements(this);
             beam.targetPosition = randomPosition;
             beam.frostbolt = frostbolt;
+            beam.flamejet = flamejet;
             beam.chargedbolts = chargedbolts;
             screen.spellManager.toAdd(beam);
         }
         projectilesSent++;
     }
     public void riftTargeting() {
-        Vector2 randomTarget = SpellUtils.getRandomVectorInRadius(targetPosition, 3.5f);
+        Vector2 randomTarget = SpellUtils.getRandomVectorInRadius(targetPosition, 5f);
         EnergyRain_Projectile beam = new EnergyRain_Projectile();
         beam.setElements(this);
         beam.targetPosition = randomTarget;
+        beam.flamejet = flamejet;
         beam.frostbolt = frostbolt;
         beam.chargedbolts = chargedbolts;
         screen.spellManager.toAdd(beam);

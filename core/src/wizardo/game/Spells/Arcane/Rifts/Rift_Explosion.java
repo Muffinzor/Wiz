@@ -77,18 +77,35 @@ public class Rift_Explosion extends Rifts_Spell {
         frame.setCenter(body.getPosition().x * PPM, body.getPosition().y * PPM);
         frame.flip(flipX, flipY);
         frame.setRotation(rotation);
+        if(flamejet) {
+            frame.setScale(1.2f);
+        } else if (overheat) {
+            frame.setScale(2f);
+        }
         screen.addSortedSprite(frame);
         screen.centerSort(frame, body.getPosition().y * PPM - 10);
     }
 
     public void createBody() {
+        if(overheat) {
+            radius = radius * 2.2f;
+        }
+        if(flamejet) {
+            radius = radius * 1.2f;
+        }
         body = BodyFactory.spellExplosionBody(targetPosition, radius);
         body.setUserData(this);
     }
 
     public void createLight() {
+        float lightRadius = 120;
+        if(flamejet) {
+            lightRadius = 150;
+        } else if (overheat) {
+            lightRadius = 250;
+        }
         light = screen.lightManager.pool.getLight();
-        light.setLight(red, green, blue, lightAlpha, 120, body.getPosition());
+        light.setLight(red, green, blue, lightAlpha, lightRadius, body.getPosition());
         light.dimKill(0.015f);
         screen.lightManager.addLight(light);
     }
@@ -111,6 +128,11 @@ public class Rift_Explosion extends Rifts_Spell {
                 anim = RiftsAnims.rift_explosion_anim_lightning;
                 red = 0.5f;
                 green = 0.25f;
+            }
+            case FIRE -> {
+                anim = RiftsAnims.rift_explosion_anim_fire;
+                red = 0.8f;
+                green = 0.15f;
             }
         }
     }
@@ -186,7 +208,7 @@ public class Rift_Explosion extends Rifts_Spell {
     }
 
     public float getProcRate() {
-        return 0.5f;
+        return 0.25f;
     }
     public int getQuantity() {
         return 3;

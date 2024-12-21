@@ -7,6 +7,8 @@ import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Resources.SpellAnims.OverheatAnims;
+import wizardo.game.Spells.Arcane.EnergyBeam.EnergyBeam_Projectile;
+import wizardo.game.Spells.Arcane.EnergyBeam.EnergyBeam_Spell;
 import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Explosion;
 import wizardo.game.Spells.Frost.Icespear.Icespear_Spell;
 import wizardo.game.Spells.Lightning.ChainLightning.ChainLightning_Hit;
@@ -226,9 +228,25 @@ public class Overheat_Explosion extends Overheat_Spell {
         }
     }
 
+    public void flameBeams() {
+        if(flameBeam) {
+            int quantity = 2 + player.spellbook.energybeam_lvl/4;
+            ArrayList<Monster> inRange = SpellUtils.findMonstersInRangeOfVector(body.getPosition(), 6, true);
+            Collections.shuffle(inRange);
+            int trueQuantity = Math.min(inRange.size(), quantity);
+            for (int i = 0; i < trueQuantity; i++) {
+                EnergyBeam_Projectile beam = new EnergyBeam_Projectile(body.getPosition(), inRange.removeFirst().body.getPosition());
+                beam.setElements(this);
+                beam.flamejet = true;
+                screen.spellManager.toAdd(beam);
+            }
+        }
+    }
+
     public void sendProjectiles() {
         immediateFrostbolts();
         icespear();
+        flameBeams();
 
         if(chainlightning) {
             chainLightning();

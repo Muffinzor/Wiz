@@ -20,7 +20,7 @@ import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyFactory;
 
-import static wizardo.game.Spells.SpellUtils.Spell_Element.FROST;
+import static wizardo.game.Spells.SpellUtils.Spell_Element.*;
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.currentScreen;
 import static wizardo.game.Wizardo.world;
@@ -29,6 +29,7 @@ public class Frozenorb_Projectile extends Frozenorb_Spell {
 
     Body body;
     RoundLight light;
+    boolean lightKilled;
     boolean hasCollided;
     float scale = 1;
     int frameCounter = 0;
@@ -76,12 +77,11 @@ public class Frozenorb_Projectile extends Frozenorb_Spell {
     }
 
     public void adjustLight() {
-        if(light != null) {
-            light.pointLight.setPosition(body.getPosition().x * PPM, body.getPosition().y * PPM);
-        }
-        if((hasCollided || stateTime >= duration) && light != null) {
+        light.pointLight.setPosition(body.getPosition().x * PPM, body.getPosition().y * PPM);
+
+        if((hasCollided || stateTime >= duration - 0.25f) && !lightKilled) {
             light.dimKill(0.01f);
-            light = null;
+            lightKilled = true;
         }
     }
 
@@ -114,7 +114,7 @@ public class Frozenorb_Projectile extends Frozenorb_Spell {
     public void createLight() {
         float lightRadius = 120 + 10 * getLvl();
         light = screen.lightManager.pool.getLight();
-        light.setLight(red,green,blue, 1, lightRadius, body.getPosition());
+        light.setLight(red,green,blue, lightAlpha, lightRadius, body.getPosition());
         screen.lightManager.addLight(light);
     }
 
@@ -124,7 +124,11 @@ public class Frozenorb_Projectile extends Frozenorb_Spell {
         }
         Sprite frame = screen.displayManager.spriteRenderer.pool.getSprite();
         frame.set(anim.getKeyFrame(stateTime, true));
-        frame.setScale(scale * 0.4f);
+        if(anim_element == COLDLITE) {
+            frame.setScale(0.7f * scale);
+        } else {
+            frame.setScale(scale);
+        }
         frame.setRotation(rotation);
         frame.setCenter(body.getPosition().x * PPM, body.getPosition().y * PPM);
         screen.displayManager.spriteRenderer.regular_sorted_sprites.add(frame);
@@ -138,6 +142,9 @@ public class Frozenorb_Projectile extends Frozenorb_Spell {
                 screen.spellManager.toRemove(this);
                 world.destroyBody(body);
                 body = null;
+                if(light != null) {
+                    light.dimKill(0.04f);
+                }
             }
         }
     }
@@ -196,10 +203,13 @@ public class Frozenorb_Projectile extends Frozenorb_Spell {
                 red = 0.5f;
                 green = 0.25f;
             }
-            case LIGHTNING -> {
+            case LIGHTNING, COLDLITE -> {
                 anim = FrozenorbAnims.frozenorb_anim_lightning;
                 green = 0.6f;
                 blue = 0.75f;
+                if(anim_element == COLDLITE) {
+                    green = 0.2f;
+                }
             }
             case ARCANE -> {
                 anim = FrozenorbAnims.frozenorb_anim_arcane;

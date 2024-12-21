@@ -6,6 +6,7 @@ import wizardo.game.Player.Pawn;
 import wizardo.game.Screens.Battle.BattleScreen;
 import wizardo.game.Screens.Character.CharacterScreen;
 import wizardo.game.Screens.EscapeMenu.EscapeScreen;
+import wizardo.game.Screens.LevelUp.LevelUpScreen;
 
 import static wizardo.game.Screens.BaseScreen.controllerActive;
 import static wizardo.game.Wizardo.currentScreen;
@@ -66,6 +67,10 @@ public class KeyboardMouseListener_BATTLE implements InputProcessor {
 
         if (keycode == Input.Keys.ESCAPE) {
             screen.game.addNewScreen(new EscapeScreen(screen.game));
+        }
+
+        if (keycode == Input.Keys.SPACE) {
+            screen.game.addNewScreen(new LevelUpScreen(screen.game));
         }
 
         return true;

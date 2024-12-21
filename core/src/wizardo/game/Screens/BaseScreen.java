@@ -40,6 +40,9 @@ import wizardo.game.Screens.Hub.BattleSelection.BattleSelectionScreen;
 import wizardo.game.Screens.Hub.Controls.ControllerListener_HUB;
 import wizardo.game.Screens.Hub.Controls.KeyboardMouseListener_HUB;
 import wizardo.game.Screens.Hub.HubScreen;
+import wizardo.game.Screens.LevelUp.Controls.ControllerListener_LEVELUP;
+import wizardo.game.Screens.LevelUp.Controls.KeyboardMouseListener_LEVELUP;
+import wizardo.game.Screens.LevelUp.LevelUpScreen;
 import wizardo.game.Screens.MainMenu.Controls.ControllerListener_MAINMENU;
 import wizardo.game.Controls.KeyboardMouseListener_TABLEMENU;
 import wizardo.game.Screens.MainMenu.MainMenuScreen;
@@ -59,7 +62,7 @@ public abstract class BaseScreen implements Screen {
     public static float screenRatio;
 
     public Wizardo game;
-    protected SpriteBatch batch;
+    public SpriteBatch batch;
     public RayHandler rayHandler;
 
     public boolean paused;
@@ -76,7 +79,6 @@ public abstract class BaseScreen implements Screen {
     public ArrayList<Animation> animations;
     public OrthographicCamera mainCamera;
     public OrthographicCamera uiCamera;
-    public Vector2 cameraOffSet;
 
     public Stage stage;
     public MenuTable menuTable;
@@ -87,7 +89,6 @@ public abstract class BaseScreen implements Screen {
         this.game = game;
         mainCamera = game.mainCamera;
         uiCamera = game.uiCamera;
-        cameraOffSet = new Vector2();
         this.batch = new SpriteBatch();
         animations = new ArrayList<>();
         displayManager = new DisplayManager(this);
@@ -219,6 +220,11 @@ public abstract class BaseScreen implements Screen {
             controllerAdapter = new ControllerListener_CHARACTERSCREEN( (CharacterScreen) this);
         }
 
+        if(this instanceof LevelUpScreen) {
+            inputProcessor = new KeyboardMouseListener_LEVELUP( (LevelUpScreen) this);
+            controllerAdapter = new ControllerListener_LEVELUP( (LevelUpScreen) this);
+        }
+
         for (Controller controller : Controllers.getControllers()) {
             controller.addListener(controllerAdapter);
         }
@@ -241,6 +247,12 @@ public abstract class BaseScreen implements Screen {
     public void addOverSprite(Sprite sprite) {
         displayManager.spriteRenderer.over_sprites.add(sprite);
     }
+
+    public void addPostLightningSprite(Sprite sprite) {
+        displayManager.spriteRenderer.post_lightning_sprites.add(sprite);
+    }
+
+
 
     /**
      * adds the sprite to the under-everything-else sprites list to be rendered

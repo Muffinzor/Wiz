@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Spells.Arcane.Rifts.Rift_Zone;
+import wizardo.game.Spells.Fire.Flamejet.Flamejet_Spell;
 import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Explosion;
 import wizardo.game.Spells.Lightning.ChargedBolts.ChargedBolts_Spell;
 import wizardo.game.Spells.Lightning.Thunderstorm.Thunderstorm_Hit;
@@ -30,6 +31,8 @@ public class Laser_Projectile extends Laser_Spell {
 
     Vector2 direction;
     float rotation;
+
+    int collisions = 0;
 
     public Laser_Projectile() {
         main_element = ARCANE;
@@ -55,6 +58,8 @@ public class Laser_Projectile extends Laser_Spell {
         frostbolts(monster);
         chargedbolts(monster);
         thunderstorm(monster);
+        flamejet(monster);
+        collisions ++;
     }
 
     public void drawFrame() {
@@ -111,6 +116,26 @@ public class Laser_Projectile extends Laser_Spell {
                 frame = lightningLaser;
                 red = 0.3f;
                 green = 0.3f;
+            }
+        }
+    }
+
+    public void flamejet(Monster monster) {
+        if(flamejet) {
+            float procRate;
+            if(collisions == 0) {
+                procRate = 0.33f - player.spellbook.flamejet_lvl * 0.03f;
+            } else {
+                procRate = 0.96f - player.spellbook.flamejet_lvl * 0.02f;
+            }
+            if(Math.random() >= procRate) {
+                Flamejet_Spell flame = new Flamejet_Spell();
+                Vector2 direction = new Vector2(body.getLinearVelocity());
+                Vector2 spawn = new Vector2(monster.body.getPosition());
+                flame.spawnPosition = spawn;
+                flame.targetPosition = spawn.cpy().add(direction);
+                flame.setElements(this);
+                screen.spellManager.toAdd(flame);
             }
         }
     }

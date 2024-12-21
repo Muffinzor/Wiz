@@ -87,6 +87,21 @@ public class WizContactListener implements ContactListener {
                 spell.handleCollision(f1);
             }
         }
+
+        /* MONSTER SPELL + PLAYER SPELL */
+        if(f1isMonsterSpell && f2isSpell || f1isSpell && f2isMonsterSpell) {
+
+            if(f1isMonsterSpell) {
+                MonsterSpell spell = (MonsterSpell) f1.getBody().getUserData();
+                Spell player_spell = (Spell) f2.getBody().getUserData();
+                player_spell.handleCollision(spell);
+            } else {
+                MonsterSpell spell = (MonsterSpell) f2.getBody().getUserData();
+                Spell player_spell = (Spell) f1.getBody().getUserData();
+                player_spell.handleCollision(spell);
+            }
+
+        }
     }
 
     public void Spell_Monster_Begin(Fixture spellFix, Fixture monsterFix) {

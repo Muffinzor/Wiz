@@ -13,8 +13,7 @@ import wizardo.game.Utils.BodyFactory;
 import static wizardo.game.Display.DisplayUtils.getLight;
 import static wizardo.game.Display.DisplayUtils.getSprite;
 import static wizardo.game.Utils.Constants.PPM;
-import static wizardo.game.Wizardo.player;
-import static wizardo.game.Wizardo.world;
+import static wizardo.game.Wizardo.*;
 
 public class Pawn {
 
@@ -81,7 +80,7 @@ public class Pawn {
         Vector3 mouseUnprojected = screen.mainCamera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
         Vector2 mousePosition = new Vector2(mouseUnprojected.x, mouseUnprojected.y);
 
-        if(mousePosition.x < body.getPosition().x * PPM) {
+        if(mousePosition.x < body.getPosition().x * PPM && !screen.paused) {
             frame.flip(true, false);
         }
 

@@ -48,7 +48,6 @@ public class LightningFire_Spells {
             // 1. Flamejet + Chainlightning
 
             ForkedLightning_Spell litefire1 = new ForkedLightning_Spell();
-            litefire1.anim_element = FIRE;
             litefire1.spellParts.add(FLAMEJET);
             litefire1.spellParts.add(CHAIN);
             litefireSpells[1] = litefire1;
@@ -119,7 +118,6 @@ public class LightningFire_Spells {
             // 9. Flamejet + Chargedbolts + Chainlightning
 
             ForkedLightning_Spell litefire9 = new ForkedLightning_Spell();
-            litefire9.anim_element = FIRE;
             litefire9.chargedbolts = true;
             litefire9.spellParts.add(FLAMEJET);
             litefire9.spellParts.add(CHAIN);
@@ -227,7 +225,6 @@ public class LightningFire_Spells {
 
             ForkedLightning_Spell litefire19 = new ForkedLightning_Spell();
             litefire19.fireball = true;
-            litefire19.anim_element = FIRE;
             litefire19.spellParts.add(FIREBALL);
             litefire19.spellParts.add(CHAIN);
             litefire19.spellParts.add(FLAMEJET);
@@ -277,6 +274,9 @@ public class LightningFire_Spells {
             litefire24.fireball = true;
             litefire24.nested_spell = new ChargedBolts_Spell();
             litefire24.anim_element = LIGHTNING;
+            litefire24.spellParts.add(FIREBALL);
+            litefire24.spellParts.add(OVERHEAT);
+            litefire24.spellParts.add(CHARGEDBOLTS);
             litefireSpells[24] = litefire24;
 
             // 25. Fireball + Overheat + Chainlightning

@@ -6,6 +6,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
+import wizardo.game.Spells.Arcane.ArcaneMissiles.ArcaneMissile_Spell;
+import wizardo.game.Spells.Fire.Flamejet.Flamejet_Spell;
 import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Explosion;
 import wizardo.game.Spells.Lightning.ChargedBolts.ChargedBolts_Spell;
 import wizardo.game.Spells.SpellUtils;
@@ -17,6 +19,8 @@ import static wizardo.game.Wizardo.player;
 import static wizardo.game.Wizardo.world;
 
 public class EnergyRain_Explosion extends EnergyRain_Spell {
+
+    public boolean arcaneMissiles;
 
     Body body;
     RoundLight light;
@@ -40,6 +44,8 @@ public class EnergyRain_Explosion extends EnergyRain_Spell {
             createLight();
             initialized = true;
             chargedbolts();
+            arcaneMissiles();
+            flamejets();
         }
 
         drawFrame();
@@ -122,6 +128,32 @@ public class EnergyRain_Explosion extends EnergyRain_Spell {
                 bolt.targetPosition = SpellUtils.getRandomVectorInRadius(body.getPosition(), 3);
                 bolt.setElements(this);
                 screen.spellManager.toAdd(bolt);
+            }
+        }
+    }
+
+    public void arcaneMissiles() {
+        if(arcaneMissiles) {
+            int quantity = 5 + player.spellbook.arcanemissile_lvl/3;
+            for (int i = 0; i < quantity; i++) {
+                ArcaneMissile_Spell missile = new ArcaneMissile_Spell();
+                missile.setElements(this);
+                missile.spawnPosition = new Vector2(body.getPosition());
+                missile.targetPosition = SpellUtils.getRandomVectorInRadius(body.getPosition(), 2);
+                screen.spellManager.toAdd(missile);
+            }
+        }
+    }
+
+    public void flamejets() {
+        if(flamejet) {
+            int quantity = 3 + player.spellbook.flamejet_lvl / 3;
+            for (int i = 0; i < quantity; i++) {
+                Flamejet_Spell flame = new Flamejet_Spell();
+                flame.setElements(this);
+                flame.spawnPosition = new Vector2(body.getPosition());
+                flame.targetPosition = SpellUtils.getRandomVectorInRadius(body.getPosition(), 2);
+                screen.spellManager.toAdd(flame);
             }
         }
     }

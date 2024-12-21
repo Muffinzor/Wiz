@@ -18,7 +18,9 @@ public class SpellUtils {
         ARCANE,
         FROST,
         FIRE,
-        LIGHTNING
+        LIGHTNING,
+        FIRELITE,
+        COLDLITE
     }
 
     public enum Spell_Name {

@@ -67,15 +67,19 @@ public class MovementManager {
     }
 
     public void applyPush(Vector2 pushDirection, float strength, float duration, float decayRate) {
-        float pushStrength = strength;
-        float pushDuration = duration;
-        if(monster.heavy) {
-            pushStrength = strength/2f;
-            pushDuration = duration * (2/3f);
+        if(pushBackTimer <= 0) {
+            float pushStrength = strength;
+            float pushDuration = duration;
+            if (monster.heavy) {
+                pushStrength = strength / 2f;
+                if(decayRate < 1) {
+                    pushDuration = duration * (2 / 3f);
+                }
+            }
+            pushBackForce.set(pushDirection.nor().scl(pushStrength));
+            pushBackTimer = pushDuration;
+            pushDecayRate = decayRate;
         }
-        pushBackForce.set(pushDirection.nor().scl(pushStrength));
-        pushBackTimer = pushDuration;
-        pushDecayRate = decayRate;
     }
 
     public void pushMonster(float delta) {

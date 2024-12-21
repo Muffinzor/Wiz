@@ -353,9 +353,6 @@ public class Icespear_Projectile extends Icespear_Spell {
             jet.targetPosition = new Vector2(body.getPosition().add(direction));
             jet.icespear = true;
             jet.setElements(this);
-            if(frostbolts) {
-                jet.textColor = Skins.light_blue;
-            }
             screen.spellManager.toAdd(jet);
         }
     }

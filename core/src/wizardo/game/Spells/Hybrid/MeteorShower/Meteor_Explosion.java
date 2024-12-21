@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Resources.SpellAnims.FireballAnims;
+import wizardo.game.Spells.Fire.Flamejet.Flamejet_Spell;
 import wizardo.game.Spells.Lightning.ChargedBolts.ChargedBolts_Spell;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
@@ -35,6 +36,7 @@ public class Meteor_Explosion extends MeteorShower_Spell {
         rotation = MathUtils.random(360);
         flipX = MathUtils.randomBoolean();
         flipY = MathUtils.randomBoolean();
+
     }
 
     public void update(float delta) {
@@ -114,23 +116,41 @@ public class Meteor_Explosion extends MeteorShower_Spell {
 
     public void shootProjs() {
         if(nested_spell != null) {
+            float procRate = getProcRate();
 
-            int quantity = getQuantity();
-            for (int i = 0; i < quantity; i++) {
-                Spell proj = nested_spell.clone();
-                proj.setElements(this);
-                proj.spawnPosition = new Vector2(body.getPosition());
-                proj.targetPosition = SpellUtils.getRandomVectorInRadius(body.getPosition(), 2);
-                proj.originBody = body;
-                screen.spellManager.toAdd(proj);
+            if(Math.random() >= procRate) {
+
+                int quantity = getQuantity();
+                for (int i = 0; i < quantity; i++) {
+                    Spell proj = nested_spell.clone();
+                    proj.setElements(this);
+                    proj.spawnPosition = new Vector2(body.getPosition());
+                    proj.targetPosition = SpellUtils.getRandomVectorInRadius(body.getPosition(), 2);
+                    proj.originBody = body;
+                    screen.spellManager.toAdd(proj);
+                }
             }
         }
+    }
+
+    public float getProcRate() {
+        float procRate = 1;
+        if(nested_spell instanceof ChargedBolts_Spell) {
+            procRate = 0.8f - 0.025f * player.spellbook.chargedbolt_lvl;
+        }
+        if(nested_spell instanceof Flamejet_Spell) {
+            procRate = 0.8f - 0.05f * player.spellbook.flamejet_lvl;
+        }
+        return procRate;
     }
 
     public int getQuantity() {
         int quantity = 0;
         if(nested_spell instanceof ChargedBolts_Spell) {
             quantity = 5 + player.spellbook.chargedbolt_lvl/2;
+        }
+        if(nested_spell instanceof Flamejet_Spell) {
+            quantity = 3 + player.spellbook.flamejet_lvl/2;
         }
         return quantity;
     }

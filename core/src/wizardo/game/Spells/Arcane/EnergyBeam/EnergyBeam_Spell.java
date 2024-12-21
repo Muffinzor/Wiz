@@ -1,7 +1,10 @@
 package wizardo.game.Spells.Arcane.EnergyBeam;
 
+import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
+
+import java.util.ArrayList;
 
 import static wizardo.game.Wizardo.currentScreen;
 import static wizardo.game.Wizardo.player;
@@ -13,6 +16,11 @@ public class EnergyBeam_Spell extends Spell {
     public boolean chargedbolts;
     public boolean chainlightning;
     public boolean thunderstorm;
+    public boolean flamejet;
+    public boolean fireball;
+    public boolean overheat;
+    public boolean arcaneMissile;
+    public boolean rift;
 
     public EnergyBeam_Spell() {
 
@@ -20,7 +28,7 @@ public class EnergyBeam_Spell extends Spell {
 
         baseDmg = 80;
 
-        cooldown = 2.5f;
+        cooldown = 3.2f;
 
         main_element = SpellUtils.Spell_Element.ARCANE;
 
@@ -28,21 +36,31 @@ public class EnergyBeam_Spell extends Spell {
 
     @Override
     public void update(float delta) {
+        setup();
 
         if(delta > 0) {
 
             EnergyBeam_Projectile beam = new EnergyBeam_Projectile(getSpawnPosition(), getTargetPosition());
-            beam.frostbolt = frostbolt;
-            beam.chargedbolts = chargedbolts;
-            beam.frozenorb = frozenorb;
-            beam.chainlightning = chainlightning;
-            beam.thunderstorm = thunderstorm;
+            beam.setBeam(this);
             beam.setElements(this);
-            currentScreen.spellManager.toAdd(beam);
-            currentScreen.spellManager.toRemove(this);
+            screen.spellManager.toAdd(beam);
+            screen.spellManager.toRemove(this);
 
         }
 
+    }
+
+    public void setBeam(EnergyBeam_Spell parent) {
+        frostbolt = parent.frostbolt;
+        chargedbolts = parent.chargedbolts;
+        frozenorb = parent.frozenorb;
+        rift = parent.rift;
+        chainlightning = parent.chainlightning;
+        thunderstorm = parent.thunderstorm;
+        flamejet = parent.flamejet;
+        fireball = parent.fireball;
+        overheat = parent.overheat;
+        arcaneMissile = parent.arcaneMissile;
     }
 
     @Override
@@ -60,6 +78,26 @@ public class EnergyBeam_Spell extends Spell {
         int dmg = baseDmg;
         dmg += getLvl() * 20;
         return dmg;
+    }
+
+    public void setup() {
+        if(arcaneMissile) {
+            ArrayList<Monster> inRange = SpellUtils.findMonstersInRangeOfVector(player.pawn.getPosition(), 15, true);
+            Monster target = null;
+            if(!inRange.isEmpty()) {
+                float max = 0;
+                for(Monster monster : inRange) {
+                    if(monster.heavy && monster.hp > max) {
+                        target = monster;
+                        max = monster.hp;
+                    }
+                }
+            }
+
+            if(target != null) {
+                targetPosition = target.body.getPosition();
+            }
+        }
     }
 
 }

@@ -1,0 +1,140 @@
+{
+com.badlogic.gdx.graphics.g2d.BitmapFont: {
+	SimpleFont26: {
+		file: SimpleFont_AllCaps(8).fnt
+		scaledSize: -1
+		markupEnabled: false
+		flip: false
+	}
+}
+com.badlogic.gdx.graphics.Color: {
+	Selected_Color: {
+		r: 0.039215688
+		g: 1
+		b: 0.23137255
+		a: 1
+	}
+	White: {
+		r: 1
+		g: 1
+		b: 1
+		a: 1
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
+	default: {
+		imageUp: Panel_Red
+	}
+	crystal: {
+		imageUp: Panel_Crystal
+	}
+	empyrean: {
+		imageUp: Panel_Empyrean
+	}
+	energy: {
+		imageUp: Panel_Energy
+	}
+	explosives: {
+		imageUp: Panel_Explosives
+	}
+	flare: {
+		imageUp: Panel_Flare
+	}
+	force: {
+		imageUp: Panel_Force
+	}
+	gravity: {
+		imageUp: Panel_Gravity
+	}
+	ice: {
+		imageUp: Panel_Ice
+	}
+	luck: {
+		imageUp: Panel_Luck
+	}
+	projectiles: {
+		imageUp: Panel_Projectiles
+	}
+	red: {
+		imageUp: Panel_Red
+	}
+	regen: {
+		imageUp: Panel_Regen
+	}
+	sharp: {
+		imageUp: Panel_SharpProjectiles
+	}
+	space: {
+		imageUp: Panel_Space
+	}
+	voltage: {
+		imageUp: Panel_Voltage
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
+	default: {
+		font: SimpleFont26
+		up: Panel_Space
+	}
+	crystal: {
+		font: SimpleFont26
+		up: Panel_Crystal
+	}
+	empyrean: {
+		font: SimpleFont26
+		up: Panel_Empyrean
+	}
+	energy: {
+		font: SimpleFont26
+		up: Panel_Energy
+	}
+	explosives: {
+		font: SimpleFont26
+		up: Panel_Explosives
+	}
+	flare: {
+		font: SimpleFont26
+		up: Panel_Flare
+	}
+	force: {
+		font: SimpleFont26
+		up: Panel_Force
+	}
+	gravity: {
+		font: SimpleFont26
+		up: Panel_Gravity
+	}
+	ice: {
+		font: SimpleFont26
+		up: Panel_Ice
+	}
+	luck: {
+		font: SimpleFont26
+		up: Panel_Luck
+	}
+	projectiles: {
+		font: SimpleFont26
+		up: Panel_Projectiles
+	}
+	red: {
+		font: SimpleFont26
+		up: Panel_Red
+	}
+	regen: {
+		font: SimpleFont26
+		up: Panel_Regen
+	}
+	sharp: {
+		font: SimpleFont26
+		up: Panel_SharpProjectiles
+	}
+	space: {
+		font: SimpleFont26
+		up: Panel_Space
+	}
+	voltage: {
+		font: SimpleFont26
+		up: Panel_Voltage
+	}
+}
+}

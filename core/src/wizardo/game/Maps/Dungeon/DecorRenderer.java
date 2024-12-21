@@ -1,5 +1,6 @@
 package wizardo.game.Maps.Dungeon;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -32,6 +33,7 @@ public class DecorRenderer {
                     float x = rectObject.getRectangle().x + chunk.x_pos;
                     float y = rectObject.getRectangle().y + chunk.y_pos;
                     frame.setPosition(x, y);
+                    frame.getTexture().setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
                     chunk.screen.addSortedSprite(frame);
                     chunk.screen.centerSort(frame, y + 30);
                 }

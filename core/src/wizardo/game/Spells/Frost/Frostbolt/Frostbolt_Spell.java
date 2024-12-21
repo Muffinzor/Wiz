@@ -21,7 +21,7 @@ public class Frostbolt_Spell extends Spell {
         speed = 7;
         radius = 25;
         baseDmg = 15;
-        cooldown = 1f;
+        cooldown = 0.6f;
 
         main_element = SpellUtils.Spell_Element.FROST;
 
@@ -32,6 +32,8 @@ public class Frostbolt_Spell extends Spell {
 
         if(targetPosition != null) {
             projectiles = 1;
+        } else {
+            projectiles = 2 + getLvl()/2;
         }
 
         for (int i = 0; i < projectiles; i++) {

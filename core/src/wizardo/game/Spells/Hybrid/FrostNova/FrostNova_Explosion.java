@@ -82,9 +82,9 @@ public class FrostNova_Explosion extends FrostNova_Spell {
     }
     public void createLight() {
         light = screen.lightManager.pool.getLight();
-        light.setLight(0,0.35f, 0.75f, 1, 250, targetPosition);
+        light.setLight(0,0.35f, 0.75f, 1, 350, targetPosition);
         screen.lightManager.addLight(light);
-        light.dimKill(0.01f);
+        light.dimKill(0.005f);
     }
 
     public void frostbolts(Monster monster) {
@@ -95,9 +95,6 @@ public class FrostNova_Explosion extends FrostNova_Spell {
                 Frostbolt_Explosion explosion = new Frostbolt_Explosion();
                 explosion.targetPosition = SpellUtils.getRandomVectorInRadius(monster.body.getPosition(), 0.5f);
                 explosion.setElements(this);
-                if(MathUtils.randomBoolean()) {
-                    explosion.anim_element = SpellUtils.Spell_Element.FIRE;
-                }
                 screen.spellManager.toAdd(explosion);
             }
         }

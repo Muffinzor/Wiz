@@ -22,7 +22,8 @@ public class TEST_MELEE extends MonsterMelee {
         massValue = 5f;
 
         bodyRadius = 10;
-        height = 32;
+        height = 40;
+        width = 20;
 
         stateTime = (float) Math.random();
         walk_anim = SkeletonAnims.skelly_walk_T1;

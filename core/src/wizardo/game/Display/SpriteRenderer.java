@@ -4,16 +4,14 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import wizardo.game.Screens.BaseScreen;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class SpriteRenderer {
 
     public ArrayList<Sprite> under_sprites;
     public ArrayList<Sprite> regular_sorted_sprites;
     public ArrayList<Sprite> over_sprites;
+    public ArrayList<Sprite> post_lightning_sprites;
     public ArrayList<Sprite> ui_sprites;
     public Map<Sprite, Float> spritePositionMap;
     public SpritePool pool;
@@ -24,6 +22,7 @@ public class SpriteRenderer {
         under_sprites = new ArrayList<>();
         over_sprites = new ArrayList<>();
         regular_sorted_sprites = new ArrayList<>();
+        post_lightning_sprites = new ArrayList<>();
         spritePositionMap = new HashMap<>();
         ui_sprites = new ArrayList<>();
         pool = new SpritePool();
@@ -57,6 +56,19 @@ public class SpriteRenderer {
         batch.end();
     }
 
+    public void renderPostLightningSprites() {
+        roundSpritePositions(post_lightning_sprites);
+        batch.begin();
+        batch.setProjectionMatrix(screen.mainCamera.combined);
+
+        for (Sprite sprite : post_lightning_sprites) {
+            sprite.draw(batch);
+            pool.poolSprite(sprite);
+        }
+
+        batch.end();
+    }
+
     public void renderUI() {
         batch.begin();
         batch.setProjectionMatrix(screen.uiCamera.combined);
@@ -75,6 +87,7 @@ public class SpriteRenderer {
         over_sprites.clear();
         regular_sorted_sprites.clear();
         ui_sprites.clear();
+        post_lightning_sprites.clear();
     }
 
     public void sortRegularSprites() {

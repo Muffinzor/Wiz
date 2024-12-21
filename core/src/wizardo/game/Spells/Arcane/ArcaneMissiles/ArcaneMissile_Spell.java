@@ -12,6 +12,8 @@ public class ArcaneMissile_Spell extends Spell {
     public boolean rift;
     public boolean riftBolts; //for Missiles + rifts + chargedbolts
     public boolean icespear;
+    public boolean overheat;
+    public boolean flamejet;
 
 
     public ArcaneMissile_Spell() {
@@ -31,7 +33,7 @@ public class ArcaneMissile_Spell extends Spell {
 
         if(delta > 0) {
 
-            int missiles = 1 + player.spellbook.arcanemissile_lvl / 3;
+            int missiles = 2 + player.spellbook.arcanemissile_lvl / 4;
             if(targetPosition != null) {
                 missiles = 1;
             }
@@ -50,8 +52,10 @@ public class ArcaneMissile_Spell extends Spell {
 
     public void setMissile(ArcaneMissile_Spell parent) {
         rift = parent.rift;
+        flamejet = parent.flamejet;
         riftBolts = parent.riftBolts;
         icespear = parent.icespear;
+        overheat = parent.overheat;
     }
 
     @Override

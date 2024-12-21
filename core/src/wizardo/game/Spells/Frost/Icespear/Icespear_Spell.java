@@ -36,7 +36,7 @@ public class Icespear_Spell extends Spell {
 
         baseDmg = 32;
         speed = 400f/PPM;
-        cooldown = 1.5f;
+        cooldown = 0.8f;
 
         main_element = SpellUtils.Spell_Element.FROST;
 

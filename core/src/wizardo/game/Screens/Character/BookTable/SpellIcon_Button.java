@@ -51,12 +51,80 @@ public class SpellIcon_Button extends ImageButton {
                 }
                 break;
 
+            case "Overheat" :
+                switch(spell.anim_element) {
+                    case FIRE -> style = skin.get("overheat_fire", ImageButtonStyle.class);
+                    case FROST -> style = skin.get("overheat_frost", ImageButtonStyle.class);
+                    case LIGHTNING -> style = skin.get("overheat_lightning", ImageButtonStyle.class);
+                }
+                break;
+
+            case "Charged Bolts" :
+                switch(spell.anim_element) {
+                    case FIRE -> style = skin.get("chargedbolts_fire", ImageButtonStyle.class);
+                    case FROST, COLDLITE -> style = skin.get("chargedbolts_frost", ImageButtonStyle.class);
+                    case ARCANE -> style = skin.get("chargedbolts_arcane", ImageButtonStyle.class);
+                    case LIGHTNING -> style = skin.get("chargedbolts_lightning", ImageButtonStyle.class);
+                }
+                break;
+
             case "Chain Lightning" :
                 switch(spell.anim_element) {
                     case FIRE -> style = skin.get("chainlightning_fire", ImageButtonStyle.class);
                     case FROST -> style = skin.get("chainlightning_frost", ImageButtonStyle.class);
                     case ARCANE -> style = skin.get("chainlightning_arcane", ImageButtonStyle.class);
                     case LIGHTNING -> style = skin.get("chainlightning_lightning", ImageButtonStyle.class);
+                }
+                break;
+
+            case "Thunderstorm" :
+                switch(spell.anim_element) {
+                    case FIRE -> style = skin.get("thunderstorm_fire", ImageButtonStyle.class);
+                    case FROST -> style = skin.get("thunderstorm_frost", ImageButtonStyle.class);
+                    case ARCANE -> style = skin.get("thunderstorm_arcane", ImageButtonStyle.class);
+                    case LIGHTNING -> style = skin.get("thunderstorm_lightning", ImageButtonStyle.class);
+                }
+                break;
+
+            case "Frostbolts" :
+                switch(spell.anim_element) {
+                    case FIRE -> style = skin.get("frostbolt_fire", ImageButtonStyle.class);
+                    case FROST -> style = skin.get("frostbolt_frost", ImageButtonStyle.class);
+                }
+                break;
+
+            case "Ice Spear" :
+                switch(spell.anim_element) {
+                    case FIRE -> style = skin.get("icespear_fire", ImageButtonStyle.class);
+                    case FROST -> style = skin.get("icespear_frost", ImageButtonStyle.class);
+                    case ARCANE -> style = skin.get("icespear_arcane", ImageButtonStyle.class);
+                    case LIGHTNING -> style = skin.get("icespear_lightning", ImageButtonStyle.class);
+                }
+                break;
+
+            case "Frozen Orb" :
+                switch(spell.anim_element) {
+                    case FIRE -> style = skin.get("frozenorb_fire", ImageButtonStyle.class);
+                    case FROST -> style = skin.get("frozenorb_frost", ImageButtonStyle.class);
+                    case ARCANE -> style = skin.get("frozenorb_arcane", ImageButtonStyle.class);
+                    case LIGHTNING -> style = skin.get("frozenorb_lightning", ImageButtonStyle.class);
+                    case COLDLITE -> style = skin.get("frozenorb_coldlite", ImageButtonStyle.class);
+                }
+                break;
+
+            case "Arcane Missiles" :
+                switch(spell.anim_element) {
+                    case FIRE -> style = skin.get("arcanemissile_fire", ImageButtonStyle.class);
+                    case ARCANE -> style = skin.get("arcanemissile_arcane", ImageButtonStyle.class);
+                }
+                break;
+
+            case "Energy Beam" :
+                switch(spell.anim_element) {
+                    case FIRE -> style = skin.get("energybeam_fire", ImageButtonStyle.class);
+                    case FROST -> style = skin.get("energybeam_frost", ImageButtonStyle.class);
+                    case ARCANE -> style = skin.get("energybeam_arcane", ImageButtonStyle.class);
+                    case LIGHTNING -> style = skin.get("energybeam_lightning", ImageButtonStyle.class);
                 }
                 break;
 
@@ -67,6 +135,76 @@ public class SpellIcon_Button extends ImageButton {
                     case ARCANE -> style = skin.get("rift_arcane", ImageButtonStyle.class);
                     case LIGHTNING -> style = skin.get("rift_lightning", ImageButtonStyle.class);
                 }
+                break;
+
+            case "Lasers" :
+                switch(spell.anim_element) {
+                    case FIRE -> style = skin.get("laser_fire", ImageButtonStyle.class);
+                    case FROST -> style = skin.get("laser_frost", ImageButtonStyle.class);
+                    case ARCANE -> style = skin.get("laser_arcane", ImageButtonStyle.class);
+                    case LIGHTNING -> style = skin.get("laser_lightning", ImageButtonStyle.class);
+                }
+                break;
+
+            case "Blizzard" :
+                switch(spell.anim_element) {
+                    case FROST -> style = skin.get("blizzard_frost", ImageButtonStyle.class);
+                    case ARCANE -> style = skin.get("blizzard_arcane", ImageButtonStyle.class);
+                }
+                break;
+
+            case "Dragonbreath" :
+                switch(spell.anim_element) {
+                    case FROST -> style = skin.get("dragonbreath_frost", ImageButtonStyle.class);
+                    case FIRE -> style = skin.get("dragonbreath_fire", ImageButtonStyle.class);
+                }
+                break;
+
+            case "Meteor Shower" :
+                switch(spell.anim_element) {
+                    case LIGHTNING -> style = skin.get("meteorshower_lightning", ImageButtonStyle.class);
+                    case FIRE -> style = skin.get("meteorshower_fire", ImageButtonStyle.class);
+                }
+                break;
+
+            case "Arcane Artillery" :
+                switch(spell.anim_element) {
+                    case FROST -> style = skin.get("artillery_frost", ImageButtonStyle.class);
+                    case ARCANE -> style = skin.get("artillery_arcane", ImageButtonStyle.class);
+                    case FIRE -> style = skin.get("artillery_fire", ImageButtonStyle.class);
+                }
+                break;
+
+            case "Energy Rain" :
+                switch(spell.anim_element) {
+                    case FROST -> style = skin.get("energyrain_frost", ImageButtonStyle.class);
+                    case ARCANE -> style = skin.get("energyrain_arcane", ImageButtonStyle.class);
+                    case FIRE -> style = skin.get("energyrain_fire", ImageButtonStyle.class);
+                }
+                break;
+
+            case "Frost Nova" :
+                style = skin.get("frostnova_frost", ImageButtonStyle.class);
+                break;
+
+            case "Orbit" :
+                style = skin.get("orbitingice", ImageButtonStyle.class);
+                break;
+
+            case "Lightning Hands" :
+                style = skin.get("lightninghands", ImageButtonStyle.class);
+                break;
+
+            case "Forked Lightning" :
+                style = skin.get("forkedlightning", ImageButtonStyle.class);
+                break;
+
+            case "Celestial Strike" :
+                style = skin.get("celestialstrike", ImageButtonStyle.class);
+                break;
+
+            case "Repulsion Field" :
+                style = skin.get("repulsionfield", ImageButtonStyle.class);
                 break;
         }
 

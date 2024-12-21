@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import static wizardo.game.Screens.BaseScreen.controllerActive;
+import static wizardo.game.Spells.SpellUtils.Spell_Element.FIRELITE;
 import static wizardo.game.Spells.SpellUtils.Spell_Element.LIGHTNING;
 import static wizardo.game.Wizardo.player;
 
@@ -33,6 +34,8 @@ public class ForkedLightning_Spell extends Spell {
         aimReach = 4;
 
         cooldown = 0.1f;
+
+        anim_element = FIRELITE;
 
     }
 

@@ -17,6 +17,7 @@ import wizardo.game.Utils.BodyFactory;
 
 import static wizardo.game.Spells.SpellUtils.Spell_Element.FROST;
 import static wizardo.game.Utils.Constants.PPM;
+import static wizardo.game.Wizardo.player;
 import static wizardo.game.Wizardo.world;
 
 public class CelestialStrike_Hit extends CelestialStrike_Spell {
@@ -32,8 +33,6 @@ public class CelestialStrike_Hit extends CelestialStrike_Spell {
 
         flipX = MathUtils.randomBoolean();
 
-        anim_element = FROST;
-
     }
 
     public void update(float delta) {
@@ -41,14 +40,18 @@ public class CelestialStrike_Hit extends CelestialStrike_Spell {
             initialized = true;
             createBody();
             createLight();
-            createOrb();
+            //createOrb();
         }
         drawSprite();
         stateTime += delta;
 
-        if(body.isActive() && stateTime >= 0.2f) {
+        if(body.isActive() && stateTime >= 0.1f) {
             body.setActive(false);
+            explosion();
+            chargedbolts();
         }
+
+        frostbolts(delta);
 
         if(stateTime >= anim.getAnimationDuration()) {
             screen.spellManager.toRemove(this);
@@ -58,15 +61,21 @@ public class CelestialStrike_Hit extends CelestialStrike_Spell {
 
     public void handleCollision(Monster monster) {
         dealDmg(monster);
+
+        float freezerate = 0.75f - 0.05f * player.spellbook.frozenorb_lvl;
+        if(Math.random() >= freezerate) {
+            monster.applyFreeze(3, 6);
+        }
     }
 
     public void drawSprite() {
         Sprite frame = screen.getSprite();
         frame.set(anim.getKeyFrame(stateTime, false));
         frame.setOrigin(frame.getWidth()/2f, 0);
-        frame.setScale(1.2f);
-        frame.setCenter(targetPosition.x * PPM, targetPosition.y * PPM + 115);
+        frame.setScale(1.4f);
+        frame.setCenter(targetPosition.x * PPM, targetPosition.y * PPM + 100);
         frame.flip(flipX, false);
+        screen.centerSort(frame, targetPosition.y * PPM);
         screen.addSortedSprite(frame);
     }
 
@@ -79,24 +88,50 @@ public class CelestialStrike_Hit extends CelestialStrike_Spell {
         light = screen.lightManager.pool.getLight();
         light.setLight(0, 0.5f, 0.65f, 1, 250, targetPosition);
         screen.lightManager.addLight(light);
-        light.dimKill(0.035f);
+        light.dimKill(0.02f);
+    }
+
+    public void explosion() {
+        CelestialStrike_Explosion explosion = new CelestialStrike_Explosion(body.getPosition());
+        screen.spellManager.toAdd(explosion);
+    }
+
+    public void frostbolts(float delta) {
+        if(frostbolts) {
+            float interval = 0.30f - 0.024f * player.spellbook.frostbolt_lvl;
+            float radius = 2f + 0.1f * player.spellbook.frostbolt_lvl;
+            if(interval < 0.06f) {
+                interval = 0.06f;
+            }
+            if (stateTime % interval <= delta) {
+                Frostbolt_Explosion explosion = new Frostbolt_Explosion();
+                explosion.targetPosition = SpellUtils.getClearRandomPosition(body.getPosition(), radius);
+                explosion.setElements(this);
+                screen.spellManager.toAdd(explosion);
+            }
+        }
+    }
+
+    public void chargedbolts() {
+        if(chargedbolts) {
+            int quantity = 6 + player.spellbook.chargedbolt_lvl;
+            for (int i = 0; i < quantity; i++) {
+                ChargedBolts_Spell bolt = new ChargedBolts_Spell();
+                bolt.spawnPosition = new Vector2(body.getPosition());
+                bolt.targetPosition = SpellUtils.getRandomVectorInRadius(body.getPosition(), 2);
+                bolt.setElements(this);
+                screen.spellManager.toAdd(bolt);
+            }
+        }
     }
 
     public void createOrb() {
         Frozenorb_Spell orb = new Frozenorb_Spell();
 
-        if(frostbolts) {
-            orb.nested_spell = new Frostbolt_Explosion();
-            orb.nested_spell.lightAlpha = 0.4f;
-        } else if(chargedbolts) {
-            orb.nested_spell = new ChargedBolts_Spell();
-        } else if(chain) {
-            orb.nested_spell = new ChainLightning_Spell();
-        }
         orb.speed = 0;
+        orb.lightAlpha = 0.0f;
         orb.anim_element = SpellUtils.Spell_Element.LIGHTNING;
-        orb.textColor = Skins.light_teal;
-        orb.duration = 1.5f;
+        orb.duration = 0.55f;
         orb.spawnPosition = new Vector2(targetPosition);
         screen.spellManager.toAdd(orb);
     }

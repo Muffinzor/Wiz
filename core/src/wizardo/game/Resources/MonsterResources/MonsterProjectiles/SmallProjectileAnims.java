@@ -14,11 +14,20 @@ public class SmallProjectileAnims {
     public static Animation<Sprite> green_hit_anim;
     public static String green_hit_path = "MonsterProjectiles/Small_Proj/green_hit.atlas";
 
+    public static Animation<Sprite> purple_hit_anim;
+    public static String purple_hit_path = "MonsterProjectiles/Small_Proj/purple_hit.atlas";
+
 
     public static void loadAnimations() {
 
-        TextureAtlas atlas = assetManager.get(green_hit_path, TextureAtlas.class);
+        TextureAtlas purple_atlas = assetManager.get(purple_hit_path, TextureAtlas.class);
+        Sprite[] purp_hit = new Sprite[60];
+        for (int i = 0; i < purp_hit.length; i++) {
+            purp_hit[i] = purple_atlas.createSprite("green" + (i+1));
+        }
+        purple_hit_anim = new Animation<>(0.015f, purp_hit);
 
+        TextureAtlas atlas = assetManager.get(green_hit_path, TextureAtlas.class);
         Sprite[] green_hit = new Sprite[60];
         for (int i = 0; i < green_hit.length; i++) {
             green_hit[i] = atlas.createSprite("green" + (i+1));
@@ -29,6 +38,7 @@ public class SmallProjectileAnims {
 
     public static void loadAtlas() {
         assetManager.load(green_hit_path, TextureAtlas.class);
+        assetManager.load(purple_hit_path, TextureAtlas.class);
     }
 
 }

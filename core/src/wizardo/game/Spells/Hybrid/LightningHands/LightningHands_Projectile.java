@@ -39,8 +39,7 @@ public class LightningHands_Projectile extends LightningHands_Spell {
         flipY = MathUtils.randomBoolean();
 
         anim = LightningHandsAnims.lightning_branch_anim;
-        textColor = Skins.light_orange;
-        main_element = SpellUtils.Spell_Element.LIGHTNING;
+
         bonus_element = FIRE;
         anim_element = FIRE;
 
@@ -79,6 +78,13 @@ public class LightningHands_Projectile extends LightningHands_Spell {
         dealDmg(monster);
         chainlightning(monster);
         chargedbolts(monster);
+        if(thunderstorm) {
+            float str = 2.8f + 0.4f * player.spellbook.thunderstorm_lvl;
+            float duration = 0.18f + 0.04f * player.spellbook.thunderstorm_lvl;
+            float decay = 0.91f + 0.0025f * player.spellbook.thunderstorm_lvl;
+            Vector2 direction = monster.body.getPosition().sub(player.pawn.body.getPosition());
+            monster.movementManager.applyPush(direction, str, duration, decay);
+        }
     }
 
 

@@ -2,6 +2,7 @@ package wizardo.game.Spells.Hybrid.LightningHands;
 
 import com.badlogic.gdx.math.Vector2;
 import wizardo.game.Spells.Spell;
+import wizardo.game.Spells.SpellUtils;
 
 import static wizardo.game.Wizardo.player;
 
@@ -20,7 +21,10 @@ public class LightningHands_Spell extends Spell {
 
         name = "Lightning Hands";
 
-        cooldown = 2;
+        cooldown = 3.2f;
+
+        anim_element = SpellUtils.Spell_Element.FIRELITE;
+        main_element = SpellUtils.Spell_Element.FIRELITE;
 
     }
 
@@ -42,6 +46,7 @@ public class LightningHands_Spell extends Spell {
             Vector2 dir = direction.cpy().rotateDeg(startAngle + i * angleStep);
             LightningHands_Projectile lightning = new LightningHands_Projectile(dir);
             lightning.setBolt(this);
+            lightning.setElements(this);
             screen.spellManager.toAdd(lightning);
         }
         screen.spellManager.toRemove(this);
@@ -58,6 +63,7 @@ public class LightningHands_Spell extends Spell {
         this.lightAlpha = parent.lightAlpha;
         this.chainlightning = parent.chainlightning;
         this.chargedbolts = parent.chargedbolts;
+        this.thunderstorm = parent.thunderstorm;
     }
 
     @Override

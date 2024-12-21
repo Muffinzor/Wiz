@@ -15,7 +15,7 @@ public class Rifts_Spell extends Spell {
 
     public int maxRifts = 20;
     public int riftsCast = 0;
-    public float interval = 0.05f;
+    public float interval = 0.065f;
     public float spread = 4.5f;
     public float radius = 50;
 
@@ -23,6 +23,8 @@ public class Rifts_Spell extends Spell {
     public boolean chargedbolt;
     public boolean chainlightning;
     public boolean arcanemissiles;
+    public boolean flamejet;
+    public boolean overheat;
 
     public Rifts_Spell() {
 
@@ -124,6 +126,8 @@ public class Rifts_Spell extends Spell {
         chargedbolt = parent.chargedbolt;
         chainlightning = parent.chainlightning;
         arcanemissiles = parent.arcanemissiles;
+        flamejet = parent.flamejet;
+        overheat = parent.overheat;
         nested_spell = parent.nested_spell;
         setElements(parent);
     }
@@ -131,7 +135,12 @@ public class Rifts_Spell extends Spell {
     @Override
     public int getDmg() {
         int dmg = baseDmg;
-        dmg += 4 * getLvl();
+        dmg += 8 * getLvl();
+
+        if(overheat) {
+            dmg += 100;
+            dmg += 20 * player.spellbook.overheat_lvl;
+        }
         return dmg;
     }
 }

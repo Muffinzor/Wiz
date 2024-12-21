@@ -22,6 +22,7 @@ public class Rift_Zone extends Rifts_Spell {
             pickAnim();
             initialized = true;
             createLight();
+            createPullBody();
         }
 
         drawSprite();
@@ -42,13 +43,26 @@ public class Rift_Zone extends Rifts_Spell {
         Sprite frame = screen.getSprite();
         frame.set(anim.getKeyFrame(stateTime, false));
         frame.setCenter(targetPosition.x * PPM, targetPosition.y * PPM);
-        frame.setScale(0.8f);
+        if(overheat) {
+            frame.setScale(1.8f);
+        } else {
+            frame.setScale(0.8f);
+        }
         screen.addUnderSprite(frame);
     }
 
+    public void createPullBody() {
+        Rift_PullBody pull = new Rift_PullBody(targetPosition, radius + 10, overheat);
+        screen.spellManager.toAdd(pull);
+    }
+
     public void createLight() {
+        float lightRadius = 80;
+        if(overheat) {
+            lightRadius = 250;
+        }
         light = screen.lightManager.pool.getLight();
-        light.setLight(1, .4f, .6f, 0.75f, 80, targetPosition);
+        light.setLight(1, .4f, .6f, 0.75f, lightRadius, targetPosition);
         light.dimKill(0.015f);
         screen.lightManager.addLight(light);
     }
@@ -71,6 +85,11 @@ public class Rift_Zone extends Rifts_Spell {
                 anim = RiftsAnims.rift_zone_anim_lightning;
                 red = 0.5f;
                 green = 0.25f;
+            }
+            case FIRE -> {
+                anim = RiftsAnims.rift_zone_anim_fire;
+                red = 0.8f;
+                green = 0.15f;
             }
         }
     }

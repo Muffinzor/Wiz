@@ -34,10 +34,16 @@ public class SmallLaser_Explosion extends SmallLaser_Projectile {
 
     @Override
     public void pickAnim() {
-        anim = SmallProjectileAnims.green_hit_anim;
-        red = 0.2f;
-        green = 0.9f;
-        blue = 0.25f;
+        if(sentBack) {
+            anim = SmallProjectileAnims.purple_hit_anim;
+            red = 0.6f;
+            blue = 0.9f;
+        } else {
+            anim = SmallProjectileAnims.green_hit_anim;
+            red = 0.2f;
+            green = 0.9f;
+            blue = 0.25f;
+        }
     }
 
     @Override
@@ -61,7 +67,7 @@ public class SmallLaser_Explosion extends SmallLaser_Projectile {
         light = screen.lightManager.pool.getLight();
         light.setLight(red, green, blue, 1, 75, spawnPosition);
         screen.lightManager.addLight(light);
-        light.dimKill(0.01f);
+        light.dimKill(0.02f);
     }
 
     public void adjustLight() {

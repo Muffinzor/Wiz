@@ -45,5 +45,155 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 	chainlightning_lightning: {
 		imageUp: chainlightning_lightning
 	}
+	thunderstorm_fire: {
+		imageUp: thunderstorm_fire
+	}
+	thunderstorm_frost: {
+		imageUp: thunderstorm_frost_selected_over
+	}
+	thunderstorm_arcane: {
+		imageUp: thunderstorm_arcane
+	}
+	thunderstorm_lightning: {
+		imageUp: thunderstorm_lightning_selected_over
+	}
+	chargedbolts_fire: {
+		imageUp: chargedbolt_fire
+	}
+	chargedbolts_frost: {
+		imageUp: chargedbolt_frost
+	}
+	chargedbolts_arcane: {
+		imageUp: chargedbolt_arcane
+	}
+	chargedbolts_lightning: {
+		imageUp: chargedbolt_lightning
+	}
+	frozenorb_fire: {
+		imageUp: frozenorb_fire
+	}
+	frozenorb_frost: {
+		imageUp: frozenorb_frost
+	}
+	frozenorb_arcane: {
+		imageUp: frozenorb_arcane
+	}
+	frozenorb_lightning: {
+		imageUp: frozenorb_lightning
+	}
+	frozenorb_coldlite: {
+		imageUp: frozenorb_coldlite
+	}
+	laser_fire: {
+		imageUp: laser_fire
+	}
+	laser_frost: {
+		imageUp: laser_frost
+	}
+	laser_arcane: {
+		imageUp: laser_arcane
+	}
+	laser_lightning: {
+		imageUp: laser_lightning
+	}
+	frostbolt_fire: {
+		imageUp: frostbolt_fire
+	}
+	frostbolt_frost: {
+		imageUp: frostbolt_frost
+	}
+	icespear_fire: {
+		imageUp: icespear_fire
+	}
+	icespear_frost: {
+		imageUp: icespear_frost
+	}
+	icespear_arcane: {
+		imageUp: icespear_arcane
+	}
+	icespear_lightning: {
+		imageUp: icespear_lightning
+	}
+	energybeam_fire: {
+		imageUp: energybeam_fire
+	}
+	energybeam_frost: {
+		imageUp: energybeam_frost
+	}
+	energybeam_arcane: {
+		imageUp: energybeam_arcane
+	}
+	energybeam_lightning: {
+		imageUp: energybeam_lightning
+	}
+	blizzard_frost: {
+		imageUp: blizzard_frost
+	}
+	blizzard_arcane: {
+		imageUp: blizzard_arcane
+	}
+	arcanemissile_fire: {
+		imageUp: arcanemissile_fire
+	}
+	arcanemissile_arcane: {
+		imageUp: arcanemissile_arcane
+	}
+	overheat_frost: {
+		imageUp: overheat_frost
+	}
+	overheat_fire: {
+		imageUp: overheat_fire
+	}
+	overheat_lightning: {
+		imageUp: overheat_lightning
+	}
+	dragonbreath_frost: {
+		imageUp: dragonbreath_frost
+	}
+	dragonbreath_fire: {
+		imageUp: dragonbreath_fire
+	}
+	frostnova_frost: {
+		imageUp: frostnova_frost
+	}
+	forkedlightning: {
+		imageUp: forked_lightning
+	}
+	lightninghands: {
+		imageUp: lightning_hands
+	}
+	celestialstrike: {
+		imageUp: celestial_strike
+	}
+	meteorshower_fire: {
+		imageUp: meteorshower_fire
+	}
+	meteorshower_lightning: {
+		imageUp: meteorshower_lightning
+	}
+	repulsionfield: {
+		imageUp: repulsionfield
+	}
+	artillery_fire: {
+		imageUp: arcaneartillery_fire
+	}
+	artillery_frost: {
+		imageUp: arcaneartillery_frost
+	}
+	artillery_arcane: {
+		imageUp: arcaneartillery_arcane
+	}
+	energyrain_fire: {
+		imageUp: energyrain_fire
+	}
+	energyrain_frost: {
+		imageUp: energyrain_frost
+	}
+	energyrain_arcane: {
+		imageUp: energyrain_arcane
+	}
+	orbitingice: {
+		imageUp: orbitingice
+	}
 }
 }

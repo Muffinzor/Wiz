@@ -32,7 +32,6 @@ public class MasteryButton extends CheckBox {
         pickStyle();
         adjustSize();
         addClickListener(spell);
-
     }
 
     public void pickStyle() {

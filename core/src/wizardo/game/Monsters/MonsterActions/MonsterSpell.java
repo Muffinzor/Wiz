@@ -27,6 +27,8 @@ public abstract class MonsterSpell implements Cloneable {
 
     public BattleScreen screen;
 
+    public boolean sentBack;     //Repulsion Field flag
+
     public MonsterSpell(Monster monster) {
         this.originMonster = monster;
     }

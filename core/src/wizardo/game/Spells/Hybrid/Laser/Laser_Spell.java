@@ -29,7 +29,7 @@ public class Laser_Spell extends Spell {
 
         name = "Lasers";
 
-        cooldown = 1.5f;
+        cooldown = 0.8f;
         speed = 15f;
 
         baseDmg = 10;
@@ -75,7 +75,7 @@ public class Laser_Spell extends Spell {
 
         if(originBody == null) {
             originBody = player.pawn.body;
-            lasers = 3 + (player.spellbook.arcanemissile_lvl-1)/2;
+            lasers = 3 + player.spellbook.arcanemissile_lvl/2;
         } else {
             lasers = 1;
         }
@@ -95,6 +95,7 @@ public class Laser_Spell extends Spell {
         rifts = parent.rifts;
         chargedbolt = parent.chargedbolt;
         thunderstorm = parent.thunderstorm;
+        flamejet = parent.flamejet;
     }
 
     public void selectTarget() {

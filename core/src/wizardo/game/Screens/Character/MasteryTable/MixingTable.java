@@ -28,6 +28,8 @@ public class MixingTable extends MenuTable {
     public ImageButton forgetButton;
 
     public Table labelTable;
+    public Label spell_dominance;
+    public Label elemental_dominance;
     public Label spell_parts;
     public Label status;
 
@@ -70,10 +72,31 @@ public class MixingTable extends MenuTable {
         stage.addActor(labelTable);
     }
     public void createLabels() {
-        spell_parts = new Label("Parts : " + getPartsString(), skin);
         labelTable.top().left();
-        labelTable.add(spell_parts).align(Align.left);
 
+        String spell;
+        if(!parts.isEmpty()) {
+            spell = getMixedSpell(parts).name;
+        } else {
+            spell = "";
+        }
+        spell_dominance = new Label("Spell Dominance : " + spell, skin);
+        labelTable.add(spell_dominance).align(Align.left);
+        labelTable.row();
+
+
+        String element;
+        if(!parts.isEmpty()) {
+            element = getMixedSpell(parts).anim_element.toString().toLowerCase();
+        } else {
+            element = "";
+        }
+        elemental_dominance = new Label("Elemental Dominance :" + element, skin);
+        labelTable.add(elemental_dominance).align(Align.left);
+        labelTable.row();
+
+        spell_parts = new Label("Parts : " + getPartsString(), skin);
+        labelTable.add(spell_parts).align(Align.left);
         labelTable.row();
 
         status = new Label("Status : ", skin);
@@ -120,6 +143,13 @@ public class MixingTable extends MenuTable {
             mixButton.setDisabled(true);
         }
 
+        if(!parts.isEmpty()) {
+            spell_dominance.setText("Spell Dominance : " + getMixedSpell(parts).name);
+            elemental_dominance.setText("Elemental Dominance : " + getMixedSpell(parts).anim_element.toString().toLowerCase());
+        } else {
+            spell_dominance.setText("Spell Dominance : ");
+            elemental_dominance.setText("Elemental Dominance : ");
+        }
         spell_parts.setText("Parts : " + getPartsString());
     }
 

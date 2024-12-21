@@ -23,6 +23,7 @@ public class TEST_RANGED extends MonsterRanged {
         massValue = 75;
 
         bodyRadius = 12;
+        width = 24;
         height = 32;
 
         stateTime = (float) Math.random();

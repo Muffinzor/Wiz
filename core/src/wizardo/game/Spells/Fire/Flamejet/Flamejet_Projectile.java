@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Resources.SpellAnims.FlamejetAnims;
+import wizardo.game.Spells.Arcane.Rifts.Rift_Zone;
 import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Explosion;
 import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyFactory;
@@ -33,7 +34,6 @@ public class Flamejet_Projectile extends Flamejet_Spell {
 
     public void update(float delta) {
         if(!initialized) {
-            lightAlpha = 0.75f - (1/cooldown) * 0.015f;
             initialized = true;
             pickAnim();
             createBody();
@@ -64,6 +64,7 @@ public class Flamejet_Projectile extends Flamejet_Spell {
     public void handleCollision(Monster monster) {
         dealDmg(monster);
         frostbolts(monster);
+        rift(monster);
     }
 
     public void drawFrame() {
@@ -97,7 +98,7 @@ public class Flamejet_Projectile extends Flamejet_Spell {
 
 
         if(!icespear) {
-            float angleVariation = Math.min(5f / cooldown, 25);
+            float angleVariation = Math.min(quantity * 4, 16);
             float randomAngle = MathUtils.random(-angleVariation, angleVariation);
             direction.rotateDeg(randomAngle);
         }
@@ -123,7 +124,7 @@ public class Flamejet_Projectile extends Flamejet_Spell {
         RoundLight light = screen.lightManager.pool.getLight();
         light.setLight(red, green, blue, lightAlpha, 75, body.getPosition());
         screen.lightManager.addLight(light);
-        light.dimKill(0.02f);
+        light.dimKill(0.04f);
     }
 
     public void frostbolts(Monster monster) {
@@ -131,16 +132,30 @@ public class Flamejet_Projectile extends Flamejet_Spell {
             float procRate = .92f - player.spellbook.frostbolt_lvl * 0.02f;
             if(Math.random() >= procRate) {
                 Frostbolt_Explosion explosion = new Frostbolt_Explosion();
-                explosion.screen = screen;
                 explosion.targetPosition = SpellUtils.getRandomVectorInRadius(monster.body.getPosition(), 0.5f);
                 explosion.setElements(this);
-                explosion.anim_element = FIRE;
                 screen.spellManager.toAdd(explosion);
             }
         }
     }
 
+    public void rift(Monster monster) {
+        if(rift) {
+            float procRate = .975f - player.spellbook.rift_lvl * 0.025f;
+            if(Math.random() >= procRate) {
+                Rift_Zone rift = new Rift_Zone(monster.body.getPosition());
+                rift.setElements(this);
+                screen.spellManager.toAdd(rift);
+            }
+        }
+    }
+
     public void pickAnim() {
+        if(quantity > 3) {
+            lightAlpha = 0.75f - (quantity - 2) * 0.06f;
+        } else {
+            lightAlpha = 0.65f;
+        }
         switch(anim_element) {
             case FIRE -> {
                 if(MathUtils.randomBoolean()) {

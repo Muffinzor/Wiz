@@ -248,10 +248,10 @@ public class FrostArcane_Spells {
 
         // 22. Icespear + ArcaneMissiles + Rift
 
-        ArcaneMissile_Spell frostarcane22 = new ArcaneMissile_Spell();
-        frostarcane22.icespear = true;
-        frostarcane22.rift = true;
+        Icespear_Spell frostarcane22 = new Icespear_Spell();
         frostarcane22.anim_element = ARCANE;
+        frostarcane22.arcaneMissile = true;
+        frostarcane22.rift = true;
         frostarcane22.spellParts.add(ICESPEAR);
         frostarcane22.spellParts.add(MISSILES);
         frostarcane22.spellParts.add(RIFTS);
@@ -291,6 +291,7 @@ public class FrostArcane_Spells {
 
         ArcaneArtillery_Spell frostarcane26 = new ArcaneArtillery_Spell();
         frostarcane26.frozenorb = true;
+        frostarcane26.rift = true;
         frostarcane26.anim_element = FROST;
         frostarcane26.spellParts.add(FROZENORB);
         frostarcane26.spellParts.add(BEAM);

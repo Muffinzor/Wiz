@@ -16,6 +16,7 @@ import static wizardo.game.Utils.Constants.PPM;
 public class TEST_BIGMONSTER extends MonsterMelee {
 
     public TEST_BIGMONSTER(BattleScreen screen, Vector2 position) {
+
         super(screen, position);
         speed = 25f/PPM;
         hp = 1500;
@@ -23,7 +24,8 @@ public class TEST_BIGMONSTER extends MonsterMelee {
         massValue = 150f;
 
         bodyRadius = 18;
-        height = 72;
+        height = 90;
+        width = 32;
 
         stateTime = (float) Math.random();
         walk_anim = SkeletonGiantAnims.skellygiant_walk;

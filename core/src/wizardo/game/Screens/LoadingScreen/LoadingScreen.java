@@ -5,12 +5,14 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import wizardo.game.Resources.EffectAnims.BlackHoleAnims;
 import wizardo.game.Resources.ScreenResources.CharacterScreenResources;
 import wizardo.game.Resources.DecorResources.GeneralDecorResources;
 import wizardo.game.Resources.MonsterResources.AcolyteAnims;
 import wizardo.game.Resources.MonsterResources.MonsterProjectiles.SmallProjectileAnims;
 import wizardo.game.Resources.MonsterResources.SkeletonAnims;
 import wizardo.game.Resources.MonsterResources.SkeletonGiantAnims;
+import wizardo.game.Resources.ScreenResources.LevelUpResources;
 import wizardo.game.Resources.SpellAnims.*;
 import wizardo.game.Screens.BaseScreen;
 import wizardo.game.Screens.MainMenu.MainMenuScreen;
@@ -97,6 +99,8 @@ public class LoadingScreen extends BaseScreen {
         ExplosionsAnims.loadAtlas();
         MeteorAnims.loadAtlas();
         LightningHandsAnims.loadAtlas();
+        RepulsionFieldAnims.loadAtlas();
+        BlackHoleAnims.loadAtlas();
 
         GeneralDecorResources.loadAtlas();
 
@@ -107,6 +111,7 @@ public class LoadingScreen extends BaseScreen {
         SmallProjectileAnims.loadAtlas();
 
         CharacterScreenResources.loadAtlas();
+        LevelUpResources.loadAtlas();
     }
 
     public void loadAnims() {
@@ -129,6 +134,8 @@ public class LoadingScreen extends BaseScreen {
         ExplosionsAnims.loadAnimations();
         MeteorAnims.loadAnimations();
         LightningHandsAnims.loadAnimations();
+        RepulsionFieldAnims.loadAnimations();
+        BlackHoleAnims.loadAnimations();
 
         GeneralDecorResources.loadAnimations();
 
@@ -139,6 +146,7 @@ public class LoadingScreen extends BaseScreen {
         SmallProjectileAnims.loadAnimations();
 
         CharacterScreenResources.loadAnimations();
+        LevelUpResources.loadAnimations();
     }
 
 }

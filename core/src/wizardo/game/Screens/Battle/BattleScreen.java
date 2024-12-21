@@ -13,21 +13,23 @@ import wizardo.game.Monsters.*;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Monsters.MonsterActions.MonsterSpellManager;
 import wizardo.game.Player.Pawn;
+import wizardo.game.Resources.ScreenResources.LevelUpResources;
 import wizardo.game.Screens.BaseScreen;
-import wizardo.game.Spells.BlankSpell;
+import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Spell;
+import wizardo.game.Spells.Hybrid.Orbit.Orbit_Spell;
 import wizardo.game.Spells.SpellManager;
 import wizardo.game.Spells.SpellUtils;
+import wizardo.game.Spells.Unique.BlackHole.BlackHole_Spell;
 import wizardo.game.Wizardo;
 
-import static wizardo.game.Spells.SpellBank.Fire_Spells.firespells;
-import static wizardo.game.Spells.SpellBank.FrostFire_Spells.frostfireSpells;
+import static wizardo.game.GameSettings.debug_camera;
 import static wizardo.game.Spells.SpellBank.Frost_Spells.frostspells;
-import static wizardo.game.Spells.SpellBank.LightningArcane_Spells.litearcaneSpells;
-import static wizardo.game.Spells.SpellBank.Lightning_Spells.litespells;
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.*;
 
 public class BattleScreen extends BaseScreen {
+
+    public float stateTime;
 
     boolean initialized;
     Sprite controllerTargetSprite;
@@ -43,8 +45,6 @@ public class BattleScreen extends BaseScreen {
 
         mainCamera.viewportWidth = Gdx.graphics.getWidth();
         mainCamera.viewportHeight = Gdx.graphics.getHeight();
-        mainCamera.position.set(0, 0, 0);
-
         mainCamera.zoom = 1f;
 
         createNewWorld();
@@ -66,21 +66,21 @@ public class BattleScreen extends BaseScreen {
         cursorTexturePath = "Cursors/Battle_Cursor.png";
         controllerTargetSprite = new Sprite(new Texture("Cursors/Controller_Cursor.png"));
 
-        for (int i = 0; i < 2; i++) {
-            Vector2 random = SpellUtils.getRandomVectorInRadius(player.pawn.getPosition(), 35);
+        for (int i = 0; i < 20; i++) {
+            Vector2 random = SpellUtils.getRandomVectorInRadius(player.pawn.getPosition(), 75);
             Monster monster = new TEST_BIGMONSTER(this, random);
             monsterManager.addMonster(monster);
         }
 
-        for (int i = 0; i < 20; i++) {
-            Vector2 random = SpellUtils.getRandomVectorInRadius(player.pawn.getPosition(), 35);
+        for (int i = 0; i < 200; i++) {
+            Vector2 random = SpellUtils.getRandomVectorInRadius(player.pawn.getPosition(), 75);
             Monster monster = new TEST_MELEE(this, random);
             monsterManager.addMonster(monster);
         }
 
 
-        for (int i = 0; i < 10; i++) {
-            Vector2 random = SpellUtils.getRandomVectorInRadius(player.pawn.getPosition(), 65);
+        for (int i = 0; i < 0; i++) {
+            Vector2 random = SpellUtils.getRandomVectorInRadius(player.pawn.getPosition(), 75);
             Monster monster = new TEST_RANGED(this, random);
             monsterManager.addMonster(monster);
         }
@@ -89,9 +89,10 @@ public class BattleScreen extends BaseScreen {
 
     @Override
     public void render(float delta) {
+        stateTime += delta;
 
         if(!initialized) {
-            player.spellbook.equippedSpells.add(firespells[1]);
+            player.spellbook.equippedSpells.add(new Orbit_Spell());
             initialized = true;
         }
 
@@ -110,12 +111,17 @@ public class BattleScreen extends BaseScreen {
         monsterSpellManager.update(delta);
 
         drawControllerTarget();
+        //ANIM_TESTING();
         displayManager.update(delta);
         lightManager.update(delta);
         updateCamera();  // must be after displayManager.update
 
-        Matrix4 debugMatrix = mainCamera.combined.cpy().scl(PPM);
-        //debugRenderer.render(world, debugMatrix);
+        if(debug_camera) {
+            Matrix4 debugMatrix = mainCamera.combined.cpy().scl(PPM);
+            debugRenderer.render(world, debugMatrix);
+        }
+
+
 
     }
 
@@ -141,14 +147,15 @@ public class BattleScreen extends BaseScreen {
     }
 
     public void updateCamera() {
-        float targetX = player.pawn.body.getPosition().x * PPM;
-        float targetY = player.pawn.body.getPosition().y * PPM;
+        int targetX = Math.round(player.pawn.body.getPosition().x * PPM);
+        int targetY = Math.round(player.pawn.body.getPosition().y * PPM);
 
         // Lerp'd
-        mainCamera.position.x += (targetX - mainCamera.position.x) * 0.03f;
-        mainCamera.position.y += (targetY - mainCamera.position.y) * 0.03f;
+        mainCamera.position.x += (targetX - mainCamera.position.x) * 0.05f;
+        mainCamera.position.y += (targetY - mainCamera.position.y) * 0.05f;
 
         mainCamera.update();
+
     }
 
     public void drawControllerTarget() {
@@ -190,6 +197,16 @@ public class BattleScreen extends BaseScreen {
             frame.setRotation(targetVector.angleDeg() - 45);  // Optional: Adjust for angle
             displayManager.spriteRenderer.ui_sprites.add(frame);
         }
+    }
+
+
+    public void ANIM_TESTING() {
+
+        Sprite frame = getSprite();
+        frame.set(LevelUpResources.selected_panel_anim.getKeyFrame(stateTime, true));
+        frame.setCenter(player.pawn.getBodyX() * PPM, player.pawn.getBodyY() * PPM);
+        addPostLightningSprite(frame);
+
     }
 
 }

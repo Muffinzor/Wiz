@@ -44,7 +44,7 @@ public class EnergyBeam_ChainLightningBody extends Spell {
         ArrayList<Monster> inRange = SpellUtils.findMonstersInRangeOfVector(body.getPosition(), 4, true);
         if(!inRange.isEmpty()) {
             int index = MathUtils.random(0, inRange.size() - 1);
-            Monster target = inRange.get(index);
+            Monster target = inRange.remove(index);
             ChainLightning_Hit chain = new ChainLightning_Hit(target);
             if(chargedbolts) {
                 chain.nested_spell = new ChargedBolts_Spell();
@@ -56,9 +56,19 @@ public class EnergyBeam_ChainLightningBody extends Spell {
             inRange.remove(target);
         }
 
-        if(player.spellbook.chainlightning_lvl >= 6 && !inRange.isEmpty()) {
+        if(player.spellbook.chainlightning_lvl >= 4 && !inRange.isEmpty()) {
             int index = MathUtils.random(0, inRange.size() - 1);
-            Monster target = inRange.get(index);
+            Monster target = inRange.remove(index);
+            ChainLightning_Hit chain = new ChainLightning_Hit(target);
+            chain.originBody = body;
+            chain.maxHits = 3;
+            chain.setElements(this);
+            screen.spellManager.toAdd(chain);
+        }
+
+        if(player.spellbook.chainlightning_lvl >= 8 && !inRange.isEmpty()) {
+            int index = MathUtils.random(0, inRange.size() - 1);
+            Monster target = inRange.remove(index);
             ChainLightning_Hit chain = new ChainLightning_Hit(target);
             chain.originBody = body;
             chain.maxHits = 3;

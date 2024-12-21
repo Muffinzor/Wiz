@@ -15,6 +15,7 @@ public class Overheat_Spell extends Spell {
     public boolean chainlightning;
     public boolean chargedbolts;
     public boolean icespear;
+    public boolean flameBeam;  // Overheat + Beam + Flamejet
 
     public Overheat_Spell() {
 
@@ -38,6 +39,7 @@ public class Overheat_Spell extends Spell {
         explosion.chargedbolts = chargedbolts;
         explosion.thunderstorm = thunderstorm;
         explosion.chainlightning = chainlightning;
+        explosion.flameBeam = flameBeam;
         explosion.setElements(this);
         explosion.nested_spell = nested_spell;
         screen.spellManager.toAdd(explosion);

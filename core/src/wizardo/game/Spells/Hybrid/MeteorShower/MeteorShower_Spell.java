@@ -8,7 +8,7 @@ import wizardo.game.Spells.SpellUtils;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import static wizardo.game.Spells.SpellUtils.Spell_Element.FIRE;
+import static wizardo.game.Spells.SpellUtils.Spell_Element.*;
 import static wizardo.game.Wizardo.player;
 
 public class MeteorShower_Spell extends Spell {
@@ -23,17 +23,18 @@ public class MeteorShower_Spell extends Spell {
     public boolean thunderstorm;
     public boolean rift;
     public boolean overheat;
+    public boolean flamejets;
 
-    public float showerRadius = 16;
+    public float showerRadius = 12;
 
     public MeteorShower_Spell() {
         name = "Meteor Shower";
 
-        main_element = FIRE;
-
         cooldown = 16;
 
         speed = 8f;
+
+        main_element = FIRE;
     }
 
     @Override
@@ -47,13 +48,13 @@ public class MeteorShower_Spell extends Spell {
 
         if(stateTime % interval < delta) {
 
-            inRange = SpellUtils.findMonstersInRangeOfVector(player.pawn.getPosition(), showerRadius, false);
-            Vector2 target = findTarget();
 
+            Vector2 target = findTarget();
             Meteor_Projectile meteor = new Meteor_Projectile(target);
             meteor.setElements(this);
             meteor.setMeteor(this);
             screen.spellManager.toAdd(meteor);
+
 
         }
 
@@ -73,6 +74,7 @@ public class MeteorShower_Spell extends Spell {
 
     public Vector2 thunderTargeting() {
         Vector2 target;
+        inRange = SpellUtils.findMonstersInRangeOfVector(player.pawn.getPosition(), showerRadius, false);
         if(!inRange.isEmpty()) {
             Collections.shuffle(inRange);
             target = inRange.getFirst().body.getPosition();
@@ -91,9 +93,17 @@ public class MeteorShower_Spell extends Spell {
 
     public void setup() {
         if(thunderstorm) {
-            frequency = 1 + player.spellbook.thunderstorm_lvl;
+            duration = 5;
+            frequency = 1.8f + 0.4f * player.spellbook.thunderstorm_lvl;
+            showerRadius += player.spellbook.thunderstorm_lvl * 0.75f;
+            main_element = LIGHTNING;
+            bonus_element = FIRE;
         } else if (rift) {
-            frequency = 3 + 3 * player.spellbook.rift_lvl;
+            duration = 8;
+            frequency = 1.8f + 0.4f * player.spellbook.rift_lvl;
+            showerRadius += player.spellbook.rift_lvl * 0.75f;
+            main_element = FIRE;
+            bonus_element = ARCANE;
         }
         interval = 1/frequency;
     }
@@ -102,6 +112,7 @@ public class MeteorShower_Spell extends Spell {
         this.nested_spell = parentSpell.nested_spell;
         this.overheat = parentSpell.overheat;
         this.thunderstorm = parentSpell.thunderstorm;
+        this.flamejets = parentSpell.flamejets;
     }
 
     @Override

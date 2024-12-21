@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import wizardo.game.Display.MenuTable;
 import wizardo.game.Resources.ScreenResources.CharacterScreenResources;
+import wizardo.game.Resources.ScreenResources.LevelUpResources;
 import wizardo.game.Screens.BaseScreen;
 import wizardo.game.Screens.Character.Anims.Screen_Anim;
 import wizardo.game.Screens.Character.Anims.SpellCreation_Anim;
@@ -208,4 +209,5 @@ public class CharacterScreen extends BaseScreen {
         anims.removeIf(Screen_Anim::isFinished);
         batch.end();
     }
+
 }

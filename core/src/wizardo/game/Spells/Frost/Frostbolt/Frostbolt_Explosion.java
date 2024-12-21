@@ -13,12 +13,11 @@ import wizardo.game.Utils.BodyFactory;
 
 import static wizardo.game.Resources.SpellAnims.FrostboltAnims.*;
 import static wizardo.game.Spells.SpellUtils.Spell_Element.FIRE;
+import static wizardo.game.Spells.SpellUtils.Spell_Element.LIGHTNING;
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.world;
 
 public class Frostbolt_Explosion extends Frostbolt_Spell{
-
-    Animation<Sprite> anim;
 
     Body body;
     RoundLight light;
@@ -64,7 +63,6 @@ public class Frostbolt_Explosion extends Frostbolt_Spell{
     }
 
     public void initialize() {
-        textColor = Skins.light_blue;
         rotation = MathUtils.random(360);
         flipX = MathUtils.randomBoolean();
         flipY = MathUtils.randomBoolean();
@@ -102,9 +100,13 @@ public class Frostbolt_Explosion extends Frostbolt_Spell{
 
     public void createLight() {
         light = screen.lightManager.pool.getLight();
-        light.setLight(red,green,blue,lightAlpha,100, body.getPosition());
+        light.setLight(red,green,blue,lightAlpha,80, body.getPosition());
         light.toLightManager();
-        light.dimKill(0.02f);
+        if(bonus_element == FIRE) {
+            light.dimKill(0.01f);
+        } else {
+            light.dimKill(0.025f);
+        }
     }
 
     public void pickAnim() {
@@ -117,18 +119,22 @@ public class Frostbolt_Explosion extends Frostbolt_Spell{
                     } else {
                         anim = frostbolt_explosion_anim_fire2;
                     }
+                    blue = 0.8f;
+                } else if(bonus_element == LIGHTNING) {
+                    anim = frostbolt_explosion_anim_lightning;
+                    green = 0.5f;
+                    blue = 0.65f;
                 } else {
                     anim = frostbolt_explosion_anim_frost;
+                    blue = 0.8f;
                 }
-                blue = 0.8f;
             }
             case FIRE -> {
                 anim = ExplosionsAnims.getExplosionAnim(FIRE);
                 red = 0.85f;
                 green = 0.25f;
-                textColor = Skins.light_orange;
             }
-            case LIGHTNING -> {
+            case COLDLITE -> {
                 anim = frostbolt_explosion_anim_lightning;
                 green = 0.5f;
                 blue = 0.65f;

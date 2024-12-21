@@ -26,7 +26,9 @@ public class DisplayManager {
         screen.rayHandler.setCombinedMatrix(screen.mainCamera);
         screen.rayHandler.updateAndRender();
 
+        spriteRenderer.renderPostLightningSprites();
         spriteRenderer.renderUI();
+
 
         spriteRenderer.clearSpriteArrays();
 
