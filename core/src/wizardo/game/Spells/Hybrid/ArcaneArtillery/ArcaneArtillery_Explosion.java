@@ -1,147 +1,144 @@
 package wizardo.game.Spells.Hybrid.ArcaneArtillery;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import wizardo.game.Monsters.MonsterArchetypes.Monster;
-import wizardo.game.Spells.Arcane.Rifts.Rift_Zone;
+import wizardo.game.Lighting.RoundLight;
+import wizardo.game.Resources.SpellAnims.ExplosionAnims_Elemental;
 import wizardo.game.Spells.Frost.Frozenorb.Frozenorb_Spell;
 import wizardo.game.Spells.Hybrid.EnergyRain.EnergyRain_Explosion;
-import wizardo.game.Spells.Lightning.Thunderstorm.Thunderstorm_Spell;
-import wizardo.game.Spells.Spell;
-import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyFactory;
 
-import static wizardo.game.Spells.SpellUtils.Spell_Element.FIRE;
+import static wizardo.game.Spells.SpellUtils.Spell_Element.FROST;
 import static wizardo.game.Spells.SpellUtils.getClearRandomPosition;
+import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.player;
 import static wizardo.game.Wizardo.world;
 
-public class ArcaneArtillery_Explosion extends ArcaneArtillery_Spell {
+public class ArcaneArtillery_BetterExplosion extends ArcaneArtillery_Spell {
 
-    Body frozenBody;
 
-    float riftInterval = 0.2f;
-    int nbrOfRifts = 10;
-    int riftsCast = 0;
+    RoundLight light;
+    boolean flipX;
+    boolean flipY;
+    int rotation;
 
-    float explosionInterval = 0.25f;
-    float explosions = 3;
+    float explosionInterval = 0.15f;
+    float explosions = 0;
     int explosionsCast = 0;
 
-    public ArcaneArtillery_Explosion() {
+    public ArcaneArtillery_BetterExplosion(Vector2 targetPosition) {
+        this.targetPosition = new Vector2(targetPosition);
 
+        rotation = MathUtils.random(360);
+        flipX = MathUtils.randomBoolean();
+        flipY = MathUtils.randomBoolean();
+    }
+
+    public void setup() {
+        if(rift) {
+            explosions = 3;
+            updateNbrOfExplosions();
+        }
+        explosionInterval = 1f/explosions;
+    }
+    public void updateNbrOfExplosions() {
+        float bonus = (player.spellbook.rift_lvl - 1) / 2f;
+        if((bonus % 1) > 0) {
+            float remainder = bonus % 1;
+            if(Math.random() >= 1 - remainder) {
+                explosions ++;
+            }
+            explosions += (float) Math.floor(bonus);
+        } else {
+            explosions += bonus;
+        }
     }
 
     public void update(float delta) {
         if(!initialized) {
-            frozenOrb();
-            thunderstorm();
+            setup();
             initialized = true;
-            initialExplosion();
+            pickAnim();
+            createBody();
+            createLight();
+            frozenorb();
         }
 
+        drawFrame();
         stateTime += delta;
 
-        rifts();
-        megaRifts();
-
-
-        if(frozenorb && frozenBody != null && stateTime >= 0.25f) {
-            world.destroyBody(frozenBody);
-            frozenBody = null;
-        }
-
-
-
-        if(explosionsCast < explosions && stateTime > explosionsCast * explosionInterval) {
-
+        if(explosionsCast < explosions && stateTime > explosionsCast * explosionInterval + Math.min(explosionInterval, 0.25f)) {
             EnergyRain_Explosion explosion = new EnergyRain_Explosion();
-            explosion.targetPosition = getClearRandomPosition(targetPosition, 3);
+            explosion.targetPosition = getClearRandomPosition(targetPosition, 4);
             explosion.arcaneMissiles = arcaneMissiles;
             explosion.setElements(this);
             screen.spellManager.toAdd(explosion);
-
             explosionsCast++;
         }
 
-        if(riftsCast >= nbrOfRifts && explosionsCast >= explosions) {
+        if(body.isActive() && stateTime >= 0.3f) {
+            body.setActive(false);
+            light.dimKill(0.016f);
+        }
+
+        if(stateTime >= anim.getAnimationDuration() && explosionsCast >= explosions) {
             screen.spellManager.toRemove(this);
+            world.destroyBody(body);
         }
-
-
     }
 
-    public void handleCollision(Monster monster) {
-        float duration = 3 + 0.2f * player.spellbook.frozenorb_lvl;
-        monster.applyFreeze(duration, duration * 2);
+    public void drawFrame() {
+        Sprite frame = screen.getSprite();
+        frame.set(anim.getKeyFrame(stateTime, false));
+        frame.setCenter(targetPosition.x * PPM, targetPosition.y * PPM);
+        frame.setRotation(rotation);
+        frame.flip(flipX, flipY);
+        screen.centerSort(frame, targetPosition.y * PPM - 35);
+        screen.addSortedSprite(frame);
     }
 
-    public void initialExplosion() {
-        EnergyRain_Explosion explosion = new EnergyRain_Explosion();
-        explosion.targetPosition = new Vector2(targetPosition);
-        explosion.arcaneMissiles = arcaneMissiles;
-        explosion.setElements(this);
-        screen.spellManager.toAdd(explosion);
+    public void createBody() {
+        body = BodyFactory.spellExplosionBody(targetPosition, 120);
+        body.setUserData(this);
+    }
+    public void createLight() {
+        light = screen.lightManager.pool.getLight();
+        light.setLight(red, green, blue, lightAlpha, 275, targetPosition);
+        screen.lightManager.addLight(light);
     }
 
-    public void rifts() {
-        if(rift) {
-            if (riftsCast < nbrOfRifts && stateTime > riftsCast * riftInterval) {
-
-                Rift_Zone rift = new Rift_Zone(getClearRandomPosition(targetPosition, 4));
-                rift.lightAlpha = 0.85f;
-                rift.setElements(this);
-                screen.spellManager.toAdd(rift);
-
-                riftsCast++;
+    public void pickAnim() {
+        anim = ExplosionAnims_Elemental.getExplosionAnim(anim_element);
+        switch(anim_element) {
+            case FROST -> {
+                green = 0.15f;
+                blue = 0.75f;
             }
-        }
-    }
-
-    public void megaRifts() {
-        if(megaRift) {
-
-            if (riftsCast < nbrOfRifts && stateTime > riftsCast * riftInterval) {
-
-                nbrOfRifts = 1 + player.spellbook.rift_lvl / 5;
-
-                Vector2 targetPos;
-                if (riftsCast == 0) {
-                    targetPos = new Vector2(targetPosition);
-                } else {
-                    targetPos = SpellUtils.getClearRandomPosition(targetPosition, 8);
-                }
-                Rift_Zone rift = new Rift_Zone(targetPos);
-                rift.overheat = true;
-                rift.anim_element = FIRE;
-                screen.spellManager.toAdd(rift);
-                riftsCast++;
-
+            case ARCANE -> {
+                red = 0.6f;
+                green = 0.15f;
+                blue = 0.9f;
+            }
+            case FIRE -> {
+                red = 0.75f;
+                green = 0.15f;
 
             }
         }
+
     }
 
-    public void frozenOrb() {
-
+    public void frozenorb() {
         if(frozenorb) {
-            float frozenRadius = 110 + 10 * player.spellbook.frozenorb_lvl;
-            frozenBody = BodyFactory.spellExplosionBody(targetPosition, frozenRadius);
-            frozenBody.setUserData(this);
+            Frozenorb_Spell orb = new Frozenorb_Spell();
+            orb.spawnPosition = new Vector2(targetPosition);
+            orb.targetPosition = new Vector2(0,0);
+            orb.speed = 0;
+            orb.duration = 2.2f;
+            orb.lightAlpha = 0.7f;
+            orb.anim_element = FROST;
+            screen.spellManager.toAdd(orb);
         }
     }
-
-    public void thunderstorm() {
-        if(thunderstorm) {
-            Thunderstorm_Spell storm = new Thunderstorm_Spell();
-            storm.setElements(this);
-            storm.spawnPosition = new Vector2(targetPosition);
-            storm.arcaneMissile = true;
-            storm.radius = 5;
-            storm.duration = 1.5f;
-            screen.spellManager.toAdd(storm);
-        }
-    }
-
-
 }
