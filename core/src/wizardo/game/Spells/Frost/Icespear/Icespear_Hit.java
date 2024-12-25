@@ -7,7 +7,6 @@ import wizardo.game.Screens.Battle.BattleScreen;
 
 import static wizardo.game.Resources.SpellAnims.IcespearAnims.*;
 import static wizardo.game.Utils.Constants.PPM;
-import static wizardo.game.Wizardo.currentScreen;
 
 public class Icespear_Hit extends Icespear_Spell {
 
@@ -32,7 +31,7 @@ public class Icespear_Hit extends Icespear_Spell {
         stateTime += delta;
 
         if(stateTime >= anim.getAnimationDuration()) {
-            currentScreen.spellManager.toRemove(this);
+            screen.spellManager.toRemove(this);
         }
 
     }
@@ -63,7 +62,7 @@ public class Icespear_Hit extends Icespear_Spell {
         }
     }
     public void createLight() {
-        light = currentScreen.lightManager.pool.getLight();
+        light = screen.lightManager.pool.getLight();
         light.setLight(0,0,0.5f,1, 25, targetPosition);
         light.toLightManager();
         light.dimKill(0.05f);
@@ -71,7 +70,7 @@ public class Icespear_Hit extends Icespear_Spell {
 
     public void drawFrame() {
 
-        Sprite frame = currentScreen.displayManager.spriteRenderer.pool.getSprite();
+        Sprite frame = screen.displayManager.spriteRenderer.pool.getSprite();
         frame.set(anim.getKeyFrame(stateTime, true));
         frame.setCenter(targetPosition.x * PPM, targetPosition.y * PPM);
         frame.rotate(rotation - 45 + 180);

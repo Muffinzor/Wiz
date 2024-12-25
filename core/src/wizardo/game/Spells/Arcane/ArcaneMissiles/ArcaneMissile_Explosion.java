@@ -7,8 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
-import wizardo.game.Resources.Skins;
-import wizardo.game.Resources.SpellAnims.ExplosionsAnims;
+import wizardo.game.Resources.SpellAnims.ExplosionAnims_Toon;
 import wizardo.game.Spells.Fire.Flamejet.Flamejet_Spell;
 import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyFactory;
@@ -72,7 +71,7 @@ public class ArcaneMissile_Explosion extends ArcaneMissile_Spell {
 
 
     public void pickAnim() {
-        anim = ExplosionsAnims.getExplosionAnim(anim_element);
+        anim = ExplosionAnims_Toon.getExplosionAnim(anim_element);
         switch (anim_element) {
             case FIRE -> {
                 red = 0.8f;
@@ -90,7 +89,7 @@ public class ArcaneMissile_Explosion extends ArcaneMissile_Spell {
     }
 
     public void createLight() {
-        float lightRadius = 35 + 2.5f * player.spellbook.overheat_lvl;
+        float lightRadius = 75 + 5f * player.spellbook.overheat_lvl;
         light = screen.lightManager.pool.getLight();
         light.setLight(red, green, blue, lightAlpha, lightRadius, body.getPosition());
         screen.lightManager.addLight(light);

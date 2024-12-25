@@ -27,8 +27,6 @@ public class RepulsionField_Explosion extends RepulsionField_Spell {
 
     boolean flipX;
 
-    float alpha = 1;
-
     float radius = 200;
 
     float scale = 1;
@@ -45,6 +43,13 @@ public class RepulsionField_Explosion extends RepulsionField_Spell {
         main_element = SpellUtils.Spell_Element.ARCANE;
         bonus_element = FIRE;
 
+    }
+
+    public void setup() {
+        radius = 170 + (10 * player.spellbook.overheat_lvl);
+        radius += 1 + player.spellbook.repulsionRadiusBonus/100f;
+        scale = 0.9f + (0.05f * player.spellbook.overheat_lvl);
+        scale += player.spellbook.repulsionRadiusBonus/100f;
     }
 
     @Override
@@ -72,10 +77,11 @@ public class RepulsionField_Explosion extends RepulsionField_Spell {
 
     public void handleCollision(Monster monster) {
         dealDmg(monster);
-        Vector2 direction = monster.body.getPosition().sub(body.getPosition());
 
-            float strength = 5;
-            monster.movementManager.applyPush(direction, strength, 0.4f, 0.89f);
+        Vector2 direction = monster.body.getPosition().sub(body.getPosition());
+        float strength = 5;
+        strength *= (1 + player.spellbook.pushbackBonus/100f);
+        monster.movementManager.applyPush(direction, strength, 0.75f, 0.89f);
     }
 
     public void handleCollision(MonsterSpell monsterSpell) {
@@ -107,10 +113,7 @@ public class RepulsionField_Explosion extends RepulsionField_Spell {
         }
     }
 
-    public void setup() {
-        radius = 170 + 10 * player.spellbook.overheat_lvl;
-        scale = 0.9f + (0.05f * player.spellbook.overheat_lvl);
-    }
+
 
     public void drawFrame() {
         Sprite frame = screen.getSprite();
@@ -146,8 +149,5 @@ public class RepulsionField_Explosion extends RepulsionField_Spell {
         return 0;
     }
 
-    @Override
-    public int getDmg() {
-        return 50 + 15 * player.spellbook.rift_lvl;
-    }
+
 }

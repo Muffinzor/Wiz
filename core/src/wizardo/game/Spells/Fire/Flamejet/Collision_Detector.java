@@ -6,7 +6,6 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Utils.BodyFactory;
 
-import static wizardo.game.Wizardo.currentScreen;
 import static wizardo.game.Wizardo.world;
 
 public class Collision_Detector extends Spell {
@@ -19,7 +18,6 @@ public class Collision_Detector extends Spell {
     public Collision_Detector(Vector2 velocity, Flamejet_Projectile proj) {
         this.velocity = new Vector2(velocity);
         this.proj = proj;
-        screen = currentScreen;
     }
 
     @Override

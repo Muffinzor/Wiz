@@ -64,9 +64,6 @@ public class Thunderstorm_Hit extends Thunderstorm_Spell {
     public void handleCollision(Monster monster) {
         dealDmg(monster);
         //rifts(monster);
-
-        Vector2 direction = monster.body.getPosition().cpy().sub(body.getPosition());
-        monster.movementManager.applyPush(direction, 3, 0.3f, 0.91f);
     }
 
     public void drawFrame() {
@@ -162,10 +159,10 @@ public class Thunderstorm_Hit extends Thunderstorm_Spell {
 
     public void overheat() {
         if(overheat) {
-            float procRate = 0.99f - 0.01f * player.spellbook.overheat_lvl;
+            float procRate = 0.96f - 0.01f * player.spellbook.overheat_lvl;
             if(Math.random() >= procRate) {
                 Overheat_Explosion explosion = new Overheat_Explosion(body.getPosition());
-                explosion.thunderstorm = true;
+                explosion.fromThunder = true;
                 explosion.setElements(this);
                 screen.spellManager.toAdd(explosion);
             }

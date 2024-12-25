@@ -27,9 +27,13 @@ public class Orbit_Spell extends Spell {
         cooldown = 12;
     }
 
+    public void setup() {
+        orbitRadius = orbitRadius * (1 + player.spellbook.orbitingIceRadius/100f);
+    }
+
     @Override
     public void update(float delta) {
-
+        setup();
         createOrbs();
         screen.spellManager.toRemove(this);
     }
@@ -64,6 +68,8 @@ public class Orbit_Spell extends Spell {
 
     @Override
     public int getDmg() {
-        return baseDmg + 10 * player.spellbook.frozenorb_lvl;
+        int dmg = baseDmg + 10 * player.spellbook.frozenorb_lvl;
+        dmg = (int) (dmg * (1 + player.spellbook.gravityBonusDmg/100f));
+        return dmg;
     }
 }

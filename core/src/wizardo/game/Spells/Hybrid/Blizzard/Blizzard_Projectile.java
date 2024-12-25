@@ -9,7 +9,6 @@ import wizardo.game.Resources.SpellAnims.IcespearAnims;
 import wizardo.game.Utils.BodyFactory;
 
 import static wizardo.game.Utils.Constants.PPM;
-import static wizardo.game.Wizardo.currentScreen;
 import static wizardo.game.Wizardo.world;
 
 public class Blizzard_Projectile extends Blizzard_Spell {

@@ -92,6 +92,7 @@ public class Icespear_Spell extends Spell {
     public int getDmg() {
         int dmg = baseDmg;
         dmg += 8 * getLvl();
+        dmg = (int) (dmg * (1 + player.spellbook.sharpBonusDmg/100f));
         return dmg;
     }
 

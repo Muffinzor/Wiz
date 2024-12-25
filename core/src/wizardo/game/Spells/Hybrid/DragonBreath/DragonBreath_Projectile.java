@@ -163,7 +163,7 @@ public class DragonBreath_Projectile extends DragonBreath_Spell {
         for(Body body : bodies) {
             if(body.isActive()) {
                 RoundLight light = screen.lightManager.pool.getLight();
-                float ownAlpha = 0.75f + stateTime * 2;
+                float ownAlpha = 0.55f + stateTime * 2;
                 light.setLight(red, green, blue, ownAlpha, 95, body.getPosition());
                 light.dimKill(0.0125f);
                 screen.lightManager.addLight(light);

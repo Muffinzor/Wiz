@@ -8,7 +8,7 @@ import wizardo.game.Spells.SpellUtils;
 
 import static wizardo.game.Wizardo.assetManager;
 
-public class EnergyExplosionsAnims {
+public class ExplosionAnims_Energy {
 
     public static Animation<Sprite> energyExplosion_anim_purple;
     public static Animation<Sprite> energyExplosion_anim_purple2;

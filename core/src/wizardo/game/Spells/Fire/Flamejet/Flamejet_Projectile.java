@@ -65,6 +65,10 @@ public class Flamejet_Projectile extends Flamejet_Spell {
         dealDmg(monster);
         frostbolts(monster);
         rift(monster);
+
+        if(monster.flamejetStacks < player.spellbook.flamejetBonus) {
+            monster.flamejetStacks++;
+        }
     }
 
     public void drawFrame() {
@@ -152,9 +156,9 @@ public class Flamejet_Projectile extends Flamejet_Spell {
 
     public void pickAnim() {
         if(quantity > 3) {
-            lightAlpha = 0.75f - (quantity - 2) * 0.06f;
+            lightAlpha = 0.85f - (quantity - 2) * 0.04f;
         } else {
-            lightAlpha = 0.65f;
+            lightAlpha = 0.80f;
         }
         switch(anim_element) {
             case FIRE -> {

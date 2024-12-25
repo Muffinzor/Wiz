@@ -18,9 +18,9 @@ public class TEST_BIGMONSTER extends MonsterMelee {
     public TEST_BIGMONSTER(BattleScreen screen, Vector2 position) {
 
         super(screen, position);
-        speed = 25f/PPM;
-        hp = 1500;
-        maxHP = 1500;
+        speed = 20f/PPM;
+        hp = 300;
+        maxHP = 300;
         massValue = 150f;
 
         bodyRadius = 18;

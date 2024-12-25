@@ -53,7 +53,7 @@ public class Meteor_Explosion extends MeteorShower_Spell {
 
         if(body.isActive() && stateTime >= 0.2f) {
             body.setActive(false);
-            light.dimKill(0.01f);
+            light.dimKill(0.012f);
         }
 
         if(stateTime >= anim.getAnimationDuration()) {
@@ -67,10 +67,8 @@ public class Meteor_Explosion extends MeteorShower_Spell {
         frame.set(anim.getKeyFrame(stateTime, false));
         frame.setCenter(body.getPosition().x * PPM, body.getPosition().y * PPM);
 
-        if(anim_element == LIGHTNING) {
-            frame.flip(flipX, flipY);
-            frame.setRotation(rotation);
-        }
+        frame.flip(flipX, flipY);
+        frame.setRotation(rotation);
 
         if(frameScale != 1) {
             frame.setScale(frameScale);
@@ -91,24 +89,29 @@ public class Meteor_Explosion extends MeteorShower_Spell {
 
     public void createLight() {
         light = screen.lightManager.pool.getLight();
-        light.setLight(red, green, blue, lightAlpha, 150, body.getPosition());
+        light.setLight(red, green, blue, lightAlpha, 170, body.getPosition());
         screen.lightManager.addLight(light);
     }
 
     public void pickAnim() {
+        anim = FireballAnims.getAnim(anim_element);
         switch(anim_element) {
             case LIGHTNING -> {
-                anim = FireballAnims.fireball_explosion_anim_lightning;
                 red = 0.75f;
-                green = 0.45f;
-                frameScale = 1;
+                green = 0.25f;
+                frameScale = 0.65f;
                 explosionRadius = 50;
             }
             case FIRE -> {
-                anim = FireballAnims.fireball_explosion_anim_fire;
                 red = 0.85f;
                 green = 0.25f;
-                frameScale = 1f;
+                frameScale = 0.65f;
+                explosionRadius = 70;
+            }
+            case ARCANE -> {
+                red = 0.55f;
+                blue = 0.85f;
+                frameScale = 0.7f;
                 explosionRadius = 70;
             }
         }

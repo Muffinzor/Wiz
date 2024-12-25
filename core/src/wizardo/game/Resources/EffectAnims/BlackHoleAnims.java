@@ -19,7 +19,7 @@ public class BlackHoleAnims {
         for (int i = 0; i < frames.length; i++) {
             frames[i] = atlas.createSprite("blackhole" + (i+1));
         }
-        blackhole_anim = new Animation<>(0.024f, frames);
+        blackhole_anim = new Animation<>(0.028f, frames);
 
     }
 

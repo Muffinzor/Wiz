@@ -7,10 +7,12 @@ public abstract class MonsterMelee extends Monster {
 
     public float attackRange;
     public float hitboxRadius;
+    public boolean canRush;
     public float rushDistance;
 
 
     public MonsterMelee(BattleScreen screen, Vector2 position) {
         super(screen, position);
     }
+
 }

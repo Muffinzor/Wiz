@@ -1,20 +1,17 @@
 package wizardo.game.Spells.Frost.Frostbolt;
 
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
-import wizardo.game.Resources.Skins;
-import wizardo.game.Resources.SpellAnims.ExplosionsAnims;
-import wizardo.game.Spells.SpellUtils;
+import wizardo.game.Resources.SpellAnims.ExplosionAnims_Toon;
 import wizardo.game.Utils.BodyFactory;
 
 import static wizardo.game.Resources.SpellAnims.FrostboltAnims.*;
-import static wizardo.game.Spells.SpellUtils.Spell_Element.FIRE;
-import static wizardo.game.Spells.SpellUtils.Spell_Element.LIGHTNING;
+import static wizardo.game.Spells.SpellUtils.Spell_Element.*;
 import static wizardo.game.Utils.Constants.PPM;
+import static wizardo.game.Wizardo.player;
 import static wizardo.game.Wizardo.world;
 
 public class Frostbolt_Explosion extends Frostbolt_Spell{
@@ -22,6 +19,7 @@ public class Frostbolt_Explosion extends Frostbolt_Spell{
     Body body;
     RoundLight light;
 
+    float frameScale = 1;
     float rotation;
     boolean flipX;
     boolean flipY;
@@ -50,15 +48,13 @@ public class Frostbolt_Explosion extends Frostbolt_Spell{
         drawFrame();
         stateTime += delta;
 
-        if(stateTime >= 0.25f) {
-            if(body != null) {
-                world.destroyBody(body);
-                body = null;
-            }
+        if(body.isActive() && stateTime >= 0.2) {
+            body.setActive(false);
         }
 
         if(stateTime >= anim.getAnimationDuration()) {
             screen.spellManager.toRemove(this);
+            world.destroyBody(body);
         }
     }
 
@@ -75,10 +71,9 @@ public class Frostbolt_Explosion extends Frostbolt_Spell{
         frame.set(anim.getKeyFrame(stateTime, false));
         frame.setCenter(targetPosition.x * PPM, targetPosition.y * PPM);
         frame.rotate(rotation);
+        frame.setScale(frameScale);
         frame.flip(flipX, flipY);
-        if(anim_element.equals(FIRE)) {
-            frame.setScale(0.65f);
-        }
+
         screen.centerSort(frame, targetPosition.y * PPM - 25);
         screen.displayManager.spriteRenderer.regular_sorted_sprites.add(frame);
 
@@ -88,7 +83,11 @@ public class Frostbolt_Explosion extends Frostbolt_Spell{
         dealDmg(monster);
 
         if(!anim_element.equals(FIRE)) {
-            monster.applySlow(2.5f, 0.7f);
+            if(Math.random() >= (1 - player.spellbook.frostboltBonus/100f)) {
+                monster.applyFreeze(2, 4);
+            } else {
+                monster.applySlow(2.5f, 0.7f);
+            }
         }
 
     }
@@ -105,39 +104,25 @@ public class Frostbolt_Explosion extends Frostbolt_Spell{
         if(bonus_element == FIRE) {
             light.dimKill(0.01f);
         } else {
-            light.dimKill(0.025f);
+            light.dimKill(0.015f);
         }
     }
 
     public void pickAnim() {
-
+        anim = getAnim(anim_element);
         switch(anim_element) {
             case FROST -> {
-                if(bonus_element == FIRE) {
-                    if(MathUtils.randomBoolean()) {
-                        anim = frostbolt_explosion_anim_fire1;
-                    } else {
-                        anim = frostbolt_explosion_anim_fire2;
-                    }
-                    blue = 0.8f;
-                } else if(bonus_element == LIGHTNING) {
-                    anim = frostbolt_explosion_anim_lightning;
-                    green = 0.5f;
-                    blue = 0.65f;
-                } else {
-                    anim = frostbolt_explosion_anim_frost;
-                    blue = 0.8f;
-                }
+                blue = 0.8f;
             }
             case FIRE -> {
-                anim = ExplosionsAnims.getExplosionAnim(FIRE);
+                anim = ExplosionAnims_Toon.getExplosionAnim(FIRE);
                 red = 0.85f;
                 green = 0.25f;
+                frameScale = 0.65f;
             }
             case COLDLITE -> {
-                anim = frostbolt_explosion_anim_lightning;
                 green = 0.5f;
-                blue = 0.65f;
+                blue = 0.75f;
             }
         }
     }

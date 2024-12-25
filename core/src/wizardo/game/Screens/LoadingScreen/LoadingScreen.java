@@ -96,7 +96,9 @@ public class LoadingScreen extends BaseScreen {
         FrostNovaAnims.loadAtlas();
         CelestialStrikeAnims.loadAtlas();
         DragonbreathAnims.loadAtlas();
-        ExplosionsAnims.loadAtlas();
+        ExplosionAnims_Toon.loadAtlas();
+        ExplosionAnims_Energy.loadAtlas();
+        ExplosionAnims_Elemental.loadAtlas();
         MeteorAnims.loadAtlas();
         LightningHandsAnims.loadAtlas();
         RepulsionFieldAnims.loadAtlas();
@@ -131,7 +133,9 @@ public class LoadingScreen extends BaseScreen {
         FrostNovaAnims.loadAnimations();
         CelestialStrikeAnims.loadAnimations();
         DragonbreathAnims.loadAnimations();
-        ExplosionsAnims.loadAnimations();
+        ExplosionAnims_Toon.loadAnimations();
+        ExplosionAnims_Energy.loadAnimations();
+        ExplosionAnims_Elemental.loadAnimations();
         MeteorAnims.loadAnimations();
         LightningHandsAnims.loadAnimations();
         RepulsionFieldAnims.loadAnimations();

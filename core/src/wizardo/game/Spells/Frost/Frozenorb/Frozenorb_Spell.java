@@ -4,7 +4,6 @@ import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 
 import static wizardo.game.Utils.Constants.PPM;
-import static wizardo.game.Wizardo.currentScreen;
 import static wizardo.game.Wizardo.player;
 
 public class Frozenorb_Spell extends Spell {
@@ -58,6 +57,7 @@ public class Frozenorb_Spell extends Spell {
     public int getDmg() {
         int dmg = baseDmg;
         dmg += 10 * getLvl();
+        dmg = (int) (dmg * (1 + player.spellbook.gravityBonusDmg/100f));
         return dmg;
     }
 

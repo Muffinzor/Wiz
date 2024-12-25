@@ -23,6 +23,7 @@ public class SmallLaser_Projectile extends MonsterSpell {
 
     public SmallLaser_Projectile(Vector2 spawnPosition, Monster monster) {
         super(monster);
+        isProjectile = true;
 
         this.spawnPosition = new Vector2(spawnPosition);
 
@@ -67,6 +68,9 @@ public class SmallLaser_Projectile extends MonsterSpell {
         frame.set(sprite);
         frame.setCenter(body.getPosition().x * PPM, body.getPosition().y * PPM);
         frame.setRotation(rotation);
+        if(alpha < 1) {
+            frame.setColor(redshift, 0.75f, 0.75f, alpha);
+        }
         frame.setScale(0.8f);
         screen.centerSort(frame, body.getPosition().y * PPM - 25);
         screen.addSortedSprite(frame);

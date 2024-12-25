@@ -1,5 +1,6 @@
 package wizardo.game.Spells.Fire.Flamejet;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Spells.Spell;
@@ -7,8 +8,8 @@ import wizardo.game.Spells.SpellUtils;
 
 import java.util.ArrayList;
 
+import static wizardo.game.GameSettings.dmg_text_on;
 import static wizardo.game.Spells.SpellUtils.Spell_Element.FIRE;
-import static wizardo.game.Wizardo.currentScreen;
 import static wizardo.game.Wizardo.player;
 
 public class Flamejet_Spell extends Spell {
@@ -46,7 +47,7 @@ public class Flamejet_Spell extends Spell {
         }
 
         if(arcaneMissile && targetPosition == null) {
-            ArrayList<Monster> inRange = SpellUtils.findMonstersInRangeOfVector(player.pawn.getPosition(), 5, true);
+            ArrayList<Monster> inRange = SpellUtils.findMonstersInRangeOfVector(player.pawn.getPosition(), 7, true);
             if(inRange.isEmpty()) {
                 screen.spellManager.toRemove(this);
                 return;
@@ -75,7 +76,7 @@ public class Flamejet_Spell extends Spell {
 
     public void setup() {
         if(targetPosition == null) {
-            quantity = 1 + Math.min(player.spellbook.flamejet_lvl/2, 5);
+            quantity = 2 + Math.min((player.spellbook.flamejet_lvl-1)/2, 5);
         }
         interval = cooldown / quantity;
     }
@@ -115,12 +116,27 @@ public class Flamejet_Spell extends Spell {
     @Override
     public int getLvl() {
         return player.spellbook.flamejet_lvl;
+
     }
 
     @Override
     public int getDmg() {
         int dmg = baseDmg;
         dmg += 4 * getLvl();
+        dmg = (int) (dmg * (1 + player.spellbook.flashBonusDmg/100f));
         return dmg;
+    }
+
+    public void dealDmg(Monster monster) {
+        float dmg = getDmg();
+        dmg += 4 * monster.flamejetStacks;
+        dmg = getScaledDmg(dmg);
+        float randomFactor = MathUtils.random(1 - dmgVariance, 1 + dmgVariance);
+        dmg *= randomFactor;
+        monster.hp -= dmg;
+
+        if(dmg_text_on) {
+            dmgText( (int)dmg, monster);
+        }
     }
 }

@@ -14,14 +14,15 @@ public class ArcaneArtillery_Spell extends Spell {
 
     public boolean frozenorb;
     public boolean thunderstorm;
-    public boolean rift;
 
     public boolean arcaneMissiles; // Beam + Overheat + Missiles
 
-    public boolean megaRift; // Beam + Overheat + Rift
+    public boolean rift; //for multiple energy rain explosions
 
     public ArcaneArtillery_Spell() {
         name = "Arcane Artillery";
+
+        baseDmg = 120;
 
         main_element = ARCANE;
 
@@ -31,7 +32,7 @@ public class ArcaneArtillery_Spell extends Spell {
     @Override
     public void update(float delta) {
 
-        ArrayList<Monster> inRange = SpellUtils.findMonstersInRangeOfVector(player.pawn.getPosition(), 15, false);
+        ArrayList<Monster> inRange = SpellUtils.findMonstersInRangeOfVector(player.pawn.getPosition(), 14, false);
         if(!inRange.isEmpty()) {
             Monster target = inRange.getFirst();
             for (int i = 1; i < inRange.size(); i++) {
@@ -43,10 +44,7 @@ public class ArcaneArtillery_Spell extends Spell {
             projectile.targetPosition = new Vector2(target.body.getPosition());
             projectile.setElements(this);
             projectile.frozenorb = frozenorb;
-            projectile.megaRift = megaRift;
             projectile.rift = rift;
-            projectile.arcaneMissiles = arcaneMissiles;
-            projectile.thunderstorm = thunderstorm;
             screen.spellManager.toAdd(projectile);
         }
 
@@ -65,6 +63,17 @@ public class ArcaneArtillery_Spell extends Spell {
 
     @Override
     public int getDmg() {
-        return 0;
+        int dmg = baseDmg;
+        dmg += 20 * player.spellbook.energybeam_lvl;
+        if(frozenorb) {
+            dmg += 2 * player.spellbook.frozenorb_lvl;
+        } else {
+            dmg += 20 * player.spellbook.overheat_lvl;
+        }
+        if(arcaneMissiles) {
+            dmg += 10 * player.spellbook.arcanemissile_lvl;
+        }
+        dmg = (int) (dmg * (1 + player.spellbook.divineBonusDmg/100f));
+        return dmg;
     }
 }

@@ -12,9 +12,9 @@ public class FrozenorbAnims {
     public static Animation<Sprite> frozenorb_anim_fire;
     public static Animation<Sprite> frozenorb_anim_arcane;
     public static Animation<Sprite> frozenorb_anim_lightning;
-    public static String frozenorb_atlas_path_frost = "Spells/Frozenorb/Frozen_Orb.atlas";
-    public static String frozenorb_atlas_path_fire = "Spells/Frozenorb/FireOrb.atlas";
-    public static String frozenorb_atlas_path_arcane = "Spells/Frozenorb/Arcane_Orb.atlas";
+    public static String frozenorb_atlas_path_frost = "Spells/Frozenorb/FrozenOrb_Frost.atlas";
+    public static String frozenorb_atlas_path_fire = "Spells/Frozenorb/FrozenOrb_Fire.atlas";
+    public static String frozenorb_atlas_path_arcane = "Spells/Frozenorb/FrozenOrb_Arcane.atlas";
     public static String frozenorb_atlas_path_lightning = "Spells/Frozenorb/lightning_orb.atlas";
 
     public static Animation<Sprite> orbit_anim;
@@ -25,21 +25,21 @@ public class FrozenorbAnims {
         TextureAtlas arcane_atlas = assetManager.get(frozenorb_atlas_path_arcane, TextureAtlas.class);
         TextureAtlas lightning_atlas = assetManager.get(frozenorb_atlas_path_lightning, TextureAtlas.class);
 
-        Sprite[] frost_frames = new Sprite[203];
+        Sprite[] frost_frames = new Sprite[180];
         for (int i = 0; i < frost_frames.length; i++) {
-            frost_frames[i] = frost_atlas.createSprite("frozen_orb" + (i + 1));
+            frost_frames[i] = frost_atlas.createSprite("orb" + (i + 1));
         }
         frozenorb_anim_frost = new Animation<>(0.032f, frost_frames);
 
-        Sprite[] fire_frames = new Sprite[203];
+        Sprite[] fire_frames = new Sprite[180];
         for (int i = 0; i < fire_frames.length; i++) {
-            fire_frames[i] = fire_atlas.createSprite("frozen_orb" + (i + 1));
+            fire_frames[i] = fire_atlas.createSprite("orb" + (i + 1));
         }
         frozenorb_anim_fire = new Animation<>(0.032f, fire_frames);
 
-        Sprite[] arcane_frames = new Sprite[203];
+        Sprite[] arcane_frames = new Sprite[180];
         for (int i = 0; i < arcane_frames.length; i++) {
-            arcane_frames[i] = arcane_atlas.createSprite("frozen_orb" + (i + 1));
+            arcane_frames[i] = arcane_atlas.createSprite("orb" + (i + 1));
         }
         frozenorb_anim_arcane = new Animation<>(0.03f, arcane_frames);
 

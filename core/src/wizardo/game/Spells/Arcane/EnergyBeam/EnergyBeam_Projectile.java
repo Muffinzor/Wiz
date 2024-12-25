@@ -43,8 +43,6 @@ public class EnergyBeam_Projectile extends EnergyBeam_Spell {
         this.spawnPosition = new Vector2(spawnPosition);
         this.targetPosition = new Vector2(targetPosition);
 
-        screen = currentScreen;
-
     }
 
     public void update(float delta) {

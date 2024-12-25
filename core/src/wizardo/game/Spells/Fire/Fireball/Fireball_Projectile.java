@@ -10,7 +10,6 @@ import wizardo.game.Resources.SpellAnims.FireballAnims;
 import wizardo.game.Utils.BodyFactory;
 
 import static wizardo.game.Utils.Constants.PPM;
-import static wizardo.game.Wizardo.currentScreen;
 import static wizardo.game.Wizardo.world;
 
 public class Fireball_Projectile extends Fireball_Spell {
@@ -28,13 +27,12 @@ public class Fireball_Projectile extends Fireball_Spell {
         this.spawnPosition = new Vector2(spawnPosition);
         this.targetPosition = new Vector2(targetPosition);
 
-        screen = currentScreen;
-
     }
 
     public void update(float delta) {
 
         if(!initialized) {
+            speed = getScaledSpeed();
             picKAnim();
             createBody();
             createLight();
@@ -75,6 +73,7 @@ public class Fireball_Projectile extends Fireball_Spell {
         Sprite frame = screen.getSprite();
         frame.set(anim.getKeyFrame(stateTime, true));
         frame.setRotation(rotation);
+        frame.setScale(0.7f);
         frame.setCenter(body.getPosition().x * PPM, body.getPosition().y * PPM);
         screen.centerSort(frame, body.getPosition().y * PPM);
         screen.addSortedSprite(frame);
@@ -91,7 +90,7 @@ public class Fireball_Projectile extends Fireball_Spell {
 
         Vector2 offset = new Vector2(direction.cpy().scl(1));
         Vector2 adjustedSpawn = new Vector2(spawnPosition.add(offset));
-        body = BodyFactory.spellProjectileCircleBody(adjustedSpawn, 10, true);
+        body = BodyFactory.spellProjectileCircleBody(adjustedSpawn, 12, true);
         body.setUserData(this);
 
         /*
@@ -108,7 +107,7 @@ public class Fireball_Projectile extends Fireball_Spell {
     }
     public void createLight() {
         light = screen.lightManager.pool.getLight();
-        light.setLight(red, green, blue, lightAlpha, 150, spawnPosition);
+        light.setLight(red, green, blue, lightAlpha, 180, spawnPosition);
         screen.lightManager.addLight(light);
     }
     public void adjustLight() {
@@ -126,7 +125,6 @@ public class Fireball_Projectile extends Fireball_Spell {
             case FROST -> {
                 anim = FireballAnims.fireball_anim_frost;
                 red = 0.1f;
-                green = 0.3f;
                 blue = 0.8f;
             }
             case LIGHTNING -> {
@@ -136,9 +134,9 @@ public class Fireball_Projectile extends Fireball_Spell {
             }
             case ARCANE -> {
                 anim = FireballAnims.fireball_anim_arcane;
-                red = 0.2f;
-                green = 0.3f;
-                blue = 0.75f;
+                red = 0.6f;
+                green = 0.0f;
+                blue = 0.85f;
             }
         }
     }

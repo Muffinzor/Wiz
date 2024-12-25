@@ -32,49 +32,49 @@ Panel_Energy
   orig: 399, 692
   offset: 0, 0
   index: -1
-Panel_Explosives
+Panel_Flare
   rotate: false
   xy: 402, 531
   size: 399, 692
   orig: 399, 692
   offset: 0, 0
   index: -1
-Panel_Flare
+Panel_Force
   rotate: false
   xy: 803, 1310
   size: 399, 692
   orig: 399, 692
   offset: 0, 0
   index: -1
-Panel_Force
+Panel_Gravity
   rotate: false
   xy: 803, 616
   size: 399, 692
   orig: 399, 692
   offset: 0, 0
   index: -1
-Panel_Gravity
+Panel_Ice
   rotate: false
   xy: 1204, 1310
   size: 399, 692
   orig: 399, 692
   offset: 0, 0
   index: -1
-Panel_Ice
+Panel_Luck
   rotate: false
   xy: 1204, 616
   size: 399, 692
   orig: 399, 692
   offset: 0, 0
   index: -1
-Panel_Luck
+Panel_Projectiles
   rotate: false
   xy: 1605, 1310
   size: 399, 692
   orig: 399, 692
   offset: 0, 0
   index: -1
-Panel_Projectiles
+Panel_Red
   rotate: false
   xy: 1605, 616
   size: 399, 692
@@ -87,37 +87,65 @@ size: 2048, 2048
 format: RGBA8888
 filter: Linear, Linear
 repeat: none
-Panel_Red
+Panel_Chargedbolt
   rotate: false
-  xy: 1, 695
+  xy: 803, 616
+  size: 399, 692
+  orig: 399, 692
+  offset: 0, 0
+  index: -1
+Panel_Explosives
+  rotate: false
+  xy: 1605, 1310
+  size: 399, 692
+  orig: 399, 692
+  offset: 0, 0
+  index: -1
+Panel_Flamejet
+  rotate: false
+  xy: 402, 616
+  size: 399, 692
+  orig: 399, 692
+  offset: 0, 0
+  index: -1
+Panel_Frostbolts
+  rotate: false
+  xy: 803, 1310
+  size: 399, 692
+  orig: 399, 692
+  offset: 0, 0
+  index: -1
+Panel_Missiles
+  rotate: false
+  xy: 1204, 616
   size: 399, 692
   orig: 399, 692
   offset: 0, 0
   index: -1
 Panel_Regen
   rotate: false
-  xy: 1, 1
+  xy: 1, 1310
   size: 399, 692
   orig: 399, 692
   offset: 0, 0
   index: -1
 Panel_SharpProjectiles
   rotate: false
-  xy: 402, 695
+  xy: 1, 616
   size: 399, 692
   orig: 399, 692
   offset: 0, 0
   index: -1
 Panel_Space
   rotate: false
-  xy: 402, 1
+  xy: 402, 1310
   size: 399, 692
   orig: 399, 692
   offset: 0, 0
   index: -1
 Panel_Voltage
   rotate: false
-  xy: 803, 695
+  xy: 1204, 1310
   size: 399, 692
   orig: 399, 692
   offset: 0, 0

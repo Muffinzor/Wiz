@@ -32,7 +32,7 @@ public class Orbit_Projectile extends Orbit_Spell {
     public Orbit_Projectile(Vector2 spawnPosition, float angle) {
         this.spawnPosition = new Vector2(spawnPosition);
         this.angle = angle;
-        radius = 24;
+        radius = 24 * (1 + player.spellbook.iceRadiusBonus/100f);
         duration = 6;
 
         rotation = MathUtils.random(360);
@@ -43,6 +43,7 @@ public class Orbit_Projectile extends Orbit_Spell {
         if(!initialized) {
             animTime = (float) Math.random();
             initialized = true;
+            speed *= 1 + player.spellbook.orbitSpeed/100f;
             createBody();
             createLight();
         }
@@ -84,7 +85,10 @@ public class Orbit_Projectile extends Orbit_Spell {
             frame.setAlpha(alpha);
         }
 
-        frame.setScale(1);
+        if(player.spellbook.iceRadiusBonus > 0) {
+            frame.setScale(1 + (player.spellbook.iceRadiusBonus/100f));
+        }
+
 
         frame.setCenter(body.getPosition().x * PPM, body.getPosition().y * PPM);
         screen.centerSort(frame, body.getPosition().y * PPM - 20);
@@ -116,12 +120,14 @@ public class Orbit_Projectile extends Orbit_Spell {
     }
 
     public void frostbolts(Monster monster) {
-        float procRate = 0.95f - 0.05f * player.spellbook.frostbolt_lvl;
-        if(Math.random() >= procRate) {
-            Frostbolt_Explosion explosion = new Frostbolt_Explosion();
-            explosion.targetPosition = SpellUtils.getRandomVectorInRadius(monster.body.getPosition(), 1);
-            explosion.setElements(this);
-            screen.spellManager.toAdd(explosion);
+        if(frostbolt) {
+            float procRate = 0.95f - 0.05f * player.spellbook.frostbolt_lvl;
+            if (Math.random() >= procRate) {
+                Frostbolt_Explosion explosion = new Frostbolt_Explosion();
+                explosion.targetPosition = SpellUtils.getRandomVectorInRadius(monster.body.getPosition(), 1);
+                explosion.setElements(this);
+                screen.spellManager.toAdd(explosion);
+            }
         }
     }
 

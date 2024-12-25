@@ -135,6 +135,9 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 	arcanemissile_fire: {
 		imageUp: arcanemissile_fire
 	}
+	arcanemissile_frost: {
+		imageUp: arcanemissile_frost
+	}
 	arcanemissile_arcane: {
 		imageUp: arcanemissile_arcane
 	}
@@ -192,8 +195,14 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 	energyrain_arcane: {
 		imageUp: energyrain_arcane
 	}
+	energyrain_lightning: {
+		imageUp: energyrain_lightning
+	}
 	orbitingice: {
 		imageUp: orbitingice
+	}
+	meteorshower_arcane: {
+		imageUp: meteorshower_arcane
 	}
 }
 }

@@ -182,9 +182,9 @@ public class LightningFire_Spells {
             litefire15.anim_element = LIGHTNING;
             litefire15.chainlightning = true;
             litefire15.chargedbolts = true;
-            litefire15.spellParts.add(FIREBALL);
+            litefire15.spellParts.add(OVERHEAT);
             litefire15.spellParts.add(CHAIN);
-            litefire15.spellParts.add(THUNDERSTORM);
+            litefire15.spellParts.add(CHARGEDBOLTS);
             litefireSpells[15] = litefire15;
 
 

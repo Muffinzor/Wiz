@@ -78,6 +78,13 @@ public class LightningHands_Spell extends Spell {
 
     @Override
     public int getDmg() {
-        return 100;
+        int dmg = 100;
+        dmg += 20 * player.spellbook.flamejet_lvl;
+        dmg += 20 * player.spellbook.overheat_lvl;
+        if(thunderstorm) {
+            dmg += 10 * player.spellbook.thunderstorm_lvl;
+        }
+        dmg = (int) (dmg * (1 + player.spellbook.flashBonusDmg/100f));
+        return dmg;
     }
 }

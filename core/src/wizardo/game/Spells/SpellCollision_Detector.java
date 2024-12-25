@@ -1,12 +1,9 @@
 package wizardo.game.Spells;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
-import wizardo.game.Spells.Spell;
 import wizardo.game.Utils.BodyFactory;
 
-import static wizardo.game.Wizardo.currentScreen;
 import static wizardo.game.Wizardo.world;
 
 public class SpellCollision_Detector extends Spell {

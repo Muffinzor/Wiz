@@ -12,9 +12,9 @@ import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyFactory;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
-import static wizardo.game.Resources.SpellAnims.ArcaneMissileAnims.arcanemissile_anim_arcane;
-import static wizardo.game.Resources.SpellAnims.ArcaneMissileAnims.arcanemissile_anim_fire;
+import static wizardo.game.Resources.SpellAnims.ArcaneMissileAnims.*;
 import static wizardo.game.Spells.SpellUtils.Spell_Element.ARCANE;
 import static wizardo.game.Spells.SpellUtils.hasLineOfSight;
 import static wizardo.game.Utils.Constants.PPM;
@@ -24,7 +24,7 @@ public class ArcaneMissile_Projectile extends ArcaneMissile_Spell {
 
     Body body;
     RoundLight light;
-    float scale = 1;
+    float frameScale = 0.35f;
 
     float rotation;
     Vector2 direction;
@@ -38,17 +38,24 @@ public class ArcaneMissile_Projectile extends ArcaneMissile_Spell {
     boolean hasCollided;
     public boolean hasSplit;
 
+    float animTimeBuffer;
+
 
     public ArcaneMissile_Projectile(Vector2 spawnPosition, Vector2 targetPosition) {
         this.spawnPosition = new Vector2(spawnPosition);
         this.targetPosition = new Vector2(targetPosition);
 
+        speed = MathUtils.random(speed * 0.9f, speed * 1.1f);
+
+        animTimeBuffer = (float) Math.random();
+        stateTime = animTimeBuffer;
 
     }
 
     public void update(float delta) {
         if(!initialized) {
             collisionsToSplit = MathUtils.random(1, 5);
+            speed = getScaledSpeed();
             initialized = true;
             pickAnim();
             createBody();
@@ -58,9 +65,9 @@ public class ArcaneMissile_Projectile extends ArcaneMissile_Spell {
         stateTime += delta;
         drawFrame();
         adjustLight();
-        arcaneTargeting();
-
-        scale -= 0.0035f;
+        if(delta > 0 && stateTime >= 0.2f) {
+            arcaneTargeting();
+        }
 
         if(scale <= 0.1f) {
             light.dimKill(0.1f);
@@ -69,7 +76,7 @@ public class ArcaneMissile_Projectile extends ArcaneMissile_Spell {
             return;
         }
 
-        if(stateTime >= 2.5f || hasCollided) {
+        if(stateTime - animTimeBuffer >= 2.5f || hasCollided) {
             scale -= 0.02f;
         }
 
@@ -81,11 +88,15 @@ public class ArcaneMissile_Projectile extends ArcaneMissile_Spell {
 
     public void handleCollision(Monster monster) {
         collisions++;
+        targetLocked = false;
         dealDmg(monster);
-        scale -= 0.05f;
 
-        if(icespear && collisions >= collisionsToSplit) {
-           canSplit = true;
+        float scaleLoss = 0.2f;
+        scaleLoss *= 1 - player.spellbook.arcanemissileBonus/100f;
+        scale -= scaleLoss;
+
+        if(frostbolt) {
+            frostbolt(monster);
         }
 
         if(rift && scale >= 0.05f) {
@@ -121,9 +132,9 @@ public class ArcaneMissile_Projectile extends ArcaneMissile_Spell {
         frame.set(anim.getKeyFrame(stateTime, true));
         frame.setCenter(body.getPosition().x * PPM, body.getPosition().y * PPM);
         frame.rotate(rotation);
-        if(scale < 1) {
-            frame.setScale(scale);
-        }
+
+        frame.setScale(scale * frameScale);
+
         screen.centerSort(frame, body.getPosition().y * PPM - 20);
         screen.addSortedSprite(frame);
     }
@@ -140,6 +151,10 @@ public class ArcaneMissile_Projectile extends ArcaneMissile_Spell {
                 anim = arcanemissile_anim_fire;
                 red = 0.85f;
                 green = 0.2f;
+            }
+            case FROST -> {
+                anim = arcanemissile_anim_frost;
+                blue = 0.7f;
             }
         }
     }
@@ -158,9 +173,9 @@ public class ArcaneMissile_Projectile extends ArcaneMissile_Spell {
         body = BodyFactory.spellProjectileCircleBody(adjustedSpawn, 5, true);
         body.setUserData(this);
 
-        int missiles = 2;
+        int missiles = 2 + player.spellbook.arcanemissile_lvl / 3;
 
-        float angleVariation = Math.min(3f * missiles, 15);
+        float angleVariation = Math.min(4f * missiles, 16);
         float randomAngle = MathUtils.random(-angleVariation, angleVariation);
         direction.rotateDeg(randomAngle);
 
@@ -172,7 +187,7 @@ public class ArcaneMissile_Projectile extends ArcaneMissile_Spell {
 
     public void createLight() {
         light = screen.lightManager.pool.getLight();
-        light.setLight(red, green, blue, 0.8f, 35, body.getPosition());
+        light.setLight(red, green, blue, 0.9f, 45, body.getPosition());
         screen.lightManager.addLight(light);
     }
 
@@ -186,6 +201,7 @@ public class ArcaneMissile_Projectile extends ArcaneMissile_Spell {
         if(!targetLocked && !screen.monsterManager.liveMonsters.isEmpty()) {
 
             ArrayList<Monster> inRange = SpellUtils.findMonstersInRangeOfVector(body.getPosition(), 6, true);
+            Collections.shuffle(inRange);
 
             float max = 0;
             for(Monster monster : inRange) {
@@ -193,6 +209,9 @@ public class ArcaneMissile_Projectile extends ArcaneMissile_Spell {
                     max = monster.hp;
                     targetMonster = monster;
                     targetLocked = true;
+                    if(MathUtils.randomBoolean()) {
+                        break;
+                    }
                 }
             }
 
@@ -218,7 +237,7 @@ public class ArcaneMissile_Projectile extends ArcaneMissile_Spell {
             }
 
             //Clamp the angle difference to the maximum allowed increment
-            float maxRotationPerFrame = 6f;
+            float maxRotationPerFrame = 8f;
             float rotationStep = MathUtils.clamp(angleDiff, -maxRotationPerFrame, maxRotationPerFrame);
 
             direction.rotateDeg(rotationStep);
@@ -252,6 +271,15 @@ public class ArcaneMissile_Projectile extends ArcaneMissile_Spell {
             missile.setElements(this);
             missile.setMissile(this);
             screen.spellManager.toAdd(missile);
+        }
+    }
+
+    public void frostbolt(Monster monster) {
+        if(frostbolt) {
+            float freezeProc = 0.8f - 0.05f * player.spellbook.frostbolt_lvl;
+            if(Math.random() >= freezeProc) {
+                monster.applyFreeze(1.5f, 3);
+            }
         }
     }
 }

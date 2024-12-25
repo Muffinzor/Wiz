@@ -5,7 +5,13 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import wizardo.game.Display.MenuTable;
+import wizardo.game.Player.Levels.LevelUpEnums;
+import wizardo.game.Player.Levels.LevelUpUtils;
 import wizardo.game.Wizardo;
+
+import java.util.ArrayList;
+
+import static wizardo.game.Wizardo.player;
 
 public class LevelUpTable extends MenuTable {
 
@@ -21,7 +27,7 @@ public class LevelUpTable extends MenuTable {
         this.skin = skin;
         this.stage = stage;
         this.screen = screen;
-        this.buttonsMatrix = new PanelButton[3];
+        this.buttonsMatrix = new PanelButton[player.levelup_choices];
 
         createTable();
         createPanels();
@@ -50,12 +56,18 @@ public class LevelUpTable extends MenuTable {
     }
 
     public void createPanels() {
-        for (int i = 0; i < buttonsMatrix.length; i++) {
-            PanelButton panel = new PanelButton(screen, LevelUpUtils.getRandomLevelUp(), LevelUpUtils.getRandomQuality());
+        ArrayList<LevelUpEnums.LevelUps> choices = new ArrayList<>();
+
+        for (int i = 0; i < player.levelup_choices; i++) {
+            LevelUpEnums.LevelUpQuality quality = LevelUpUtils.getRandomQuality();
+            LevelUpEnums.LevelUps type = LevelUpUtils.getPossibleChoice(quality, choices);
+            choices.add(type);
+            PanelButton panel = new PanelButton(screen, type, quality);
             table.add(panel).padLeft(15).padRight(15);
             buttons.add(panel);
             buttonsMatrix[i] = panel;
         }
+
     }
 
     @Override

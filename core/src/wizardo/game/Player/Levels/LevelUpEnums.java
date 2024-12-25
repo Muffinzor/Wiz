@@ -1,8 +1,11 @@
-package wizardo.game.Screens.LevelUp;
+package wizardo.game.Player.Levels;
 
-import java.util.Random;
+import java.util.ArrayList;
+import java.util.Collections;
 
-public class LevelUpUtils {
+import static wizardo.game.Wizardo.player;
+
+public class LevelUpEnums {
 
     public enum LevelUps {
         CRYSTAL,
@@ -15,11 +18,40 @@ public class LevelUpUtils {
         ICE,
         LUCK,
         PROJECTILES,
-        //RED,
+        RED,
         REGEN,
         SHARP,
         SPACE,
-        VOLTAGE
+        VOLTAGE,
+
+        FROSTBOLT,
+        FLAMEJET,
+        CHARGEDBOLT,
+        MISSILES,
+        ICESPEAR,
+        FIREBALL,
+        CHAIN,
+        BEAM,
+    }
+
+    public static LevelUps getRandomT1() {
+        ArrayList<LevelUps> list = new ArrayList<>();
+
+        if(player.spellbook.flamejetBonus < 10) {
+            list.add(LevelUps.FLAMEJET);
+        }
+        if(player.spellbook.frostboltBonus < 40) {
+            list.add(LevelUps.FROSTBOLT);
+        }
+        if(player.spellbook.arcanemissileBonus < 40) {
+            list.add(LevelUps.MISSILES);
+        }
+        if(player.spellbook.chargedboltBonus < 40) {
+            list.add(LevelUps.CHARGEDBOLT);
+        }
+
+        Collections.shuffle(list);
+        return list.getFirst();
     }
 
     public enum LevelUpQuality {
@@ -29,15 +61,5 @@ public class LevelUpUtils {
         LEGENDARY
     }
 
-    public static LevelUps getRandomLevelUp() {
-        LevelUps[] levelUps = LevelUps.values();
-        Random random = new Random();
-        return levelUps[random.nextInt(levelUps.length)];
-    }
 
-    public static LevelUpQuality getRandomQuality() {
-        LevelUpQuality[] qualities = LevelUpQuality.values();
-        Random random = new Random();
-        return qualities[random.nextInt(qualities.length)];
-    }
 }

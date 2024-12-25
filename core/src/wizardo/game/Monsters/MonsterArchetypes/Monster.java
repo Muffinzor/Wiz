@@ -27,7 +27,6 @@ public abstract class Monster {
     public BattleScreen screen;
     public Animation<Sprite> spawn_anim;
     public Animation<Sprite> walk_anim;
-    public Animation<Sprite> attack_anim;
     public Animation<Sprite> death_anim;
     public boolean deathFrameFlip;
     public Sprite weaponSprite;
@@ -57,14 +56,18 @@ public abstract class Monster {
     public float maxHP;
     public boolean dead;
     public boolean spaghettified;  // Dead from blackhole
+    public float redshift = 0.75f;     // ditto
 
     public boolean initialized;
+    public boolean tooFar;
 
     public float thunderImmunityTimer = 0;
     public float freezeImmunityTimer = 0;
     public float freezeTimer = 0;
     public float slowedTimer = 0;
     public float slowRatio = 1;
+
+    public int flamejetStacks = 0;
 
     public static Sprite greenHP = new Sprite(new Texture("Monsters/hpbar.png"));
     public static Sprite redHP = new Sprite(new Texture("Monsters/redbar.png"));
@@ -175,15 +178,21 @@ public abstract class Monster {
                 alpha = 0;
             }
         }
+        Sprite frame = screen.displayManager.spriteRenderer.pool.getSprite();
         if(!spaghettified) {
-            Sprite frame = screen.displayManager.spriteRenderer.pool.getSprite();
             frame.set(death_anim.getKeyFrame(stateTime, false));
-            frame.setPosition(body.getPosition().x * PPM - frame.getWidth() / 2, body.getPosition().y * PPM - bodyRadius);
             frame.setAlpha(alpha);
-            frame.flip(deathFrameFlip, false);
-            screen.centerSort(frame, body.getPosition().y * PPM - bodyRadius + 10);
-            screen.displayManager.spriteRenderer.regular_sorted_sprites.add(frame);
+        } else {
+            alpha -= 0.012f;
+            redshift += 0.012f;
+            stateTime -= delta;
+            frame.set(walk_anim.getKeyFrames()[0]);
+            frame.setColor(redshift,0.75f,0.75f,alpha);
         }
+        frame.flip(deathFrameFlip, false);
+        frame.setPosition(body.getPosition().x * PPM - frame.getWidth() / 2, body.getPosition().y * PPM - bodyRadius);
+        screen.centerSort(frame, body.getPosition().y * PPM - bodyRadius + 10);
+        screen.displayManager.spriteRenderer.regular_sorted_sprites.add(frame);
     }
 
     public void dispose() {

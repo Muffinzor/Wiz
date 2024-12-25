@@ -5,7 +5,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Resources.SpellAnims.EnergyBeamAnims;
-import wizardo.game.Spells.Hybrid.EnergyRain.EnergyRain_Explosion;
 import wizardo.game.Utils.BodyFactory;
 
 import static wizardo.game.Utils.Constants.PPM;
@@ -144,14 +143,12 @@ public class ArcaneArtillery_Projectile extends ArcaneArtillery_Spell {
     }
 
     public void explode() {
-        ArcaneArtillery_Explosion explosion = new ArcaneArtillery_Explosion();
-        explosion.targetPosition = new Vector2(targetPosition);
+        ArcaneArtillery_Explosion explosion = new ArcaneArtillery_Explosion(targetPosition);
         explosion.setElements(this);
         explosion.frozenorb = frozenorb;
         explosion.arcaneMissiles = arcaneMissiles;
         explosion.rift = rift;
-        explosion.megaRift = megaRift;
-        explosion.thunderstorm = thunderstorm;
+        explosion.rift = rift;
         screen.spellManager.toAdd(explosion);
     }
 

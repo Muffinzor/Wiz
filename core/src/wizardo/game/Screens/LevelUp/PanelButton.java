@@ -1,7 +1,6 @@
 package wizardo.game.Screens.LevelUp;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -12,12 +11,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
+import wizardo.game.Player.Levels.StatsBuffer;
 import wizardo.game.Resources.ScreenResources.LevelUpResources;
-import wizardo.game.Screens.LevelUp.LevelUpUtils.*;
-import wizardo.game.Spells.SpellUtils;
-
-import static wizardo.game.Resources.Skins.masteryTableSkin;
-import static wizardo.game.Screens.BaseScreen.screenRatio;
+import wizardo.game.Player.Levels.LevelUpEnums.*;
 
 public class PanelButton extends TextButton {
 
@@ -33,8 +29,6 @@ public class PanelButton extends TextButton {
     public LevelUps type;
     public LevelUpQuality quality;
     public boolean selected;
-
-
 
     public PanelButton(LevelUpScreen screen, LevelUps type, LevelUpQuality quality) {
         super("", screen.skin);
@@ -98,14 +92,18 @@ public class PanelButton extends TextButton {
 
     }
 
+    public void handleClick() {
+        StatsBuffer.apply_LevelUp(type, quality);
+    }
+
     public void addClickListener() {
 
         this.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 screen.game.setPreviousScreen();
+                handleClick();
             }
-
 
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
                 selected = true;
@@ -137,7 +135,7 @@ public class PanelButton extends TextButton {
         Label label = getLabel();
         label.setWrap(true);
         label.setAlignment(Align.center);
-        getLabelCell().pad(10 * xRatio);
+        getLabelCell().pad(15 * xRatio);
 
         setStyle(newStyle);
     }

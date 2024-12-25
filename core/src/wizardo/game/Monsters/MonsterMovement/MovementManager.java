@@ -3,6 +3,8 @@ package wizardo.game.Monsters.MonsterMovement;
 import com.badlogic.gdx.math.Vector2;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 
+import static wizardo.game.Wizardo.player;
+
 public class MovementManager {
 
     Monster monster;
@@ -39,9 +41,9 @@ public class MovementManager {
     }
 
     public void walk(boolean backwards) {
-
         frameCounter ++;
         if(frameCounter >= 20) {
+            checkDistance();
             if(backwards) {
                 monster.directionVector = pathfinder.awayFromPlayer();
             } else {
@@ -59,7 +61,13 @@ public class MovementManager {
 
         monster.directionVector.nor().scl(trueSpeed);
         monster.body.setLinearVelocity(monster.directionVector);
+    }
 
+    public void checkDistance() {
+        float dst = monster.body.getPosition().dst(player.pawn.getPosition());
+        if(dst > 55) {
+            monster.tooFar = true;
+        }
     }
 
     public void stopMonster() {
@@ -86,6 +94,9 @@ public class MovementManager {
         monster.body.setLinearVelocity(pushBackForce);
         pushBackForce.scl(pushDecayRate);
         pushBackTimer -= delta;
+        if(pushBackForce.len() < 0.1f) {
+            pushBackTimer = 0;
+        }
     }
 
 

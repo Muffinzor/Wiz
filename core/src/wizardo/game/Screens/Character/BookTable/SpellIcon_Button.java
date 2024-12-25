@@ -71,7 +71,7 @@ public class SpellIcon_Button extends ImageButton {
             case "Chain Lightning" :
                 switch(spell.anim_element) {
                     case FIRE -> style = skin.get("chainlightning_fire", ImageButtonStyle.class);
-                    case FROST -> style = skin.get("chainlightning_frost", ImageButtonStyle.class);
+                    case FROST, COLDLITE -> style = skin.get("chainlightning_frost", ImageButtonStyle.class);
                     case ARCANE -> style = skin.get("chainlightning_arcane", ImageButtonStyle.class);
                     case LIGHTNING -> style = skin.get("chainlightning_lightning", ImageButtonStyle.class);
                 }
@@ -116,6 +116,8 @@ public class SpellIcon_Button extends ImageButton {
                 switch(spell.anim_element) {
                     case FIRE -> style = skin.get("arcanemissile_fire", ImageButtonStyle.class);
                     case ARCANE -> style = skin.get("arcanemissile_arcane", ImageButtonStyle.class);
+                    case FROST -> style = skin.get("arcanemissile_frost", ImageButtonStyle.class);
+
                 }
                 break;
 
@@ -164,6 +166,8 @@ public class SpellIcon_Button extends ImageButton {
                 switch(spell.anim_element) {
                     case LIGHTNING -> style = skin.get("meteorshower_lightning", ImageButtonStyle.class);
                     case FIRE -> style = skin.get("meteorshower_fire", ImageButtonStyle.class);
+                    case ARCANE -> style = skin.get("meteorshower_arcane", ImageButtonStyle.class);
+
                 }
                 break;
 
@@ -180,6 +184,8 @@ public class SpellIcon_Button extends ImageButton {
                     case FROST -> style = skin.get("energyrain_frost", ImageButtonStyle.class);
                     case ARCANE -> style = skin.get("energyrain_arcane", ImageButtonStyle.class);
                     case FIRE -> style = skin.get("energyrain_fire", ImageButtonStyle.class);
+                    case LIGHTNING -> style = skin.get("energyrain_lightning", ImageButtonStyle.class);
+
                 }
                 break;
 

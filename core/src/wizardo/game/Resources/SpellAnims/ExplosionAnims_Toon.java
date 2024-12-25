@@ -4,12 +4,11 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.MathUtils;
-import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 
 import static wizardo.game.Wizardo.assetManager;
 
-public class ExplosionsAnims {
+public class ExplosionAnims_Toon {
 
     public static Animation<Sprite> explosion1_anim_fire;
     public static Animation<Sprite> explosion2_anim_fire;

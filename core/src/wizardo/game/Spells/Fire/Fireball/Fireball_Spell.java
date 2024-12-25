@@ -70,6 +70,7 @@ public class Fireball_Spell extends Spell {
     public int getDmg() {
         int dmg = baseDmg;
         dmg += 15 * getLvl();
+        dmg = (int) (dmg * (1 + player.spellbook.explosivesBonusDmg/100f));
         return dmg;
     }
 

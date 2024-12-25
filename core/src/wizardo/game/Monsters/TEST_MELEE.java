@@ -16,9 +16,9 @@ public class TEST_MELEE extends MonsterMelee {
 
     public TEST_MELEE(BattleScreen screen, Vector2 position) {
         super(screen, position);
-        speed = 30f/PPM;
-        hp = 500;
-        maxHP = 500;
+        speed = 20f/PPM;
+        hp = 60;
+        maxHP = 60;
         massValue = 5f;
 
         bodyRadius = 10;

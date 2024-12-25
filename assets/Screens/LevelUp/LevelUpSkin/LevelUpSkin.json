@@ -34,9 +34,6 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 	energy: {
 		imageUp: Panel_Energy
 	}
-	explosives: {
-		imageUp: Panel_Explosives
-	}
 	flare: {
 		imageUp: Panel_Flare
 	}
@@ -66,9 +63,6 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 	}
 	space: {
 		imageUp: Panel_Space
-	}
-	voltage: {
-		imageUp: Panel_Voltage
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
@@ -135,6 +129,22 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 	voltage: {
 		font: SimpleFont26
 		up: Panel_Voltage
+	}
+	frostbolt: {
+		font: SimpleFont26
+		up: Panel_Frostbolts
+	}
+	flamejet: {
+		font: SimpleFont26
+		up: Panel_Flamejet
+	}
+	chargedbolt: {
+		font: SimpleFont26
+		up: Panel_Chargedbolt
+	}
+	missiles: {
+		font: SimpleFont26
+		up: Panel_Missiles
 	}
 }
 }

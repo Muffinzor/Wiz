@@ -54,7 +54,7 @@ public class FrostLightning_Spells {
 
         ChainLightning_Spell frostlite3 = new ChainLightning_Spell();
         frostlite3.frostbolts = true;
-        frostlite3.anim_element = FROST;
+        frostlite3.anim_element = COLDLITE;
         frostlite3.spellParts.add(CHAIN);
         frostlite3.spellParts.add(FROSTBOLT);
         frostliteSpells[3] = frostlite3;
@@ -173,7 +173,7 @@ public class FrostLightning_Spells {
         ChainLightning_Spell frostlite15 = new ChainLightning_Spell();
         frostlite15.frostbolts = true;
         frostlite15.spear = true;
-        frostlite15.anim_element = FROST;
+        frostlite15.anim_element = COLDLITE;
         frostlite15.textColor = Skins.light_blue;
         frostlite15.spellParts.add(CHAIN);
         frostlite15.spellParts.add(ICESPEAR);

@@ -8,7 +8,6 @@ import wizardo.game.Spells.SpellUtils;
 
 import java.util.ArrayList;
 
-import static wizardo.game.Wizardo.currentScreen;
 import static wizardo.game.Wizardo.player;
 
 public class Thunderstorm_Spell extends Spell {
@@ -22,6 +21,8 @@ public class Thunderstorm_Spell extends Spell {
     public boolean arcaneMissile;
     public boolean rifts;
     public boolean overheat;
+
+    int thunderSent;
 
     public Thunderstorm_Spell() {
 
@@ -46,6 +47,7 @@ public class Thunderstorm_Spell extends Spell {
         stateTime += delta;
 
         if(stateTime % interval < delta) {
+            thunderSent++;
             Vector2 target;
             if(arcaneMissile) {
                 target = arcaneMissileTargeting();
@@ -66,7 +68,8 @@ public class Thunderstorm_Spell extends Spell {
         }
 
         if(stateTime >= duration) {
-            currentScreen.spellManager.toRemove(this);
+            screen.spellManager.toRemove(this);
+            System.out.println("Thunders:" + thunderSent);
         }
 
     }
@@ -114,8 +117,6 @@ public class Thunderstorm_Spell extends Spell {
         return target;
     }
 
-
-
     @Override
     public void dispose() {
 
@@ -128,11 +129,14 @@ public class Thunderstorm_Spell extends Spell {
 
     @Override
     public int getDmg() {
-        return baseDmg + 30 * getLvl();
+        int dmg = baseDmg + 30 * getLvl();
+        dmg = (int) (dmg * (1 + player.spellbook.voltageBonusDmg/100f));
+        return dmg;
     }
 
     public void setup() {
-        frequency = 5 * (0.9f + getLvl()/10f);
+        frequency = 3 * (0.9f + getLvl()/10f);
+        frequency = frequency * (1 + player.spellbook.empyreanFrequencyBonus/100f);
         interval = 1/frequency;
         if(rifts) {
             spawnPosition = getTargetPosition();

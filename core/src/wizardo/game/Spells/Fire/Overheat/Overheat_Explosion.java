@@ -32,6 +32,11 @@ public class Overheat_Explosion extends Overheat_Spell {
     boolean flipY;
     int rotation;
 
+    float pushStrength;
+    float pushDuration;
+    float pushDecay = 0.89f;
+
+    public boolean fromThunder;  //spawned from thunderstorm + overheat +chargedbolt
     public boolean small; // spawned from superBolt
 
     public Overheat_Explosion(Vector2 targetPosition) {
@@ -44,13 +49,26 @@ public class Overheat_Explosion extends Overheat_Spell {
 
     }
 
+    public void setup() {
+        pickAnim();
+        createBody();
+        createLight();
+        sendProjectiles();
+        if(thunderstorm) {
+            pushStrength = 8 + 0.75f * player.spellbook.thunderstorm_lvl;
+            pushDuration = 0.75f;
+            pushDecay = 0.91f;
+        } else {
+            pushStrength = 4;
+            pushDuration = 0.3f;
+        }
+        pushStrength *= (1 + player.spellbook.pushbackBonus/100f);
+    }
+
     public void update(float delta) {
         if(!initialized) {
             initialized = true;
-            pickAnim();
-            createBody();
-            createLight();
-            sendProjectiles();
+            setup();
         }
 
         drawFrame();
@@ -59,6 +77,7 @@ public class Overheat_Explosion extends Overheat_Spell {
 
         if(stateTime >= 0.2f) {
             body.setActive(false);
+            light.dimKill(0.01f);
         }
 
         delayedFrostbolts(delta);
@@ -71,15 +90,16 @@ public class Overheat_Explosion extends Overheat_Spell {
 
     public void handleCollision(Monster monster) {
         dealDmg(monster);
-
         fireball(monster);
+        pushBack(monster);
+    }
 
+    public void pushBack(Monster monster) {
         Vector2 direction = monster.body.getPosition().sub(body.getPosition());
-        if(thunderstorm) {
-            float strength = 10 + 0.5f * player.spellbook.thunderstorm_lvl;
-            monster.movementManager.applyPush(direction, strength, 0.75f, 0.89f);
+        if (fromThunder) {
+            monster.movementManager.applyPush(direction, 1, 0.25f, 0.89f);
         } else {
-            monster.movementManager.applyPush(direction, 5, 0.3f, 0.92f);
+            monster.movementManager.applyPush(direction, pushStrength, pushDuration, pushDecay);
         }
     }
 
@@ -88,7 +108,7 @@ public class Overheat_Explosion extends Overheat_Spell {
         frame.set(anim.getKeyFrame(stateTime, false));
         frame.setCenter(body.getPosition().x * PPM, body.getPosition().y * PPM);
         frame.setRotation(rotation);
-        frame.setScale(1.2f);
+        frame.setScale(1.4f);
         if(small) {
             frame.setScale(0.6f);
         }
@@ -106,8 +126,8 @@ public class Overheat_Explosion extends Overheat_Spell {
             }
             case FIRE -> {
                 anim = OverheatAnims.overheat_anim_fire;
-                red = 0.7f;
-                green = 0.3f;
+                red = 0.75f;
+                green = 0.25f;
             }
             case LIGHTNING -> {
                 anim = OverheatAnims.overheat_anim_lightning;
@@ -131,13 +151,12 @@ public class Overheat_Explosion extends Overheat_Spell {
     }
 
     public void createLight() {
-        float lightRadius = 250;
+        float lightRadius = 500;
         if(small) {
             lightRadius = 150;
         }
         light = screen.lightManager.pool.getLight();
-        light.setLight(red, green, blue, lightAlpha, lightRadius, targetPosition);
-        light.dimKill(0.015f);
+        light.setLight(red, green, blue, 1, lightRadius, targetPosition);
         screen.lightManager.addLight(light);
     }
 

@@ -58,6 +58,7 @@ public class Icespear_Projectile extends Icespear_Spell {
 
     public void update(float delta) {
         if(!initialized) {
+            speed = getScaledSpeed();
             duration = duration * MathUtils.random(0.75f, 1);
             pickAnim();
             createBody();
@@ -283,7 +284,7 @@ public class Icespear_Projectile extends Icespear_Spell {
             direction = new Vector2(1,0);
         }
 
-        int radius = 8;
+        int radius = 6;
         float actualSpeed = speed;
         if(beam) {
             radius = 20;

@@ -3,7 +3,6 @@ package wizardo.game.Spells.Frost.Frostbolt;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 
-import static wizardo.game.Wizardo.currentScreen;
 import static wizardo.game.Wizardo.player;
 
 public class Frostbolt_Spell extends Spell {
@@ -20,8 +19,8 @@ public class Frostbolt_Spell extends Spell {
 
         speed = 7;
         radius = 25;
-        baseDmg = 15;
-        cooldown = 0.6f;
+        baseDmg = 24;
+        cooldown = 0.8f;
 
         main_element = SpellUtils.Spell_Element.FROST;
 
@@ -59,10 +58,11 @@ public class Frostbolt_Spell extends Spell {
     @Override
     public int getDmg() {
         int dmg = baseDmg;
-        dmg += 5 * getLvl();
+        dmg += 6 * getLvl();
         if(superBolt) {
             dmg += 5 * player.spellbook.fireball_lvl;
         }
+        dmg = (int) (dmg * (1 + player.spellbook.explosivesBonusDmg/100f));
         return dmg;
     }
 

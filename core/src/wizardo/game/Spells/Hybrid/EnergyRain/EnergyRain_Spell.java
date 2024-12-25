@@ -71,11 +71,14 @@ public class EnergyRain_Spell extends Spell {
 
     @Override
     public int getDmg() {
-        return baseDmg + player.spellbook.energybeam_lvl * 25;
+        int dmg = baseDmg + player.spellbook.energybeam_lvl * 25;
+        dmg = (int) (dmg * (1 + player.spellbook.energyBonusDmg/100f));
+        return dmg;
     }
 
     public void setup() {
         projectiles = 6 + player.spellbook.rift_lvl * 2;
+        projectiles = (int) (projectiles * (1 + player.spellbook.empyreanFrequencyBonus/100f));
         if(riftTargeting) {
             targetPosition = getTargetPosition();
         }
@@ -91,13 +94,13 @@ public class EnergyRain_Spell extends Spell {
     }
 
     public Vector2 getRandomizedPosition(Monster target) {
-        Vector2 randomTarget = null;
+        Vector2 randomTarget = SpellUtils.getRandomVectorInRadius(target.body.getPosition(), 3);;
         int attempts = 0;
-        while (randomTarget == null && attempts < 10) {
+        while (attempts < 10) {
             attempts++;
             Vector2 attempt = SpellUtils.getRandomVectorInRadius(target.body.getPosition(), 3);
-            if (!isPositionOverlappingWithObstacle(attempt) || attempts == 10) {
-                randomTarget = attempt;
+            if (!isPositionOverlappingWithObstacle(attempt) || attempts == 5) {
+                return attempt;
             }
         }
         return randomTarget;

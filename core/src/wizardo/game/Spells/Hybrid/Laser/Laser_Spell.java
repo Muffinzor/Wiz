@@ -124,6 +124,7 @@ public class Laser_Spell extends Spell {
     public int getDmg() {
         int dmg = baseDmg;
         dmg += 10 * player.spellbook.energybeam_lvl;
+        dmg = (int) (dmg * (1 + player.spellbook.energyBonusDmg/100f));
         return dmg;
     }
 

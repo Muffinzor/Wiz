@@ -33,6 +33,8 @@ import wizardo.game.Screens.Battle.Controls.KeyboardMouseListener_BATTLE;
 import wizardo.game.Screens.Character.CharacterScreen;
 import wizardo.game.Screens.Character.Controls.ControllerListener_CHARACTERSCREEN;
 import wizardo.game.Screens.Character.Controls.KeyboardMouseListener_CHARACTERSCREEN;
+import wizardo.game.Screens.DevScreen.Cheat_Screen;
+import wizardo.game.Screens.DevScreen.KeyboardMouseListener_CHEATMENU;
 import wizardo.game.Screens.EscapeMenu.Controls.ControllerListener_ESCAPE;
 import wizardo.game.Screens.EscapeMenu.Controls.KeyboardMouseListener_ESCAPE;
 import wizardo.game.Screens.EscapeMenu.EscapeScreen;
@@ -223,6 +225,11 @@ public abstract class BaseScreen implements Screen {
         if(this instanceof LevelUpScreen) {
             inputProcessor = new KeyboardMouseListener_LEVELUP( (LevelUpScreen) this);
             controllerAdapter = new ControllerListener_LEVELUP( (LevelUpScreen) this);
+        }
+
+        if(this instanceof Cheat_Screen) {
+            inputProcessor = new KeyboardMouseListener_CHEATMENU( (Cheat_Screen) this);
+            controllerAdapter = new ControllerListener_TABLEMENU(this);
         }
 
         for (Controller controller : Controllers.getControllers()) {

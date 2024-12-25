@@ -4,9 +4,12 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import wizardo.game.Lighting.RoundLight;
+import wizardo.game.Monsters.MonsterActions.MonsterSpell;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Resources.EffectAnims.BlackHoleAnims;
 import wizardo.game.Utils.BodyFactory;
+
+import java.util.ArrayList;
 
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.world;
@@ -27,9 +30,12 @@ public class BlackHole_Effect extends BlackHole_Spell {
     float duration;
     float lightRadius = 100;
 
+    ArrayList<MonsterSpell> projs;
+
     public BlackHole_Effect(Vector2 targetPosition) {
 
         this.targetPosition = new Vector2(targetPosition);
+        projs = new ArrayList<>();
 
         anim = BlackHoleAnims.blackhole_anim;
 
@@ -68,6 +74,9 @@ public class BlackHole_Effect extends BlackHole_Spell {
         if(!bodyKilled && stateTime >= anim.getAnimationDuration() * 0.9f) {
             world.destroyBody(body);
             killbody.terminate();
+            for(MonsterSpell proj : projs) {
+                proj.blackholeBody = null;
+            }
             bodyKilled = true;
         }
 
@@ -77,7 +86,7 @@ public class BlackHole_Effect extends BlackHole_Spell {
     }
 
     public void createPullBody() {
-        radius = 200;
+        radius = 220;
         body = BodyFactory.spellExplosionBody(targetPosition, radius);
         body.setUserData(this);
     }
@@ -108,6 +117,15 @@ public class BlackHole_Effect extends BlackHole_Spell {
         }
     }
 
+    public void handleCollision(MonsterSpell proj) {
+        try {
+            proj.blackholeBody = body;
+            projs.add(proj);
+        } catch (Exception e) {
+            // Do nothing, just be a failure.
+        }
+    }
+
     public void createLight() {
         light = screen.lightManager.pool.getLight();
         light.setLight(0.6f, 0, 0.9f, 1, lightRadius, targetPosition);
@@ -133,7 +151,7 @@ public class BlackHole_Effect extends BlackHole_Spell {
         frame.setCenter(targetPosition.x * PPM, targetPosition.y * PPM);
         frame.setRotation(rotation);
         frame.flip(flipX, flipY);
-        screen.addOverSprite(frame);
+        screen.addUnderSprite(frame);
     }
 
 }

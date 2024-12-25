@@ -8,7 +8,6 @@ import wizardo.game.Spells.SpellUtils;
 import java.util.ArrayList;
 
 import static wizardo.game.Utils.Methods.isPositionOverlappingWithObstacle;
-import static wizardo.game.Wizardo.currentScreen;
 import static wizardo.game.Wizardo.player;
 
 public class Rifts_Spell extends Spell {
@@ -52,7 +51,7 @@ public class Rifts_Spell extends Spell {
             castRifts();
 
             if (riftsCast >= maxRifts) {
-                currentScreen.spellManager.toRemove(this);
+                screen.spellManager.toRemove(this);
             }
 
         }
@@ -74,7 +73,7 @@ public class Rifts_Spell extends Spell {
             if(randomTarget != null) {
                 Rift_Zone rift = new Rift_Zone(randomTarget);
                 rift.setRift(this);
-                currentScreen.spellManager.toAdd(rift);
+                screen.spellManager.toAdd(rift);
             }
 
             riftsCast++;
@@ -141,6 +140,8 @@ public class Rifts_Spell extends Spell {
             dmg += 100;
             dmg += 20 * player.spellbook.overheat_lvl;
         }
+
+        dmg = (int) (dmg * (1 + player.spellbook.gravityBonusDmg/100f));
         return dmg;
     }
 }

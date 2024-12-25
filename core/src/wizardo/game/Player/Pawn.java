@@ -1,13 +1,16 @@
 package wizardo.game.Player;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Resources.PlayerResources;
+import wizardo.game.Resources.ScreenResources.LevelUpResources;
 import wizardo.game.Screens.BaseScreen;
+import wizardo.game.Screens.LevelUp.LevelUpScreen;
 import wizardo.game.Utils.BodyFactory;
 
 import static wizardo.game.Display.DisplayUtils.getLight;
@@ -21,16 +24,17 @@ public class Pawn {
 
     public Body body;
     private float stateTime;
+    private boolean levelingUp;
 
     public Vector2 movementVector;
     public Vector2 targetVector;
+    public Vector2 levelUpVector;
 
     Vector2 pushBackForce = new Vector2();
     float pushBackTimer = 0;
     float pushDecayRate = 0;
 
     public RoundLight light;
-
 
 
     public Pawn(BaseScreen screen) {
@@ -51,6 +55,42 @@ public class Pawn {
         }
 
         adjustLight();
+
+        if(delta > 0) {
+            checkXP();
+        }
+
+    }
+
+    public void checkXP() {
+        if(player.currentXP >= player.neededXP && !levelingUp) {
+            player.level ++;
+            player.currentXP = player.currentXP - player.neededXP;
+            player.neededXP += ((player.level - 1) * 10);
+            levelingUp = true;
+            stateTime = 0;
+            levelUpVector = new Vector2(player.pawn.getBodyX(), player.pawn.getBodyY() + 2);
+            RoundLight light = screen.lightManager.pool.getLight();
+            light.setLight(0.6f, 0, 0.9f, 1, 200, levelUpVector);
+            light.dimKill(0.0075f);
+            screen.lightManager.addLight(light);
+        } else {
+            levelUP();
+        }
+    }
+
+    public void levelUP() {
+        if(levelingUp) {
+            Sprite frame = getSprite(screen);
+            frame.set(LevelUpResources.level_up_anim.getKeyFrame(stateTime, false));
+            frame.setCenter(levelUpVector.x * PPM, levelUpVector.y * PPM);
+            frame.setScale(1.2f);
+            screen.displayManager.spriteRenderer.post_lightning_sprites.add(frame);
+        }
+        if(levelingUp && stateTime >= LevelUpResources.level_up_anim.getAnimationDuration()) {
+            levelingUp = false;
+            screen.game.addNewScreen(new LevelUpScreen(screen.game));
+        }
     }
 
     public void applyPush(Vector2 pushDirection, float strength, float duration, float decayRate) {
@@ -119,7 +159,7 @@ public class Pawn {
             movementVector.nor();
         }
         if(player != null) {
-            body.setLinearVelocity(movementVector.cpy().scl(player.runSpeed));
+            body.setLinearVelocity(movementVector.cpy().scl(player.stats.runSpeed));
         }
     }
 

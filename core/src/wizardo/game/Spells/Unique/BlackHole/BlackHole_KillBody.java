@@ -1,6 +1,7 @@
 package wizardo.game.Spells.Unique.BlackHole;
 
 import com.badlogic.gdx.math.Vector2;
+import wizardo.game.Monsters.MonsterActions.MonsterSpell;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Utils.BodyFactory;
@@ -22,7 +23,7 @@ public class BlackHole_KillBody extends Spell {
     }
 
     public void createBody() {
-        body = BodyFactory.spellExplosionBody(targetPosition, 40);
+        body = BodyFactory.spellExplosionBody(targetPosition, 85);
         body.setUserData(this);
     }
 
@@ -34,6 +35,10 @@ public class BlackHole_KillBody extends Spell {
     public void handleCollision(Monster monster) {
         monster.hp = 0;
         monster.spaghettified = true;
+    }
+
+    public void handleCollision(MonsterSpell proj) {
+        proj.blackholed = true;
     }
 
     @Override

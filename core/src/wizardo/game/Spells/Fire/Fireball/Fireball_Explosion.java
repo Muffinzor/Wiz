@@ -22,6 +22,7 @@ import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyFactory;
 
+import static wizardo.game.Spells.SpellUtils.Spell_Element.FIRELITE;
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.*;
 
@@ -85,12 +86,10 @@ public class Fireball_Explosion extends Fireball_Spell {
         Sprite frame = screen.displayManager.spriteRenderer.pool.getSprite();
         frame.set(anim.getKeyFrame(stateTime, false));
         frame.setCenter(targetPosition.x * PPM, targetPosition.y * PPM);
-        if(anim_element == SpellUtils.Spell_Element.FROST) {
-            frame.rotate(rotation);
-            frame.flip(flipX, flipY);
-        } else {
-            frame.flip(flipX, false);
-        }
+
+        frame.rotate(rotation);
+        frame.flip(flipX, flipY);
+
         if(frameScale != 1) {
             frame.setScale(frameScale);
         }
@@ -105,9 +104,7 @@ public class Fireball_Explosion extends Fireball_Spell {
     }
 
     public void createLight() {
-        if(castByPawn) {
-            lightAlpha = 1;
-        }
+        lightAlpha = 1;
         light = screen.lightManager.pool.getLight();
         light.setLight(red, green, blue, lightAlpha, 250, body.getPosition());
         light.toLightManager();
@@ -119,7 +116,9 @@ public class Fireball_Explosion extends Fireball_Spell {
             for (int i = 0; i < 2; i++) {
                 Vector2 random = SpellUtils.getRandomVectorInRadius(body.getPosition(), 3);
                 Frostbolt_Explosion explosion = new Frostbolt_Explosion();
-                //explosion.lightAlpha -= interval / 0.15f;
+                if(interval < 0.22f) {
+                    explosion.lightAlpha -= 0.15f;
+                }
                 explosion.setElements(this);
                 explosion.targetPosition = random;
                 screen.spellManager.toAdd(explosion);
@@ -186,14 +185,17 @@ public class Fireball_Explosion extends Fireball_Spell {
                 proj.targetPosition = SpellUtils.getRandomVectorInRadius(body.getPosition(), 4);
                 proj.spawnPosition = new Vector2(body.getPosition());
                 screen.spellManager.toAdd(proj);
+                if(nested_spell instanceof ArcaneMissile_Spell) {
+                    ArcaneMissile_Spell missile = (ArcaneMissile_Spell) proj;
+                    missile.scale = 0.7f;
+                }
             }
         }
     }
 
     public void flamejets() {
         if(flamejets) {
-            float level = (getLvl() + player.spellbook.flamejet_lvl) / 2f;
-            int quantity = 2 + (int) (level);
+            int quantity = 2 + player.spellbook.flamejet_lvl;
             for (int i = 0; i < quantity; i++) {
                 Flamejet_Spell flame = new Flamejet_Spell();
                 flame.setElements(this);
@@ -240,37 +242,30 @@ public class Fireball_Explosion extends Fireball_Spell {
 
 
     public void picKAnim() {
+        anim = FireballAnims.getAnim(anim_element);
         switch(anim_element) {
             case FIRE -> {
-                anim = FireballAnims.fireball_explosion_anim_fire;
                 red = 1f;
                 green = 0.25f;
-                lightAlpha = 0.8f;
+                lightAlpha = 1;
+                frameScale = 0.75f;
             }
             case FROST -> {
-                anim = FireballAnims.fireball_explosion_anim_frost;
                 red = 0.1f;
                 green = 0.3f;
                 blue = 0.8f;
+                frameScale = 0.75f;
+            }
+            case LIGHTNING, FIRELITE -> {
+                red = 0.55f;
+                green = 0.25f;
+                lightAlpha = 1;
                 frameScale = 0.8f;
             }
-            case LIGHTNING -> {
-                anim = FireballAnims.fireball_explosion_anim_lightning;
-                red = 0.75f;
-                if(!firelite) {
-                    green = 0.5f;
-                } else {
-                    green = 0.2f;
-                    textColor = Skins.light_orange;
-                }
-                lightAlpha = 0.8f;
-                frameScale = 1.2f;
-            }
             case ARCANE -> {
-                anim = FireballAnims.fireball_explosion_anim_arcane;
-                red = 0.2f;
-                green = 0.3f;
-                blue = 0.75f;
+                red = 0.6f;
+                blue = 0.85f;
+                frameScale = 0.75f;
             }
         }
     }

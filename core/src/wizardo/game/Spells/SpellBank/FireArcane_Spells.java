@@ -245,13 +245,11 @@ public class FireArcane_Spells {
 
         // 22. ArcaneMissile + Rifts + Fireball
 
-        Fireball_Spell firearcane22 = new Fireball_Spell();
+        MeteorShower_Spell firearcane22 = new MeteorShower_Spell();
         firearcane22.anim_element = ARCANE;
-        ArcaneMissile_Spell proj22 = new ArcaneMissile_Spell();
-        proj22.rift = true;
-        firearcane22.nested_spell = proj22;
-        firearcane22.spellParts.add(MISSILES);
+        firearcane22.arcaneMissile = true;
         firearcane22.spellParts.add(RIFTS);
+        firearcane22.spellParts.add(MISSILES);
         firearcane22.spellParts.add(FIREBALL);
         firearcaneSpells[22] = firearcane22;
 
@@ -285,12 +283,11 @@ public class FireArcane_Spells {
         firearcane25.spellParts.add(BEAM);
         firearcaneSpells[25] = firearcane25;
 
-
         // 26. Rifts + Beam + Overheat
 
         ArcaneArtillery_Spell firearcane26 = new ArcaneArtillery_Spell();
-        firearcane26.megaRift = true;
-        firearcane26.anim_element = FIRE;
+        firearcane26.rift = true;
+        firearcane26.anim_element = ARCANE;
         firearcane26.spellParts.add(OVERHEAT);
         firearcane26.spellParts.add(RIFTS);
         firearcane26.spellParts.add(BEAM);

@@ -96,9 +96,57 @@ public class SpellUtils {
     }
 
     /**
+     * randomizes a vector in a ring around a vector
+     * @param minRadius minimum distance from center
+     * @param maxRadius maximum distance
+     * @return Vector with randomized coordinates
+     */
+    public static Vector2 getRandomVectorInRing(Vector2 areaCenter, float minRadius, float maxRadius) {
+        float randomAngle = MathUtils.random(0, MathUtils.PI2); // Random angle in radians
+        float randomRadius = (float) Math.sqrt(MathUtils.random(minRadius * minRadius, maxRadius * maxRadius)); // Adjusted random radius for uniform distribution
+        float offsetX = randomRadius * MathUtils.cos(randomAngle); // X offset
+        float offsetY = randomRadius * MathUtils.sin(randomAngle); // Y offset
+
+        // Calculate the randomized coordinates
+        float x = areaCenter.x + offsetX;
+        float y = areaCenter.y + offsetY;
+
+        return new Vector2(x, y);
+    }
+
+    /**
+     * randomizes a vector in a 60 degree cone of a ring around the center
+     * @param minRadius minimum distance from center
+     * @param maxRadius maximum distance
+     * @param centralAngle the central angle of the cone
+     * @return Vector with randomized coordinates
+     */
+    public static Vector2 getRandomVectorInConeRing(Vector2 areaCenter, float minRadius, float maxRadius, float centralAngle) {
+        // Convert central angle from degrees to radians
+        float centralAngleRadians = centralAngle * MathUtils.degreesToRadians;
+
+        // Generate a random angle constrained within ±30 degrees of the central angle
+        float halfCone = MathUtils.PI / 4; // 30 degrees in radians
+        float randomAngle = MathUtils.random(
+                centralAngleRadians - halfCone,
+                centralAngleRadians + halfCone
+        );
+
+        // Generate a random radius within the ring boundaries
+        float randomRadius = MathUtils.random(minRadius, maxRadius);
+
+        // Compute offsets for X and Y using polar coordinates
+        float offsetX = randomRadius * MathUtils.cos(randomAngle);
+        float offsetY = randomRadius * MathUtils.sin(randomAngle);
+
+        // Return the final coordinates in Vector2 form
+        return new Vector2(areaCenter.x + offsetX, areaCenter.y + offsetY);
+    }
+
+    /**
      * returns a randomized position that does not collide with obstacles, if it can find one quickly
      * @param center center of the search circle
-     * @return null if nothing is found
+     * @return
      */
     public static Vector2 getClearRandomPosition(Vector2 center, float radius) {
         Vector2 randomTarget = null;
@@ -111,6 +159,40 @@ public class SpellUtils {
             }
         }
         return randomTarget;
+    }
+
+    /**
+     * returns a randomized position that does not collide with obstacles, if it can find one quickly
+     * @param center center of the search circle
+     * @param minRadius minimum distance
+     */
+    public static Vector2 getClearRandomPositionRing(Vector2 center, float minRadius, float maxRadius) {
+        Vector2 randomTarget = SpellUtils.getRandomVectorInRing(center, minRadius, maxRadius);
+        int attempts = 0;
+        while (attempts < 10) {
+            if (!isPositionOverlappingWithObstacle(randomTarget)) {
+                return randomTarget;
+            } else {
+                randomTarget = SpellUtils.getRandomVectorInRing(center, minRadius, maxRadius);
+                attempts++;
+            }
+        }
+        return randomTarget;
+    }
+
+    public static Vector2 getClearRandomPositionCone(Vector2 center, float minRadius, float maxRadius, float centralAngle) {
+        Vector2 position = SpellUtils.getRandomVectorInConeRing(center, minRadius, maxRadius, centralAngle);
+        int attempts = 0;
+        while (attempts < 10) {
+            if (!isPositionOverlappingWithObstacle(position)) {
+                return position;
+            } else {
+                position = SpellUtils.getRandomVectorInConeRing(center, minRadius, maxRadius, centralAngle);
+            }
+            attempts++;
+
+        }
+        return position;
     }
 
     /**

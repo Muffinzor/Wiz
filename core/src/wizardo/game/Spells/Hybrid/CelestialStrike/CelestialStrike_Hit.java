@@ -89,6 +89,17 @@ public class CelestialStrike_Hit extends CelestialStrike_Spell {
         light.setLight(0, 0.5f, 0.65f, 1, 250, targetPosition);
         screen.lightManager.addLight(light);
         light.dimKill(0.02f);
+
+        RoundLight upperLight = screen.lightManager.pool.getLight();
+        Vector2 position;
+        if(flipX) {
+            position = new Vector2(targetPosition.x + 2, targetPosition.y + 4);
+        } else {
+            position = new Vector2(targetPosition.x - 2, targetPosition.y + 4);
+        }
+        upperLight.setLight(0, 0.5f, 0.65f, 1, 250, position);
+        upperLight.dimKill(0.02f);
+        screen.lightManager.addLight(upperLight);
     }
 
     public void explosion() {
@@ -97,8 +108,8 @@ public class CelestialStrike_Hit extends CelestialStrike_Spell {
     }
 
     public void frostbolts(float delta) {
-        if(frostbolts) {
-            float interval = 0.30f - 0.024f * player.spellbook.frostbolt_lvl;
+        if(frostbolts && stateTime <= anim.getAnimationDuration()/2) {
+            float interval = 0.24f - 0.024f * player.spellbook.frostbolt_lvl;
             float radius = 2f + 0.1f * player.spellbook.frostbolt_lvl;
             if(interval < 0.06f) {
                 interval = 0.06f;

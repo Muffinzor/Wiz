@@ -33,7 +33,6 @@ public abstract class Spell implements Cloneable {
     public int aimReach = 15;
 
     public Animation<Sprite> anim;
-    public Sprite spell_icon;
     public float red = 0;
     public float green = 0;
     public float blue = 0;
@@ -118,7 +117,7 @@ public abstract class Spell implements Cloneable {
     public Vector2 getTargetPosition() {
         if(targetPosition == null) {
             if (!controllerActive) {
-                Vector3 mouseUnprojected = currentScreen.mainCamera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
+                Vector3 mouseUnprojected = screen.mainCamera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
                 return new Vector2(mouseUnprojected.x / PPM, mouseUnprojected.y / PPM);
             } else {
                 return controllerAimAssist();
@@ -328,12 +327,16 @@ public abstract class Spell implements Cloneable {
     public abstract int getDmg();
 
 
+    public float getScaledSpeed() {
+        return speed * (1 + player.spellbook.projSpeedBonus/100f);
+    }
+
     /**
      * Dmg after scaling modifiers, elemental + allDmg
      * @return
      */
-    public int getScaledDmg() {
-        float scaledDmg = getDmg();
+    public int getScaledDmg(float unscaledDmg) {
+        float scaledDmg = unscaledDmg;
         switch(main_element) {
             case ARCANE -> scaledDmg *= (1 + player.spellbook.arcaneBonusDmg);
             case FROST -> scaledDmg *= (1 + player.spellbook.frostBonusDmg);
@@ -353,7 +356,8 @@ public abstract class Spell implements Cloneable {
     }
 
     public void dealDmg(Monster monster) {
-        float dmg = getScaledDmg();
+        float dmg = getDmg();
+        dmg = getScaledDmg(dmg);
         float randomFactor = MathUtils.random(1 - dmgVariance, 1 + dmgVariance);
         dmg *= randomFactor;
         monster.hp -= dmg;

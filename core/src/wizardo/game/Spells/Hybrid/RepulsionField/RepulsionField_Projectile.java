@@ -58,6 +58,7 @@ public class RepulsionField_Projectile extends Spell {
             light.dimKill(0.5f);
             RepulsionField_ProjExplosion explosion = new RepulsionField_ProjExplosion(body.getPosition());
             explosion.setElements(this);
+            explosion.arcaneMissile = missile;
             screen.spellManager.toAdd(explosion);
             screen.spellManager.toRemove(this);
         }

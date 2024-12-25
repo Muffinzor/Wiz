@@ -68,7 +68,7 @@ public class EnergyBeam_FreezeBody extends Spell {
             int quantity = 2 + player.spellbook.frostbolt_lvl/2;
             for (int i = 0; i < quantity; i++) {
                 Frostbolt_Explosion explosion = new Frostbolt_Explosion();
-                explosion.targetPosition = SpellUtils.getRandomVectorInRadius(body.getPosition(), 3);
+                explosion.targetPosition = SpellUtils.getRandomVectorInRadius(body.getPosition(), 2.5f);
                 explosion.setElements(this);
                 screen.spellManager.toAdd(explosion);
             }

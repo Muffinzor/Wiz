@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
-import wizardo.game.Resources.SpellAnims.ExplosionsAnims;
+import wizardo.game.Resources.SpellAnims.ExplosionAnims_Toon;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyFactory;
@@ -15,6 +15,9 @@ import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.player;
 import static wizardo.game.Wizardo.world;
 
+/**
+ * Smaller explosions coming from procs of overheat mechanic
+ */
 public class Overheat_TriggerExplosion extends Spell {
 
     Body body;
@@ -107,17 +110,17 @@ public class Overheat_TriggerExplosion extends Spell {
     public void pickAnim() {
         switch(anim_element) {
             case FROST -> {
-                anim = ExplosionsAnims.getExplosionAnim(FROST);
+                anim = ExplosionAnims_Toon.getExplosionAnim(FROST);
                 green = 0.15f;
                 blue = 0.5f;
             }
             case FIRE -> {
-                anim = ExplosionsAnims.getExplosionAnim(FIRE);
+                anim = ExplosionAnims_Toon.getExplosionAnim(FIRE);
                 red = 0.7f;
                 green = 0.3f;
             }
             case LIGHTNING -> {
-                anim = ExplosionsAnims.getExplosionAnim(LIGHTNING);
+                anim = ExplosionAnims_Toon.getExplosionAnim(LIGHTNING);
                 red = 0.25f;
                 green = 0.2f;
             }

@@ -6,7 +6,6 @@ import wizardo.game.Spells.SpellUtils;
 
 import java.util.ArrayList;
 
-import static wizardo.game.Wizardo.currentScreen;
 import static wizardo.game.Wizardo.player;
 
 public class EnergyBeam_Spell extends Spell {
@@ -73,13 +72,6 @@ public class EnergyBeam_Spell extends Spell {
         return player.spellbook.energybeam_lvl;
     }
 
-    @Override
-    public int getDmg() {
-        int dmg = baseDmg;
-        dmg += getLvl() * 20;
-        return dmg;
-    }
-
     public void setup() {
         if(arcaneMissile) {
             ArrayList<Monster> inRange = SpellUtils.findMonstersInRangeOfVector(player.pawn.getPosition(), 15, true);
@@ -98,6 +90,14 @@ public class EnergyBeam_Spell extends Spell {
                 targetPosition = target.body.getPosition();
             }
         }
+    }
+
+    @Override
+    public int getDmg() {
+        int dmg = baseDmg;
+        dmg += getLvl() * 20;
+        dmg = (int) (dmg * (1 + player.spellbook.energyBonusDmg/100f));
+        return dmg;
     }
 
 }

@@ -5,11 +5,11 @@ import com.badlogic.gdx.InputProcessor;
 import wizardo.game.Player.Pawn;
 import wizardo.game.Screens.Battle.BattleScreen;
 import wizardo.game.Screens.Character.CharacterScreen;
+import wizardo.game.Screens.DevScreen.Cheat_Screen;
 import wizardo.game.Screens.EscapeMenu.EscapeScreen;
 import wizardo.game.Screens.LevelUp.LevelUpScreen;
 
 import static wizardo.game.Screens.BaseScreen.controllerActive;
-import static wizardo.game.Wizardo.currentScreen;
 import static wizardo.game.Wizardo.player;
 
 public class KeyboardMouseListener_BATTLE implements InputProcessor {
@@ -72,6 +72,11 @@ public class KeyboardMouseListener_BATTLE implements InputProcessor {
         if (keycode == Input.Keys.SPACE) {
             screen.game.addNewScreen(new LevelUpScreen(screen.game));
         }
+
+        if (keycode == Input.Keys.F1) {
+            screen.game.addNewScreen(new Cheat_Screen(screen.game));
+        }
+
 
         return true;
     }

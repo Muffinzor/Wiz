@@ -8,7 +8,6 @@ import wizardo.game.Spells.SpellUtils;
 import java.util.ArrayList;
 
 import static wizardo.game.Screens.BaseScreen.controllerActive;
-import static wizardo.game.Wizardo.currentScreen;
 import static wizardo.game.Wizardo.player;
 
 public class ChainLightning_Spell extends Spell {
@@ -125,7 +124,7 @@ public class ChainLightning_Spell extends Spell {
                     chain.originBody = player.pawn.body;
                 }
 
-                currentScreen.spellManager.toAdd(chain);
+                screen.spellManager.toAdd(chain);
 
             }
         }
@@ -158,7 +157,8 @@ public class ChainLightning_Spell extends Spell {
     @Override
     public int getDmg() {
         int dmg = baseDmg;
-        dmg += 15 * getLvl();
+        dmg += 8 * getLvl();
+        dmg = (int) (dmg * (1 + player.spellbook.voltageBonusDmg/100f));
         return dmg;
     }
 }

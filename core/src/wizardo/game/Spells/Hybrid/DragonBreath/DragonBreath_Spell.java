@@ -56,6 +56,7 @@ public class DragonBreath_Spell extends Spell {
         int dmg = baseDmg;
         dmg += 15 * player.spellbook.flamejet_lvl;
         dmg += 15 * player.spellbook.overheat_lvl;
+        dmg = (int) (dmg * (1 + player.spellbook.flashBonusDmg/100f));
         return dmg;
     }
 

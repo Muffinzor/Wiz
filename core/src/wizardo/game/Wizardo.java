@@ -18,7 +18,7 @@ import static wizardo.game.SettingsPref.*;
 public class Wizardo extends Game {
 
 	private Stack<BaseScreen> screenStack;
-	public static BaseScreen currentScreen;
+	public BaseScreen currentScreen;
 	public static World world;
 	public static Player player;
 	public static WizContactListener contactListener;
@@ -120,10 +120,6 @@ public class Wizardo extends Game {
 				previousScreen.resume();
 			}
 		}
-	}
-
-	public static BaseScreen getCurrentScreen() {
-		return currentScreen;
 	}
 
 	public static void createNewWorld() {

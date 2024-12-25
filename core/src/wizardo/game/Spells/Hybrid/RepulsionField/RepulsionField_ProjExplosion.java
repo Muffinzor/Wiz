@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
-import wizardo.game.Resources.SpellAnims.ExplosionsAnims;
+import wizardo.game.Resources.SpellAnims.ExplosionAnims_Toon;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyFactory;
@@ -25,6 +25,8 @@ public class RepulsionField_ProjExplosion extends Spell {
     boolean flipX;
     boolean flipY;
 
+    public boolean arcaneMissile;
+
     public RepulsionField_ProjExplosion(Vector2 targetPosition) {
 
         this.targetPosition = new Vector2(targetPosition);
@@ -39,7 +41,7 @@ public class RepulsionField_ProjExplosion extends Spell {
     @Override
     public void update(float delta) {
         if(!initialized) {
-            anim = ExplosionsAnims.getExplosionAnim(SpellUtils.Spell_Element.ARCANE);
+            anim = ExplosionAnims_Toon.getExplosionAnim(SpellUtils.Spell_Element.ARCANE);
             initialized = true;
             createBody();
             createLight();
@@ -99,6 +101,10 @@ public class RepulsionField_ProjExplosion extends Spell {
         int dmg  = 80;
         dmg += 20 * player.spellbook.rift_lvl;
         dmg += 20 * player.spellbook.overheat_lvl;
+        if(arcaneMissile) {
+            dmg += 20 * player.spellbook.arcanemissile_lvl;
+        }
+        dmg = (int) (dmg * (1 + player.spellbook.gravityBonusDmg/100f));
         return dmg;
     }
 }

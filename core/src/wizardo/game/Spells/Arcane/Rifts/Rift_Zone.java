@@ -7,7 +7,6 @@ import wizardo.game.Resources.SpellAnims.RiftsAnims;
 import wizardo.game.Spells.Spell;
 
 import static wizardo.game.Utils.Constants.PPM;
-import static wizardo.game.Wizardo.currentScreen;
 
 public class Rift_Zone extends Rifts_Spell {
 

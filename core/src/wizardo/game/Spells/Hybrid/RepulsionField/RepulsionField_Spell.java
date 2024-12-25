@@ -3,6 +3,8 @@ package wizardo.game.Spells.Hybrid.RepulsionField;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 
+import static wizardo.game.Wizardo.player;
+
 public class RepulsionField_Spell extends Spell {
 
     public boolean fireball;
@@ -13,9 +15,11 @@ public class RepulsionField_Spell extends Spell {
 
         name = "Repulsion Field";
 
-        cooldown = 2.5f;
+        cooldown = 3.2f;
 
         anim_element = SpellUtils.Spell_Element.ARCANE;
+
+        baseDmg = 10;
 
     }
 
@@ -42,6 +46,8 @@ public class RepulsionField_Spell extends Spell {
 
     @Override
     public int getDmg() {
-        return 0;
+        int dmg = baseDmg + 10 * player.spellbook.rift_lvl;
+        dmg = (int) (dmg * (1 + player.spellbook.gravityBonusDmg/100f));
+        return dmg;
     }
 }

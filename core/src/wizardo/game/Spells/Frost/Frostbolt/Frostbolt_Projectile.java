@@ -50,6 +50,7 @@ public class Frostbolt_Projectile extends Frostbolt_Spell{
 
         if(!initialized) {
             //playSound(screen.player.pawn.getPosition());
+            speed = getScaledSpeed();
             createBody();
             createLight();
             initialized = true;
@@ -132,7 +133,7 @@ public class Frostbolt_Projectile extends Frostbolt_Spell{
 
         Vector2 offset = new Vector2(direction.cpy().scl(0.5f));
         Vector2 adjustedSpawn = new Vector2(spawnPosition.add(offset));
-        body = BodyFactory.spellProjectileCircleBody(adjustedSpawn, 8, true);
+        body = BodyFactory.spellProjectileCircleBody(adjustedSpawn, 6, true);
         body.setUserData(this);
 
         Vector2 velocity = direction.scl(speed);
@@ -148,7 +149,7 @@ public class Frostbolt_Projectile extends Frostbolt_Spell{
             blue = 0.8f;
         }
         light = screen.lightManager.pool.getLight();
-        light.setLight(red,green,blue,1,25, body.getPosition());
+        light.setLight(red,green,blue,1,35, body.getPosition());
         screen.lightManager.addLight(light);
     }
 

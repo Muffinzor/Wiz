@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Lighting.RoundLight;
+import wizardo.game.Resources.SpellAnims.FireballAnims;
 import wizardo.game.Resources.SpellAnims.MeteorAnims;
 import wizardo.game.Spells.Fire.Overheat.Overheat_Explosion;
 import wizardo.game.Utils.BodyFactory;
@@ -21,23 +22,36 @@ public class Meteor_Projectile extends MeteorShower_Spell {
     RoundLight light;
     float lightRadius;
     float frameScale = 1;
-    float frameOffset;
 
     float rotation;
     Vector2 direction;
+
+    boolean overheatProc;
 
 
     public Meteor_Projectile(Vector2 targetPosition) {
         this.targetPosition = targetPosition;
     }
 
+    public void setup() {
+        if(overheat) {
+            float procRate = 0.92f - 0.02f * player.spellbook.overheat_lvl;
+            if(Math.random() >= procRate) {
+                overheatProc = true;
+                frameScale = 1.3f;
+            }
+        }
+    }
+
     public void update(float delta) {
         if(!initialized) {
+            setup();
             setStartingPosition();
             initialized = true;
             pickAnim();
             createBody();
             createLight();
+
         }
 
         drawFrame();
@@ -62,13 +76,8 @@ public class Meteor_Projectile extends MeteorShower_Spell {
     }
 
     public void explode() {
-        if(overheat) {
-            float procRate = 0.92f - 0.02f * player.spellbook.overheat_lvl;
-            if(Math.random() > procRate) {
-                overheatExplosion();
-            } else {
-                regularExplosion();
-            }
+        if(overheatProc) {
+            overheatExplosion();
         } else {
             regularExplosion();
         }
@@ -96,8 +105,8 @@ public class Meteor_Projectile extends MeteorShower_Spell {
     public void drawFrame() {
         Sprite frame = screen.getSprite();
         frame.set(anim.getKeyFrame(stateTime, true));
-        Vector2 spritePosition = new Vector2(body.getPosition().add(direction.cpy().scl(frameOffset)));
-        frame.setCenter(spritePosition.x * PPM, spritePosition.y * PPM);
+
+        frame.setCenter(body.getPosition().x * PPM, body.getPosition().y * PPM);
         frame.setRotation(rotation);
         if(frameScale != 1) {
             frame.setScale(frameScale);
@@ -117,6 +126,9 @@ public class Meteor_Projectile extends MeteorShower_Spell {
         rotation = velocity.angleDeg();
     }
     public void createLight() {
+        if(overheatProc) {
+            lightRadius *= 1.3f;
+        }
         light = screen.lightManager.pool.getLight();
         light.setLight(red, green, blue, lightAlpha, lightRadius, body.getPosition());
         screen.lightManager.addLight(light);
@@ -142,22 +154,27 @@ public class Meteor_Projectile extends MeteorShower_Spell {
     public void pickAnim() {
         switch(anim_element) {
             case LIGHTNING -> {
-                anim = MeteorAnims.meteor_anim_lightning;
+                anim = FireballAnims.fireball_anim_lightning;
                 red = 0.7f;
                 green = 0.55f;
                 frameScale = 0.6f;
-                frameOffset = 1.5f;
                 lightAlpha = 1;
                 lightRadius = 60f;
                 speed = 11f;
             }
             case FIRE -> {
-                anim = MeteorAnims.meteor_anim_fire;
+                anim = FireballAnims.fireball_anim_fire;
                 red = 0.85f;
                 green = 0.25f;
-                frameScale = 1f;
-                frameOffset = 2f;
                 lightAlpha = 1;
+                lightRadius = 80f;
+                speed = 8f;
+            }
+            case ARCANE -> {
+                anim = FireballAnims.fireball_anim_arcane;
+                red = 0.55f;
+                blue = 0.85f;
+                frameScale = 0.8f;
                 lightRadius = 80f;
                 speed = 8f;
             }

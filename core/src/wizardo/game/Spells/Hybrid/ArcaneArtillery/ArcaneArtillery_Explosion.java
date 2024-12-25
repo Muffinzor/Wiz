@@ -15,7 +15,7 @@ import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.player;
 import static wizardo.game.Wizardo.world;
 
-public class ArcaneArtillery_BetterExplosion extends ArcaneArtillery_Spell {
+public class ArcaneArtillery_Explosion extends ArcaneArtillery_Spell {
 
 
     RoundLight light;
@@ -27,7 +27,7 @@ public class ArcaneArtillery_BetterExplosion extends ArcaneArtillery_Spell {
     float explosions = 0;
     int explosionsCast = 0;
 
-    public ArcaneArtillery_BetterExplosion(Vector2 targetPosition) {
+    public ArcaneArtillery_Explosion(Vector2 targetPosition) {
         this.targetPosition = new Vector2(targetPosition);
 
         rotation = MathUtils.random(360);

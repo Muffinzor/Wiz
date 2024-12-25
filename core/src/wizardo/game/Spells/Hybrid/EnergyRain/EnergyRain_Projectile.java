@@ -124,7 +124,7 @@ public class EnergyRain_Projectile extends EnergyRain_Spell {
         }
     }
     public void createBody() {
-        spawnPosition = targetPosition.cpy().add(0, 20);
+        spawnPosition = targetPosition.cpy().add(0, 27);
 
         body = BodyFactory.spellProjectileCircleBody(spawnPosition,5,true);
         body.setUserData(this);

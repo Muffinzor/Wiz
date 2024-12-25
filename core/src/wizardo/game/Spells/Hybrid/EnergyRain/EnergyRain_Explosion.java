@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
+import wizardo.game.Resources.SpellAnims.ExplosionAnims_Energy;
 import wizardo.game.Spells.Arcane.ArcaneMissiles.ArcaneMissile_Spell;
 import wizardo.game.Spells.Fire.Flamejet.Flamejet_Spell;
 import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Explosion;
@@ -13,7 +14,6 @@ import wizardo.game.Spells.Lightning.ChargedBolts.ChargedBolts_Spell;
 import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyFactory;
 
-import static wizardo.game.Resources.SpellAnims.ExplosionsAnims.getExplosionAnim;
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.player;
 import static wizardo.game.Wizardo.world;
@@ -53,6 +53,7 @@ public class EnergyRain_Explosion extends EnergyRain_Spell {
 
         if(body.isActive() && stateTime >= 0.2f) {
             body.setActive(false);
+            light.dimKill(0.01f);
         }
 
         if(stateTime >= anim.getAnimationDuration()) {
@@ -73,7 +74,6 @@ public class EnergyRain_Explosion extends EnergyRain_Spell {
         Sprite frame = screen.getSprite();
         frame.set(anim.getKeyFrame(stateTime, false));
         frame.setCenter(body.getPosition().x * PPM, body.getPosition().y * PPM);
-        frame.setScale(1.75f);
         frame.setRotation(rotation);
         frame.flip(flipX, flipY);
         screen.centerSort(frame, body.getPosition().y * PPM - 10);
@@ -81,7 +81,7 @@ public class EnergyRain_Explosion extends EnergyRain_Spell {
     }
 
     public void pickAnim() {
-        anim = getExplosionAnim(anim_element);
+        anim = ExplosionAnims_Energy.getExplosionAnim(anim_element);
         switch(anim_element) {
             case FROST -> {
                 red = 0.2f;
@@ -93,19 +93,19 @@ public class EnergyRain_Explosion extends EnergyRain_Spell {
             }
             case LIGHTNING -> {
                 red = 0.55f;
-                blue = 0.35f;
+                green = 0.35f;
             }
         }
     }
 
     public void createBody() {
-        body = BodyFactory.spellExplosionBody(targetPosition, 90);
+        body = BodyFactory.spellExplosionBody(targetPosition, 75);
         body.setUserData(this);
     }
     public void createLight() {
         light = screen.lightManager.pool.getLight();
-        light.setLight(red,green,blue,lightAlpha,150,targetPosition);
-        light.dimKill(0.015f);
+        light.setLight(red,green,blue,lightAlpha,170,targetPosition);
+
         screen.lightManager.addLight(light);
     }
 

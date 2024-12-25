@@ -22,7 +22,7 @@ import wizardo.game.Utils.BodyFactory;
 
 import static wizardo.game.Spells.SpellUtils.Spell_Element.*;
 import static wizardo.game.Utils.Constants.PPM;
-import static wizardo.game.Wizardo.currentScreen;
+import static wizardo.game.Wizardo.player;
 import static wizardo.game.Wizardo.world;
 
 public class Frozenorb_Projectile extends Frozenorb_Spell {
@@ -46,15 +46,20 @@ public class Frozenorb_Projectile extends Frozenorb_Spell {
         rotation = MathUtils.random(360);
     }
 
+    public void setup() {
+        radius = 2.85f + 0.15f * getLvl();
+        radius += (1 + player.spellbook.iceRadiusBonus/100f);
+        pickAnim();
+        createBody();
+        createLight();
+        if(nested_spell != null) {
+            castInterval = getInterval();
+        }
+    }
+
     public void update(float delta) {
         if(!initialized) {
-            radius = 2.85f + 0.15f * getLvl();
-            pickAnim();
-            createBody();
-            createLight();
-            if(nested_spell != null) {
-                castInterval = getInterval();
-            }
+            setup();
             initialized = true;
         }
 
@@ -79,7 +84,7 @@ public class Frozenorb_Projectile extends Frozenorb_Spell {
     public void adjustLight() {
         light.pointLight.setPosition(body.getPosition().x * PPM, body.getPosition().y * PPM);
 
-        if((hasCollided || stateTime >= duration - 0.25f) && !lightKilled) {
+        if((hasCollided || scale < 0.5f) && !lightKilled) {
             light.dimKill(0.01f);
             lightKilled = true;
         }
@@ -104,7 +109,8 @@ public class Frozenorb_Projectile extends Frozenorb_Spell {
             spawnPosition = new Vector2(spawnPosition.add(offset));
         }
 
-        body = BodyFactory.spellProjectileCircleBody(spawnPosition, 20, true);
+        float bodyRadius = 22 * (1 + player.spellbook.iceRadiusBonus/100f);
+        body = BodyFactory.spellProjectileCircleBody(spawnPosition, bodyRadius, true);
         body.setUserData(this);
 
         Vector2 velocity = new Vector2(direction.scl(speed));
@@ -124,10 +130,12 @@ public class Frozenorb_Projectile extends Frozenorb_Spell {
         }
         Sprite frame = screen.displayManager.spriteRenderer.pool.getSprite();
         frame.set(anim.getKeyFrame(stateTime, true));
+
+        float immediatesScale = scale * (1 + player.spellbook.iceRadiusBonus/100f);
         if(anim_element == COLDLITE) {
-            frame.setScale(0.7f * scale);
+            frame.setScale(0.7f * immediatesScale);
         } else {
-            frame.setScale(scale);
+            frame.setScale(immediatesScale);
         }
         frame.setRotation(rotation);
         frame.setCenter(body.getPosition().x * PPM, body.getPosition().y * PPM);
@@ -138,7 +146,7 @@ public class Frozenorb_Projectile extends Frozenorb_Spell {
     public void adjustScale() {
         if(stateTime > duration - 0.5f || hasCollided) {
             scale = scale - 0.025f;
-            if(scale <= 0) {
+            if(scale <= 0.1f) {
                 screen.spellManager.toRemove(this);
                 world.destroyBody(body);
                 body = null;
@@ -155,7 +163,6 @@ public class Frozenorb_Projectile extends Frozenorb_Spell {
             frameCounter++;
             if (frameCounter == 5) {
                 frameCounter = 0;
-                BattleScreen screen = (BattleScreen) currentScreen;
                 for (Monster monster : screen.monsterManager.liveMonsters) {
                     if (monster.body.getPosition().dst(body.getPosition()) < radius) {
                         monster.hp -= getDmg()/12f;
@@ -210,6 +217,7 @@ public class Frozenorb_Projectile extends Frozenorb_Spell {
                 if(anim_element == COLDLITE) {
                     green = 0.2f;
                 }
+                scale = 0.9f;
             }
             case ARCANE -> {
                 anim = FrozenorbAnims.frozenorb_anim_arcane;

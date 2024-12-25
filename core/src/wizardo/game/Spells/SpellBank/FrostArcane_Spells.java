@@ -1,7 +1,6 @@
 package wizardo.game.Spells.SpellBank;
 
 import wizardo.game.Spells.Arcane.ArcaneMissiles.ArcaneMissile_Spell;
-import wizardo.game.Spells.Arcane.EnergyBeam.EnergyBeam_Projectile;
 import wizardo.game.Spells.Arcane.EnergyBeam.EnergyBeam_Spell;
 import wizardo.game.Spells.Arcane.Rifts.Rifts_Spell;
 import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Spell;
@@ -27,9 +26,9 @@ public class FrostArcane_Spells {
 
         // 0. Frostbolt + ArcaneMissile
 
-        Frostbolt_Spell frostarcane0 = new Frostbolt_Spell();
-        frostarcane0.missile = true;
+        ArcaneMissile_Spell frostarcane0 = new ArcaneMissile_Spell();
         frostarcane0.anim_element = FROST;
+        frostarcane0.frostbolt = true;
         frostarcane0.spellParts.add(FROSTBOLT);
         frostarcane0.spellParts.add(MISSILES);
         frostarcaneSpells[0] = frostarcane0;

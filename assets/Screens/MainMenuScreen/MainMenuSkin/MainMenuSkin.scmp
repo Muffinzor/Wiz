@@ -460,7 +460,7 @@ jsonData: {
 						type: com.badlogic.gdx.graphics.g2d.BitmapFont
 						name: font
 						optional: false
-						value: null
+						value: DamageNumbers
 					}
 					fontColor: {
 						type: com.badlogic.gdx.graphics.Color
@@ -1621,13 +1621,13 @@ jsonData: {
 						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
 						name: imageUp
 						optional: true
-						value: null
+						value: Check_off
 					}
 					imageDown: {
 						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
 						name: imageDown
 						optional: true
-						value: null
+						value: Check_on
 					}
 					imageOver: {
 						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable

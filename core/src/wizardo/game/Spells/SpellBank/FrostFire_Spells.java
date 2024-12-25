@@ -103,6 +103,7 @@ public class FrostFire_Spells {
         // 9. Fireball + Flamejet + Frostbolts
 
         Fireball_Spell frostfire9 = new Fireball_Spell();
+        frostfire9.frostbolts = true;
         Flamejet_Spell proj9 = new Flamejet_Spell();
         proj9.frostbolts = true;
         frostfire9.nested_spell = proj9;
@@ -127,6 +128,7 @@ public class FrostFire_Spells {
 
         Fireball_Spell frostfire11 = new Fireball_Spell();
         frostfire11.anim_element = FIRE;
+        frostfire11.flamejets = true;
         Frozenorb_Spell orb11 = new Frozenorb_Spell();
         orb11.nested_spell = new Flamejet_Spell();
         frostfire11.nested_spell = orb11;

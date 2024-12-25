@@ -7,6 +7,7 @@ import wizardo.game.Screens.Battle.BattleScreen;
 
 import java.util.ArrayList;
 
+import static wizardo.game.Wizardo.player;
 import static wizardo.game.Wizardo.world;
 
 public class MonsterManager {
@@ -41,14 +42,19 @@ public class MonsterManager {
         for(Monster monster : liveMonsters) {
             monster.update(delta);
             if(monster.dead) {
+                player.currentXP += 5;
                 monster.stateTime = 0;
                 dyingMonsters.add(monster);
                 if(monster.light != null) {
                     monster.light.dimKill(0.2f);
                 }
+            } else if(monster.tooFar) {
+                dyingMonsters.add(monster);
+                monster.alpha = 0.05f;
             }
         }
         liveMonsters.removeIf(monster -> monster.dead);
+        liveMonsters.removeIf(monster -> monster.tooFar);
 
         for(Monster monster : liveMonsters) {
             monster.movement(delta);

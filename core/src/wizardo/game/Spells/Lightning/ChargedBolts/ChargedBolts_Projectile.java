@@ -47,10 +47,6 @@ public class ChargedBolts_Projectile extends ChargedBolts_Spell {
 
     public ChargedBolts_Projectile(Vector2 spawnPosition, Vector2 targetPosition) {
 
-        stateTime = (float) Math.random();
-        speed = speed * MathUtils.random(0.9f, 1.1f);
-        duration = duration * MathUtils.random(0.9f, 1.1f);
-
         this.spawnPosition = new Vector2(spawnPosition);
         this.targetPosition = new Vector2(targetPosition);
 
@@ -70,8 +66,16 @@ public class ChargedBolts_Projectile extends ChargedBolts_Spell {
 
     }
 
+    public void setup() {
+        stateTime = (float) Math.random();
+        speed = speed * MathUtils.random(0.85f, 1.15f);
+        speed = getScaledSpeed();
+        duration = duration * MathUtils.random(0.9f, 1.1f);
+    }
+
     public void update(float delta) {
         if(!initialized) {
+            setup();
             pickAnim();
             initialized = true;
             createBody();
@@ -106,7 +110,7 @@ public class ChargedBolts_Projectile extends ChargedBolts_Spell {
             adjustLight();
         }
 
-        if(stateTime > duration || collisions > 5) {
+        if(stateTime > duration) {
             if(!lightKilled) {
                 light.dimKill(0.03f);
                 lightKilled = true;
@@ -250,7 +254,7 @@ public class ChargedBolts_Projectile extends ChargedBolts_Spell {
 
             if(!targetLocked) {
 
-                ArrayList<Monster> inRange = SpellUtils.findMonstersInRangeOfVector(body.getPosition(), 3, true);
+                ArrayList<Monster> inRange = SpellUtils.findMonstersInRangeOfVector(body.getPosition(), 2.5f, true);
 
                 if(!inRange.isEmpty()) {
                     targetMonster = inRange.get(MathUtils.random(inRange.size() - 1));

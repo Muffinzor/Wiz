@@ -99,7 +99,7 @@ public class ForkedLightning_Spell extends Spell {
                 Fireball_Explosion explosion = new Fireball_Explosion();
                 explosion.targetPosition = new Vector2(monster.body.getPosition());
                 explosion.setElements(this);
-                explosion.anim_element = LIGHTNING;
+                explosion.anim_element = FIRELITE;
                 explosion.firelite = true;
                 screen.spellManager.toAdd(explosion);
             }
@@ -113,7 +113,10 @@ public class ForkedLightning_Spell extends Spell {
 
     @Override
     public int getDmg() {
-        return 0;
+        int dmg = baseDmg + getLvl() * 4;
+        dmg = (int) (dmg * (1 + player.spellbook.flashBonusDmg/100f));
+        return dmg;
+
     }
 
     public void setup() {

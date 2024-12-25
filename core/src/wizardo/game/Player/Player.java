@@ -9,12 +9,15 @@ public class Player {
     public Inventory inventory;
     public Stats stats;
 
-    public float runSpeed;
+    public int level = 1;
+    public int currentXP = 0;
+    public int neededXP = 100;
+    public int levelup_choices = 4;
+
 
     public Player(Pawn pawn) {
         this.pawn = pawn;
         this.spellbook = new Spellbook();
-        this.runSpeed = 80f/PPM;
         this.inventory = new Inventory();
         this.stats = new Stats();
     }

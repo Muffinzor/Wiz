@@ -4,7 +4,6 @@ import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 
 import static wizardo.game.Utils.Constants.PPM;
-import static wizardo.game.Wizardo.currentScreen;
 import static wizardo.game.Wizardo.player;
 
 public class ChargedBolts_Spell extends Spell {
@@ -25,9 +24,9 @@ public class ChargedBolts_Spell extends Spell {
         name = "Charged Bolts";
 
         duration = 2.5f;
-        cooldown = .75f;
+        cooldown = 0.8f;
         baseDmg = 12;
-        speed = 70f/PPM;
+        speed = 80f/PPM;
         bolts = 3;
 
         main_element = SpellUtils.Spell_Element.LIGHTNING;
@@ -39,26 +38,23 @@ public class ChargedBolts_Spell extends Spell {
 
         if(spawnPosition != null) {
             bolts = 1;
-            speed = 45f/PPM;
+            speed = 55f/PPM;
         } else {
             bolts = 2 + getLvl();
             if(overheat) {
                 bolts = Math.max(bolts/2, 2);
-
             }
         }
 
         if(delta > 0) {
-
             for (int i = 0; i < bolts; i++) {
-                ChargedBolts_Projectile bolt = new ChargedBolts_Projectile(getSpawnPosition(), getTargetPosition());
-                bolt.setNext(this);
-                bolt.setElements(this);
-                currentScreen.spellManager.toAdd(bolt);
+                castBolt();
+
+                if(Math.random() >= 1 - player.spellbook.chargedboltBonus/100f) {
+                    castBolt();
+                }
             }
-
-            currentScreen.spellManager.toRemove(this);
-
+            screen.spellManager.toRemove(this);
         }
 
     }
@@ -71,6 +67,13 @@ public class ChargedBolts_Spell extends Spell {
         spear = thisBolt.spear;
         speed = thisBolt.speed;
         duration = thisBolt.duration;
+    }
+
+    public void castBolt() {
+        ChargedBolts_Projectile bolt = new ChargedBolts_Projectile(getSpawnPosition(), getTargetPosition());
+        bolt.setNext(this);
+        bolt.setElements(this);
+        screen.spellManager.toAdd(bolt);
     }
 
     @Override
@@ -87,11 +90,15 @@ public class ChargedBolts_Spell extends Spell {
     public int getDmg() {
         int dmg = baseDmg;
         dmg += 4 * getLvl();
+        if(arcaneMissile) {
+            dmg += 4 * player.spellbook.arcanemissile_lvl;
+        }
+
+        dmg = (int) (dmg * (1 + player.spellbook.voltageBonusDmg/100f));
         if(overheat) {
             return dmg * 2;
         } else {
             return dmg;
         }
-
     }
 }

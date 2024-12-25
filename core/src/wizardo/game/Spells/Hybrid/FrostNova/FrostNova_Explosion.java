@@ -2,9 +2,11 @@ package wizardo.game.Spells.Hybrid.FrostNova;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
+import wizardo.game.Resources.SpellAnims.ExplosionAnims_Elemental;
 import wizardo.game.Resources.SpellAnims.FrostNovaAnims;
 import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Explosion;
 import wizardo.game.Spells.SpellUtils;
@@ -21,14 +23,14 @@ public class FrostNova_Explosion extends FrostNova_Spell {
 
     float radius = 110;
     float sizeScaling = 1;
-    float freezeDuration = 2.3f;
+    float freezeDuration = 2.25f;
 
     public FrostNova_Explosion(){
 
-        anim = FrostNovaAnims.frostnova_anim;
+        anim = ExplosionAnims_Elemental.frostnova_anim;
 
-        sizeScaling = 1 + player.spellbook.overheat_lvl * 0.1f; // 2 at lvl 10
-        freezeDuration += 0.2f * player.spellbook.frozenorb_lvl;
+        sizeScaling = 1 + ((player.spellbook.overheat_lvl - 1) * 0.05f) + (player.spellbook.iceRadiusBonus/100f); // 1.5 at lvl 10
+        freezeDuration += 0.25f * player.spellbook.frozenorb_lvl;
 
     }
 
@@ -62,6 +64,10 @@ public class FrostNova_Explosion extends FrostNova_Spell {
             monster.applySlow(4, slowScale);
         }
 
+        Vector2 direction = monster.body.getPosition().sub(body.getPosition());
+        float strength = 3 * (1 + player.spellbook.pushbackBonus/100f);
+        monster.movementManager.applyPush(direction, strength, 0.5f, 0.9f);
+
         frostbolts(monster);
     }
 
@@ -69,7 +75,7 @@ public class FrostNova_Explosion extends FrostNova_Spell {
         Sprite frame = screen.getSprite();
         frame.set(anim.getKeyFrame(stateTime, false));
         frame.setCenter(targetPosition.x * PPM, targetPosition.y * PPM);
-        frame.setScale(1.8f * sizeScaling);
+        frame.setScale(1f * sizeScaling);
         frame.setAlpha(0.8f);
         //screen.centerSort(frame, targetPosition.y * PPM);
         screen.addSortedSprite(frame);

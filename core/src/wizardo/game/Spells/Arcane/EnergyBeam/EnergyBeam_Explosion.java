@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
-import wizardo.game.Resources.SpellAnims.ExplosionsAnims;
+import wizardo.game.Resources.SpellAnims.ExplosionAnims_Toon;
 import wizardo.game.Spells.Hybrid.EnergyRain.EnergyRain_Spell;
 import wizardo.game.Utils.BodyFactory;
 
@@ -53,6 +53,7 @@ public class EnergyBeam_Explosion extends EnergyRain_Spell {
     }
 
     public void handleCollision(Monster monster) {
+        dealDmg(monster);
         if(frostbolt) {
             monster.applySlow(5, 0.7f);
         }
@@ -70,7 +71,7 @@ public class EnergyBeam_Explosion extends EnergyRain_Spell {
     }
 
     public void pickAnim() {
-        anim = ExplosionsAnims.getExplosionAnim(anim_element);
+        anim = ExplosionAnims_Toon.getExplosionAnim(anim_element);
         switch(anim_element) {
             case FROST -> {
                 red = 0.2f;
