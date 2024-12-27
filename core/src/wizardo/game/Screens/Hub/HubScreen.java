@@ -26,7 +26,7 @@ public class HubScreen extends BaseScreen {
 
     public HubScreen(Wizardo game) {
         super(game);
-        chunk = new HubChunk("Maps/TEST/Map_Project1.tmx", 0, 0, game, this);
+        chunk = new HubChunk("Maps/TEST/Map_HUB.tmx", 0, 0, game, this);
 
         mainCamera.viewportWidth = Gdx.graphics.getWidth();
         mainCamera.viewportHeight = Gdx.graphics.getHeight();

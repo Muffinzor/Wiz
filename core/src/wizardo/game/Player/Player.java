@@ -1,8 +1,12 @@
 package wizardo.game.Player;
 
+import wizardo.game.Spells.SpellManager;
+
 import static wizardo.game.Utils.Constants.PPM;
 
 public class Player {
+
+    public SpellManager spellManager;
 
     public Pawn pawn;
     public Spellbook spellbook;

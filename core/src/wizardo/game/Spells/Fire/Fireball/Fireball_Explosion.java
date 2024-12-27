@@ -90,23 +90,22 @@ public class Fireball_Explosion extends Fireball_Spell {
         frame.rotate(rotation);
         frame.flip(flipX, flipY);
 
-        if(frameScale != 1) {
-            frame.setScale(frameScale);
-        }
+        frame.setScale(frameScale * effectRatio);
+
         screen.centerSort(frame, body.getPosition().y * PPM - 10);
         screen.displayManager.spriteRenderer.regular_sorted_sprites.add(frame);
 
     }
 
     public void createBody() {
-        body = BodyFactory.spellExplosionBody(targetPosition, radius);
+        body = BodyFactory.spellExplosionBody(targetPosition, radius * effectRatio);
         body.setUserData(this);
     }
 
     public void createLight() {
         lightAlpha = 1;
         light = screen.lightManager.pool.getLight();
-        light.setLight(red, green, blue, lightAlpha, 250, body.getPosition());
+        light.setLight(red, green, blue, lightAlpha, 250 * effectRatio, body.getPosition());
         light.toLightManager();
     }
 

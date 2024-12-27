@@ -62,7 +62,7 @@ public class MapManager {
     }
 
     private void setPlayerStartPosition() {
-        player.pawn.body.setTransform((1524f / PPM) * startingTileX, (1524f / PPM) * startingTileY, 0);
+        player.pawn.body.setTransform((2048f / PPM) * startingTileX + 1024f/PPM, (2048f / PPM) * startingTileY + 1024f/PPM, 0);
         camera.position.set(player.pawn.getPosition().scl(PPM), 0);
     }
 
@@ -85,9 +85,9 @@ public class MapManager {
 
     private void loadStartingChunk(int playerChunkX, int playerChunkY, String biome) {
         if (biome.equals("Dungeon")) {
-            loadMapChunk(chunkPaths.getFirst(), playerChunkX, playerChunkY);
+            loadMapChunk("Maps/TEST/Map_Project2.tmx", startingTileX, startingTileY);
         } else {
-            loadMapChunk("Map/ForestMap/ChunkMaps/StartingChunk.tmx", playerChunkX, playerChunkY);
+            loadMapChunk("Maps/TEST/Map_Project2.tmx", startingTileX, startingTileY);
         }
     }
     private void loadInitialGrid(String biome) {
@@ -98,7 +98,6 @@ public class MapManager {
         loadedChunksY = startingTileY;
     }
     private void loadChunksAroundPlayer(int playerChunkX, int playerChunkY) {
-
         for (int x = playerChunkX - INITIAL_GRID_SIZE; x <= playerChunkX + INITIAL_GRID_SIZE; x++) {
             for (int y = playerChunkY - INITIAL_GRID_SIZE; y <= playerChunkY + INITIAL_GRID_SIZE; y++) {
                 if (x == startingTileX && y == startingTileY) continue;

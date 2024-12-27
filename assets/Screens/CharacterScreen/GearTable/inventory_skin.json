@@ -1,0 +1,140 @@
+{
+com.badlogic.gdx.graphics.g2d.BitmapFont: {
+	Flavor_Text: {
+		file: LTPerfume-2(1).fnt
+		scaledSize: -1
+		markupEnabled: false
+		flip: false
+	}
+	Gear_Name: {
+		file: DePixelBreit.fnt
+		scaledSize: -1
+		markupEnabled: false
+		flip: false
+	}
+	Gear_Text: {
+		file: PixelOperatorSC.fnt
+		scaledSize: -1
+		markupEnabled: false
+		flip: false
+	}
+	Gear_Title: {
+		file: Colorfiction - Messy(13).fnt
+		scaledSize: -1
+		markupEnabled: false
+		flip: false
+	}
+	Juice20: {
+		file: Colorfiction - Juice - Freeform.fnt
+		scaledSize: -1
+		markupEnabled: false
+		flip: false
+	}
+	Klein16: {
+		file: DePixelKlein.fnt
+		scaledSize: -1
+		markupEnabled: false
+		flip: false
+	}
+	Messy22: {
+		file: Colorfiction - Messy(11).fnt
+		scaledSize: -1
+		markupEnabled: false
+		flip: false
+	}
+}
+com.badlogic.gdx.graphics.Color: {
+	Arcane: {
+		r: 0.9529412
+		g: 0.68235296
+		b: 1
+		a: 1
+	}
+	Black: {
+		r: 0
+		g: 0
+		b: 0
+		a: 1
+	}
+	Blue: {
+		r: 0.34509805
+		g: 0.40392157
+		b: 0.9529412
+		a: 1
+	}
+	Fire: {
+		r: 1
+		g: 0.7137255
+		b: 0.5882353
+		a: 1
+	}
+	Frost: {
+		r: 0.57254905
+		g: 0.9019608
+		b: 1
+		a: 1
+	}
+	Green: {
+		r: 0.20784314
+		g: 0.59607846
+		b: 0.101960786
+		a: 1
+	}
+	Lightning: {
+		r: 1
+		g: 0.90588236
+		b: 0.62352943
+		a: 1
+	}
+	Purple: {
+		r: 0.80784315
+		g: 0.24705882
+		b: 0.72156864
+		a: 1
+	}
+	Red: {
+		r: 0.84313726
+		g: 0.15686275
+		b: 0.023529412
+		a: 1
+	}
+	White: {
+		r: 1
+		g: 1
+		b: 1
+		a: 1
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
+	default: {
+		imageUp: Gear_Slot
+		imageOver: GearSlot_Selected
+	}
+	inventory: {
+		imageUp: gearBoxSmall
+		imageOver: gearBoxOver
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
+	default: {
+		font: Messy22
+	}
+	Gear_Title: {
+		font: Gear_Title
+	}
+	Gear_Name: {
+		font: Gear_Name
+	}
+	Gear_Text: {
+		font: Juice20
+	}
+	Gear_Flavor: {
+		font: Flavor_Text
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle: {
+	default: {
+		label: default
+	}
+}
+}

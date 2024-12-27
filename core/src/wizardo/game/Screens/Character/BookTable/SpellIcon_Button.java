@@ -244,7 +244,6 @@ public class SpellIcon_Button extends ImageButton {
     }
 
     public void addClickListener() {
-
         this.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -296,6 +295,7 @@ public class SpellIcon_Button extends ImageButton {
         if(spell_equipped.name.equals(spell_known.name)) {
 
             player.spellbook.equippedSpells.set(equipped_index, spell_known);
+            spell_known.resetCD();
             player.spellbook.knownSpells.set(known_index, spell_equipped);
             if(selected_is_equipped) {
                 createSwapAnims(this, screen.selectedSpell_Button, spell_equipped, spell_known);

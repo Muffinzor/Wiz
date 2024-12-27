@@ -21,7 +21,7 @@ public class FrostNova_Explosion extends FrostNova_Spell {
     Body body;
     RoundLight light;
 
-    float radius = 110;
+    float radius = 135;
     float sizeScaling = 1;
     float freezeDuration = 2.25f;
 
@@ -75,7 +75,7 @@ public class FrostNova_Explosion extends FrostNova_Spell {
         Sprite frame = screen.getSprite();
         frame.set(anim.getKeyFrame(stateTime, false));
         frame.setCenter(targetPosition.x * PPM, targetPosition.y * PPM);
-        frame.setScale(1f * sizeScaling);
+        frame.setScale(1.15f * sizeScaling);
         frame.setAlpha(0.8f);
         //screen.centerSort(frame, targetPosition.y * PPM);
         screen.addSortedSprite(frame);

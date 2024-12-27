@@ -101,4 +101,9 @@ public class ChargedBolts_Spell extends Spell {
             return dmg;
         }
     }
+
+    @Override
+    public boolean isLearnable() {
+        return player.spellbook.chargedbolt_lvl > 0;
+    }
 }

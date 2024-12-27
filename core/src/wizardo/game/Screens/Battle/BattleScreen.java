@@ -16,12 +16,14 @@ import wizardo.game.Player.Pawn;
 import wizardo.game.Resources.ScreenResources.LevelUpResources;
 import wizardo.game.Screens.BaseScreen;
 import wizardo.game.Screens.Battle.MonsterSpawner.MonsterSpawner;
+import wizardo.game.Spells.BlankSpell;
 import wizardo.game.Spells.Hybrid.ArcaneArtillery.ArcaneArtillery_Spell;
 import wizardo.game.Spells.SpellManager;
 import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Wizardo;
 
 import static wizardo.game.GameSettings.debug_camera;
+import static wizardo.game.Spells.SpellBank.Frost_Spells.frostspells;
 import static wizardo.game.Spells.SpellUtils.Spell_Element.ARCANE;
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.*;
@@ -62,6 +64,7 @@ public class BattleScreen extends BaseScreen {
 
         monsterManager = new MonsterManager(this);
         spellManager = new SpellManager(this);
+        player.spellManager = spellManager;
         monsterSpellManager = new MonsterSpellManager(this);
 
         cursorTexturePath = "Cursors/Battle_Cursor.png";
@@ -93,10 +96,7 @@ public class BattleScreen extends BaseScreen {
         stateTime += delta;
 
         if(!initialized) {
-            ArcaneArtillery_Spell spell = new ArcaneArtillery_Spell();
-            spell.anim_element = ARCANE;
-            spell.rift = true;
-            player.spellbook.equippedSpells.add(spell);
+            player.spellbook.equippedSpells.add(frostspells[0]);
             initialized = true;
         }
 

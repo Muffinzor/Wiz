@@ -195,13 +195,14 @@ public class Frozenorb_Projectile extends Frozenorb_Spell {
         proj.targetPosition = SpellUtils.getRandomVectorInRadius(body.getPosition(), 2.5f);
 
         if(proj instanceof Flamejet_Spell) {
-            proj.lightAlpha = 0.3f + getInterval() * 1.5f;
+            proj.lightAlpha = 0.5f + getInterval() * 2.5f;
         }
     }
 
     public void pickAnim() {
         switch(anim_element) {
             case FROST -> {
+                red = 0.1f;
                 anim = FrozenorbAnims.frozenorb_anim_frost;
                 blue = 0.5f;
             }

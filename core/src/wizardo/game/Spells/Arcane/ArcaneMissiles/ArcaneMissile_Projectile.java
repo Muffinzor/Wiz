@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Spells.Arcane.Rifts.Rift_Zone;
+import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Explosion;
 import wizardo.game.Spells.Lightning.ChargedBolts.ChargedBolts_Spell;
 import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyFactory;
@@ -70,6 +71,7 @@ public class ArcaneMissile_Projectile extends ArcaneMissile_Spell {
         }
 
         if(scale <= 0.1f) {
+            frostboltExplosion();
             light.dimKill(0.1f);
             world.destroyBody(body);
             screen.spellManager.toRemove(this);
@@ -95,9 +97,7 @@ public class ArcaneMissile_Projectile extends ArcaneMissile_Spell {
         scaleLoss *= 1 - player.spellbook.arcanemissileBonus/100f;
         scale -= scaleLoss;
 
-        if(frostbolt) {
-            frostbolt(monster);
-        }
+        frostbolt(monster);
 
         if(rift && scale >= 0.05f) {
             float procRate = 0.925f - 0.025f * player.spellbook.rift_lvl;
@@ -274,9 +274,17 @@ public class ArcaneMissile_Projectile extends ArcaneMissile_Spell {
         }
     }
 
+    public void frostboltExplosion() {
+        if(frostbolt) {
+            Frostbolt_Explosion explosion = new Frostbolt_Explosion();
+            explosion.setElements(this);
+            explosion.targetPosition = new Vector2(body.getPosition());
+            screen.spellManager.toAdd(explosion);
+        }
+    }
     public void frostbolt(Monster monster) {
         if(frostbolt) {
-            float freezeProc = 0.8f - 0.05f * player.spellbook.frostbolt_lvl;
+            float freezeProc = 0.8f - 0.08f * player.spellbook.frostbolt_lvl;
             if(Math.random() >= freezeProc) {
                 monster.applyFreeze(1.5f, 3);
             }

@@ -66,6 +66,11 @@ public class Frostbolt_Spell extends Spell {
         return dmg;
     }
 
+    @Override
+    public boolean isLearnable() {
+        return player.spellbook.frostbolt_lvl > 0;
+    }
+
     public void inherit(Frostbolt_Spell parent) {
         this.screen = parent.screen;
         this.setElements(parent);

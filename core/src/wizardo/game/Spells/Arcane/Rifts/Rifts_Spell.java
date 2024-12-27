@@ -144,5 +144,10 @@ public class Rifts_Spell extends Spell {
         dmg = (int) (dmg * (1 + player.spellbook.gravityBonusDmg/100f));
         return dmg;
     }
+
+    @Override
+    public boolean isLearnable() {
+        return player.spellbook.rift_lvl > 0;
+    }
 }
 

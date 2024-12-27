@@ -49,9 +49,9 @@ public class FrozenorbAnims {
         }
         frozenorb_anim_lightning = new Animation<>(0.03f, lightning_frames);
 
-        Sprite[] orbit_frames = new Sprite[22];
-        for (int i = 35; i < orbit_frames.length + 35; i++) {
-            orbit_frames[i - 35] = frost_atlas.createSprite("frozen_orb" + (i + 1));
+        Sprite[] orbit_frames = new Sprite[160];
+        for (int i = 20; i < orbit_frames.length + 20; i++) {
+            orbit_frames[i - 20] = frost_atlas.createSprite("orb" + (i + 1));
         }
         orbit_anim = new Animation<>(0.032f, orbit_frames);
 

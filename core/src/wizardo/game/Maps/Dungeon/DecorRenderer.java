@@ -37,6 +37,26 @@ public class DecorRenderer {
                     chunk.screen.addSortedSprite(frame);
                     chunk.screen.centerSort(frame, y + 30);
                 }
+                case "Building1" -> {
+                    frame.set(DungeonDecorResources.building1_sprite);
+                    RectangleMapObject rectObject = (RectangleMapObject) object;
+                    float x = rectObject.getRectangle().x + chunk.x_pos;
+                    float y = rectObject.getRectangle().y + chunk.y_pos;
+                    frame.setPosition(x, y);
+                    frame.getTexture().setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+                    chunk.screen.addSortedSprite(frame);
+                    chunk.screen.centerSort(frame, y + 30);
+                }
+                case "Building2" -> {
+                    frame.set(DungeonDecorResources.building2_sprite);
+                    RectangleMapObject rectObject = (RectangleMapObject) object;
+                    float x = rectObject.getRectangle().x + chunk.x_pos;
+                    float y = rectObject.getRectangle().y + chunk.y_pos;
+                    frame.setPosition(x, y);
+                    frame.getTexture().setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+                    chunk.screen.addSortedSprite(frame);
+                    chunk.screen.centerSort(frame, y + 30);
+                }
             }
 
 

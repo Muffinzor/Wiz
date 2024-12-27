@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import wizardo.game.Resources.DecorResources.DungeonDecorResources;
 import wizardo.game.Resources.EffectAnims.BlackHoleAnims;
 import wizardo.game.Resources.ScreenResources.CharacterScreenResources;
 import wizardo.game.Resources.DecorResources.GeneralDecorResources;
@@ -105,6 +106,7 @@ public class LoadingScreen extends BaseScreen {
         BlackHoleAnims.loadAtlas();
 
         GeneralDecorResources.loadAtlas();
+        DungeonDecorResources.loadAtlas();
 
         SkeletonAnims.loadAtlas();
         SkeletonGiantAnims.loadAtlas();
@@ -142,6 +144,7 @@ public class LoadingScreen extends BaseScreen {
         BlackHoleAnims.loadAnimations();
 
         GeneralDecorResources.loadAnimations();
+        DungeonDecorResources.loadAnimations();
 
         SkeletonAnims.loadAnimations();
         SkeletonGiantAnims.loadAnimations();

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="64" height="64" tilewidth="32" tileheight="32" infinite="0" nextlayerid="3" nextobjectid="2">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="64" height="64" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="92">
  <tileset firstgid="1" source="Dungeon_Plus.tsx"/>
  <layer id="1" name="Tile Layer 1" width="64" height="64">
   <data encoding="csv">
@@ -70,6 +70,95 @@
 </data>
  </layer>
  <objectgroup id="2" name="ObstacleBodies">
-  <object id="1" name="Portal" x="945" y="952" width="80" height="88"/>
+  <object id="2" name="Pillar" x="1472" y="1120" width="64" height="64"/>
+  <object id="3" name="Pillar" x="1280" y="1120" width="64" height="64"/>
+  <object id="4" name="Pillar" x="1472" y="1376" width="64" height="64"/>
+  <object id="5" name="Pillar" x="1280" y="1376" width="64" height="64"/>
+  <object id="6" name="Pillar" x="768" y="1120" width="64" height="64"/>
+  <object id="7" name="Pillar" x="576" y="1120" width="64" height="64"/>
+  <object id="8" name="Pillar" x="768" y="1376" width="64" height="64"/>
+  <object id="9" name="Pillar" x="576" y="1376" width="64" height="64"/>
+  <object id="10" name="Pillar" x="1472" y="608" width="64" height="64"/>
+  <object id="11" name="Pillar" x="1280" y="608" width="64" height="64"/>
+  <object id="12" name="Pillar" x="1472" y="864" width="64" height="64"/>
+  <object id="13" name="Pillar" x="1280" y="864" width="64" height="64"/>
+  <object id="14" name="Pillar" x="768" y="608" width="64" height="64"/>
+  <object id="15" name="Pillar" x="576" y="608" width="64" height="64"/>
+  <object id="16" name="Pillar" x="768" y="864" width="64" height="64"/>
+  <object id="17" name="Pillar" x="576" y="864" width="64" height="64"/>
+  <object id="19" name="Building1" x="928" y="1696" width="256" height="128"/>
+  <object id="20" name="Building1" x="1600" y="1696" width="256" height="128"/>
+  <object id="21" name="Building1" x="256" y="1696" width="256" height="128"/>
+  <object id="22" name="Building1" x="928" y="192" width="256" height="128"/>
+  <object id="23" name="Building1" x="1600" y="192" width="256" height="128"/>
+  <object id="24" name="Building1" x="256" y="192" width="256" height="128"/>
+ </objectgroup>
+ <objectgroup id="3" name="DecorBodies">
+  <object id="25" name="Vase" x="799" y="930" width="4" height="4"/>
+  <object id="26" name="Vase" x="821" y="934" width="4" height="4"/>
+  <object id="27" name="Vase" x="592" y="673" width="4" height="4"/>
+  <object id="28" name="Vase" x="586" y="928" width="4" height="4"/>
+  <object id="29" name="Vase" x="602" y="937" width="4" height="4"/>
+  <object id="30" name="Vase" x="617" y="933" width="4" height="4"/>
+  <object id="31" name="Vase" x="632" y="930" width="4" height="4"/>
+  <object id="32" name="Vase" x="620" y="1184" width="4" height="4"/>
+  <object id="33" name="Vase" x="600" y="1196" width="4" height="4"/>
+  <object id="34" name="Vase" x="588" y="1188" width="4" height="4"/>
+  <object id="35" name="Vase" x="1301" y="1185" width="4" height="4"/>
+  <object id="36" name="Vase" x="1322" y="1191" width="4" height="4"/>
+  <object id="37" name="Vase" x="1484" y="1184" width="4" height="4"/>
+  <object id="38" name="Vase" x="1521" y="927" width="4" height="4"/>
+  <object id="39" name="Vase" x="1492" y="673" width="4" height="4"/>
+  <object id="40" name="Vase" x="1296" y="674" width="4" height="4"/>
+  <object id="41" name="Vase" x="1323" y="682" width="4" height="4"/>
+  <object id="42" name="Vase" x="1293" y="931" width="4" height="4"/>
+  <object id="43" name="Vase" x="1317" y="935" width="4" height="4"/>
+  <object id="44" name="Vase" x="1333" y="929" width="4" height="4"/>
+  <object id="45" name="Vase" x="1489" y="1442" width="4" height="4"/>
+  <object id="46" name="Vase" x="807" y="1442" width="4" height="4"/>
+  <object id="47" name="Vase" x="582" y="1441" width="4" height="4"/>
+  <object id="48" name="Vase" x="1297" y="1442" width="4" height="4"/>
+  <object id="49" name="Vase" x="288" y="1824" width="4" height="4"/>
+  <object id="50" name="Vase" x="309" y="1835" width="4" height="4"/>
+  <object id="51" name="Vase" x="323" y="1828" width="4" height="4"/>
+  <object id="52" name="Vase" x="339" y="1824" width="4" height="4"/>
+  <object id="53" name="Vase" x="360" y="1830" width="4" height="4"/>
+  <object id="54" name="Vase" x="411" y="1824" width="4" height="4"/>
+  <object id="55" name="Vase" x="385" y="1824" width="4" height="4"/>
+  <object id="57" name="Vase" x="985" y="1824" width="4" height="4"/>
+  <object id="58" name="Vase" x="1006" y="1835" width="4" height="4"/>
+  <object id="59" name="Vase" x="1020" y="1828" width="4" height="4"/>
+  <object id="60" name="Vase" x="1057" y="1824" width="4" height="4"/>
+  <object id="61" name="Vase" x="1078" y="1830" width="4" height="4"/>
+  <object id="62" name="Vase" x="1129" y="1824" width="4" height="4"/>
+  <object id="63" name="Vase" x="1103" y="1824" width="4" height="4"/>
+  <object id="64" name="Vase" x="1752" y="1824" width="4" height="4"/>
+  <object id="65" name="Vase" x="1773" y="1835" width="4" height="4"/>
+  <object id="66" name="Vase" x="1787" y="1828" width="4" height="4"/>
+  <object id="67" name="Vase" x="1803" y="1824" width="4" height="4"/>
+  <object id="68" name="Vase" x="1629" y="1830" width="4" height="4"/>
+  <object id="69" name="Vase" x="1680" y="1824" width="4" height="4"/>
+  <object id="70" name="Vase" x="1654" y="1824" width="4" height="4"/>
+  <object id="71" name="Vase" x="995" y="320" width="4" height="4"/>
+  <object id="72" name="Vase" x="1016" y="331" width="4" height="4"/>
+  <object id="73" name="Vase" x="1030" y="324" width="4" height="4"/>
+  <object id="74" name="Vase" x="1046" y="320" width="4" height="4"/>
+  <object id="75" name="Vase" x="1067" y="326" width="4" height="4"/>
+  <object id="76" name="Vase" x="1118" y="320" width="4" height="4"/>
+  <object id="77" name="Vase" x="1092" y="320" width="4" height="4"/>
+  <object id="78" name="Vase" x="283" y="320" width="4" height="4"/>
+  <object id="79" name="Vase" x="304" y="331" width="4" height="4"/>
+  <object id="80" name="Vase" x="318" y="324" width="4" height="4"/>
+  <object id="81" name="Vase" x="334" y="320" width="4" height="4"/>
+  <object id="82" name="Vase" x="432" y="326" width="4" height="4"/>
+  <object id="83" name="Vase" x="483" y="320" width="4" height="4"/>
+  <object id="84" name="Vase" x="457" y="320" width="4" height="4"/>
+  <object id="85" name="Vase" x="1693" y="320" width="4" height="4"/>
+  <object id="86" name="Vase" x="1714" y="331" width="4" height="4"/>
+  <object id="87" name="Vase" x="1652" y="324" width="4" height="4"/>
+  <object id="88" name="Vase" x="1668" y="320" width="4" height="4"/>
+  <object id="89" name="Vase" x="1770" y="326" width="4" height="4"/>
+  <object id="90" name="Vase" x="1821" y="320" width="4" height="4"/>
+  <object id="91" name="Vase" x="1795" y="320" width="4" height="4"/>
  </objectgroup>
 </map>

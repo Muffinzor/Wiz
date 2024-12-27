@@ -9,7 +9,8 @@ public class ChunkPaths {
     public static void fillChunks(String biome) {
         chunkPaths.clear();
         if(biome.equals("Dungeon")) {
-            chunkPaths.add("Maps/TEST/Map_Project2.tmx");
+            chunkPaths.add("Maps/TEST/Map_Project1.tmx");
+            chunkPaths.add("Maps/TEST/Map_Project3.tmx");
         }
     }
 }

@@ -134,6 +134,11 @@ public class Thunderstorm_Spell extends Spell {
         return dmg;
     }
 
+    @Override
+    public boolean isLearnable() {
+        return player.spellbook.thunderstorm_lvl > 0;
+    }
+
     public void setup() {
         frequency = 3 * (0.9f + getLvl()/10f);
         frequency = frequency * (1 + player.spellbook.empyreanFrequencyBonus/100f);

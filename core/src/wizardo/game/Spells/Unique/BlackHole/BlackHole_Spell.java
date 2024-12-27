@@ -29,4 +29,9 @@ public class BlackHole_Spell extends Spell {
     public int getDmg() {
         return 0;
     }
+
+    @Override
+    public boolean isLearnable() {
+        return false;
+    }
 }

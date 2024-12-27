@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Resources.SpellAnims.RiftsAnims;
+import wizardo.game.Spells.Fire.Flamejet.Flamejet_Spell;
 import wizardo.game.Spells.Lightning.ChainLightning.ChainLightning_Hit;
 import wizardo.game.Spells.Lightning.ChargedBolts.ChargedBolts_Spell;
 import wizardo.game.Spells.Spell;
@@ -82,6 +83,7 @@ public class Rift_Explosion extends Rifts_Spell {
         } else if (overheat) {
             frame.setScale(2f);
         }
+        frame.setScale(0.6f);
         screen.addSortedSprite(frame);
         screen.centerSort(frame, body.getPosition().y * PPM - 10);
     }
@@ -111,26 +113,23 @@ public class Rift_Explosion extends Rifts_Spell {
     }
 
     public void pickAnim() {
+        anim = RiftsAnims.getExplosionAnim(anim_element);
         switch (anim_element) {
             case ARCANE -> {
-                anim = RiftsAnims.rift_explosion_anim_arcane;
                 red = 1;
                 green = 0.4f;
                 blue = 0.6f;
             }
             case FROST -> {
-                anim = RiftsAnims.rift_explosion_anim_frost;
                 red = 0.1f;
                 green = 0.15f;
                 blue = 0.8f;
             }
             case LIGHTNING -> {
-                anim = RiftsAnims.rift_explosion_anim_lightning;
                 red = 0.5f;
                 green = 0.25f;
             }
             case FIRE -> {
-                anim = RiftsAnims.rift_explosion_anim_fire;
                 red = 0.8f;
                 green = 0.15f;
             }
@@ -197,11 +196,15 @@ public class Rift_Explosion extends Rifts_Spell {
             if(Math.random() >= procRate) {
                 for (int i = 0; i < quantity; i++) {
                     Spell clone = nested_spell.clone();
+                    if(clone instanceof Flamejet_Spell) {
+                        clone.lightAlpha = 0.8f;
+                    }
                     clone.setElements(this);
                     clone.spawnPosition = new Vector2(body.getPosition());
                     clone.targetPosition = SpellUtils.getRandomVectorInRadius(body.getPosition(), 2);
                     clone.originBody = body;
                     screen.spellManager.toAdd(clone);
+
                 }
             }
         }

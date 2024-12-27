@@ -1,0 +1,92 @@
+
+inventory_skin.png
+size: 1024, 1024
+format: RGBA8888
+filter: Linear, Linear
+repeat: none
+LTPerfume-2(1)
+  rotate: false
+  xy: 509, 856
+  size: 506, 89
+  orig: 506, 89
+  offset: 0, 0
+  index: -1
+Colorfiction - Juice - Freeform
+  rotate: false
+  xy: 1, 770
+  size: 506, 67
+  orig: 506, 67
+  offset: 0, 0
+  index: -1
+Colorfiction - Messy(11)
+  rotate: false
+  xy: 1, 916
+  size: 506, 97
+  orig: 506, 97
+  offset: 0, 0
+  index: -1
+Colorfiction - Messy(13)
+  rotate: false
+  xy: 1, 613
+  size: 504, 155
+  orig: 504, 155
+  offset: 0, 0
+  index: -1
+DePixelBreit
+  rotate: false
+  xy: 1, 839
+  size: 506, 75
+  orig: 506, 75
+  offset: 0, 0
+  index: -1
+DePixelKlein
+  rotate: false
+  xy: 509, 791
+  size: 504, 63
+  orig: 504, 63
+  offset: 0, 0
+  index: -1
+PixelOperatorSC
+  rotate: false
+  xy: 509, 947
+  size: 506, 66
+  orig: 506, 66
+  offset: 0, 0
+  index: -1
+gearBoxOver
+  rotate: false
+  xy: 1, 172
+  size: 88, 88
+  orig: 88, 88
+  offset: 0, 0
+  index: -1
+gearBoxSmall
+  rotate: false
+  xy: 118, 284
+  size: 88, 88
+  orig: 88, 88
+  offset: 0, 0
+  index: -1
+GearSlot_Selected
+  rotate: false
+  xy: 378, 501
+  size: 115, 110
+  orig: 115, 110
+  offset: 0, 0
+  index: -1
+Gear_Slot
+  rotate: false
+  xy: 1, 262
+  size: 115, 110
+  orig: 115, 110
+  offset: 0, 0
+  index: -1
+Panel_Blank
+  rotate: false
+  xy: 1, 374
+  size: 375, 237
+  split: 58, 58, 66, 71
+  pad: 0, 0, 0, 0
+  orig: 375, 237
+  offset: 0, 0
+  index: -1

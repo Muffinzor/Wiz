@@ -61,7 +61,7 @@ public class FrostFire_Spells {
 
         Icespear_Spell frostfire4 = new Icespear_Spell();
         frostfire4.fireball = true;
-        frostfire4.anim_element = FROST;
+        frostfire4.anim_element = FIRE;
         frostfire4.spellParts.add(FIREBALL);
         frostfire4.spellParts.add(ICESPEAR);
         frostfireSpells[4] = frostfire4;

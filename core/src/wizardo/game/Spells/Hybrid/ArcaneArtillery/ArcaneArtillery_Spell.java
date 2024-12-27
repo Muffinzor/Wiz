@@ -22,7 +22,7 @@ public class ArcaneArtillery_Spell extends Spell {
     public ArcaneArtillery_Spell() {
         name = "Arcane Artillery";
 
-        baseDmg = 120;
+        baseDmg = 80;
 
         main_element = ARCANE;
 

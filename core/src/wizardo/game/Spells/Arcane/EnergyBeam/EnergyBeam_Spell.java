@@ -100,4 +100,9 @@ public class EnergyBeam_Spell extends Spell {
         return dmg;
     }
 
+    @Override
+    public boolean isLearnable() {
+        return player.spellbook.energybeam_lvl > 0;
+    }
+
 }

@@ -182,6 +182,7 @@ public class Icespear_Projectile extends Icespear_Spell {
             fireballSplit();
         } else if(arcaneMissile) {
             ArrayList<Monster> inRange = SpellUtils.findMonstersInRangeOfVector(body.getPosition(), 5, true);
+            inRange.remove(splitMonster);
             if(!inRange.isEmpty()) {
                 arcaneSplit(inRange);
             } else {
@@ -238,7 +239,7 @@ public class Icespear_Projectile extends Icespear_Spell {
         Sprite frame = screen.displayManager.spriteRenderer.pool.getSprite();
         frame.set(anim.getKeyFrame(stateTime, true));
         frame.setCenter(body.getPosition().x * PPM, body.getPosition().y * PPM);
-        frame.rotate(rotation + 180);
+        frame.rotate(rotation);
         if(scale != 1) {
             frame.setScale(scale);
         }
@@ -263,8 +264,8 @@ public class Icespear_Projectile extends Icespear_Spell {
             }
             case ARCANE -> {
                 anim = icespear_anim_arcane;
-                red = 0.2f;
-                green = 0.3f;
+                red = 0.25f;
+                green = 0.1f;
                 blue = 0.75f;
             }
             case LIGHTNING -> {
@@ -284,7 +285,7 @@ public class Icespear_Projectile extends Icespear_Spell {
             direction = new Vector2(1,0);
         }
 
-        int radius = 6;
+        int radius = 8;
         float actualSpeed = speed;
         if(beam) {
             radius = 20;
@@ -303,7 +304,7 @@ public class Icespear_Projectile extends Icespear_Spell {
     }
 
     public void createLight() {
-        int radius = 25;
+        int radius = 45;
         if(beam) {
             radius = 75;
         }
@@ -350,6 +351,7 @@ public class Icespear_Projectile extends Icespear_Spell {
         if(flamejet) {
             Flamejet_Spell jet = new Flamejet_Spell();
             jet.frostbolts = frostbolts;
+            jet.lightAlpha = 0.75f;
             jet.spawnPosition = new Vector2(body.getPosition());
             jet.targetPosition = new Vector2(body.getPosition().add(direction));
             jet.icespear = true;

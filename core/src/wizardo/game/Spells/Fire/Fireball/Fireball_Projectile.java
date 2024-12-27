@@ -1,21 +1,26 @@
 package wizardo.game.Spells.Fire.Fireball;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
+import wizardo.game.Items.Equipment.Amulet.Fireball_LegendaryAmulet;
+import wizardo.game.Items.Equipment.Staff.Fireball_EpicStaff;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Resources.SpellAnims.FireballAnims;
 import wizardo.game.Utils.BodyFactory;
 
 import static wizardo.game.Utils.Constants.PPM;
+import static wizardo.game.Wizardo.player;
 import static wizardo.game.Wizardo.world;
 
 public class Fireball_Projectile extends Fireball_Spell {
 
     boolean initialized;
     boolean hasCollided;
+    int totalCollisions;
 
     public Body body;
     public RoundLight light;
@@ -26,6 +31,7 @@ public class Fireball_Projectile extends Fireball_Spell {
 
         this.spawnPosition = new Vector2(spawnPosition);
         this.targetPosition = new Vector2(targetPosition);
+        speed = speed * MathUtils.random(0.9f, 1.1f);
 
     }
 
@@ -49,6 +55,8 @@ public class Fireball_Projectile extends Fireball_Spell {
     @Override
     public void handleCollision(Monster monster) {
         hasCollided = true;
+        legendaryAmuletEffect(monster);
+        totalCollisions++;
     }
 
     @Override
@@ -69,11 +77,25 @@ public class Fireball_Projectile extends Fireball_Spell {
         }
     }
 
+    public void legendaryAmuletEffect(Monster monster) {
+
+        if(player.inventory.equippedAmulet instanceof Fireball_LegendaryAmulet) {
+            dealDmg(monster);
+            hasCollided = false;
+            if(Math.random() > 0.9f || totalCollisions == 0) {
+                Fireball_Explosion explosion = new Fireball_Explosion();
+                explosion.targetPosition = new Vector2(body.getPosition());
+                explosion.inherit(this);
+                screen.spellManager.toAdd(explosion);
+            }
+        }
+    }
+
     public void drawSprite() {
         Sprite frame = screen.getSprite();
         frame.set(anim.getKeyFrame(stateTime, true));
         frame.setRotation(rotation);
-        frame.setScale(0.7f);
+        frame.setScale(0.7f * effectRatio * effectRatio);
         frame.setCenter(body.getPosition().x * PPM, body.getPosition().y * PPM);
         screen.centerSort(frame, body.getPosition().y * PPM);
         screen.addSortedSprite(frame);
@@ -90,16 +112,14 @@ public class Fireball_Projectile extends Fireball_Spell {
 
         Vector2 offset = new Vector2(direction.cpy().scl(1));
         Vector2 adjustedSpawn = new Vector2(spawnPosition.add(offset));
-        body = BodyFactory.spellProjectileCircleBody(adjustedSpawn, 12, true);
+        body = BodyFactory.spellProjectileCircleBody(adjustedSpawn, 12 * effectRatio, true);
         body.setUserData(this);
 
-        /*
-        if(player.staff instanceof FireballStaff) {
-            float angleVariation = 7;
+        if(player.inventory.equippedStaff instanceof Fireball_EpicStaff) {
+            float angleVariation = 10;
             float randomAngle = MathUtils.random(-angleVariation, angleVariation);
             direction.rotateDeg(randomAngle);
         }
-        */
 
         Vector2 velocity = direction.scl(speed);
         body.setLinearVelocity(velocity);
@@ -107,7 +127,7 @@ public class Fireball_Projectile extends Fireball_Spell {
     }
     public void createLight() {
         light = screen.lightManager.pool.getLight();
-        light.setLight(red, green, blue, lightAlpha, 180, spawnPosition);
+        light.setLight(red, green, blue, lightAlpha, 180 * effectRatio * effectRatio, spawnPosition);
         screen.lightManager.addLight(light);
     }
     public void adjustLight() {
@@ -116,6 +136,9 @@ public class Fireball_Projectile extends Fireball_Spell {
 
     public void picKAnim() {
         lightAlpha = 0.8f;
+        if(effectRatio == 0.8f) {
+            lightAlpha = 0.72f;
+        }
         switch(anim_element) {
             case FIRE -> {
                 anim = FireballAnims.fireball_anim_fire;

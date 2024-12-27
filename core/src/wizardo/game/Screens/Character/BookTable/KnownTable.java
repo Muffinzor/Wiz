@@ -43,7 +43,7 @@ public class KnownTable extends MenuTable {
         table.setHeight(height);
         stage.addActor(table);
 
-        table.setDebug(true);
+        //table.setDebug(true);
 
         centerPoint = new Vector2(x_pos + width/2, y_pos + height/2);
     }

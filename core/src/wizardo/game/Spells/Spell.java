@@ -12,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.RayCastCallback;
 import wizardo.game.Account.Unlocked;
 import wizardo.game.Audio.Sounds.SoundPlayer;
 import wizardo.game.Display.Text.FloatingDamage;
+import wizardo.game.Maps.LayerObject;
 import wizardo.game.Monsters.MonsterActions.MonsterSpell;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Screens.BaseScreen;
@@ -79,6 +80,10 @@ public abstract class Spell implements Cloneable {
 
     public void handleCollision(Fixture obstacle) {
 
+    }
+
+    public void handleCollision(LayerObject decor) {
+        decor.collided = true;
     }
 
     public void handleCollision(MonsterSpell monsterSpell) {
@@ -310,12 +315,81 @@ public abstract class Spell implements Cloneable {
 
         if(spaceInEquipped && !sameTypeEquipped) {
             player.spellbook.equippedSpells.add(this);
+            resetCD();
         } else
 
         if(spaceInKnown) {
             player.spellbook.knownSpells.add(this);
         }
+    }
+    public void forget() {
+        boolean equipped = player.spellbook.equippedSpells.contains(this);
 
+        if(equipped && player.spellbook.equippedSpells.size() == 1) {
+            player.spellbook.equippedSpells.remove(this);
+            if(!player.spellbook.knownSpells.isEmpty()) {
+                Spell spell_to_move = player.spellbook.knownSpells.getFirst();
+                spell_to_move.resetCD();
+                player.spellbook.equippedSpells.add(spell_to_move);
+                player.spellbook.knownSpells.remove(spell_to_move);
+            }
+            return;
+        }
+
+        if(equipped) {
+            int index = player.spellbook.equippedSpells.indexOf(this);
+            cascadeCooldowns(index);
+
+            player.spellbook.equippedSpells.remove(this);
+            ArrayList<String> spells_equipped = new ArrayList<>();
+
+            for(Spell spell : player.spellbook.equippedSpells) {
+                spells_equipped.add(spell.name);
+            }
+
+            for(Spell spell : player.spellbook.knownSpells) {
+                if(!spells_equipped.contains(spell.name)) {
+                    player.spellbook.equippedSpells.add(spell);
+                    player.spellbook.knownSpells.remove(spell);
+                    spell.resetCD();
+                    return;
+                }
+            }
+        }
+
+        if(!equipped) {
+            player.spellbook.knownSpells.remove(this);
+        }
+    }
+    private void cascadeCooldowns(int index) {
+        if(index == 0) {
+            player.spellManager.cooldown1 = player.spellManager.cooldown2;
+            player.spellManager.cooldown2 = player.spellManager.cooldown3;
+        }
+        if(index == 1) {
+            player.spellManager.cooldown2 = player.spellManager.cooldown3;
+        }
+    }
+
+    public void resetCD() {
+        for (int i = 0; i < player.spellbook.equippedSpells.size(); i++) {
+
+            if(player.spellbook.equippedSpells.get(i).equals(this)) {
+                if(i == 0) {
+                    player.spellManager.cooldown1 = this.cooldown;
+                }
+                if(i == 1) {
+                    player.spellManager.cooldown2 = this.cooldown;
+                }
+                if(i == 2) {
+                    player.spellManager.cooldown3 = this.cooldown;
+                }
+                if(i == 3) {
+                    player.spellManager.cooldown4 = this.cooldown;
+                }
+                break;
+            }
+        }
     }
 
     public abstract int getLvl();
@@ -325,6 +399,10 @@ public abstract class Spell implements Cloneable {
      * @return
      */
     public abstract int getDmg();
+
+    public float getCooldown() {
+        return cooldown;
+    }
 
 
     public float getScaledSpeed() {
@@ -338,17 +416,17 @@ public abstract class Spell implements Cloneable {
     public int getScaledDmg(float unscaledDmg) {
         float scaledDmg = unscaledDmg;
         switch(main_element) {
-            case ARCANE -> scaledDmg *= (1 + player.spellbook.arcaneBonusDmg);
-            case FROST -> scaledDmg *= (1 + player.spellbook.frostBonusDmg);
-            case FIRE -> scaledDmg *= (1 + player.spellbook.fireBonusDmg);
-            case LIGHTNING -> scaledDmg *= (1 + player.spellbook.lightningBonusDmg);
+            case ARCANE -> scaledDmg *= (1 + player.spellbook.arcaneBonusDmg/100);
+            case FROST -> scaledDmg *= (1 + player.spellbook.frostBonusDmg/100);
+            case FIRE -> scaledDmg *= (1 + player.spellbook.fireBonusDmg/100);
+            case LIGHTNING -> scaledDmg *= (1 + player.spellbook.lightningBonusDmg/100);
         }
         if(bonus_element != null) {
             switch (bonus_element) {
-                case ARCANE -> scaledDmg *= (1 + player.spellbook.arcaneBonusDmg / 2);
-                case FROST -> scaledDmg *= (1 + player.spellbook.frostBonusDmg / 2);
-                case FIRE -> scaledDmg *= (1 + player.spellbook.fireBonusDmg / 2);
-                case LIGHTNING -> scaledDmg *= (1 + player.spellbook.lightningBonusDmg / 2);
+                case ARCANE -> scaledDmg *= (1 + player.spellbook.arcaneBonusDmg/100 / 2);
+                case FROST -> scaledDmg *= (1 + player.spellbook.frostBonusDmg/100 / 2);
+                case FIRE -> scaledDmg *= (1 + player.spellbook.fireBonusDmg/100 / 2);
+                case LIGHTNING -> scaledDmg *= (1 + player.spellbook.lightningBonusDmg/100 / 2);
             }
         }
         scaledDmg *= (1 + player.spellbook.allBonusDmg);
@@ -395,6 +473,74 @@ public abstract class Spell implements Cloneable {
         Vector2 randomPosition = SpellUtils.getRandomVectorInRadius(monsterTextHeight, 0.5f);
         text.setAll(s, randomPosition.scl(PPM), mainMenuSkin.getFont("DamageNumbers"), color);
         screen.displayManager.textManager.addDmgText(text);
+    }
+
+    public boolean isLearnable() {
+        for(Spell_Name part : spellParts) {
+            switch(part) {
+                case FROSTBOLT -> {
+                    if(player.spellbook.frostbolt_lvl < 1) {
+                        return false;
+                    }
+                }
+                case ICESPEAR -> {
+                    if(player.spellbook.icespear_lvl < 1) {
+                        return false;
+                    }
+                }
+                case FROZENORB -> {
+                    if(player.spellbook.frozenorb_lvl < 1) {
+                        return false;
+                    }
+                }
+                case FLAMEJET -> {
+                    if(player.spellbook.flamejet_lvl < 1) {
+                        return false;
+                    }
+                }
+                case FIREBALL -> {
+                    if(player.spellbook.fireball_lvl < 1) {
+                        return false;
+                    }
+                }
+                case OVERHEAT -> {
+                    if(player.spellbook.overheat_lvl < 1) {
+                        return false;
+                    }
+                }
+                case CHARGEDBOLTS -> {
+                    if(player.spellbook.chargedbolt_lvl < 1) {
+                        return false;
+                    }
+                }
+                case CHAIN -> {
+                    if(player.spellbook.chainlightning_lvl < 1) {
+                        return false;
+                    }
+                }
+                case THUNDERSTORM -> {
+                    if(player.spellbook.thunderstorm_lvl < 1) {
+                        return false;
+                    }
+                }
+                case MISSILES -> {
+                    if(player.spellbook.arcanemissile_lvl < 1) {
+                        return false;
+                    }
+                }
+                case BEAM -> {
+                    if(player.spellbook.energybeam_lvl < 1) {
+                        return false;
+                    }
+                }
+                case RIFTS -> {
+                    if(player.spellbook.rift_lvl < 1) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
     }
 
 }

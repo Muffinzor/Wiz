@@ -155,10 +155,12 @@ public class Flamejet_Projectile extends Flamejet_Spell {
     }
 
     public void pickAnim() {
-        if(quantity > 3) {
-            lightAlpha = 0.85f - (quantity - 2) * 0.04f;
-        } else {
-            lightAlpha = 0.80f;
+        if(castByPawn) {
+            if (quantity > 3) {
+                lightAlpha = 0.85f - (quantity - 2) * 0.04f;
+            } else {
+                lightAlpha = 0.80f;
+            }
         }
         switch(anim_element) {
             case FIRE -> {

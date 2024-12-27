@@ -1,5 +1,6 @@
 package wizardo.game.Spells.Fire.Fireball;
 
+import wizardo.game.Items.Equipment.Staff.Fireball_EpicStaff;
 import wizardo.game.Spells.Spell;
 
 import static wizardo.game.Spells.SpellUtils.Spell_Element.FIRE;
@@ -7,6 +8,9 @@ import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.player;
 
 public class Fireball_Spell extends Spell {
+
+    int projectiles = 1;
+    float effectRatio = 1;
 
     public boolean frostbolts;
     public boolean frozenorb;
@@ -30,15 +34,27 @@ public class Fireball_Spell extends Spell {
 
     }
 
+    public void setup() {
+        if(player.inventory.equippedStaff instanceof Fireball_EpicStaff) {
+            projectiles = 3;
+            effectRatio = 0.8f;
+        }
+    }
+
     @Override
     public void update(float delta) {
-        stateTime += delta;
 
-        Fireball_Projectile ball = new Fireball_Projectile(getSpawnPosition(), getTargetPosition());
-        ball.inherit(this);
-        ball.castByPawn = true;
-        screen.spellManager.toAdd(ball);
+        setup();
+
+        for (int i = 0; i < projectiles; i++) {
+            Fireball_Projectile ball = new Fireball_Projectile(getSpawnPosition(), getTargetPosition());
+            ball.inherit(this);
+            ball.castByPawn = castByPawn;
+            screen.spellManager.toAdd(ball);
+        }
+
         screen.spellManager.toRemove(this);
+
     }
 
     @Override
@@ -61,6 +77,7 @@ public class Fireball_Spell extends Spell {
         this.flameRift = parent.flameRift;
         this.nested_spell = parent.nested_spell;
         this.castByPawn = parent.castByPawn;
+        this.effectRatio = parent.effectRatio;
 
         setElements(parent);
         this.screen = parent.screen;
@@ -72,6 +89,11 @@ public class Fireball_Spell extends Spell {
         dmg += 15 * getLvl();
         dmg = (int) (dmg * (1 + player.spellbook.explosivesBonusDmg/100f));
         return dmg;
+    }
+
+    @Override
+    public boolean isLearnable() {
+        return player.spellbook.fireball_lvl > 0;
     }
 
 }

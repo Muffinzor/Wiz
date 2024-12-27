@@ -56,11 +56,11 @@ public class IcespearAnims {
 
         TextureAtlas atlas = assetManager.get(icespear_atlas_path_frost, TextureAtlas.class);
 
-        Sprite[] spear_frames = new Sprite[8];
+        Sprite[] spear_frames = new Sprite[30];
         for (int i = 0; i < spear_frames.length; i++) {
             spear_frames[i] = atlas.createSprite("spear" + (i+1));
         }
-        icespear_anim_frost = new Animation<>(0.1f, spear_frames);
+        icespear_anim_frost = new Animation<>(0.015f, spear_frames);
 
         Sprite[] hit_frames = new Sprite[16];
         for (int i = 0; i < hit_frames.length; i++) {
@@ -72,11 +72,11 @@ public class IcespearAnims {
 
         TextureAtlas fire_atlas = assetManager.get(icespear_atlas_path_fire, TextureAtlas.class);
 
-        Sprite[] fire_frames = new Sprite[8];
+        Sprite[] fire_frames = new Sprite[30];
         for (int i = 0; i < fire_frames.length; i++) {
             fire_frames[i] = fire_atlas.createSprite("spear" + (i+1));
         }
-        icespear_anim_fire = new Animation<>(0.1f, fire_frames);
+        icespear_anim_fire = new Animation<>(0.015f, fire_frames);
 
         Sprite[] firehit_frames = new Sprite[16];
         for (int i = 0; i < firehit_frames.length; i++) {
@@ -88,11 +88,11 @@ public class IcespearAnims {
 
         TextureAtlas arcane_atlas = assetManager.get(icespear_atlas_path_arcane, TextureAtlas.class);
 
-        Sprite[] arcane_frames = new Sprite[8];
+        Sprite[] arcane_frames = new Sprite[30];
         for (int i = 0; i < arcane_frames.length; i++) {
             arcane_frames[i] = arcane_atlas.createSprite("spear" + (i+1));
         }
-        icespear_anim_arcane = new Animation<>(0.1f, arcane_frames);
+        icespear_anim_arcane = new Animation<>(0.015f, arcane_frames);
 
         Sprite[] arcanehit_frames = new Sprite[16];
         for (int i = 0; i < arcanehit_frames.length; i++) {

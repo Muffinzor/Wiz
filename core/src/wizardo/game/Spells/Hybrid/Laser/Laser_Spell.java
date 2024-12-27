@@ -81,8 +81,13 @@ public class Laser_Spell extends Spell {
         }
 
         inRange = SpellUtils.findMonstersInRangeOfVector(originBody.getPosition(), 10, true);
-        if(originBody == player.pawn.body) {
-            inRange.sort((m1, m2) -> Float.compare(m2.hp, m1.hp));
+        if (originBody == player.pawn.body) {
+            inRange.sort((m1, m2) -> {
+                float distance1 = m1.body.getPosition().dst(player.pawn.getPosition());
+                float distance2 = m2.body.getPosition().dst(player.pawn.getPosition());
+                return Float.compare(distance1, distance2);
+            });
+
             if (inRange.size() > lasers) {
                 inRange.subList(lasers, inRange.size()).clear();
             }
@@ -99,7 +104,7 @@ public class Laser_Spell extends Spell {
     }
 
     public void selectTarget() {
-        if(targetCounter == inRange.size()) {
+        if(targetCounter == Math.min(inRange.size(), 3)) {
             targetCounter = 0;
         }
 

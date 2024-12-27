@@ -35,7 +35,7 @@ public class Spellbook {
     public float lightningBonusDmg;
     public float allBonusDmg;
 
-    // Mastery Modifiers
+    // LevelUp Mastery Modifiers
     public int chargedboltBonus;
     public int frostboltBonus;
     public int arcanemissileBonus;

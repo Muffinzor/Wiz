@@ -16,11 +16,12 @@ public class SpellManager {
 
     BaseScreen screen;
 
-    private float cooldown1;
-    private float cooldown2;
-    private float cooldown3;
-    private float defensive_cooldown;
-    private float utility_cooldown;
+    public float cooldown1;
+    public float cooldown2;
+    public float cooldown3;
+    public float cooldown4;
+    public float defensive_cooldown;
+    public float utility_cooldown;
 
 
     public SpellManager(BaseScreen screen) {
@@ -33,7 +34,6 @@ public class SpellManager {
         cooldown1 = MathUtils.random(1f);
         cooldown2 = MathUtils.random(1f);
         cooldown3 = MathUtils.random(1f);
-
     }
 
 
@@ -60,22 +60,30 @@ public class SpellManager {
     }
 
     public void castSpell(float delta) {
-        cooldown1 -= delta;
-        if (cooldown1 <= 0 && !player.spellbook.equippedSpells.isEmpty()) {
-            spellsToCast.add(player.spellbook.equippedSpells.getFirst().clone());
-            cooldown1 = player.spellbook.equippedSpells.getFirst().cooldown;
-        }
+        if(delta > 0) {
+            cooldown1 -= delta;
+            if (cooldown1 <= 0 && !player.spellbook.equippedSpells.isEmpty()) {
+                Spell clone = player.spellbook.equippedSpells.getFirst().clone();
+                clone.castByPawn = true;
+                spellsToCast.add(clone);
+                cooldown1 = clone.getCooldown();
+            }
 
-        cooldown2 -= delta;
-        if (cooldown2 <= 0 && player.spellbook.equippedSpells.size() > 1) {
-            spellsToCast.add(player.spellbook.equippedSpells.get(1).clone());
-            cooldown2 = player.spellbook.equippedSpells.get(1).cooldown;
-        }
+            cooldown2 -= delta;
+            if (cooldown2 <= 0 && player.spellbook.equippedSpells.size() > 1) {
+                Spell clone = player.spellbook.equippedSpells.get(1).clone();
+                clone.castByPawn = true;
+                spellsToCast.add(clone);
+                cooldown2 = clone.getCooldown();
+            }
 
-        cooldown3 -= delta;
-        if (cooldown3 <= 0 && player.spellbook.equippedSpells.size() > 2) {
-            spellsToCast.add(player.spellbook.equippedSpells.get(2).clone());
-            cooldown3 = player.spellbook.equippedSpells.get(2).cooldown;
+            cooldown3 -= delta;
+            if (cooldown3 <= 0 && player.spellbook.equippedSpells.size() > 2) {
+                Spell clone = player.spellbook.equippedSpells.get(2).clone();
+                clone.castByPawn = true;
+                spellsToCast.add(clone);
+                cooldown3 = clone.getCooldown();
+            }
         }
     }
 

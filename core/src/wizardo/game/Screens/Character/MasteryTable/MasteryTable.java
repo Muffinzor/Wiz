@@ -31,6 +31,19 @@ public class MasteryTable extends MenuTable {
     public int x_position = 0;
     public int y_position = 0;
 
+    Label flamejet_m;
+    Label fireball_m;
+    Label overheat_m;
+    Label frostbolt_m;
+    Label icespear_m;
+    Label frozenorb_m;
+    Label chargedbolt_m;
+    Label chain_m;
+    Label storm_m;
+    Label missiles_m;
+    Label beam_m;
+    Label rifts_m;
+
     public MasteryTable(Stage stage, Skin skin, Wizardo game, CharacterScreen screen) {
         super(stage, skin, game);
         this.screen = screen;
@@ -95,12 +108,12 @@ public class MasteryTable extends MenuTable {
 
         table.row();
 
-        Label frostbolts_mastery = new Label("Mastery : " + player.spellbook.frostbolt_lvl, skin);
-        table.add(frostbolts_mastery);
-        Label icespear_mastery = new Label("Mastery : " + player.spellbook.icespear_lvl, skin);
-        table.add(icespear_mastery);
-        Label orb_mastery = new Label("Mastery : " + player.spellbook.frozenorb_lvl, skin);
-        table.add(orb_mastery);
+        frostbolt_m = new Label("Mastery : " + player.spellbook.frostbolt_lvl, skin);
+        table.add(frostbolt_m);
+        icespear_m = new Label("Mastery : " + player.spellbook.icespear_lvl, skin);
+        table.add(icespear_m);
+        frozenorb_m = new Label("Mastery : " + player.spellbook.frozenorb_lvl, skin);
+        table.add(frozenorb_m);
 
         table.row();
 
@@ -132,12 +145,12 @@ public class MasteryTable extends MenuTable {
 
         table.row();
 
-        Label flamejet_mastery = new Label("Mastery : " + player.spellbook.flamejet_lvl, skin);
-        table.add(flamejet_mastery);
-        Label fireball_mastery = new Label("Mastery : " + player.spellbook.fireball_lvl, skin);
-        table.add(fireball_mastery);
-        Label overheat_mastery = new Label("Mastery : " + player.spellbook.overheat_lvl, skin);
-        table.add(overheat_mastery);
+        flamejet_m = new Label("Mastery : " + player.spellbook.flamejet_lvl, skin);
+        table.add(flamejet_m);
+        fireball_m = new Label("Mastery : " + player.spellbook.fireball_lvl, skin);
+        table.add(fireball_m);
+        overheat_m = new Label("Mastery : " + player.spellbook.overheat_lvl, skin);
+        table.add(overheat_m);
 
         table.row();
     }
@@ -168,12 +181,12 @@ public class MasteryTable extends MenuTable {
 
         table.row();
 
-        Label chargedbolt_mastery = new Label("Mastery : " + player.spellbook.chargedbolt_lvl, skin);
-        table.add(chargedbolt_mastery);
-        Label chain_mastery = new Label("Mastery : " + player.spellbook.chainlightning_lvl, skin);
-        table.add(chain_mastery);
-        Label thunderstorm_mastery = new Label("Mastery : " + player.spellbook.thunderstorm_lvl, skin);
-        table.add(thunderstorm_mastery);
+        chargedbolt_m = new Label("Mastery : " + player.spellbook.chargedbolt_lvl, skin);
+        table.add(chargedbolt_m);
+        chain_m = new Label("Mastery : " + player.spellbook.chainlightning_lvl, skin);
+        table.add(chain_m);
+        storm_m = new Label("Mastery : " + player.spellbook.thunderstorm_lvl, skin);
+        table.add(storm_m);
 
         table.row();
     }
@@ -204,12 +217,12 @@ public class MasteryTable extends MenuTable {
 
         table.row();
 
-        Label missile_mastery = new Label("Mastery : " + player.spellbook.arcanemissile_lvl, skin);
-        table.add(missile_mastery);
-        Label beam_mastery = new Label("Mastery : " + player.spellbook.energybeam_lvl, skin);
-        table.add(beam_mastery);
-        Label rifts_mastery = new Label("Mastery : " + player.spellbook.rift_lvl, skin);
-        table.add(rifts_mastery);
+        missiles_m = new Label("Mastery : " + player.spellbook.arcanemissile_lvl, skin);
+        table.add(missiles_m);
+        beam_m = new Label("Mastery : " + player.spellbook.energybeam_lvl, skin);
+        table.add(beam_m);
+        rifts_m = new Label("Mastery : " + player.spellbook.rift_lvl, skin);
+        table.add(rifts_m);
 
         table.row();
     }
@@ -354,6 +367,22 @@ public class MasteryTable extends MenuTable {
         createSpellButtonsTable();
         createMixingTable();
 
+        updateCheckBoxes();
+    }
+
+    public void updateChanges() {
+        frostbolt_m.setText("Mastery : " + player.spellbook.frostbolt_lvl);
+        icespear_m.setText("Mastery : " + player.spellbook.icespear_lvl);
+        frozenorb_m.setText("Mastery : " + player.spellbook.frozenorb_lvl);
+        flamejet_m.setText("Mastery : " + player.spellbook.flamejet_lvl);
+        fireball_m.setText("Mastery : " + player.spellbook.fireball_lvl);
+        overheat_m.setText("Mastery : " + player.spellbook.overheat_lvl);
+        chargedbolt_m.setText("Mastery : " + player.spellbook.chargedbolt_lvl);
+        chain_m.setText("Mastery : " + player.spellbook.chainlightning_lvl);
+        storm_m.setText("Mastery : " + player.spellbook.thunderstorm_lvl);
+        missiles_m.setText("Mastery : " + player.spellbook.arcanemissile_lvl);
+        beam_m.setText("Mastery : " + player.spellbook.energybeam_lvl);
+        rifts_m.setText("Mastery : " + player.spellbook.rift_lvl);
         updateCheckBoxes();
     }
 

@@ -42,11 +42,9 @@ public class Rift_Zone extends Rifts_Spell {
         Sprite frame = screen.getSprite();
         frame.set(anim.getKeyFrame(stateTime, false));
         frame.setCenter(targetPosition.x * PPM, targetPosition.y * PPM);
-        if(overheat) {
-            frame.setScale(1.8f);
-        } else {
-            frame.setScale(0.8f);
-        }
+
+        frame.setScale(0.65f);
+
         screen.addUnderSprite(frame);
     }
 
@@ -57,9 +55,7 @@ public class Rift_Zone extends Rifts_Spell {
 
     public void createLight() {
         float lightRadius = 80;
-        if(overheat) {
-            lightRadius = 250;
-        }
+
         light = screen.lightManager.pool.getLight();
         light.setLight(1, .4f, .6f, 0.75f, lightRadius, targetPosition);
         light.dimKill(0.015f);

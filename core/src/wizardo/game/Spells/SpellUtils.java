@@ -6,7 +6,9 @@ import com.badlogic.gdx.physics.box2d.QueryCallback;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static wizardo.game.Utils.Methods.isPositionOverlappingWithObstacle;
@@ -25,16 +27,16 @@ public class SpellUtils {
 
     public enum Spell_Name {
         FROSTBOLT,
-        ICESPEAR,
-        FROZENORB,
         FLAMEJET,
-        FIREBALL,
-        OVERHEAT,
         MISSILES,
-        BEAM,
-        RIFTS,
         CHARGEDBOLTS,
+        ICESPEAR,
+        FIREBALL,
+        BEAM,
         CHAIN,
+        FROZENORB,
+        OVERHEAT,
+        RIFTS,
         THUNDERSTORM
     }
 
@@ -245,5 +247,20 @@ public class SpellUtils {
         monstersInRange.removeIf(monster -> !seenMonsters.add(monster));
 
         return monstersInRange;
+    }
+
+    /** recursive will also make the previous tiers available as picks */
+    public static Spell_Name getRandomMastery(int tier, boolean recursive) {
+        List<Spell_Name> list = Arrays.asList(Spell_Name.values());
+        int maxIndex = tier * 4 - 1;
+        int minIndex = 0;
+        if(!recursive) {
+            if(tier == 2) {
+                minIndex = 4;
+            } else if(tier == 3) {
+                minIndex = 8;
+            }
+        }
+        return list.get(MathUtils.random(minIndex, maxIndex));
     }
 }

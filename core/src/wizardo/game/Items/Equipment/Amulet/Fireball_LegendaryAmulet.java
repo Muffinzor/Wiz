@@ -1,0 +1,60 @@
+package wizardo.game.Items.Equipment.Amulet;
+
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.MathUtils;
+import wizardo.game.Items.ItemUtils;
+import wizardo.game.Spells.SpellUtils;
+
+import java.util.ArrayList;
+
+import static wizardo.game.Wizardo.player;
+
+public class Fireball_LegendaryAmulet extends Amulet {
+
+    public Fireball_LegendaryAmulet() {
+        sprite = new Sprite(new Texture("Items/Amulets/3Stones.png"));
+        spriteOver = new Sprite(new Texture("Items/Amulets/3Stones_Over.png"));
+        displayScale = 0.85f;
+
+        name = "The Cinder Lords";
+        title = "Legendary Amulet";
+        quality = ItemUtils.EquipQuality.LEGENDARY;
+
+        masteries.add(SpellUtils.Spell_Name.FIREBALL);
+        quantity_masteries.add(2);
+        gearStats.add(ItemUtils.GearStat.FIREDMG);
+        quantity_gearStats.add(MathUtils.random(15,20));
+    }
+
+    public String getDescription() {
+        return String.format("""
+            Fireballs pass through monsters and
+            damage everything they hit
+            
+            Monsters hit have a chance to explode
+            
+            The first monster hit will always
+            trigger an explosion""");
+    }
+
+    public String getFlavorText() {
+        return "\" We're not even fit to lick\n their boots.\"";
+    }
+
+    public void equip() {
+        super.equip();
+        player.stats.bonusMastery_fireball += 2;
+        player.spellbook.fireball_lvl += 2 ;
+        player.spellbook.fireBonusDmg += quantity_gearStats.getFirst();
+    }
+
+    @Override
+    public void unequip() {
+        player.inventory.equippedAmulet = null;
+        player.stats.bonusMastery_fireball -= 2;
+        player.spellbook.fireball_lvl -= 2;
+        player.spellbook.fireBonusDmg -= quantity_gearStats.getFirst();
+        checkForSpellRemoval();
+    }
+}

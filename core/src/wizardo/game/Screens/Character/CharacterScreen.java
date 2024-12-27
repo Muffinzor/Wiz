@@ -1,9 +1,7 @@
 package wizardo.game.Screens.Character;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -12,20 +10,20 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import wizardo.game.Display.MenuTable;
 import wizardo.game.Resources.ScreenResources.CharacterScreenResources;
-import wizardo.game.Resources.ScreenResources.LevelUpResources;
 import wizardo.game.Screens.BaseScreen;
 import wizardo.game.Screens.Character.Anims.Screen_Anim;
-import wizardo.game.Screens.Character.Anims.SpellCreation_Anim;
 import wizardo.game.Screens.Character.BookTable.EquippedTable;
 import wizardo.game.Screens.Character.BookTable.KnownTable;
 import wizardo.game.Screens.Character.BookTable.SpellIcon_Button;
+import wizardo.game.Screens.Character.EquipmentTable.EquipmentTable;
+import wizardo.game.Screens.Character.EquipmentTable.GearPanel;
+import wizardo.game.Screens.Character.InventoryTable.InventoryTable;
 import wizardo.game.Screens.Character.MasteryTable.MasteryTable;
 import wizardo.game.Wizardo;
 
 import java.util.ArrayList;
 
-import static wizardo.game.Resources.Skins.bookTableSkin;
-import static wizardo.game.Resources.Skins.masteryTableSkin;
+import static wizardo.game.Resources.Skins.*;
 import static wizardo.game.Wizardo.player;
 
 public class CharacterScreen extends BaseScreen {
@@ -36,26 +34,29 @@ public class CharacterScreen extends BaseScreen {
     public MasteryTable mastery_table;
     public EquippedTable equippedSpells_table;
     public KnownTable knownSpells_table;
-    public Table equipment_table;
-    public Table inventory_table;
+    public EquipmentTable equipment_table;
+    public InventoryTable inventory_table;
 
     public Button selectedButton;
     public MenuTable activeTable;
+    public GearPanel activePanel;
+    public Stage panelStage;
 
     public SpellIcon_Button selectedSpell_Button;
     int selected_rotation;
     public float selected_scale = 1;
     boolean selected_growing;
 
-    private Sprite background;
+    private final Sprite background;
 
     public CharacterScreen(Wizardo game) {
         super(game);
         this.anims = new ArrayList<>();
 
         stage = new Stage(new ScreenViewport(uiCamera));
+        panelStage = new Stage(new ScreenViewport(uiCamera));
 
-        background = new Sprite(new Texture("Screens/CharacterScreen/Background.png"));
+        background = new Sprite(new Texture("Screens/CharacterScreen/Background_Larger.png"));
         background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         mastery_table = new MasteryTable(stage, masteryTableSkin, game, this);
@@ -77,6 +78,12 @@ public class CharacterScreen extends BaseScreen {
 
         stage.act(delta);
         stage.draw();
+
+        equipment_table.update();
+        inventory_table.update();
+
+        panelStage.act(delta);
+        panelStage.draw();
 
         if(controllerActive) {
             drawSelectedButton();
@@ -122,6 +129,13 @@ public class CharacterScreen extends BaseScreen {
         stage.clear();
         stage = new Stage(new ScreenViewport(uiCamera));
         stage.getViewport().update(width, height, true);
+
+        panelStage.clear();
+        panelStage = new Stage(new ScreenViewport(uiCamera));
+        panelStage.getViewport().update(width, height, true);
+
+        equipment_table = new EquipmentTable(stage, inventorySkin, game, this);
+        inventory_table = new InventoryTable(stage, inventorySkin, game, this);
 
         mastery_table = new MasteryTable(stage, masteryTableSkin, game, this);
         mastery_table.updateSelectedButton();

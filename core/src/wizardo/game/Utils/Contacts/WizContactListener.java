@@ -1,6 +1,7 @@
 package wizardo.game.Utils.Contacts;
 
 import com.badlogic.gdx.physics.box2d.*;
+import wizardo.game.Maps.LayerObject;
 import wizardo.game.Maps.TriggerObject;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Monsters.MonsterActions.MonsterSpell;
@@ -34,6 +35,9 @@ public class WizContactListener implements ContactListener {
         boolean f1isTrigger = (f1.getFilterData().categoryBits & TRIGGER) != 0;
         boolean f2isTrigger = (f2.getFilterData().categoryBits & TRIGGER) != 0;
 
+        boolean f1isDecor = (f1.getFilterData().categoryBits & DECOR) != 0;
+        boolean f2isDecor = (f2.getFilterData().categoryBits & DECOR) != 0;
+
 
         /* PAWN + TRIGGER */
         if(f1isPawn && f2isTrigger || f2isPawn && f1isTrigger) {
@@ -49,10 +53,20 @@ public class WizContactListener implements ContactListener {
         /* MONSTER + SPELL */
         if(f1isMonster && f2isSpell || f2isMonster && f1isSpell) {
             if(f1isMonster) {
-                Spell_Monster_Begin(f2, f1);
+                Spell_Monster_Contact(f2, f1);
             } else {
-                Spell_Monster_Begin(f1, f2);
+                Spell_Monster_Contact(f1, f2);
             }
+        } else
+
+        if(f1isMonster && f2isDecor || f2isMonster && f1isDecor) {
+            LayerObject object;
+            if(f1isMonster) {
+                object = (LayerObject) f2.getBody().getUserData();
+            } else {
+                object = (LayerObject) f1.getBody().getUserData();
+            }
+            object.collided = true;
         } else
 
         /* SPELL + OBSTACLE */
@@ -63,6 +77,15 @@ public class WizContactListener implements ContactListener {
             } else {
                 Spell spell = (Spell) f2.getBody().getUserData();
                 spell.handleCollision(f1);
+            }
+        } else
+
+        /* SPELL + DECOR */
+        if(f1isSpell && f2isDecor || f2isSpell && f1isDecor) {
+            if(f1isSpell) {
+                Spell_Decor_Contact(f1, f2);
+            } else {
+                Spell_Decor_Contact(f2, f1);
             }
         }
 
@@ -75,7 +98,7 @@ public class WizContactListener implements ContactListener {
                 MonsterSpell spell = (MonsterSpell) f2.getBody().getUserData();
                 spell.handleCollision(player.pawn.body);
             }
-        }
+        } else
 
         /* MONSTER SPELL + OBSTACLE */
         if(f1isMonsterSpell && f2isObstacle || f2isMonsterSpell && f1isObstacle) {
@@ -86,7 +109,7 @@ public class WizContactListener implements ContactListener {
                 MonsterSpell spell = (MonsterSpell) f2.getBody().getUserData();
                 spell.handleCollision(f1);
             }
-        }
+        } else
 
         /* MONSTER SPELL + PLAYER SPELL */
         if(f1isMonsterSpell && f2isSpell || f1isSpell && f2isMonsterSpell) {
@@ -104,10 +127,17 @@ public class WizContactListener implements ContactListener {
         }
     }
 
-    public void Spell_Monster_Begin(Fixture spellFix, Fixture monsterFix) {
+    public void Spell_Monster_Contact(Fixture spellFix, Fixture monsterFix) {
         Spell spell = (Spell) spellFix.getBody().getUserData();
         Monster monster = (Monster) monsterFix.getBody().getUserData();
         spell.handleCollision(monster);
+    }
+    public void Spell_Decor_Contact(Fixture spellFix, Fixture decorFix) {
+        Spell spell = (Spell) spellFix.getBody().getUserData();
+        spell.handleCollision(decorFix);
+
+        LayerObject decor = (LayerObject) decorFix.getBody().getUserData();
+        decor.collided = true;
     }
 
 

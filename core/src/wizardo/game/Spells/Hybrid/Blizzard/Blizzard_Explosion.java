@@ -54,9 +54,9 @@ public class Blizzard_Explosion extends Blizzard_Spell {
     }
 
     public void pickAnim() {
+        anim = BlizzardAnims.getHitAnim(anim_element);
         switch(anim_element) {
             case FROST -> {
-                anim = BlizzardAnims.blizzard_hit_anim;
                 green = 0.4f;
                 blue = 0.75f;
             }

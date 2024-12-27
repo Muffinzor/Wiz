@@ -56,7 +56,7 @@ public class Blizzard_Projectile extends Blizzard_Spell {
         Sprite frame = screen.getSprite();
         frame.set(anim.getKeyFrame(stateTime, true));
         frame.setCenter(body.getPosition().x * PPM, body.getPosition().y * PPM);
-        frame.setRotation(rotation + 180);
+        frame.setRotation(rotation);
         screen.centerSort(frame, targetPosition.y * PPM);
         screen.addSortedSprite(frame);
     }

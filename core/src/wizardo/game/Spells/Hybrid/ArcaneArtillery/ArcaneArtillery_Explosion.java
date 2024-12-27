@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import wizardo.game.Lighting.RoundLight;
+import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Resources.SpellAnims.ExplosionAnims_Elemental;
 import wizardo.game.Spells.Frost.Frozenorb.Frozenorb_Spell;
 import wizardo.game.Spells.Hybrid.EnergyRain.EnergyRain_Explosion;
@@ -86,6 +87,10 @@ public class ArcaneArtillery_Explosion extends ArcaneArtillery_Spell {
             screen.spellManager.toRemove(this);
             world.destroyBody(body);
         }
+    }
+
+    public void handleCollision(Monster monster) {
+        dealDmg(monster);
     }
 
     public void drawFrame() {

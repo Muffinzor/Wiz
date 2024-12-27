@@ -69,8 +69,7 @@ public class LevelUpUtils {
             list.add(RED);
         }
 
-        if((player.spellbook.overheat_lvl > 0 || player.spellbook.fireball_lvl > 0)
-                && (quality == EPIC || quality == LEGENDARY)) {
+        if((player.spellbook.overheat_lvl > 0) && (quality == EPIC || quality == LEGENDARY)) {
             list.add(FORCE);
         }
 
@@ -118,7 +117,6 @@ public class LevelUpUtils {
         }
         return false;
     }
-
 
     private static boolean canBeEmpyrean() {
         boolean possible = false;

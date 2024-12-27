@@ -24,14 +24,12 @@ public class PillarTorchObject extends LayerObject {
     }
 
     RoundLight light;
-    float x;
-    float y;
-
 
     public PillarTorchObject(MapChunk chunk, MapObject object) {
         super(chunk, object);
-        x = object.getProperties().get("x", Float.class) + chunk.x_pos + 32;
-        y = object.getProperties().get("y", Float.class) + chunk.y_pos + 42;
+        float width = object.getProperties().get("width", Float.class);
+        x = object.getProperties().get("x", Float.class) + chunk.x_pos + width/2;
+        y = object.getProperties().get("y", Float.class) + chunk.y_pos + 36;
         x = x/PPM;
         y = y/PPM;
         stateTime = (float) Math.random();
@@ -51,7 +49,7 @@ public class PillarTorchObject extends LayerObject {
 
     public void createLight() {
         light = chunk.screen.lightManager.pool.getLight();
-        light.setLight(0.7f, 0.3f, 0, 1, 45, new Vector2(x,y + 0.3f));
+        light.setLight(0.7f, 0.3f, 0, 1, 85, new Vector2(x,y + 0.3f));
         chunk.screen.lightManager.addLight(light);
     }
 
@@ -64,6 +62,9 @@ public class PillarTorchObject extends LayerObject {
 
     @Override
     public void dispose() {
-        light.dimKill(0.5f);
+        if(initialized) {
+            light.dimKill(0.5f);
+            initialized = false;
+        }
     }
 }

@@ -15,7 +15,7 @@ public class FrostNova_Spell extends Spell {
         name = "Frost Nova";
 
         baseDmg = 45;
-        cooldown = 5f;
+        cooldown = 6.4f;
 
         main_element = SpellUtils.Spell_Element.FROST;
         anim_element = SpellUtils.Spell_Element.FROST;

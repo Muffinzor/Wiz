@@ -48,17 +48,18 @@ public class EquippedTable extends MenuTable {
         table.setHeight(height);
         stage.addActor(table);
 
-        table.setDebug(true);
+        //table.setDebug(true);
 
         centerPoint = new Vector2(x_pos + width/2, y_pos + height/2);
     }
 
     public void createButtons() {
 
-        SpellIcon_Button button = new SpellIcon_Button(player.spellbook.equippedSpells.get(0), true, screen);
-        table.add(button);
-
-        buttonsMatrix[0][0] = button;
+        if(!player.spellbook.equippedSpells.isEmpty()) {
+            SpellIcon_Button button = new SpellIcon_Button(player.spellbook.equippedSpells.get(0), true, screen);
+            table.add(button);
+            buttonsMatrix[0][0] = button;
+        }
 
         if(player.spellbook.equippedSpells.size() > 1) {
             SpellIcon_Button button2 = new SpellIcon_Button(player.spellbook.equippedSpells.get(1), true, screen);

@@ -16,7 +16,6 @@ import static wizardo.game.Wizardo.world;
 public class PortalObject extends TriggerObject {
 
     public RoundLight light;
-    boolean touched;
     boolean active;
 
     public PortalObject(MapChunk chunk, MapObject object, boolean active) {
@@ -41,10 +40,11 @@ public class PortalObject extends TriggerObject {
 
     @Override
     public void dispose() {
-        light.dimKill(0.5f);
-        light = null;
-        world.destroyBody(body);
-        body = null;
+        if(initialized) {
+            light.dimKill(0.5f);
+            world.destroyBody(body);
+            initialized = false;
+        }
     }
 
     public void handleCollision() {
@@ -55,7 +55,7 @@ public class PortalObject extends TriggerObject {
         Sprite frame = getSprite(chunk.screen);
         frame.set(GeneralDecorResources.blue_portal_anim.getKeyFrame(stateTime, true));
         frame.setAlpha(0.8f);
-        frame.setCenter(body.getPosition().x * PPM, body.getPosition().y * PPM);
+        frame.setCenter(body.getPosition().x * PPM, body.getPosition().y * PPM + 20);
         chunk.screen.displayManager.spriteRenderer.regular_sorted_sprites.add(frame);
     }
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="64" height="64" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="120">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="64" height="64" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="191">
  <tileset firstgid="1" source="Dungeon_Plus.tsx"/>
  <layer id="1" name="Tile Layer 1" width="64" height="64">
   <data encoding="csv">
@@ -70,43 +70,70 @@
 </data>
  </layer>
  <objectgroup id="2" name="ObstacleBodies">
-  <object id="48" name="Pillar" x="896" y="1056" width="64" height="64"/>
-  <object id="77" name="Pillar" x="704" y="1056" width="64" height="64"/>
-  <object id="78" name="Pillar" x="896" y="1312" width="64" height="64"/>
-  <object id="79" name="Pillar" x="704" y="1312" width="64" height="64"/>
-  <object id="80" name="Pillar" x="896" y="1600" width="64" height="64"/>
-  <object id="81" name="Pillar" x="704" y="1600" width="64" height="64"/>
-  <object id="82" name="Pillar" x="896" y="1856" width="64" height="64"/>
-  <object id="83" name="Pillar" x="704" y="1856" width="64" height="64"/>
-  <object id="84" name="Pillar" x="512" y="1056" width="64" height="64"/>
-  <object id="85" name="Pillar" x="320" y="1056" width="64" height="64"/>
-  <object id="86" name="Pillar" x="512" y="1312" width="64" height="64"/>
-  <object id="87" name="Pillar" x="320" y="1312" width="64" height="64"/>
-  <object id="88" name="Pillar" x="512" y="1600" width="64" height="64"/>
-  <object id="89" name="Pillar" x="320" y="1600" width="64" height="64"/>
-  <object id="90" name="Pillar" x="512" y="1856" width="64" height="64"/>
-  <object id="91" name="Pillar" x="320" y="1856" width="64" height="64"/>
-  <object id="92" name="Pillar" x="128" y="1056" width="64" height="64"/>
-  <object id="94" name="Pillar" x="128" y="1312" width="64" height="64"/>
-  <object id="96" name="Pillar" x="128" y="1600" width="64" height="64"/>
-  <object id="98" name="Pillar" x="128" y="1856" width="64" height="64"/>
-  <object id="102" name="Pillar" x="896" y="256" width="64" height="64"/>
-  <object id="103" name="Pillar" x="704" y="256" width="64" height="64"/>
-  <object id="104" name="Pillar" x="896" y="544" width="64" height="64"/>
-  <object id="105" name="Pillar" x="704" y="544" width="64" height="64"/>
-  <object id="106" name="Pillar" x="896" y="800" width="64" height="64"/>
-  <object id="107" name="Pillar" x="704" y="800" width="64" height="64"/>
-  <object id="110" name="Pillar" x="512" y="256" width="64" height="64"/>
-  <object id="111" name="Pillar" x="320" y="256" width="64" height="64"/>
-  <object id="112" name="Pillar" x="512" y="544" width="64" height="64"/>
-  <object id="113" name="Pillar" x="320" y="544" width="64" height="64"/>
-  <object id="114" name="Pillar" x="512" y="800" width="64" height="64"/>
-  <object id="115" name="Pillar" x="320" y="800" width="64" height="64"/>
-  <object id="117" name="Pillar" x="128" y="256" width="64" height="64"/>
-  <object id="118" name="Pillar" x="128" y="544" width="64" height="64"/>
-  <object id="119" name="Pillar" x="128" y="800" width="64" height="64"/>
+  <object id="48" name="Pillar" x="1376" y="1120" width="64" height="64"/>
+  <object id="77" name="Pillar" x="1120" y="1120" width="64" height="64"/>
+  <object id="78" name="Pillar" x="1376" y="1376" width="64" height="64"/>
+  <object id="79" name="Pillar" x="1120" y="1376" width="64" height="64"/>
+  <object id="84" name="Pillar" x="864" y="1120" width="64" height="64"/>
+  <object id="85" name="Pillar" x="608" y="1120" width="64" height="64"/>
+  <object id="86" name="Pillar" x="864" y="1376" width="64" height="64"/>
+  <object id="87" name="Pillar" x="608" y="1376" width="64" height="64"/>
+  <object id="104" name="Pillar" x="1376" y="608" width="64" height="64"/>
+  <object id="105" name="Pillar" x="1120" y="608" width="64" height="64"/>
+  <object id="106" name="Pillar" x="1376" y="864" width="64" height="64"/>
+  <object id="107" name="Pillar" x="1120" y="864" width="64" height="64"/>
+  <object id="112" name="Pillar" x="864" y="608" width="64" height="64"/>
+  <object id="113" name="Pillar" x="608" y="608" width="64" height="64"/>
+  <object id="114" name="Pillar" x="864" y="864" width="64" height="64"/>
+  <object id="115" name="Pillar" x="608" y="864" width="64" height="64"/>
+  <object id="169" name="Pillar" x="1120" y="352" width="64" height="64"/>
+  <object id="170" name="Pillar" x="864" y="352" width="64" height="64"/>
+  <object id="171" name="Pillar" x="352" y="1120" width="64" height="64"/>
+  <object id="172" name="Pillar" x="352" y="864" width="64" height="64"/>
+  <object id="173" name="Pillar" x="1632" y="1120" width="64" height="64"/>
+  <object id="174" name="Pillar" x="1632" y="864" width="64" height="64"/>
+  <object id="175" name="Pillar" x="1120" y="1632" width="64" height="64"/>
+  <object id="176" name="Pillar" x="864" y="1632" width="64" height="64"/>
+  <object id="187" name="Building2" x="1664" y="1664" width="128" height="128"/>
+  <object id="188" name="Building2" x="256" y="1664" width="128" height="128"/>
+  <object id="189" name="Building2" x="1664" y="256" width="128" height="128"/>
+  <object id="190" name="Building2" x="256" y="256" width="128" height="128"/>
  </objectgroup>
  <objectgroup id="3" name="DecorBodies">
-  <object id="34" name="Portal" x="1024" y="1017" width="7" height="7"/>
+  <object id="34" name="Portal" x="1024" y="1011" width="7" height="7"/>
+  <object id="125" name="Vase" x="871" y="1440" width="4" height="4"/>
+  <object id="126" name="Vase" x="896" y="1440" width="4" height="4"/>
+  <object id="128" name="Vase" x="879" y="1448" width="4" height="4"/>
+  <object id="129" name="Vase" x="1399" y="1184" width="4" height="4"/>
+  <object id="130" name="Vase" x="1424" y="1184" width="4" height="4"/>
+  <object id="131" name="Vase" x="1407" y="1192" width="4" height="4"/>
+  <object id="132" name="Vase" x="626" y="672" width="4" height="4"/>
+  <object id="133" name="Vase" x="651" y="672" width="4" height="4"/>
+  <object id="134" name="Vase" x="634" y="680" width="4" height="4"/>
+  <object id="135" name="Vase" x="1128" y="672" width="4" height="4"/>
+  <object id="136" name="Vase" x="1165" y="675" width="4" height="4"/>
+  <object id="137" name="Vase" x="1136" y="680" width="4" height="4"/>
+  <object id="138" name="Vase" x="634" y="1184" width="4" height="4"/>
+  <object id="139" name="Vase" x="618" y="1184" width="4" height="4"/>
+  <object id="140" name="Vase" x="642" y="1192" width="4" height="4"/>
+  <object id="141" name="Vase" x="1145" y="928" width="4" height="4"/>
+  <object id="142" name="Vase" x="1177" y="928" width="4" height="4"/>
+  <object id="145" name="Vase" x="1169" y="936" width="4" height="4"/>
+  <object id="146" name="Vase" x="1130" y="934" width="4" height="4"/>
+  <object id="147" name="Vase" x="1167" y="1442" width="4" height="4"/>
+  <object id="148" name="Vase" x="1132" y="1448" width="4" height="4"/>
+  <object id="150" name="Vase" x="1392" y="1440" width="4" height="4"/>
+  <object id="151" name="Vase" x="885" y="929" width="4" height="4"/>
+  <object id="152" name="Vase" x="905" y="936" width="4" height="4"/>
+  <object id="153" name="Vase" x="645" y="929" width="4" height="4"/>
+  <object id="155" name="Vase" x="912" y="672" width="4" height="4"/>
+  <object id="160" name="Vase" x="1391" y="675" width="4" height="4"/>
+  <object id="161" name="Vase" x="1430" y="930" width="4" height="4"/>
+  <object id="163" name="Vase" x="1163" y="1190" width="4" height="4"/>
+  <object id="164" name="Vase" x="1174" y="1185" width="4" height="4"/>
+  <object id="165" name="Vase" x="882" y="1184" width="4" height="4"/>
+  <object id="167" name="Vase" x="659" y="1440" width="4" height="4"/>
+  <object id="177" name="StandingTorch" x="958" y="1022" width="4" height="4"/>
+  <object id="178" name="StandingTorch" x="1086" y="1022" width="4" height="4"/>
  </objectgroup>
 </map>

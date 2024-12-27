@@ -33,6 +33,8 @@ public class Flamejet_Spell extends Spell {
 
         main_element = FIRE;
 
+        lightAlpha = 0.88f;
+
     }
 
     @Override
@@ -138,5 +140,10 @@ public class Flamejet_Spell extends Spell {
         if(dmg_text_on) {
             dmgText( (int)dmg, monster);
         }
+    }
+
+    @Override
+    public boolean isLearnable() {
+        return player.spellbook.flamejet_lvl > 0;
     }
 }

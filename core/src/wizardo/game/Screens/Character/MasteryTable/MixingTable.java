@@ -186,27 +186,28 @@ public class MixingTable extends MenuTable {
         mixButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-
                 if(!mixButton.isDisabled()) {
-                    Spell spell = getMixedSpell(parts);
-                    spell.learn();
-
-                    boolean equipped = player.spellbook.equippedSpells.contains(spell);
-                    masteryTable.screen.anims.add(new SpellCreation_Anim(spell.anim_element, masteryTable.screen, equipped));
-
-                    parts.clear();
-                    for (Button button : masteryTable.buttons) {
-                        button.setChecked(false);
-                    }
-                    masteryTable.updateCheckBoxes();
-                    masteryTable.screen.equippedSpells_table.resize();
-                    masteryTable.screen.knownSpells_table.resize();
-                    masteryTable.screen.selectedSpell_Button = null;
-                    updateButtons();
+                    handleMix();
                 }
-
             }
         });
+    }
+    public void handleMix() {
+        Spell spell = getMixedSpell(parts);
+        spell.learn();
+
+        boolean equipped = player.spellbook.equippedSpells.contains(spell);
+        masteryTable.screen.anims.add(new SpellCreation_Anim(spell.anim_element, masteryTable.screen, equipped));
+
+        parts.clear();
+        for (Button button : masteryTable.buttons) {
+            button.setChecked(false);
+        }
+        masteryTable.updateCheckBoxes();
+        masteryTable.screen.equippedSpells_table.resize();
+        masteryTable.screen.knownSpells_table.resize();
+        masteryTable.screen.selectedSpell_Button = null;
+        updateButtons();
     }
     public void create_clearButton() {
         clearButton = new ImageButton(masteryTableSkin, "clear_button");
@@ -269,7 +270,8 @@ public class MixingTable extends MenuTable {
 
                 if(!forgetButton.isDisabled()) {
 
-                    forgetSpell();
+                    Spell spell_to_forget = masteryTable.screen.selectedSpell_Button.spell;
+                    spell_to_forget.forget();
 
                     masteryTable.screen.selectedSpell_Button = null;
                     masteryTable.screen.equippedSpells_table.resize();
@@ -280,42 +282,6 @@ public class MixingTable extends MenuTable {
 
             }
         });
-    }
-
-    public void forgetSpell() {
-        Spell spell_to_forget = masteryTable.screen.selectedSpell_Button.spell;
-        boolean equipped = player.spellbook.equippedSpells.contains(spell_to_forget);
-
-        if(equipped && player.spellbook.equippedSpells.size() == 1) {
-            player.spellbook.equippedSpells.remove(spell_to_forget);
-            Spell spell_to_move = player.spellbook.knownSpells.getFirst();
-            player.spellbook.equippedSpells.add(spell_to_move);
-            player.spellbook.knownSpells.remove(spell_to_move);
-            return;
-        }
-
-
-        if(equipped) {
-            player.spellbook.equippedSpells.remove(spell_to_forget);
-            ArrayList<String> spells_equipped = new ArrayList<>();
-
-            for(Spell spell : player.spellbook.equippedSpells) {
-                spells_equipped.add(spell.name);
-            }
-
-            for(Spell spell : player.spellbook.knownSpells) {
-                if(!spells_equipped.contains(spell.name)) {
-                    player.spellbook.equippedSpells.add(spell);
-                    player.spellbook.knownSpells.remove(spell);
-                    return;
-                }
-            }
-        }
-
-        if(!equipped) {
-            player.spellbook.knownSpells.remove(spell_to_forget);
-        }
-
     }
 
     @Override
@@ -363,21 +329,7 @@ public class MixingTable extends MenuTable {
     @Override
     public void pressSelectedButton() {
         if(x_pos == 0 && !mixButton.isDisabled()) {
-            Spell spell = getMixedSpell(parts);
-            spell.learn();
-
-            boolean equipped = player.spellbook.equippedSpells.contains(spell);
-            masteryTable.screen.anims.add(new SpellCreation_Anim(spell.anim_element, masteryTable.screen, equipped));
-
-            parts.clear();
-            for (Button button : masteryTable.buttons) {
-                button.setChecked(false);
-            }
-            masteryTable.updateCheckBoxes();
-            masteryTable.screen.equippedSpells_table.resize();
-            masteryTable.screen.knownSpells_table.resize();
-            masteryTable.screen.selectedSpell_Button = null;
-            updateButtons();
+            handleMix();
         }
 
         if(x_pos == 1 && !clearButton.isDisabled()) {
@@ -390,8 +342,7 @@ public class MixingTable extends MenuTable {
         }
 
         if(x_pos == 2 && !forgetButton.isDisabled()) {
-            forgetSpell();
-
+            masteryTable.screen.selectedSpell_Button.spell.forget();
             masteryTable.screen.selectedSpell_Button = null;
             masteryTable.screen.equippedSpells_table.resize();
             masteryTable.screen.knownSpells_table.resize();

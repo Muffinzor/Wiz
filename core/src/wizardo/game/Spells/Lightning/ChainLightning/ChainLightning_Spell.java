@@ -161,4 +161,9 @@ public class ChainLightning_Spell extends Spell {
         dmg = (int) (dmg * (1 + player.spellbook.voltageBonusDmg/100f));
         return dmg;
     }
+
+    @Override
+    public boolean isLearnable() {
+        return player.spellbook.chainlightning_lvl > 0;
+    }
 }

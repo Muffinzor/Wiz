@@ -10,6 +10,10 @@ import static wizardo.game.Wizardo.assetManager;
 public class CharacterScreenResources {
 
     public static Sprite circle_selected = new Sprite(new Texture("Screens/CharacterScreen/Circle_Selected.png"));
+    public static Sprite purpleQuality = new Sprite(new Texture("Screens/CharacterScreen/GearTable/Quality_Purple.png"));
+    public static Sprite blueQuality = new Sprite(new Texture("Screens/CharacterScreen/GearTable/Quality_Blue.png"));
+    public static Sprite greenQuality = new Sprite(new Texture("Screens/CharacterScreen/GearTable/Quality_Green.png"));
+    public static Sprite redQuality = new Sprite(new Texture("Screens/CharacterScreen/GearTable/Quality_Red.png"));
 
     public static Animation<Sprite> selected_button_anim;
     public static String selected_button_path = "Screens/CharacterScreen/Selected_Button.atlas";

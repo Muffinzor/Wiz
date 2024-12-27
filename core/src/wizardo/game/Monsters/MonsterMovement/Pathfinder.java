@@ -49,30 +49,42 @@ public class Pathfinder {
     private Vector2 avoidObstacle(Vector2 direction, boolean backwards) {
 
         Vector2 desiredDirection = new Vector2(direction);
-        float dst = desiredDirection.len();
-        if(backwards) {
-            dst = 6;
+        float rayLength = direction.len(); // Ray length depends on the current direction
+        if (backwards) {
+            rayLength = 6; // Default length when moving backwards
         }
+
         direction.nor();
 
-        // Handle obstacle avoidance
-        world.rayCast((fixture, point, normal, fraction) -> {
-            if (fixture.getBody().getUserData() != null && fixture.getBody().getUserData().equals("Obstacle")) {
-                Vector2 avoidForce;
+        // Define angles for multiple rays (e.g., -20, -10, 0, 10, 20 degrees)
+        float[] rayAngles = {-12, -6, 0, 6, 12}; // in degrees
 
-                Vector2 obstacleToMonster = monster.body.getPosition().cpy().sub(fixture.getBody().getPosition());
+        for (float angle : rayAngles) {
+            Vector2 rayDir = new Vector2(direction).rotateDeg(angle);
 
-                if (obstacleToMonster.crs(direction) > 0) {
-                    avoidForce = new Vector2(-normal.y, normal.x); // Steer right
-                } else {
-                    avoidForce = new Vector2(normal.y, -normal.x); // Steer left
+            // Perform ray cast
+            world.rayCast((fixture, point, normal, fraction) -> {
+                if (fixture.getBody().getUserData() != null && (fixture.getBody().getUserData().equals("Obstacle") ||
+                                                                fixture.getBody().getUserData().equals("Decor"))) {
+                    Vector2 avoidForce;
+
+                    // Calculate direction from obstacle to monster
+                    Vector2 obstacleToMonster = monster.body.getPosition().cpy().sub(fixture.getBody().getPosition());
+
+                    // Determine steering direction based on relative position
+                    if (obstacleToMonster.crs(rayDir) > 0) {
+                        avoidForce = new Vector2(-normal.y, normal.x); // Steer right
+                    } else {
+                        avoidForce = new Vector2(normal.y, -normal.x); // Steer left
+                    }
+
+                    // Scale avoidance force based on distance to obstacle
+                    float dstToObstacle = fixture.getBody().getPosition().dst(monster.body.getPosition());
+                    desiredDirection.add(avoidForce.scl(300 / (dstToObstacle * dstToObstacle + 1))); // Avoid divide by 0
                 }
-
-                float dstToObstacle = fixture.getBody().getPosition().dst(monster.body.getPosition());
-                desiredDirection.add(avoidForce.scl((300 / (dstToObstacle * dstToObstacle))));
-            }
-            return fraction;
-        }, monster.body.getPosition(), monster.body.getPosition().cpy().add(direction.scl(dst))); // Ray length: dst to player
+                return fraction; // Continue ray cast
+            }, monster.body.getPosition(), monster.body.getPosition().cpy().add(rayDir.scl(rayLength)));
+        }
 
         return desiredDirection;
     }

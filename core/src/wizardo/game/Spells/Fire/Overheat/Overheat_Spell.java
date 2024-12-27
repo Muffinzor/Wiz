@@ -22,7 +22,7 @@ public class Overheat_Spell extends Spell {
         name = "Overheat";
 
         radius = 200;
-        cooldown = 4f;
+        cooldown = 6.4f;
         baseDmg = 125;
 
         main_element = SpellUtils.Spell_Element.FIRE;
@@ -70,6 +70,11 @@ public class Overheat_Spell extends Spell {
         dmg += 25 * getLvl();
         dmg = (int) (dmg * (1 + player.spellbook.explosivesBonusDmg/100f));
         return dmg;
+    }
+
+    @Override
+    public boolean isLearnable() {
+        return player.spellbook.overheat_lvl > 0;
     }
 
 }
