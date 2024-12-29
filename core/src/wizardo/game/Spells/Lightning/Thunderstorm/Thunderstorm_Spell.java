@@ -2,6 +2,7 @@ package wizardo.game.Spells.Lightning.Thunderstorm;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import wizardo.game.Items.Equipment.Amulet.Epic_StormAmulet;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
@@ -134,11 +135,6 @@ public class Thunderstorm_Spell extends Spell {
         return dmg;
     }
 
-    @Override
-    public boolean isLearnable() {
-        return player.spellbook.thunderstorm_lvl > 0;
-    }
-
     public void setup() {
         frequency = 3 * (0.9f + getLvl()/10f);
         frequency = frequency * (1 + player.spellbook.empyreanFrequencyBonus/100f);
@@ -146,6 +142,9 @@ public class Thunderstorm_Spell extends Spell {
         if(rifts) {
             spawnPosition = getTargetPosition();
             radius = 3.5f;
+        }
+        if(player.inventory.equippedAmulet instanceof Epic_StormAmulet) {
+            duration += 2;
         }
     }
 

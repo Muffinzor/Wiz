@@ -99,6 +99,7 @@ public class FrostArcane_Spells {
         // 8. Frozenorb + Rift
 
         Orbit_Spell frostarcane8 = new Orbit_Spell();
+        frostarcane8.anim_element = ARCANE;
         frostarcane8.spellParts.add(FROZENORB);
         frostarcane8.spellParts.add(RIFTS);
         frostarcaneSpells[8] = frostarcane8;

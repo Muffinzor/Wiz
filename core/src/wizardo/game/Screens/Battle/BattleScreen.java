@@ -8,23 +8,24 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import wizardo.game.Maps.Chest;
 import wizardo.game.Maps.MapGeneration.MapManager;
 import wizardo.game.Monsters.*;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Monsters.MonsterActions.MonsterSpellManager;
 import wizardo.game.Player.Pawn;
+import wizardo.game.Player.Player;
 import wizardo.game.Resources.ScreenResources.LevelUpResources;
 import wizardo.game.Screens.BaseScreen;
+import wizardo.game.Items.Drop.DropManager;
 import wizardo.game.Screens.Battle.MonsterSpawner.MonsterSpawner;
-import wizardo.game.Spells.BlankSpell;
-import wizardo.game.Spells.Hybrid.ArcaneArtillery.ArcaneArtillery_Spell;
+import wizardo.game.Screens.MainMenu.MainMenuScreen;
 import wizardo.game.Spells.SpellManager;
 import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Wizardo;
 
 import static wizardo.game.GameSettings.debug_camera;
 import static wizardo.game.Spells.SpellBank.Frost_Spells.frostspells;
-import static wizardo.game.Spells.SpellUtils.Spell_Element.ARCANE;
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.*;
 
@@ -39,8 +40,9 @@ public class BattleScreen extends BaseScreen {
 
     public Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
 
-    MapManager mapManager;
-    MonsterSpawner monsterSpawner;
+    public MapManager mapManager;
+    public MonsterSpawner monsterSpawner;
+    public DropManager dropManager;
 
     public BattleScreen(Wizardo game, String biome) {
         super(game);
@@ -58,6 +60,7 @@ public class BattleScreen extends BaseScreen {
         Pawn playerPawn = new Pawn(this);
         playerPawn.createPawn(new Vector2(1000f/PPM,1000f/PPM));
         player.pawn = playerPawn;
+        player.screen = this;
 
         mapManager = new MapManager(biome, game, this);
         monsterSpawner = new MonsterSpawner(this);
@@ -66,6 +69,7 @@ public class BattleScreen extends BaseScreen {
         spellManager = new SpellManager(this);
         player.spellManager = spellManager;
         monsterSpellManager = new MonsterSpellManager(this);
+        dropManager = new DropManager(this);
 
         cursorTexturePath = "Cursors/Battle_Cursor.png";
         controllerTargetSprite = new Sprite(new Texture("Cursors/Controller_Cursor.png"));
@@ -114,6 +118,7 @@ public class BattleScreen extends BaseScreen {
         spellManager.update(delta);
         monsterManager.update(delta);
         monsterSpellManager.update(delta);
+        dropManager.update(delta);
 
         drawControllerTarget();
         //ANIM_TESTING();
@@ -121,9 +126,16 @@ public class BattleScreen extends BaseScreen {
         lightManager.update(delta);
         updateCamera();  // must be after displayManager.update
 
+        player.update(delta);
+        player.drawPlayerHP();
+
         if(debug_camera) {
             Matrix4 debugMatrix = mainCamera.combined.cpy().scl(PPM);
             debugRenderer.render(world, debugMatrix);
+        }
+
+        if(player.stats.shield <= 0) {
+            game.freshScreen(new MainMenuScreen(game));
         }
 
 
@@ -202,6 +214,10 @@ public class BattleScreen extends BaseScreen {
             frame.setRotation(targetVector.angleDeg() - 45);  // Optional: Adjust for angle
             displayManager.spriteRenderer.ui_sprites.add(frame);
         }
+    }
+
+    public void drawPlayerHP() {
+
     }
 
 

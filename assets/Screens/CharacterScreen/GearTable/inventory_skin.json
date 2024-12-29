@@ -98,6 +98,12 @@ com.badlogic.gdx.graphics.Color: {
 		b: 0.023529412
 		a: 1
 	}
+	Regen: {
+		r: 0.41568628
+		g: 1
+		b: 0.8039216
+		a: 1
+	}
 	White: {
 		r: 1
 		g: 1

@@ -13,7 +13,8 @@ import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 
 import static wizardo.game.Resources.Skins.bookTableSkin;
-import static wizardo.game.Screens.BaseScreen.screenRatio;
+import static wizardo.game.Screens.BaseScreen.xRatio;
+import static wizardo.game.Screens.BaseScreen.yRatio;
 import static wizardo.game.Wizardo.player;
 
 public class SpellIcon_Button extends ImageButton {
@@ -90,6 +91,7 @@ public class SpellIcon_Button extends ImageButton {
                 switch(spell.anim_element) {
                     case FIRE -> style = skin.get("frostbolt_fire", ImageButtonStyle.class);
                     case FROST -> style = skin.get("frostbolt_frost", ImageButtonStyle.class);
+                    case LIGHTNING, COLDLITE -> style = skin.get("frostbolt_frost", ImageButtonStyle.class);
                 }
                 break;
 
@@ -217,14 +219,16 @@ public class SpellIcon_Button extends ImageButton {
         ImageButtonStyle newStyle = new ImageButtonStyle(style);
         newStyle.imageUp = new TextureRegionDrawable(((TextureRegionDrawable) style.imageUp).getRegion());
 
-        float SPELLBUTTON_SIZE = 128 * screenRatio;
+        float SPELLBUTTON_SIZE_X = 128 * xRatio;
+        float SPELLBUTTON_SIZE_Y = 128 * yRatio;
 
         if(!equipped) {
-            SPELLBUTTON_SIZE *= 0.8f;
+            SPELLBUTTON_SIZE_X *= 0.8f;
+            SPELLBUTTON_SIZE_Y *= 0.8f;
         }
 
-        newStyle.imageUp.setMinWidth(SPELLBUTTON_SIZE);
-        newStyle.imageUp.setMinHeight(SPELLBUTTON_SIZE);
+        newStyle.imageUp.setMinWidth(SPELLBUTTON_SIZE_X);
+        newStyle.imageUp.setMinHeight(SPELLBUTTON_SIZE_Y);
 
         return newStyle;
     }

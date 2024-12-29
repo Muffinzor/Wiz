@@ -114,10 +114,5 @@ public class HubScreen extends BaseScreen {
         chunk.dispose();
     }
 
-    @Override
-    public void resize(int width, int height) {
-        super.resize(width, height);
-    }
-
 
 }

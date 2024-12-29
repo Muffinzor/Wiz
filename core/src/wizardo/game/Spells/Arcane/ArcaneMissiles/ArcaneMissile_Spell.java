@@ -93,8 +93,4 @@ public class ArcaneMissile_Spell extends Spell {
         return dmg;
     }
 
-    @Override
-    public boolean isLearnable() {
-        return player.spellbook.arcanemissile_lvl > 0;
-    }
 }

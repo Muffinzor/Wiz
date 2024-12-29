@@ -8,6 +8,7 @@ import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Resources.SpellAnims.ExplosionAnims_Energy;
 import wizardo.game.Spells.Arcane.ArcaneMissiles.ArcaneMissile_Spell;
+import wizardo.game.Spells.Arcane.Rifts.Rift_Zone;
 import wizardo.game.Spells.Fire.Flamejet.Flamejet_Spell;
 import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Explosion;
 import wizardo.game.Spells.Lightning.ChargedBolts.ChargedBolts_Spell;
@@ -46,6 +47,7 @@ public class EnergyRain_Explosion extends EnergyRain_Spell {
             chargedbolts();
             arcaneMissiles();
             flamejets();
+            rifts();
         }
 
         drawFrame();
@@ -154,6 +156,19 @@ public class EnergyRain_Explosion extends EnergyRain_Spell {
                 flame.spawnPosition = new Vector2(body.getPosition());
                 flame.targetPosition = SpellUtils.getRandomVectorInRadius(body.getPosition(), 2);
                 screen.spellManager.toAdd(flame);
+            }
+        }
+    }
+
+    public void rifts() {
+        if(rifts) {
+            float procRate = 0.66f - 0.033f * player.spellbook.rift_lvl;
+            if(Math.random() >= procRate) {
+                for (int i = 0; i < 3; i++) {
+                    Rift_Zone rift = new Rift_Zone(SpellUtils.getClearRandomPosition(body.getPosition(), 3));
+                    rift.setElements(this);
+                    screen.spellManager.toAdd(rift);
+                }
             }
         }
     }

@@ -1,6 +1,6 @@
 package wizardo.game.Spells.Frost.Frozenorb;
 
-import wizardo.game.Items.Equipment.Staff.Frozenorb_EpicStaff;
+import wizardo.game.Items.Equipment.Staff.Epic_FrozenorbStaff;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 
@@ -26,7 +26,7 @@ public class Frozenorb_Spell extends Spell {
     }
 
     public void setup() {
-        if(player.inventory.equippedStaff instanceof Frozenorb_EpicStaff) {
+        if(player.inventory.equippedStaff instanceof Epic_FrozenorbStaff) {
             speed = speed * (2/3f);
             duration = duration * (2/3f);
         }
@@ -68,23 +68,17 @@ public class Frozenorb_Spell extends Spell {
         int dmg = baseDmg;
         dmg += 10 * getLvl();
         dmg = (int) (dmg * (1 + player.spellbook.gravityBonusDmg/100f));
-        if(player.inventory.equippedStaff instanceof Frozenorb_EpicStaff) {
+        if(player.inventory.equippedStaff instanceof Epic_FrozenorbStaff) {
             dmg = (dmg * 150)/100;
         }
         return dmg;
     }
 
     public float getCooldown() {
-        if(player.inventory.equippedStaff instanceof Frozenorb_EpicStaff) {
+        if(player.inventory.equippedStaff instanceof Epic_FrozenorbStaff) {
             return cooldown * (2/3f);
         }
         return cooldown;
     }
-
-    @Override
-    public boolean isLearnable() {
-        return player.spellbook.frozenorb_lvl > 0;
-    }
-
 
 }

@@ -9,6 +9,7 @@ import wizardo.game.Screens.EscapeMenu.EscapeScreen;
 
 import static wizardo.game.Screens.BaseScreen.controllerActive;
 import static wizardo.game.Screens.BaseScreen.inputMultiplexer;
+import static wizardo.game.Wizardo.player;
 
 public class KeyboardMouseListener_CHARACTERSCREEN extends InputAdapter {
 

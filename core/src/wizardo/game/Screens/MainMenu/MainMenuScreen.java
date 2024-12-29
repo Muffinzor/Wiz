@@ -30,8 +30,8 @@ public class MainMenuScreen extends BaseScreen {
         background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         title = new Sprite(new Texture("Screens/MainMenuScreen/Title.png"));
-        title.setSize(600 * screenRatio, 150 * screenRatio);
-        title.setPosition(Gdx.graphics.getWidth()/2f - title.getWidth()/2f, 600 * screenRatio);
+        title.setSize(600 * xRatio, 150 * yRatio);
+        title.setPosition(Gdx.graphics.getWidth()/2f - title.getWidth()/2f, 600 * yRatio);
 
         menuTable = new MainMenuTable(stage, mainMenuSkin, game);
         inputProcessor = new KeyboardMouseListener_TABLEMENU(this);

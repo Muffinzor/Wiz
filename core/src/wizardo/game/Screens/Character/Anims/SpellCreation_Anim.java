@@ -11,7 +11,8 @@ import wizardo.game.Resources.SpellAnims.OverheatAnims;
 import wizardo.game.Screens.Character.CharacterScreen;
 import wizardo.game.Spells.SpellUtils;
 
-import static wizardo.game.Screens.BaseScreen.screenRatio;
+import static wizardo.game.Screens.BaseScreen.xRatio;
+import static wizardo.game.Screens.BaseScreen.yRatio;
 import static wizardo.game.Spells.SpellUtils.Spell_Element.FIRE;
 
 public class SpellCreation_Anim extends Screen_Anim {
@@ -68,7 +69,7 @@ public class SpellCreation_Anim extends Screen_Anim {
         frame.setCenter(position.x, position.y);
         frame.setRotation(rotation);
         frame.flip(flipX, flipY);
-        frame.setScale(screenRatio * 1.5f);
+        frame.setScale(xRatio * 1.5f, yRatio * 1.5f);
 
         frame.draw(batch);
 
@@ -88,7 +89,7 @@ public class SpellCreation_Anim extends Screen_Anim {
         frame.setCenter(position.x, position.y);
         frame.setRotation(rotation);
         frame.flip(flipX, flipY);
-        frame.setScale(screenRatio * scale2);
+        frame.setScale(xRatio * scale2, yRatio * scale2);
         frame.setAlpha(alpha2);
 
         if(element == FIRE) {

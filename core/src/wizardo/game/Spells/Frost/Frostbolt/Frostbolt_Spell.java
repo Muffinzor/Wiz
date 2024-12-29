@@ -9,6 +9,7 @@ public class Frostbolt_Spell extends Spell {
 
     public int projectiles = 3;
 
+    public boolean chargedbolt;
     public boolean missile;
     public boolean rifts;
     public boolean superBolt; // Frostbolt + Fireball + Overheat
@@ -37,10 +38,8 @@ public class Frostbolt_Spell extends Spell {
 
         for (int i = 0; i < projectiles; i++) {
             Frostbolt_Projectile bolt = new Frostbolt_Projectile(getSpawnPosition(), getTargetPosition());
-            bolt.inherit(this);
-            bolt.missile = missile;
-            bolt.rifts = rifts;
-            bolt.superBolt = superBolt;
+            bolt.setBolt(this);
+            bolt.setElements(this);
             screen.spellManager.toAdd(bolt);
             screen.spellManager.toRemove(this);
         }
@@ -66,13 +65,10 @@ public class Frostbolt_Spell extends Spell {
         return dmg;
     }
 
-    @Override
-    public boolean isLearnable() {
-        return player.spellbook.frostbolt_lvl > 0;
-    }
-
-    public void inherit(Frostbolt_Spell parent) {
-        this.screen = parent.screen;
-        this.setElements(parent);
+    public void setBolt(Frostbolt_Spell parent) {
+        this.missile = parent.missile;
+        this.rifts = parent.rifts;
+        this.superBolt = parent.superBolt;
+        this.chargedbolt = parent.chargedbolt;
     }
 }

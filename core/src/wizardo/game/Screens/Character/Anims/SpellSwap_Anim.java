@@ -9,10 +9,11 @@ import wizardo.game.Resources.ScreenResources.CharacterScreenResources;
 import wizardo.game.Resources.SpellAnims.IcespearAnims;
 import wizardo.game.Screens.Character.BookTable.SpellIcon_Button;
 import wizardo.game.Screens.Character.CharacterScreen;
-import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 
-import static wizardo.game.Screens.BaseScreen.screenRatio;
+import static wizardo.game.Screens.BaseScreen.xRatio;
+import static wizardo.game.Screens.BaseScreen.yRatio;
+
 
 public class SpellSwap_Anim extends Screen_Anim {
 
@@ -63,7 +64,7 @@ public class SpellSwap_Anim extends Screen_Anim {
         frame.setCenter(position.x, position.y);
         frame.setRotation(rotation);
         frame.flip(flipX, flipY);
-        frame.setScale(screenRatio * 0.8f);
+        frame.setScale(xRatio * 0.8f, yRatio * 0.8f);
 
         frame.draw(batch);
 
@@ -76,7 +77,7 @@ public class SpellSwap_Anim extends Screen_Anim {
         frame.setCenter(position.x, position.y);
         frame.setRotation(rotation);
         frame.flip(flipX, flipY);
-        frame.setScale(screenRatio * 0.8f);
+        frame.setScale(xRatio * 0.8f, yRatio * 0.8f);
 
         frame.draw(batch);
 

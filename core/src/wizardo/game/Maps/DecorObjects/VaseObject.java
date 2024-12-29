@@ -62,7 +62,7 @@ public class VaseObject extends LayerObject {
     }
 
     public void createBody() {
-        body = MapUtils.createCircleDecorBody(chunk, object, 8, false, false);
+        body = MapUtils.createCircleDecorBody_FromTiledMap(chunk, object, 8, false, false);
         body.setUserData(this);
         if(destroyed) {
             body.setActive(false);

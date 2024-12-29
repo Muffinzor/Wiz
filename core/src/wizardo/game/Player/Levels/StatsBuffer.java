@@ -2,10 +2,77 @@ package wizardo.game.Player.Levels;
 
 import wizardo.game.Player.Levels.LevelUpEnums.LevelUps;
 import wizardo.game.Player.Levels.LevelUpEnums.LevelUpQuality;
+import wizardo.game.Spells.SpellUtils;
 
 import static wizardo.game.Wizardo.player;
 
 public class StatsBuffer {
+
+    public static void apply_Scroll(SpellUtils.Spell_Name spell) {
+        switch(spell) {
+            case FROSTBOLT -> {
+                if(player.spellbook.frostbolt_lvl - player.stats.bonusMastery_frostbolt < 10) {
+                    player.spellbook.frostbolt_lvl++;
+                }
+            }
+            case ICESPEAR -> {
+                if(player.spellbook.icespear_lvl - player.stats.bonusMastery_icespear< 10) {
+                    player.spellbook.icespear_lvl++;
+                }
+            }
+            case FROZENORB -> {
+                if(player.spellbook.frozenorb_lvl - player.stats.bonusMastery_frozenorb< 10) {
+                    player.spellbook.frozenorb_lvl++;
+                }
+            }
+            case CHARGEDBOLTS -> {
+                if(player.spellbook.chargedbolt_lvl - player.stats.bonusMastery_chargedbolt < 10) {
+                    player.spellbook.chargedbolt_lvl++;
+                }
+            }
+            case CHAIN -> {
+                if(player.spellbook.icespear_lvl - player.stats.bonusMastery_chainlightning < 10) {
+                    player.spellbook.chainlightning_lvl++;
+                }
+            }
+            case THUNDERSTORM -> {
+                if(player.spellbook.thunderstorm_lvl - player.stats.bonusMastery_thunderstorm < 10) {
+                    player.spellbook.thunderstorm_lvl++;
+                }
+            }
+            case MISSILES -> {
+                if(player.spellbook.arcanemissile_lvl - player.stats.bonusMastery_missiles < 10) {
+                    player.spellbook.arcanemissile_lvl++;
+                }
+            }
+            case BEAM -> {
+                if(player.spellbook.energybeam_lvl - player.stats.bonusMastery_beam < 10) {
+                    player.spellbook.energybeam_lvl++;
+                }
+            }
+            case RIFTS -> {
+                if(player.spellbook.rift_lvl - player.stats.bonusMastery_rifts< 10) {
+                    player.spellbook.rift_lvl++;
+                }
+            }
+            case FLAMEJET -> {
+                if(player.spellbook.flamejet_lvl - player.stats.bonusMastery_flamejet< 10) {
+                    player.spellbook.flamejet_lvl++;
+                }
+            }
+            case FIREBALL -> {
+                if(player.spellbook.fireball_lvl - player.stats.bonusMastery_fireball < 10) {
+                    player.spellbook.fireball_lvl++;
+                }
+            }
+            case OVERHEAT -> {
+                if(player.spellbook.overheat_lvl - player.stats.bonusMastery_overheat < 10) {
+                    player.spellbook.overheat_lvl++;
+                }
+            }
+
+        }
+    }
 
     public static void apply_LevelUp(LevelUps type, LevelUpQuality quality) {
         switch(type) {

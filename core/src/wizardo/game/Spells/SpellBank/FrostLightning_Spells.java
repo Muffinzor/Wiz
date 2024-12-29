@@ -3,6 +3,7 @@ package wizardo.game.Spells.SpellBank;
 import wizardo.game.Resources.Colors;
 import wizardo.game.Resources.Skins;
 import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Explosion;
+import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Spell;
 import wizardo.game.Spells.Frost.Frozenorb.Frozenorb_Spell;
 import wizardo.game.Spells.Frost.Icespear.Icespear_Spell;
 import wizardo.game.Spells.Hybrid.Blizzard.Blizzard_Spell;
@@ -25,8 +26,8 @@ public class FrostLightning_Spells {
 
         // 0. ChargedBolts + FrostBolts
 
-        ChargedBolts_Spell frostlite0 = new ChargedBolts_Spell();
-        frostlite0.frostbolts = true;
+        Frostbolt_Spell frostlite0 = new Frostbolt_Spell();
+        frostlite0.chargedbolt = true;
         frostlite0.anim_element = COLDLITE;
         frostlite0.spellParts.add(CHARGEDBOLTS);
         frostlite0.spellParts.add(FROSTBOLT);

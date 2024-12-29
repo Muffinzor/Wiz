@@ -2,7 +2,6 @@ package wizardo.game.Spells;
 
 import com.badlogic.gdx.math.MathUtils;
 import wizardo.game.Screens.BaseScreen;
-import wizardo.game.Screens.Battle.BattleScreen;
 
 import java.util.ArrayList;
 
@@ -13,6 +12,8 @@ public class SpellManager {
     private ArrayList<Spell> spellsToCast;
     private ArrayList<Spell> activeSpells;
     private ArrayList<Spell> spellsToRemove;
+    ArrayList<Spell> multicastedSpells;
+    ArrayList<Float> delays;
 
     BaseScreen screen;
 
@@ -24,10 +25,13 @@ public class SpellManager {
     public float utility_cooldown;
 
 
+
     public SpellManager(BaseScreen screen) {
         spellsToCast = new ArrayList<>();
         activeSpells = new ArrayList<>();
         spellsToRemove = new ArrayList<>();
+        multicastedSpells = new ArrayList<>();
+        delays = new ArrayList<>();
         this.screen = screen;
 
 
@@ -45,6 +49,7 @@ public class SpellManager {
      */
     public void update(float delta) {
         castSpell(delta);
+        updateMulticasted(delta);
 
         for(Spell spell : spellsToCast) {
             spell.screen = screen;
@@ -57,6 +62,7 @@ public class SpellManager {
         }
 
         disposeFinishedSpells();
+
     }
 
     public void castSpell(float delta) {
@@ -67,6 +73,7 @@ public class SpellManager {
                 clone.castByPawn = true;
                 spellsToCast.add(clone);
                 cooldown1 = clone.getCooldown();
+                attemptMulticast(player.spellbook.equippedSpells.getFirst().clone());
             }
 
             cooldown2 -= delta;
@@ -75,6 +82,7 @@ public class SpellManager {
                 clone.castByPawn = true;
                 spellsToCast.add(clone);
                 cooldown2 = clone.getCooldown();
+                attemptMulticast(player.spellbook.equippedSpells.get(1).clone());
             }
 
             cooldown3 -= delta;
@@ -83,6 +91,30 @@ public class SpellManager {
                 clone.castByPawn = true;
                 spellsToCast.add(clone);
                 cooldown3 = clone.getCooldown();
+                attemptMulticast(player.spellbook.equippedSpells.get(2).clone());
+            }
+        }
+    }
+
+    public void attemptMulticast(Spell spell) {
+        if(Math.random() > 1 - player.spellbook.multicast/100f) {
+            multicastedSpells.add(spell);
+            delays.add(0.2f);
+        }
+    }
+
+    public void updateMulticasted(float delta) {
+        for (int i = 0; i < multicastedSpells.size(); i++) {
+            Float delay = delays.get(i);
+            delay -= delta;
+            if(delay <= 0) {
+                Spell spell = multicastedSpells.get(i);
+                spellsToCast.add(spell);
+                multicastedSpells.remove(i);
+                delays.remove(i);
+                break;
+            } else {
+                delays.set(i, delay);
             }
         }
     }

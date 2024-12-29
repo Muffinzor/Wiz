@@ -54,9 +54,7 @@ public class LevelUpUtils {
         if(player.spellbook.frozenorb_lvl > 0) {
             list.add(ICE);
         }
-        if(canBeSpeed()) {
-            list.add(PROJECTILES);
-        }
+
         if(canBeSharp()) {
             list.add(SHARP);
         }
@@ -165,27 +163,7 @@ public class LevelUpUtils {
 
         return possible;
     }
-    private static boolean canBeSpeed() {
-        boolean possible = false;
 
-        if(player.spellbook.frostbolt_lvl > 0) {
-            possible = true;
-        }
-        if(player.spellbook.fireball_lvl > 0) {
-            possible = true;
-        }
-        if(player.spellbook.icespear_lvl > 0) {
-            possible = true;
-        }
-        if(player.spellbook.arcanemissile_lvl > 0) {
-            possible = true;
-        }
-        if(player.spellbook.chargedbolt_lvl > 0) {
-            possible = true;
-        }
-
-        return possible;
-    }
     private static boolean canBeSharp() {
         boolean possible = false;
 

@@ -19,8 +19,10 @@ public class TEST_MELEE extends MonsterMelee {
         speed = 20f/PPM;
         hp = 60;
         maxHP = 60;
-        massValue = 5f;
 
+        dmg = 5;
+
+        massValue = 5f;
         bodyRadius = 10;
         height = 40;
         width = 20;

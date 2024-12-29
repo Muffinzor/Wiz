@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import wizardo.game.Resources.DecorResources.DungeonDecorResources;
 import wizardo.game.Resources.EffectAnims.BlackHoleAnims;
+import wizardo.game.Resources.EffectAnims.GearFlareAnims;
 import wizardo.game.Resources.ScreenResources.CharacterScreenResources;
 import wizardo.game.Resources.DecorResources.GeneralDecorResources;
 import wizardo.game.Resources.MonsterResources.AcolyteAnims;
@@ -104,9 +105,12 @@ public class LoadingScreen extends BaseScreen {
         LightningHandsAnims.loadAtlas();
         RepulsionFieldAnims.loadAtlas();
         BlackHoleAnims.loadAtlas();
+        LightningBoltAnims.loadAtlas();
+        IceGustAnims.loadAtlas();
 
         GeneralDecorResources.loadAtlas();
         DungeonDecorResources.loadAtlas();
+        GearFlareAnims.loadAtlas();
 
         SkeletonAnims.loadAtlas();
         SkeletonGiantAnims.loadAtlas();
@@ -142,9 +146,12 @@ public class LoadingScreen extends BaseScreen {
         LightningHandsAnims.loadAnimations();
         RepulsionFieldAnims.loadAnimations();
         BlackHoleAnims.loadAnimations();
+        LightningBoltAnims.loadAnimations();
+        IceGustAnims.loadAnimations();
 
         GeneralDecorResources.loadAnimations();
         DungeonDecorResources.loadAnimations();
+        GearFlareAnims.loadAnimations();
 
         SkeletonAnims.loadAnimations();
         SkeletonGiantAnims.loadAnimations();

@@ -142,8 +142,4 @@ public class Flamejet_Spell extends Spell {
         }
     }
 
-    @Override
-    public boolean isLearnable() {
-        return player.spellbook.flamejet_lvl > 0;
-    }
 }

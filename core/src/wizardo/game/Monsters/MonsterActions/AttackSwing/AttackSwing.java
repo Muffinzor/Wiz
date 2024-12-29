@@ -48,6 +48,7 @@ public class AttackSwing extends MonsterSpell {
                 duration = 0.2f;
             }
             player.pawn.applyPush(direction, strength, duration, 0.9f);
+            monster.dealDmg();
             hasHit = true;
         }
     }

@@ -15,13 +15,10 @@ public class FloatingText {
     public BitmapFont font;
     public Color color;
     public String text;
-    public float textWidth;
-    public GlyphLayout glyphLayout;
     public Vector2 position;
     public float y_increase;
 
     public FloatingText() {
-
         y_increase = 0;
     }
 
@@ -31,10 +28,6 @@ public class FloatingText {
         this.position = new Vector2(position);
         this.font = font;
         this.color = new Color(color);
-
-        glyphLayout = new GlyphLayout();
-        glyphLayout.setText(font, text);
-        textWidth = glyphLayout.width;
     }
 
     public void setText(String text) {
@@ -70,7 +63,7 @@ public class FloatingText {
 
         font.setColor(textColor);
 
-        float textX = position.x - textWidth / 2;
+        float textX = position.x;
 
         font.draw(batch, text, textX, position.y + y_increase);
     }

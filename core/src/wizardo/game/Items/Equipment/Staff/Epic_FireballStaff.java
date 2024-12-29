@@ -5,13 +5,9 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import wizardo.game.Items.ItemUtils;
 import wizardo.game.Spells.SpellUtils;
 
-import java.util.ArrayList;
+public class Epic_FireballStaff extends Staff {
 
-import static wizardo.game.Wizardo.player;
-
-public class Fireball_EpicStaff extends Staff {
-
-    public Fireball_EpicStaff() {
+    public Epic_FireballStaff() {
         sprite = new Sprite(new Texture("Items/Staff/Hydrastaff.png"));
         spriteOver = new Sprite(new Texture("Items/Staff/Hydrastaff_Over.png"));
         displayRotation = 25;

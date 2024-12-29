@@ -1,15 +1,16 @@
 package wizardo.game.Screens.Character.EquipmentTable;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import wizardo.game.Items.Equipment.Equipment;
 import wizardo.game.Screens.Character.CharacterScreen;
 
@@ -25,22 +26,45 @@ public class EquipmentButton extends ImageButton implements MenuButton {
     Sprite sprite;
     Sprite spriteOver;
 
+    float xRatio;
+    float yRatio;
+
     public EquipmentButton(Skin skin, CharacterScreen screen, Equipment piece) {
         super(skin);
         this.screen = screen;
         this.piece = piece;
-
         if(piece != null) {
            setup();
            addClickListener();
         }
-
-
+        xRatio = Gdx.graphics.getWidth() / 1920f;
+        yRatio = Gdx.graphics.getHeight() / 1080f;
+        adjustSize();
     }
 
     public void setup() {
         sprite = piece.sprite;
         spriteOver = piece.spriteOver;
+    }
+
+    public void adjustSize() {
+
+        ImageButton.ImageButtonStyle style = this.getStyle();
+        ImageButton.ImageButtonStyle newStyle = new ImageButton.ImageButtonStyle();
+        newStyle.imageUp = new TextureRegionDrawable(((TextureRegionDrawable) style.imageUp).getRegion());
+        newStyle.imageOver = new TextureRegionDrawable(((TextureRegionDrawable) style.imageOver).getRegion());
+
+        float WIDTH = xRatio * 115;
+        float HEIGHT = yRatio * 110;
+
+        newStyle.imageUp.setMinWidth(WIDTH);
+        newStyle.imageUp.setMinHeight(HEIGHT);
+
+        newStyle.imageOver.setMinWidth(WIDTH);
+        newStyle.imageOver.setMinHeight(HEIGHT);
+
+        setStyle(newStyle);
+
     }
 
     public void drawItem() {
@@ -56,7 +80,7 @@ public class EquipmentButton extends ImageButton implements MenuButton {
                 frame.set(sprite);
             }
 
-            frame.setScale(piece.displayScale);
+            frame.setScale(xRatio * piece.displayScale, yRatio * piece.displayScale);
             frame.rotate(piece.displayRotation);
             frame.setCenter(getCenterPoint().x, getCenterPoint().y);
 
@@ -68,6 +92,7 @@ public class EquipmentButton extends ImageButton implements MenuButton {
         Sprite frame = screen.getSprite();
         frame.set(getQualitySprite());
         frame.setCenter(getCenterPoint().x, getCenterPoint().y);
+        frame.setScale(xRatio, yRatio);
         frame.draw(batch);
     }
 
@@ -106,7 +131,7 @@ public class EquipmentButton extends ImageButton implements MenuButton {
 
     public void handleClick() {
         if(piece != null) {
-            piece.store();
+            piece.storeAfterUnequip();
             screen.inventory_table.resize();
             screen.equipment_table.resize();
             screen.mastery_table.updateChanges();

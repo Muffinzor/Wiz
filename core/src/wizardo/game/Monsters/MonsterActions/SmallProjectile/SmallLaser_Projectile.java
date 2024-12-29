@@ -9,6 +9,7 @@ import wizardo.game.Monsters.MonsterActions.MonsterSpell;
 import wizardo.game.Resources.MonsterResources.MonsterProjectiles.SmallProjectileAnims;
 
 import static wizardo.game.Utils.Constants.PPM;
+import static wizardo.game.Wizardo.player;
 import static wizardo.game.Wizardo.world;
 
 public class SmallLaser_Projectile extends MonsterSpell {
@@ -60,6 +61,7 @@ public class SmallLaser_Projectile extends MonsterSpell {
     public void handleCollision(Body playerBody) {
         hasCollided = true;
         body.setLinearVelocity(0,0);
+        originMonster.dealDmg();
     }
 
     @Override

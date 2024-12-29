@@ -1,6 +1,7 @@
 package wizardo.game.Spells.Hybrid.MeteorShower;
 
 import com.badlogic.gdx.math.Vector2;
+import wizardo.game.Items.Equipment.Amulet.Epic_StormAmulet;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
@@ -31,7 +32,7 @@ public class MeteorShower_Spell extends Spell {
     public MeteorShower_Spell() {
         name = "Meteor Shower";
 
-        cooldown = 16;
+        cooldown = 12;
 
         speed = 8f;
 
@@ -106,6 +107,10 @@ public class MeteorShower_Spell extends Spell {
         }
         frequency = frequency * (1 + player.spellbook.empyreanFrequencyBonus/100f);
         interval = 1/frequency;
+
+        if(player.inventory.equippedAmulet instanceof Epic_StormAmulet) {
+            duration *= 1.5f;
+        }
     }
 
     public void setMeteor(MeteorShower_Spell parentSpell) {

@@ -3,15 +3,12 @@ package wizardo.game.Items.Equipment.Book;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import wizardo.game.Items.ItemUtils;
-import wizardo.game.Spells.SpellUtils;
-
-import java.util.ArrayList;
 
 import static wizardo.game.Wizardo.player;
 
-public class Gold_LegendaryBook extends Book {
+public class Legendary_GoldBook extends Book {
 
-    public Gold_LegendaryBook() {
+    public Legendary_GoldBook() {
         sprite = new Sprite(new Texture("Items/Spellbook/Goldbook.png"));
         spriteOver = new Sprite(new Texture("Items/Spellbook/Goldbook_Over.png"));
         displayScale = 0.8f;
@@ -39,7 +36,7 @@ public class Gold_LegendaryBook extends Book {
         super.equip();
     }
 
-    public int getStatValue(int index) {
+    public float getStatValue(int index) {
         return player.inventory.gold/100;
     }
 

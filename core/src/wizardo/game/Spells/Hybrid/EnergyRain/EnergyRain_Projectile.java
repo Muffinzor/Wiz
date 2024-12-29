@@ -167,6 +167,7 @@ public class EnergyRain_Projectile extends EnergyRain_Spell {
         explosion.targetPosition = new Vector2(targetPosition);
         explosion.setElements(this);
         explosion.frostbolt = frostbolt;
+        explosion.rifts = rifts;
         explosion.flamejet = flamejet;
         explosion.chargedbolts = chargedbolts;
         screen.spellManager.toAdd(explosion);

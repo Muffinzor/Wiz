@@ -1,6 +1,6 @@
 package wizardo.game.Spells.Frost.Icespear;
 
-import wizardo.game.Items.Equipment.Staff.Icespear_EpicStaff;
+import wizardo.game.Items.Equipment.Staff.Epic_IcespearStaff;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 
@@ -44,7 +44,7 @@ public class Icespear_Spell extends Spell {
     }
 
     public void setup() {
-        if(player.inventory.equippedStaff instanceof Icespear_EpicStaff) {
+        if(player.inventory.equippedStaff instanceof Epic_IcespearStaff) {
             minimumTimeForSplit = 0;
             flamejet = true;
         }
@@ -103,12 +103,5 @@ public class Icespear_Spell extends Spell {
         dmg = (int) (dmg * (1 + player.spellbook.sharpBonusDmg/100f));
         return dmg;
     }
-
-    @Override
-    public boolean isLearnable() {
-        return player.spellbook.icespear_lvl > 0;
-    }
-
-
 
 }

@@ -12,11 +12,14 @@ import com.badlogic.gdx.physics.box2d.RayCastCallback;
 import wizardo.game.Account.Unlocked;
 import wizardo.game.Audio.Sounds.SoundPlayer;
 import wizardo.game.Display.Text.FloatingDamage;
+import wizardo.game.Items.Equipment.Staff.Legendary_LightningStaff;
 import wizardo.game.Maps.LayerObject;
 import wizardo.game.Monsters.MonsterActions.MonsterSpell;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Screens.BaseScreen;
 import wizardo.game.Spells.SpellUtils.*;
+import wizardo.game.Spells.Unique.ThundergodBolt.ThundergodBolt_Projectile;
+import wizardo.game.Spells.Unique.ThundergodBolt.ThundergodBolt_Spell;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -221,6 +224,9 @@ public abstract class Spell implements Cloneable {
         if(anim_element == null) {
             anim_element = spellParent.anim_element;
         }
+        if(main_element == null && anim_element != null) {
+            main_element = anim_element;
+        }
     }
 
     /**
@@ -401,7 +407,8 @@ public abstract class Spell implements Cloneable {
     public abstract int getDmg();
 
     public float getCooldown() {
-        return cooldown;
+        float ratio = player.spellbook.castSpeed/100;
+        return cooldown * (1 - ratio);
     }
 
 
@@ -429,7 +436,7 @@ public abstract class Spell implements Cloneable {
                 case LIGHTNING -> scaledDmg *= (1 + player.spellbook.lightningBonusDmg/100 / 2);
             }
         }
-        scaledDmg *= (1 + player.spellbook.allBonusDmg);
+        scaledDmg *= (1 + player.spellbook.allBonusDmg/100f);
         return (int) scaledDmg;
     }
 
@@ -440,10 +447,21 @@ public abstract class Spell implements Cloneable {
         dmg *= randomFactor;
         monster.hp -= dmg;
 
+        checkGearProcs(monster);
+
         if(dmg_text_on) {
             dmgText( (int)dmg, monster);
         }
     }
+
+    public void checkGearProcs(Monster monster) {
+        if(player.inventory.equippedStaff instanceof Legendary_LightningStaff) {
+              if(anim_element == Spell_Element.LIGHTNING && !(this instanceof ThundergodBolt_Spell)) {
+                  Legendary_LightningStaff.castThunderbolt(monster, this);
+              }
+        }
+    }
+
 
     public void dmgText(int dmg, Monster monster) {
         String s = "" + dmg;

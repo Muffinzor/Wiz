@@ -5,10 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.QueryCallback;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static wizardo.game.Utils.Methods.isPositionOverlappingWithObstacle;
@@ -250,17 +247,58 @@ public class SpellUtils {
     }
 
     /** recursive will also make the previous tiers available as picks */
-    public static Spell_Name getRandomMastery(int tier, boolean recursive) {
-        List<Spell_Name> list = Arrays.asList(Spell_Name.values());
-        int maxIndex = tier * 4 - 1;
-        int minIndex = 0;
-        if(!recursive) {
-            if(tier == 2) {
-                minIndex = 4;
-            } else if(tier == 3) {
-                minIndex = 8;
+    public static Spell_Name getRandomMastery(SpellUtils.Spell_Element element, int tier, boolean recursive) {
+        List<Spell_Name> list = new ArrayList<>();
+        if(element != null) {
+            switch(element) {
+                case FROST -> {
+                    list.add(Spell_Name.FROSTBOLT);
+                    list.add(Spell_Name.ICESPEAR);
+                    list.add(Spell_Name.FROZENORB);
+                }
+                case FIRE -> {
+                    list.add(Spell_Name.FLAMEJET);
+                    list.add(Spell_Name.FIREBALL);
+                    list.add(Spell_Name.OVERHEAT);
+                }
+                case LIGHTNING -> {
+                    list.add(Spell_Name.CHARGEDBOLTS);
+                    list.add(Spell_Name.CHAIN);
+                    list.add(Spell_Name.THUNDERSTORM);
+                }
+                case ARCANE -> {
+                    list.add(Spell_Name.MISSILES);
+                    list.add(Spell_Name.BEAM);
+                    list.add(Spell_Name.RIFTS);
+                }
             }
+            Collections.shuffle(list);
+            return list.getFirst();
+
+        } else {
+            list = Arrays.asList(Spell_Name.values());
+            int maxIndex = tier * 4 - 1;
+            int minIndex = 0;
+            if(!recursive) {
+                if(tier == 2) {
+                    minIndex = 4;
+                } else if(tier == 3) {
+                    minIndex = 8;
+                }
+            }
+            return list.get(MathUtils.random(minIndex, maxIndex));
         }
-        return list.get(MathUtils.random(minIndex, maxIndex));
+
+    }
+
+    public static Spell_Element whatElementIsThis(Spell_Name spell) {
+        Spell_Element element = null;
+        switch(spell) {
+            case FROSTBOLT, ICESPEAR, FROZENORB -> element = Spell_Element.FROST;
+            case FLAMEJET, FIREBALL, OVERHEAT -> element = Spell_Element.FIRE;
+            case CHARGEDBOLTS, CHAIN, THUNDERSTORM -> element = Spell_Element.LIGHTNING;
+            case MISSILES, BEAM, RIFTS -> element = Spell_Element.ARCANE;
+        }
+        return element;
     }
 }

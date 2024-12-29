@@ -1,6 +1,7 @@
 package wizardo.game.Spells.Hybrid.EnergyRain;
 
 import com.badlogic.gdx.math.Vector2;
+import wizardo.game.Items.Equipment.Amulet.Epic_StormAmulet;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
@@ -22,7 +23,7 @@ public class EnergyRain_Spell extends Spell {
     public boolean chargedbolts;
     public boolean flamejet;
 
-    public boolean riftTargeting;
+    public boolean rifts;
 
     public EnergyRain_Spell() {
         name = "Energy Rain";
@@ -45,11 +46,8 @@ public class EnergyRain_Spell extends Spell {
 
         if(stateTime >= projectilesSent * interval) {
 
-            if(riftTargeting) {
-                riftTargeting();
-            } else {
-                regularTargeting();
-            }
+            regularTargeting();
+
 
         }
 
@@ -79,8 +77,9 @@ public class EnergyRain_Spell extends Spell {
     public void setup() {
         projectiles = 6 + player.spellbook.rift_lvl * 2;
         projectiles = (int) (projectiles * (1 + player.spellbook.empyreanFrequencyBonus/100f));
-        if(riftTargeting) {
-            targetPosition = getTargetPosition();
+
+        if(player.inventory.equippedAmulet instanceof Epic_StormAmulet) {
+            projectiles = (projectiles * 150) / 100;
         }
     }
 
@@ -114,21 +113,11 @@ public class EnergyRain_Spell extends Spell {
             beam.setElements(this);
             beam.targetPosition = randomPosition;
             beam.frostbolt = frostbolt;
+            beam.rifts = rifts;
             beam.flamejet = flamejet;
             beam.chargedbolts = chargedbolts;
             screen.spellManager.toAdd(beam);
         }
-        projectilesSent++;
-    }
-    public void riftTargeting() {
-        Vector2 randomTarget = SpellUtils.getRandomVectorInRadius(targetPosition, 5f);
-        EnergyRain_Projectile beam = new EnergyRain_Projectile();
-        beam.setElements(this);
-        beam.targetPosition = randomTarget;
-        beam.flamejet = flamejet;
-        beam.frostbolt = frostbolt;
-        beam.chargedbolts = chargedbolts;
-        screen.spellManager.toAdd(beam);
         projectilesSent++;
     }
 }

@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Spells.Arcane.Rifts.Rift_Zone;
@@ -19,6 +20,7 @@ import static wizardo.game.Resources.SpellAnims.ArcaneMissileAnims.*;
 import static wizardo.game.Spells.SpellUtils.Spell_Element.ARCANE;
 import static wizardo.game.Spells.SpellUtils.hasLineOfSight;
 import static wizardo.game.Utils.Constants.PPM;
+import static wizardo.game.Utils.Contacts.Masks.OBSTACLE;
 import static wizardo.game.Wizardo.*;
 
 public class ArcaneMissile_Projectile extends ArcaneMissile_Spell {
@@ -66,7 +68,8 @@ public class ArcaneMissile_Projectile extends ArcaneMissile_Spell {
         stateTime += delta;
         drawFrame();
         adjustLight();
-        if(delta > 0 && stateTime >= 0.2f) {
+
+        if(delta > 0 && stateTime >= 0.2f && !hasCollided) {
             arcaneTargeting();
         }
 
@@ -78,8 +81,15 @@ public class ArcaneMissile_Projectile extends ArcaneMissile_Spell {
             return;
         }
 
-        if(stateTime - animTimeBuffer >= 2.5f || hasCollided) {
+        if(hasCollided && body.isActive()) {
+            body.setActive(false);
+        }
+
+        if((hasCollided || stateTime - animTimeBuffer >= 2.5f) && delta > 0) {
             scale -= 0.02f;
+            if(hasCollided) {
+                scale -= 0.02f;
+            }
         }
 
         if(canSplit && !hasSplit) {
@@ -125,6 +135,14 @@ public class ArcaneMissile_Projectile extends ArcaneMissile_Spell {
                 scale = 0;
             }
         }
+    }
+
+    public void handleCollision(Fixture fix) {
+        boolean isObstacle = (fix.getFilterData().categoryBits & OBSTACLE) != 0;
+        if(isObstacle) {
+            hasCollided = true;
+        }
+
     }
 
     public void drawFrame() {

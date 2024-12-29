@@ -127,6 +127,7 @@ public class DungeonChunk extends MapChunk {
         }
     }
 
+
     @Override
     public void disposeBodies() {
         for (Body body : bodies) {
@@ -143,6 +144,7 @@ public class DungeonChunk extends MapChunk {
     public void initialize() {
         createBodies();
         if(!alreadySeen) {
+            createChests();
             createDecor();
             alreadySeen = true;
         }

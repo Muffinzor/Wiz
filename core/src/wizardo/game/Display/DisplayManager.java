@@ -29,11 +29,10 @@ public class DisplayManager {
         spriteRenderer.renderPostLightningSprites();
         spriteRenderer.renderUI();
 
-
         spriteRenderer.clearSpriteArrays();
 
         textManager.update(delta);
-        textManager.render();
+        textManager.renderAlLTexts();
 
     }
 

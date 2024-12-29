@@ -63,6 +63,9 @@ public class Spellbook {
     public int flamejetBonus;
 
 
+    public float castSpeed;
+    public float multicast;
+
 
     public Spellbook() {
         equippedSpells = new ArrayList<>();

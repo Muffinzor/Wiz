@@ -54,6 +54,7 @@ public abstract class Monster {
 
     public float hp;
     public float maxHP;
+    public int dmg;
     public boolean dead;
     public boolean spaghettified;  // Dead from blackhole
     public float redshift = 0.75f;     // ditto
@@ -110,6 +111,14 @@ public abstract class Monster {
             adjustLight();
         }
 
+    }
+
+    public void dealDmg() {
+        float dmg = this.dmg - player.stats.damageReduction;
+        if(dmg < this.dmg/2f) {
+            dmg = this.dmg/2f;
+        }
+        player.stats.shield -= dmg;
     }
 
     public void createBody() {

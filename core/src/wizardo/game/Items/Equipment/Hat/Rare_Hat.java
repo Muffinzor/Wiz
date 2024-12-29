@@ -6,30 +6,29 @@ import com.badlogic.gdx.math.MathUtils;
 import wizardo.game.Items.ItemUtils;
 import wizardo.game.Spells.SpellUtils;
 
-import java.util.ArrayList;
-
 import static wizardo.game.Wizardo.player;
 
 public class Rare_Hat extends Hat {
 
     public Rare_Hat() {
-        sprite = new Sprite(new Texture("Items/Hat/Greenhat.png"));
-        spriteOver = new Sprite(new Texture("Items/Hat/Greenhat_Over.png"));
+        sprite = new Sprite(new Texture("Items/Hat/rare1.png"));
+        spriteOver = new Sprite(new Texture("Items/Hat/rare1_over.png"));
+        displayScale = 1.3f;
 
         name = "Pointy Hat";
         title = "Rare Hat";
         quality = ItemUtils.EquipQuality.RARE;
 
-        masteries.add(SpellUtils.getRandomMastery(2, true));
-        quantity_masteries.add(1);
-        gearStats.add(getRareStat());
-        quantity_gearStats.add(MathUtils.random(5, 10));
+        getRareHatStats(this, 2);
+
+        if(Math.random() >= 1 - (player.stats.luck/100f)) {
+            getNormalHatStats(this, 1);
+        }
 
     }
 
     public String getFlavorText() {
         return "Just a pointy hat";
-
     }
 
 }

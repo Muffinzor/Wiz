@@ -1,6 +1,6 @@
 package wizardo.game.Spells.Fire.Fireball;
 
-import wizardo.game.Items.Equipment.Staff.Fireball_EpicStaff;
+import wizardo.game.Items.Equipment.Staff.Epic_FireballStaff;
 import wizardo.game.Spells.Spell;
 
 import static wizardo.game.Spells.SpellUtils.Spell_Element.FIRE;
@@ -35,7 +35,7 @@ public class Fireball_Spell extends Spell {
     }
 
     public void setup() {
-        if(player.inventory.equippedStaff instanceof Fireball_EpicStaff) {
+        if(player.inventory.equippedStaff instanceof Epic_FireballStaff) {
             projectiles = 3;
             effectRatio = 0.8f;
         }
@@ -89,11 +89,6 @@ public class Fireball_Spell extends Spell {
         dmg += 15 * getLvl();
         dmg = (int) (dmg * (1 + player.spellbook.explosivesBonusDmg/100f));
         return dmg;
-    }
-
-    @Override
-    public boolean isLearnable() {
-        return player.spellbook.fireball_lvl > 0;
     }
 
 }

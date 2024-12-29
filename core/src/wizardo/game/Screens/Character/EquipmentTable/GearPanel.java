@@ -75,7 +75,6 @@ public class GearPanel {
         createTitleLabel();
         createGemImage();
 
-        //contentTable.setDebug(true);
 
     }
 
@@ -97,7 +96,6 @@ public class GearPanel {
 
         titleLabel = new Label(piece.title, inventorySkin, "Gear_Title");
         titleLabel.setColor(getTitleColor());
-        //titleLabel.setDebug(true);
         titleLabel.setAlignment(Align.center);
         titleLabel.pack();
         titleLabel.setPosition(centerW - titleLabel.getWidth()/2, adjustedH - titleLabel.getHeight()/2);
@@ -148,24 +146,42 @@ public class GearPanel {
         }
         if(!piece.gearStats.isEmpty()) {
             for (int i = 0; i < piece.gearStats.size(); i++) {
+                Table smalltable = new Table();
                 String s = "" + getGearStatString(piece.gearStats.get(i));
                 Label gearStatLabel = new Label(s, inventorySkin, "Gear_Text");
                 gearStatLabel.setColor(getGearStatColor(piece.gearStats.get(i)));
                 gearStatLabel.setAlignment(Align.left);
-                gearStatsTable.add(gearStatLabel).align(Align.left).expandX();
+                smalltable.add(gearStatLabel).align(Align.left);
 
-                String value = "" + piece.getStatValue(i) + "%";
+                String percent = getPercentIfNeeded(piece.gearStats.get(i));
+                float statValue = piece.getStatValue(i);
+                String formattedValue = (statValue == Math.floor(statValue))
+                        ? String.format("%.0f", statValue)
+                        : String.format("%.1f", statValue);
+
+                String value = formattedValue + percent;
                 Label gearStatValue = new Label(value, inventorySkin, "Gear_Text");
                 gearStatValue.setColor(Color.GREEN);
                 gearStatValue.setAlignment(Align.left);
-                gearStatsTable.pack();
-                gearStatsTable.add(gearStatValue).align(Align.left);
+                smalltable.add(gearStatValue).align(Align.left);
+                gearStatsTable.add(smalltable).align(Align.left);
                 gearStatsTable.row().padTop(5);
             }
         }
         contentTable.add(gearStatsTable).align(Align.left);
         contentTable.row();
         container.pack();
+    }
+
+    public String getPercentIfNeeded(ItemUtils.GearStat stat) {
+        String s = "%";
+        if(stat == null) {
+            return s;
+        }
+        switch(stat) {
+            case LUCK, DEFENSE, MASTERY_FROST, MASTERY_ARCANE, MASTERY_LIGHTNING, MASTERY_FIRE, REGEN -> s = "";
+        }
+        return s;
     }
     public Color getMasteryColor(SpellUtils.Spell_Name spell) {
         Color color = null;
@@ -183,10 +199,11 @@ public class GearPanel {
             return color;
         }
         switch (stat) {
-            case FIREDMG -> color = inventorySkin.getColor("Fire");
-            case FROSTDMG -> color = inventorySkin.getColor("Frost");
-            case LITEDMG -> color = inventorySkin.getColor("Lightning");
-            case ARCANEDMG -> color = inventorySkin.getColor("Arcane");
+            case FIREDMG, MASTERY_FIRE -> color = inventorySkin.getColor("Fire");
+            case FROSTDMG, MASTERY_FROST -> color = inventorySkin.getColor("Frost");
+            case LITEDMG, MASTERY_LIGHTNING -> color = inventorySkin.getColor("Lightning");
+            case ARCANEDMG, MASTERY_ARCANE -> color = inventorySkin.getColor("Arcane");
+            case REGEN -> color = inventorySkin.getColor("Regen");
         }
         return color;
     }
@@ -218,6 +235,17 @@ public class GearPanel {
             case FROSTDMG -> s = "Increased frost damage: ";
             case LITEDMG -> s = "Increased lightning damage: ";
             case ARCANEDMG -> s = "Increased arcane damage: ";
+            case ALLDMG -> s = "All damage increased by: ";
+            case CASTSPEED -> s = "Cooldown reduction: ";
+            case MULTICAST -> s = "Multicast chance: ";
+            case LUCK -> s = "Luck: ";
+            case MASTERY_FROST -> s = "Frost masteries increased by ";
+            case MASTERY_FIRE -> s = "Fire masteries increased by ";
+            case MASTERY_LIGHTNING -> s = "Lightning masteries increased by ";
+            case MASTERY_ARCANE -> s = "Arcane masteries increased by ";
+            case REGEN -> s = "Bonus shield per second: ";
+            case DEFENSE -> s = "Damage received reduced by: ";
+            case PROJSPEED -> s = "Increased projectile speed: ";
         }
         return s;
     }

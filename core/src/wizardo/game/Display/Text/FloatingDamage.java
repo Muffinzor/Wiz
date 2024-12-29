@@ -21,7 +21,6 @@ public class FloatingDamage extends FloatingText {
             stateTime = 0;
         }
 
-
         if (alpha <= 0) {
             text = "";
         }

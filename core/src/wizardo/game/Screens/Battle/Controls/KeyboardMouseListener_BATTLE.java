@@ -120,6 +120,10 @@ public class KeyboardMouseListener_BATTLE implements InputProcessor {
             D_pressed = false;
         }
 
+        if (keycode == Input.Keys.F && player.nearbyTriggerObject != null) {
+            player.nearbyTriggerObject.trigger();
+        }
+
         return true;
     }
 

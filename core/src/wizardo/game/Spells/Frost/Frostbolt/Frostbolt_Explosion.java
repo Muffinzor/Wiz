@@ -2,10 +2,14 @@ package wizardo.game.Spells.Frost.Frostbolt;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Resources.SpellAnims.ExplosionAnims_Toon;
+import wizardo.game.Spells.Lightning.ChargedBolts.ChargedBolts_Spell;
+import wizardo.game.Spells.SpellUtils;
+import wizardo.game.Spells.Unique.ThundergodBolt.ThundergodBolt_Projectile;
 import wizardo.game.Utils.BodyFactory;
 
 import static wizardo.game.Resources.SpellAnims.FrostboltAnims.*;
@@ -40,9 +44,9 @@ public class Frostbolt_Explosion extends Frostbolt_Spell{
             pickAnim();
             createBody();
             createLight();
-
             playSound(body.getPosition());
             initialized = true;
+            chargedbolts();
         }
 
         drawFrame();
@@ -74,7 +78,7 @@ public class Frostbolt_Explosion extends Frostbolt_Spell{
         frame.setScale(frameScale);
         frame.flip(flipX, flipY);
 
-        screen.centerSort(frame, targetPosition.y * PPM - 25);
+        screen.centerSort(frame, targetPosition.y * PPM - 15);
         screen.displayManager.spriteRenderer.regular_sorted_sprites.add(frame);
 
     }
@@ -123,6 +127,21 @@ public class Frostbolt_Explosion extends Frostbolt_Spell{
             case COLDLITE -> {
                 green = 0.5f;
                 blue = 0.75f;
+            }
+        }
+    }
+
+    public void chargedbolts() {
+        if(chargedbolt) {
+            float procRate = 0.66f - 0.06f * player.spellbook.chargedbolt_lvl;
+            if(Math.random() >= procRate) {
+                for (int i = 0; i < 3; i++) {
+                    ChargedBolts_Spell bolt = new ChargedBolts_Spell();
+                    bolt.setElements(this);
+                    bolt.spawnPosition = new Vector2(body.getPosition());
+                    bolt.targetPosition = SpellUtils.getRandomVectorInRadius(body.getPosition(), 2);
+                    screen.spellManager.toAdd(bolt);
+                }
             }
         }
     }

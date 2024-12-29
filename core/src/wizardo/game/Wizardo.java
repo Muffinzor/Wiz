@@ -29,7 +29,8 @@ public class Wizardo extends Game {
 	
 	@Override
 	public void create () {
-		BaseScreen.screenRatio = Gdx.graphics.getWidth()/1920f;
+		BaseScreen.xRatio = Gdx.graphics.getWidth()/1920f;
+		BaseScreen.yRatio = Gdx.graphics.getHeight()/1920f;
 		screenStack = new Stack<>();
 		mainCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		uiCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());

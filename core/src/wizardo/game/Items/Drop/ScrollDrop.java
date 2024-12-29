@@ -1,0 +1,113 @@
+package wizardo.game.Items.Drop;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Vector2;
+import wizardo.game.Display.Text.BottomText;
+import wizardo.game.Player.Levels.StatsBuffer;
+import wizardo.game.Spells.SpellUtils;
+
+import static com.badlogic.gdx.Input.Keys.T;
+import static wizardo.game.Resources.EffectAnims.GearFlareAnims.white_flare;
+import static wizardo.game.Resources.Skins.inventorySkin;
+import static wizardo.game.Spells.SpellUtils.whatElementIsThis;
+import static wizardo.game.Wizardo.world;
+
+public class ScrollDrop extends Drop {
+
+    Color textColor;
+    String displayText;
+
+    SpellUtils.Spell_Name SpellType;
+    SpellUtils.Spell_Element Element;
+    int tier;
+    boolean recursive;
+
+    SpellUtils.Spell_Name Mastery;
+
+    /**
+     *
+     * @param spawnPosition
+     * @param SpellType
+     * @param Element null if all accessible
+     * @param tier -1 if all tier accessibles
+     * @param recursive true if all tiers under specified are accessible
+     */
+    public ScrollDrop(Vector2 spawnPosition, SpellUtils.Spell_Name SpellType, SpellUtils.Spell_Element Element, int tier, boolean recursive) {
+        this.spawnPosition = new Vector2(spawnPosition);
+        this.SpellType = SpellType;
+        this.Element = Element;
+        this.tier = tier;
+        this.recursive = recursive;
+        displayScale = 0.3f;
+
+        flareAnim = white_flare;
+        flareScale = 0.35f;
+
+        setup();
+    }
+
+    public void initializeMastery() {
+        if(SpellType != null) {
+            Mastery = SpellType;
+        } else {
+            Mastery = SpellUtils.getRandomMastery(Element, tier, recursive);
+        }
+        Element = whatElementIsThis(Mastery);
+        setupText();
+    }
+
+    @Override
+    public void setup() {
+        initializeMastery();
+        sprite = getScrollSprite(Element);
+    }
+
+    @Override
+    public void pickup() {
+        StatsBuffer.apply_Scroll(Mastery);
+        pickedUp = true;
+        stateTime = 0;
+        BottomText text = new BottomText();
+        Vector2 position = new Vector2(Gdx.graphics.getWidth()/2f, 100);
+        text.setAll(displayText, position, inventorySkin.getFont("Gear_Title"), textColor);
+        screen.displayManager.textManager.addBottomText(text);
+    }
+
+    public void setupText() {
+        switch (Element) {
+            case FIRE -> textColor = inventorySkin.getColor("Fire");
+            case FROST -> textColor = inventorySkin.getColor("Frost");
+            case LIGHTNING -> textColor = inventorySkin.getColor("Lightning");
+            case ARCANE -> textColor = inventorySkin.getColor("Arcane");
+        }
+
+        switch(Mastery) {
+            case FROSTBOLT -> displayText = "+1 Frostbolts Mastery";
+            case ICESPEAR -> displayText = "+1 Ice Spear Mastery";
+            case FROZENORB -> displayText = "+1 Frozen Orb Mastery";
+            case FLAMEJET -> displayText = "+1 Flamejet Mastery";
+            case FIREBALL -> displayText = "+1 Fireball Mastery";
+            case OVERHEAT -> displayText = "+1 Overheat Mastery";
+            case CHARGEDBOLTS -> displayText = "+1 Chargedbolts Mastery";
+            case CHAIN -> displayText = "+1 Chain Lightning Mastery";
+            case MISSILES -> displayText = "+1 Arcane Missiles Mastery";
+            case BEAM -> displayText = "+1 Energy Beam Mastery";
+            case RIFTS -> displayText = "+1 Rifts Mastery";
+        }
+
+    }
+
+    public static Sprite getScrollSprite(SpellUtils.Spell_Element element) {
+        Sprite sprite = null;
+        switch(element) {
+            case FROST -> sprite = new Sprite(new Texture("Items/Drops/Scrolls/frostScroll.png"));
+            case FIRE -> sprite = new Sprite(new Texture("Items/Drops/Scrolls/lightningScroll.png"));
+            case ARCANE -> sprite = new Sprite(new Texture("Items/Drops/Scrolls/fireScroll.png"));
+            case LIGHTNING -> sprite = new Sprite(new Texture("Items/Drops/Scrolls/arcaneScroll.png"));
+        }
+        return sprite;
+    }
+}

@@ -5,13 +5,9 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import wizardo.game.Items.ItemUtils;
 import wizardo.game.Spells.SpellUtils;
 
-import java.util.ArrayList;
+public class Epic_IcespearStaff extends Staff{
 
-import static wizardo.game.Wizardo.player;
-
-public class Icespear_EpicStaff extends Staff{
-
-    public Icespear_EpicStaff() {
+    public Epic_IcespearStaff() {
         sprite = new Sprite(new Texture("Items/Staff/Icespear.png"));
         spriteOver = new Sprite(new Texture("Items/Staff/Icespear_Over.png"));
         displayRotation = 25;

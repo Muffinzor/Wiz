@@ -1,23 +1,7 @@
 package wizardo.game.Items.Equipment;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import wizardo.game.Items.Equipment.Amulet.Amulet;
-import wizardo.game.Items.Equipment.Book.Book;
-import wizardo.game.Items.Equipment.Hat.Hat;
-import wizardo.game.Items.Equipment.Ring.Ring;
-import wizardo.game.Items.Equipment.Robes.Robes;
-import wizardo.game.Items.Equipment.SoulStone.SoulStone;
-import wizardo.game.Items.Equipment.Staff.Frozenorb_EpicStaff;
-import wizardo.game.Items.Equipment.Staff.Staff;
 import wizardo.game.Items.ItemUtils;
-import wizardo.game.Spells.Arcane.ArcaneMissiles.ArcaneMissile_Spell;
-import wizardo.game.Spells.Arcane.EnergyBeam.EnergyBeam_Spell;
-import wizardo.game.Spells.Fire.Fireball.Fireball_Spell;
-import wizardo.game.Spells.Fire.Flamejet.Flamejet_Spell;
-import wizardo.game.Spells.Fire.Overheat.Overheat_Spell;
-import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Spell;
-import wizardo.game.Spells.Frost.Frozenorb.Frozenorb_Spell;
-import wizardo.game.Spells.Frost.Icespear.Icespear_Spell;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 
@@ -37,20 +21,33 @@ public abstract class Equipment {
     public String name;
     public String title;
     public String description;
-    public String flavorText;
+    public String flavorText = null;
 
     public ArrayList<SpellUtils.Spell_Name> masteries = new ArrayList<>();
     public ArrayList<Integer> quantity_masteries = new ArrayList<>();
     public ArrayList<ItemUtils.GearStat> gearStats = new ArrayList<>();
     public ArrayList<Integer> quantity_gearStats = new ArrayList<>();
 
+    public void update(float delta) {
+
+    }
+    public abstract void pickup();
+
     public abstract void equip();
     public abstract void unequip();
-    public void store() {
+    public void storeAfterUnequip() {
         for (int i = 0; i < player.inventory.holdingBox.length; i++) {
             if(player.inventory.holdingBox[i] == null) {
                 player.inventory.holdingBox[i] = this;
                 this.unequip();
+                break;
+            }
+        }
+    }
+    public void storeAfterPickup() {
+        for (int i = 0; i < player.inventory.holdingBox.length; i++) {
+            if(player.inventory.holdingBox[i] == null) {
+                player.inventory.holdingBox[i] = this;
                 break;
             }
         }
@@ -61,8 +58,14 @@ public abstract class Equipment {
     }
 
     /** returns the value of an item's gearStat according to its order in the gearStat list */
-    public int getStatValue(int index) {
-        return quantity_gearStats.get(index);
+    public float getStatValue(int index) {
+        if(gearStats.get(index) == ItemUtils.GearStat.REGEN) {
+            float regen = quantity_gearStats.get(index);
+            regen = regen/60f;
+            return regen;
+        } else {
+            return quantity_gearStats.get(index);
+        }
     }
 
     public String getFlavorText() {
@@ -90,8 +93,6 @@ public abstract class Equipment {
                 }
             }
         }
-
-
     }
 
 }

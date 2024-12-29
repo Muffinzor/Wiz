@@ -2,6 +2,7 @@ package wizardo.game.Spells.Hybrid.Orbit;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import wizardo.game.Items.Equipment.Book.Epic_OrbitBook;
 import wizardo.game.Spells.Spell;
 
 import static wizardo.game.Spells.SpellUtils.Spell_Element.*;
@@ -17,18 +18,22 @@ public class Orbit_Spell extends Spell {
 
     public boolean frostbolt;
 
+    public float duration;
+
     public Orbit_Spell() {
         name = "Orbit";
-        anim_element = FROST;
-        main_element = FROST;
-        bonus_element = ARCANE;
 
         baseDmg = 20;
         cooldown = 12;
+        duration = 6;
     }
 
     public void setup() {
+        speed *= 1 + (player.spellbook.projSpeedBonus/100f);
         orbitRadius = orbitRadius * (1 + player.spellbook.orbitingIceRadius/100f);
+        if(player.inventory.equippedBook instanceof Epic_OrbitBook) {
+            speed = speed * 1.2f;
+        }
     }
 
     @Override
@@ -41,7 +46,6 @@ public class Orbit_Spell extends Spell {
     public void createOrbs() {
         int randomStart = MathUtils.random(360);
         for (int i = 0; i < orbs; i++) {
-
             float angle = i * 2 * MathUtils.PI / orbs;
             angle+= randomStart;
             float x = player.pawn.getPosition().x + orbitRadius * MathUtils.cos(angle);
@@ -52,7 +56,23 @@ public class Orbit_Spell extends Spell {
             orb.frostbolt = frostbolt;
             orb.orbitRadius = orbitRadius;
             screen.spellManager.toAdd(orb);
+        }
 
+        if(player.inventory.equippedBook instanceof Epic_OrbitBook) {
+            orbitRadius += orbitRadius/2;
+            for (int i = 0; i < orbs; i++) {
+                float angle = i * 2 * MathUtils.PI / orbs;
+                angle+= randomStart;
+                float x = player.pawn.getPosition().x + orbitRadius * MathUtils.cos(angle);
+                float y = player.pawn.getPosition().y + orbitRadius * MathUtils.sin(angle);
+                Vector2 startPos = new Vector2(x, y);
+                Orbit_Projectile orb = new Orbit_Projectile(startPos, angle);
+                orb.reverse = true;
+                orb.setElements(this);
+                orb.frostbolt = frostbolt;
+                orb.orbitRadius = orbitRadius;
+                screen.spellManager.toAdd(orb);
+            }
         }
     }
 

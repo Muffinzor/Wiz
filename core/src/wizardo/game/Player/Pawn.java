@@ -60,6 +60,13 @@ public class Pawn {
             checkXP();
         }
 
+        updateEquippedGear(delta);
+    }
+
+    public void updateEquippedGear(float delta) {
+        if(player.inventory.equippedRobes != null) {
+            player.inventory.equippedRobes.update(delta);
+        }
     }
 
     public void checkXP() {

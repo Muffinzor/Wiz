@@ -14,7 +14,7 @@ import wizardo.game.Utils.BodyFactory;
 
 import java.util.ArrayList;
 
-import static wizardo.game.Resources.SpellAnims.FrostboltAnims.frostbolt_anim_frost;
+import static wizardo.game.Resources.SpellAnims.FrostboltAnims.*;
 import static wizardo.game.Spells.SpellUtils.Spell_Element.FIRE;
 import static wizardo.game.Spells.SpellUtils.Spell_Element.FROST;
 import static wizardo.game.Utils.Constants.PPM;
@@ -25,6 +25,7 @@ public class Frostbolt_Projectile extends Frostbolt_Spell{
     private boolean hasCollided;
     private Body body;
     private float alpha = 1;
+    private float frameScale = 1;
     private RoundLight light;
     private float rotation;
     private Vector2 direction;
@@ -33,7 +34,7 @@ public class Frostbolt_Projectile extends Frostbolt_Spell{
     boolean targetLocked;
 
     public Frostbolt_Projectile(Vector2 spawnPosition, Vector2 targetPosition) {
-
+        stateTime = (float) Math.random();
         this.spawnPosition = spawnPosition;
         this.targetPosition = targetPosition;
         direction = new Vector2(targetPosition.cpy().sub(spawnPosition));
@@ -51,6 +52,7 @@ public class Frostbolt_Projectile extends Frostbolt_Spell{
         if(!initialized) {
             //playSound(screen.player.pawn.getPosition());
             speed = getScaledSpeed();
+            pickAnim();
             createBody();
             createLight();
             initialized = true;
@@ -82,7 +84,7 @@ public class Frostbolt_Projectile extends Frostbolt_Spell{
             if(alpha <= 0) {
                 world.destroyBody(body);
                 body = null;
-                light.dimKill(0.5f);
+                light.dimKill(0.1f);
                 screen.spellManager.toRemove(this);
             }
         }
@@ -93,10 +95,31 @@ public class Frostbolt_Projectile extends Frostbolt_Spell{
         rift();
     }
 
+    public void pickAnim() {
+        switch(anim_element) {
+            case FROST -> {
+                anim = frostbolt_projectile_anim_frost;
+                blue = 0.8f;
+            }
+            case LIGHTNING, COLDLITE -> {
+                anim = frostbolt_projectile_anim_lightning;
+                green = 0.5f;
+                blue = 0.75f;
+                frameScale = 0.5f;
+            }
+            case FIRE -> {
+                anim = frostbolt_projectile_anim_frost;
+                red = 0.7f;
+                green = 0.25f;
+            }
+        }
+    }
+
     public void regularExplosion() {
         Frostbolt_Explosion explosion = new Frostbolt_Explosion();
         explosion.targetPosition = new Vector2(body.getPosition());
-        explosion.inherit(this);
+        explosion.setBolt(this);
+        explosion.setElements(this);
         screen.spellManager.toAdd(explosion);
     }
 
@@ -142,12 +165,6 @@ public class Frostbolt_Projectile extends Frostbolt_Spell{
     }
 
     public void createLight() {
-        if(superBolt) {
-            red = 0.8f;
-            green = 0.15f;
-        } else {
-            blue = 0.8f;
-        }
         light = screen.lightManager.pool.getLight();
         light.setLight(red,green,blue,1,35, body.getPosition());
         screen.lightManager.addLight(light);
@@ -160,14 +177,15 @@ public class Frostbolt_Projectile extends Frostbolt_Spell{
     public void drawFrame() {
 
         Sprite frame = screen.displayManager.spriteRenderer.pool.getSprite();
-        frame.set(frostbolt_anim_frost.getKeyFrame(stateTime, true));
+        frame.set(anim.getKeyFrame(stateTime, true));
         frame.setCenter(body.getPosition().x * PPM, body.getPosition().y * PPM);
         frame.rotate(rotation);
+        frame.setScale(frameScale);
         if(alpha < 1) {
             frame.setAlpha(alpha);
         }
         if(anim_element.equals(FIRE)) {
-            frame.setColor(1,0,0,alpha);
+            frame.setColor(1,0.5f,0.5f,alpha);
         }
         screen.displayManager.spriteRenderer.regular_sorted_sprites.add(frame);
 

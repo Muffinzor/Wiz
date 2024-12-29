@@ -145,9 +145,5 @@ public class Rifts_Spell extends Spell {
         return dmg;
     }
 
-    @Override
-    public boolean isLearnable() {
-        return player.spellbook.rift_lvl > 0;
-    }
 }
 

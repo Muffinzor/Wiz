@@ -296,9 +296,8 @@ public class LightningArcane_Spells {
         litearcaneSpells[25] = litearcane25;
 
         // 26. Rifts + Beam + Thunderstorm
-
         EnergyRain_Spell litearcane26 = new EnergyRain_Spell();
-        litearcane26.riftTargeting = true;
+        litearcane26.rifts =  true;
         litearcane26.anim_element = ARCANE;
         litearcane26.spellParts.add(BEAM);
         litearcane26.spellParts.add(RIFTS);

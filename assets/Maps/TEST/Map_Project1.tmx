@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="64" height="64" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="92">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="64" height="64" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="100">
  <tileset firstgid="1" source="Dungeon_Plus.tsx"/>
  <layer id="1" name="Tile Layer 1" width="64" height="64">
   <data encoding="csv">
@@ -92,6 +92,7 @@
   <object id="22" name="Building1" x="928" y="192" width="256" height="128"/>
   <object id="23" name="Building1" x="1600" y="192" width="256" height="128"/>
   <object id="24" name="Building1" x="256" y="192" width="256" height="128"/>
+  <object id="99" name="Chest" x="782" y="928" width="4" height="4"/>
  </objectgroup>
  <objectgroup id="3" name="DecorBodies">
   <object id="25" name="Vase" x="799" y="930" width="4" height="4"/>
@@ -160,5 +161,14 @@
   <object id="89" name="Vase" x="1770" y="326" width="4" height="4"/>
   <object id="90" name="Vase" x="1821" y="320" width="4" height="4"/>
   <object id="91" name="Vase" x="1795" y="320" width="4" height="4"/>
+ </objectgroup>
+ <objectgroup id="4" name="LootBodies">
+  <object id="92" name="Chest" x="798" y="1184" width="4" height="4"/>
+  <object id="93" name="Chest" x="1485" y="928" width="4" height="4"/>
+  <object id="94" name="Chest" x="1726" y="1824" width="4" height="4"/>
+  <object id="95" name="Chest" x="462" y="1824" width="4" height="4"/>
+  <object id="96" name="Chest" x="371" y="320" width="4" height="4"/>
+  <object id="97" name="Chest" x="958" y="320" width="4" height="4"/>
+  <object id="98" name="Chest" x="606" y="1440" width="4" height="4"/>
  </objectgroup>
 </map>

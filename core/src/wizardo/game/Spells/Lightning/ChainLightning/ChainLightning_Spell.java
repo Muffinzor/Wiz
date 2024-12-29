@@ -162,8 +162,4 @@ public class ChainLightning_Spell extends Spell {
         return dmg;
     }
 
-    @Override
-    public boolean isLearnable() {
-        return player.spellbook.chainlightning_lvl > 0;
-    }
 }

@@ -21,8 +21,10 @@ public class TEST_BIGMONSTER extends MonsterMelee {
         speed = 20f/PPM;
         hp = 300;
         maxHP = 300;
-        massValue = 150f;
 
+        dmg = 15;
+
+        massValue = 150f;
         bodyRadius = 18;
         height = 90;
         width = 32;

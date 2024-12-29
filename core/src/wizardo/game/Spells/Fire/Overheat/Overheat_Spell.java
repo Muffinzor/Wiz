@@ -72,9 +72,4 @@ public class Overheat_Spell extends Spell {
         return dmg;
     }
 
-    @Override
-    public boolean isLearnable() {
-        return player.spellbook.overheat_lvl > 0;
-    }
-
 }

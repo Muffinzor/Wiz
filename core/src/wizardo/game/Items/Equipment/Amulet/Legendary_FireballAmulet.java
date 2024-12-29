@@ -6,13 +6,11 @@ import com.badlogic.gdx.math.MathUtils;
 import wizardo.game.Items.ItemUtils;
 import wizardo.game.Spells.SpellUtils;
 
-import java.util.ArrayList;
-
 import static wizardo.game.Wizardo.player;
 
-public class Fireball_LegendaryAmulet extends Amulet {
+public class Legendary_FireballAmulet extends Amulet {
 
-    public Fireball_LegendaryAmulet() {
+    public Legendary_FireballAmulet() {
         sprite = new Sprite(new Texture("Items/Amulets/3Stones.png"));
         spriteOver = new Sprite(new Texture("Items/Amulets/3Stones_Over.png"));
         displayScale = 0.85f;
@@ -42,19 +40,4 @@ public class Fireball_LegendaryAmulet extends Amulet {
         return "\" We're not even fit to lick\n their boots.\"";
     }
 
-    public void equip() {
-        super.equip();
-        player.stats.bonusMastery_fireball += 2;
-        player.spellbook.fireball_lvl += 2 ;
-        player.spellbook.fireBonusDmg += quantity_gearStats.getFirst();
-    }
-
-    @Override
-    public void unequip() {
-        player.inventory.equippedAmulet = null;
-        player.stats.bonusMastery_fireball -= 2;
-        player.spellbook.fireball_lvl -= 2;
-        player.spellbook.fireBonusDmg -= quantity_gearStats.getFirst();
-        checkForSpellRemoval();
-    }
 }

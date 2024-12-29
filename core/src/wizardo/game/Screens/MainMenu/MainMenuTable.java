@@ -14,9 +14,7 @@ import wizardo.game.Display.MenuTable;
 import wizardo.game.Screens.Hub.HubScreen;
 import wizardo.game.Wizardo;
 
-import java.util.ArrayList;
-
-import static wizardo.game.Screens.BaseScreen.screenRatio;
+import static wizardo.game.Screens.BaseScreen.yRatio;
 
 public class MainMenuTable extends MenuTable {
 
@@ -32,7 +30,7 @@ public class MainMenuTable extends MenuTable {
 
     public void setPosition() {
         int x = Gdx.graphics.getWidth()/2;
-        int y = Gdx.graphics.getHeight()/2 - (int)(200 * screenRatio);
+        int y = Gdx.graphics.getHeight()/2 - (int)(200 * yRatio);
         table.setPosition(x,y);
         stage.addActor(table);
     }

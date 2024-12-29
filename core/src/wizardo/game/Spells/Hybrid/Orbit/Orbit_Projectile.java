@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import wizardo.game.Items.Equipment.Hat.Epic_OrbitHat;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Resources.SpellAnims.FrozenorbAnims;
@@ -19,12 +20,13 @@ import static wizardo.game.Wizardo.world;
 
 public class Orbit_Projectile extends Orbit_Spell {
 
+    public boolean reverse;
+
     Body body;
     RoundLight light;
     float alpha = 1;
 
     float angle;
-    float duration;
     int rotation;
 
     float animTime;
@@ -33,10 +35,9 @@ public class Orbit_Projectile extends Orbit_Spell {
         this.spawnPosition = new Vector2(spawnPosition);
         this.angle = angle;
         radius = 24 * (1 + player.spellbook.iceRadiusBonus/100f);
-        duration = 6;
 
         rotation = MathUtils.random(360);
-        anim = FrozenorbAnims.orbit_anim;
+        anim = FrozenorbAnims.orbit_anim_frost;
     }
 
     public void update(float delta) {
@@ -44,12 +45,18 @@ public class Orbit_Projectile extends Orbit_Spell {
             animTime = (float) Math.random();
             initialized = true;
             speed *= 1 + player.spellbook.orbitSpeed/100f;
+            pickAnim();
             createBody();
             createLight();
+
         }
 
         stateTime += delta;
-        angle += speed * delta;
+        if(reverse) {
+            angle -= speed * delta;
+        } else {
+            angle += speed * delta;
+        }
         float x = player.pawn.getBodyX() + orbitRadius * MathUtils.cos(angle);
         float y = player.pawn.getBodyY() + orbitRadius * MathUtils.sin(angle);
         body.setTransform(x, y, body.getAngle());
@@ -70,10 +77,37 @@ public class Orbit_Projectile extends Orbit_Spell {
 
     }
 
+    public void pickAnim() {
+        switch(anim_element) {
+            case FROST -> {
+                anim = FrozenorbAnims.orbit_anim_frost;
+                blue = 0.9f;
+            }
+            case ARCANE -> {
+                anim = FrozenorbAnims.orbit_anim_arcane;
+                red = 0.9f;
+                green = 0.4f;
+                blue = 1;
+            }
+        }
+    }
+
     public void handleCollision(Monster monster) {
         dealDmg(monster);
-        bombs();
         frostbolts(monster);
+        if(player.inventory.equippedHat instanceof Epic_OrbitHat) {
+            rift(monster);
+        }
+    }
+
+    public void rift(Monster monster) {
+        float procRate = 0.9f;
+        if(Math.random() >= procRate) {
+            Rift_Zone rift = new Rift_Zone(monster.body.getPosition());
+            rift.setElements(this);
+            rift.frostbolt = frostbolt;
+            screen.spellManager.toAdd(rift);
+        }
     }
 
     public void drawFrame() {
@@ -101,22 +135,12 @@ public class Orbit_Projectile extends Orbit_Spell {
     }
     public void createLight() {
         light = screen.lightManager.pool.getLight();
-        light.setLight(0.0f, 0, 0.9f, lightAlpha, 75, body.getPosition());
+        light.setLight(red, green, blue, lightAlpha, 75, body.getPosition());
         screen.lightManager.addLight(light);
     }
 
     public void adjustLight() {
         light.pointLight.setPosition(body.getPosition().scl(PPM));
-    }
-
-    public void bombs() {
-        float procRate = 0.9f;
-        if(Math.random() >= procRate) {
-            Rift_Zone rift = new Rift_Zone(body.getPosition());
-            rift.setElements(this);
-            rift.anim_element = FROST;
-            screen.spellManager.toAdd(rift);
-        }
     }
 
     public void frostbolts(Monster monster) {

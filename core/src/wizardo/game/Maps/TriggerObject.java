@@ -6,7 +6,7 @@ import wizardo.game.Maps.MapGeneration.MapChunk;
 
 public abstract class TriggerObject extends LayerObject{
 
-    public Body body;
+    public Body triggerBody;
     
     public TriggerObject(MapChunk chunk, MapObject object) {
         super(chunk, object);
@@ -14,4 +14,8 @@ public abstract class TriggerObject extends LayerObject{
     }
 
     public abstract void handleCollision();
+
+    public void trigger() {
+
+    }
 }

@@ -29,7 +29,7 @@ public class PortalObject extends TriggerObject {
             createBody();
             createLight();
             if(!active) {
-                body.setActive(false);
+                triggerBody.setActive(false);
             }
         }
 
@@ -42,7 +42,7 @@ public class PortalObject extends TriggerObject {
     public void dispose() {
         if(initialized) {
             light.dimKill(0.5f);
-            world.destroyBody(body);
+            world.destroyBody(triggerBody);
             initialized = false;
         }
     }
@@ -55,18 +55,18 @@ public class PortalObject extends TriggerObject {
         Sprite frame = getSprite(chunk.screen);
         frame.set(GeneralDecorResources.blue_portal_anim.getKeyFrame(stateTime, true));
         frame.setAlpha(0.8f);
-        frame.setCenter(body.getPosition().x * PPM, body.getPosition().y * PPM + 20);
+        frame.setCenter(triggerBody.getPosition().x * PPM, triggerBody.getPosition().y * PPM + 20);
         chunk.screen.displayManager.spriteRenderer.regular_sorted_sprites.add(frame);
     }
 
     public void createBody() {
-        body = MapUtils.createEventTriggerBody(chunk, object, 15);
-        body.setUserData(this);
+        triggerBody = MapUtils.createEventTriggerBody(chunk, object, 15);
+        triggerBody.setUserData(this);
     }
 
     public void createLight() {
-        light = new RoundLight(chunk.screen);
-        light.setLight(0,0,0.4f,0.8f,125, body.getPosition());
+        light = chunk.screen.lightManager.pool.getLight();
+        light.setLight(0,0,0.4f,0.8f,125, triggerBody.getPosition());
         chunk.screen.lightManager.addLight(light);
     }
 }

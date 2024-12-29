@@ -1,6 +1,7 @@
 package wizardo.game.Utils.Contacts;
 
 import com.badlogic.gdx.physics.box2d.*;
+import wizardo.game.Items.Drop.Drop;
 import wizardo.game.Maps.LayerObject;
 import wizardo.game.Maps.TriggerObject;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
@@ -38,16 +39,32 @@ public class WizContactListener implements ContactListener {
         boolean f1isDecor = (f1.getFilterData().categoryBits & DECOR) != 0;
         boolean f2isDecor = (f2.getFilterData().categoryBits & DECOR) != 0;
 
+        boolean f1isDrop = (f1.getFilterData().categoryBits & DROP) != 0;
+        boolean f2isDrop = (f2.getFilterData().categoryBits & DROP) != 0;
+
 
         /* PAWN + TRIGGER */
         if(f1isPawn && f2isTrigger || f2isPawn && f1isTrigger) {
             TriggerObject object;
             if(f2isTrigger) {
                 object = (TriggerObject) f2.getBody().getUserData();
+                player.nearbyTriggerObject = object;
             } else {
                 object = (TriggerObject) f1.getBody().getUserData();
+                player.nearbyTriggerObject = object;
             }
             object.handleCollision();
+        } else
+
+        /* PAWN + ITEMDROP */
+        if(f1isPawn && f2isDrop || f2isPawn && f1isDrop) {
+            if(f2isDrop) {
+                Drop drop = (Drop) f2.getBody().getUserData();
+                drop.pickup();
+            } else {
+                Drop drop = (Drop) f1.getBody().getUserData();
+                drop.pickup();
+            }
         } else
 
         /* MONSTER + SPELL */
@@ -143,7 +160,31 @@ public class WizContactListener implements ContactListener {
 
     @Override
     public void endContact(Contact contact) {
+        Fixture f1 = contact.getFixtureA();
+        Fixture f2 = contact.getFixtureB();
 
+        boolean f1isTrigger = (f1.getFilterData().categoryBits & TRIGGER) != 0;
+        boolean f2isTrigger = (f2.getFilterData().categoryBits & TRIGGER) != 0;
+
+        boolean f1isPawn = (f1.getFilterData().categoryBits & PAWN) != 0;
+        boolean f2isPawn = (f2.getFilterData().categoryBits & PAWN) != 0;
+
+        /* PAWN + TRIGGER */
+        if(f1isPawn && f2isTrigger || f2isPawn && f1isTrigger) {
+            TriggerObject object;
+            if(f2isTrigger) {
+                object = (TriggerObject) f2.getBody().getUserData();
+                if(player.nearbyTriggerObject != null && player.nearbyTriggerObject.equals(object)) {
+                    player.nearbyTriggerObject = null;
+                }
+            } else {
+                object = (TriggerObject) f1.getBody().getUserData();
+                if(player.nearbyTriggerObject != null && player.nearbyTriggerObject.equals(object)) {
+                    player.nearbyTriggerObject = null;
+                }
+            }
+            object.handleCollision();
+        }
     }
 
     @Override

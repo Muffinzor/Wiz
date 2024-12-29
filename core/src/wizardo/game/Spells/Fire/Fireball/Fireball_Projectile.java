@@ -5,8 +5,8 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
-import wizardo.game.Items.Equipment.Amulet.Fireball_LegendaryAmulet;
-import wizardo.game.Items.Equipment.Staff.Fireball_EpicStaff;
+import wizardo.game.Items.Equipment.Amulet.Legendary_FireballAmulet;
+import wizardo.game.Items.Equipment.Staff.Epic_FireballStaff;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Resources.SpellAnims.FireballAnims;
@@ -79,7 +79,7 @@ public class Fireball_Projectile extends Fireball_Spell {
 
     public void legendaryAmuletEffect(Monster monster) {
 
-        if(player.inventory.equippedAmulet instanceof Fireball_LegendaryAmulet) {
+        if(player.inventory.equippedAmulet instanceof Legendary_FireballAmulet) {
             dealDmg(monster);
             hasCollided = false;
             if(Math.random() > 0.9f || totalCollisions == 0) {
@@ -115,7 +115,7 @@ public class Fireball_Projectile extends Fireball_Spell {
         body = BodyFactory.spellProjectileCircleBody(adjustedSpawn, 12 * effectRatio, true);
         body.setUserData(this);
 
-        if(player.inventory.equippedStaff instanceof Fireball_EpicStaff) {
+        if(player.inventory.equippedStaff instanceof Epic_FireballStaff) {
             float angleVariation = 10;
             float randomAngle = MathUtils.random(-angleVariation, angleVariation);
             direction.rotateDeg(randomAngle);

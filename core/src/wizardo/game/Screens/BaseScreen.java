@@ -61,7 +61,10 @@ public abstract class BaseScreen implements Screen {
     public static InputMultiplexer inputMultiplexer = new InputMultiplexer();
     public static boolean controllerActive;
     public static boolean mouseInvisible;
-    public static float screenRatio;
+
+
+    public static float xRatio;
+    public static float yRatio;
 
     public Wizardo game;
     public SpriteBatch batch;
@@ -78,7 +81,6 @@ public abstract class BaseScreen implements Screen {
     public SpellManager spellManager;
     public MonsterManager monsterManager;
 
-    public ArrayList<Animation> animations;
     public OrthographicCamera mainCamera;
     public OrthographicCamera uiCamera;
 
@@ -92,7 +94,7 @@ public abstract class BaseScreen implements Screen {
         mainCamera = game.mainCamera;
         uiCamera = game.uiCamera;
         this.batch = new SpriteBatch();
-        animations = new ArrayList<>();
+
         displayManager = new DisplayManager(this);
         lightManager = new LightManager(this);
 
@@ -108,10 +110,15 @@ public abstract class BaseScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        screenRatio = width/1920f;
+        xRatio = width/1920f;
+        yRatio = height/1080f;
         mainCamera.viewportWidth = width;
         mainCamera.viewportHeight = height;
         mainCamera.update();
+        uiCamera.viewportWidth = width;
+        uiCamera.viewportHeight = height;
+        uiCamera.update();
+        uiCamera.setToOrtho(false, width, height);
     }
 
     public void removeInputs() {

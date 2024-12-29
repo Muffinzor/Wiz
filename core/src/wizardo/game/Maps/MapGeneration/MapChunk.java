@@ -1,10 +1,13 @@
 package wizardo.game.Maps.MapGeneration;
 
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import wizardo.game.Maps.Chest;
 import wizardo.game.Maps.LayerObject;
 import wizardo.game.Screens.BaseScreen;
 import wizardo.game.Wizardo;
@@ -50,4 +53,17 @@ public abstract class MapChunk {
     public abstract void createBodies();
 
     public abstract void disposeBodies();
+
+    public void createChests() {
+        MapObjects obstacles = map.getLayers().get("LootBodies").getObjects();
+
+        for(MapObject object : obstacles) {
+
+            if(object.getName().equals("Chest")) {
+                Chest chest = new Chest(this, object, -1);
+                layerObjects.add(chest);
+            }
+
+        }
+    }
 }

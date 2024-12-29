@@ -17,7 +17,8 @@ public class FrozenorbAnims {
     public static String frozenorb_atlas_path_arcane = "Spells/Frozenorb/FrozenOrb_Arcane.atlas";
     public static String frozenorb_atlas_path_lightning = "Spells/Frozenorb/lightning_orb.atlas";
 
-    public static Animation<Sprite> orbit_anim;
+    public static Animation<Sprite> orbit_anim_frost;
+    public static Animation<Sprite> orbit_anim_arcane;
 
     public static void loadAnimations() {
         TextureAtlas frost_atlas = assetManager.get(frozenorb_atlas_path_frost, TextureAtlas.class);
@@ -53,7 +54,13 @@ public class FrozenorbAnims {
         for (int i = 20; i < orbit_frames.length + 20; i++) {
             orbit_frames[i - 20] = frost_atlas.createSprite("orb" + (i + 1));
         }
-        orbit_anim = new Animation<>(0.032f, orbit_frames);
+        orbit_anim_frost = new Animation<>(0.032f, orbit_frames);
+
+        Sprite[] orbit_frames2 = new Sprite[160];
+        for (int i = 20; i < orbit_frames2.length + 20; i++) {
+            orbit_frames2[i - 20] = arcane_atlas.createSprite("orb" + (i + 1));
+        }
+        orbit_anim_arcane = new Animation<>(0.032f, orbit_frames2);
 
     }
 

@@ -102,8 +102,4 @@ public class ChargedBolts_Spell extends Spell {
         }
     }
 
-    @Override
-    public boolean isLearnable() {
-        return player.spellbook.chargedbolt_lvl > 0;
-    }
 }

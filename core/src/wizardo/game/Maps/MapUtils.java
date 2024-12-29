@@ -2,11 +2,10 @@ package wizardo.game.Maps;
 
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import wizardo.game.Maps.MapGeneration.MapChunk;
-import wizardo.game.Utils.BodyFactory;
 
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Utils.Contacts.Masks.*;
@@ -14,14 +13,48 @@ import static wizardo.game.Wizardo.world;
 
 public class MapUtils {
 
-    /**
-     *
-     * @param chunk
-     * @param object
-     * @param radius
-     * @return
-     */
-    public static Body createCircleDecorBody(MapChunk chunk, MapObject object, float radius, boolean isSensor, boolean isStatic) {
+    public static Body createCircleDecorBody_FromVector(Vector2 position, float radius, boolean isSensor, boolean isStatic) {
+        Body body;
+        BodyDef def = new BodyDef();
+
+        float x = position.x;
+        float y = position.y;
+
+        if(isStatic) {
+            def.type = BodyDef.BodyType.StaticBody;
+        } else {
+            def.type = BodyDef.BodyType.DynamicBody;
+        }
+
+        def.position.set(x/PPM, y/PPM);
+        def.fixedRotation = true;
+        def.linearDamping = 10000f;
+        def.angularDamping = 10000f;
+        body = world.createBody(def);
+
+        if(!isStatic) {
+            MassData mass = new MassData();
+            float newMass = 20000;
+            mass.mass = newMass;
+            body.setMassData(mass);
+        }
+
+        CircleShape shape = new CircleShape();
+        shape.setRadius(radius / PPM);
+
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = shape;
+        fixtureDef.filter.categoryBits = DECOR;
+        fixtureDef.filter.maskBits = DECOR_MASK;
+        fixtureDef.isSensor = isSensor;
+
+
+        body.createFixture(fixtureDef);
+        shape.dispose();
+
+        return body;
+    }
+    public static Body createCircleDecorBody_FromTiledMap(MapChunk chunk, MapObject object, float radius, boolean isSensor, boolean isStatic) {
         Body body;
         BodyDef def = new BodyDef();
 
