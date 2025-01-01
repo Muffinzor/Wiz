@@ -11,6 +11,7 @@ import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Explosion;
 import wizardo.game.Utils.BodyFactory;
 
 import static wizardo.game.Utils.Constants.PPM;
+import static wizardo.game.Wizardo.player;
 import static wizardo.game.Wizardo.world;
 
 public class Blizzard_Explosion extends Blizzard_Spell {
@@ -44,7 +45,7 @@ public class Blizzard_Explosion extends Blizzard_Spell {
         stateTime += delta;
 
         if(stateTime >= anim.getAnimationDuration()) {
-            screen.spellManager.toRemove(this);
+            screen.spellManager.remove(this);
             world.destroyBody(body);
         }
     }
@@ -96,11 +97,14 @@ public class Blizzard_Explosion extends Blizzard_Spell {
 
     public void frostbolts() {
         if(frostbolts) {
-            Frostbolt_Explosion bolt = new Frostbolt_Explosion();
-            bolt.screen = screen;
-            bolt.setElements(this);
-            bolt.targetPosition = new Vector2(targetPosition);
-            screen.spellManager.toAdd(bolt);
+            float procRate = 0.8f - 0.08f * player.spellbook.frostbolt_lvl;
+            if(Math.random() >= procRate) {
+                Frostbolt_Explosion bolt = new Frostbolt_Explosion();
+                bolt.screen = screen;
+                bolt.setElements(this);
+                bolt.targetPosition = new Vector2(targetPosition);
+                screen.spellManager.add(bolt);
+            }
         }
     }
 }

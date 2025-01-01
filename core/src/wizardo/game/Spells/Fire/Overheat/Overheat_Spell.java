@@ -19,6 +19,8 @@ public class Overheat_Spell extends Spell {
 
     public Overheat_Spell() {
 
+        multicastable = false;
+
         name = "Overheat";
 
         radius = 200;
@@ -42,13 +44,13 @@ public class Overheat_Spell extends Spell {
         explosion.flameBeam = flameBeam;
         explosion.setElements(this);
         explosion.nested_spell = nested_spell;
-        screen.spellManager.toAdd(explosion);
-        screen.spellManager.toRemove(this);
+        screen.spellManager.add(explosion);
+        screen.spellManager.remove(this);
 
         if(thunderstorm) {
             Thunderstorm_Hit thunder = new Thunderstorm_Hit(player.pawn.getPosition());
             thunder.setElements(this);
-            screen.spellManager.toAdd(thunder);
+            screen.spellManager.add(thunder);
         }
 
 

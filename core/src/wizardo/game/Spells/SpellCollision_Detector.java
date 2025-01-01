@@ -30,7 +30,7 @@ public class SpellCollision_Detector extends Spell {
         }
         if(hasCollided || body.getPosition().dst(spawnPosition) > maxDistance) {
             world.destroyBody(body);
-            screen.spellManager.toRemove(this);
+            screen.spellManager.remove(this);
         }
     }
 

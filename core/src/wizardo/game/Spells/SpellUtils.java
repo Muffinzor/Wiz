@@ -22,6 +22,18 @@ public class SpellUtils {
         COLDLITE
     }
 
+    public static Spell_Element getRandomClassicElement() {
+        Spell_Element ele = null;
+        int random = MathUtils.random(1,4);
+        switch (random) {
+            case 1 -> ele = Spell_Element.FIRE;
+            case 2 -> ele = Spell_Element.FROST;
+            case 3 -> ele = Spell_Element.ARCANE;
+            case 4 -> ele = Spell_Element.LIGHTNING;
+        }
+        return ele;
+    }
+
     public enum Spell_Name {
         FROSTBOLT,
         FLAMEJET,

@@ -125,52 +125,53 @@ public class GearPanel {
         if(piece.getDescription() != null) {
             Label textLabel = new Label(piece.getDescription(), inventorySkin, "Gear_Text");
             textLabel.setAlignment(Align.center);
-            contentTable.add(textLabel).expandX().align(Align.center).colspan(2);
-            contentTable.row().padTop(20);
+            contentTable.add(textLabel).expandX().align(Align.center).colspan(2).padBottom(20);
+            contentTable.row();
         }
     }
 
     public void createStatLabels() {
         if(!piece.masteries.isEmpty() || !piece.gearStats.isEmpty()) {
             gearStatsTable = new Table();
-        }
-        if(!piece.masteries.isEmpty()) {
-            for (int i = 0; i < piece.masteries.size(); i++) {
-                String s = "+" + piece.quantity_masteries.get(i) + " to " + getSpellString(piece.masteries.get(i)) + " mastery";
-                Label masteryLabel = new Label(s , inventorySkin, "Gear_Text");
-                masteryLabel.setColor(getMasteryColor(piece.masteries.get(i)));
-                masteryLabel.setAlignment(Align.left);
-                gearStatsTable.add(masteryLabel).align(Align.left).fillX();
-                gearStatsTable.row().padTop(5);
+            if (!piece.masteries.isEmpty()) {
+                for (int i = 0; i < piece.masteries.size(); i++) {
+                    String s = "+" + piece.quantity_masteries.get(i) + " to " + getSpellString(piece.masteries.get(i)) + " mastery";
+                    Label masteryLabel = new Label(s, inventorySkin, "Gear_Text");
+                    masteryLabel.setColor(getMasteryColor(piece.masteries.get(i)));
+                    masteryLabel.setAlignment(Align.left);
+                    gearStatsTable.add(masteryLabel).align(Align.left).fillX();
+                    gearStatsTable.row().padTop(5);
+                }
             }
-        }
-        if(!piece.gearStats.isEmpty()) {
-            for (int i = 0; i < piece.gearStats.size(); i++) {
-                Table smalltable = new Table();
-                String s = "" + getGearStatString(piece.gearStats.get(i));
-                Label gearStatLabel = new Label(s, inventorySkin, "Gear_Text");
-                gearStatLabel.setColor(getGearStatColor(piece.gearStats.get(i)));
-                gearStatLabel.setAlignment(Align.left);
-                smalltable.add(gearStatLabel).align(Align.left);
+            if (!piece.gearStats.isEmpty()) {
+                for (int i = 0; i < piece.gearStats.size(); i++) {
+                    Table smalltable = new Table();
+                    String s = "" + getGearStatString(piece.gearStats.get(i));
+                    Label gearStatLabel = new Label(s, inventorySkin, "Gear_Text");
+                    gearStatLabel.setColor(getGearStatColor(piece.gearStats.get(i)));
+                    gearStatLabel.setAlignment(Align.left);
+                    smalltable.add(gearStatLabel).align(Align.left);
 
-                String percent = getPercentIfNeeded(piece.gearStats.get(i));
-                float statValue = piece.getStatValue(i);
-                String formattedValue = (statValue == Math.floor(statValue))
-                        ? String.format("%.0f", statValue)
-                        : String.format("%.1f", statValue);
+                    String percent = getPercentIfNeeded(piece.gearStats.get(i));
+                    float statValue = piece.getStatValue(i);
+                    String formattedValue = (statValue == Math.floor(statValue))
+                            ? String.format("%.0f", statValue)
+                            : String.format("%.1f", statValue);
 
-                String value = formattedValue + percent;
-                Label gearStatValue = new Label(value, inventorySkin, "Gear_Text");
-                gearStatValue.setColor(Color.GREEN);
-                gearStatValue.setAlignment(Align.left);
-                smalltable.add(gearStatValue).align(Align.left);
-                gearStatsTable.add(smalltable).align(Align.left);
-                gearStatsTable.row().padTop(5);
+                    String value = formattedValue + percent;
+                    Label gearStatValue = new Label(value, inventorySkin, "Gear_Text");
+                    gearStatValue.setColor(Color.GREEN);
+                    gearStatValue.setAlignment(Align.left);
+                    smalltable.add(gearStatValue).align(Align.left);
+                    gearStatsTable.add(smalltable).align(Align.left);
+                    gearStatsTable.row().padTop(5);
+                }
             }
+            contentTable.add(gearStatsTable).align(Align.left);
+            contentTable.row().padTop(20);
+            container.pack();
         }
-        contentTable.add(gearStatsTable).align(Align.left);
-        contentTable.row();
-        container.pack();
+
     }
 
     public String getPercentIfNeeded(ItemUtils.GearStat stat) {
@@ -179,7 +180,7 @@ public class GearPanel {
             return s;
         }
         switch(stat) {
-            case LUCK, DEFENSE, MASTERY_FROST, MASTERY_ARCANE, MASTERY_LIGHTNING, MASTERY_FIRE, REGEN -> s = "";
+            case LUCK, DEFENSE, MASTERY_FROST, MASTERY_ARCANE, MASTERY_LIGHTNING, MASTERY_FIRE, REGEN, MASTERY_ALL -> s = "";
         }
         return s;
     }
@@ -204,6 +205,7 @@ public class GearPanel {
             case LITEDMG, MASTERY_LIGHTNING -> color = inventorySkin.getColor("Lightning");
             case ARCANEDMG, MASTERY_ARCANE -> color = inventorySkin.getColor("Arcane");
             case REGEN -> color = inventorySkin.getColor("Regen");
+            case MASTERY_ALL -> color = Color.GREEN;
         }
         return color;
     }
@@ -243,9 +245,11 @@ public class GearPanel {
             case MASTERY_FIRE -> s = "Fire masteries increased by ";
             case MASTERY_LIGHTNING -> s = "Lightning masteries increased by ";
             case MASTERY_ARCANE -> s = "Arcane masteries increased by ";
+            case MASTERY_ALL -> s = "All masteries increased by ";
             case REGEN -> s = "Bonus shield per second: ";
             case DEFENSE -> s = "Damage received reduced by: ";
             case PROJSPEED -> s = "Increased projectile speed: ";
+            case WALKSPEED -> s = "Increased walking speed: ";
         }
         return s;
     }
@@ -255,7 +259,7 @@ public class GearPanel {
         if(piece.getFlavorText() != null) {
             Label textLabel = new Label(piece.getFlavorText(), inventorySkin, "Gear_Flavor");
             textLabel.setAlignment(Align.center);
-            contentTable.add(textLabel).padBottom(60).padTop(15).expandX().align(Align.top).colspan(2);
+            contentTable.add(textLabel).padBottom(60).expandX().align(Align.top).colspan(2);
             contentTable.row();
         }
     }

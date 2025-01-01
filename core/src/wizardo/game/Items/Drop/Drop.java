@@ -25,7 +25,9 @@ public abstract class Drop {
     public boolean pickedUp;
 
     public Body body;
+    public float alpha = 1;
     public RoundLight light;
+    public float lightRadius = 35f;
     public Vector2 spawnPosition;
     public boolean goToPlayer;
     public Vector2 pickedUpLocation;
@@ -34,6 +36,7 @@ public abstract class Drop {
 
     public Sprite sprite;
     public Animation<Sprite> flareAnim;
+    public Animation<Sprite> pickupAnim;
     float red;
     float green;
     float blue;
@@ -48,6 +51,7 @@ public abstract class Drop {
         frameCounter++;
 
         if(!initialized) {
+            spawnPosition = new Vector2(spawnPosition.x, spawnPosition.y - 0.1f);
             initialized = true;
             setup();
             flipX = MathUtils.randomBoolean();
@@ -55,12 +59,20 @@ public abstract class Drop {
             createLight();
         }
 
+
+        drawFrame();
+
+        if(stateTime >= 30) {
+            fade(delta);
+            return;
+        }
+
+        stateTime += delta;
+
         if(intangible && stateTime >= 1f) {
             becomeTangible();
         }
 
-        stateTime += delta;
-        drawFrame();
         adjustLight();
 
         if(goToPlayer) {
@@ -79,13 +91,25 @@ public abstract class Drop {
             checkDistance();
         }
     }
+    public void fade(float delta) {
+        stateTime += delta;
+        alpha -= 0.02f;
+        if(body.isActive()) {
+            body.setActive(false);
+        }
+        if(light != null) {
+            light.dimKill(0.02f);
+            light = null;
+        }
+        if(alpha < 0.05f && !pickedUp) {
+            world.destroyBody(body);
+        }
+    }
 
     public void checkDistance() {
         float dst = body.getPosition().dst(player.pawn.getPosition());
         if(dst < pickupRadius * (1 + player.stats.pickupRadiusBonus/100f)) {
-            if(player.inventory.hasSpace()) {
-                goToPlayer = true;
-            }
+            goToPlayer = !(this instanceof EquipmentDrop) || player.inventory.hasSpace();
         }
     }
 
@@ -95,6 +119,7 @@ public abstract class Drop {
                 Sprite frame2 = screen.getSprite();
                 frame2.set(flareAnim.getKeyFrame(stateTime, true));
                 frame2.setScale(0.8f * flareScale);
+                frame2.setAlpha(alpha);
                 frame2.setCenter(body.getPosition().x * PPM, body.getPosition().y * PPM);
                 screen.addSortedSprite(frame2);
                 screen.centerSort(frame2, body.getPosition().y * PPM + 5);
@@ -105,12 +130,13 @@ public abstract class Drop {
             frame.set(sprite);
             frame.setCenter(body.getPosition().x * PPM, body.getPosition().y * PPM);
             frame.flip(flipX, false);
+            frame.setAlpha(alpha);
             frame.setScale(displayScale);
             screen.addSortedSprite(frame);
             screen.centerSort(frame, body.getPosition().y * PPM);
         } else {
             Sprite frame = screen.getSprite();
-            frame.set(GearFlareAnims.gear_pop.getKeyFrame(stateTime, false));
+            frame.set(pickupAnim.getKeyFrame(stateTime, false));
             frame.rotate(flareRotation);
             frame.setCenter(body.getPosition().x * PPM, body.getPosition().y * PPM);
             screen.addSortedSprite(frame);
@@ -125,7 +151,7 @@ public abstract class Drop {
         if(direction.len() > 0) {
             direction.nor();
         }
-        direction.scl(3.5f);
+        direction.scl(2f);
         body.setLinearVelocity(direction);
     }
 
@@ -134,13 +160,13 @@ public abstract class Drop {
         filter.categoryBits = DROP;
         filter.maskBits = DROP_MASK;
         body.getFixtureList().first().setFilterData(filter);
-        body.getFixtureList().first().setSensor(false);
+        body.getFixtureList().first().setSensor(true);
         intangible = false;
     }
 
     public void createLight() {
         light = screen.lightManager.pool.getLight();
-        light.setLight(red,green,blue,1, 35, body.getPosition());
+        light.setLight(red,green,blue,1, lightRadius, body.getPosition());
         screen.lightManager.addLight(light);
     }
 

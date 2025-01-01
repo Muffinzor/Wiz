@@ -8,7 +8,6 @@ import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Resources.SpellAnims.OverheatAnims;
 import wizardo.game.Spells.Arcane.EnergyBeam.EnergyBeam_Projectile;
-import wizardo.game.Spells.Arcane.EnergyBeam.EnergyBeam_Spell;
 import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Explosion;
 import wizardo.game.Spells.Frost.Icespear.Icespear_Spell;
 import wizardo.game.Spells.Lightning.ChainLightning.ChainLightning_Hit;
@@ -84,7 +83,7 @@ public class Overheat_Explosion extends Overheat_Spell {
 
         if(stateTime >= anim.getAnimationDuration()) {
             world.destroyBody(body);
-            screen.spellManager.toRemove(this);
+            screen.spellManager.remove(this);
         }
     }
 
@@ -168,7 +167,7 @@ public class Overheat_Explosion extends Overheat_Spell {
                 Frostbolt_Explosion explosion = new Frostbolt_Explosion();
                 explosion.setElements(this);
                 explosion.targetPosition = SpellUtils.getRandomVectorInRadius(body.getPosition(), radius);
-                screen.spellManager.toAdd(explosion);
+                screen.spellManager.add(explosion);
             }
         }
     }
@@ -186,7 +185,7 @@ public class Overheat_Explosion extends Overheat_Spell {
                 Frostbolt_Explosion explosion = new Frostbolt_Explosion();
                 explosion.setElements(this);
                 explosion.targetPosition = SpellUtils.getRandomVectorInRadius(body.getPosition(), radius);
-                screen.spellManager.toAdd(explosion);
+                screen.spellManager.add(explosion);
 
             }
         }
@@ -205,7 +204,7 @@ public class Overheat_Explosion extends Overheat_Spell {
                 fireball.nested_spell = nested_spell;
                 fireball.setElements(this);
                 fireball.targetPosition = new Vector2(monster.body.getPosition());
-                screen.spellManager.toAdd(fireball);
+                screen.spellManager.add(fireball);
             }
         }
 
@@ -225,7 +224,7 @@ public class Overheat_Explosion extends Overheat_Spell {
                         chain.nested_spell = new ChargedBolts_Spell();
                     }
                     chain.originBody = body;
-                    screen.spellManager.toAdd(chain);
+                    screen.spellManager.add(chain);
                 }
             }
         }
@@ -242,7 +241,7 @@ public class Overheat_Explosion extends Overheat_Spell {
                 spear.setElements(this);
                 spear.spawnPosition = new Vector2(body.getPosition());
                 spear.targetPosition = SpellUtils.getRandomVectorInRadius(body.getPosition(), 2);
-                screen.spellManager.toAdd(spear);
+                screen.spellManager.add(spear);
             }
         }
     }
@@ -257,7 +256,7 @@ public class Overheat_Explosion extends Overheat_Spell {
                 EnergyBeam_Projectile beam = new EnergyBeam_Projectile(body.getPosition(), inRange.removeFirst().body.getPosition());
                 beam.setElements(this);
                 beam.flamejet = true;
-                screen.spellManager.toAdd(beam);
+                screen.spellManager.add(beam);
             }
         }
     }
@@ -280,7 +279,7 @@ public class Overheat_Explosion extends Overheat_Spell {
                 proj.setElements(this);
                 proj.targetPosition = SpellUtils.getRandomVectorInRadius(body.getPosition(), 5);
                 proj.spawnPosition = new Vector2(body.getPosition());
-                screen.spellManager.toAdd(proj);
+                screen.spellManager.add(proj);
 
             }
         }

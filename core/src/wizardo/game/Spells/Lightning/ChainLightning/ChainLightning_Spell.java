@@ -1,6 +1,7 @@
 package wizardo.game.Spells.Lightning.ChainLightning;
 
 import com.badlogic.gdx.math.Vector2;
+import wizardo.game.Items.Equipment.Hat.Legendary_SentientHat;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
@@ -38,6 +39,8 @@ public class ChainLightning_Spell extends Spell {
 
         cooldown = 1.2f;
         baseDmg = 35;
+        autoaimable = true;
+
 
         main_element = SpellUtils.Spell_Element.LIGHTNING;
 
@@ -53,13 +56,15 @@ public class ChainLightning_Spell extends Spell {
 
         if(delta > 0) {
 
-            Vector2 center = findTarget();
 
-            ArrayList<Monster> inRange = SpellUtils.findMonstersInRangeOfVector(center, 5, true);
+            Vector2 center = checkAutoAim();
+            float radius = checkRadius();
+
+            ArrayList<Monster> inRange = SpellUtils.findMonstersInRangeOfVector(center, radius, true);
 
             shootLightning(center, inRange);
 
-            screen.spellManager.toRemove(this);
+            screen.spellManager.remove(this);
 
         }
     }
@@ -124,7 +129,7 @@ public class ChainLightning_Spell extends Spell {
                     chain.originBody = player.pawn.body;
                 }
 
-                screen.spellManager.toAdd(chain);
+                screen.spellManager.add(chain);
 
             }
         }
@@ -160,6 +165,22 @@ public class ChainLightning_Spell extends Spell {
         dmg += 8 * getLvl();
         dmg = (int) (dmg * (1 + player.spellbook.voltageBonusDmg/100f));
         return dmg;
+    }
+
+    public Vector2 checkAutoAim() {
+        if(player.inventory.equippedHat instanceof Legendary_SentientHat) {
+            return new Vector2(player.pawn.getPosition());
+        } else {
+            return findTarget();
+        }
+    }
+
+    public float checkRadius() {
+        if(player.inventory.equippedHat instanceof Legendary_SentientHat) {
+            return 8;
+        } else {
+            return 5;
+        }
     }
 
 }

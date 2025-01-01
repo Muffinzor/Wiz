@@ -7,7 +7,7 @@ import static wizardo.game.Wizardo.player;
 
 public class Frostbolt_Spell extends Spell {
 
-    public int projectiles = 3;
+    public int projectiles = 1;
 
     public boolean chargedbolt;
     public boolean missile;
@@ -22,27 +22,47 @@ public class Frostbolt_Spell extends Spell {
         radius = 25;
         baseDmg = 24;
         cooldown = 0.8f;
+        autoaimable = true;
 
         main_element = SpellUtils.Spell_Element.FROST;
 
     }
 
+    public void setup() {
+        float extraProjs = 0;
+        if(targetPosition == null) {
+            float bonus = (player.spellbook.frostbolt_lvl - 1) / 2f;
+            if((bonus % 1) > 0) {
+                float remainder = bonus % 1;
+                if(Math.random() >= 1 - remainder) {
+                    extraProjs ++;
+                }
+                extraProjs += (float) Math.floor(bonus);
+            } else {
+                extraProjs = bonus;
+            }
+        }
+        projectiles += extraProjs;
+    }
+
     @Override
     public void update(float delta) {
+        setup();
 
-        if(targetPosition != null) {
-            projectiles = 1;
-        } else {
-            projectiles = 2 + getLvl()/2;
+        autoAimCheck();
+
+        if(targetPosition == null) {
+            return;
         }
 
         for (int i = 0; i < projectiles; i++) {
-            Frostbolt_Projectile bolt = new Frostbolt_Projectile(getSpawnPosition(), getTargetPosition());
+
+            Frostbolt_Projectile bolt = new Frostbolt_Projectile(getSpawnPosition(), targetPosition);
             bolt.setBolt(this);
             bolt.setElements(this);
-            screen.spellManager.toAdd(bolt);
-            screen.spellManager.toRemove(this);
+            screen.spellManager.add(bolt);
         }
+        screen.spellManager.remove(this);
 
     }
 
@@ -70,5 +90,6 @@ public class Frostbolt_Spell extends Spell {
         this.rifts = parent.rifts;
         this.superBolt = parent.superBolt;
         this.chargedbolt = parent.chargedbolt;
+        this.projectiles = parent.projectiles;
     }
 }

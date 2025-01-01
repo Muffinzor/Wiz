@@ -149,8 +149,6 @@ public abstract class MonsterSpell implements Cloneable {
 
         direction = new Vector2(targetPosition.cpy().sub(spawnPosition));
         direction.nor();
-        //Vector2 offset = new Vector2(direction.cpy().scl(originMonster.bodyRadius/PPM));
-        //Vector2 adjustedSpawn = new Vector2(spawnPosition.add(offset));
 
         body = BodyFactory.monsterProjectileBody(spawnPosition, radius);
         body.setUserData(this);

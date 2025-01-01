@@ -4,12 +4,12 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import wizardo.game.Items.Equipment.Staff.Epic_FrostboltStaff;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Resources.SpellAnims.ExplosionAnims_Toon;
 import wizardo.game.Spells.Lightning.ChargedBolts.ChargedBolts_Spell;
 import wizardo.game.Spells.SpellUtils;
-import wizardo.game.Spells.Unique.ThundergodBolt.ThundergodBolt_Projectile;
 import wizardo.game.Utils.BodyFactory;
 
 import static wizardo.game.Resources.SpellAnims.FrostboltAnims.*;
@@ -57,7 +57,7 @@ public class Frostbolt_Explosion extends Frostbolt_Spell{
         }
 
         if(stateTime >= anim.getAnimationDuration()) {
-            screen.spellManager.toRemove(this);
+            screen.spellManager.remove(this);
             world.destroyBody(body);
         }
     }
@@ -87,8 +87,16 @@ public class Frostbolt_Explosion extends Frostbolt_Spell{
         dealDmg(monster);
 
         if(!anim_element.equals(FIRE)) {
-            if(Math.random() >= (1 - player.spellbook.frostboltBonus/100f)) {
-                monster.applyFreeze(2, 4);
+            float duration = 2;
+            float immunity = 4;
+            float treshold = (0.8f - player.spellbook.frostboltBonus/100f);
+            if(player.inventory.equippedStaff instanceof Epic_FrostboltStaff) {
+                duration = 3;
+                immunity = 6;
+                treshold = treshold/2;
+            }
+            if(Math.random() >= treshold) {
+                monster.applyFreeze(duration, immunity);
             } else {
                 monster.applySlow(2.5f, 0.7f);
             }
@@ -140,7 +148,7 @@ public class Frostbolt_Explosion extends Frostbolt_Spell{
                     bolt.setElements(this);
                     bolt.spawnPosition = new Vector2(body.getPosition());
                     bolt.targetPosition = SpellUtils.getRandomVectorInRadius(body.getPosition(), 2);
-                    screen.spellManager.toAdd(bolt);
+                    screen.spellManager.add(bolt);
                 }
             }
         }

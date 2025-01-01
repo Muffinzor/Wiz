@@ -23,8 +23,7 @@ public class Epic_IcespearStaff extends Staff{
     public String getDescription() {
         return String.format("""
             Ice Spears can split immediately
-            and all contain Flamejet
-            Their speed is increased by 20%%""");
+            and all contain Flamejet""");
     }
 
     public String getFlavorText() {

@@ -34,7 +34,7 @@ public class CelestialStrike_Explosion extends Spell {
         drawFrame();
         stateTime += delta;
         if(stateTime >= anim.getAnimationDuration()) {
-            screen.spellManager.toRemove(this);
+            screen.spellManager.remove(this);
         }
     }
 

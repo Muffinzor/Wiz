@@ -18,7 +18,6 @@ import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyFactory;
 
 import static wizardo.game.Resources.SpellAnims.EnergyBeamAnims.*;
-import static wizardo.game.Spells.SpellUtils.Spell_Element.*;
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.*;
 
@@ -74,7 +73,7 @@ public class EnergyBeam_Projectile extends EnergyBeam_Spell {
 
         if(alpha < 0.03f) {
             world.destroyBody(body);
-            screen.spellManager.toRemove(this);
+            screen.spellManager.remove(this);
         }
     }
 
@@ -97,7 +96,7 @@ public class EnergyBeam_Projectile extends EnergyBeam_Spell {
         EnergyBeam_Explosion explosion = new EnergyBeam_Explosion();
         explosion.targetPosition = new Vector2(body.getPosition());
         explosion.setElements(this);
-        screen.spellManager.toAdd(explosion);
+        screen.spellManager.add(explosion);
     }
 
     public void drawFrame() {
@@ -175,7 +174,7 @@ public class EnergyBeam_Projectile extends EnergyBeam_Spell {
             freezeBody.setElements(this);
             freezeBody.frostbolt = frostbolt;
             freezeBody.targetPosition = body.getPosition();
-            screen.spellManager.toAdd(freezeBody);
+            screen.spellManager.add(freezeBody);
         }
     }
 
@@ -232,7 +231,7 @@ public class EnergyBeam_Projectile extends EnergyBeam_Spell {
                     jet.setElements(this);
                     jet.spawnPosition = new Vector2(body.getPosition());
                     jet.targetPosition = new Vector2(body.getPosition().add(newDirection));
-                    screen.spellManager.toAdd(jet);
+                    screen.spellManager.add(jet);
                 }
 
             }
@@ -247,14 +246,14 @@ public class EnergyBeam_Projectile extends EnergyBeam_Spell {
                     Overheat_Explosion overheat = new Overheat_Explosion(new Vector2(body.getPosition()));
                     overheat.setElements(this);
                     overheat.radius = overheat.radius - 30;
-                    screen.spellManager.toAdd(overheat);
+                    screen.spellManager.add(overheat);
                 }
             }
             Fireball_Explosion explosion = new Fireball_Explosion();
             explosion.setElements(this);
             explosion.flamejets = flamejet;
             explosion.targetPosition = new Vector2(body.getPosition());
-            screen.spellManager.toAdd(explosion);
+            screen.spellManager.add(explosion);
 
             hasCollided = true;
             body.setLinearVelocity(0,0);
@@ -281,7 +280,7 @@ public class EnergyBeam_Projectile extends EnergyBeam_Spell {
                 explosion.setElements(this);
 
                 explosion.targetPosition = randomSpawn;
-                screen.spellManager.toAdd(explosion);
+                screen.spellManager.add(explosion);
             }
         }
     }
@@ -291,7 +290,7 @@ public class EnergyBeam_Projectile extends EnergyBeam_Spell {
         for (int i = 0; i < quantity; i++) {
             Rift_Zone rift = new Rift_Zone(SpellUtils.getRandomVectorInRadius(monster.body.getPosition(), 3.5f));
             rift.setElements(this);
-            screen.spellManager.toAdd(rift);
+            screen.spellManager.add(rift);
         }
     }
 
@@ -308,7 +307,7 @@ public class EnergyBeam_Projectile extends EnergyBeam_Spell {
                     bolt.spawnPosition = new Vector2(body.getPosition());
                     bolt.targetPosition = SpellUtils.getRandomVectorInRadius(body.getPosition(), 2);
                     bolt.setElements(this);
-                    screen.spellManager.toAdd(bolt);
+                    screen.spellManager.add(bolt);
                 }
             }
         }
@@ -331,7 +330,7 @@ public class EnergyBeam_Projectile extends EnergyBeam_Spell {
                 chainBody.chargedbolts = chargedbolts;
                 chainBody.targetPosition = new Vector2(body.getPosition());
                 chainBody.setElements(this);
-                screen.spellManager.toAdd(chainBody);
+                screen.spellManager.add(chainBody);
                 frameCounter = 0;
             }
         }
@@ -347,7 +346,7 @@ public class EnergyBeam_Projectile extends EnergyBeam_Spell {
             if(Math.random() >= procRate) {
                 Thunderstorm_Hit thunder = new Thunderstorm_Hit(monster.body.getPosition());
                 thunder.setElements(this);
-                screen.spellManager.toAdd(thunder);
+                screen.spellManager.add(thunder);
             }
         }
 

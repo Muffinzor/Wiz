@@ -229,4 +229,31 @@ public class BodyFactory {
         return body;
 
     }
+    public static Body dropGoldBody(Vector2 position, float radius) {
+        Body body;
+        BodyDef def = new BodyDef();
+
+        def.type = BodyDef.BodyType.DynamicBody;
+        def.position.set(position.x, position.y);
+        def.fixedRotation = true;
+        def.linearDamping = 2;
+        def.angularDamping = 2;
+        body = world.createBody(def);
+
+        CircleShape shape = new CircleShape();
+        shape.setRadius(radius / PPM);
+
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = shape;
+        fixtureDef.filter.categoryBits = DROP;
+        fixtureDef.filter.maskBits = DROP_MASK;
+        fixtureDef.isSensor = false;
+
+        body.createFixture(fixtureDef);
+        shape.dispose();
+
+        return body;
+
+    }
+
 }

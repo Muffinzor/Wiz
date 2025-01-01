@@ -38,7 +38,7 @@ public class Meteor_Crater extends Spell {
         stateTime += delta;
 
         if(stateTime >= anim.getAnimationDuration()) {
-            screen.spellManager.toRemove(this);
+            screen.spellManager.remove(this);
         }
 
     }

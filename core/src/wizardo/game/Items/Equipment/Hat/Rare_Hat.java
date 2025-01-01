@@ -3,6 +3,7 @@ package wizardo.game.Items.Equipment.Hat;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
+import wizardo.game.Items.Equipment.EquipmentUtils;
 import wizardo.game.Items.ItemUtils;
 import wizardo.game.Spells.SpellUtils;
 
@@ -11,11 +12,8 @@ import static wizardo.game.Wizardo.player;
 public class Rare_Hat extends Hat {
 
     public Rare_Hat() {
-        sprite = new Sprite(new Texture("Items/Hat/rare1.png"));
-        spriteOver = new Sprite(new Texture("Items/Hat/rare1_over.png"));
-        displayScale = 1.3f;
+        setSprite();
 
-        name = "Pointy Hat";
         title = "Rare Hat";
         quality = ItemUtils.EquipQuality.RARE;
 
@@ -28,7 +26,26 @@ public class Rare_Hat extends Hat {
     }
 
     public String getFlavorText() {
-        return "Just a pointy hat";
+        return "The classic attire";
     }
 
+    public void setSprite() {
+        reversedSprite = MathUtils.randomBoolean();
+        int random = MathUtils.random(1, 3);
+        switch (random) {
+            case 1 -> {
+                sprite = new Sprite(new Texture("Items/Hat/rare1.png"));
+                spriteOver = new Sprite(new Texture("Items/Hat/rare1_over.png"));
+                displayScale = 1.3f;
+            }
+            case 2 -> {
+                sprite = new Sprite(new Texture("Items/Hat/RareHat1.png"));
+                spriteOver = new Sprite(new Texture("Items/Hat/RareHat1_Over.png"));
+            }
+            case 3 -> {
+                sprite = new Sprite(new Texture("Items/Hat/YellowHat.png"));
+                spriteOver = new Sprite(new Texture("Items/Hat/YellowHat_Over.png"));
+            }
+        }
+    }
 }

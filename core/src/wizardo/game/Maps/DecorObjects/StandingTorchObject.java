@@ -77,7 +77,7 @@ public class StandingTorchObject extends LayerObject {
         if(!destroyed) {
             Vector2 lightPosition = new Vector2(body.getPosition().x + 2f / PPM, body.getPosition().y + 64f / PPM);
             light = chunk.screen.lightManager.pool.getLight();
-            light.setLight(0.75f, 0.35f, 0, 1, 55, lightPosition);
+            light.setLight(0.75f, 0.35f, 0, 0.75f, 55, lightPosition);
             chunk.screen.lightManager.addLight(light);
         }
     }

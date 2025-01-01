@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="64" height="64" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="100">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="64" height="64" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="117">
  <tileset firstgid="1" source="Dungeon_Plus.tsx"/>
  <layer id="1" name="Tile Layer 1" width="64" height="64">
   <data encoding="csv">
@@ -161,6 +161,23 @@
   <object id="89" name="Vase" x="1770" y="326" width="4" height="4"/>
   <object id="90" name="Vase" x="1821" y="320" width="4" height="4"/>
   <object id="91" name="Vase" x="1795" y="320" width="4" height="4"/>
+  <object id="100" name="StandingTorch" x="932" y="1828" width="4" height="4"/>
+  <object id="101" name="StandingTorch" x="1176" y="1828" width="4" height="4"/>
+  <object id="102" name="StandingTorch" x="260" y="1828" width="4" height="4"/>
+  <object id="103" name="StandingTorch" x="504" y="1828" width="4" height="4"/>
+  <object id="104" name="StandingTorch" x="1604" y="1828" width="4" height="4"/>
+  <object id="105" name="StandingTorch" x="1848" y="1828" width="4" height="4"/>
+  <object id="106" name="StandingTorch" x="1604" y="324" width="4" height="4"/>
+  <object id="107" name="StandingTorch" x="1848" y="324" width="4" height="4"/>
+  <object id="108" name="StandingTorch" x="932" y="324" width="4" height="4"/>
+  <object id="109" name="StandingTorch" x="1176" y="324" width="4" height="4"/>
+  <object id="110" name="StandingTorch" x="260" y="324" width="4" height="4"/>
+  <object id="111" name="StandingTorch" x="504" y="324" width="4" height="4"/>
+  <object id="112" name="StandingTorch" x="1528" y="676" width="4" height="4"/>
+  <object id="113" name="StandingTorch" x="1528" y="1188" width="4" height="4"/>
+  <object id="114" name="StandingTorch" x="772" y="1444" width="4" height="4"/>
+  <object id="115" name="StandingTorch" x="772" y="676" width="4" height="4"/>
+  <object id="116" name="StandingTorch" x="824" y="676" width="4" height="4"/>
  </objectgroup>
  <objectgroup id="4" name="LootBodies">
   <object id="92" name="Chest" x="798" y="1184" width="4" height="4"/>

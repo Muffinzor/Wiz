@@ -5,7 +5,6 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
-import wizardo.game.Resources.Skins;
 import wizardo.game.Resources.SpellAnims.LightningHandsAnims;
 import wizardo.game.Spells.Hybrid.ForkedLightning.ForkedLightning_Spell;
 import wizardo.game.Spells.Lightning.ChargedBolts.ChargedBolts_Spell;
@@ -70,7 +69,7 @@ public class LightningHands_Projectile extends LightningHands_Spell {
 
         if(stateTime > 0.4f) {
             world.destroyBody(body);
-            screen.spellManager.toRemove(this);
+            screen.spellManager.remove(this);
         }
     }
 
@@ -123,7 +122,6 @@ public class LightningHands_Projectile extends LightningHands_Spell {
         velocity = direction.scl(40);
         body.setLinearVelocity(velocity);
 
-
     }
 
     public void createLights(float delta) {
@@ -160,7 +158,7 @@ public class LightningHands_Projectile extends LightningHands_Spell {
     public void createDetector(Vector2 velocity) {
         SpellCollision_Detector detector = new SpellCollision_Detector(velocity, this, 0.5f, 9.5f);
         detector.screen = screen;
-        screen.spellManager.toAdd(detector);
+        screen.spellManager.add(detector);
     }
 
     public void chainlightning(Monster monster) {
@@ -170,7 +168,7 @@ public class LightningHands_Projectile extends LightningHands_Spell {
                 ForkedLightning_Spell lightning = new ForkedLightning_Spell();
                 lightning.setElements(this);
                 lightning.originBody = monster.body;
-                screen.spellManager.toAdd(lightning);
+                screen.spellManager.add(lightning);
             }
         }
     }
@@ -185,7 +183,7 @@ public class LightningHands_Projectile extends LightningHands_Spell {
                     bolt.spawnPosition = new Vector2(monster.body.getPosition());
                     bolt.targetPosition = SpellUtils.getRandomVectorInRadius(monster.body.getPosition(), 2);
                     bolt.flamejet = true;
-                    screen.spellManager.toAdd(bolt);
+                    screen.spellManager.add(bolt);
                 }
             }
         }

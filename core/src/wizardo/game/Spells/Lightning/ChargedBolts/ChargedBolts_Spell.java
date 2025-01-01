@@ -1,5 +1,7 @@
 package wizardo.game.Spells.Lightning.ChargedBolts;
 
+import com.badlogic.gdx.math.Vector2;
+import wizardo.game.Items.Equipment.Staff.Epic_ChargedboltStaff;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 
@@ -28,6 +30,8 @@ public class ChargedBolts_Spell extends Spell {
         baseDmg = 12;
         speed = 80f/PPM;
         bolts = 3;
+        autoaimable = true;
+
 
         main_element = SpellUtils.Spell_Element.LIGHTNING;
 
@@ -47,14 +51,47 @@ public class ChargedBolts_Spell extends Spell {
         }
 
         if(delta > 0) {
-            for (int i = 0; i < bolts; i++) {
-                castBolt();
-
-                if(Math.random() >= 1 - player.spellbook.chargedboltBonus/100f) {
-                    castBolt();
-                }
+            if(player.inventory.equippedStaff instanceof Epic_ChargedboltStaff && targetPosition == null) {
+                uniqueStaffShooting();
+            } else {
+                normalBoltShooting();
             }
-            screen.spellManager.toRemove(this);
+            screen.spellManager.remove(this);
+        }
+
+    }
+
+    public void normalBoltShooting() {
+        autoAimCheck();
+
+        if(targetPosition == null) {
+            return;
+        }
+
+        for (int i = 0; i < bolts; i++) {
+            castBolt();
+
+            if(Math.random() >= 1 - player.spellbook.chargedboltBonus/100f) {
+                castBolt();
+            }
+        }
+    }
+    public void uniqueStaffShooting() {
+        bolts = bolts * 5;
+        for (int i = 0; i < bolts; i++) {
+            Vector2 target = SpellUtils.getRandomVectorInRadius(player.pawn.body.getPosition(), 2);
+            ChargedBolts_Projectile bolt = new ChargedBolts_Projectile(player.pawn.body.getPosition(), target);
+            bolt.setNext(this);
+            bolt.setElements(this);
+            screen.spellManager.add(bolt);
+
+            if(Math.random() >= 1 - player.spellbook.chargedboltBonus/100f) {
+                Vector2 target2 = SpellUtils.getRandomVectorInRadius(player.pawn.body.getPosition(), 2);
+                ChargedBolts_Projectile bolt2 = new ChargedBolts_Projectile(player.pawn.body.getPosition(), target2);
+                bolt2.setNext(this);
+                bolt2.setElements(this);
+                screen.spellManager.add(bolt2);
+            }
         }
 
     }
@@ -70,10 +107,10 @@ public class ChargedBolts_Spell extends Spell {
     }
 
     public void castBolt() {
-        ChargedBolts_Projectile bolt = new ChargedBolts_Projectile(getSpawnPosition(), getTargetPosition());
+        ChargedBolts_Projectile bolt = new ChargedBolts_Projectile(getSpawnPosition(), targetPosition);
         bolt.setNext(this);
         bolt.setElements(this);
-        screen.spellManager.toAdd(bolt);
+        screen.spellManager.add(bolt);
     }
 
     @Override

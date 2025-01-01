@@ -1,17 +1,16 @@
 package wizardo.game.Items.Drop;
 
 import wizardo.game.Items.Equipment.Amulet.Epic_StormAmulet;
+import wizardo.game.Items.Equipment.Amulet.Legendary_FireballAmulet;
+import wizardo.game.Items.Equipment.Book.Epic_FireAcaneBook;
 import wizardo.game.Items.Equipment.Book.Epic_OrbitBook;
 import wizardo.game.Items.Equipment.Equipment;
 import wizardo.game.Items.Equipment.EquipmentUtils;
-import wizardo.game.Items.Equipment.Hat.Epic_OrbitHat;
-import wizardo.game.Items.Equipment.Hat.Normal_Hat;
-import wizardo.game.Items.Equipment.Hat.Rare_Hat;
+import wizardo.game.Items.Equipment.Hat.*;
 import wizardo.game.Items.Equipment.Ring.Epic_OculusRing;
 import wizardo.game.Items.Equipment.Robes.Legendary_FreezeRobes;
 import wizardo.game.Items.Equipment.Robes.Rare_Robes;
-import wizardo.game.Items.Equipment.Staff.Epic_FireballStaff;
-import wizardo.game.Items.Equipment.Staff.Legendary_LightningStaff;
+import wizardo.game.Items.Equipment.Staff.*;
 import wizardo.game.Items.ItemUtils;
 import wizardo.game.Maps.Chest;
 import wizardo.game.Resources.EffectAnims.GearFlareAnims;
@@ -45,6 +44,7 @@ public class DropManager {
             }
         }
 
+        drops.removeIf(drop -> drop.alpha <= 0.05f);
         drops.removeIf(drop -> drop.pickedUp && drop.stateTime >= GearFlareAnims.gear_pop.getAnimationDuration());
     }
 
@@ -52,20 +52,30 @@ public class DropManager {
         drops.add(drop);
         drop.screen = screen;
     }
-
-    public void dropChestLoot(Chest chest) {
-        Equipment piece3 = new Epic_OrbitBook();
-        Drop drop3 = new EquipmentDrop(chest.body.getPosition(), piece3);
-        addDrop(drop3);
-
-
-        Equipment piece4 = new Epic_OrbitHat();
-        Drop drop4 = new EquipmentDrop(chest.body.getPosition(), piece4);
-        addDrop(drop4);
+    public void removeDrop(Drop drop) {
+        drops.remove(drop);
     }
 
-    /** returns a single piece of equipment from the selection, after verifying if it hasn't already been dropped
-     if specificDropName is not null, it will disregard the verification and simply return that item **/
+    public void dropChestLoot(Chest chest) {
+
+
+        ArrayList<Drop> drops = chest.loot.getDrops();
+        for(Drop drop : drops) {
+            if(drop != null) {
+                if(drop instanceof EquipmentDrop) {
+                    if(((EquipmentDrop) drop).piece != null) {
+                        addDrop(drop);
+                    }
+                } else {
+                    addDrop(drop);
+                }
+            }
+        }
+
+    }
+
+    /** returns a single piece of equipment from the selection, after verifying if it hasn't already been dropped.
+     If specificDropName is not null, it will disregard the verification and simply return that item **/
     public Equipment getEquipmentForDrop(ItemUtils.EquipSlot slot, ItemUtils.EquipQuality quality, String specificDropName) {
 
         Equipment drop = null;
@@ -79,8 +89,14 @@ public class DropManager {
                 }
             }
         } else {
-            possibleDrops.addAll(EquipmentUtils.get_all_items_from_class(slot, quality));
+            ItemUtils.EquipSlot randomSlot = EquipmentUtils.getRandomEquipSlot();
+            possibleDrops.addAll(EquipmentUtils.get_all_items_from_class(randomSlot, quality));
             possibleDrops.removeIf(equip -> alreadyDroppedNameList.contains(equip.name));
+
+            if(possibleDrops.isEmpty()) {
+                possibleDrops.addAll(EquipmentUtils.get_all_items_from_class(ALL, quality));
+                possibleDrops.removeIf(equip -> alreadyDroppedNameList.contains(equip.name));
+            }
 
             if(!possibleDrops.isEmpty()) {
                 drop = possibleDrops.getFirst();

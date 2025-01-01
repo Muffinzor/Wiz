@@ -15,6 +15,8 @@ import wizardo.game.Player.Levels.StatsBuffer;
 import wizardo.game.Resources.ScreenResources.LevelUpResources;
 import wizardo.game.Player.Levels.LevelUpEnums.*;
 
+import static wizardo.game.Spells.SpellUtils.Spell_Name.FROZENORB;
+
 public class PanelButton extends TextButton {
 
     float stateTime;
@@ -51,6 +53,7 @@ public class PanelButton extends TextButton {
         style = skin.get(type.toString().toLowerCase(), TextButton.TextButtonStyle.class);
         this.style = style;
 
+        forceQuality();
         switch(quality) {
             case NORMAL -> qualityGem = LevelUpResources.green_gem;
             case RARE -> qualityGem = LevelUpResources.blue_gem;
@@ -166,6 +169,14 @@ public class PanelButton extends TextButton {
         float actual_y = table_y + own_y + getHeight()/2f;
 
         return new Vector2(actual_x, actual_y);
+    }
+
+    public void forceQuality() {
+        switch(type) {
+            case FROSTBOLT, FLAMEJET, MISSILES, CHARGEDBOLT -> quality = LevelUpQuality.NORMAL;
+            case ICESPEAR, CHAIN, FIREBALL, BEAM -> quality = LevelUpQuality.RARE;
+            case FROZENORB, RIFTS, THUNDERSTORM, OVERHEAT -> quality = LevelUpQuality.EPIC;
+        }
     }
 
 }

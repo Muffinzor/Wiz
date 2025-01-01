@@ -14,7 +14,6 @@ public class SkeletonAnims {
     public static String skelly_atlas_path = "Monsters/Skelly/Skelly.atlas";
 
     public static Sprite bone = new Sprite(new Texture("bone.png"));
-    public static Sprite bigBone = new Sprite(new Texture("bigBone.png"));
 
     public static void loadAnimations() {
         TextureAtlas atlas = assetManager.get(skelly_atlas_path, TextureAtlas.class);

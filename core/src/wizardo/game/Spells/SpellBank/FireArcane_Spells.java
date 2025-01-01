@@ -6,7 +6,7 @@ import wizardo.game.Spells.Arcane.Rifts.Rifts_Spell;
 import wizardo.game.Spells.Fire.Fireball.Fireball_Spell;
 import wizardo.game.Spells.Fire.Flamejet.Flamejet_Spell;
 import wizardo.game.Spells.Fire.Overheat.Overheat_Spell;
-import wizardo.game.Spells.Hybrid.ArcaneArtillery.ArcaneArtillery_Spell;
+import wizardo.game.Spells.Hybrid.ArcaneArtillery.Judgement_Spell;
 import wizardo.game.Spells.Hybrid.DragonBreath.DragonBreath_Spell;
 import wizardo.game.Spells.Hybrid.EnergyRain.EnergyRain_Spell;
 import wizardo.game.Spells.Hybrid.Laser.Laser_Spell;
@@ -71,7 +71,7 @@ public class FireArcane_Spells {
 
         // 5. EnergyBeam + Overheat
 
-        ArcaneArtillery_Spell firearcane5 = new ArcaneArtillery_Spell();
+        Judgement_Spell firearcane5 = new Judgement_Spell();
         firearcane5.anim_element = FIRE;
         firearcane5.spellParts.add(BEAM);
         firearcane5.spellParts.add(OVERHEAT);
@@ -224,7 +224,7 @@ public class FireArcane_Spells {
 
         // 20. ArcaneMissile + Beam + Overheat
 
-        ArcaneArtillery_Spell firearcane20 = new ArcaneArtillery_Spell();
+        Judgement_Spell firearcane20 = new Judgement_Spell();
         firearcane20.anim_element = ARCANE;
         firearcane20.arcaneMissiles = true;
         firearcane20.spellParts.add(OVERHEAT);
@@ -285,7 +285,7 @@ public class FireArcane_Spells {
 
         // 26. Rifts + Beam + Overheat
 
-        ArcaneArtillery_Spell firearcane26 = new ArcaneArtillery_Spell();
+        Judgement_Spell firearcane26 = new Judgement_Spell();
         firearcane26.rift = true;
         firearcane26.anim_element = ARCANE;
         firearcane26.spellParts.add(OVERHEAT);

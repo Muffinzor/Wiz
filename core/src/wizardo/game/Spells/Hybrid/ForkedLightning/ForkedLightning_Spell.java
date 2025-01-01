@@ -13,7 +13,6 @@ import java.util.Collections;
 
 import static wizardo.game.Screens.BaseScreen.controllerActive;
 import static wizardo.game.Spells.SpellUtils.Spell_Element.FIRELITE;
-import static wizardo.game.Spells.SpellUtils.Spell_Element.LIGHTNING;
 import static wizardo.game.Wizardo.player;
 
 public class ForkedLightning_Spell extends Spell {
@@ -59,14 +58,14 @@ public class ForkedLightning_Spell extends Spell {
                 chain.forked = true;
                 chain.originBody = originBody;
                 chain.setElements(this);
-                screen.spellManager.toAdd(chain);
+                screen.spellManager.add(chain);
                 chargedbolts(inRange.get(i));
                 fireball(inRange.get(i));
             }
         }
 
 
-        screen.spellManager.toRemove(this);
+        screen.spellManager.remove(this);
 
     }
 
@@ -86,7 +85,7 @@ public class ForkedLightning_Spell extends Spell {
                     bolt.setElements(this);
                     bolt.spawnPosition = new Vector2(monster.body.getPosition());
                     bolt.targetPosition = SpellUtils.getRandomVectorInRadius(monster.body.getPosition(), 2);
-                    screen.spellManager.toAdd(bolt);
+                    screen.spellManager.add(bolt);
                 }
             }
         }
@@ -101,7 +100,7 @@ public class ForkedLightning_Spell extends Spell {
                 explosion.setElements(this);
                 explosion.anim_element = FIRELITE;
                 explosion.firelite = true;
-                screen.spellManager.toAdd(explosion);
+                screen.spellManager.add(explosion);
             }
         }
     }

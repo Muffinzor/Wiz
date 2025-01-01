@@ -56,7 +56,7 @@ public class RepulsionField_ProjExplosion extends Spell {
 
         if(stateTime >= anim.getAnimationDuration()) {
             world.destroyBody(body);
-            screen.spellManager.toRemove(this);
+            screen.spellManager.remove(this);
         }
     }
 

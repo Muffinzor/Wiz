@@ -20,6 +20,7 @@ public class Frozenorb_Spell extends Spell {
         speed = 60f/PPM;
         cooldown = 8f;
         baseDmg = 50;   // per second
+        autoaimable = true;
 
         main_element = SpellUtils.Spell_Element.FROST;
 
@@ -36,10 +37,16 @@ public class Frozenorb_Spell extends Spell {
 
         setup();
 
-        Frozenorb_Projectile orb = new Frozenorb_Projectile(getSpawnPosition(), getTargetPosition());
+        autoAimCheck();
+
+        if(targetPosition == null) {
+            return;
+        }
+
+        Frozenorb_Projectile orb = new Frozenorb_Projectile(getSpawnPosition(), targetPosition);
         orb.inherit(this);
-        screen.spellManager.toAdd(orb);
-        screen.spellManager.toRemove(this);
+        screen.spellManager.add(orb);
+        screen.spellManager.remove(this);
 
     }
 

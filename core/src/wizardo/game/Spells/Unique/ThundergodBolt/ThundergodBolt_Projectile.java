@@ -5,9 +5,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Lighting.RoundLight;
-import wizardo.game.Resources.SpellAnims.IcespearAnims;
 import wizardo.game.Resources.SpellAnims.LightningBoltAnims;
-import wizardo.game.Spells.Hybrid.Blizzard.Blizzard_Explosion;
 import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyFactory;
 
@@ -63,9 +61,9 @@ public class ThundergodBolt_Projectile extends ThundergodBolt_Spell{
         float dst = body.getPosition().dst(targetPosition);
         if(dst < 0.5f) {
             ThundergodBolt_Explosion explosion = new ThundergodBolt_Explosion(body.getPosition());
-            screen.spellManager.toAdd(explosion);
+            screen.spellManager.add(explosion);
 
-            screen.spellManager.toRemove(this);
+            screen.spellManager.remove(this);
             light.dimKill(0.5f);
             world.destroyBody(body);
         }

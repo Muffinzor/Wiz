@@ -154,6 +154,7 @@ public class MixingTable extends MenuTable {
     }
 
     public void updateForgetButton() {
+        System.out.println(masteryTable.screen.selectedSpell_Button == null);
         forgetButton.setDisabled(masteryTable.screen.selectedSpell_Button == null);
         if(masteryTable.screen.selectedSpell_Button != null) {
             if (player.spellbook.equippedSpells.contains(masteryTable.screen.selectedSpell_Button.spell) &&

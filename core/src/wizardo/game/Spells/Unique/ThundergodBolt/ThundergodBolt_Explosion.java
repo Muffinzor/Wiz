@@ -6,17 +6,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
-import wizardo.game.Resources.SpellAnims.ExplosionAnims_Toon;
 import wizardo.game.Resources.SpellAnims.LightningBoltAnims;
-import wizardo.game.Spells.Lightning.ChargedBolts.ChargedBolts_Spell;
-import wizardo.game.Spells.SpellUtils;
-import wizardo.game.Spells.Unique.ThundergodBolt.ThundergodBolt_Projectile;
 import wizardo.game.Utils.BodyFactory;
 
-import static wizardo.game.Resources.SpellAnims.FrostboltAnims.*;
-import static wizardo.game.Spells.SpellUtils.Spell_Element.*;
 import static wizardo.game.Utils.Constants.PPM;
-import static wizardo.game.Wizardo.player;
 import static wizardo.game.Wizardo.world;
 
 public class ThundergodBolt_Explosion extends ThundergodBolt_Spell {
@@ -52,7 +45,7 @@ public class ThundergodBolt_Explosion extends ThundergodBolt_Spell {
         }
 
         if(stateTime >= anim.getAnimationDuration()) {
-            screen.spellManager.toRemove(this);
+            screen.spellManager.remove(this);
             world.destroyBody(body);
         }
     }

@@ -22,6 +22,9 @@ public class FrostboltAnims {
     public static Animation<Sprite> frostbolt_explosion_anim_lightning2;
     public static String frostbolt_atlas_path_lightning = "Spells/Frostbolt/FrostLite_Explosion.atlas";
 
+    public static String frostbolt_projectile_fire_path = "Spells/Frostbolt/Frostbolt_Projectile_Fire.atlas";
+    public static Animation<Sprite> frostbolt_projectile_anim_fire;
+
 
     public static Animation<Sprite> frostbolt_explosion_anim_fire1;
     public static Animation<Sprite> frostbolt_explosion_anim_fire2;
@@ -31,6 +34,7 @@ public class FrostboltAnims {
 
     public static void loadAnimations() {
         TextureAtlas proj_atlas = assetManager.get(frostbolt_projectile_frost_path, TextureAtlas.class);
+        TextureAtlas fire_proj_atlas = assetManager.get(frostbolt_projectile_fire_path, TextureAtlas.class);
         TextureAtlas atlas = assetManager.get(frostbolt_atlas_path_frost, TextureAtlas.class);
         TextureAtlas lightning_atlas = assetManager.get(frostbolt_atlas_path_lightning, TextureAtlas.class);
         TextureAtlas liteproj_atlas = assetManager.get(frostbolt_projectile_lightning_path, TextureAtlas.class);
@@ -39,9 +43,15 @@ public class FrostboltAnims {
 
         Sprite[] bolt_frames = new Sprite[20];
         for (int i = 0; i < bolt_frames.length; i++) {
-            bolt_frames[i] = proj_atlas.createSprite("projectile" + (i+1));
+            bolt_frames[i] = fire_proj_atlas.createSprite("projectile" + (i+1));
         }
-        frostbolt_projectile_anim_frost = new Animation<>(0.03f, bolt_frames);
+        frostbolt_projectile_anim_fire = new Animation<>(0.03f, bolt_frames);
+
+        Sprite[] firebolt_frames = new Sprite[20];
+        for (int i = 0; i < firebolt_frames.length; i++) {
+            firebolt_frames[i] = proj_atlas.createSprite("projectile" + (i+1));
+        }
+        frostbolt_projectile_anim_frost = new Animation<>(0.03f, firebolt_frames);
 
 
         /** FROST **/
@@ -92,6 +102,7 @@ public class FrostboltAnims {
     }
     public static void loadAtlas() {
         assetManager.load(frostbolt_projectile_frost_path, TextureAtlas.class);
+        assetManager.load(frostbolt_projectile_fire_path, TextureAtlas.class);
         assetManager.load(frostbolt_atlas_path_frost, TextureAtlas.class);
         assetManager.load(frostbolt_atlas_path_lightning, TextureAtlas.class);
         assetManager.load(frostbolt_atlas_path_fire1, TextureAtlas.class);

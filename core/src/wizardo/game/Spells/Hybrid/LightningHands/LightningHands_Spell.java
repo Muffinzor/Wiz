@@ -22,6 +22,8 @@ public class LightningHands_Spell extends Spell {
         name = "Lightning Hands";
 
         cooldown = 3.2f;
+        autoaimable = true;
+
 
         anim_element = SpellUtils.Spell_Element.FIRELITE;
         main_element = SpellUtils.Spell_Element.FIRELITE;
@@ -34,7 +36,12 @@ public class LightningHands_Spell extends Spell {
 
         setup();
 
-        targetPosition = getTargetPosition();
+        autoAimCheck();
+
+        if(targetPosition == null) {
+            return;
+        }
+
         spawnPosition = getSpawnPosition();
         direction = targetPosition.cpy().sub(spawnPosition);
 
@@ -47,9 +54,9 @@ public class LightningHands_Spell extends Spell {
             LightningHands_Projectile lightning = new LightningHands_Projectile(dir);
             lightning.setBolt(this);
             lightning.setElements(this);
-            screen.spellManager.toAdd(lightning);
+            screen.spellManager.add(lightning);
         }
-        screen.spellManager.toRemove(this);
+        screen.spellManager.remove(this);
 
     }
 

@@ -10,7 +10,6 @@ import wizardo.game.Monsters.MonsterActions.MonsterSpell;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Resources.SpellAnims.RepulsionFieldAnims;
 import wizardo.game.Spells.Fire.Fireball.Fireball_Projectile;
-import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyFactory;
 
@@ -70,7 +69,7 @@ public class RepulsionField_Explosion extends RepulsionField_Spell {
 
         if(stateTime >= anim.getAnimationDuration()) {
             world.destroyBody(body);
-            screen.spellManager.toRemove(this);
+            screen.spellManager.remove(this);
         }
 
     }
@@ -100,7 +99,7 @@ public class RepulsionField_Explosion extends RepulsionField_Spell {
             Fireball_Projectile fireball = new Fireball_Projectile(contact, contact.cpy().add(direction));
             fireball.setElements(this);
             fireball.speed = fireball.speed * 1.25f;
-            screen.spellManager.toAdd(fireball);
+            screen.spellManager.add(fireball);
         } else {
             RepulsionField_Projectile proj = new RepulsionField_Projectile(contact, contact.cpy().add(direction));
             if(arcaneMissile) {
@@ -109,7 +108,7 @@ public class RepulsionField_Explosion extends RepulsionField_Spell {
             }
 
             proj.setElements(this);
-            screen.spellManager.toAdd(proj);
+            screen.spellManager.add(proj);
         }
     }
 

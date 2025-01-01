@@ -1,6 +1,7 @@
 package wizardo.game.Spells;
 
 import com.badlogic.gdx.math.MathUtils;
+import wizardo.game.Items.Equipment.Hat.Legendary_TripleCastHat;
 import wizardo.game.Screens.BaseScreen;
 
 import java.util.ArrayList;
@@ -97,9 +98,14 @@ public class SpellManager {
     }
 
     public void attemptMulticast(Spell spell) {
-        if(Math.random() > 1 - player.spellbook.multicast/100f) {
+        if(spell.multicastable && Math.random() > 1 - player.spellbook.multicast/100f) {
+            spell.multicasted = true;
             multicastedSpells.add(spell);
             delays.add(0.2f);
+            if(player.inventory.equippedHat instanceof Legendary_TripleCastHat) {
+                multicastedSpells.add(spell.clone());
+                delays.add(0.4f);
+            }
         }
     }
 
@@ -119,11 +125,11 @@ public class SpellManager {
         }
     }
 
-    public void toAdd(Spell spell) {
+    public void add(Spell spell) {
         spellsToCast.add(spell);
     }
 
-    public void toRemove(Spell spell) {
+    public void remove(Spell spell) {
         spellsToRemove.add(spell);
     }
 

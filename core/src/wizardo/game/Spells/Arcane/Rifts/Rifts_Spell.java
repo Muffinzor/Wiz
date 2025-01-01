@@ -1,6 +1,7 @@
 package wizardo.game.Spells.Arcane.Rifts;
 
 import com.badlogic.gdx.math.Vector2;
+import wizardo.game.Items.Equipment.Staff.Epic_RiftStaff;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
@@ -27,6 +28,8 @@ public class Rifts_Spell extends Spell {
 
     public Rifts_Spell() {
 
+        multicastable = false;
+
         name = "Rifts";
 
         cooldown = 5f;
@@ -51,7 +54,7 @@ public class Rifts_Spell extends Spell {
             castRifts();
 
             if (riftsCast >= maxRifts) {
-                screen.spellManager.toRemove(this);
+                screen.spellManager.remove(this);
             }
 
         }
@@ -61,23 +64,46 @@ public class Rifts_Spell extends Spell {
 
         if (stateTime > riftsCast * interval) {
             Vector2 randomTarget = null;
-            int attempts = 0;
-            while (randomTarget == null && attempts < 10) {
-                attempts++;
-                Vector2 attempt = SpellUtils.getRandomVectorInRadius(targetPosition, spread);
-                if (!isPositionOverlappingWithObstacle(attempt)) {
-                    randomTarget = attempt;
+
+            if(player.inventory.equippedStaff instanceof Epic_RiftStaff) {
+                randomTarget = getUniqueStaffTarget();
+            } else {
+                int attempts = 0;
+                while (randomTarget == null && attempts < 10) {
+                    attempts++;
+                    Vector2 attempt = SpellUtils.getRandomVectorInRadius(targetPosition, spread);
+                    if (!isPositionOverlappingWithObstacle(attempt)) {
+                        randomTarget = attempt;
+                    }
                 }
             }
 
             if(randomTarget != null) {
                 Rift_Zone rift = new Rift_Zone(randomTarget);
                 rift.setRift(this);
-                screen.spellManager.toAdd(rift);
+                screen.spellManager.add(rift);
             }
-
             riftsCast++;
+        }
+    }
 
+    public Vector2 getUniqueStaffTarget() {
+        ArrayList<Monster> inRange = SpellUtils.findMonstersInRangeOfVector(targetPosition, spread, false);
+        Vector2 target = null;
+        if(!inRange.isEmpty()) {
+            int index = (int) (Math.random() * inRange.size());
+            target = inRange.get(index).body.getPosition();
+            return target;
+        } else {
+            int attempts = 0;
+            while (target == null && attempts < 10) {
+                attempts++;
+                Vector2 attempt = SpellUtils.getRandomVectorInRadius(targetPosition, spread);
+                if (!isPositionOverlappingWithObstacle(attempt)) {
+                    target = attempt;
+                }
+            }
+            return target;
         }
     }
 

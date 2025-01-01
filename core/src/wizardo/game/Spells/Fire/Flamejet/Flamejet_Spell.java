@@ -51,7 +51,7 @@ public class Flamejet_Spell extends Spell {
         if(arcaneMissile && targetPosition == null) {
             ArrayList<Monster> inRange = SpellUtils.findMonstersInRangeOfVector(player.pawn.getPosition(), 7, true);
             if(inRange.isEmpty()) {
-                screen.spellManager.toRemove(this);
+                screen.spellManager.remove(this);
                 return;
             } else {
                 arcaneTargeting(inRange);
@@ -64,14 +64,14 @@ public class Flamejet_Spell extends Spell {
             flame.targetPosition = new Vector2(getTargetPosition());
             flame.setFlame(this);
             flame.setElements(this);
-            screen.spellManager.toAdd(flame);
+            screen.spellManager.add(flame);
             flamesCast++;
         }
 
         stateTime += delta;
 
         if(flamesCast >= quantity) {
-            screen.spellManager.toRemove(this);
+            screen.spellManager.remove(this);
         }
 
     }
@@ -136,6 +136,8 @@ public class Flamejet_Spell extends Spell {
         float randomFactor = MathUtils.random(1 - dmgVariance, 1 + dmgVariance);
         dmg *= randomFactor;
         monster.hp -= dmg;
+
+        checkGearProcs(monster);
 
         if(dmg_text_on) {
             dmgText( (int)dmg, monster);

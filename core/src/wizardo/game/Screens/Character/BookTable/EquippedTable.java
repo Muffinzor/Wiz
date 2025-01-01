@@ -12,6 +12,7 @@ import wizardo.game.Wizardo;
 
 import java.util.ArrayList;
 
+import static wizardo.game.Items.Equipment.Equipment.checkForGearConditionalEffects;
 import static wizardo.game.Wizardo.player;
 
 public class EquippedTable extends MenuTable {
@@ -161,6 +162,8 @@ public class EquippedTable extends MenuTable {
         if(active) {
             updateSelectedButton();
         }
+        checkForGearConditionalEffects();
+        screen.mastery_table.mixingTable.updateButtons();
     }
 
     public void dispose() {

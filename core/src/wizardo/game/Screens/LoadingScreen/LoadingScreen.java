@@ -5,9 +5,13 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import wizardo.game.Items.Drop.DropAnims;
 import wizardo.game.Resources.DecorResources.DungeonDecorResources;
+import wizardo.game.Resources.EffectAnims.AuraAnims;
 import wizardo.game.Resources.EffectAnims.BlackHoleAnims;
 import wizardo.game.Resources.EffectAnims.GearFlareAnims;
+import wizardo.game.Resources.MonsterResources.MawDemonAnims;
+import wizardo.game.Resources.MonsterResources.MonsterProjectiles.MonsterExplosions;
 import wizardo.game.Resources.ScreenResources.CharacterScreenResources;
 import wizardo.game.Resources.DecorResources.GeneralDecorResources;
 import wizardo.game.Resources.MonsterResources.AcolyteAnims;
@@ -111,12 +115,16 @@ public class LoadingScreen extends BaseScreen {
         GeneralDecorResources.loadAtlas();
         DungeonDecorResources.loadAtlas();
         GearFlareAnims.loadAtlas();
+        DropAnims.loadAtlas();
+        AuraAnims.loadAtlas();
 
         SkeletonAnims.loadAtlas();
         SkeletonGiantAnims.loadAtlas();
         AcolyteAnims.loadAtlas();
+        MawDemonAnims.loadAtlas();
 
         SmallProjectileAnims.loadAtlas();
+        MonsterExplosions.loadAtlas();
 
         CharacterScreenResources.loadAtlas();
         LevelUpResources.loadAtlas();
@@ -152,12 +160,16 @@ public class LoadingScreen extends BaseScreen {
         GeneralDecorResources.loadAnimations();
         DungeonDecorResources.loadAnimations();
         GearFlareAnims.loadAnimations();
+        DropAnims.loadAnimations();
+        AuraAnims.loadAnimations();
 
         SkeletonAnims.loadAnimations();
         SkeletonGiantAnims.loadAnimations();
         AcolyteAnims.loadAnimations();
+        MawDemonAnims.loadAnimations();
 
         SmallProjectileAnims.loadAnimations();
+        MonsterExplosions.loadAnimations();
 
         CharacterScreenResources.loadAnimations();
         LevelUpResources.loadAnimations();

@@ -6,7 +6,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Resources.SpellAnims.FireballAnims;
-import wizardo.game.Resources.SpellAnims.MeteorAnims;
 import wizardo.game.Spells.Fire.Overheat.Overheat_Explosion;
 import wizardo.game.Utils.BodyFactory;
 
@@ -62,7 +61,7 @@ public class Meteor_Projectile extends MeteorShower_Spell {
             explode();
             world.destroyBody(body);
             light.dimKill(0.5f);
-            screen.spellManager.toRemove(this);
+            screen.spellManager.remove(this);
         }
 
     }
@@ -87,18 +86,18 @@ public class Meteor_Projectile extends MeteorShower_Spell {
         Meteor_Explosion explosion = new Meteor_Explosion(targetPosition);
         explosion.setElements(this);
         explosion.setMeteor(this);
-        screen.spellManager.toAdd(explosion);
+        screen.spellManager.add(explosion);
     }
     public void overheatExplosion() {
         Overheat_Explosion explosion = new Overheat_Explosion(targetPosition);
         explosion.thunderstorm = thunderstorm;
         explosion.setElements(this);
-        screen.spellManager.toAdd(explosion);
+        screen.spellManager.add(explosion);
 
         if(anim_element == FIRE) {
             Meteor_Crater crater = new Meteor_Crater(targetPosition);
             crater.setElements(this);
-            screen.spellManager.toAdd(crater);
+            screen.spellManager.add(crater);
         }
     }
 

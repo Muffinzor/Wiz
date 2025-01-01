@@ -36,8 +36,8 @@ public class DragonBreath_Spell extends Spell {
         dragonbreath.fireball = fireball;
         dragonbreath.rift = rift;
         dragonbreath.setElements(this);
-        screen.spellManager.toAdd(dragonbreath);
-        screen.spellManager.toRemove(this);
+        screen.spellManager.add(dragonbreath);
+        screen.spellManager.remove(this);
 
     }
 

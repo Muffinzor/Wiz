@@ -8,6 +8,7 @@ import static wizardo.game.Wizardo.assetManager;
 
 public class AcolyteAnims {
 
+    public static Animation<Sprite> acolyte_spawn_blue;
     public static Animation<Sprite> acolyte_walk_blue;
     public static Animation<Sprite> acolyte_death_blue;
 
@@ -15,6 +16,14 @@ public class AcolyteAnims {
 
     public static void loadAnimations() {
         TextureAtlas atlas = assetManager.get(acolyte_atlas_path, TextureAtlas.class);
+
+        Sprite[] spawn_frames = new Sprite[10];
+        int index = 0;
+        for (int i = 9; i >= 0; i--) {
+            spawn_frames[index] = atlas.createSprite("death" + (i));
+            index++;
+        }
+        acolyte_spawn_blue = new Animation<>(0.2f, spawn_frames);
 
         Sprite[] walk_frames = new Sprite[4];
         for (int i = 0; i < walk_frames.length; i++) {

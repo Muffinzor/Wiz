@@ -6,12 +6,14 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.QueryCallback;
+import wizardo.game.Items.Equipment.Staff.Epic_ChainStaff;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Resources.SpellAnims.ChainLightningAnims;
 import wizardo.game.Spells.Arcane.Rifts.Rift_Zone;
 import wizardo.game.Spells.Fire.Fireball.Fireball_Explosion;
 import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Explosion;
+import wizardo.game.Spells.Hybrid.EnergyRain.ChainLightning_Splash;
 import wizardo.game.Spells.Lightning.ChargedBolts.ChargedBolts_Spell;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
@@ -66,7 +68,7 @@ public class ChainLightning_Hit extends ChainLightning_Spell {
             fireball(monsterTo);
             laserBody();
             dealDmg(monsterTo);
-
+            uniqueStaff();
         }
 
         if(currentHits < maxHits && !alreadyChained && stateTime > 0.03f) {
@@ -85,7 +87,7 @@ public class ChainLightning_Hit extends ChainLightning_Spell {
         drawFrame(delta);
 
         if(stateTime > duration) {
-            screen.spellManager.toRemove(this);
+            screen.spellManager.remove(this);
             if(beam) {
                 world.destroyBody(body);
             }
@@ -140,7 +142,7 @@ public class ChainLightning_Hit extends ChainLightning_Spell {
             if(Math.random() >= procTreshold) {
                 Rift_Zone rift = new Rift_Zone(monster.body.getPosition());
                 rift.setElements(this);
-                screen.spellManager.toAdd(rift);
+                screen.spellManager.add(rift);
             }
         }
     }
@@ -160,7 +162,7 @@ public class ChainLightning_Hit extends ChainLightning_Spell {
             chain.setElements(this);
             monstersHit.add(target);
             chain.monstersHit = monstersHit;
-            screen.spellManager.toAdd(chain);
+            screen.spellManager.add(chain);
         }
 
     }
@@ -177,14 +179,14 @@ public class ChainLightning_Hit extends ChainLightning_Spell {
         chain.setElements(this);
         chain.monstersHit = new ArrayList<>(monstersHit);
         chain.monstersHit.add(target1);
-        screen.spellManager.toAdd(chain);
+        screen.spellManager.add(chain);
 
         ChainLightning_Hit chain2 = new ChainLightning_Hit(target1);
         chain2.setNextChain(this);
         chain2.setElements(this);
         chain2.monstersHit = new ArrayList<>(monstersHit);
         chain2.monstersHit.add(target2);
-        screen.spellManager.toAdd(chain2);
+        screen.spellManager.add(chain2);
 
     }
 
@@ -359,7 +361,7 @@ public class ChainLightning_Hit extends ChainLightning_Spell {
                 proj.spawnPosition = new Vector2(monsterTo.body.getPosition());
                 proj.targetPosition = target;
                 proj.setElements(this);
-                screen.spellManager.toAdd(proj);
+                screen.spellManager.add(proj);
             }
         }
 
@@ -395,7 +397,7 @@ public class ChainLightning_Hit extends ChainLightning_Spell {
                 explosion.targetPosition = new Vector2(adjusted);
                 explosion.screen = screen;
                 explosion.setElements(this);
-                screen.spellManager.toAdd(explosion);
+                screen.spellManager.add(explosion);
 
             }
         }
@@ -408,7 +410,7 @@ public class ChainLightning_Hit extends ChainLightning_Spell {
             if(Math.random() >= procRate) {
                 Rift_Zone rift = new Rift_Zone(monster.body.getPosition());
                 rift.setElements(this);
-                screen.spellManager.toAdd(rift);
+                screen.spellManager.add(rift);
             }
         }
     }
@@ -421,7 +423,18 @@ public class ChainLightning_Hit extends ChainLightning_Spell {
                 Fireball_Explosion explosion = new Fireball_Explosion();
                 explosion.targetPosition = new Vector2(monster.body.getPosition());
                 explosion.setElements(this);
-                screen.spellManager.toAdd(explosion);
+                screen.spellManager.add(explosion);
+            }
+        }
+    }
+
+    public void uniqueStaff() {
+        if(player.inventory.equippedStaff instanceof Epic_ChainStaff) {
+            float proc = 0.75f;
+            if(Math.random() >= proc) {
+                ChainLightning_Splash splash = new ChainLightning_Splash(monsterTo.body.getPosition());
+                splash.setElements(this);
+                screen.spellManager.add(splash);
             }
         }
     }

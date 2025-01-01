@@ -7,7 +7,6 @@ import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Resources.SpellAnims.EnergyBeamAnims;
 import wizardo.game.Utils.BodyFactory;
 
-import static wizardo.game.Spells.SpellUtils.Spell_Element.FROST;
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.world;
 
@@ -51,7 +50,7 @@ public class EnergyRain_Projectile extends EnergyRain_Spell {
 
         if(alpha <= 0.1f) {
             world.destroyBody(body);
-            screen.spellManager.toRemove(this);
+            screen.spellManager.remove(this);
         } else if(!body.isActive() && delta > 0) {
             alpha -= 0.05f;
         }
@@ -168,9 +167,10 @@ public class EnergyRain_Projectile extends EnergyRain_Spell {
         explosion.setElements(this);
         explosion.frostbolt = frostbolt;
         explosion.rifts = rifts;
+        explosion.thunderstorm = thunderstorm;
         explosion.flamejet = flamejet;
         explosion.chargedbolts = chargedbolts;
-        screen.spellManager.toAdd(explosion);
+        screen.spellManager.add(explosion);
     }
 
 }

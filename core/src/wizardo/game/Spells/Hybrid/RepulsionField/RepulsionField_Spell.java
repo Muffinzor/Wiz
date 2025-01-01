@@ -29,9 +29,9 @@ public class RepulsionField_Spell extends Spell {
         RepulsionField_Explosion explosion = new RepulsionField_Explosion();
         explosion.fireball = fireball;
         explosion.arcaneMissile = arcaneMissile;
-        screen.spellManager.toAdd(explosion);
+        screen.spellManager.add(explosion);
 
-        screen.spellManager.toRemove(this);
+        screen.spellManager.remove(this);
     }
 
     @Override

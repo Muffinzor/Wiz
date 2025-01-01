@@ -21,14 +21,14 @@ public class Legendary_FireballAmulet extends Amulet {
 
         masteries.add(SpellUtils.Spell_Name.FIREBALL);
         quantity_masteries.add(2);
-        gearStats.add(ItemUtils.GearStat.FIREDMG);
-        quantity_gearStats.add(MathUtils.random(15,20));
+        masteries.add(SpellUtils.Spell_Name.FROSTBOLT);
+        quantity_masteries.add(2);
     }
 
     public String getDescription() {
         return String.format("""
-            Fireballs pass through monsters and
-            damage everything they hit
+            Fireballs and Frostbolts pass through
+            monsters and damage everything they hit
             
             Monsters hit have a chance to explode
             

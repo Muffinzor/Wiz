@@ -41,7 +41,7 @@ public class Rift_PullBody extends Spell {
         stateTime += delta;
         if(stateTime >= 0.3f) {
             world.destroyBody(body);
-            screen.spellManager.toRemove(this);
+            screen.spellManager.remove(this);
         }
 
     }

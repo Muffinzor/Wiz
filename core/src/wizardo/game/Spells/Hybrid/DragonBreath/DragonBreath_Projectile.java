@@ -9,7 +9,6 @@ import wizardo.game.Resources.SpellAnims.DragonbreathAnims;
 import wizardo.game.Spells.Arcane.Rifts.Rift_Zone;
 import wizardo.game.Spells.Fire.Fireball.Fireball_Explosion;
 import wizardo.game.Spells.Fire.Flamejet.Flamejet_Spell;
-import wizardo.game.Spells.Fire.Overheat.Overheat_TriggerExplosion;
 import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Explosion;
 import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyFactory;
@@ -63,7 +62,7 @@ public class DragonBreath_Projectile extends DragonBreath_Spell {
             for (Body body : bodies) {
                 world.destroyBody(body);
             }
-            screen.spellManager.toRemove(this);
+            screen.spellManager.remove(this);
         }
     }
 
@@ -96,7 +95,7 @@ public class DragonBreath_Projectile extends DragonBreath_Spell {
             Rift_Zone rift = new Rift_Zone(monster.body.getPosition());
             rift.setElements(this);
             rift.nested_spell = new Flamejet_Spell();
-            screen.spellManager.toAdd(rift);
+            screen.spellManager.add(rift);
         }
     }
 
@@ -107,7 +106,7 @@ public class DragonBreath_Projectile extends DragonBreath_Spell {
             Frostbolt_Explosion explosion = new Frostbolt_Explosion();
             explosion.targetPosition = new Vector2(monster.body.getPosition());
             explosion.setElements(this);
-            screen.spellManager.toAdd(explosion);
+            screen.spellManager.add(explosion);
         }
     }
 
@@ -117,7 +116,7 @@ public class DragonBreath_Projectile extends DragonBreath_Spell {
             Fireball_Explosion explosion1 = new Fireball_Explosion();
             explosion1.targetPosition = new Vector2(monster.body.getPosition());
             explosion1.setElements(this);
-            screen.spellManager.toAdd(explosion1);
+            screen.spellManager.add(explosion1);
             fireballProcs ++;
         }
     }
@@ -156,7 +155,7 @@ public class DragonBreath_Projectile extends DragonBreath_Spell {
     public void createDetector(Vector2 velocity, Body body) {
         DragonBreath_CollisionDetector detector = new DragonBreath_CollisionDetector(velocity, body);
         detector.screen = screen;
-        screen.spellManager.toAdd(detector);
+        screen.spellManager.add(detector);
     }
 
     public void createLights() {

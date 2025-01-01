@@ -72,7 +72,7 @@ public class Overheat_TriggerExplosion extends Spell {
 
         if(stateTime >= anim.getAnimationDuration()) {
             world.destroyBody(body);
-            screen.spellManager.toRemove(this);
+            screen.spellManager.remove(this);
         }
 
     }
@@ -134,7 +134,7 @@ public class Overheat_TriggerExplosion extends Spell {
                 clone.spawnPosition = body.getPosition();
                 clone.targetPosition = SpellUtils.getRandomVectorInRadius(body.getPosition(), 2);
                 clone.setElements(this);
-                screen.spellManager.toAdd(clone);
+                screen.spellManager.add(clone);
             }
 
         }

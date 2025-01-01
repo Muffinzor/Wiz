@@ -60,14 +60,9 @@ public class Pawn {
             checkXP();
         }
 
-        updateEquippedGear(delta);
     }
 
-    public void updateEquippedGear(float delta) {
-        if(player.inventory.equippedRobes != null) {
-            player.inventory.equippedRobes.update(delta);
-        }
-    }
+
 
     public void checkXP() {
         if(player.currentXP >= player.neededXP && !levelingUp) {
@@ -101,11 +96,11 @@ public class Pawn {
     }
 
     public void applyPush(Vector2 pushDirection, float strength, float duration, float decayRate) {
-        float pushStrength = strength;
-        float pushDuration = duration;
-        pushBackForce.set(pushDirection.nor().scl(pushStrength));
-        pushBackTimer = pushDuration;
-        pushDecayRate = decayRate;
+            float pushStrength = strength;
+            float pushDuration = duration;
+            pushBackForce.set(pushDirection.nor().scl(pushStrength));
+            pushBackTimer = pushDuration;
+            pushDecayRate = decayRate;
     }
 
     public void pushPlayer(float delta) {

@@ -1,13 +1,11 @@
 package wizardo.game.Spells.Hybrid.FrostNova;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Resources.SpellAnims.ExplosionAnims_Elemental;
-import wizardo.game.Resources.SpellAnims.FrostNovaAnims;
 import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Explosion;
 import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyFactory;
@@ -48,7 +46,7 @@ public class FrostNova_Explosion extends FrostNova_Spell {
 
         if(stateTime > anim.getAnimationDuration()) {
             world.destroyBody(body);
-            screen.spellManager.toRemove(this);
+            screen.spellManager.remove(this);
         }
 
         drawFrame();
@@ -101,7 +99,7 @@ public class FrostNova_Explosion extends FrostNova_Spell {
                 Frostbolt_Explosion explosion = new Frostbolt_Explosion();
                 explosion.targetPosition = SpellUtils.getRandomVectorInRadius(monster.body.getPosition(), 0.5f);
                 explosion.setElements(this);
-                screen.spellManager.toAdd(explosion);
+                screen.spellManager.add(explosion);
             }
         }
     }

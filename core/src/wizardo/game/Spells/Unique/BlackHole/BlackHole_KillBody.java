@@ -29,7 +29,7 @@ public class BlackHole_KillBody extends Spell {
 
     public void terminate() {
         world.destroyBody(body);
-        screen.spellManager.toRemove(this);
+        screen.spellManager.remove(this);
     }
 
     public void handleCollision(Monster monster) {

@@ -9,7 +9,7 @@ import static wizardo.game.Wizardo.player;
 
 public class EquipmentDrop extends Drop {
 
-    Equipment piece;
+    public Equipment piece;
 
     public EquipmentDrop(Vector2 spawnPosition, Equipment piece) {
         this.piece = piece;
@@ -22,6 +22,7 @@ public class EquipmentDrop extends Drop {
         sprite = piece.sprite;
         displayScale = 0.4f * piece.displayScale;
         flareRotation = MathUtils.random(360);
+        pickupAnim = GearFlareAnims.gear_pop;
 
         switch(piece.quality) {
             case LEGENDARY -> {

@@ -40,7 +40,7 @@ public class Overheat_miniExplosion extends Overheat_Spell{
 
         if(stateTime >= anim.getAnimationDuration()) {
             world.destroyBody(body);
-            screen.spellManager.toRemove(this);
+            screen.spellManager.remove(this);
         }
     }
 
@@ -95,7 +95,7 @@ public class Overheat_miniExplosion extends Overheat_Spell{
                 Overheat_TriggerExplosion fireball = new Overheat_TriggerExplosion();
                 fireball.setElements(this);
                 fireball.targetPosition = monster.body.getPosition();
-                screen.spellManager.toAdd(fireball);
+                screen.spellManager.add(fireball);
             }
         }
     }

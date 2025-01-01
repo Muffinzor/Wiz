@@ -178,6 +178,8 @@ public class KnownTable extends MenuTable {
         if(active) {
             updateSelectedButton();
         }
+        screen.selectedSpell_Button = null;
+        screen.mastery_table.mixingTable.updateButtons();
     }
 
     public void dispose() {

@@ -1,5 +1,7 @@
 package wizardo.game.Spells.Arcane.EnergyBeam;
 
+import com.badlogic.gdx.math.Vector2;
+import wizardo.game.Items.Equipment.Staff.Epic_EnergybeamStaff;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
@@ -21,13 +23,15 @@ public class EnergyBeam_Spell extends Spell {
     public boolean arcaneMissile;
     public boolean rift;
 
+    public boolean reverse;
+
     public EnergyBeam_Spell() {
 
         name = "Energy Beam";
 
         baseDmg = 80;
-
         cooldown = 3.2f;
+        autoaimable = true;
 
         main_element = SpellUtils.Spell_Element.ARCANE;
 
@@ -37,16 +41,40 @@ public class EnergyBeam_Spell extends Spell {
     public void update(float delta) {
         setup();
 
-        if(delta > 0) {
+        autoAimCheck();
 
-            EnergyBeam_Projectile beam = new EnergyBeam_Projectile(getSpawnPosition(), getTargetPosition());
-            beam.setBeam(this);
-            beam.setElements(this);
-            screen.spellManager.toAdd(beam);
-            screen.spellManager.toRemove(this);
-
+        if(targetPosition == null) {
+            return;
         }
 
+        if(delta > 0) {
+
+
+            EnergyBeam_Projectile beam = new EnergyBeam_Projectile(getSpawnPosition(), targetPosition);
+            beam.setBeam(this);
+            beam.setElements(this);
+            screen.spellManager.add(beam);
+
+
+            uniqueStaff();
+            screen.spellManager.remove(this);
+        }
+
+    }
+
+    public void uniqueStaff() {
+        if(player.inventory.equippedStaff instanceof Epic_EnergybeamStaff) {
+            Vector2 reverseVector;
+            Vector2 direction = getTargetPosition().sub(getSpawnPosition());
+            direction.scl(-1);
+            reverseVector = player.pawn.getPosition().add(direction);
+
+            EnergyBeam_Projectile beam = new EnergyBeam_Projectile(getSpawnPosition(), reverseVector);
+            beam.setBeam(this);
+            beam.setElements(this);
+            beam.reverse = true;
+            screen.spellManager.add(beam);
+        }
     }
 
     public void setBeam(EnergyBeam_Spell parent) {

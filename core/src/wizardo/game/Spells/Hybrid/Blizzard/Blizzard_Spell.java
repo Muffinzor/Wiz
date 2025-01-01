@@ -25,6 +25,8 @@ public class Blizzard_Spell extends Spell {
 
     public Blizzard_Spell() {
 
+        multicastable = false;
+
         name = "Blizzard";
 
         cooldown = 12;
@@ -77,7 +79,7 @@ public class Blizzard_Spell extends Spell {
         }
 
         if(stateTime >= duration) {
-            screen.spellManager.toRemove(this);
+            screen.spellManager.remove(this);
             System.out.println("total projs: " + projsSent);
         }
 
@@ -126,7 +128,7 @@ public class Blizzard_Spell extends Spell {
                 proj.setElements(this);
                 proj.screen = screen;
                 proj.frostbolts = frostbolts;
-                screen.spellManager.toAdd(proj);
+                screen.spellManager.add(proj);
             }
         }
     }

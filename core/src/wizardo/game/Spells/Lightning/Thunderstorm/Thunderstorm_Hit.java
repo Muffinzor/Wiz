@@ -57,7 +57,7 @@ public class Thunderstorm_Hit extends Thunderstorm_Spell {
 
         if(stateTime >= anim.getAnimationDuration()) {
             world.destroyBody(body);
-            screen.spellManager.toRemove(this);
+            screen.spellManager.remove(this);
         }
     }
 
@@ -93,7 +93,7 @@ public class Thunderstorm_Hit extends Thunderstorm_Spell {
                 green = 0.2f;
                 blue = 0.9f;
             }
-            case FROST -> {
+            case FROST, COLDLITE -> {
                 anim = ThunderstormAnims.thunder_frost_anim;
                 green = 0.5f;
                 blue = 0.65f;
@@ -139,7 +139,7 @@ public class Thunderstorm_Hit extends Thunderstorm_Spell {
                     proj.originBody = body;
                     proj.spawnPosition = new Vector2(body.getPosition());
                     proj.targetPosition = SpellUtils.getRandomVectorInRadius(body.getPosition(), getProjRadius());
-                    screen.spellManager.toAdd(proj);
+                    screen.spellManager.add(proj);
                 }
             }
 
@@ -152,7 +152,7 @@ public class Thunderstorm_Hit extends Thunderstorm_Spell {
             if(Math.random() >= procRate) {
                 Rift_Zone rift = new Rift_Zone(monster.body.getPosition());
                 rift.setElements(this);
-                screen.spellManager.toAdd(rift);
+                screen.spellManager.add(rift);
             }
         }
     }
@@ -164,7 +164,7 @@ public class Thunderstorm_Hit extends Thunderstorm_Spell {
                 Overheat_Explosion explosion = new Overheat_Explosion(body.getPosition());
                 explosion.fromThunder = true;
                 explosion.setElements(this);
-                screen.spellManager.toAdd(explosion);
+                screen.spellManager.add(explosion);
             }
         }
     }

@@ -3,6 +3,7 @@ package wizardo.game.Monsters;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
+import wizardo.game.Monsters.MonsterArchetypes.MonsterRanged;
 import wizardo.game.Screens.Battle.BattleScreen;
 
 import java.util.ArrayList;
@@ -42,13 +43,19 @@ public class MonsterManager {
         for(Monster monster : liveMonsters) {
             monster.update(delta);
             if(monster.dead) {
-                player.currentXP += 5;
+                screen.monsterSpawner.registerKill();
+                player.currentXP += monster.xp;
                 monster.stateTime = 0;
                 dyingMonsters.add(monster);
                 if(monster.light != null) {
-                    monster.light.dimKill(0.2f);
+                    monster.light.dimKill(0.01f);
+                    monster.light = null;
                 }
             } else if(monster.tooFar) {
+                if(monster.light != null) {
+                    monster.light.dimKill(0.5f);
+                    monster.light = null;
+                }
                 dyingMonsters.add(monster);
                 monster.alpha = 0.05f;
             }
@@ -83,6 +90,16 @@ public class MonsterManager {
         }
 
         dyingMonsters.removeIf(monster -> monster.alpha <= 0);
+    }
+
+    public int getRangedMonstersCount() {
+        int count = 0;
+        for(Monster monster : liveMonsters) {
+            if(monster instanceof MonsterRanged) {
+                count++;
+            }
+        }
+        return count;
     }
 
 }

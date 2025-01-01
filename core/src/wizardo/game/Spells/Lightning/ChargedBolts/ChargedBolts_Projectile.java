@@ -14,7 +14,6 @@ import wizardo.game.Utils.BodyFactory;
 import java.util.ArrayList;
 
 import static wizardo.game.Resources.SpellAnims.ChargedboltsAnims.*;
-import static wizardo.game.Spells.SpellUtils.Spell_Element.FROST;
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.*;
 
@@ -89,7 +88,7 @@ public class ChargedBolts_Projectile extends ChargedBolts_Spell {
                 lightKilled = true;
             }
             world.destroyBody(body);
-            screen.spellManager.toRemove(this);
+            screen.spellManager.remove(this);
             return;
         }
 
@@ -100,7 +99,7 @@ public class ChargedBolts_Projectile extends ChargedBolts_Spell {
                 lightKilled = true;
             }
             world.destroyBody(body);
-            screen.spellManager.toRemove(this);
+            screen.spellManager.remove(this);
             return;
         }
 
@@ -132,7 +131,7 @@ public class ChargedBolts_Projectile extends ChargedBolts_Spell {
                 light.dimKill(0.5f);
                 lightKilled = true;
             }
-            screen.spellManager.toRemove(this);
+            screen.spellManager.remove(this);
         }
 
     }
@@ -162,7 +161,7 @@ public class ChargedBolts_Projectile extends ChargedBolts_Spell {
             frame.setAlpha(alpha);
         }
         if(overheat) {
-            frame.setScale(2);
+            frame.setScale(1.5f);
         }
         frame.setCenter(body.getPosition().x * PPM, body.getPosition().y * PPM);
 
@@ -186,7 +185,7 @@ public class ChargedBolts_Projectile extends ChargedBolts_Spell {
 
         float bodyRadius = 10;
         if(overheat) {
-            bodyRadius = 25;
+            bodyRadius = 16;
         }
         body = BodyFactory.spellProjectileCircleBody(adjustedSpawn, bodyRadius, true);
         body.setUserData(this);
@@ -229,14 +228,14 @@ public class ChargedBolts_Projectile extends ChargedBolts_Spell {
             bolt.setNext(this);
             bolt.duration = duration - stateTime;
             bolt.setElements(this);
-            screen.spellManager.toAdd(bolt);
+            screen.spellManager.add(bolt);
         }
     }
 
     public void createLight() {
         float lightRadius = 25;
         if(overheat) {
-            lightRadius = 50;
+            lightRadius = 35;
         }
         light = screen.lightManager.pool.getLight();
         light.setLight(red, green, blue, lightAlpha, lightRadius, body.getPosition());
@@ -318,7 +317,7 @@ public class ChargedBolts_Projectile extends ChargedBolts_Spell {
     public void explode() {
         ChargedBolts_Explosion explosion = new ChargedBolts_Explosion(body.getPosition());
         explosion.setElements(this);
-        screen.spellManager.toAdd(explosion);
+        screen.spellManager.add(explosion);
     }
 
     /**
@@ -334,7 +333,7 @@ public class ChargedBolts_Projectile extends ChargedBolts_Spell {
                 explosion.lightAlpha = 0.8f;
                 explosion.screen = screen;
                 explosion.setElements(this);
-                screen.spellManager.toAdd(explosion);
+                screen.spellManager.add(explosion);
             }
 
         }

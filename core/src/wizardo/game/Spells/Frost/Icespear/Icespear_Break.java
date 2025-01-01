@@ -37,7 +37,7 @@ public class Icespear_Break extends Spell {
         stateTime += delta;
 
         if(stateTime >= anim.getAnimationDuration()) {
-            screen.spellManager.toRemove(this);
+            screen.spellManager.remove(this);
         }
 
     }

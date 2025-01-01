@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
+import wizardo.game.Items.Equipment.Amulet.Legendary_FireballAmulet;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Spells.Arcane.Rifts.Rift_Zone;
@@ -22,6 +23,7 @@ import static wizardo.game.Wizardo.*;
 
 public class Frostbolt_Projectile extends Frostbolt_Spell{
 
+    int totalCollisions;
     private boolean hasCollided;
     private Body body;
     private float alpha = 1;
@@ -76,7 +78,7 @@ public class Frostbolt_Projectile extends Frostbolt_Spell{
             world.destroyBody(body);
             body = null;
             light.dimKill(0.5f);
-            screen.spellManager.toRemove(this);
+            screen.spellManager.remove(this);
 
         } else if(stateTime > 2) {
             alpha -= 0.02f;
@@ -85,14 +87,26 @@ public class Frostbolt_Projectile extends Frostbolt_Spell{
                 world.destroyBody(body);
                 body = null;
                 light.dimKill(0.1f);
-                screen.spellManager.toRemove(this);
+                screen.spellManager.remove(this);
             }
         }
     }
 
     public void handleCollision(Monster monster) {
         hasCollided = true;
+        legendaryAmuletEffect(monster);
         rift();
+        totalCollisions++;
+    }
+
+    public void legendaryAmuletEffect(Monster monster) {
+        if(player.inventory.equippedAmulet instanceof Legendary_FireballAmulet) {
+            dealDmg(monster);
+            hasCollided = false;
+            if(Math.random() > 0.9f || totalCollisions == 0) {
+                regularExplosion();
+            }
+        }
     }
 
     public void pickAnim() {
@@ -120,7 +134,7 @@ public class Frostbolt_Projectile extends Frostbolt_Spell{
         explosion.targetPosition = new Vector2(body.getPosition());
         explosion.setBolt(this);
         explosion.setElements(this);
-        screen.spellManager.toAdd(explosion);
+        screen.spellManager.add(explosion);
     }
 
     public void superExplosion() {
@@ -130,7 +144,7 @@ public class Frostbolt_Projectile extends Frostbolt_Spell{
             mini_overheat.setElements(this);
             mini_overheat.small = true;
             mini_overheat.fireball = true;
-            screen.spellManager.toAdd(mini_overheat);
+            screen.spellManager.add(mini_overheat);
         } else {
             regularExplosion();
         }
@@ -149,7 +163,7 @@ public class Frostbolt_Projectile extends Frostbolt_Spell{
         }
 
         if(projectiles > 1) {
-            float angleVariation = Math.min(projectiles * 2, 15);
+            float angleVariation = Math.min(projectiles * 2, 8);
             float randomAngle = MathUtils.random(-angleVariation, angleVariation);
             direction.rotateDeg(randomAngle);
         }
@@ -188,6 +202,7 @@ public class Frostbolt_Projectile extends Frostbolt_Spell{
             frame.setColor(1,0.5f,0.5f,alpha);
         }
         screen.displayManager.spriteRenderer.regular_sorted_sprites.add(frame);
+        screen.centerSort(frame, body.getPosition().y * PPM - 5);
 
     }
 
@@ -250,7 +265,7 @@ public class Frostbolt_Projectile extends Frostbolt_Spell{
                 Rift_Zone rift = new Rift_Zone(new Vector2(body.getPosition()));
                 rift.setElements(this);
                 rift.anim_element = FROST;
-                screen.spellManager.toAdd(rift);
+                screen.spellManager.add(rift);
             }
         }
     }

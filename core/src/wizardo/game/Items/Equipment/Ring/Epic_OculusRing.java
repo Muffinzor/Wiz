@@ -26,6 +26,8 @@ public class Epic_OculusRing extends Ring {
 
         gearStats.add(ItemUtils.GearStat.ALLDMG);
         quantity_gearStats.add(5);
+        gearStats.add(ItemUtils.GearStat.MULTICAST);
+        quantity_gearStats.add(5);
     }
 
     public String getFlavorText() {

@@ -32,7 +32,7 @@ public class EnergyBeam_FreezeBody extends Spell {
 
         if(stateTime >= 0.2f) {
             world.destroyBody(body);
-            screen.spellManager.toRemove(this);
+            screen.spellManager.remove(this);
         }
 
     }
@@ -70,7 +70,7 @@ public class EnergyBeam_FreezeBody extends Spell {
                 Frostbolt_Explosion explosion = new Frostbolt_Explosion();
                 explosion.targetPosition = SpellUtils.getRandomVectorInRadius(body.getPosition(), 2.5f);
                 explosion.setElements(this);
-                screen.spellManager.toAdd(explosion);
+                screen.spellManager.add(explosion);
             }
         }
     }

@@ -1,6 +1,7 @@
 package wizardo.game.Player;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import wizardo.game.Items.Equipment.Equipment;
 import wizardo.game.Maps.TriggerObject;
 import wizardo.game.Resources.PlayerResources;
 import wizardo.game.Screens.Battle.BattleScreen;
@@ -9,6 +10,7 @@ import wizardo.game.Spells.SpellManager;
 import static wizardo.game.Screens.BaseScreen.xRatio;
 import static wizardo.game.Screens.BaseScreen.yRatio;
 import static wizardo.game.Utils.Constants.PPM;
+import static wizardo.game.Wizardo.player;
 
 public class Player {
 
@@ -39,6 +41,9 @@ public class Player {
 
 
     public void update(float delta) {
+        updateEquippedGear(delta);
+        drawPlayerHP();
+
         if(stats.shield < 0) {
             stats.shield = 0;
         }
@@ -53,8 +58,12 @@ public class Player {
             }
         }
     }
+    public void updateEquippedGear(float delta) {
+        for(Equipment piece : inventory.equippedGear) {
+            piece.update(delta);
+        }
+    }
     public void drawPlayerHP() {
-        update(0);
 
         Sprite frame1 = screen.getSprite();
         frame1.set(PlayerResources.shieldEffect);

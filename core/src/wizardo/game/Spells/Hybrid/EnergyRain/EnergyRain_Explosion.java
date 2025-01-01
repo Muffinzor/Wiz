@@ -12,6 +12,7 @@ import wizardo.game.Spells.Arcane.Rifts.Rift_Zone;
 import wizardo.game.Spells.Fire.Flamejet.Flamejet_Spell;
 import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Explosion;
 import wizardo.game.Spells.Lightning.ChargedBolts.ChargedBolts_Spell;
+import wizardo.game.Spells.Lightning.Thunderstorm.Thunderstorm_Spell;
 import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyFactory;
 
@@ -48,6 +49,7 @@ public class EnergyRain_Explosion extends EnergyRain_Spell {
             arcaneMissiles();
             flamejets();
             rifts();
+            thunderstorm();
         }
 
         drawFrame();
@@ -60,7 +62,7 @@ public class EnergyRain_Explosion extends EnergyRain_Spell {
 
         if(stateTime >= anim.getAnimationDuration()) {
             world.destroyBody(body);
-            screen.spellManager.toRemove(this);
+            screen.spellManager.remove(this);
         }
     }
 
@@ -117,7 +119,7 @@ public class EnergyRain_Explosion extends EnergyRain_Spell {
             Frostbolt_Explosion explosion = new Frostbolt_Explosion();
             explosion.targetPosition = SpellUtils.getRandomVectorInRadius(monster.body.getPosition(), monster.bodyRadius/PPM);
             explosion.setElements(this);
-            screen.spellManager.toAdd(explosion);
+            screen.spellManager.add(explosion);
         }
     }
 
@@ -129,7 +131,7 @@ public class EnergyRain_Explosion extends EnergyRain_Spell {
                 bolt.spawnPosition = new Vector2(body.getPosition());
                 bolt.targetPosition = SpellUtils.getRandomVectorInRadius(body.getPosition(), 3);
                 bolt.setElements(this);
-                screen.spellManager.toAdd(bolt);
+                screen.spellManager.add(bolt);
             }
         }
     }
@@ -142,7 +144,7 @@ public class EnergyRain_Explosion extends EnergyRain_Spell {
                 missile.setElements(this);
                 missile.spawnPosition = new Vector2(body.getPosition());
                 missile.targetPosition = SpellUtils.getRandomVectorInRadius(body.getPosition(), 2);
-                screen.spellManager.toAdd(missile);
+                screen.spellManager.add(missile);
             }
         }
     }
@@ -155,7 +157,7 @@ public class EnergyRain_Explosion extends EnergyRain_Spell {
                 flame.setElements(this);
                 flame.spawnPosition = new Vector2(body.getPosition());
                 flame.targetPosition = SpellUtils.getRandomVectorInRadius(body.getPosition(), 2);
-                screen.spellManager.toAdd(flame);
+                screen.spellManager.add(flame);
             }
         }
     }
@@ -167,9 +169,24 @@ public class EnergyRain_Explosion extends EnergyRain_Spell {
                 for (int i = 0; i < 3; i++) {
                     Rift_Zone rift = new Rift_Zone(SpellUtils.getClearRandomPosition(body.getPosition(), 3));
                     rift.setElements(this);
-                    screen.spellManager.toAdd(rift);
+                    screen.spellManager.add(rift);
                 }
             }
+        }
+    }
+
+    public void thunderstorm() {
+        if(thunderstorm) {
+            float procChance = 0.8f - 0.08f * player.spellbook.thunderstorm_lvl;
+            if(Math.random() >= procChance) {
+                Thunderstorm_Spell storm = new Thunderstorm_Spell();
+                storm.setElements(this);
+                storm.spawnPosition = new Vector2(body.getPosition());
+                storm.radius = 4;
+                storm.duration = 1.2f;
+                screen.spellManager.add(storm);
+            }
+
         }
     }
 

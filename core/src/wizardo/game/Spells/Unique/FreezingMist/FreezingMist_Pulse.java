@@ -52,7 +52,7 @@ public class FreezingMist_Pulse extends Spell {
         }
 
         if(stateTime >= anim.getAnimationDuration()) {
-            screen.spellManager.toRemove(this);
+            screen.spellManager.remove(this);
             world.destroyBody(body);
         }
     }
@@ -71,7 +71,7 @@ public class FreezingMist_Pulse extends Spell {
         frame.setCenter(targetPosition.x * PPM, targetPosition.y * PPM);
         frame.rotate(rotation);
         frame.flip(flipX, flipY);
-        frame.setScale(2);
+        frame.setScale(2.2f);
         frame.setAlpha(0.7f);
 
         screen.centerSort(frame, targetPosition.y * PPM - 15);
@@ -90,7 +90,7 @@ public class FreezingMist_Pulse extends Spell {
     }
 
     public void createBody() {
-        body = BodyFactory.spellExplosionBody(targetPosition, 120);
+        body = BodyFactory.spellExplosionBody(targetPosition, 150);
         body.setUserData(this);
     }
 

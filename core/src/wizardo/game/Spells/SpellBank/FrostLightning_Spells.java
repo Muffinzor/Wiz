@@ -239,7 +239,7 @@ public class FrostLightning_Spells {
         ChargedBolts_Spell proj21 = new ChargedBolts_Spell();
         proj21.frostbolts = true;
         frostlite21.nested_spell = frostliteSpells[0];
-        frostlite21.anim_element = LIGHTNING;
+        frostlite21.anim_element = COLDLITE;
         frostlite21.spellParts.add(THUNDERSTORM);
         frostlite21.spellParts.add(CHARGEDBOLTS);
         frostlite21.spellParts.add(FROSTBOLT);

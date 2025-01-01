@@ -26,7 +26,17 @@ public class GearFlareAnims {
     public static Animation<Sprite> gear_pop;
     public static String gear_pop_path = "Items/GearEffect/GearPop.atlas";
 
+    public static Animation<Sprite> gold_pop;
+    public static String gold_pop_path = "Items/GearEffect/goldPickUp.atlas";
+
     public static void loadAnimations() {
+
+        TextureAtlas goldpop_atlas = assetManager.get(gold_pop_path, TextureAtlas.class);
+        Sprite[] goldpop_frames = new Sprite[60];
+        for (int i = 0; i < goldpop_frames.length; i++) {
+            goldpop_frames[i] = goldpop_atlas.createSprite("gold" + (i+1));
+        }
+        gold_pop = new Animation<>(0.01f, goldpop_frames);
 
         TextureAtlas pop_atlas = assetManager.get(gear_pop_path, TextureAtlas.class);
         Sprite[] pop_frames = new Sprite[44];
@@ -78,6 +88,7 @@ public class GearFlareAnims {
         assetManager.load(blue_path, TextureAtlas.class);
         assetManager.load(green_path, TextureAtlas.class);
         assetManager.load(gear_pop_path, TextureAtlas.class);
+        assetManager.load(gold_pop_path, TextureAtlas.class);
         assetManager.load(white_path, TextureAtlas.class);
     }
 }

@@ -2,27 +2,29 @@ package wizardo.game.Monsters;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import wizardo.game.Items.Drop.GoldDrop;
 import wizardo.game.Monsters.MonsterArchetypes.MonsterMelee;
-import wizardo.game.Monsters.MonsterAttack.AttackManager;
 import wizardo.game.Monsters.MonsterMovement.MovementManager;
 import wizardo.game.Monsters.MonsterActions.AttackSwing.AttackSwing;
 import wizardo.game.Monsters.MonsterStateManager.MeleeStateManager;
 import wizardo.game.Resources.MonsterResources.MonsterWeapons;
 import wizardo.game.Resources.MonsterResources.SkeletonGiantAnims;
 import wizardo.game.Screens.Battle.BattleScreen;
+import wizardo.game.Screens.Battle.MonsterSpawner.MonsterSpawner;
 
 import static wizardo.game.Utils.Constants.PPM;
+import static wizardo.game.Wizardo.player;
 
 public class TEST_BIGMONSTER extends MonsterMelee {
 
-    public TEST_BIGMONSTER(BattleScreen screen, Vector2 position) {
-
-        super(screen, position);
+    public TEST_BIGMONSTER(BattleScreen screen, Vector2 position, MonsterSpawner spawner) {
+        super(screen, position, spawner);
         speed = 20f/PPM;
-        hp = 300;
-        maxHP = 300;
+        hp = 150;
+        maxHP = 150;
+        xp = 30;
 
-        dmg = 15;
+        dmg = 20;
 
         massValue = 150f;
         bodyRadius = 18;
@@ -36,7 +38,7 @@ public class TEST_BIGMONSTER extends MonsterMelee {
 
         movementManager = new MovementManager(this);
         stateManager = new MeleeStateManager(this);
-        attackManager = new AttackManager(this, 2.5f);
+        monsterActionManager = new MonsterActionManager(this, 2.5f);
         attackRange = 1.5f;
         hitboxRadius = 20;
         rushDistance = 0;
@@ -57,5 +59,15 @@ public class TEST_BIGMONSTER extends MonsterMelee {
         initialized = true;
         createBody();
         speed = speed * MathUtils.random(0.9f, 1.1f);
+    }
+
+    @Override
+    public void onDeath() {
+        super.onDeath();
+        float goldrate = 0.9f - player.stats.luck/500f;
+        if(Math.random() >= goldrate) {
+            GoldDrop gold = new GoldDrop(body.getPosition(),2 , 3);
+            screen.dropManager.addDrop(gold);
+        }
     }
 }

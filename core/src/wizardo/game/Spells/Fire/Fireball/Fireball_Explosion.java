@@ -6,11 +6,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
-import wizardo.game.Resources.Skins;
 import wizardo.game.Resources.SpellAnims.FireballAnims;
 import wizardo.game.Spells.Arcane.ArcaneMissiles.ArcaneMissile_Spell;
 import wizardo.game.Spells.Arcane.Rifts.Rift_Zone;
-import wizardo.game.Spells.Arcane.Rifts.Rifts_Spell;
 import wizardo.game.Spells.Fire.Flamejet.Flamejet_Spell;
 import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Explosion;
 import wizardo.game.Spells.Frost.Frozenorb.Frozenorb_Spell;
@@ -22,7 +20,6 @@ import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyFactory;
 
-import static wizardo.game.Spells.SpellUtils.Spell_Element.FIRELITE;
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.*;
 
@@ -68,7 +65,7 @@ public class Fireball_Explosion extends Fireball_Spell {
 
         if(stateTime >= anim.getAnimationDuration()) {
             world.destroyBody(body);
-            screen.spellManager.toRemove(this);
+            screen.spellManager.remove(this);
         }
     }
 
@@ -120,7 +117,7 @@ public class Fireball_Explosion extends Fireball_Spell {
                 }
                 explosion.setElements(this);
                 explosion.targetPosition = random;
-                screen.spellManager.toAdd(explosion);
+                screen.spellManager.add(explosion);
             }
         }
     }
@@ -133,7 +130,7 @@ public class Fireball_Explosion extends Fireball_Spell {
                 Rift_Zone rift = new Rift_Zone(randomPosition);
                 rift.setElements(this);
                 rift.nested_spell = new Flamejet_Spell();
-                screen.spellManager.toAdd(rift);
+                screen.spellManager.add(rift);
             }
         }
     }
@@ -149,7 +146,7 @@ public class Fireball_Explosion extends Fireball_Spell {
             spear.maxSplits = 0;
             orb.nested_spell = spear;
             orb.setElements(this);
-            screen.spellManager.toAdd(orb);
+            screen.spellManager.add(orb);
         }
     }
 
@@ -175,7 +172,7 @@ public class Fireball_Explosion extends Fireball_Spell {
             orb.spawnPosition = new Vector2(body.getPosition());
             orb.targetPosition = new Vector2(1,0);
             orb.setElements(this);
-            screen.spellManager.toAdd(orb);
+            screen.spellManager.add(orb);
         } else if(nested_spell != null) {
             int quantity = getProjQuantity();
             for (int i = 0; i < quantity; i++) {
@@ -183,7 +180,7 @@ public class Fireball_Explosion extends Fireball_Spell {
                 proj.setElements(this);
                 proj.targetPosition = SpellUtils.getRandomVectorInRadius(body.getPosition(), 4);
                 proj.spawnPosition = new Vector2(body.getPosition());
-                screen.spellManager.toAdd(proj);
+                screen.spellManager.add(proj);
                 if(nested_spell instanceof ArcaneMissile_Spell) {
                     ArcaneMissile_Spell missile = (ArcaneMissile_Spell) proj;
                     missile.scale = 0.7f;
@@ -201,7 +198,7 @@ public class Fireball_Explosion extends Fireball_Spell {
                 flame.originBody = body;
                 flame.spawnPosition = new Vector2(body.getPosition());
                 flame.targetPosition = SpellUtils.getRandomVectorInRadius(body.getPosition(), 2);
-                screen.spellManager.toAdd(flame);
+                screen.spellManager.add(flame);
             }
         }
     }
@@ -235,7 +232,7 @@ public class Fireball_Explosion extends Fireball_Spell {
             storm.spawnPosition = new Vector2(body.getPosition());
             storm.radius = 5;
             storm.duration = 1;
-            screen.spellManager.toAdd(storm);
+            screen.spellManager.add(storm);
         }
     }
 

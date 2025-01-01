@@ -45,10 +45,10 @@ public class Blizzard_Projectile extends Blizzard_Spell {
             hit.screen = screen;
             hit.frostbolts = frostbolts;
             hit.setElements(this);
-            screen.spellManager.toAdd(hit);
+            screen.spellManager.add(hit);
             light.dimKill(0.5f);
             world.destroyBody(body);
-            screen.spellManager.toRemove(this);
+            screen.spellManager.remove(this);
         }
     }
 

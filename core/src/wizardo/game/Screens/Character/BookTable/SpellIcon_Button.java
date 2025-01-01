@@ -81,9 +81,9 @@ public class SpellIcon_Button extends ImageButton {
             case "Thunderstorm" :
                 switch(spell.anim_element) {
                     case FIRE -> style = skin.get("thunderstorm_fire", ImageButtonStyle.class);
-                    case FROST -> style = skin.get("thunderstorm_frost", ImageButtonStyle.class);
+                    case FROST, COLDLITE -> style = skin.get("thunderstorm_frost", ImageButtonStyle.class);
                     case ARCANE -> style = skin.get("thunderstorm_arcane", ImageButtonStyle.class);
-                    case LIGHTNING -> style = skin.get("thunderstorm_lightning", ImageButtonStyle.class);
+                    case LIGHTNING-> style = skin.get("thunderstorm_lightning", ImageButtonStyle.class);
                 }
                 break;
 
@@ -173,7 +173,7 @@ public class SpellIcon_Button extends ImageButton {
                 }
                 break;
 
-            case "Arcane Artillery" :
+            case "Judgement" :
                 switch(spell.anim_element) {
                     case FROST -> style = skin.get("artillery_frost", ImageButtonStyle.class);
                     case ARCANE -> style = skin.get("artillery_arcane", ImageButtonStyle.class);
@@ -331,6 +331,7 @@ public class SpellIcon_Button extends ImageButton {
             screen.knownSpells_table.resize();
             screen.equippedSpells_table.resize();
             screen.selectedSpell_Button = null;
+            screen.mastery_table.mixingTable.updateButtons();
         } else {
             screen.selectedSpell_Button = this;
         }

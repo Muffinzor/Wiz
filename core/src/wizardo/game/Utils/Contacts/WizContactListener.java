@@ -67,6 +67,25 @@ public class WizContactListener implements ContactListener {
             }
         } else
 
+        /* MONSTER + PAWN */
+        if(f1isPawn && f2isMonster || f1isMonster && f2isPawn) {
+            if(f1isMonster) {
+                Monster monster = (Monster) f1.getBody().getUserData();
+                monster.handleCollision(player);
+            } else {
+                Monster monster = (Monster) f2.getBody().getUserData();
+                monster.handleCollision(player);
+            }
+        }
+
+        /* MONSTER + MONSTER for push */
+        if(f1isMonster && f2isMonster) {
+            Monster monster1 = (Monster) f1.getBody().getUserData();
+            Monster monster2 = (Monster) f2.getBody().getUserData();
+            monster1.handleCollision(monster2);
+            monster2.handleCollision(monster1);
+        } else
+
         /* MONSTER + SPELL */
         if(f1isMonster && f2isSpell || f2isMonster && f1isSpell) {
             if(f1isMonster) {
@@ -104,7 +123,7 @@ public class WizContactListener implements ContactListener {
             } else {
                 Spell_Decor_Contact(f2, f1);
             }
-        }
+        } else
 
         /* MONSTER SPELL + PLAYER */
         if(f1isMonsterSpell && f2isPawn || f2isMonsterSpell && f1isPawn) {

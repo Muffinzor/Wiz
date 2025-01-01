@@ -1,6 +1,7 @@
 package wizardo.game.Spells.Hybrid.Laser;
 
 import com.badlogic.gdx.math.Vector2;
+import wizardo.game.Items.Equipment.Staff.Epic_EnergybeamStaff;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
@@ -31,8 +32,8 @@ public class Laser_Spell extends Spell {
 
         cooldown = 0.8f;
         speed = 15f;
-
         baseDmg = 10;
+        autoaimable = true;
 
         inRange = new ArrayList<>();
 
@@ -58,17 +59,34 @@ public class Laser_Spell extends Spell {
                 laser.spawnPosition = new Vector2(originBody.getPosition());
                 laser.targetPosition = new Vector2(target.body.getPosition());
                 laser.setLaser(this);
-                screen.spellManager.toAdd(laser);
+                screen.spellManager.add(laser);
 
+                uniqueStaff();
                 lasersCast ++;
             }
 
         }
 
         if(lasersCast >= lasers) {
-            screen.spellManager.toRemove(this);
+            screen.spellManager.remove(this);
         }
 
+    }
+
+    public void uniqueStaff() {
+        if(player.inventory.equippedStaff instanceof Epic_EnergybeamStaff) {
+            Vector2 reverseVector;
+            Vector2 direction = target.body.getPosition().sub(getSpawnPosition());
+            direction.scl(-1);
+            reverseVector = player.pawn.getPosition().add(direction);
+
+            Laser_Projectile laser = new Laser_Projectile();
+            laser.spawnPosition = player.pawn.getPosition();
+            laser.targetPosition = reverseVector;
+            laser.setElements(this);
+            laser.setLaser(this);
+            screen.spellManager.add(laser);
+        }
     }
 
     public void setup() {

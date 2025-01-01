@@ -12,6 +12,8 @@ public class FrostNova_Spell extends Spell {
 
     public FrostNova_Spell() {
 
+        multicastable = false;
+
         name = "Frost Nova";
 
         baseDmg = 45;
@@ -28,8 +30,8 @@ public class FrostNova_Spell extends Spell {
         explosion.targetPosition = new Vector2(player.pawn.body.getPosition());
         explosion.setElements(this);
         explosion.frostbolts = frostbolts;
-        screen.spellManager.toAdd(explosion);
-        screen.spellManager.toRemove(this);
+        screen.spellManager.add(explosion);
+        screen.spellManager.remove(this);
 
     }
 
@@ -48,7 +50,7 @@ public class FrostNova_Spell extends Spell {
     public int getDmg() {
         int dmg = baseDmg;
         dmg += 15 * player.spellbook.overheat_lvl;
-        return dmg;
+        return 0;
     }
 
 }

@@ -85,7 +85,7 @@ public class DungeonChunk extends MapChunk {
                 layerObjects.add(vase);
             }
 
-            if(object.getName().equals("StandingTorch")) {
+            if(object.getName().equals("StandingTorch") && Math.random() >= 0.5) {
                 StandingTorchObject torch = new StandingTorchObject(this, object);
                 layerObjects.add(torch);
             }

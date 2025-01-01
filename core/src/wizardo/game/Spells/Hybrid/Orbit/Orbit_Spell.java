@@ -5,8 +5,6 @@ import com.badlogic.gdx.math.Vector2;
 import wizardo.game.Items.Equipment.Book.Epic_OrbitBook;
 import wizardo.game.Spells.Spell;
 
-import static wizardo.game.Spells.SpellUtils.Spell_Element.*;
-import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.player;
 
 public class Orbit_Spell extends Spell {
@@ -40,7 +38,7 @@ public class Orbit_Spell extends Spell {
     public void update(float delta) {
         setup();
         createOrbs();
-        screen.spellManager.toRemove(this);
+        screen.spellManager.remove(this);
     }
 
     public void createOrbs() {
@@ -55,7 +53,7 @@ public class Orbit_Spell extends Spell {
             orb.setElements(this);
             orb.frostbolt = frostbolt;
             orb.orbitRadius = orbitRadius;
-            screen.spellManager.toAdd(orb);
+            screen.spellManager.add(orb);
         }
 
         if(player.inventory.equippedBook instanceof Epic_OrbitBook) {
@@ -71,7 +69,7 @@ public class Orbit_Spell extends Spell {
                 orb.setElements(this);
                 orb.frostbolt = frostbolt;
                 orb.orbitRadius = orbitRadius;
-                screen.spellManager.toAdd(orb);
+                screen.spellManager.add(orb);
             }
         }
     }

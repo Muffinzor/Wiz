@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
+import wizardo.game.Items.Equipment.Staff.Epic_MissileStaff;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Spells.Arcane.Rifts.Rift_Zone;
@@ -17,7 +18,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import static wizardo.game.Resources.SpellAnims.ArcaneMissileAnims.*;
-import static wizardo.game.Spells.SpellUtils.Spell_Element.ARCANE;
 import static wizardo.game.Spells.SpellUtils.hasLineOfSight;
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Utils.Contacts.Masks.OBSTACLE;
@@ -77,7 +77,7 @@ public class ArcaneMissile_Projectile extends ArcaneMissile_Spell {
             frostboltExplosion();
             light.dimKill(0.1f);
             world.destroyBody(body);
-            screen.spellManager.toRemove(this);
+            screen.spellManager.remove(this);
             return;
         }
 
@@ -103,9 +103,11 @@ public class ArcaneMissile_Projectile extends ArcaneMissile_Spell {
         targetLocked = false;
         dealDmg(monster);
 
-        float scaleLoss = 0.2f;
-        scaleLoss *= 1 - player.spellbook.arcanemissileBonus/100f;
-        scale -= scaleLoss;
+        if(!(player.inventory.equippedStaff instanceof Epic_MissileStaff)) {
+            float scaleLoss = 0.2f;
+            scaleLoss *= 1 - player.spellbook.arcanemissileBonus / 100f;
+            scale -= scaleLoss;
+        }
 
         frostbolt(monster);
 
@@ -119,19 +121,21 @@ public class ArcaneMissile_Projectile extends ArcaneMissile_Spell {
                     rift.nested_spell = bolt;
                 }
                 rift.setElements(this);
-                screen.spellManager.toAdd(rift);
+                screen.spellManager.add(rift);
                 scale -= (0.5f - 0.025f * player.spellbook.rift_lvl);
             }
         }
 
         if(overheat && scale > 0) {
-            scale -= 0.2f;
+            if(!(player.inventory.equippedStaff instanceof Epic_MissileStaff)) {
+                scale -= 0.2f;
+            }
             float procRate = scale;
             if(scale > 0.2f && Math.random() >= procRate) {
                 ArcaneMissile_Explosion explosion = new ArcaneMissile_Explosion(body.getPosition());
                 explosion.setElements(this);
                 explosion.flamejet = flamejet;
-                screen.spellManager.toAdd(explosion);
+                screen.spellManager.add(explosion);
                 scale = 0;
             }
         }
@@ -274,7 +278,7 @@ public class ArcaneMissile_Projectile extends ArcaneMissile_Spell {
     public void split() {
         world.destroyBody(body);
         light.dimKill(0.5f);
-        screen.spellManager.toRemove(this);
+        screen.spellManager.remove(this);
 
         int missiles = 2 + player.spellbook.icespear_lvl / 5;
         float initialAngle = rotation;
@@ -288,7 +292,7 @@ public class ArcaneMissile_Projectile extends ArcaneMissile_Spell {
             missile.hasSplit = true;
             missile.setElements(this);
             missile.setMissile(this);
-            screen.spellManager.toAdd(missile);
+            screen.spellManager.add(missile);
         }
     }
 
@@ -297,7 +301,7 @@ public class ArcaneMissile_Projectile extends ArcaneMissile_Spell {
             Frostbolt_Explosion explosion = new Frostbolt_Explosion();
             explosion.setElements(this);
             explosion.targetPosition = new Vector2(body.getPosition());
-            screen.spellManager.toAdd(explosion);
+            screen.spellManager.add(explosion);
         }
     }
     public void frostbolt(Monster monster) {

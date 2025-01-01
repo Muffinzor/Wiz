@@ -1,5 +1,6 @@
 package wizardo.game.Items.Equipment;
 
+import com.badlogic.gdx.math.MathUtils;
 import wizardo.game.Items.Equipment.Amulet.Amulet;
 import wizardo.game.Items.Equipment.Book.Book;
 import wizardo.game.Items.Equipment.Hat.Hat;
@@ -11,8 +12,10 @@ import wizardo.game.Items.ItemUtils;
 import wizardo.game.Spells.SpellUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
+import static wizardo.game.Items.ItemUtils.EquipSlot.RING;
 import static wizardo.game.Wizardo.player;
 
 public class EquipmentUtils {
@@ -109,6 +112,7 @@ public class EquipmentUtils {
                     case LUCK -> player.stats.luck += value;
                     case REGEN -> player.stats.baseRecharge += value/100f;
                     case DEFENSE -> player.stats.damageReduction += value;
+                    case PROJSPEED -> player.spellbook.projSpeedBonus += value;
                     case MASTERY_FROST -> {
                         player.spellbook.frostbolt_lvl += value;
                         player.spellbook.icespear_lvl += value;
@@ -129,6 +133,21 @@ public class EquipmentUtils {
                         player.spellbook.chainlightning_lvl += value;
                         player.spellbook.thunderstorm_lvl += value;
                     }
+                    case MASTERY_ALL -> {
+                        player.spellbook.chargedbolt_lvl += value;
+                        player.spellbook.chainlightning_lvl += value;
+                        player.spellbook.thunderstorm_lvl += value;
+                        player.spellbook.flamejet_lvl += value;
+                        player.spellbook.fireball_lvl += value;
+                        player.spellbook.overheat_lvl += value;
+                        player.spellbook.arcanemissile_lvl += value;
+                        player.spellbook.energybeam_lvl += value;
+                        player.spellbook.rift_lvl += value;
+                        player.spellbook.frostbolt_lvl += value;
+                        player.spellbook.icespear_lvl += value;
+                        player.spellbook.frozenorb_lvl += value;
+                    }
+
                 }
 
             }
@@ -238,7 +257,7 @@ public class EquipmentUtils {
             }
         }
 
-        if(slot.equals(ItemUtils.EquipSlot.RING)) {
+        if(slot.equals(RING)) {
             switch(quality) {
                 case NORMAL -> list.addAll(Ring.getNormalRings());
                 case RARE -> list.addAll(Ring.getRareRings());
@@ -276,6 +295,92 @@ public class EquipmentUtils {
 
         Collections.shuffle(list);
         return list;
+    }
+
+    public static ItemUtils.EquipSlot getRandomEquipSlot() {
+        ArrayList<ItemUtils.EquipSlot> slots = new ArrayList<ItemUtils.EquipSlot>(Arrays.asList(ItemUtils.EquipSlot.values()));
+        Collections.shuffle(slots);
+        return slots.getFirst();
+    }
+
+    public static String getRandomName(Equipment piece) {
+        ItemUtils.EquipSlot slot = piece.slot;
+        String prefix = randomPrefix();
+        String suffix = randomSuffix(slot);
+
+        return prefix + " " + suffix;
+    }
+    public static String randomPrefix() {
+        String prefix = "";
+        int random = MathUtils.random(1,10);
+        switch (random) {
+            case 1 -> prefix = "Ancient";
+            case 2 -> prefix = "Lost";
+            case 3 -> prefix = "Huming";
+            case 4 -> prefix = "Valuable";
+            case 5 -> prefix = "Shiny";
+            case 6 -> prefix = "Scratched";
+            case 7 -> prefix = "Peculiar";
+            case 8 -> prefix = "Restored";
+            case 9 -> prefix = "Strange";
+            case 10 -> prefix = "Abandonned";
+        }
+        return prefix;
+    }
+    public static String randomSuffix(ItemUtils.EquipSlot slot) {
+        String prefix = "";
+        int random = MathUtils.random(1,4);
+        switch(slot) {
+            case ROBE -> {
+                switch (random) {
+                    case 1 -> prefix = "Rags";
+                    case 2 -> prefix = "Robes";
+                    case 3 -> prefix = "Cloak";
+                    case 4 -> prefix = "Cape";
+                }
+            }
+            case RING -> {
+                switch (random) {
+                    case 1 -> prefix = "Band";
+                    case 2 -> prefix = "Ring";
+                    case 3 -> prefix = "Loop";
+                    case 4 -> prefix = "Halo";
+                }
+            }
+            case AMULET -> {
+                switch (random) {
+                    case 1 -> prefix = "Trinket";
+                    case 2 -> prefix = "Pendant";
+                    case 3 -> prefix = "Charm";
+                    case 4 -> prefix = "Locket";
+                }
+            }
+            case STAFF -> {
+                switch (random) {
+                    case 1 -> prefix = "Rod";
+                    case 2 -> prefix = "Spire";
+                    case 3 -> prefix = "Cane";
+                    case 4 -> prefix = "Catalyst";
+                }
+            }
+            case SPELLBOOK -> {
+                switch (random) {
+                    case 1 -> prefix = "Grimoire";
+                    case 2 -> prefix = "Tome";
+                    case 3 -> prefix = "Volume";
+                    case 4 -> prefix = "Journal";
+                }
+            }
+            case HAT -> {
+                switch (random) {
+                    case 1 -> prefix = "Cap";
+                    case 2 -> prefix = "Cloche";
+                    case 3 -> prefix = "Chapeau";
+                    case 4 -> prefix = "Hood";
+                }
+            }
+        }
+        return prefix;
     }
 
 }

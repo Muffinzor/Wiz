@@ -6,7 +6,7 @@ import wizardo.game.Spells.Arcane.Rifts.Rifts_Spell;
 import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Spell;
 import wizardo.game.Spells.Frost.Frozenorb.Frozenorb_Spell;
 import wizardo.game.Spells.Frost.Icespear.Icespear_Spell;
-import wizardo.game.Spells.Hybrid.ArcaneArtillery.ArcaneArtillery_Spell;
+import wizardo.game.Spells.Hybrid.ArcaneArtillery.Judgement_Spell;
 import wizardo.game.Spells.Hybrid.Blizzard.Blizzard_Spell;
 import wizardo.game.Spells.Hybrid.EnergyRain.EnergyRain_Spell;
 import wizardo.game.Spells.Hybrid.Laser.Laser_Spell;
@@ -289,7 +289,7 @@ public class FrostArcane_Spells {
 
         // 26. Frozenorb + Beam + Rift
 
-        ArcaneArtillery_Spell frostarcane26 = new ArcaneArtillery_Spell();
+        Judgement_Spell frostarcane26 = new Judgement_Spell();
         frostarcane26.frozenorb = true;
         frostarcane26.rift = true;
         frostarcane26.anim_element = FROST;

@@ -3,6 +3,7 @@ package wizardo.game.Items.Equipment.Robes;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
+import wizardo.game.Items.Equipment.EquipmentUtils;
 import wizardo.game.Items.ItemUtils;
 import wizardo.game.Spells.SpellUtils;
 
@@ -13,8 +14,8 @@ public class Rare_Robes extends Robes {
     public Rare_Robes() {
         sprite = new Sprite(new Texture("Items/Robes/RandomCloak4.png"));
         spriteOver = new Sprite(new Texture("Items/Robes/RandomCloak4_Over.png"));
+        displayScale = 0.75f;
 
-        name = "Apprentice's Robes";
         title = "Rare Robes";
         quality = ItemUtils.EquipQuality.RARE;
 
@@ -27,7 +28,7 @@ public class Rare_Robes extends Robes {
     }
 
     public String getFlavorText() {
-        return "Just a pointy hat";
+        return "Simple yet elegant";
     }
 
 }

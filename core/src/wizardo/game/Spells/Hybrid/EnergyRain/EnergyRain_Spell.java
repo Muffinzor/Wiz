@@ -22,10 +22,14 @@ public class EnergyRain_Spell extends Spell {
     public boolean frostbolt;
     public boolean chargedbolts;
     public boolean flamejet;
+    public boolean thunderstorm;
 
     public boolean rifts;
 
     public EnergyRain_Spell() {
+
+        multicastable = false;
+
         name = "Energy Rain";
         cooldown = 12;
         baseDmg = 75;
@@ -52,7 +56,7 @@ public class EnergyRain_Spell extends Spell {
         }
 
         if(projectilesSent >= projectiles) {
-            screen.spellManager.toRemove(this);
+            screen.spellManager.remove(this);
         }
 
     }
@@ -114,9 +118,10 @@ public class EnergyRain_Spell extends Spell {
             beam.targetPosition = randomPosition;
             beam.frostbolt = frostbolt;
             beam.rifts = rifts;
+            beam.thunderstorm = thunderstorm;
             beam.flamejet = flamejet;
             beam.chargedbolts = chargedbolts;
-            screen.spellManager.toAdd(beam);
+            screen.spellManager.add(beam);
         }
         projectilesSent++;
     }

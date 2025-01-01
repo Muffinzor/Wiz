@@ -81,7 +81,7 @@ public class BlackHole_Effect extends BlackHole_Spell {
         }
 
         if(stateTime >= anim.getAnimationDuration()) {
-            screen.spellManager.toRemove(this);
+            screen.spellManager.remove(this);
         }
     }
 
@@ -93,7 +93,7 @@ public class BlackHole_Effect extends BlackHole_Spell {
 
     public void createKillBody() {
         BlackHole_KillBody body = new BlackHole_KillBody(targetPosition);
-        screen.spellManager.toAdd(body);
+        screen.spellManager.add(body);
         killbody = body;
     }
 

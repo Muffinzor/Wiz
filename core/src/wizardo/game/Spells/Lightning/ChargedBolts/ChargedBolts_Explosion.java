@@ -59,7 +59,7 @@ public class ChargedBolts_Explosion extends Spell {
             light.dimKill(0.01f);
         } else if (stateTime > anim.getAnimationDuration()) {
             world.destroyBody(body);
-            screen.spellManager.toRemove(this);
+            screen.spellManager.remove(this);
         }
     }
 

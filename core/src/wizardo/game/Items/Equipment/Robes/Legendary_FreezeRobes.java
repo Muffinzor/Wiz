@@ -40,7 +40,7 @@ public class Legendary_FreezeRobes extends Robes{
         stateTime += delta;
         if(stateTime >= 1.2f) {
             FreezingMist_Pulse gust = new FreezingMist_Pulse(player.pawn.getPosition());
-            player.screen.spellManager.toAdd(gust);
+            player.screen.spellManager.add(gust);
             stateTime = 0;
         }
     }

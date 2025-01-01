@@ -135,7 +135,7 @@ public class Laser_Projectile extends Laser_Spell {
                 flame.spawnPosition = spawn;
                 flame.targetPosition = spawn.cpy().add(direction);
                 flame.setElements(this);
-                screen.spellManager.toAdd(flame);
+                screen.spellManager.add(flame);
             }
         }
     }
@@ -151,7 +151,7 @@ public class Laser_Projectile extends Laser_Spell {
             if(Math.random() > procTreshold) {
                 Rift_Zone rift = new Rift_Zone(monster.body.getPosition());
                 rift.setElements(this);
-                screen.spellManager.toAdd(rift);
+                screen.spellManager.add(rift);
             }
 
         }
@@ -169,7 +169,7 @@ public class Laser_Projectile extends Laser_Spell {
                 Frostbolt_Explosion explosion = new Frostbolt_Explosion();
                 explosion.targetPosition = new Vector2(monster.body.getPosition());
                 explosion.setElements(this);
-                screen.spellManager.toAdd(explosion);
+                screen.spellManager.add(explosion);
             }
 
         }
@@ -190,7 +190,7 @@ public class Laser_Projectile extends Laser_Spell {
                     bolt.spawnPosition = new Vector2(monster.body.getPosition());
                     bolt.targetPosition = SpellUtils.getRandomVectorInRadius(monster.body.getPosition(), 2);
                     bolt.setElements(this);
-                    screen.spellManager.toAdd(bolt);
+                    screen.spellManager.add(bolt);
                 }
             }
 
@@ -208,7 +208,7 @@ public class Laser_Projectile extends Laser_Spell {
             if(Math.random() > procTreshold) {
                 Thunderstorm_Hit thunder = new Thunderstorm_Hit(monster.body.getPosition());
                 thunder.setElements(this);
-                screen.spellManager.toAdd(thunder);
+                screen.spellManager.add(thunder);
             }
         }
     }

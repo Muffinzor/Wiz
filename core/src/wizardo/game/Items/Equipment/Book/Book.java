@@ -2,6 +2,7 @@ package wizardo.game.Items.Equipment.Book;
 
 import wizardo.game.Items.Equipment.Equipment;
 import wizardo.game.Items.Equipment.EquipmentUtils;
+import wizardo.game.Items.ItemUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,6 +10,11 @@ import java.util.Collections;
 import static wizardo.game.Wizardo.player;
 
 public abstract class Book extends Equipment {
+
+    public Book() {
+        slot = ItemUtils.EquipSlot.SPELLBOOK;
+        name = EquipmentUtils.getRandomName(this);
+    }
 
     public void equip() {
 
@@ -25,8 +31,9 @@ public abstract class Book extends Equipment {
             toStore.storeAfterUnequip();
         }
         player.inventory.equippedBook = this;
-
+        player.inventory.equippedGear.add(this);
         EquipmentUtils.applyGearStats(this, false);
+        checkForGearConditionalEffects();
     }
 
     public void pickup() {
@@ -40,8 +47,8 @@ public abstract class Book extends Equipment {
     @Override
     public void unequip() {
         player.inventory.equippedBook = null;
-        EquipmentUtils.applyGearStats(this, true);
-        checkForSpellRemoval();
+        player.inventory.equippedGear.remove(this);
+        removalSteps();
     }
 
     public static ArrayList<Equipment> getAllBooks() {
@@ -70,6 +77,10 @@ public abstract class Book extends Equipment {
 
     public static ArrayList<Equipment> getEpicBooks() {
         ArrayList<Equipment> list = new ArrayList<>();
+
+        list.add(new Epic_VogonBook());
+        list.add(new Epic_FireAcaneBook());
+        list.add(new Epic_OrbitBook());
 
         return list;
     }

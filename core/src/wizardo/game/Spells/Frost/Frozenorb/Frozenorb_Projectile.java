@@ -7,7 +7,6 @@ import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Resources.SpellAnims.FrozenorbAnims;
-import wizardo.game.Screens.Battle.BattleScreen;
 import wizardo.game.Spells.Arcane.ArcaneMissiles.ArcaneMissile_Spell;
 import wizardo.game.Spells.Fire.Flamejet.Flamejet_Spell;
 import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Spell;
@@ -147,7 +146,7 @@ public class Frozenorb_Projectile extends Frozenorb_Spell {
         if(stateTime > duration - 0.5f || hasCollided) {
             scale = scale - 0.025f;
             if(scale <= 0.1f) {
-                screen.spellManager.toRemove(this);
+                screen.spellManager.remove(this);
                 world.destroyBody(body);
                 body = null;
                 if(light != null) {
@@ -181,7 +180,7 @@ public class Frozenorb_Projectile extends Frozenorb_Spell {
 
             setProj(proj);
 
-            screen.spellManager.toAdd(proj);
+            screen.spellManager.add(proj);
             castCounter++;
         }
 
@@ -264,7 +263,7 @@ public class Frozenorb_Projectile extends Frozenorb_Spell {
             FrostNova_Explosion nova = new FrostNova_Explosion();
             nova.setElements(this);
             nova.targetPosition = new Vector2(body.getPosition());
-            screen.spellManager.toAdd(nova);
+            screen.spellManager.add(nova);
 
             if(nested_spell instanceof Frostbolt_Spell) {
                 nova.frostbolts = true;
@@ -273,7 +272,7 @@ public class Frozenorb_Projectile extends Frozenorb_Spell {
                 for (int i = 0; i < projs; i++) {
                     Spell spear = nested_spell.clone();
                     setProj(spear);
-                    screen.spellManager.toAdd(spear);
+                    screen.spellManager.add(spear);
                 }
             }
             frostNovaSpent = true;

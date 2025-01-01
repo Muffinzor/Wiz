@@ -2,6 +2,7 @@ package wizardo.game.Screens.Battle;
 
 import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -13,6 +14,7 @@ import wizardo.game.Maps.MapGeneration.MapManager;
 import wizardo.game.Monsters.*;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Monsters.MonsterActions.MonsterSpellManager;
+import wizardo.game.Monsters.MonsterTypes.MawDemon.MawDemon;
 import wizardo.game.Player.Pawn;
 import wizardo.game.Player.Player;
 import wizardo.game.Resources.ScreenResources.LevelUpResources;
@@ -30,6 +32,8 @@ import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.*;
 
 public class BattleScreen extends BaseScreen {
+
+    FPSLogger logger = new FPSLogger();
 
     public float stateTime;
 
@@ -74,35 +78,14 @@ public class BattleScreen extends BaseScreen {
         cursorTexturePath = "Cursors/Battle_Cursor.png";
         controllerTargetSprite = new Sprite(new Texture("Cursors/Controller_Cursor.png"));
 
-        for (int i = 0; i < 0; i++) {
-            Vector2 random = SpellUtils.getRandomVectorInRadius(player.pawn.getPosition(), 45);
-            Monster monster = new TEST_BIGMONSTER(this, random);
-            monsterManager.addMonster(monster);
-        }
-
-        for (int i = 0; i < 0; i++) {
-            Vector2 random = SpellUtils.getRandomVectorInRadius(player.pawn.getPosition(), 45);
-            Monster monster = new TEST_MELEE(this, random);
-            monsterManager.addMonster(monster);
-        }
-
-
-        for (int i = 0; i < 0; i++) {
-            Vector2 random = SpellUtils.getRandomVectorInRadius(player.pawn.getPosition(), 45);
-            Monster monster = new TEST_RANGED(this, random);
-            monsterManager.addMonster(monster);
-        }
+        Monster monster = new MawDemon(this, null, monsterSpawner);
+        monsterSpawner.spawnMonster(monster);
 
     }
 
     @Override
     public void render(float delta) {
         stateTime += delta;
-
-        if(!initialized) {
-            player.spellbook.equippedSpells.add(frostspells[0]);
-            initialized = true;
-        }
 
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         if(paused) {
@@ -127,11 +110,11 @@ public class BattleScreen extends BaseScreen {
         updateCamera();  // must be after displayManager.update
 
         player.update(delta);
-        player.drawPlayerHP();
 
         if(debug_camera) {
             Matrix4 debugMatrix = mainCamera.combined.cpy().scl(PPM);
             debugRenderer.render(world, debugMatrix);
+            logger.log();
         }
 
         if(player.stats.shield <= 0) {

@@ -8,24 +8,28 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.MassData;
+import wizardo.game.Items.Drop.GoldDrop;
+import wizardo.game.Items.Drop.PotionDrop;
+import wizardo.game.Items.Equipment.Staff.Legendary_FrostStaff;
 import wizardo.game.Lighting.RoundLight;
-import wizardo.game.Monsters.MonsterAttack.AttackManager;
+import wizardo.game.Monsters.MonsterActionManager;
 import wizardo.game.Monsters.MonsterMovement.MovementManager;
 import wizardo.game.Monsters.MonsterStateManager.StateManager;
 import wizardo.game.Monsters.MonsterUtils;
-import wizardo.game.Screens.BaseScreen;
+import wizardo.game.Player.Player;
 import wizardo.game.Screens.Battle.BattleScreen;
+import wizardo.game.Screens.Battle.MonsterSpawner.MonsterSpawner;
 import wizardo.game.Utils.BodyFactory;
 
 import static wizardo.game.GameSettings.monster_health_bars;
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.player;
-import static wizardo.game.Wizardo.world;
 
 public abstract class Monster {
 
     public BattleScreen screen;
     public Animation<Sprite> spawn_anim;
+    public boolean spawned = true;
     public Animation<Sprite> walk_anim;
     public Animation<Sprite> death_anim;
     public boolean deathFrameFlip;
@@ -35,13 +39,18 @@ public abstract class Monster {
     public float stateTime;
     public int frameCounter;
 
+    public MonsterSpawner spawner;
     public MonsterUtils.MONSTER_STATE state;
     public MovementManager movementManager;
     public StateManager stateManager;
-    public AttackManager attackManager;
+    public MonsterActionManager monsterActionManager;
 
     public Body body;
     public RoundLight light;
+    public float red;
+    public float green;
+    public float blue;
+
     public float massValue;
     public boolean heavy;
     public float bodyRadius;
@@ -51,10 +60,14 @@ public abstract class Monster {
     public Vector2 directionVector;
     public Vector2 position;
     public Vector2 deathPosition;
+    public boolean frameReversed;
 
     public float hp;
     public float maxHP;
     public int dmg;
+    public int xp;
+    public boolean elite;
+
     public boolean dead;
     public boolean spaghettified;  // Dead from blackhole
     public float redshift = 0.75f;     // ditto
@@ -74,7 +87,11 @@ public abstract class Monster {
     public static Sprite redHP = new Sprite(new Texture("Monsters/redbar.png"));
 
 
-    public Monster(BattleScreen screen, Vector2 position) {
+    public Monster(BattleScreen screen, Vector2 position, MonsterSpawner spawner) {
+        this.spawner = spawner;
+        if(position == null) {
+            position = spawner.getSpawnPosition();
+        }
         this.screen = screen;
         this.position = new Vector2(position);
         stateTime = 0;
@@ -85,19 +102,49 @@ public abstract class Monster {
     public void update(float delta) {
         if(!initialized) {
             initialize();
+            initialized = true;
         }
+
+        handleSpawning();
+
         timers(delta);
         drawFrame();
         drawHealthBar();
-        stateManager.updateState(delta);
-        attackManager.update(delta);
+
+        if(spawned) {
+            stateManager.updateState(delta);
+            monsterActionManager.update(delta);
+        }
 
         if(hp <= 0) {
+            onDeath();
             deathFrameFlip = player.pawn.getBodyX() < body.getPosition().x;
             dead = true;
             stateTime = 0;
         }
     }
+    public void handleCollision(Player player) {
+
+    }
+    public void handleCollision(Monster monster) {
+
+    }
+
+    public void handleSpawning() {
+        if(spawn_anim != null) {
+
+            if(stateTime < spawn_anim.getAnimationDuration() && body.isActive()) {
+                spawned = false;
+                body.setActive(false);
+            } else if(!body.isActive() && stateTime >= spawn_anim.getAnimationDuration()) {
+                spawned = true;
+                body.setActive(true);
+            }
+
+        }
+    }
+
+
 
     public abstract void launchAttack();
 
@@ -135,7 +182,7 @@ public abstract class Monster {
 
     public void createLight(float size, float alpha) {
         light = screen.lightManager.pool.getLight();
-        light.setLight(0,0,0.3f,alpha,size, body.getPosition());
+        light.setLight(red,green,blue,alpha,size, body.getPosition());
         screen.lightManager.addLight(light);
     }
 
@@ -145,16 +192,22 @@ public abstract class Monster {
 
     public void drawFrame() {
         Sprite frame = screen.displayManager.spriteRenderer.pool.getSprite();
-        frame.set(walk_anim.getKeyFrame(stateTime, true));
+
+        if(spawn_anim != null && stateTime <= spawn_anim.getAnimationDuration()) {
+            frame.set(spawn_anim.getKeyFrame(stateTime, false));
+        } else {
+            frame.set(walk_anim.getKeyFrame(stateTime, true));
+        }
+
         frame.setPosition(body.getPosition().x * PPM - frame.getWidth()/2, body.getPosition().y * PPM - bodyRadius);
         //frame.setCenter(body.getPosition().x * PPM, body.getPosition().y * PPM);
         boolean flip = player.pawn.getBodyX() < body.getPosition().x;
         frame.flip(flip, false);
         if(freezeTimer > 0) {
-            Color tint = new Color(0.3f, 0.3f, 0.8f, 1.0f);
+            Color tint = new Color(0.5f, 0.5f, 1f, 1.0f);
             frame.setColor(tint);
         } else if(slowedTimer > 0) {
-            Color tint = new Color(0.5f, 0.5f, 0.8f, 1.0f);
+            Color tint = new Color(0.7f, 0.7f, 1f, 1.0f);
             frame.setColor(tint);
         }
         screen.addSortedSprite(frame);
@@ -182,7 +235,7 @@ public abstract class Monster {
 
     public void drawDeathFrame(float delta) {
         if(delta > 0) {
-            alpha -= 0.005f;
+            alpha -= 0.0025f;
             if(alpha < 0) {
                 alpha = 0;
             }
@@ -228,18 +281,42 @@ public abstract class Monster {
      * @param ratio between 0 and 1.0f
      */
     public void applySlow(float duration, float ratio) {
-        slowedTimer = duration;
-        slowRatio = ratio;
+        if(!elite) {
+            slowedTimer = duration;
+            slowRatio = ratio;
+        }
     }
 
     public void applyFreeze(float duration, float immunity) {
-        if(freezeImmunityTimer <= 0) {
-            freezeTimer = duration;
-            freezeImmunityTimer = immunity;
-        } else {
-            slowedTimer = duration;
-            slowRatio = 0.75f;
+        if(!elite) {
+            if (freezeImmunityTimer <= 0) {
+                freezeTimer = duration;
+                freezeImmunityTimer = immunity;
+                if (player.inventory.equippedStaff instanceof Legendary_FrostStaff) {
+                    Legendary_FrostStaff staff = (Legendary_FrostStaff) player.inventory.equippedStaff;
+                    staff.castNova(this);
+                }
+            } else {
+                slowedTimer = duration;
+                slowRatio = 0.75f;
+            }
         }
+    }
+
+    public void onDeath() {
+        float potrate = 0.99f - player.stats.luck/1000f;
+        if(Math.random() >= potrate) {
+            PotionDrop potion = new PotionDrop(body.getPosition());
+            screen.dropManager.addDrop(potion);
+        }
+
+        float goldrate = 0.9f - player.stats.luck/500f;
+        if(Math.random() >= goldrate) {
+            GoldDrop gold = new GoldDrop(body.getPosition(),1 , 1);
+            screen.dropManager.addDrop(gold);
+        }
+
+
     }
     public abstract void initialize();
 }

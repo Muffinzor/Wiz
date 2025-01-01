@@ -14,7 +14,6 @@ import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyFactory;
 
 import static wizardo.game.Display.DisplayUtils.getSprite;
-import static wizardo.game.Spells.SpellUtils.Spell_Element.LIGHTNING;
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.player;
 import static wizardo.game.Wizardo.world;
@@ -58,7 +57,7 @@ public class Meteor_Explosion extends MeteorShower_Spell {
 
         if(stateTime >= anim.getAnimationDuration()) {
             world.destroyBody(body);
-            screen.spellManager.toRemove(this);
+            screen.spellManager.remove(this);
         }
     }
 
@@ -130,7 +129,7 @@ public class Meteor_Explosion extends MeteorShower_Spell {
                     proj.spawnPosition = new Vector2(body.getPosition());
                     proj.targetPosition = SpellUtils.getRandomVectorInRadius(body.getPosition(), 2);
                     proj.originBody = body;
-                    screen.spellManager.toAdd(proj);
+                    screen.spellManager.add(proj);
                 }
             }
         }

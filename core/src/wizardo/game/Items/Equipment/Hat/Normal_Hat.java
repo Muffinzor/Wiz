@@ -2,6 +2,8 @@ package wizardo.game.Items.Equipment.Hat;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.MathUtils;
+import wizardo.game.Items.Equipment.EquipmentUtils;
 import wizardo.game.Items.ItemUtils;
 import wizardo.game.Spells.SpellUtils;
 
@@ -10,11 +12,8 @@ import static wizardo.game.Wizardo.player;
 public class Normal_Hat extends Hat{
 
     public Normal_Hat() {
-        sprite = new Sprite(new Texture("Items/Hat/normal1.png"));
-        spriteOver = new Sprite(new Texture("Items/Hat/normal1_over.png"));
-        displayScale = 1.3f;
+        setSprite();
 
-        name = "Paper Cone";
         title = "Common Hat";
         quality = ItemUtils.EquipQuality.NORMAL;
 
@@ -28,6 +27,22 @@ public class Normal_Hat extends Hat{
 
     @Override
     public String getFlavorText() {
-        return "Truly an honor";
+        return "Just a pointy hat";
+    }
+
+    public void setSprite() {
+        reversedSprite = MathUtils.randomBoolean();
+        int random = MathUtils.random(1, 2);
+        switch (random) {
+            case 1 -> {
+                sprite = new Sprite(new Texture("Items/Hat/NormalHat1.png"));
+                spriteOver = new Sprite(new Texture("Items/Hat/NormalHat1_Over.png"));
+                displayScale = 1.3f;
+            }
+            case 2 -> {
+                sprite = new Sprite(new Texture("Items/Hat/Greenhat.png"));
+                spriteOver = new Sprite(new Texture("Items/Hat/GreenHat_Over.png"));
+            }
+        }
     }
 }

@@ -38,6 +38,7 @@ public class Icespear_Spell extends Spell {
         baseDmg = 32;
         speed = 400f/PPM;
         cooldown = 0.8f;
+        autoaimable = true;
 
         main_element = SpellUtils.Spell_Element.FROST;
 
@@ -54,10 +55,16 @@ public class Icespear_Spell extends Spell {
         stateTime += delta;
         setup();
 
-        Icespear_Projectile spear = new Icespear_Projectile(getSpawnPosition(), getTargetPosition());
+        autoAimCheck();
+
+        if(targetPosition == null) {
+            return;
+        }
+
+        Icespear_Projectile spear = new Icespear_Projectile(getSpawnPosition(), targetPosition);
         spear.setNextSpear(this);
-        screen.spellManager.toAdd(spear);
-        screen.spellManager.toRemove(this);
+        screen.spellManager.add(spear);
+        screen.spellManager.remove(this);
     }
 
 

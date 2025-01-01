@@ -13,7 +13,6 @@ import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Explosion;
 import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyFactory;
 
-import static wizardo.game.Spells.SpellUtils.Spell_Element.FROST;
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.player;
 import static wizardo.game.Wizardo.world;
@@ -69,7 +68,7 @@ public class Orbit_Projectile extends Orbit_Spell {
 
         if(alpha <= 0.02f) {
             world.destroyBody(body);
-            screen.spellManager.toRemove(this);
+            screen.spellManager.remove(this);
         } else if(stateTime >= duration) {
             alpha -= 0.02f;
             light.dimKill(0.01f);
@@ -106,7 +105,7 @@ public class Orbit_Projectile extends Orbit_Spell {
             Rift_Zone rift = new Rift_Zone(monster.body.getPosition());
             rift.setElements(this);
             rift.frostbolt = frostbolt;
-            screen.spellManager.toAdd(rift);
+            screen.spellManager.add(rift);
         }
     }
 
@@ -150,7 +149,7 @@ public class Orbit_Projectile extends Orbit_Spell {
                 Frostbolt_Explosion explosion = new Frostbolt_Explosion();
                 explosion.targetPosition = SpellUtils.getRandomVectorInRadius(monster.body.getPosition(), 1);
                 explosion.setElements(this);
-                screen.spellManager.toAdd(explosion);
+                screen.spellManager.add(explosion);
             }
         }
     }

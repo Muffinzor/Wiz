@@ -24,9 +24,10 @@ public class ArcaneMissile_Spell extends Spell {
 
         name = "Arcane Missiles";
 
-        baseDmg = 36;
+        baseDmg = 48;
         speed = 225f/PPM;
         cooldown = 1.2f;
+        autoaimable = true;
 
         main_element = SpellUtils.Spell_Element.ARCANE;
 
@@ -34,7 +35,7 @@ public class ArcaneMissile_Spell extends Spell {
 
     public void setup() {
         if(targetPosition == null) {
-            float bonus = (player.spellbook.arcanemissile_lvl - 1) / 3f;
+            float bonus = (player.spellbook.arcanemissile_lvl - 1) / 2f;
             if((bonus % 1) > 0) {
                 float remainder = bonus % 1;
                 if(Math.random() >= 1 - remainder) {
@@ -53,14 +54,20 @@ public class ArcaneMissile_Spell extends Spell {
         if(delta > 0) {
             setup();
 
+            autoAimCheck();
+
+            if(targetPosition == null) {
+                return;
+            }
+
             for (int i = 0; i < 1 + extraProjs; i++) {
-                ArcaneMissile_Projectile missile = new ArcaneMissile_Projectile(getSpawnPosition(), getTargetPosition());
+                ArcaneMissile_Projectile missile = new ArcaneMissile_Projectile(getSpawnPosition(), targetPosition);
                 missile.setElements(this);
                 missile.scale = scale;
                 missile.setMissile(this);
-                screen.spellManager.toAdd(missile);
+                screen.spellManager.add(missile);
             }
-            screen.spellManager.toRemove(this);
+            screen.spellManager.remove(this);
 
         }
 

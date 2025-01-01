@@ -28,7 +28,7 @@ public class DragonBreath_CollisionDetector extends Spell {
         }
         if(hasCollided || body.getPosition().dst(spawnPosition) > 12) {
             world.destroyBody(body);
-            screen.spellManager.toRemove(this);
+            screen.spellManager.remove(this);
         }
     }
 

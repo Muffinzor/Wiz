@@ -32,6 +32,10 @@ public class LevelUpEnums {
         FIREBALL,
         CHAIN,
         BEAM,
+        FROZENORB,
+        OVERHEAT,
+        THUNDERSTORM,
+        RIFTS
     }
 
     public static LevelUps getRandomT1() {

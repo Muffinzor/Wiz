@@ -64,12 +64,12 @@ public class Thunderstorm_Spell extends Spell {
                 thunder.rifts = rifts;
                 thunder.overheat = overheat;
                 thunder.nested_spell = nested_spell;
-                screen.spellManager.toAdd(thunder);
+                screen.spellManager.add(thunder);
             }
         }
 
         if(stateTime >= duration) {
-            screen.spellManager.toRemove(this);
+            screen.spellManager.remove(this);
             System.out.println("Thunders:" + thunderSent);
         }
 

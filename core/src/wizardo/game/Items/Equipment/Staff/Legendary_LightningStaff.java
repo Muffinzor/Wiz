@@ -8,7 +8,6 @@ import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Spell;
 import wizardo.game.Spells.Lightning.ChargedBolts.ChargedBolts_Spell;
 import wizardo.game.Spells.Spell;
-import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Spells.Unique.ThundergodBolt.ThundergodBolt_Projectile;
 
 public class Legendary_LightningStaff extends Staff {
@@ -47,7 +46,7 @@ public class Legendary_LightningStaff extends Staff {
         }
         if(Math.random() >= procRate) {
             ThundergodBolt_Projectile bolt = new ThundergodBolt_Projectile(monster.body.getPosition());
-            monster.screen.spellManager.toAdd(bolt);
+            monster.screen.spellManager.add(bolt);
         }
     }
 

@@ -11,8 +11,8 @@ public class BlackHole_Spell extends Spell {
     @Override
     public void update(float delta) {
         BlackHole_Effect blackhole = new BlackHole_Effect(getTargetPosition());
-        screen.spellManager.toAdd(blackhole);
-        screen.spellManager.toRemove(this);
+        screen.spellManager.add(blackhole);
+        screen.spellManager.remove(this);
     }
 
     @Override

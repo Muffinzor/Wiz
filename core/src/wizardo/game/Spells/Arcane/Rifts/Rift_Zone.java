@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Resources.SpellAnims.RiftsAnims;
-import wizardo.game.Spells.Spell;
 
 import static wizardo.game.Utils.Constants.PPM;
 
@@ -28,12 +27,12 @@ public class Rift_Zone extends Rifts_Spell {
         stateTime += delta;
 
         if(stateTime >= anim.getAnimationDuration()) {
-            screen.spellManager.toRemove(this);
+            screen.spellManager.remove(this);
         } else if(stateTime > 0.5f) {
             Rift_Explosion explosion = new Rift_Explosion(targetPosition);
             explosion.setRift(this);
-            screen.spellManager.toAdd(explosion);
-            screen.spellManager.toRemove(this);
+            screen.spellManager.add(explosion);
+            screen.spellManager.remove(this);
         }
 
     }
@@ -50,7 +49,7 @@ public class Rift_Zone extends Rifts_Spell {
 
     public void createPullBody() {
         Rift_PullBody pull = new Rift_PullBody(targetPosition, radius + 10, overheat);
-        screen.spellManager.toAdd(pull);
+        screen.spellManager.add(pull);
     }
 
     public void createLight() {

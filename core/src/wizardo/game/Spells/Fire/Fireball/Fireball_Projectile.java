@@ -69,11 +69,11 @@ public class Fireball_Projectile extends Fireball_Spell {
             Fireball_Explosion explosion = new Fireball_Explosion();
             explosion.targetPosition = new Vector2(body.getPosition());
             explosion.inherit(this);
-            screen.spellManager.toAdd(explosion);
+            screen.spellManager.add(explosion);
             world.destroyBody(body);
             body = null;
             light.dimKill(0.5f);
-            screen.spellManager.toRemove(this);
+            screen.spellManager.remove(this);
         }
     }
 
@@ -86,7 +86,7 @@ public class Fireball_Projectile extends Fireball_Spell {
                 Fireball_Explosion explosion = new Fireball_Explosion();
                 explosion.targetPosition = new Vector2(body.getPosition());
                 explosion.inherit(this);
-                screen.spellManager.toAdd(explosion);
+                screen.spellManager.add(explosion);
             }
         }
     }

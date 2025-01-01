@@ -59,9 +59,9 @@ public class ArcaneMissile_Explosion extends ArcaneMissile_Spell {
         }
 
         if(stateTime >= anim.getAnimationDuration()) {
-            screen.spellManager.toRemove(this);
+            screen.spellManager.remove(this);
             world.destroyBody(body);
-            screen.spellManager.toRemove(this);
+            screen.spellManager.remove(this);
         }
     }
 
@@ -117,7 +117,7 @@ public class ArcaneMissile_Explosion extends ArcaneMissile_Spell {
                     flame.originBody = body;
                     flame.spawnPosition = new Vector2(body.getPosition());
                     flame.targetPosition = SpellUtils.getRandomVectorInRadius(body.getPosition(), 2);
-                    screen.spellManager.toAdd(flame);
+                    screen.spellManager.add(flame);
                 }
             }
         }

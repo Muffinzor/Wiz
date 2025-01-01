@@ -12,9 +12,11 @@ import static wizardo.game.Wizardo.player;
 public abstract class Equipment {
 
     public ItemUtils.EquipQuality quality = ItemUtils.EquipQuality.NORMAL;
+    public ItemUtils.EquipSlot slot;
 
     public Sprite sprite;
     public Sprite spriteOver;
+    public boolean reversedSprite;
     public int displayRotation;
     public float displayScale = 1;
 
@@ -33,7 +35,19 @@ public abstract class Equipment {
     }
     public abstract void pickup();
 
-    public abstract void equip();
+    public void equip() {
+
+    }
+
+    public static void checkForGearConditionalEffects() {
+        for (Equipment piece : player.inventory.equippedGear) {
+            piece.applySelfVerification();
+        }
+    }
+    /** Helper method for checkForConditionalEffects, to be implemented to gear itself if conditional effects */
+    public void applySelfVerification() {
+
+    }
     public abstract void unequip();
     public void storeAfterUnequip() {
         for (int i = 0; i < player.inventory.holdingBox.length; i++) {
@@ -93,6 +107,13 @@ public abstract class Equipment {
                 }
             }
         }
+    }
+
+    public void removalSteps() {
+        EquipmentUtils.applyGearStats(this, true);
+        checkForSpellRemoval();
+        applySelfVerification();
+        checkForGearConditionalEffects();
     }
 
 }

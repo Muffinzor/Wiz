@@ -30,6 +30,9 @@ public class MeteorShower_Spell extends Spell {
     public float showerRadius = 15;
 
     public MeteorShower_Spell() {
+
+        multicastable = false;
+
         name = "Meteor Shower";
 
         cooldown = 12;
@@ -54,12 +57,12 @@ public class MeteorShower_Spell extends Spell {
             Meteor_Projectile meteor = new Meteor_Projectile(target);
             meteor.setElements(this);
             meteor.setMeteor(this);
-            screen.spellManager.toAdd(meteor);
+            screen.spellManager.add(meteor);
 
         }
 
         if(stateTime >= duration) {
-            screen.spellManager.toRemove(this);
+            screen.spellManager.remove(this);
         }
 
     }

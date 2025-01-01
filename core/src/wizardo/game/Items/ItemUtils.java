@@ -1,5 +1,7 @@
 package wizardo.game.Items;
 
+import com.badlogic.gdx.math.MathUtils;
+
 public class ItemUtils {
 
 
@@ -38,6 +40,7 @@ public class ItemUtils {
         WALKSPEED,
         LUCK,
 
+        MASTERY_ALL,
         MASTERY_T1,
         MASTERY_T2,
         MASTERY_T3,
@@ -57,6 +60,18 @@ public class ItemUtils {
         MASTERY_MISSILES,
         MASTERY_BEAM,
         MASTERY_RIFTS,
+    }
+
+    public static GearStat getEleDmgStat() {
+        GearStat ele = null;
+        int random = MathUtils.random(1,4);
+        switch (random) {
+            case 1 -> ele = GearStat.FIREDMG;
+            case 2 -> ele = GearStat.FROSTDMG;
+            case 3 -> ele = GearStat.ARCANEDMG;
+            case 4 -> ele = GearStat.LITEDMG;
+        }
+        return ele;
     }
 
 }

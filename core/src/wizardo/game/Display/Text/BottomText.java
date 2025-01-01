@@ -18,7 +18,8 @@ public class BottomText extends FloatingText {
 
 
         if (alpha <= 0) {
-            text = "";
+            text = " ";
+            alpha = 0;
         }
     }
 }

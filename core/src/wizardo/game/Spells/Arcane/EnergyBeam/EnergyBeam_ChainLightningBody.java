@@ -31,7 +31,7 @@ public class EnergyBeam_ChainLightningBody extends Spell {
 
         if(stateTime >= 0.5f) {
             world.destroyBody(body);
-            screen.spellManager.toRemove(this);
+            screen.spellManager.remove(this);
         }
     }
 
@@ -52,7 +52,7 @@ public class EnergyBeam_ChainLightningBody extends Spell {
             chain.originBody = body;
             chain.maxHits = 2;
             chain.setElements(this);
-            screen.spellManager.toAdd(chain);
+            screen.spellManager.add(chain);
             inRange.remove(target);
         }
 
@@ -63,7 +63,7 @@ public class EnergyBeam_ChainLightningBody extends Spell {
             chain.originBody = body;
             chain.maxHits = 3;
             chain.setElements(this);
-            screen.spellManager.toAdd(chain);
+            screen.spellManager.add(chain);
         }
 
         if(player.spellbook.chainlightning_lvl >= 8 && !inRange.isEmpty()) {
@@ -73,7 +73,7 @@ public class EnergyBeam_ChainLightningBody extends Spell {
             chain.originBody = body;
             chain.maxHits = 3;
             chain.setElements(this);
-            screen.spellManager.toAdd(chain);
+            screen.spellManager.add(chain);
         }
     }
 

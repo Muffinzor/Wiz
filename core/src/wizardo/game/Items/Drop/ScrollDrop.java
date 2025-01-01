@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import wizardo.game.Display.Text.BottomText;
 import wizardo.game.Player.Levels.StatsBuffer;
+import wizardo.game.Resources.EffectAnims.GearFlareAnims;
 import wizardo.game.Spells.SpellUtils;
 
 import static com.badlogic.gdx.Input.Keys.T;
@@ -32,7 +33,7 @@ public class ScrollDrop extends Drop {
      * @param spawnPosition
      * @param SpellType
      * @param Element null if all accessible
-     * @param tier -1 if all tier accessibles
+     * @param tier 3 + recursive if all tier accessibles
      * @param recursive true if all tiers under specified are accessible
      */
     public ScrollDrop(Vector2 spawnPosition, SpellUtils.Spell_Name SpellType, SpellUtils.Spell_Element Element, int tier, boolean recursive) {
@@ -43,6 +44,7 @@ public class ScrollDrop extends Drop {
         this.recursive = recursive;
         displayScale = 0.3f;
 
+        pickupAnim = GearFlareAnims.gear_pop;
         flareAnim = white_flare;
         flareScale = 0.35f;
 
@@ -93,6 +95,7 @@ public class ScrollDrop extends Drop {
             case OVERHEAT -> displayText = "+1 Overheat Mastery";
             case CHARGEDBOLTS -> displayText = "+1 Chargedbolts Mastery";
             case CHAIN -> displayText = "+1 Chain Lightning Mastery";
+            case THUNDERSTORM -> displayText = "+1 Chain Lightning Mastery";
             case MISSILES -> displayText = "+1 Arcane Missiles Mastery";
             case BEAM -> displayText = "+1 Energy Beam Mastery";
             case RIFTS -> displayText = "+1 Rifts Mastery";
@@ -104,9 +107,9 @@ public class ScrollDrop extends Drop {
         Sprite sprite = null;
         switch(element) {
             case FROST -> sprite = new Sprite(new Texture("Items/Drops/Scrolls/frostScroll.png"));
-            case FIRE -> sprite = new Sprite(new Texture("Items/Drops/Scrolls/lightningScroll.png"));
-            case ARCANE -> sprite = new Sprite(new Texture("Items/Drops/Scrolls/fireScroll.png"));
-            case LIGHTNING -> sprite = new Sprite(new Texture("Items/Drops/Scrolls/arcaneScroll.png"));
+            case FIRE -> sprite = new Sprite(new Texture("Items/Drops/Scrolls/fireScroll.png"));
+            case ARCANE -> sprite = new Sprite(new Texture("Items/Drops/Scrolls/arcaneScroll.png"));
+            case LIGHTNING -> sprite = new Sprite(new Texture("Items/Drops/Scrolls/lightningScroll.png"));
         }
         return sprite;
     }

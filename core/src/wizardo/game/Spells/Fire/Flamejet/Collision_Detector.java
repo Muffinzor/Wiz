@@ -28,7 +28,7 @@ public class Collision_Detector extends Spell {
         }
         if(hasCollided || body.getPosition().dst(spawnPosition) > 5) {
             world.destroyBody(body);
-            screen.spellManager.toRemove(this);
+            screen.spellManager.remove(this);
         }
     }
 

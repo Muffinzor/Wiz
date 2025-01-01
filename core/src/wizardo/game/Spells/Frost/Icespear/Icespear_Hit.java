@@ -3,7 +3,6 @@ package wizardo.game.Spells.Frost.Icespear;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import wizardo.game.Lighting.RoundLight;
-import wizardo.game.Screens.Battle.BattleScreen;
 
 import static wizardo.game.Resources.SpellAnims.IcespearAnims.*;
 import static wizardo.game.Utils.Constants.PPM;
@@ -31,7 +30,7 @@ public class Icespear_Hit extends Icespear_Spell {
         stateTime += delta;
 
         if(stateTime >= anim.getAnimationDuration()) {
-            screen.spellManager.toRemove(this);
+            screen.spellManager.remove(this);
         }
 
     }

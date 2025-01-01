@@ -12,13 +12,18 @@ import com.badlogic.gdx.physics.box2d.RayCastCallback;
 import wizardo.game.Account.Unlocked;
 import wizardo.game.Audio.Sounds.SoundPlayer;
 import wizardo.game.Display.Text.FloatingDamage;
+import wizardo.game.Items.Equipment.Book.Epic_VogonBook;
+import wizardo.game.Items.Equipment.Hat.Legendary_SentientHat;
+import wizardo.game.Items.Equipment.Staff.Legendary_ArcaneStaff;
+import wizardo.game.Items.Equipment.Staff.Legendary_FireStaff;
+import wizardo.game.Items.Equipment.Staff.Legendary_FrostStaff;
 import wizardo.game.Items.Equipment.Staff.Legendary_LightningStaff;
 import wizardo.game.Maps.LayerObject;
 import wizardo.game.Monsters.MonsterActions.MonsterSpell;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Screens.BaseScreen;
 import wizardo.game.Spells.SpellUtils.*;
-import wizardo.game.Spells.Unique.ThundergodBolt.ThundergodBolt_Projectile;
+import wizardo.game.Spells.Unique.Brand.Brand_Explosion;
 import wizardo.game.Spells.Unique.ThundergodBolt.ThundergodBolt_Spell;
 
 import java.util.ArrayList;
@@ -64,6 +69,11 @@ public abstract class Spell implements Cloneable {
 
     public Spell nested_spell;
     public BaseScreen screen;
+
+    public boolean multicastable = true;
+    public boolean multicasted;
+    public boolean arcaneCasted; //From Arcane Staff Legendary
+    public boolean autoaimable; //For Sentient Hat Legendary
 
 
     public Spell_Element anim_element;
@@ -131,7 +141,7 @@ public abstract class Spell implements Cloneable {
                 return controllerAimAssist();
             }
         } else {
-            return targetPosition;
+            return new Vector2(targetPosition);
         }
     }
 
@@ -214,6 +224,8 @@ public abstract class Spell implements Cloneable {
     }
 
     public void setElements(Spell spellParent) {
+        arcaneCasted = spellParent.arcaneCasted;
+        multicasted = spellParent.multicasted;
         textColor = spellParent.textColor;
         if(main_element != spellParent.main_element) {
             this.bonus_element = spellParent.main_element;
@@ -408,6 +420,9 @@ public abstract class Spell implements Cloneable {
 
     public float getCooldown() {
         float ratio = player.spellbook.castSpeed/100;
+        if(player.inventory.equippedHat instanceof Legendary_SentientHat && autoaimable) {
+            ratio += 0.2f;
+        }
         return cooldown * (1 - ratio);
     }
 
@@ -448,10 +463,28 @@ public abstract class Spell implements Cloneable {
         monster.hp -= dmg;
 
         checkGearProcs(monster);
+        dmg = applyGearModifiers(monster, dmg);
 
         if(dmg_text_on) {
             dmgText( (int)dmg, monster);
         }
+    }
+
+    public float applyGearModifiers(Monster monster, float dmg) {
+        float modifiedDmg = dmg;
+
+        if(player.inventory.equippedStaff instanceof Legendary_FrostStaff && monster.freezeTimer > 0) {
+            modifiedDmg = modifiedDmg * 1.5f;
+        }
+
+        if(player.inventory.equippedBook instanceof Epic_VogonBook) {
+            float dst = monster.body.getPosition().dst(player.pawn.getPosition());
+            if(dst <= 5.8) {
+                modifiedDmg *= 1.3f;
+            }
+        }
+
+        return modifiedDmg;
     }
 
     public void checkGearProcs(Monster monster) {
@@ -459,6 +492,18 @@ public abstract class Spell implements Cloneable {
               if(anim_element == Spell_Element.LIGHTNING && !(this instanceof ThundergodBolt_Spell)) {
                   Legendary_LightningStaff.castThunderbolt(monster, this);
               }
+        }
+        if(player.inventory.equippedStaff instanceof Legendary_FireStaff) {
+            if(anim_element == Spell_Element.FIRE && !(this instanceof Brand_Explosion)) {
+                Legendary_FireStaff staff = (Legendary_FireStaff) player.inventory.equippedStaff;
+                staff.castBrand(monster, this);
+            }
+        }
+        if(player.inventory.equippedStaff instanceof Legendary_ArcaneStaff) {
+            if(anim_element == Spell_Element.ARCANE && !arcaneCasted) {
+                Legendary_ArcaneStaff staff = (Legendary_ArcaneStaff) player.inventory.equippedStaff;
+                staff.castArcaneMissile(monster);
+            }
         }
     }
 
@@ -559,6 +604,19 @@ public abstract class Spell implements Cloneable {
             }
         }
         return true;
+    }
+
+    public void autoAimCheck() {
+        if(player.inventory.equippedHat instanceof Legendary_SentientHat) {
+            Monster target = Legendary_SentientHat.findTarget();
+            if(target != null) {
+                targetPosition = new Vector2(target.body.getPosition());
+            } else {
+                screen.spellManager.remove(this);
+            }
+        } else {
+            targetPosition = getTargetPosition();
+        }
     }
 
 }

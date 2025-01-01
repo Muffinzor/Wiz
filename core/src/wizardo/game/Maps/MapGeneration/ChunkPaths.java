@@ -11,6 +11,10 @@ public class ChunkPaths {
         if(biome.equals("Dungeon")) {
             chunkPaths.add("Maps/TEST/Map_Project1.tmx");
             chunkPaths.add("Maps/TEST/Map_Project3.tmx");
+            chunkPaths.add("Maps/TEST/Map_Project4.tmx");
+            chunkPaths.add("Maps/TEST/Map_Project5.tmx");
+            chunkPaths.add("Maps/TEST/Map_Project6.tmx");
+            chunkPaths.add("Maps/TEST/Map_Project7.tmx");
         }
     }
 }

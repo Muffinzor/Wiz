@@ -3,16 +3,8 @@ package wizardo.game.Spells.SpellBank;
 import wizardo.game.Spells.Arcane.ArcaneMissiles.ArcaneMissile_Spell;
 import wizardo.game.Spells.Arcane.EnergyBeam.EnergyBeam_Spell;
 import wizardo.game.Spells.Arcane.Rifts.Rifts_Spell;
-import wizardo.game.Spells.Fire.Fireball.Fireball_Spell;
-import wizardo.game.Spells.Fire.Flamejet.Flamejet_Spell;
-import wizardo.game.Spells.Fire.Overheat.Overheat_Spell;
-import wizardo.game.Spells.Frost.Frozenorb.Frozenorb_Spell;
-import wizardo.game.Spells.Frost.Icespear.Icespear_Spell;
-import wizardo.game.Spells.Hybrid.ArcaneArtillery.ArcaneArtillery_Spell;
-import wizardo.game.Spells.Hybrid.DragonBreath.DragonBreath_Projectile;
-import wizardo.game.Spells.Hybrid.DragonBreath.DragonBreath_Spell;
+import wizardo.game.Spells.Hybrid.ArcaneArtillery.Judgement_Spell;
 import wizardo.game.Spells.Hybrid.EnergyRain.EnergyRain_Spell;
-import wizardo.game.Spells.Hybrid.FrostNova.FrostNova_Spell;
 
 import wizardo.game.Spells.Hybrid.Laser.Laser_Spell;
 import wizardo.game.Spells.Lightning.ChainLightning.ChainLightning_Spell;
@@ -286,7 +278,7 @@ public class LightningArcane_Spells {
 
         // 25. ArcaneMissiles + Rifts + Thunderstorm
 
-        ArcaneArtillery_Spell litearcane25 = new ArcaneArtillery_Spell();
+        Judgement_Spell litearcane25 = new Judgement_Spell();
         litearcane25.anim_element = ARCANE;
         litearcane25.thunderstorm = true;
         litearcane25.rift = true;
@@ -297,8 +289,8 @@ public class LightningArcane_Spells {
 
         // 26. Rifts + Beam + Thunderstorm
         EnergyRain_Spell litearcane26 = new EnergyRain_Spell();
-        litearcane26.rifts =  true;
-        litearcane26.anim_element = ARCANE;
+        litearcane26.thunderstorm = true;
+        litearcane26.anim_element = LIGHTNING;
         litearcane26.spellParts.add(BEAM);
         litearcane26.spellParts.add(RIFTS);
         litearcane26.spellParts.add(THUNDERSTORM);

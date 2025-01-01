@@ -1,24 +1,12 @@
 package wizardo.game.Spells.SpellBank;
 
-import wizardo.game.Spells.Arcane.ArcaneMissiles.ArcaneMissile_Spell;
-import wizardo.game.Spells.Arcane.EnergyBeam.EnergyBeam_Spell;
-import wizardo.game.Spells.Arcane.Rifts.Rifts_Spell;
 import wizardo.game.Spells.Fire.Fireball.Fireball_Spell;
 import wizardo.game.Spells.Fire.Flamejet.Flamejet_Spell;
 import wizardo.game.Spells.Fire.Overheat.Overheat_Spell;
-import wizardo.game.Spells.Frost.Frozenorb.Frozenorb_Spell;
-import wizardo.game.Spells.Frost.Icespear.Icespear_Spell;
-import wizardo.game.Spells.Hybrid.ArcaneArtillery.ArcaneArtillery_Spell;
-import wizardo.game.Spells.Hybrid.DragonBreath.DragonBreath_Projectile;
-import wizardo.game.Spells.Hybrid.DragonBreath.DragonBreath_Spell;
-import wizardo.game.Spells.Hybrid.EnergyRain.EnergyRain_Spell;
 import wizardo.game.Spells.Hybrid.ForkedLightning.ForkedLightning_Spell;
-import wizardo.game.Spells.Hybrid.FrostNova.FrostNova_Spell;
 
-import wizardo.game.Spells.Hybrid.Laser.Laser_Spell;
 import wizardo.game.Spells.Hybrid.LightningHands.LightningHands_Spell;
 import wizardo.game.Spells.Hybrid.MeteorShower.MeteorShower_Spell;
-import wizardo.game.Spells.Hybrid.MeteorShower.Meteor_Explosion;
 import wizardo.game.Spells.Lightning.ChainLightning.ChainLightning_Spell;
 import wizardo.game.Spells.Lightning.ChargedBolts.ChargedBolts_Spell;
 import wizardo.game.Spells.Lightning.Thunderstorm.Thunderstorm_Spell;
@@ -282,7 +270,7 @@ public class LightningFire_Spells {
             // 25. Fireball + Overheat + Chainlightning
 
             Overheat_Spell litefire25 = new Overheat_Spell();
-            litefire25.anim_element = FIRE;
+            litefire25.anim_element = LIGHTNING;
             litefire25.chainlightning = true;
             litefire25.fireball = true;
             litefire25.spellParts.add(FIREBALL);

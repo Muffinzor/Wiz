@@ -6,16 +6,13 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
-import wizardo.game.Resources.Skins;
 import wizardo.game.Resources.SpellAnims.CelestialStrikeAnims;
 import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Explosion;
 import wizardo.game.Spells.Frost.Frozenorb.Frozenorb_Spell;
-import wizardo.game.Spells.Lightning.ChainLightning.ChainLightning_Spell;
 import wizardo.game.Spells.Lightning.ChargedBolts.ChargedBolts_Spell;
 import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyFactory;
 
-import static wizardo.game.Spells.SpellUtils.Spell_Element.FROST;
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.player;
 import static wizardo.game.Wizardo.world;
@@ -54,7 +51,7 @@ public class CelestialStrike_Hit extends CelestialStrike_Spell {
         frostbolts(delta);
 
         if(stateTime >= anim.getAnimationDuration()) {
-            screen.spellManager.toRemove(this);
+            screen.spellManager.remove(this);
             world.destroyBody(body);
         }
     }
@@ -104,7 +101,7 @@ public class CelestialStrike_Hit extends CelestialStrike_Spell {
 
     public void explosion() {
         CelestialStrike_Explosion explosion = new CelestialStrike_Explosion(body.getPosition());
-        screen.spellManager.toAdd(explosion);
+        screen.spellManager.add(explosion);
     }
 
     public void frostbolts(float delta) {
@@ -118,7 +115,7 @@ public class CelestialStrike_Hit extends CelestialStrike_Spell {
                 Frostbolt_Explosion explosion = new Frostbolt_Explosion();
                 explosion.targetPosition = SpellUtils.getClearRandomPosition(body.getPosition(), radius);
                 explosion.setElements(this);
-                screen.spellManager.toAdd(explosion);
+                screen.spellManager.add(explosion);
             }
         }
     }
@@ -131,7 +128,7 @@ public class CelestialStrike_Hit extends CelestialStrike_Spell {
                 bolt.spawnPosition = new Vector2(body.getPosition());
                 bolt.targetPosition = SpellUtils.getRandomVectorInRadius(body.getPosition(), 2);
                 bolt.setElements(this);
-                screen.spellManager.toAdd(bolt);
+                screen.spellManager.add(bolt);
             }
         }
     }
@@ -144,6 +141,6 @@ public class CelestialStrike_Hit extends CelestialStrike_Spell {
         orb.anim_element = SpellUtils.Spell_Element.LIGHTNING;
         orb.duration = 0.55f;
         orb.spawnPosition = new Vector2(targetPosition);
-        screen.spellManager.toAdd(orb);
+        screen.spellManager.add(orb);
     }
 }

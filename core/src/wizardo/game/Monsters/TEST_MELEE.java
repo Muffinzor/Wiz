@@ -3,22 +3,23 @@ package wizardo.game.Monsters;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import wizardo.game.Monsters.MonsterArchetypes.MonsterMelee;
-import wizardo.game.Monsters.MonsterAttack.AttackManager;
 import wizardo.game.Monsters.MonsterMovement.MovementManager;
 import wizardo.game.Monsters.MonsterActions.AttackSwing.AttackSwing;
 import wizardo.game.Monsters.MonsterStateManager.MeleeStateManager;
 import wizardo.game.Resources.MonsterResources.SkeletonAnims;
 import wizardo.game.Screens.Battle.BattleScreen;
+import wizardo.game.Screens.Battle.MonsterSpawner.MonsterSpawner;
 
 import static wizardo.game.Utils.Constants.PPM;
 
 public class TEST_MELEE extends MonsterMelee {
 
-    public TEST_MELEE(BattleScreen screen, Vector2 position) {
-        super(screen, position);
+    public TEST_MELEE(BattleScreen screen, Vector2 position, MonsterSpawner spawner) {
+        super(screen, position, spawner);
         speed = 20f/PPM;
-        hp = 60;
-        maxHP = 60;
+        hp = 30;
+        maxHP = 30;
+        xp = 5;
 
         dmg = 5;
 
@@ -36,7 +37,7 @@ public class TEST_MELEE extends MonsterMelee {
 
         state = MonsterUtils.MONSTER_STATE.ADVANCING;
         stateManager = new MeleeStateManager(this);
-        attackManager = new AttackManager(this, 1.5f);
+        monsterActionManager = new MonsterActionManager(this, 1.5f);
         attackRange = 1;
         hitboxRadius = 10;
         rushDistance = 2.5f;

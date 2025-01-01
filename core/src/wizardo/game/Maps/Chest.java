@@ -26,6 +26,7 @@ public class Chest extends TriggerObject {
     Animation<Sprite> openAnim;
 
     BattleScreen screen;
+    public ChestLoot loot;
 
     public void findTier() {
         if(tier < 0) {
@@ -75,13 +76,13 @@ public class Chest extends TriggerObject {
         }
     }
 
-
     public Chest(MapChunk chunk, MapObject object, int tier) {
         super(chunk, object);
         this.tier = tier;
         this.screen = (BattleScreen) chunk.screen;
         findTier();
         setup();
+        loot = new ChestLoot(this);
     }
 
     public void trigger() {

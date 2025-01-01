@@ -2,6 +2,7 @@ package wizardo.game.Items.Equipment.SoulStone;
 
 import wizardo.game.Items.Equipment.Equipment;
 import wizardo.game.Items.Equipment.EquipmentUtils;
+import wizardo.game.Items.ItemUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -10,6 +11,10 @@ import static wizardo.game.Wizardo.player;
 
 public abstract class SoulStone extends Equipment {
 
+    public SoulStone() {
+        slot = ItemUtils.EquipSlot.RUNESTONE;
+        name = EquipmentUtils.getRandomName(this);
+    }
 
     public void equip() {
 
@@ -26,8 +31,9 @@ public abstract class SoulStone extends Equipment {
             toStore.storeAfterUnequip();
         }
         player.inventory.equippedStone = this;
-
+        player.inventory.equippedGear.add(this);
         EquipmentUtils.applyGearStats(this, false);
+        checkForGearConditionalEffects();
     }
 
     public void pickup() {
@@ -41,8 +47,8 @@ public abstract class SoulStone extends Equipment {
     @Override
     public void unequip() {
         player.inventory.equippedStone = null;
-        EquipmentUtils.applyGearStats(this, true);
-        checkForSpellRemoval();
+        player.inventory.equippedGear.remove(this);
+        removalSteps();
     }
 
     public static ArrayList<Equipment> getAllStones() {

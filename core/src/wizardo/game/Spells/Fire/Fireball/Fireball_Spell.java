@@ -29,6 +29,7 @@ public class Fireball_Spell extends Spell {
         cooldown = 2;
         radius = 75;
         speed = 200f/PPM;
+        autoaimable = true;
 
         main_element = FIRE;
 
@@ -46,14 +47,20 @@ public class Fireball_Spell extends Spell {
 
         setup();
 
-        for (int i = 0; i < projectiles; i++) {
-            Fireball_Projectile ball = new Fireball_Projectile(getSpawnPosition(), getTargetPosition());
-            ball.inherit(this);
-            ball.castByPawn = castByPawn;
-            screen.spellManager.toAdd(ball);
+        autoAimCheck();
+
+        if(targetPosition == null) {
+            return;
         }
 
-        screen.spellManager.toRemove(this);
+        for (int i = 0; i < projectiles; i++) {
+            Fireball_Projectile ball = new Fireball_Projectile(getSpawnPosition(), targetPosition);
+            ball.inherit(this);
+            ball.castByPawn = castByPawn;
+            screen.spellManager.add(ball);
+        }
+
+        screen.spellManager.remove(this);
 
     }
 

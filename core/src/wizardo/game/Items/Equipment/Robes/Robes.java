@@ -3,6 +3,7 @@ package wizardo.game.Items.Equipment.Robes;
 import com.badlogic.gdx.math.MathUtils;
 import wizardo.game.Items.Equipment.Equipment;
 import wizardo.game.Items.Equipment.EquipmentUtils;
+import wizardo.game.Items.Equipment.Ring.Normal_Ring;
 import wizardo.game.Items.ItemUtils;
 import wizardo.game.Spells.SpellUtils;
 
@@ -12,6 +13,11 @@ import java.util.Collections;
 import static wizardo.game.Wizardo.player;
 
 public abstract class Robes extends Equipment {
+
+    public Robes() {
+        slot = ItemUtils.EquipSlot.ROBE;
+        name = EquipmentUtils.getRandomName(this);
+    }
 
 
     public void equip() {
@@ -29,7 +35,7 @@ public abstract class Robes extends Equipment {
             toStore.storeAfterUnequip();
         }
         player.inventory.equippedRobes = this;
-
+        player.inventory.equippedGear.add(this);
         EquipmentUtils.applyGearStats(this, false);
     }
 
@@ -44,8 +50,8 @@ public abstract class Robes extends Equipment {
     @Override
     public void unequip() {
         player.inventory.equippedRobes = null;
-        EquipmentUtils.applyGearStats(this, true);
-        checkForSpellRemoval();
+        player.inventory.equippedGear.remove(this);
+        removalSteps();
     }
 
     public static ArrayList<Equipment> getAllRobes() {
@@ -63,12 +69,16 @@ public abstract class Robes extends Equipment {
     public static ArrayList<Equipment> getNormalRobes() {
         ArrayList<Equipment> list = new ArrayList<>();
 
+        list.add(new Normal_Robes());
+        list.add(new Normal_Robes());
+
         return list;
     }
 
     public static ArrayList<Equipment> getRareRobes() {
         ArrayList<Equipment> list = new ArrayList<>();
 
+        list.add(new Rare_Robes());
         list.add(new Rare_Robes());
 
         return list;
@@ -93,9 +103,9 @@ public abstract class Robes extends Equipment {
         ArrayList<Integer> picks = new ArrayList<>();
 
         do {
-            int roll = MathUtils.random(1, 5);
+            int roll = MathUtils.random(1, 3);
             while (picks.contains(roll)) {
-                roll = MathUtils.random(1, 5);
+                roll = MathUtils.random(1, 3);
             }
             picks.add(roll);
 

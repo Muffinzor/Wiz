@@ -83,6 +83,10 @@ public class LevelUpUtils {
 
         Collections.shuffle(list);
 
+        if(list.isEmpty()) {
+            list.add(LevelUpEnums.getRandomT1());
+        }
+
         return list.getFirst();
 
     }

@@ -1,12 +1,14 @@
 package wizardo.game.Spells.Hybrid.CelestialStrike;
 
-import com.badlogic.gdx.math.Vector2;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 
 import static wizardo.game.Wizardo.player;
 
 public class CelestialStrike_Spell extends Spell {
+
+    int projectiles = 1;
+    int projectilesCast;
 
     public boolean frostbolts;
     public boolean chargedbolts;
@@ -20,8 +22,8 @@ public class CelestialStrike_Spell extends Spell {
         name = "Celestial Strike";
 
         baseDmg = 120;
-
         cooldown = 1.6f;
+        autoaimable = true;
 
         main_element = SpellUtils.Spell_Element.LIGHTNING;
 
@@ -29,18 +31,41 @@ public class CelestialStrike_Spell extends Spell {
 
     }
 
-
     @Override
     public void update(float delta) {
+        if(!initialized) {
+            initialized = true;
+        }
 
-        CelestialStrike_Hit strike = new CelestialStrike_Hit();
-        strike.targetPosition = new Vector2(getTargetPosition());
-        strike.screen = screen;
-        strike.frostbolts = frostbolts;
-        strike.chain = chain;
-        strike.chargedbolts = chargedbolts;
-        screen.spellManager.toRemove(this);
-        screen.spellManager.toAdd(strike);
+        autoAimCheck();
+
+        if(targetPosition == null) {
+            return;
+        }
+
+        stateTime += delta;
+        if(stateTime >= projectilesCast * 0.33f) {
+
+            CelestialStrike_Hit strike = new CelestialStrike_Hit();
+
+            if(projectiles > 1) {
+                strike.targetPosition = SpellUtils.getClearRandomPosition(targetPosition, 3f);
+            } else {
+                strike.targetPosition = targetPosition;
+            }
+
+            strike.frostbolts = frostbolts;
+            strike.chain = chain;
+            strike.chargedbolts = chargedbolts;
+            screen.spellManager.add(strike);
+
+            projectilesCast++;
+
+        }
+
+        if(projectilesCast >= projectiles) {
+            screen.spellManager.remove(this);
+        }
 
     }
 

@@ -7,8 +7,6 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
-import wizardo.game.Resources.Colors;
-import wizardo.game.Resources.Skins;
 import wizardo.game.Spells.Arcane.Rifts.Rift_Zone;
 import wizardo.game.Spells.Fire.Fireball.Fireball_Explosion;
 import wizardo.game.Spells.Fire.Flamejet.Flamejet_Spell;
@@ -82,7 +80,7 @@ public class Icespear_Projectile extends Icespear_Spell {
 
         if(destroyed || scale <= 0.05f) {
             world.destroyBody(body);
-            screen.spellManager.toRemove(this);
+            screen.spellManager.remove(this);
             if(!lightKilled) {
                 light.dimKill(0.5f);
                 lightKilled = true;
@@ -123,7 +121,7 @@ public class Icespear_Projectile extends Icespear_Spell {
             Icespear_Hit hit = new Icespear_Hit(body.getPosition(), rotation);
             hit.beam = beam;
             hit.setElements(this);
-            screen.spellManager.toAdd(hit);
+            screen.spellManager.add(hit);
 
             if (nested_spell != null) {
                 float chanceToProc = getProcRate();
@@ -135,7 +133,7 @@ public class Icespear_Projectile extends Icespear_Spell {
                         proj.screen = screen;
                         proj.spawnPosition = new Vector2(monster.body.getPosition());
                         proj.targetPosition = SpellUtils.getRandomVectorInRadius(monster.body.getPosition(), 0.5f);
-                        screen.spellManager.toAdd(proj);
+                        screen.spellManager.add(proj);
                     }
                 }
             }
@@ -149,7 +147,7 @@ public class Icespear_Projectile extends Icespear_Spell {
     public void handleCollision(Fixture fixture) {
         destroyed = true;
         Icespear_Break hit = new Icespear_Break(body.getPosition());
-        screen.spellManager.toAdd(hit);
+        screen.spellManager.add(hit);
     }
 
     public float getProcRate() {
@@ -206,7 +204,7 @@ public class Icespear_Projectile extends Icespear_Spell {
             spear.currentSplits = currentSplits;
             spear.stateTime = stateTime;
             spear.setNextSpear(this);
-            screen.spellManager.toAdd(spear);
+            screen.spellManager.add(spear);
 
             flamejetSplit(direction);
         }
@@ -225,7 +223,7 @@ public class Icespear_Projectile extends Icespear_Spell {
                 spear.currentSplits = currentSplits;
                 spear.stateTime = stateTime;
                 spear.setNextSpear(this);
-                screen.spellManager.toAdd(spear);
+                screen.spellManager.add(spear);
 
                 Vector2 direction = new Vector2(MathUtils.cosDeg(rotation), MathUtils.sinDeg(rotation));
                 flamejetSplit(direction);
@@ -327,7 +325,7 @@ public class Icespear_Projectile extends Icespear_Spell {
                 CelestialStrike_Hit strike = new CelestialStrike_Hit();
                 strike.targetPosition = new Vector2(body.getPosition());
                 strike.screen = screen;
-                screen.spellManager.toAdd(strike);
+                screen.spellManager.add(strike);
             }
         }
     }
@@ -342,7 +340,7 @@ public class Icespear_Projectile extends Icespear_Spell {
                 orb.speed = 0;
                 orb.spawnPosition = new Vector2(body.getPosition());
                 orb.targetPosition =  new Vector2(body.getPosition().x + 1, body.getPosition().y + 1);
-                screen.spellManager.toAdd(orb);
+                screen.spellManager.add(orb);
             }
         }
     }
@@ -356,7 +354,7 @@ public class Icespear_Projectile extends Icespear_Spell {
             jet.targetPosition = new Vector2(body.getPosition().add(direction));
             jet.icespear = true;
             jet.setElements(this);
-            screen.spellManager.toAdd(jet);
+            screen.spellManager.add(jet);
         }
     }
 
@@ -368,7 +366,7 @@ public class Icespear_Projectile extends Icespear_Spell {
             explosion.nested_spell = new Flamejet_Spell();
         }
         explosion.targetPosition = new Vector2(body.getPosition());
-        screen.spellManager.toAdd(explosion);
+        screen.spellManager.add(explosion);
     }
 
     public void overheatSplit() {
@@ -376,7 +374,7 @@ public class Icespear_Projectile extends Icespear_Spell {
         explosion.setElements(this);
         explosion.fireball = true;
         explosion.targetPosition = new Vector2(body.getPosition());
-        screen.spellManager.toAdd(explosion);
+        screen.spellManager.add(explosion);
     }
 
     public void rift() {
@@ -387,7 +385,7 @@ public class Icespear_Projectile extends Icespear_Spell {
                 Rift_Zone rift = new Rift_Zone(body.getPosition());
                 rift.frostbolt = frostbolts;
                 rift.setElements(this);
-                screen.spellManager.toAdd(rift);
+                screen.spellManager.add(rift);
             }
         }
     }
@@ -400,7 +398,7 @@ public class Icespear_Projectile extends Icespear_Spell {
                 Frostbolt_Explosion explosion = new Frostbolt_Explosion();
                 explosion.targetPosition = new Vector2(body.getPosition());
                 explosion.setElements(this);
-                screen.spellManager.toAdd(explosion);
+                screen.spellManager.add(explosion);
             }
         }
     }
@@ -417,7 +415,7 @@ public class Icespear_Projectile extends Icespear_Spell {
                     bolt.anim_element = FROST;
                     bolt.spawnPosition = new Vector2(body.getPosition());
                     bolt.targetPosition = SpellUtils.getRandomVectorInRadius(body.getPosition(), 3);
-                    screen.spellManager.toAdd(bolt);
+                    screen.spellManager.add(bolt);
                 }
             }
         }
@@ -429,7 +427,7 @@ public class Icespear_Projectile extends Icespear_Spell {
                 Thunderstorm_Hit thunder = new Thunderstorm_Hit(body.getPosition());
                 thunder.setElements(this);
                 thunder.anim_element = FROST;
-                screen.spellManager.toAdd(thunder);
+                screen.spellManager.add(thunder);
             }
         }
     }
@@ -440,7 +438,7 @@ public class Icespear_Projectile extends Icespear_Spell {
             Overheat_TriggerExplosion explosion = new Overheat_TriggerExplosion();
             explosion.setElements(this);
             explosion.targetPosition = new Vector2(body.getPosition());
-            screen.spellManager.toAdd(explosion);
+            screen.spellManager.add(explosion);
         }
     }
 }

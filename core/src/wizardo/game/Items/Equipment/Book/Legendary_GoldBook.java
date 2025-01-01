@@ -32,16 +32,9 @@ public class Legendary_GoldBook extends Book {
     }
 
 
-    public void equip() {
-        super.equip();
-    }
-
     public float getStatValue(int index) {
         return player.inventory.gold/100;
     }
 
-    @Override
-    public void unequip() {
-        player.inventory.equippedBook = null;
-    }
+
 }

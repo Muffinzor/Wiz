@@ -56,7 +56,7 @@ public class Rift_Explosion extends Rifts_Spell {
 
         if(stateTime >= anim.getAnimationDuration()) {
             world.destroyBody(body);
-            screen.spellManager.toRemove(this);
+            screen.spellManager.remove(this);
         } else if(stateTime > 0.2f) {
             body.setActive(false);
         }
@@ -156,7 +156,7 @@ public class Rift_Explosion extends Rifts_Spell {
                     bolt.setElements(this);
                     bolt.spawnPosition = new Vector2(body.getPosition());
                     bolt.targetPosition = SpellUtils.getRandomVectorInRadius(body.getPosition(), 2);
-                    screen.spellManager.toAdd(bolt);
+                    screen.spellManager.add(bolt);
                 }
             }
         }
@@ -183,7 +183,7 @@ public class Rift_Explosion extends Rifts_Spell {
                     chain.originBody = body;
                     chain.setElements(this);
                     chain.arcaneMissile = arcanemissiles;
-                    screen.spellManager.toAdd(chain);
+                    screen.spellManager.add(chain);
                 }
             }
         }
@@ -203,7 +203,7 @@ public class Rift_Explosion extends Rifts_Spell {
                     clone.spawnPosition = new Vector2(body.getPosition());
                     clone.targetPosition = SpellUtils.getRandomVectorInRadius(body.getPosition(), 2);
                     clone.originBody = body;
-                    screen.spellManager.toAdd(clone);
+                    screen.spellManager.add(clone);
 
                 }
             }

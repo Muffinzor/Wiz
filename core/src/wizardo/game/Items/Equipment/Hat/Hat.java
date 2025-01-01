@@ -13,6 +13,11 @@ import static wizardo.game.Wizardo.player;
 
 public abstract class Hat extends Equipment {
 
+    public Hat() {
+        slot = ItemUtils.EquipSlot.HAT;
+        name = EquipmentUtils.getRandomName(this);
+    }
+
 
     public void equip() {
 
@@ -29,8 +34,9 @@ public abstract class Hat extends Equipment {
             toStore.storeAfterUnequip();
         }
         player.inventory.equippedHat = this;
-
+        player.inventory.equippedGear.add(this);
         EquipmentUtils.applyGearStats(this, false);
+        checkForGearConditionalEffects();
     }
 
     public void pickup() {
@@ -44,8 +50,8 @@ public abstract class Hat extends Equipment {
     @Override
     public void unequip() {
         player.inventory.equippedHat = null;
-        EquipmentUtils.applyGearStats(this, true);
-        checkForSpellRemoval();
+        player.inventory.equippedGear.remove(this);
+        removalSteps();
     }
 
     public static ArrayList<Equipment> getAllHats() {
@@ -64,6 +70,7 @@ public abstract class Hat extends Equipment {
         ArrayList<Equipment> list = new ArrayList<>();
 
         list.add(new Normal_Hat());
+        list.add(new Normal_Hat());
 
         return list;
     }
@@ -72,6 +79,7 @@ public abstract class Hat extends Equipment {
         ArrayList<Equipment> list = new ArrayList<>();
 
         list.add(new Rare_Hat());
+        list.add(new Rare_Hat());
 
         return list;
     }
@@ -79,6 +87,8 @@ public abstract class Hat extends Equipment {
     public static ArrayList<Equipment> getEpicHats() {
         ArrayList<Equipment> list = new ArrayList<>();
 
+        list.add(new Epic_Hat());
+        list.add(new Epic_Hat());
         list.add(new Epic_OrbitHat());
 
         return list;
@@ -86,6 +96,9 @@ public abstract class Hat extends Equipment {
 
     public static ArrayList<Equipment> getLegendaryHats() {
         ArrayList<Equipment> list = new ArrayList<>();
+
+        list.add(new Legendary_TripleCastHat());
+        list.add(new Legendary_SentientHat());
 
         return list;
     }
@@ -161,6 +174,42 @@ public abstract class Hat extends Equipment {
                 case 5 -> {
                     piece.gearStats.add(ItemUtils.GearStat.LUCK);
                     piece.quantity_gearStats.add(MathUtils.random(5,10));
+                }
+            }
+        } while(picks.size() < quantity);
+    }
+    public static void getEpicHatStats(Equipment piece, int quantity) {
+
+        ArrayList<Integer> picks = new ArrayList<>();
+
+        do {
+            int roll = MathUtils.random(1, 5);
+            while (picks.contains(roll)) {
+                roll = MathUtils.random(1, 5);
+            }
+            picks.add(roll);
+
+            switch(roll) {
+
+                case 1 -> {
+                    piece.masteries.add(SpellUtils.getRandomMastery(null,2, false));
+                    piece.quantity_masteries.add(2);
+                }
+                case 2 -> {
+                    piece.masteries.add(SpellUtils.getRandomMastery(null,3, false));
+                    piece.quantity_masteries.add(2);
+                }
+                case 3 -> {
+                    piece.gearStats.add(ItemUtils.GearStat.CASTSPEED);
+                    piece.quantity_gearStats.add(MathUtils.random(11,15));
+                }
+                case 4 -> {
+                    piece.gearStats.add(ItemUtils.GearStat.MULTICAST);
+                    piece.quantity_gearStats.add(MathUtils.random(11,15));
+                }
+                case 5 -> {
+                    piece.gearStats.add(ItemUtils.GearStat.PROJSPEED);
+                    piece.quantity_gearStats.add(MathUtils.random(15,25));
                 }
             }
         } while(picks.size() < quantity);

@@ -59,7 +59,12 @@ public abstract class MapChunk {
 
         for(MapObject object : obstacles) {
 
-            if(object.getName().equals("Chest")) {
+            if(object.getName().equals("Chest") && Math.random() >= 0.7f) {
+                Chest chest = new Chest(this, object, -1);
+                layerObjects.add(chest);
+            }
+
+            if(object.getName().equals("TestChest")) {
                 Chest chest = new Chest(this, object, -1);
                 layerObjects.add(chest);
             }
