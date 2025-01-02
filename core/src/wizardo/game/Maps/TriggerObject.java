@@ -15,7 +15,5 @@ public abstract class TriggerObject extends LayerObject{
 
     public abstract void handleCollision();
 
-    public void trigger() {
-
-    }
+    public abstract void trigger();
 }

@@ -112,7 +112,7 @@ public class ForkedLightning_Spell extends Spell {
 
     @Override
     public int getDmg() {
-        int dmg = baseDmg + getLvl() * 4;
+        int dmg = this.dmg + getLvl() * 4;
         dmg = (int) (dmg * (1 + player.spellbook.flashBonusDmg/100f));
         return dmg;
 

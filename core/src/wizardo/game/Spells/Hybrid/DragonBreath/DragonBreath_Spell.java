@@ -17,7 +17,7 @@ public class DragonBreath_Spell extends Spell {
 
         name = "Dragonbreath";
 
-        baseDmg = 120;
+        dmg = 120;
 
         cooldown = 4f;
 
@@ -53,7 +53,7 @@ public class DragonBreath_Spell extends Spell {
 
     @Override
     public int getDmg() {
-        int dmg = baseDmg;
+        int dmg = this.dmg;
         dmg += 15 * player.spellbook.flamejet_lvl;
         dmg += 15 * player.spellbook.overheat_lvl;
         dmg = (int) (dmg * (1 + player.spellbook.flashBonusDmg/100f));

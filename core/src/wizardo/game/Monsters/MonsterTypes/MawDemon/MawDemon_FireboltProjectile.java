@@ -27,7 +27,7 @@ public class MawDemon_FireboltProjectile extends MawDemon_FireboltAttack{
 
     @Override
     public void checkState(float delta) {
-        if(hasCollided || stateTime >= 2.5f) {
+        if(hasCollided || stateTime >= 4) {
             explode();
             light.dimKill(0.5f);
             world.destroyBody(body);

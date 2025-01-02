@@ -93,7 +93,7 @@ public class MonsterSpawner {
     }
 
     public void spawnMeleeMonsters() {
-        if(meleeSpawnTimer > 1.5f) {
+        if(meleeSpawnTimer > 2f) {
             meleeSpawnTimer = 0;
             if(screen.monsterManager.liveMonsters.size() < 1200) {
                 for (int i = 0; i < 5; i++) {
@@ -131,7 +131,7 @@ public class MonsterSpawner {
             randomizedDirection.scl(45);
             Vector2 centerpoint = player.pawn.getPosition().add(randomizedDirection);
 
-            int count = (int) (12 * spawnRatio);
+            int count = (int) (8 * spawnRatio);
             for (int i = 0; i < count; i++) {
                 Vector2 spawnPoint = SpellUtils.getClearRandomPosition(centerpoint, Math.min(2 * spawnRatio, 10));
                 Monster monster;
@@ -145,7 +145,7 @@ public class MonsterSpawner {
         }
     }
     public void spawnMonstersInEmptyQuadrant() {
-        if(targetedSpawnTimer > 4 && screen.monsterManager.liveMonsters.size() < 1200) {
+        if(targetedSpawnTimer > 2 && screen.monsterManager.liveMonsters.size() < 1200) {
 
             targetedSpawnTimer = 0;
             int topLeft = 0, topRight = 0, bottomLeft = 0, bottomRight = 0;

@@ -42,7 +42,7 @@ public class Overheat_TriggerExplosion extends Spell {
 
         radius = 40;
 
-        baseDmg = player.spellbook.fireball_lvl * 35;
+        dmg = player.spellbook.fireball_lvl * 35;
 
         main_element = FIRE;
 

@@ -24,7 +24,7 @@ public class ArcaneMissile_Spell extends Spell {
 
         name = "Arcane Missiles";
 
-        baseDmg = 48;
+        dmg = 48;
         speed = 225f/PPM;
         cooldown = 1.2f;
         autoaimable = true;
@@ -94,7 +94,7 @@ public class ArcaneMissile_Spell extends Spell {
 
     @Override
     public int getDmg() {
-        int dmg = baseDmg;
+        int dmg = this.dmg;
         dmg += 12 * getLvl();
         dmg = (int) (dmg * (1 + player.spellbook.sharpBonusDmg/100f));
         return dmg;

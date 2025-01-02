@@ -7,23 +7,25 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import wizardo.game.Screens.BaseScreen;
 import wizardo.game.Wizardo;
 
+import static wizardo.game.Resources.Skins.mainMenuSkin;
+
 public class AreYouSureScreen extends BaseScreen {
 
     public float globalCD = 0;
     public YesOrNoTable menuTable;
 
-    private Skin mainMenuSkin = new Skin(Gdx.files.internal("MainMenuScreen/MainMenuSkin/MainMenuSkin.json"));
-
-    public AreYouSureScreen(Wizardo game) {
+    public AreYouSureScreen(Wizardo game, String message) {
         super(game);
 
         stage = new Stage(new ScreenViewport(uiCamera));
-        menuTable = new YesOrNoTable(stage, mainMenuSkin, game);
+        menuTable = new YesOrNoTable(stage, mainMenuSkin, game, message);
+
     }
 
     @Override
     public void render(float delta) {
-
+        stage.act();
+        stage.draw();
     }
 
     @Override

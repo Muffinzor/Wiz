@@ -80,6 +80,10 @@ public class StatsBuffer {
             case FLAMEJET -> flamejet();
             case CHARGEDBOLT -> chargedbolt();
             case MISSILES -> missiles();
+            case ICESPEAR -> icespear();
+            case FIREBALL -> fireball();
+            case CHAIN -> chain();
+            case BEAM -> beam();
 
             case EXPLOSIVES -> player.spellbook.explosivesBonusDmg += basicValue(quality);
             case ENERGY -> player.spellbook.energyBonusDmg += basicValue(quality);
@@ -141,6 +145,34 @@ public class StatsBuffer {
             player.spellbook.arcanemissile_lvl++;
         } else {
             player.spellbook.arcanemissileBonus += 8;
+        }
+    }
+    private static void icespear() {
+        if(player.spellbook.icespear_lvl < 5) {
+            player.spellbook.icespear_lvl++;
+        } else {
+            player.spellbook.icespearBonus += 8;
+        }
+    }
+    private static void fireball() {
+        if(player.spellbook.fireball_lvl < 5) {
+            player.spellbook.fireball_lvl++;
+        } else {
+            player.spellbook.fireballBonus += 8;
+        }
+    }
+    private static void beam() {
+        if(player.spellbook.energybeam_lvl < 5) {
+            player.spellbook.energybeam_lvl++;
+        } else {
+            player.spellbook.energybeamBonus += 20;
+        }
+    }
+    private static void chain() {
+        if(player.spellbook.chainlightning_lvl < 5) {
+            player.spellbook.chainlightning_lvl++;
+        } else {
+            player.spellbook.chainlightningBonus += 6;
         }
     }
 

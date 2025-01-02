@@ -35,8 +35,6 @@ public class EnergyBeam_Projectile extends EnergyBeam_Spell {
     int frameCounter;
     int chainFrameInterval;
 
-    int monstersHit = 0;
-
     public EnergyBeam_Projectile(Vector2 spawnPosition, Vector2 targetPosition) {
 
         this.spawnPosition = new Vector2(spawnPosition);
@@ -78,13 +76,14 @@ public class EnergyBeam_Projectile extends EnergyBeam_Spell {
     }
 
     public void handleCollision(Monster monster) {
+        monstersHit++;
         dealDmg(monster);
         frostbolts(monster);
         chargedbolts();
         thunderstorm(monster);
         flamejets();
         fireball(monster);
-        monstersHit ++;
+
     }
 
     public void handleCollision(Fixture fix) {
@@ -270,7 +269,7 @@ public class EnergyBeam_Projectile extends EnergyBeam_Spell {
             monster.applySlow(3, 0.7f);
 
             float procRate = .825f - .025f * player.spellbook.frostbolt_lvl;
-            if(monstersHit == 0) {
+            if(monstersHit == 1) {
                 procRate = 0;
             }
             if (Math.random() > procRate) {
@@ -297,7 +296,7 @@ public class EnergyBeam_Projectile extends EnergyBeam_Spell {
     public void chargedbolts() {
         if(chargedbolts) {
             float procRate = .9f - 0.05f * player.spellbook.chargedbolt_lvl;
-            if(monstersHit == 0) {
+            if(monstersHit == 1) {
                 procRate = 0;
             }
             if(Math.random() >= procRate) {
@@ -340,7 +339,7 @@ public class EnergyBeam_Projectile extends EnergyBeam_Spell {
         if(thunderstorm) {
             int level = (getLvl() + player.spellbook.thunderstorm_lvl) / 2;
             float procRate = 0.825f - 0.025f * level;
-            if(monstersHit == 0) {
+            if(monstersHit == 1) {
                 procRate = 0;
             }
             if(Math.random() >= procRate) {

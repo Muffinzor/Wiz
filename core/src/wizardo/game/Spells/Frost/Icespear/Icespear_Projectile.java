@@ -45,6 +45,8 @@ public class Icespear_Projectile extends Icespear_Spell {
 
     float scale = 1;
 
+    int collisions;
+
 
     public Icespear_Projectile(Vector2 spawnPosition, Vector2 targetPosition) {
 
@@ -76,6 +78,12 @@ public class Icespear_Projectile extends Icespear_Spell {
             } else {
                 destroyed = true;
             }
+        }
+
+        if(collisions >= maxCollisions) {
+            destroyed = true;
+            Icespear_Break hit = new Icespear_Break(body.getPosition());
+            screen.spellManager.add(hit);
         }
 
         if(destroyed || scale <= 0.05f) {
@@ -141,6 +149,11 @@ public class Icespear_Projectile extends Icespear_Spell {
             rift();
             frostbolts();
             thunderspear();
+
+            if (Math.random() >= player.spellbook.icespearBonus / 100f) {
+                collisions++;
+            }
+
         }
     }
 

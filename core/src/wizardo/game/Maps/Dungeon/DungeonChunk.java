@@ -9,6 +9,7 @@ import wizardo.game.Maps.DecorObjects.*;
 import wizardo.game.Maps.LayerObject;
 import wizardo.game.Maps.MapGeneration.MapChunk;
 import wizardo.game.Maps.MapUtils;
+import wizardo.game.Maps.Shop.MapShop;
 import wizardo.game.Screens.Battle.BattleScreen;
 import wizardo.game.Wizardo;
 
@@ -48,7 +49,7 @@ public class DungeonChunk extends MapChunk {
 
             mapRenderer.setView(screen.mainCamera);
             mapRenderer.render();
-            decorRenderer.drawObstacles();
+            decorRenderer.drawObstacles(delta);
 
             screen.mainCamera.translate(x_pos, y_pos);
             screen.mainCamera.update();
@@ -114,7 +115,6 @@ public class DungeonChunk extends MapChunk {
                     layerObjects.add(flag);
                 }
             }
-
             if(object.getName().equals("Building2")) {
                 if(Math.random() >= 0.4f) {
                     PillarTorchObject torch = new PillarTorchObject(this, object);
@@ -123,6 +123,10 @@ public class DungeonChunk extends MapChunk {
                     WallFlagObject flag = new WallFlagObject(this, object);
                     layerObjects.add(flag);
                 }
+            }
+            if(object.getName().equals("BuildingShop") && rolledShop) {
+                MapShop shop = new MapShop(this, object);
+                layerObjects.add(shop);
             }
         }
     }

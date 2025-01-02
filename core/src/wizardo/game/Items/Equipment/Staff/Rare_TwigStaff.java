@@ -18,9 +18,9 @@ public class Rare_TwigStaff extends Staff{
         quality = ItemUtils.EquipQuality.RARE;
 
         gearStats.add(ItemUtils.GearStat.REGEN);
-        quantity_gearStats.add(90);
+        quantity_gearStats.add(60);
         gearStats.add(ItemUtils.GearStat.WALKSPEED);
-        quantity_gearStats.add(10);
+        quantity_gearStats.add(5);
         gearStats.add(ItemUtils.GearStat.LUCK);
         quantity_gearStats.add(10);
 

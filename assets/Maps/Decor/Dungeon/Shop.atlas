@@ -1,0 +1,11 @@
+Shop.png
+size:1024,128
+repeat:none
+dungeonshop1
+bounds:260,2,256,61
+dungeonshop2
+bounds:2,2,256,61
+dungeonshop3
+bounds:2,65,256,61
+dungeonshop4
+bounds:260,65,256,61

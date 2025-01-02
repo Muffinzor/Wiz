@@ -13,6 +13,17 @@ public class DungeonDecorResources {
     public static Sprite building1_sprite = new Sprite(new Texture("Maps/Decor/Dungeon/building1.png"));
     public static Sprite building2_sprite = new Sprite(new Texture("Maps/Decor/Dungeon/building2.png"));
 
+    public static Animation<Sprite> dungeonshop_anim;
+    public static String shopPath = "Maps/Decor/Dungeon/Shop.atlas";
+    public static void loadShopAnimations() {
+        TextureAtlas atlas = assetManager.get(shopPath, TextureAtlas.class);
+        Sprite[] frames1 = new Sprite[4];
+        for (int i = 0; i < frames1.length; i++) {
+            frames1[i] = atlas.createSprite("dungeonshop" + (i+1));
+        }
+        dungeonshop_anim = new Animation<>(0.12f, frames1);
+    }
+
     /**
      * VASES
      */
@@ -79,9 +90,11 @@ public class DungeonDecorResources {
     public static void loadAnimations() {
         loadVaseAnimations();
         loadStandingTorchAnimations();
+        loadShopAnimations();
     }
     public static void loadAtlas() {
         assetManager.load(vasePath, TextureAtlas.class);
+        assetManager.load(shopPath, TextureAtlas.class);
         assetManager.load(standingTorchPath, TextureAtlas.class);
     }
 }

@@ -21,7 +21,7 @@ public class Orbit_Spell extends Spell {
     public Orbit_Spell() {
         name = "Orbit";
 
-        baseDmg = 20;
+        dmg = 20;
         cooldown = 12;
         duration = 6;
     }
@@ -86,7 +86,7 @@ public class Orbit_Spell extends Spell {
 
     @Override
     public int getDmg() {
-        int dmg = baseDmg + 10 * player.spellbook.frozenorb_lvl;
+        int dmg = this.dmg + 10 * player.spellbook.frozenorb_lvl;
         dmg = (int) (dmg * (1 + player.spellbook.gravityBonusDmg/100f));
         return dmg;
     }

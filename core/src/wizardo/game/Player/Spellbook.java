@@ -54,6 +54,9 @@ public class Spellbook {
     public int pushbackBonus;
     public int iceRadiusBonus;
     public int projSpeedBonus;
+
+    public float castSpeed;
+    public float multicast;
     
     // Specific Modifiers
     public int repulsionRadiusBonus;
@@ -61,10 +64,10 @@ public class Spellbook {
     public float orbitSpeed;
     public int riftPullBonus;
     public int flamejetBonus;
-
-
-    public float castSpeed;
-    public float multicast;
+    public int energybeamBonus;
+    public int chainlightningBonus;
+    public int icespearBonus;
+    public int fireballBonus;
 
 
     public Spellbook() {

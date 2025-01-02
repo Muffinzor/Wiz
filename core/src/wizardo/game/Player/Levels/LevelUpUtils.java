@@ -24,7 +24,7 @@ public class LevelUpUtils {
         if(random >= 0.85f) {
             return EPIC;
         }
-        if(random >= 0.64f) {
+        if(random >= 0.54f) {
             return RARE;
         }
         return NORMAL;
@@ -95,7 +95,11 @@ public class LevelUpUtils {
         if(quality == NORMAL && !containsT1(currentList)) {
             tempList.add(LevelUpEnums.getRandomT1());
         }
+        if(quality == RARE && player.level >= 8 && !containsT2(currentList)) {
+            tempList.add(LevelUpEnums.getRandomT2());
+        }
     }
+
     public static boolean containsT1(ArrayList<LevelUps> currentList) {
         boolean maxFlamejet = player.spellbook.flamejetBonus >= 10;
         boolean maxFrostbolt = player.spellbook.frostboltBonus >= 40;
@@ -115,6 +119,29 @@ public class LevelUpUtils {
             return true;
         }
         if(currentList.contains(MISSILES)) {
+            return true;
+        }
+        return false;
+    }
+    public static boolean containsT2(ArrayList<LevelUps> currentList) {
+        boolean maxFireball = player.spellbook.fireballBonus >= 40;
+        boolean maxIcespear = player.spellbook.icespearBonus >= 40;
+        boolean maxChain = player.spellbook.chainlightningBonus >= 30;
+        boolean maxBeam = player.spellbook.energybeamBonus >= 100;
+
+        if(maxFireball && maxIcespear && maxChain && maxBeam) {
+            return true;
+        }
+        if(currentList.contains(ICESPEAR)) {
+            return true;
+        }
+        if(currentList.contains(BEAM)) {
+            return true;
+        }
+        if(currentList.contains(FIREBALL)) {
+            return true;
+        }
+        if(currentList.contains(CHAIN)) {
             return true;
         }
         return false;

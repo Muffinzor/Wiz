@@ -19,7 +19,7 @@ public class Frozenorb_Spell extends Spell {
 
         speed = 60f/PPM;
         cooldown = 8f;
-        baseDmg = 50;   // per second
+        dmg = 50;   // per second
         autoaimable = true;
 
         main_element = SpellUtils.Spell_Element.FROST;
@@ -72,7 +72,7 @@ public class Frozenorb_Spell extends Spell {
 
     @Override
     public int getDmg() {
-        int dmg = baseDmg;
+        int dmg = this.dmg;
         dmg += 10 * getLvl();
         dmg = (int) (dmg * (1 + player.spellbook.gravityBonusDmg/100f));
         if(player.inventory.equippedStaff instanceof Epic_FrozenorbStaff) {

@@ -27,7 +27,7 @@ public class Judgement_Spell extends Spell {
     public Judgement_Spell() {
         name = "Judgement";
 
-        baseDmg = 80;
+        dmg = 80;
 
         main_element = ARCANE;
 
@@ -87,7 +87,7 @@ public class Judgement_Spell extends Spell {
 
     @Override
     public int getDmg() {
-        int dmg = baseDmg;
+        int dmg = this.dmg;
         dmg += 20 * player.spellbook.energybeam_lvl;
         if(frozenorb) {
             dmg += 2 * player.spellbook.frozenorb_lvl;

@@ -13,7 +13,7 @@ public class Legendary_TripleCastHat extends Hat {
     public Legendary_TripleCastHat() {
         sprite = new Sprite(new Texture("Items/Hat/ScraggsHat.png"));
         spriteOver = new Sprite(new Texture("Items/Hat/ScraggsHat_Over.png"));
-        displayScale = 1.3f;
+        displayScale = 0.9f;
 
         name = "Scraggs' Lucky Hat";
         title = "Legendary Hat";

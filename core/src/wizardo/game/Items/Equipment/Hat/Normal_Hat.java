@@ -37,7 +37,6 @@ public class Normal_Hat extends Hat{
             case 1 -> {
                 sprite = new Sprite(new Texture("Items/Hat/NormalHat1.png"));
                 spriteOver = new Sprite(new Texture("Items/Hat/NormalHat1_Over.png"));
-                displayScale = 1.3f;
             }
             case 2 -> {
                 sprite = new Sprite(new Texture("Items/Hat/Greenhat.png"));

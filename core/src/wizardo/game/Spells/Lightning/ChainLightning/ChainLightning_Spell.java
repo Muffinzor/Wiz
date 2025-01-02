@@ -38,7 +38,7 @@ public class ChainLightning_Spell extends Spell {
         name = "Chain Lightning";
 
         cooldown = 1.2f;
-        baseDmg = 35;
+        dmg = 35;
         autoaimable = true;
 
 
@@ -72,7 +72,7 @@ public class ChainLightning_Spell extends Spell {
     public void setup() {
         maxHits = maxHits + getLvl()/2;
         if(spear) {
-            baseDmg += player.spellbook.icespear_lvl * 5;
+            dmg += player.spellbook.icespear_lvl * 5;
             for (int i = 0; i < 2; i++) {
                 maxHits = maxHits - (player.spellbook.icespear_lvl/4);
             }
@@ -161,7 +161,7 @@ public class ChainLightning_Spell extends Spell {
 
     @Override
     public int getDmg() {
-        int dmg = baseDmg;
+        int dmg = this.dmg;
         dmg += 8 * getLvl();
         dmg = (int) (dmg * (1 + player.spellbook.voltageBonusDmg/100f));
         return dmg;

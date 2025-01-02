@@ -19,6 +19,7 @@ import wizardo.game.Screens.Character.EquipmentTable.EquipmentTable;
 import wizardo.game.Screens.Character.EquipmentTable.GearPanel;
 import wizardo.game.Screens.Character.InventoryTable.InventoryTable;
 import wizardo.game.Screens.Character.MasteryTable.MasteryTable;
+import wizardo.game.Screens.Character.StatsTable.StatsTable;
 import wizardo.game.Wizardo;
 
 import java.util.ArrayList;
@@ -36,6 +37,7 @@ public class CharacterScreen extends BaseScreen {
     public KnownTable knownSpells_table;
     public EquipmentTable equipment_table;
     public InventoryTable inventory_table;
+    public StatsTable stats_Table;
 
     public Button selectedButton;
     public MenuTable activeTable;
@@ -64,6 +66,7 @@ public class CharacterScreen extends BaseScreen {
 
         equippedSpells_table = new EquippedTable(stage, bookTableSkin, game, this);
         knownSpells_table = new KnownTable(stage, bookTableSkin, game, this);
+        stats_Table = new StatsTable(stage);
 
     }
 
@@ -149,6 +152,10 @@ public class CharacterScreen extends BaseScreen {
         background.setSize(width, height);
         batch.setProjectionMatrix(uiCamera.combined);
         setInputs();
+
+        stats_Table.dispose();
+        stats_Table = new StatsTable(stage);
+
     }
 
     public void drawSelectedButton() {

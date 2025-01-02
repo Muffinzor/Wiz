@@ -1,6 +1,7 @@
 package wizardo.game.Screens.Character.InventoryTable;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -10,13 +11,17 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import wizardo.game.Items.Equipment.Equipment;
 import wizardo.game.Screens.Character.CharacterScreen;
 import wizardo.game.Screens.Character.EquipmentTable.GearPanel;
 import wizardo.game.Screens.Character.EquipmentTable.MenuButton;
+import wizardo.game.Screens.Popups.AreYouSureScreen;
 
 import static wizardo.game.Resources.ScreenResources.CharacterScreenResources.*;
 import static wizardo.game.Resources.ScreenResources.CharacterScreenResources.redQuality;
+import static wizardo.game.Screens.BaseScreen.xRatio;
+import static wizardo.game.Screens.BaseScreen.yRatio;
 
 public class InventoryButton extends ImageButton implements MenuButton {
 
@@ -38,11 +43,35 @@ public class InventoryButton extends ImageButton implements MenuButton {
             setup();
             addClickListener();
         }
+        adjustSize();
     }
 
     public void setup() {
         sprite = piece.sprite;
         spriteOver = piece.spriteOver;
+    }
+
+    public void adjustSize() {
+
+        ImageButton.ImageButtonStyle style = this.getStyle();
+        ImageButton.ImageButtonStyle newStyle = new ImageButton.ImageButtonStyle();
+        newStyle.imageUp = new TextureRegionDrawable(((TextureRegionDrawable) style.imageUp).getRegion());
+        newStyle.imageOver = new TextureRegionDrawable(((TextureRegionDrawable) style.imageOver).getRegion());
+
+        float ogWidth = newStyle.imageUp.getMinWidth();
+        float ogHeigth = newStyle.imageUp.getMinHeight();
+
+        float WIDTH = xRatio * ogWidth;
+        float HEIGHT = yRatio * ogHeigth;
+
+        newStyle.imageUp.setMinWidth(WIDTH);
+        newStyle.imageUp.setMinHeight(HEIGHT);
+
+        newStyle.imageOver.setMinWidth(WIDTH);
+        newStyle.imageOver.setMinHeight(HEIGHT);
+
+        setStyle(newStyle);
+
     }
 
 
@@ -95,30 +124,51 @@ public class InventoryButton extends ImageButton implements MenuButton {
             screen.equippedSpells_table.resize();
             screen.knownSpells_table.resize();
         }
+    }
 
+    public void handleRightClick() {
+        if(piece != null) {
+            screen.game.addNewScreen(new AreYouSureScreen(screen.game, "This will destroy the item"));
+        }
     }
 
     public void addClickListener() {
         MenuButton button = this;
         this.addListener(new ClickListener() {
+
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                if (button == Input.Buttons.RIGHT) {
+                    handleRightClick();
+                    return true;
+                }
+                return super.touchDown(event, x, y, pointer, button);
+            }
+
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                handleClick();
+                if (event.getButton() == Input.Buttons.LEFT) {
+                    handleClick();
+                } else if (event.getButton() == Input.Buttons.RIGHT) {
+                    handleRightClick();
+                }
                 screen.panelStage.clear();
             }
+
             @Override
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
                 hovered = true;
-                GearPanel panel = new GearPanel(screen.panelStage, piece, false, button);
-                screen.activePanel = panel;
+                screen.activePanel = new GearPanel(screen.panelStage, piece, false, button);
                 spriteRatio = 0.8f;
             }
+
             @Override
             public void exit(InputEvent event, float x, float y, int pointer, Actor fromActor) {
                 hovered = false;
                 screen.activePanel.dispose();
                 spriteRatio = 0.7f;
             }
+
         });
     }
 

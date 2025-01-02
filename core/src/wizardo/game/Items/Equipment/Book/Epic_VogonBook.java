@@ -3,14 +3,14 @@ package wizardo.game.Items.Equipment.Book;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import wizardo.game.Items.ItemUtils;
-import wizardo.game.Spells.Unique.BookAura;
+import wizardo.game.Spells.Unique.VogonAura;
 
 
 import static wizardo.game.Wizardo.player;
 
 public class Epic_VogonBook extends Book {
 
-    BookAura aura;
+    VogonAura aura;
 
     public Epic_VogonBook() {
         sprite = new Sprite(new Texture("Items/Spellbook/VogonBook.png"));
@@ -36,11 +36,12 @@ public class Epic_VogonBook extends Book {
     @Override
     public void equip() {
         super.equip();
-        aura = new BookAura();
+        aura = new VogonAura();
         player.screen.spellManager.add(aura);
     }
 
     public void unequip() {
+        super.unequip();
         player.screen.spellManager.remove(aura);
     }
 }

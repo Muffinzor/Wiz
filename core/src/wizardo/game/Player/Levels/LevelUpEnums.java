@@ -57,6 +57,25 @@ public class LevelUpEnums {
         Collections.shuffle(list);
         return list.getFirst();
     }
+    public static LevelUps getRandomT2() {
+        ArrayList<LevelUps> list = new ArrayList<>();
+
+        if(player.spellbook.fireballBonus < 40) {
+            list.add(LevelUps.FIREBALL);
+        }
+        if(player.spellbook.icespearBonus < 40) {
+            list.add(LevelUps.ICESPEAR);
+        }
+        if(player.spellbook.energybeamBonus < 100) {
+            list.add(LevelUps.BEAM);
+        }
+        if(player.spellbook.chainlightningBonus < 30) {
+            list.add(LevelUps.CHAIN);
+        }
+
+        Collections.shuffle(list);
+        return list.getFirst();
+    }
 
     public enum LevelUpQuality {
         NORMAL,

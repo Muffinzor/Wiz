@@ -10,6 +10,8 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.MassData;
 import wizardo.game.Items.Drop.GoldDrop;
 import wizardo.game.Items.Drop.PotionDrop;
+import wizardo.game.Items.Equipment.Book.Legendary_NecronomiconBook;
+import wizardo.game.Items.Equipment.Ring.Legendary_DukeRing;
 import wizardo.game.Items.Equipment.Staff.Legendary_FrostStaff;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.MonsterActionManager;
@@ -19,6 +21,8 @@ import wizardo.game.Monsters.MonsterUtils;
 import wizardo.game.Player.Player;
 import wizardo.game.Screens.Battle.BattleScreen;
 import wizardo.game.Screens.Battle.MonsterSpawner.MonsterSpawner;
+import wizardo.game.Spells.Unique.CorpseExplosion.CorpseExplosion;
+import wizardo.game.Spells.Unique.DukeLightning.DukeLightningHit;
 import wizardo.game.Utils.BodyFactory;
 
 import static wizardo.game.GameSettings.monster_health_bars;
@@ -166,6 +170,11 @@ public abstract class Monster {
             dmg = this.dmg/2f;
         }
         player.stats.shield -= dmg;
+
+        if(player.inventory.equippedRing instanceof Legendary_DukeRing) {
+            Legendary_DukeRing ring = (Legendary_DukeRing) player.inventory.equippedRing;
+            ring.castDeathLightning(this);
+        }
     }
 
     public void createBody() {
@@ -304,6 +313,8 @@ public abstract class Monster {
     }
 
     public void onDeath() {
+        corpseExplosion();
+
         float potrate = 0.99f - player.stats.luck/1000f;
         if(Math.random() >= potrate) {
             PotionDrop potion = new PotionDrop(body.getPosition());
@@ -315,8 +326,16 @@ public abstract class Monster {
             GoldDrop gold = new GoldDrop(body.getPosition(),1 , 1);
             screen.dropManager.addDrop(gold);
         }
-
-
     }
+
+    public void corpseExplosion() {
+        if(player.inventory.equippedBook instanceof Legendary_NecronomiconBook) {
+            if(Math.random() >= 0.8f) {
+                CorpseExplosion explosion = new CorpseExplosion(this);
+                screen.spellManager.add(explosion);
+            }
+        }
+    }
+
     public abstract void initialize();
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="64" height="64" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="197">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="64" height="64" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="198">
  <tileset firstgid="1" source="Dungeon_Plus.tsx"/>
  <layer id="1" name="Tile Layer 1" width="64" height="64">
   <data encoding="csv">
@@ -98,6 +98,7 @@
   <object id="188" name="Building2" x="256" y="1664" width="128" height="128"/>
   <object id="189" name="Building2" x="1664" y="256" width="128" height="128"/>
   <object id="190" name="Building2" x="256" y="256" width="128" height="128"/>
+  <object id="197" name="BuildingShop" x="896" y="704" width="256" height="128"/>
  </objectgroup>
  <objectgroup id="3" name="DecorBodies">
   <object id="34" name="Portal" x="1024" y="1011" width="7" height="7"/>
@@ -138,9 +139,5 @@
  </objectgroup>
  <objectgroup id="4" name="LootBodies">
   <object id="192" name="TestChest" x="912" y="1184" width="4" height="4"/>
-  <object id="193" name="TestChest" x="1022" y="1182" width="4" height="4"/>
-  <object id="194" name="TestChest" x="1126" y="1184" width="4" height="4"/>
-  <object id="195" name="TestChest" x="958" y="926" width="4" height="4"/>
-  <object id="196" name="TestChest" x="1086" y="926" width="4" height="4"/>
  </objectgroup>
 </map>

@@ -14,7 +14,7 @@ public class Icespear_Spell extends Spell {
     public int maxSplits = 2;
     boolean canSplit;
 
-    int maxCollisions = 5;
+    int maxCollisions = 8;
     public float duration = 1.5f;
     public boolean indestructible;
 
@@ -35,7 +35,7 @@ public class Icespear_Spell extends Spell {
 
         name = "Ice Spear";
 
-        baseDmg = 32;
+        dmg = 32;
         speed = 400f/PPM;
         cooldown = 0.8f;
         autoaimable = true;
@@ -105,7 +105,7 @@ public class Icespear_Spell extends Spell {
 
     @Override
     public int getDmg() {
-        int dmg = baseDmg;
+        int dmg = this.dmg;
         dmg += 8 * getLvl();
         dmg = (int) (dmg * (1 + player.spellbook.sharpBonusDmg/100f));
         return dmg;

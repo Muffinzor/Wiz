@@ -6,56 +6,84 @@ filter: Linear, Linear
 repeat: none
 Lemon Shake Shake
   rotate: false
-  xy: 1, 429
+  xy: 1, 435
   size: 506, 76
   orig: 506, 76
   offset: 0, 0
   index: -1
 PixelOperator8(3)
   rotate: false
-  xy: 1, 375
+  xy: 1, 381
   size: 506, 52
   orig: 506, 52
   offset: 0, 0
   index: -1
 BlackBar
   rotate: false
-  xy: 1, 119
+  xy: 1, 125
   size: 300, 10
   orig: 300, 10
   offset: 0, 0
   index: -1
 knob
   rotate: false
-  xy: 77, 97
+  xy: 321, 115
   size: 20, 20
   orig: 20, 20
   offset: 0, 0
   index: -1
 Check_off
   rotate: false
-  xy: 1, 65
+  xy: 245, 71
   size: 74, 52
   orig: 74, 52
   offset: 0, 0
   index: -1
 Check_on
   rotate: false
-  xy: 1, 10
+  xy: 245, 16
   size: 74, 53
   orig: 74, 53
   offset: 0, 0
   index: -1
+GreenButtonOK_Over
+  rotate: false
+  xy: 1, 1
+  size: 120, 60
+  orig: 120, 60
+  offset: 0, 0
+  index: -1
+GreenButtonOk
+  rotate: false
+  xy: 1, 63
+  size: 120, 60
+  orig: 120, 60
+  offset: 0, 0
+  index: -1
+RedButtonCancel
+  rotate: false
+  xy: 123, 63
+  size: 120, 60
+  orig: 120, 60
+  offset: 0, 0
+  index: -1
+RedButtonCancel_Over
+  rotate: false
+  xy: 123, 1
+  size: 120, 60
+  orig: 120, 60
+  offset: 0, 0
+  index: -1
 WoodButton
   rotate: false
-  xy: 1, 253
+  xy: 1, 259
   size: 500, 120
   orig: 500, 120
   offset: 0, 0
   index: -1
 WoodButtonHovered
   rotate: false
-  xy: 1, 131
+  xy: 1, 137
   size: 500, 120
   orig: 500, 120
   offset: 0, 0

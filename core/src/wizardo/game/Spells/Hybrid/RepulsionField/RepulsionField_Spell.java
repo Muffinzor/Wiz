@@ -19,7 +19,7 @@ public class RepulsionField_Spell extends Spell {
 
         anim_element = SpellUtils.Spell_Element.ARCANE;
 
-        baseDmg = 10;
+        dmg = 10;
 
     }
 
@@ -46,7 +46,7 @@ public class RepulsionField_Spell extends Spell {
 
     @Override
     public int getDmg() {
-        int dmg = baseDmg + 10 * player.spellbook.rift_lvl;
+        int dmg = this.dmg + 10 * player.spellbook.rift_lvl;
         dmg = (int) (dmg * (1 + player.spellbook.gravityBonusDmg/100f));
         return dmg;
     }

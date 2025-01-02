@@ -30,6 +30,10 @@ public class TextGenerator {
             case FLAMEJET -> s = flamejet();
             case CHARGEDBOLT -> s = chargedbolt();
             case MISSILES -> s = missiles();
+            case ICESPEAR -> s = icespear();
+            case FIREBALL -> s = fireball();
+            case CHAIN -> s = chain();
+            case BEAM -> s = beam();
         }
 
         return s;
@@ -89,6 +93,62 @@ public class TextGenerator {
             
             -8%% duration loss per hit
             """);
+            return text;
+        }
+    }
+    private static String fireball() {
+        if(player.spellbook.fireball_lvl < 5) {
+            return "+1 Fireball Mastery";
+        } else {
+            String text = String.format("""
+            FIREBALL
+            
+            8%% increased explosion radius
+            """);
+            return text;
+        }
+    }
+    private static String icespear() {
+        if(player.spellbook.icespear_lvl < 5) {
+            return "+1 Icespear Mastery";
+        } else {
+            String text = String.format("""
+            ICESPEAR
+            
+            8%% chance to break into
+            an additional shard
+            """);
+            return text;
+        }
+    }
+    private static String beam() {
+        if(player.spellbook.energybeam_lvl < 5) {
+            return "+1 Energy Beam Mastery";
+        } else {
+            int current = player.spellbook.energybeamBonus;
+            String text = String.format("""
+            ENERGY BEAM
+            
+            deals 20%% more damage to
+            the first monster it hits
+            
+            Current bonus: %d
+            """, current);
+            return text;
+        }
+    }
+    private static String chain() {
+        if(player.spellbook.chainlightning_lvl < 5) {
+            return "+1 Chain Lightning Mastery";
+        } else {
+            int current = player.spellbook.chainlightningBonus;
+            String text = String.format("""
+            CHAIN LIGHTNING
+            
+            +6%% chance to deal double damage
+            
+            Current chance: %d
+            """, current);
             return text;
         }
     }

@@ -87,6 +87,13 @@ size: 2048, 2048
 format: RGBA8888
 filter: Linear, Linear
 repeat: none
+Panel_Beam
+  rotate: false
+  xy: 1605, 616
+  size: 399, 692
+  orig: 399, 692
+  offset: 0, 0
+  index: -1
 Panel_Chargedbolt
   rotate: false
   xy: 803, 616
@@ -146,6 +153,33 @@ Panel_Space
 Panel_Voltage
   rotate: false
   xy: 1204, 1310
+  size: 399, 692
+  orig: 399, 692
+  offset: 0, 0
+  index: -1
+
+LevelUpSkin3.png
+size: 2048, 2048
+format: RGBA8888
+filter: Linear, Linear
+repeat: none
+Panel_Chain
+  rotate: false
+  xy: 402, 695
+  size: 399, 692
+  orig: 399, 692
+  offset: 0, 0
+  index: -1
+Panel_Fireball
+  rotate: false
+  xy: 1, 695
+  size: 399, 692
+  orig: 399, 692
+  offset: 0, 0
+  index: -1
+Panel_IceSpear
+  rotate: false
+  xy: 1, 1
   size: 399, 692
   orig: 399, 692
   offset: 0, 0

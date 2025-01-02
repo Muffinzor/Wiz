@@ -85,11 +85,6 @@ public class ChestLoot {
         }
     }
     public void WoodenChest() {
-        Equipment epic = chest.screen.dropManager.getEquipmentForDrop(ALL, ItemUtils.EquipQuality.EPIC, "Vogon Poems");
-        drops.add(new EquipmentDrop(chest.body.getPosition(), epic));
-
-        Equipment epic2 = chest.screen.dropManager.getEquipmentForDrop(ALL, ItemUtils.EquipQuality.EPIC, "Boreas' Cloak");
-        drops.add(new EquipmentDrop(chest.body.getPosition(), epic2));
 
         int loots = MathUtils.random(1,2);
         for (int i = 0; i < loots; i++) {

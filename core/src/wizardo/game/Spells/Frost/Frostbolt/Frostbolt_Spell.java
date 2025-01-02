@@ -20,7 +20,7 @@ public class Frostbolt_Spell extends Spell {
 
         speed = 7;
         radius = 25;
-        baseDmg = 24;
+        dmg = 24;
         cooldown = 0.8f;
         autoaimable = true;
 
@@ -76,7 +76,7 @@ public class Frostbolt_Spell extends Spell {
 
     @Override
     public int getDmg() {
-        int dmg = baseDmg;
+        int dmg = this.dmg;
         dmg += 6 * getLvl();
         if(superBolt) {
             dmg += 5 * player.spellbook.fireball_lvl;

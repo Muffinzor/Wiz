@@ -89,6 +89,8 @@ public abstract class Book extends Equipment {
         ArrayList<Equipment> list = new ArrayList<>();
 
         list.add(new Legendary_GoldBook());
+        list.add(new Legendary_NecronomiconBook());
+
 
         return list;
     }

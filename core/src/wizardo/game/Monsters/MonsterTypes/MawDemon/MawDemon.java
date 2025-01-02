@@ -2,6 +2,7 @@ package wizardo.game.Monsters.MonsterTypes.MawDemon;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
+import wizardo.game.Maps.ChestLoot;
 import wizardo.game.Monsters.MonsterActions.SelfFireExplosion.SelfFireExplosion;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Monsters.MonsterMovement.MovementManager;
@@ -26,8 +27,8 @@ public class MawDemon extends Monster {
         super(screen, position, spawner);
 
         speed = 1f;
-        hp = 1000;
-        maxHP = 1000;
+        hp = 5000;
+        maxHP = 5000;
         xp = 400;
         elite = true;
 
@@ -113,7 +114,7 @@ public class MawDemon extends Monster {
     }
 
     public void handleCollision(Player player) {
-
+        dealDmg();
         if(charging) {
             // Get the monster's velocity
             Vector2 monsterVelocity = body.getLinearVelocity();

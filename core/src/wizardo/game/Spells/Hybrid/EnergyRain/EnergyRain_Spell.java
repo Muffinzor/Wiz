@@ -32,7 +32,7 @@ public class EnergyRain_Spell extends Spell {
 
         name = "Energy Rain";
         cooldown = 12;
-        baseDmg = 75;
+        dmg = 75;
         interval = 0.2f;
         radius = 16;
 
@@ -73,7 +73,7 @@ public class EnergyRain_Spell extends Spell {
 
     @Override
     public int getDmg() {
-        int dmg = baseDmg + player.spellbook.energybeam_lvl * 25;
+        int dmg = this.dmg + player.spellbook.energybeam_lvl * 25;
         dmg = (int) (dmg * (1 + player.spellbook.energyBonusDmg/100f));
         return dmg;
     }

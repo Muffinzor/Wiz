@@ -18,6 +18,8 @@ public class MonsterManager {
 
     public BattleScreen screen;
 
+    int bodiesRemovalCounter;
+
     public MonsterManager(BattleScreen screen) {
         this.screen = screen;
 
@@ -84,12 +86,27 @@ public class MonsterManager {
             monster.drawDeathFrame(delta);
             monster.stateTime += delta;
 
-            if(monster.alpha <= 0) {
-                world.destroyBody(monster.body);
-            }
         }
 
-        dyingMonsters.removeIf(monster -> monster.alpha <= 0);
+        bodiesRemoval();
+
+    }
+
+    /** spaced to prevent garbage collection crazyness **/
+    public void bodiesRemoval() {
+        bodiesRemovalCounter++;
+        ArrayList<Monster> monstersRemoved = new ArrayList<>();
+        if(bodiesRemovalCounter >= 120) {
+            bodiesRemovalCounter = 0;
+            for(Monster monster : dyingMonsters) {
+                if(monster.alpha <= 0) {
+                    world.destroyBody(monster.body);
+                    monstersRemoved.add(monster);
+                }
+            }
+        }
+        dyingMonsters.removeAll(monstersRemoved);
+        monstersRemoved.clear();
     }
 
     public int getRangedMonstersCount() {

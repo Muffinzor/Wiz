@@ -13,7 +13,7 @@ public class Epic_Staff extends Staff{
     public Epic_Staff() {
         setupSprites();
 
-        title = "EPIC Staff";
+        title = "Epic Staff";
         quality = ItemUtils.EquipQuality.EPIC;
 
         getEpicStaffStats(this, 3);

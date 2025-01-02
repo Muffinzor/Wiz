@@ -21,7 +21,7 @@ public class CelestialStrike_Spell extends Spell {
 
         name = "Celestial Strike";
 
-        baseDmg = 120;
+        dmg = 120;
         cooldown = 1.6f;
         autoaimable = true;
 
@@ -81,7 +81,7 @@ public class CelestialStrike_Spell extends Spell {
 
     @Override
     public int getDmg() {
-        int dmg = baseDmg;
+        int dmg = this.dmg;
         dmg += 20 * player.spellbook.thunderstorm_lvl;
         return dmg;
     }

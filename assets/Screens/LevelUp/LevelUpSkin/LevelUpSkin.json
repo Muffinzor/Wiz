@@ -146,5 +146,21 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 		font: SimpleFont26
 		up: Panel_Missiles
 	}
+	chain: {
+		font: SimpleFont26
+		up: Panel_Chain
+	}
+	beam: {
+		font: SimpleFont26
+		up: Panel_Beam
+	}
+	fireball: {
+		font: SimpleFont26
+		up: Panel_Fireball
+	}
+	icespear: {
+		font: SimpleFont26
+		up: Panel_IceSpear
+	}
 }
 }

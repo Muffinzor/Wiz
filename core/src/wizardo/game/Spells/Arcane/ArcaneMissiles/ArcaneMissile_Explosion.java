@@ -37,7 +37,7 @@ public class ArcaneMissile_Explosion extends ArcaneMissile_Spell {
 
         radius = 24 + 4 * player.spellbook.overheat_lvl;
 
-        baseDmg = 35;
+        dmg = 35;
     }
 
     public void update(float delta) {
@@ -125,6 +125,6 @@ public class ArcaneMissile_Explosion extends ArcaneMissile_Spell {
 
     @Override
     public int getDmg() {
-        return baseDmg + player.spellbook.overheat_lvl * 25;
+        return dmg + player.spellbook.overheat_lvl * 25;
     }
 }

@@ -14,6 +14,12 @@ com.badlogic.gdx.graphics.g2d.BitmapFont: {
 	}
 }
 com.badlogic.gdx.graphics.Color: {
+	LightGreen: {
+		r: 0.33707866
+		g: 1
+		b: 0
+		a: 1
+	}
 	LightBlue: {
 		r: 0.27450982
 		g: 0.6666667
@@ -67,6 +73,14 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 	default: {
 		imageUp: Check_off
 		imageDown: Check_on
+	}
+	GreenOK: {
+		imageUp: GreenButtonOk
+		imageOver: GreenButtonOK_Over
+	}
+	RedCancel: {
+		imageUp: RedButtonCancel
+		imageOver: RedButtonCancel_Over
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {

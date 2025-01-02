@@ -25,7 +25,7 @@ public class Fireball_Spell extends Spell {
 
         name = "Fireball";
 
-        baseDmg = 50;
+        dmg = 50;
         cooldown = 2;
         radius = 75;
         speed = 200f/PPM;
@@ -92,7 +92,7 @@ public class Fireball_Spell extends Spell {
 
     @Override
     public int getDmg() {
-        int dmg = baseDmg;
+        int dmg = this.dmg;
         dmg += 15 * getLvl();
         dmg = (int) (dmg * (1 + player.spellbook.explosivesBonusDmg/100f));
         return dmg;

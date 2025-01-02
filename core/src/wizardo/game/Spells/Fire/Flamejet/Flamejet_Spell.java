@@ -29,7 +29,7 @@ public class Flamejet_Spell extends Spell {
 
         speed = 20;
         cooldown = 0.6f;
-        baseDmg = 25;
+        dmg = 25;
 
         main_element = FIRE;
 
@@ -123,7 +123,7 @@ public class Flamejet_Spell extends Spell {
 
     @Override
     public int getDmg() {
-        int dmg = baseDmg;
+        int dmg = this.dmg;
         dmg += 4 * getLvl();
         dmg = (int) (dmg * (1 + player.spellbook.flashBonusDmg/100f));
         return dmg;

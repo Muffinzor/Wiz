@@ -18,7 +18,7 @@ public class Legendary_SentientHat extends Hat {
     public Legendary_SentientHat() {
         sprite = new Sprite(new Texture("Items/Hat/SentientHat.png"));
         spriteOver = new Sprite(new Texture("Items/Hat/SentientHat_Over.png"));
-        displayScale = 0.8f;
+        displayScale = 0.9f;
 
         name = "Sentient Hat";
         title = "Legendary Hat";

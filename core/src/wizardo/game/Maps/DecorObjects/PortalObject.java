@@ -51,6 +51,11 @@ public class PortalObject extends TriggerObject {
         chunk.screen.game.addNewScreen(new BattleSelectionScreen(chunk.screen.game));
     }
 
+    @Override
+    public void trigger() {
+
+    }
+
     public void drawSprite() {
         Sprite frame = getSprite(chunk.screen);
         frame.set(GeneralDecorResources.blue_portal_anim.getKeyFrame(stateTime, true));

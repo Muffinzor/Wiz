@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Maps.Chest;
 import wizardo.game.Maps.LayerObject;
+import wizardo.game.Maps.Shop.MapShop;
 import wizardo.game.Screens.BaseScreen;
 import wizardo.game.Wizardo;
 
@@ -31,6 +32,9 @@ public abstract class MapChunk {
     public ArrayList<Body> bodies;
     public ArrayList<LayerObject> layerObjects;
 
+    public MapShop shop;
+    public boolean rolledShop;
+
     public MapChunk(String pathToFile, float x, float y, Wizardo game, BaseScreen screen) {
         this.game = game;
         this.screen = screen;
@@ -40,6 +44,7 @@ public abstract class MapChunk {
         y_pos = y;
         bodies = new ArrayList<>();
         layerObjects = new ArrayList<>();
+        rolledShop = Math.random() > 0.1f;
     }
 
     public abstract void render(float delta);
@@ -65,7 +70,7 @@ public abstract class MapChunk {
             }
 
             if(object.getName().equals("TestChest")) {
-                Chest chest = new Chest(this, object, -1);
+                Chest chest = new Chest(this, object, 0);
                 layerObjects.add(chest);
             }
 

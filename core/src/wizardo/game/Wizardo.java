@@ -123,6 +123,10 @@ public class Wizardo extends Game {
 		}
 	}
 
+	public BaseScreen getPreviousScreen () {
+		return screenStack.get(screenStack.size() - 2);
+	}
+
 	public static void createNewWorld() {
 		if(world != null) {
 			world.dispose();

@@ -15,12 +15,15 @@ public class DecorRenderer {
     MapChunk chunk;
     TiledMap map;
 
+    float stateTime;
+
     public DecorRenderer(MapChunk chunk) {
         this.chunk = chunk;
         this.map = chunk.map;
     }
 
-    public void drawObstacles() {
+    public void drawObstacles(float delta) {
+        stateTime += delta;
 
         for (MapObject object : map.getLayers().get("ObstacleBodies").getObjects()) {
 
@@ -33,17 +36,15 @@ public class DecorRenderer {
                     float x = rectObject.getRectangle().x + chunk.x_pos;
                     float y = rectObject.getRectangle().y + chunk.y_pos;
                     frame.setPosition(x, y);
-                    frame.getTexture().setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
                     chunk.screen.addSortedSprite(frame);
                     chunk.screen.centerSort(frame, y + 30);
                 }
-                case "Building1" -> {
+                case "Building1", "BuildingShop" -> {
                     frame.set(DungeonDecorResources.building1_sprite);
                     RectangleMapObject rectObject = (RectangleMapObject) object;
                     float x = rectObject.getRectangle().x + chunk.x_pos;
                     float y = rectObject.getRectangle().y + chunk.y_pos;
                     frame.setPosition(x, y);
-                    frame.getTexture().setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
                     chunk.screen.addSortedSprite(frame);
                     chunk.screen.centerSort(frame, y + 30);
                 }
@@ -53,13 +54,10 @@ public class DecorRenderer {
                     float x = rectObject.getRectangle().x + chunk.x_pos;
                     float y = rectObject.getRectangle().y + chunk.y_pos;
                     frame.setPosition(x, y);
-                    frame.getTexture().setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
                     chunk.screen.addSortedSprite(frame);
                     chunk.screen.centerSort(frame, y + 30);
                 }
             }
-
-
 
         }
 

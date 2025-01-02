@@ -32,7 +32,7 @@ public class Laser_Spell extends Spell {
 
         cooldown = 0.8f;
         speed = 15f;
-        baseDmg = 10;
+        dmg = 10;
         autoaimable = true;
 
         inRange = new ArrayList<>();
@@ -145,7 +145,7 @@ public class Laser_Spell extends Spell {
 
     @Override
     public int getDmg() {
-        int dmg = baseDmg;
+        int dmg = this.dmg;
         dmg += 10 * player.spellbook.energybeam_lvl;
         dmg = (int) (dmg * (1 + player.spellbook.energyBonusDmg/100f));
         return dmg;

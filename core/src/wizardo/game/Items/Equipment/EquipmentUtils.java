@@ -113,6 +113,7 @@ public class EquipmentUtils {
                     case REGEN -> player.stats.baseRecharge += value/100f;
                     case DEFENSE -> player.stats.damageReduction += value;
                     case PROJSPEED -> player.spellbook.projSpeedBonus += value;
+                    case WALKSPEED -> player.stats.runSpeed += (value/100f) * 2.7f;
                     case MASTERY_FROST -> {
                         player.spellbook.frostbolt_lvl += value;
                         player.spellbook.icespear_lvl += value;

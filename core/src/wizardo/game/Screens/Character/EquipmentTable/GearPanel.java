@@ -2,10 +2,12 @@ package wizardo.game.Screens.Character.EquipmentTable;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -21,6 +23,8 @@ import wizardo.game.Spells.SpellUtils;
 
 import static wizardo.game.Resources.Skins.inventorySkin;
 import static wizardo.game.Resources.Skins.masteryTableSkin;
+import static wizardo.game.Screens.BaseScreen.xRatio;
+import static wizardo.game.Screens.BaseScreen.yRatio;
 
 public class GearPanel {
 
@@ -46,12 +50,33 @@ public class GearPanel {
             case EPIC -> gem = new Sprite(new Texture("Screens/CharacterScreen/GearTable/Gem_Purple.png"));
             case LEGENDARY -> gem = new Sprite(new Texture("Screens/CharacterScreen/GearTable/Gem_Red.png"));
         }
+
+        Pixmap ogPixmap = new Pixmap(Gdx.files.internal("Screens/CharacterScreen/GearTable/smallNinePatch.png"));
+        int newWidth = (int) (ogPixmap.getWidth() * xRatio);
+        int newHeight = (int) (ogPixmap.getHeight() * yRatio);
+        Pixmap scaledPixmap = new Pixmap(newWidth, newHeight, ogPixmap.getFormat());
+
+        scaledPixmap.drawPixmap(
+                ogPixmap,
+                0, 0, ogPixmap.getWidth(), ogPixmap.getHeight(),
+                0, 0, newWidth, newHeight
+        );
+
+        Texture scaledTexture = new Texture(scaledPixmap);
+        ogPixmap.dispose();
+        scaledPixmap.dispose();
+
+        int xPad = (int) (60 * xRatio);
+        NinePatch ninePatch = new NinePatch(scaledTexture, xPad, xPad,
+                (int) (65 * yRatio), (int) (72 * yRatio));
+        backgroundDrawable = new NinePatchDrawable(ninePatch);
+
         container.setBackground(backgroundDrawable);
         container.setActor(contentTable);
-        container.padLeft(45);
-        container.padRight(42);
-        container.padTop(70);
-        container.padBottom(30);
+        container.padLeft(45* xRatio);
+        container.padRight(42* xRatio);
+        container.padTop(70* yRatio);
+        container.padBottom(30* yRatio);
     }
 
     public GearPanel(Stage stage, Equipment piece, boolean equipped, MenuButton button) {
@@ -80,9 +105,9 @@ public class GearPanel {
 
     public void setPosition() {
         if(equipped) {
-            container.setPosition(500, 580 - container.getHeight()/2);
+            container.setPosition(500 * xRatio, (580 - container.getHeight()/2) * yRatio);
         } else {
-            container.setPosition(540, 100);
+            container.setPosition(540 * xRatio, 100 * yRatio);
         }
     }
 
@@ -91,7 +116,7 @@ public class GearPanel {
         float containerY = container.getY();
         float containerHeight = container.getHeight();
         float containerWidth = container.getWidth();
-        float adjustedH = containerHeight - (30) + containerY;
+        float adjustedH = containerHeight - (30 * yRatio) + containerY;
         float centerW = containerWidth/2 + containerX;
 
         titleLabel = new Label(piece.title, inventorySkin, "Gear_Title");
@@ -117,7 +142,7 @@ public class GearPanel {
         Label nameLabel = new Label(piece.name, inventorySkin, "Gear_Name");
         nameLabel.setColor(getTitleColor());
         nameLabel.setAlignment(Align.center);
-        contentTable.add(nameLabel).padTop(15).padBottom(20).expandX().align(Align.center).colspan(2);
+        contentTable.add(nameLabel).padTop(15* yRatio).padBottom(20* yRatio).expandX().align(Align.center).colspan(2);
         contentTable.row();
     }
 
@@ -125,7 +150,7 @@ public class GearPanel {
         if(piece.getDescription() != null) {
             Label textLabel = new Label(piece.getDescription(), inventorySkin, "Gear_Text");
             textLabel.setAlignment(Align.center);
-            contentTable.add(textLabel).expandX().align(Align.center).colspan(2).padBottom(20);
+            contentTable.add(textLabel).expandX().align(Align.center).colspan(2).padBottom(20* yRatio);
             contentTable.row();
         }
     }
@@ -140,7 +165,7 @@ public class GearPanel {
                     masteryLabel.setColor(getMasteryColor(piece.masteries.get(i)));
                     masteryLabel.setAlignment(Align.left);
                     gearStatsTable.add(masteryLabel).align(Align.left).fillX();
-                    gearStatsTable.row().padTop(5);
+                    gearStatsTable.row().padTop(5* yRatio);
                 }
             }
             if (!piece.gearStats.isEmpty()) {
@@ -164,11 +189,11 @@ public class GearPanel {
                     gearStatValue.setAlignment(Align.left);
                     smalltable.add(gearStatValue).align(Align.left);
                     gearStatsTable.add(smalltable).align(Align.left);
-                    gearStatsTable.row().padTop(5);
+                    gearStatsTable.row().padTop(5* yRatio);
                 }
             }
             contentTable.add(gearStatsTable).align(Align.left);
-            contentTable.row().padTop(20);
+            contentTable.row().padTop(20* yRatio);
             container.pack();
         }
 
@@ -259,7 +284,7 @@ public class GearPanel {
         if(piece.getFlavorText() != null) {
             Label textLabel = new Label(piece.getFlavorText(), inventorySkin, "Gear_Flavor");
             textLabel.setAlignment(Align.center);
-            contentTable.add(textLabel).padBottom(60).expandX().align(Align.top).colspan(2);
+            contentTable.add(textLabel).padBottom(60* yRatio).expandX().align(Align.top).colspan(2);
             contentTable.row();
         }
     }
@@ -268,7 +293,7 @@ public class GearPanel {
         float containerX = container.getX();
         float containerY = container.getY();
         float containerWidth = container.getWidth();
-        float adjustedH = containerY + 33;
+        float adjustedH = containerY + 33* yRatio;
         float centerW = containerWidth/2 + containerX;
 
         ImageButton.ImageButtonStyle style = new ImageButton.ImageButtonStyle();

@@ -32,7 +32,7 @@ public class Blizzard_Spell extends Spell {
         cooldown = 12;
 
         speed = 15;
-        baseDmg = 24;
+        dmg = 24;
 
         blizz_radius = 20;
         radius = 25;
@@ -145,7 +145,7 @@ public class Blizzard_Spell extends Spell {
 
     @Override
     public int getDmg() {
-        int dmg = baseDmg;
+        int dmg = this.dmg;
         dmg += 8 * player.spellbook.icespear_lvl;
         dmg = (int) (dmg * (1 + player.spellbook.sharpBonusDmg/100f));
         return dmg;

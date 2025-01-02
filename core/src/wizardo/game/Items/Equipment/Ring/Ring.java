@@ -95,6 +95,8 @@ public abstract class Ring extends Equipment {
     public static ArrayList<Equipment> getLegendaryRings() {
         ArrayList<Equipment> list = new ArrayList<>();
 
+        list.add(new Legendary_DukeRing());
+
         return list;
     }
 

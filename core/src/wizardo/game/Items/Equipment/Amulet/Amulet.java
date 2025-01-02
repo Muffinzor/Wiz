@@ -75,6 +75,7 @@ public abstract class Amulet extends Equipment {
 
         list.add(new Rare_Amulet());
         list.add(new Rare_Amulet());
+        list.add(new Rare_EliteAmulet());
 
         return list;
     }

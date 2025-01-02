@@ -9,6 +9,7 @@ import wizardo.game.Items.Drop.DropAnims;
 import wizardo.game.Resources.DecorResources.DungeonDecorResources;
 import wizardo.game.Resources.EffectAnims.AuraAnims;
 import wizardo.game.Resources.EffectAnims.BlackHoleAnims;
+import wizardo.game.Resources.EffectAnims.CorpseExplosionAnims;
 import wizardo.game.Resources.EffectAnims.GearFlareAnims;
 import wizardo.game.Resources.MonsterResources.MawDemonAnims;
 import wizardo.game.Resources.MonsterResources.MonsterProjectiles.MonsterExplosions;
@@ -117,6 +118,7 @@ public class LoadingScreen extends BaseScreen {
         GearFlareAnims.loadAtlas();
         DropAnims.loadAtlas();
         AuraAnims.loadAtlas();
+        CorpseExplosionAnims.loadAtlas();
 
         SkeletonAnims.loadAtlas();
         SkeletonGiantAnims.loadAtlas();
@@ -162,6 +164,7 @@ public class LoadingScreen extends BaseScreen {
         GearFlareAnims.loadAnimations();
         DropAnims.loadAnimations();
         AuraAnims.loadAnimations();
+        CorpseExplosionAnims.loadAnimations();
 
         SkeletonAnims.loadAnimations();
         SkeletonGiantAnims.loadAnimations();

@@ -25,11 +25,13 @@ public class EnergyBeam_Spell extends Spell {
 
     public boolean reverse;
 
+    public int monstersHit = 0;
+
     public EnergyBeam_Spell() {
 
         name = "Energy Beam";
 
-        baseDmg = 80;
+        dmg = 80;
         cooldown = 3.2f;
         autoaimable = true;
 
@@ -122,9 +124,14 @@ public class EnergyBeam_Spell extends Spell {
 
     @Override
     public int getDmg() {
-        int dmg = baseDmg;
+        int dmg = this.dmg;
         dmg += getLvl() * 20;
         dmg = (int) (dmg * (1 + player.spellbook.energyBonusDmg/100f));
+
+        if(monstersHit == 1) {
+            dmg = (int) (dmg * (1f + player.spellbook.energybeamBonus/100f));
+        }
+
         return dmg;
     }
 

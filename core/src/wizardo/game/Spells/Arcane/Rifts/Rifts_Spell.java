@@ -33,7 +33,7 @@ public class Rifts_Spell extends Spell {
         name = "Rifts";
 
         cooldown = 5f;
-        baseDmg = 24;
+        dmg = 24;
 
         main_element = SpellUtils.Spell_Element.ARCANE;
 
@@ -88,7 +88,7 @@ public class Rifts_Spell extends Spell {
     }
 
     public Vector2 getUniqueStaffTarget() {
-        ArrayList<Monster> inRange = SpellUtils.findMonstersInRangeOfVector(targetPosition, spread, false);
+        ArrayList<Monster> inRange = SpellUtils.findMonstersInRangeOfVector(targetPosition, spread * 1.8f, false);
         Vector2 target = null;
         if(!inRange.isEmpty()) {
             int index = (int) (Math.random() * inRange.size());
@@ -159,7 +159,7 @@ public class Rifts_Spell extends Spell {
 
     @Override
     public int getDmg() {
-        int dmg = baseDmg;
+        int dmg = this.dmg;
         dmg += 8 * getLvl();
 
         if(overheat) {

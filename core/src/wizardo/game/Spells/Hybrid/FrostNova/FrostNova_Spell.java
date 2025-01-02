@@ -16,7 +16,7 @@ public class FrostNova_Spell extends Spell {
 
         name = "Frost Nova";
 
-        baseDmg = 45;
+        dmg = 45;
         cooldown = 6.4f;
 
         main_element = SpellUtils.Spell_Element.FROST;
@@ -48,7 +48,7 @@ public class FrostNova_Spell extends Spell {
 
     @Override
     public int getDmg() {
-        int dmg = baseDmg;
+        int dmg = this.dmg;
         dmg += 15 * player.spellbook.overheat_lvl;
         return 0;
     }

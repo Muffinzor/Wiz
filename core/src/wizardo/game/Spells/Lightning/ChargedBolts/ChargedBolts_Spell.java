@@ -27,7 +27,7 @@ public class ChargedBolts_Spell extends Spell {
 
         duration = 2.5f;
         cooldown = 0.8f;
-        baseDmg = 12;
+        dmg = 12;
         speed = 80f/PPM;
         bolts = 3;
         autoaimable = true;
@@ -125,7 +125,7 @@ public class ChargedBolts_Spell extends Spell {
 
     @Override
     public int getDmg() {
-        int dmg = baseDmg;
+        int dmg = this.dmg;
         dmg += 4 * getLvl();
         if(arcaneMissile) {
             dmg += 4 * player.spellbook.arcanemissile_lvl;

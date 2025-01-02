@@ -1,6 +1,5 @@
 package wizardo.game.Spells.SpellBank;
 
-import wizardo.game.Resources.Colors;
 import wizardo.game.Resources.Skins;
 import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Explosion;
 import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Spell;
@@ -12,7 +11,6 @@ import wizardo.game.Spells.Lightning.ChainLightning.ChainLightning_Spell;
 import wizardo.game.Spells.Lightning.ChargedBolts.ChargedBolts_Spell;
 import wizardo.game.Spells.Lightning.Thunderstorm.Thunderstorm_Spell;
 import wizardo.game.Spells.Spell;
-import wizardo.game.Spells.SpellUtils;
 
 import static wizardo.game.Spells.SpellUtils.Spell_Element.*;
 import static wizardo.game.Spells.SpellUtils.Spell_Name.*;

@@ -31,7 +31,7 @@ public class Thunderstorm_Spell extends Spell {
 
         interval = 1/frequency;
         cooldown = 8f;
-        baseDmg = 60;
+        dmg = 60;
         radius = 16;
 
         main_element = SpellUtils.Spell_Element.LIGHTNING;
@@ -130,7 +130,7 @@ public class Thunderstorm_Spell extends Spell {
 
     @Override
     public int getDmg() {
-        int dmg = baseDmg + 30 * getLvl();
+        int dmg = this.dmg + 30 * getLvl();
         dmg = (int) (dmg * (1 + player.spellbook.voltageBonusDmg/100f));
         return dmg;
     }

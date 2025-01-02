@@ -87,7 +87,7 @@ public class Fireball_Explosion extends Fireball_Spell {
         frame.rotate(rotation);
         frame.flip(flipX, flipY);
 
-        frame.setScale(frameScale * effectRatio);
+        frame.setScale(frameScale * effectRatio * (1 + player.spellbook.fireballBonus/100f));
 
         screen.centerSort(frame, body.getPosition().y * PPM - 10);
         screen.displayManager.spriteRenderer.regular_sorted_sprites.add(frame);
@@ -95,7 +95,7 @@ public class Fireball_Explosion extends Fireball_Spell {
     }
 
     public void createBody() {
-        body = BodyFactory.spellExplosionBody(targetPosition, radius * effectRatio);
+        body = BodyFactory.spellExplosionBody(targetPosition, radius * effectRatio * (1 + player.spellbook.fireballBonus/100f));
         body.setUserData(this);
     }
 

@@ -15,6 +15,8 @@ import wizardo.game.Items.Equipment.Equipment;
 import wizardo.game.Screens.Character.CharacterScreen;
 
 import static wizardo.game.Resources.ScreenResources.CharacterScreenResources.*;
+import static wizardo.game.Screens.BaseScreen.xRatio;
+import static wizardo.game.Screens.BaseScreen.yRatio;
 
 public class EquipmentButton extends ImageButton implements MenuButton {
 
@@ -26,9 +28,6 @@ public class EquipmentButton extends ImageButton implements MenuButton {
     Sprite sprite;
     Sprite spriteOver;
 
-    float xRatio;
-    float yRatio;
-
     public EquipmentButton(Skin skin, CharacterScreen screen, Equipment piece) {
         super(skin);
         this.screen = screen;
@@ -37,8 +36,6 @@ public class EquipmentButton extends ImageButton implements MenuButton {
            setup();
            addClickListener();
         }
-        xRatio = Gdx.graphics.getWidth() / 1920f;
-        yRatio = Gdx.graphics.getHeight() / 1080f;
         adjustSize();
     }
 

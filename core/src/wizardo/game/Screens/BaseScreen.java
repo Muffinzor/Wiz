@@ -48,7 +48,11 @@ import wizardo.game.Screens.LevelUp.LevelUpScreen;
 import wizardo.game.Screens.MainMenu.Controls.ControllerListener_MAINMENU;
 import wizardo.game.Controls.KeyboardMouseListener_TABLEMENU;
 import wizardo.game.Screens.MainMenu.MainMenuScreen;
+import wizardo.game.Screens.Popups.AreYouSureScreen;
 import wizardo.game.Screens.Settings.SettingsScreen;
+import wizardo.game.Screens.Shop.Controls.ControllerListener_MAPSHOP;
+import wizardo.game.Screens.Shop.Controls.KeyboardMouseListener_MAPSHOP;
+import wizardo.game.Screens.Shop.ShopScreen;
 import wizardo.game.Spells.SpellManager;
 import wizardo.game.Wizardo;
 
@@ -72,6 +76,7 @@ public abstract class BaseScreen implements Screen {
 
     public boolean paused;
     public float globalCD = 0;
+    public boolean choiceConfirmed; //for popup
 
     protected ControllerAdapter controllerAdapter;
     protected InputProcessor inputProcessor;
@@ -209,7 +214,7 @@ public abstract class BaseScreen implements Screen {
             controllerAdapter = new ControllerListener_TABLEMENU(this);
         }
 
-        if(this instanceof SettingsScreen) {
+        if(this instanceof SettingsScreen || this instanceof AreYouSureScreen) {
             inputProcessor = new KeyboardMouseListener_TABLEMENU(this);
             controllerAdapter = new ControllerListener_TABLEMENU(this);
         }
@@ -232,6 +237,11 @@ public abstract class BaseScreen implements Screen {
         if(this instanceof LevelUpScreen) {
             inputProcessor = new KeyboardMouseListener_LEVELUP( (LevelUpScreen) this);
             controllerAdapter = new ControllerListener_LEVELUP( (LevelUpScreen) this);
+        }
+
+        if(this instanceof ShopScreen) {
+            inputProcessor = new KeyboardMouseListener_MAPSHOP( (ShopScreen) this);
+            controllerAdapter = new ControllerListener_MAPSHOP((ShopScreen) this);
         }
 
         if(this instanceof Cheat_Screen) {

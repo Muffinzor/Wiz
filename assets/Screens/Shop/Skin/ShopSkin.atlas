@@ -1,0 +1,13 @@
+
+ShopSkin.png
+size: 2048, 2048
+format: RGBA8888
+filter: Linear, Linear
+repeat: none
+ShopBackground
+  rotate: false
+  xy: 1, 317
+  size: 1118, 800
+  orig: 1118, 800
+  offset: 0, 0
+  index: -1

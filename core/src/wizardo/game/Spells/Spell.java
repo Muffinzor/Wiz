@@ -12,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.RayCastCallback;
 import wizardo.game.Account.Unlocked;
 import wizardo.game.Audio.Sounds.SoundPlayer;
 import wizardo.game.Display.Text.FloatingDamage;
+import wizardo.game.Items.Equipment.Amulet.Rare_EliteAmulet;
 import wizardo.game.Items.Equipment.Book.Epic_VogonBook;
 import wizardo.game.Items.Equipment.Hat.Legendary_SentientHat;
 import wizardo.game.Items.Equipment.Staff.Legendary_ArcaneStaff;
@@ -22,6 +23,7 @@ import wizardo.game.Maps.LayerObject;
 import wizardo.game.Monsters.MonsterActions.MonsterSpell;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Screens.BaseScreen;
+import wizardo.game.Spells.Lightning.ChainLightning.ChainLightning_Spell;
 import wizardo.game.Spells.SpellUtils.*;
 import wizardo.game.Spells.Unique.Brand.Brand_Explosion;
 import wizardo.game.Spells.Unique.ThundergodBolt.ThundergodBolt_Spell;
@@ -58,7 +60,7 @@ public abstract class Spell implements Cloneable {
     public String soundPath;
     public String name;
 
-    public int baseDmg;
+    public int dmg;
     public float dmgVariance = 0.15f;   //      0.85 - 1.15 by default
     public float speed;
     public float radius;
@@ -460,10 +462,12 @@ public abstract class Spell implements Cloneable {
         dmg = getScaledDmg(dmg);
         float randomFactor = MathUtils.random(1 - dmgVariance, 1 + dmgVariance);
         dmg *= randomFactor;
-        monster.hp -= dmg;
 
         checkGearProcs(monster);
         dmg = applyGearModifiers(monster, dmg);
+        dmg = checkOtherModifiers(monster, dmg);
+
+        monster.hp -= dmg;
 
         if(dmg_text_on) {
             dmgText( (int)dmg, monster);
@@ -477,6 +481,10 @@ public abstract class Spell implements Cloneable {
             modifiedDmg = modifiedDmg * 1.5f;
         }
 
+        if(player.inventory.equippedAmulet instanceof Rare_EliteAmulet && monster.heavy) {
+            modifiedDmg = modifiedDmg * 1.2f;
+        }
+
         if(player.inventory.equippedBook instanceof Epic_VogonBook) {
             float dst = monster.body.getPosition().dst(player.pawn.getPosition());
             if(dst <= 5.8) {
@@ -486,7 +494,6 @@ public abstract class Spell implements Cloneable {
 
         return modifiedDmg;
     }
-
     public void checkGearProcs(Monster monster) {
         if(player.inventory.equippedStaff instanceof Legendary_LightningStaff) {
               if(anim_element == Spell_Element.LIGHTNING && !(this instanceof ThundergodBolt_Spell)) {
@@ -505,6 +512,15 @@ public abstract class Spell implements Cloneable {
                 staff.castArcaneMissile(monster);
             }
         }
+    }
+    public float checkOtherModifiers(Monster monster, float dmg) {
+        float scaledDmg = dmg;
+        if(this instanceof ChainLightning_Spell) {
+            if(Math.random() >= 1 - player.spellbook.chainlightningBonus/100f) {
+                scaledDmg = scaledDmg * 2;
+            }
+        }
+        return scaledDmg;
     }
 
 

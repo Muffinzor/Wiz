@@ -40,7 +40,6 @@ public class ChainLightning_Hit extends ChainLightning_Spell {
     public ArrayList<Monster> inRange;
     public ArrayList<Monster> monstersHit = new ArrayList<>();
 
-    boolean flipX;
     boolean flipY;
 
     public Animation<Sprite> longAnim;
@@ -50,7 +49,6 @@ public class ChainLightning_Hit extends ChainLightning_Spell {
     public ChainLightning_Hit(Monster target) {
         monsterTo = target;
 
-        flipX = MathUtils.randomBoolean();
         flipY = MathUtils.randomBoolean();
 
     }
@@ -121,7 +119,7 @@ public class ChainLightning_Hit extends ChainLightning_Spell {
         frame.setSize(distance, 90);
         frame.setOrigin(0,frame.getHeight() / 2f);
         frame.setRotation(angle);
-        frame.flip(flipX, flipY);
+        frame.flip(false, flipY);
         frame.setPosition(originBody.getPosition().x * PPM, originBody.getPosition().y * PPM - frame.getHeight() / 2);
 
         screen.addSortedSprite(frame);

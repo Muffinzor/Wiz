@@ -78,9 +78,6 @@ public class BattleScreen extends BaseScreen {
         cursorTexturePath = "Cursors/Battle_Cursor.png";
         controllerTargetSprite = new Sprite(new Texture("Cursors/Controller_Cursor.png"));
 
-        Monster monster = new MawDemon(this, null, monsterSpawner);
-        monsterSpawner.spawnMonster(monster);
-
     }
 
     @Override
@@ -104,7 +101,6 @@ public class BattleScreen extends BaseScreen {
         dropManager.update(delta);
 
         drawControllerTarget();
-        //ANIM_TESTING();
         displayManager.update(delta);
         lightManager.update(delta);
         updateCamera();  // must be after displayManager.update
@@ -120,9 +116,6 @@ public class BattleScreen extends BaseScreen {
         if(player.stats.shield <= 0) {
             game.freshScreen(new MainMenuScreen(game));
         }
-
-
-
     }
 
     @Override
@@ -197,20 +190,6 @@ public class BattleScreen extends BaseScreen {
             frame.setRotation(targetVector.angleDeg() - 45);  // Optional: Adjust for angle
             displayManager.spriteRenderer.ui_sprites.add(frame);
         }
-    }
-
-    public void drawPlayerHP() {
-
-    }
-
-
-    public void ANIM_TESTING() {
-
-        Sprite frame = getSprite();
-        frame.set(LevelUpResources.selected_panel_anim.getKeyFrame(stateTime, true));
-        frame.setCenter(player.pawn.getBodyX() * PPM, player.pawn.getBodyY() * PPM);
-        addPostLightningSprite(frame);
-
     }
 
 }

@@ -94,6 +94,7 @@ public abstract class Robes extends Equipment {
         ArrayList<Equipment> list = new ArrayList<>();
 
         list.add(new Legendary_FreezeRobes());
+        list.add(new Legendary_FireRobes());
 
         return list;
     }
