@@ -58,4 +58,12 @@ public class Inventory {
         return false;
     }
 
+    public void destroyItem(Equipment piece) {
+        for (int i = 0; i < holdingBox.length; i++) {
+            if(holdingBox[i] == piece) {
+                holdingBox[i] = null;
+            }
+        }
+    }
+
 }

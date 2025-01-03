@@ -315,13 +315,13 @@ public abstract class Monster {
     public void onDeath() {
         corpseExplosion();
 
-        float potrate = 0.99f - player.stats.luck/1000f;
+        float potrate = 0.995f - player.stats.luck/2000f;
         if(Math.random() >= potrate) {
             PotionDrop potion = new PotionDrop(body.getPosition());
             screen.dropManager.addDrop(potion);
         }
 
-        float goldrate = 0.9f - player.stats.luck/500f;
+        float goldrate = 0.95f - player.stats.luck/500f;
         if(Math.random() >= goldrate) {
             GoldDrop gold = new GoldDrop(body.getPosition(),1 , 1);
             screen.dropManager.addDrop(gold);

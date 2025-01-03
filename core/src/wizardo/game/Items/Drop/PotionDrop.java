@@ -28,7 +28,7 @@ public class PotionDrop extends Drop {
     public void pickup() {
         pickedUp = true;
         stateTime = 0;
-        player.stats.shield += MathUtils.random(20, 40) * (1 + (player.stats.luck/100f));
+        player.stats.shield += MathUtils.random(10, 20) * (1 + (player.stats.luck/100f));
         if(player.stats.shield > player.stats.maxShield) {
             player.stats.shield = player.stats.maxShield;
         }

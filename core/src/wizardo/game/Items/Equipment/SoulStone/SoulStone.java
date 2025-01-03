@@ -37,6 +37,7 @@ public abstract class SoulStone extends Equipment {
     }
 
     public void pickup() {
+        super.pickup();
         if(player.inventory.equippedStone == null) {
             this.equip();
         } else {

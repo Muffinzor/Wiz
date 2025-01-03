@@ -1,18 +1,22 @@
 package wizardo.game.Spells;
 
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Items.Equipment.Hat.Legendary_TripleCastHat;
 import wizardo.game.Screens.BaseScreen;
 
 import java.util.ArrayList;
 
 import static wizardo.game.Wizardo.player;
+import static wizardo.game.Wizardo.world;
 
 public class SpellManager {
 
     private ArrayList<Spell> spellsToCast;
     private ArrayList<Spell> activeSpells;
     private ArrayList<Spell> spellsToRemove;
+    private ArrayList<Body> bodiesToRemove;
+    int garbageRemovalCounter;
     ArrayList<Spell> multicastedSpells;
     ArrayList<Float> delays;
 
@@ -32,6 +36,7 @@ public class SpellManager {
         activeSpells = new ArrayList<>();
         spellsToRemove = new ArrayList<>();
         multicastedSpells = new ArrayList<>();
+        bodiesToRemove = new ArrayList<>();
         delays = new ArrayList<>();
         this.screen = screen;
 
@@ -128,7 +133,6 @@ public class SpellManager {
     public void add(Spell spell) {
         spellsToCast.add(spell);
     }
-
     public void remove(Spell spell) {
         spellsToRemove.add(spell);
     }
@@ -140,5 +144,7 @@ public class SpellManager {
         }
         spellsToRemove.clear();
     }
+
+
 
 }

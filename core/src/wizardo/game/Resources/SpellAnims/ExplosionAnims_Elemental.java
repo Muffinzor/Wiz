@@ -130,7 +130,7 @@ public class ExplosionAnims_Elemental {
                     return lightningCloud_anim_lightning2;
                 }
             }
-            case FROST -> {
+            case FROST, COLDLITE -> {
                 if(MathUtils.randomBoolean()) {
                     return lightningCloud_anim_frost;
                 } else {
@@ -144,7 +144,7 @@ public class ExplosionAnims_Elemental {
                     return lightningCloud_anim_arcane2;
                 }
             }
-            case FIRE -> {
+            case FIRE, FIRELITE -> {
                 if(MathUtils.randomBoolean()) {
                     return lightningCloud_anim_fire;
                 } else {

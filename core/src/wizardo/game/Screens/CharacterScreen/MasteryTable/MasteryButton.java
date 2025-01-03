@@ -1,8 +1,6 @@
-package wizardo.game.Screens.Character.MasteryTable;
+package wizardo.game.Screens.CharacterScreen.MasteryTable;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -12,7 +10,7 @@ import wizardo.game.Spells.SpellUtils.*;
 
 import java.util.ArrayList;
 
-import static wizardo.game.Screens.BaseScreen.controllerActive;
+import static wizardo.game.Screens.BaseScreen.*;
 
 public class MasteryButton extends CheckBox {
 
@@ -53,10 +51,6 @@ public class MasteryButton extends CheckBox {
         this.style = style;
     }
     public void adjustSize() {
-
-        float xRatio = Gdx.graphics.getWidth() / 1920f;
-        float yRatio = Gdx.graphics.getHeight() / 1080f;
-
         CheckBox.CheckBoxStyle style = this.style;
         CheckBox.CheckBoxStyle newStyle = new CheckBox.CheckBoxStyle();
         newStyle.checkboxOn = new TextureRegionDrawable(((TextureRegionDrawable) style.checkboxOn).getRegion());

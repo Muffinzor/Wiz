@@ -1,4 +1,4 @@
-package wizardo.game.Screens.Character.MasteryTable;
+package wizardo.game.Screens.CharacterScreen.MasteryTable;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -6,9 +6,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import wizardo.game.Display.MenuTable;
-import wizardo.game.Screens.Character.CharacterScreen;
+import wizardo.game.Screens.CharacterScreen.CharacterScreen;
 import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Wizardo;
 
@@ -16,6 +15,8 @@ import wizardo.game.Wizardo;
 import java.util.ArrayList;
 
 import static wizardo.game.Resources.Skins.masteryTableSkin;
+import static wizardo.game.Screens.BaseScreen.xRatio;
+import static wizardo.game.Screens.BaseScreen.yRatio;
 import static wizardo.game.Spells.SpellUtils.Spell_Name.*;
 import static wizardo.game.Wizardo.player;
 
@@ -47,13 +48,24 @@ public class MasteryTable extends MenuTable {
     public MasteryTable(Stage stage, Skin skin, Wizardo game, CharacterScreen screen) {
         super(stage, skin, game);
         this.screen = screen;
-        resize();
+        parts = new ArrayList<>();
+        buttonsMatrix = new MasteryButton[3][4];
+        mixingTable = new MixingTable(stage, skin, game, this);
+        createSpellButtonsTable();
+        adjustTable();
+        adjustButtons();
+
+        updateCheckBoxes();
     }
 
-    public void createSpellButtonsTable() {
+    public void adjustButtons() {
+        for(Button button : buttons) {
+            MasteryButton butt = (MasteryButton) button;
+            butt.adjustSize();
+        }
+    }
+    public void adjustTable() {
         adjustFontSize();
-        float xRatio = Gdx.graphics.getWidth() / 1920f;
-        float yRatio = Gdx.graphics.getHeight() / 1080f;
 
         float width = 575f * xRatio;
         float height = 500f * yRatio;
@@ -61,24 +73,27 @@ public class MasteryTable extends MenuTable {
         int x_pos = Math.round(1330 * xRatio);
         int y_pos = Math.round(500 * yRatio);
 
-        table = new Table();
         table.setPosition(x_pos, y_pos);
         table.setWidth(width);
         table.setHeight(height);
-        stage.addActor(table);
+    }
 
-        //table.setDebug(true);
+    @Override
+    public void resize() {
+        adjustTable();
+        adjustButtons();
+        mixingTable.resize();
+    }
 
-        int bottomPad = Math.round(-8 * yRatio);
-        int topPad = Math.round(-4 * yRatio);
+    public void createSpellButtonsTable() {
+        int bottomPad = -8;
+        int topPad = -4;
 
         FrostButtons(bottomPad, topPad);
         FireButtons(bottomPad, topPad);
         LightningButtons(bottomPad, topPad);
         ArcaneButtons(bottomPad, topPad);
-    }
-    public void createMixingTable() {
-        mixingTable = new MixingTable(stage, skin, game, this);
+        stage.addActor(table);
     }
 
     public void FrostButtons(int bottomPad, int topPad) {
@@ -357,18 +372,7 @@ public class MasteryTable extends MenuTable {
         buttonsMatrix[x_position][y_position].handleClick();
     }
 
-    @Override
-    public void resize() {
-        table.clear();
-        table.remove();
-        parts = new ArrayList<>();
-        buttonsMatrix = new MasteryButton[3][4];
 
-        createSpellButtonsTable();
-        createMixingTable();
-
-        updateCheckBoxes();
-    }
 
     public void updateChanges() {
         frostbolt_m.setText("Mastery : " + player.spellbook.frostbolt_lvl);
@@ -387,7 +391,6 @@ public class MasteryTable extends MenuTable {
     }
 
     public void dispose() {
-        System.out.println("MASTERY TABLE DISPOSE METHOD");
         mixingTable.dispose();
         table.clear();
         table.remove();

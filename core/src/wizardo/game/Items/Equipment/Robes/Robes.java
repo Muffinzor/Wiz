@@ -40,6 +40,7 @@ public abstract class Robes extends Equipment {
     }
 
     public void pickup() {
+        super.pickup();
         if(player.inventory.equippedRobes == null) {
             this.equip();
         } else {
@@ -95,6 +96,7 @@ public abstract class Robes extends Equipment {
 
         list.add(new Legendary_FreezeRobes());
         list.add(new Legendary_FireRobes());
+        list.add(new Legendary_ShieldRobes());
 
         return list;
     }

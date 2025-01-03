@@ -5,6 +5,7 @@ import wizardo.game.Items.Equipment.Amulet.Amulet;
 import wizardo.game.Items.Equipment.Book.Book;
 import wizardo.game.Items.Equipment.Hat.Hat;
 import wizardo.game.Items.Equipment.Ring.Ring;
+import wizardo.game.Items.Equipment.Robes.Legendary_ShieldRobes;
 import wizardo.game.Items.Equipment.Robes.Robes;
 import wizardo.game.Items.Equipment.SoulStone.SoulStone;
 import wizardo.game.Items.Equipment.Staff.Staff;
@@ -114,6 +115,14 @@ public class EquipmentUtils {
                     case DEFENSE -> player.stats.damageReduction += value;
                     case PROJSPEED -> player.spellbook.projSpeedBonus += value;
                     case WALKSPEED -> player.stats.runSpeed += (value/100f) * 2.7f;
+                    case MAXSHIELD -> {
+                        if(player.inventory.equippedRobes instanceof Legendary_ShieldRobes) {
+                            Legendary_ShieldRobes robes = (Legendary_ShieldRobes) player.inventory.equippedRobes;
+                            player.stats.maxShield += robes.taxShield(value);
+                        } else {
+                            player.stats.maxShield += value;
+                        }
+                    }
                     case MASTERY_FROST -> {
                         player.spellbook.frostbolt_lvl += value;
                         player.spellbook.icespear_lvl += value;

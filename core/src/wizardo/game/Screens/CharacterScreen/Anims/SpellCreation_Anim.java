@@ -1,4 +1,4 @@
-package wizardo.game.Screens.Character.Anims;
+package wizardo.game.Screens.CharacterScreen.Anims;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import wizardo.game.Resources.ScreenResources.CharacterScreenResources;
 import wizardo.game.Resources.SpellAnims.FrostNovaAnims;
 import wizardo.game.Resources.SpellAnims.OverheatAnims;
-import wizardo.game.Screens.Character.CharacterScreen;
+import wizardo.game.Screens.CharacterScreen.CharacterScreen;
 import wizardo.game.Spells.SpellUtils;
 
 import static wizardo.game.Screens.BaseScreen.xRatio;

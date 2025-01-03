@@ -15,24 +15,20 @@ import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.graphics.Cursor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import wizardo.game.Controls.ControllerListener_TABLEMENU;
 import wizardo.game.Display.DisplayManager;
 import wizardo.game.Display.MenuTable;
 import wizardo.game.Lighting.LightManager;
 import wizardo.game.Monsters.MonsterManager;
-import wizardo.game.Player.Player;
 import wizardo.game.Screens.Battle.BattleScreen;
 import wizardo.game.Screens.Battle.Controls.ControllerListener_BATTLE;
 import wizardo.game.Screens.Battle.Controls.KeyboardMouseListener_BATTLE;
-import wizardo.game.Screens.Character.CharacterScreen;
-import wizardo.game.Screens.Character.Controls.ControllerListener_CHARACTERSCREEN;
-import wizardo.game.Screens.Character.Controls.KeyboardMouseListener_CHARACTERSCREEN;
+import wizardo.game.Screens.CharacterScreen.CharacterScreen;
+import wizardo.game.Screens.CharacterScreen.Controls.ControllerListener_CHARACTERSCREEN;
+import wizardo.game.Screens.CharacterScreen.Controls.KeyboardMouseListener_CHARACTERSCREEN;
 import wizardo.game.Screens.DevScreen.Cheat_Screen;
 import wizardo.game.Screens.DevScreen.KeyboardMouseListener_CHEATMENU;
 import wizardo.game.Screens.EscapeMenu.Controls.ControllerListener_ESCAPE;
@@ -55,10 +51,6 @@ import wizardo.game.Screens.Shop.Controls.KeyboardMouseListener_MAPSHOP;
 import wizardo.game.Screens.Shop.ShopScreen;
 import wizardo.game.Spells.SpellManager;
 import wizardo.game.Wizardo;
-
-import java.util.ArrayList;
-
-import static wizardo.game.Wizardo.player;
 
 public abstract class BaseScreen implements Screen {
 

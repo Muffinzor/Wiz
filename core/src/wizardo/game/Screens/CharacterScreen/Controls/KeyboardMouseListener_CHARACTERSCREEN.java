@@ -1,15 +1,11 @@
-package wizardo.game.Screens.Character.Controls;
+package wizardo.game.Screens.CharacterScreen.Controls;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
-import wizardo.game.Display.MenuTable;
-import wizardo.game.Screens.Battle.BattleScreen;
-import wizardo.game.Screens.Character.CharacterScreen;
-import wizardo.game.Screens.EscapeMenu.EscapeScreen;
+import wizardo.game.Screens.CharacterScreen.CharacterScreen;
 
 import static wizardo.game.Screens.BaseScreen.controllerActive;
 import static wizardo.game.Screens.BaseScreen.inputMultiplexer;
-import static wizardo.game.Wizardo.player;
 
 public class KeyboardMouseListener_CHARACTERSCREEN extends InputAdapter {
 

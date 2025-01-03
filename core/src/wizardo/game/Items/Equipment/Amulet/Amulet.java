@@ -19,6 +19,7 @@ public abstract class Amulet extends Equipment {
     }
 
     public void pickup() {
+        super.pickup();
         if(player.inventory.equippedAmulet == null) {
             this.equip();
         } else {

@@ -1,4 +1,4 @@
-package wizardo.game.Screens.Character.EquipmentTable;
+package wizardo.game.Screens.CharacterScreen.EquipmentTable;
 
 import com.badlogic.gdx.math.Vector2;
 

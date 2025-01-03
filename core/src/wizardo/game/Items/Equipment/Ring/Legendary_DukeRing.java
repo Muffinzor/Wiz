@@ -19,6 +19,8 @@ public class Legendary_DukeRing extends Ring {
         title = "Legendary Ring";
         quality = ItemUtils.EquipQuality.LEGENDARY;
 
+        gearStats.add(ItemUtils.GearStat.MAXSHIELD);
+        quantity_gearStats.add(25);
         gearStats.add(ItemUtils.GearStat.WALKSPEED);
         quantity_gearStats.add(10);
 

@@ -48,6 +48,8 @@ public class BattleScreen extends BaseScreen {
     public MonsterSpawner monsterSpawner;
     public DropManager dropManager;
 
+    private BattleUI battleUI;
+
     public BattleScreen(Wizardo game, String biome) {
         super(game);
 
@@ -75,6 +77,7 @@ public class BattleScreen extends BaseScreen {
         monsterSpellManager = new MonsterSpellManager(this);
         dropManager = new DropManager(this);
 
+        battleUI = new BattleUI(this);
         cursorTexturePath = "Cursors/Battle_Cursor.png";
         controllerTargetSprite = new Sprite(new Texture("Cursors/Controller_Cursor.png"));
 
@@ -100,7 +103,7 @@ public class BattleScreen extends BaseScreen {
         monsterSpellManager.update(delta);
         dropManager.update(delta);
 
-        drawControllerTarget();
+        battleUI.update();
         displayManager.update(delta);
         lightManager.update(delta);
         updateCamera();  // must be after displayManager.update
@@ -149,47 +152,6 @@ public class BattleScreen extends BaseScreen {
 
         mainCamera.update();
 
-    }
-
-    public void drawControllerTarget() {
-        if (controllerActive) {
-            // Get the player's world position (in meters)
-            Vector2 playerWorldPosition = player.pawn.body.getPosition();
-
-            // Convert the player's world position to screen space manually, taking the camera's position into account
-            // Convert world position to screen position in pixels (scaled by PPM)
-            float playerWorldX = playerWorldPosition.x * PPM;
-            float playerWorldY = playerWorldPosition.y * PPM;
-
-            // Apply the camera's world position (in pixels) to convert world position to screen space
-            float playerScreenX = playerWorldX - (mainCamera.position.x);
-            float playerScreenY = playerWorldY - (mainCamera.position.y);
-
-            // Now, we need to handle the scale by PPM, which has already been factored into the camera position
-            Vector2 playerScreenPosition = new Vector2(playerScreenX, playerScreenY);
-
-
-            // Define the target vector based on joystick input and normalize
-            Vector2 targetVector = player.pawn.targetVector;
-            if(targetVector.isZero()) {
-                targetVector.set(0,1);
-            }
-            float angle = targetVector.angleRad();
-
-            // Define the cursor offset in screen pixels
-            float aimRadiusPixels = 100f;  // Adjust for the desired cursor offset
-
-            float cursorX = playerScreenPosition.x + aimRadiusPixels * (float)Math.cos(angle);
-            float cursorY = playerScreenPosition.y + aimRadiusPixels * (float)Math.sin(angle);
-
-
-            // Draw the cursor at the calculated position
-            Sprite frame = displayManager.spriteRenderer.pool.getSprite();
-            frame.set(controllerTargetSprite);
-            frame.setCenter(cursorX + Gdx.graphics.getWidth()/2f, cursorY + Gdx.graphics.getHeight()/2f);
-            frame.setRotation(targetVector.angleDeg() - 45);  // Optional: Adjust for angle
-            displayManager.spriteRenderer.ui_sprites.add(frame);
-        }
     }
 
 }

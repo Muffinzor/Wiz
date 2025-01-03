@@ -72,7 +72,7 @@ public class ChainLightning_Splash extends EnergyRain_Spell {
     public void pickAnim() {
         anim = ExplosionAnims_Elemental.getLightningCloud(anim_element);
         switch(anim_element) {
-            case FROST -> {
+            case FROST, COLDLITE -> {
                 red = 0.2f;
                 blue = 0.9f;
             }
@@ -84,7 +84,7 @@ public class ChainLightning_Splash extends EnergyRain_Spell {
                 red = 0.55f;
                 green = 0.35f;
             }
-            case FIRE -> {
+            case FIRE, FIRELITE -> {
                 red = 0.85f;
                 green = 0.15f;
             }

@@ -7,9 +7,7 @@ import wizardo.game.Maps.MapGeneration.MapChunk;
 import wizardo.game.Maps.MapUtils;
 import wizardo.game.Maps.TriggerObject;
 import wizardo.game.Resources.DecorResources.DungeonDecorResources;
-import wizardo.game.Screens.Character.CharacterScreen;
 import wizardo.game.Screens.Popups.AreYouSureScreen;
-import wizardo.game.Screens.Shop.ShopScreen;
 
 import static wizardo.game.Display.DisplayUtils.getSprite;
 import static wizardo.game.Utils.Constants.PPM;

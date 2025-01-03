@@ -1,12 +1,17 @@
 package wizardo.game.Items.Equipment;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Vector2;
+import wizardo.game.Display.Text.BottomText;
 import wizardo.game.Items.ItemUtils;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 
 import java.util.ArrayList;
 
+import static wizardo.game.Resources.Skins.inventorySkin;
 import static wizardo.game.Wizardo.player;
 
 public abstract class Equipment {
@@ -33,7 +38,23 @@ public abstract class Equipment {
     public void update(float delta) {
 
     }
-    public abstract void pickup();
+    public void pickup() {
+        BottomText text = new BottomText();
+        Vector2 position = new Vector2(Gdx.graphics.getWidth()/2f, 100);
+        text.setAll(title, position, inventorySkin.getFont("Gear_Title"), getTitleColor());
+        player.screen.displayManager.textManager.addBottomText(text);
+    }
+
+    private Color getTitleColor() {
+        Color color = null;
+        switch(quality) {
+            case NORMAL -> color = inventorySkin.getColor("Green");
+            case RARE -> color = inventorySkin.getColor("Blue");
+            case EPIC -> color = inventorySkin.getColor("Purple");
+            case LEGENDARY -> color = inventorySkin.getColor("Red");
+        }
+        return color;
+    }
 
     public void equip() {
 

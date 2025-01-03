@@ -1,82 +1,111 @@
-package wizardo.game.Screens.Character.BookTable;
+package wizardo.game.Screens.CharacterScreen.BookTable;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import wizardo.game.Display.MenuTable;
-import wizardo.game.Screens.Character.CharacterScreen;
+import wizardo.game.Screens.CharacterScreen.CharacterScreen;
 import wizardo.game.Wizardo;
 
+import static wizardo.game.Screens.BaseScreen.xRatio;
+import static wizardo.game.Screens.BaseScreen.yRatio;
 import static wizardo.game.Wizardo.player;
 
-public class KnownTable extends MenuTable {
+public class KnownSpells_Table extends MenuTable {
 
     CharacterScreen screen;
     Vector2 centerPoint;
+
+    Table firstRowTable;
+    Table secondRowTable;
 
     SpellIcon_Button[][] buttonsMatrix;
     public int x_pos;
     public int y_pos;
 
-    public KnownTable(Stage stage, Skin skin, Wizardo game, CharacterScreen screen) {
+    public KnownSpells_Table(Stage stage, Skin skin, Wizardo game, CharacterScreen screen) {
         super(stage, skin, game);
         this.screen = screen;
+        buttonsMatrix = new SpellIcon_Button[2][2];
 
-        resize();
+        firstRowTable = new Table();
+        secondRowTable = new Table();
+        table.add(firstRowTable).row();
+        table.add(secondRowTable);
+        table.top();
+        createButtons();
+        adjustButtons();
+        adjustSize();
+        stage.addActor(table);
+
     }
 
-    public void createTable() {
-        float xRatio = Gdx.graphics.getWidth() / 1920f;
-        float yRatio = Gdx.graphics.getHeight() / 1080f;
-
+    public void adjustSize() {
         float width = 210 * xRatio;
-        float height = 260 * yRatio;
+        float height = 130 * yRatio;
 
         int x_pos = Math.round(980 * xRatio);
-        int y_pos = Math.round(100 * yRatio);
+        int y_pos = Math.round(205 * yRatio);
 
-        table = new Table();
         table.setPosition(x_pos, y_pos);
         table.setWidth(width);
         table.setHeight(height);
         stage.addActor(table);
 
-        //table.setDebug(true);
-
         centerPoint = new Vector2(x_pos + width/2, y_pos + height/2);
+
+        adjustButtons();
     }
+
+    public void adjustButtons() {
+        for(Button button : buttons) {
+            SpellIcon_Button butt = (SpellIcon_Button) button;
+            butt.adjustSize();
+        }
+    }
+
+    public void updateSpells() {
+        for(Button button : buttons) {
+            button.remove();
+        }
+        buttonsMatrix = new SpellIcon_Button[2][2];
+        buttons.clear();
+        createButtons();
+        adjustButtons();
+    }
+
 
     public void createButtons() {
 
         if(!player.spellbook.knownSpells.isEmpty()) {
             SpellIcon_Button button = new SpellIcon_Button(player.spellbook.knownSpells.getFirst(), false, screen);
-            table.add(button);
-
+            firstRowTable.add(button);
+            buttons.add(button);
             buttonsMatrix[0][0] = button;
         }
 
 
         if(player.spellbook.knownSpells.size() > 1) {
             SpellIcon_Button button2 = new SpellIcon_Button(player.spellbook.knownSpells.get(1), false, screen);
-            table.add(button2);
-
+            firstRowTable.add(button2);
+            buttons.add(button2);
             buttonsMatrix[1][0] = button2;
         }
 
         if(player.spellbook.knownSpells.size() > 2) {
             table.row();
             SpellIcon_Button button3 = new SpellIcon_Button(player.spellbook.knownSpells.get(2), false, screen);
-            table.add(button3);
-
+            secondRowTable.add(button3);
+            buttons.add(button3);
             buttonsMatrix[0][1] = button3;
         }
 
         if(player.spellbook.knownSpells.size() > 3) {
             SpellIcon_Button button4 = new SpellIcon_Button(player.spellbook.knownSpells.get(3), false, screen);
-            table.add(button4);
-
+            secondRowTable.add(button4);
+            buttons.add(button4);
             buttonsMatrix[1][1] = button4;
         }
     }
@@ -163,23 +192,11 @@ public class KnownTable extends MenuTable {
     public void pressSelectedButton() {
         SpellIcon_Button button = buttonsMatrix[x_pos][y_pos];
         button.handleClick();
-        System.out.println("click handled");
     }
 
     @Override
     public void resize() {
-        boolean active = screen.activeTable.equals(this);
-        table.clear();
-        table.remove();
-
-        buttonsMatrix = new SpellIcon_Button[2][2];
-        createTable();
-        createButtons();
-        if(active) {
-            updateSelectedButton();
-        }
-        screen.selectedSpell_Button = null;
-        screen.mastery_table.mixingTable.updateButtons();
+        adjustSize();
     }
 
     public void dispose() {

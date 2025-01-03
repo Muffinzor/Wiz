@@ -40,6 +40,7 @@ public abstract class Ring extends Equipment {
     }
 
     public void pickup() {
+        super.pickup();
         if(player.inventory.equippedRing == null) {
             this.equip();
         } else {

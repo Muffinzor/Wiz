@@ -40,6 +40,7 @@ public abstract class Staff extends Equipment {
     }
 
     public void pickup() {
+        super.pickup();
         if(player.inventory.equippedStaff == null) {
             this.equip();
         } else {

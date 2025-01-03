@@ -1,15 +1,15 @@
-package wizardo.game.Screens.Character.InventoryTable;
+package wizardo.game.Screens.CharacterScreen.InventoryTable;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import wizardo.game.Display.MenuTable;
-import wizardo.game.Screens.Character.CharacterScreen;
-import wizardo.game.Screens.Character.EquipmentTable.EquipmentButton;
+import wizardo.game.Screens.CharacterScreen.CharacterScreen;
+import wizardo.game.Screens.CharacterScreen.EquipmentTable.EquipmentButton;
 import wizardo.game.Wizardo;
 
+import static wizardo.game.Screens.BaseScreen.xRatio;
+import static wizardo.game.Screens.BaseScreen.yRatio;
 import static wizardo.game.Wizardo.player;
 
 public class InventoryTable extends MenuTable {
@@ -20,7 +20,9 @@ public class InventoryTable extends MenuTable {
     public InventoryTable(Stage stage, Skin skin, Wizardo game, CharacterScreen screen) {
         super(stage, skin, game);
         this.screen = screen;
-        resize();
+        stage.addActor(table);
+        adjustTable();
+        createButtons();
     }
 
     public void update() {
@@ -30,11 +32,7 @@ public class InventoryTable extends MenuTable {
         }
     }
 
-    public void createTable() {
-
-        //adjustFontSize();
-        float xRatio = Gdx.graphics.getWidth() / 1920f;
-        float yRatio = Gdx.graphics.getHeight() / 1080f;
+    public void adjustTable() {
 
         float width = 480 * xRatio;
         float height = 246 * yRatio;
@@ -42,13 +40,9 @@ public class InventoryTable extends MenuTable {
         int x_pos = Math.round(60 * xRatio);
         int y_pos = Math.round(80 * yRatio);
 
-        table = new Table();
         table.setPosition(x_pos, y_pos);
         table.setWidth(width);
         table.setHeight(height);
-        stage.addActor(table);
-
-        //table.setDebug(true);
 
         createButtons();
 
@@ -102,8 +96,7 @@ public class InventoryTable extends MenuTable {
     @Override
     public void resize() {
         table.clear();
-        table.remove();
         buttons.clear();
-        createTable();
+        adjustTable();
     }
 }

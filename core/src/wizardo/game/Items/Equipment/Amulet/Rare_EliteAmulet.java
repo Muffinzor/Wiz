@@ -31,11 +31,11 @@ public class Rare_EliteAmulet extends Amulet {
     }
 
     public String getDescription() {
-        return "Deal 20%% more damage\nto large monsters";
+        return "Deal 20% more damage\nto large monsters";
     }
 
     public String getFlavorText() {
-        return "for Big Game Wizards";
+        return "Big Game Wizards";
     }
 
 

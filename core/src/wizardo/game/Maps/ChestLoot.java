@@ -92,6 +92,13 @@ public class ChestLoot {
         }
     }
 
+    public void powerLoot() {
+        Equipment rare = chest.screen.dropManager.getEquipmentForDrop(ALL, ItemUtils.EquipQuality.RARE, "Tal's Regalia");
+        drops.add(new EquipmentDrop(chest.body.getPosition(), rare));
+        Equipment rare2 = chest.screen.dropManager.getEquipmentForDrop(ALL, ItemUtils.EquipQuality.RARE, "The Duke's Signet");
+        drops.add(new EquipmentDrop(chest.body.getPosition(), rare2));
+    }
+
     public Drop goldChestDropTable() {
         Drop drop = null;
         int roll = MathUtils.random(1,19);

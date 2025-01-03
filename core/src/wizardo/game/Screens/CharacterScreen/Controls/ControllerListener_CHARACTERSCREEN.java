@@ -1,10 +1,9 @@
-package wizardo.game.Screens.Character.Controls;
+package wizardo.game.Screens.CharacterScreen.Controls;
 
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.ControllerAdapter;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import wizardo.game.Display.MenuTable;
-import wizardo.game.Screens.Character.CharacterScreen;
+import wizardo.game.Screens.CharacterScreen.CharacterScreen;
 
 import static wizardo.game.Screens.BaseScreen.controllerActive;
 

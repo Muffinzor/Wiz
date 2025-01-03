@@ -68,7 +68,7 @@ public class Pawn {
         if(player.currentXP >= player.neededXP && !levelingUp) {
             player.level ++;
             player.currentXP = player.currentXP - player.neededXP;
-            player.neededXP += ((player.level - 1) * 10);
+            player.neededXP += ((player.level - 1) * 20);
             levelingUp = true;
             stateTime = 0;
             levelUpVector = new Vector2(player.pawn.getBodyX(), player.pawn.getBodyY() + 2);

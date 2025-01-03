@@ -1,13 +1,13 @@
-package wizardo.game.Screens.Character.MasteryTable;
+package wizardo.game.Screens.CharacterScreen.MasteryTable;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import wizardo.game.Display.MenuTable;
-import wizardo.game.Screens.Character.Anims.SpellCreation_Anim;
+import wizardo.game.Screens.CharacterScreen.Anims.SpellCreation_Anim;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Wizardo;
@@ -15,6 +15,8 @@ import wizardo.game.Wizardo;
 import java.util.ArrayList;
 
 import static wizardo.game.Resources.Skins.masteryTableSkin;
+import static wizardo.game.Screens.BaseScreen.xRatio;
+import static wizardo.game.Screens.BaseScreen.yRatio;
 import static wizardo.game.Spells.SpellMixer.getMixedSpell;
 import static wizardo.game.Spells.SpellUtils.getSpellString;
 import static wizardo.game.Wizardo.player;
@@ -43,34 +45,42 @@ public class MixingTable extends MenuTable {
     public MixingTable(Stage stage, Skin skin, Wizardo game, MasteryTable masteryTable) {
         super(stage, skin, game);
         this.masteryTable = masteryTable;
+        this.labelTable = new Table();
         this.parts = masteryTable.parts;
-        createTable();
 
         create_mixButton();
         create_clearButton();
         create_forgetButton();
 
-        createLabelTable();
+        adjustTableSize();
         createLabels();
 
         updateButtons();
+
+        stage.addActor(table);
+        stage.addActor(labelTable);
     }
 
-    public void createLabelTable() {
-        float xRatio = Gdx.graphics.getWidth() / 1920f;
-        float yRatio = Gdx.graphics.getHeight() / 1080f;
-
+    public void adjustTableSize() {
         int x_pos = Math.round(1330 * xRatio);
         int y_pos = Math.round(300 * yRatio);
         float height = 150 * yRatio;
         float width = 530 * xRatio;
 
-        labelTable = new Table();
         labelTable.setPosition(x_pos, y_pos);
         labelTable.setSize(width, height);
-        labelTable.setDebug(true);
-        stage.addActor(labelTable);
+
+
+        int x_pos2 = Math.round(1330 * xRatio);
+        int y_pos2 = Math.round(130 * yRatio);
+        float width2 = 530f * xRatio;
+        float height2 = 100f * yRatio;
+
+        table.setPosition(x_pos2, y_pos2);
+        table.setWidth(width2);
+        table.setHeight(height2);
     }
+
     public void createLabels() {
         labelTable.top().left();
 
@@ -83,7 +93,6 @@ public class MixingTable extends MenuTable {
         spell_dominance = new Label("Spell Dominance : " + spell, skin);
         labelTable.add(spell_dominance).align(Align.left);
         labelTable.row();
-
 
         String element;
         if(!parts.isEmpty()) {
@@ -103,26 +112,6 @@ public class MixingTable extends MenuTable {
         labelTable.add(status).align(Align.left);
     }
 
-    public void createTable() {
-        //adjustFontSize();
-        float xRatio = Gdx.graphics.getWidth() / 1920f;
-        float yRatio = Gdx.graphics.getHeight() / 1080f;
-
-        float width = 530f * xRatio;
-        float height = 100f * yRatio;
-
-        int x_pos = Math.round(1330 * xRatio);
-        int y_pos = Math.round(130 * yRatio);
-
-        table = new Table();
-        table.setPosition(x_pos, y_pos);
-        table.setWidth(width);
-        table.setHeight(height);
-        stage.addActor(table);
-
-        table.setDebug(true);
-    }
-
     public void updateSelectedButton() {
         masteryTable.screen.selectedButton = buttonMatrix[x_pos];
     }
@@ -131,7 +120,6 @@ public class MixingTable extends MenuTable {
         mixButton.setDisabled(parts.isEmpty());
         clearButton.setDisabled(parts.isEmpty());
         updateForgetButton();
-
 
         if(!parts.isEmpty()) {
             mixButton.setDisabled(!getMixedSpell(parts).canMix());
@@ -154,7 +142,6 @@ public class MixingTable extends MenuTable {
     }
 
     public void updateForgetButton() {
-        System.out.println(masteryTable.screen.selectedSpell_Button == null);
         forgetButton.setDisabled(masteryTable.screen.selectedSpell_Button == null);
         if(masteryTable.screen.selectedSpell_Button != null) {
             if (player.spellbook.equippedSpells.contains(masteryTable.screen.selectedSpell_Button.spell) &&
@@ -166,23 +153,10 @@ public class MixingTable extends MenuTable {
 
     public void create_mixButton() {
         mixButton = new ImageButton(masteryTableSkin, "create_button");
-        ImageButton.ImageButtonStyle newStyle = mixButton.getStyle();
-        float width = button_width * (Gdx.graphics.getWidth()/1920f);
-        float height = button_height * (Gdx.graphics.getHeight()/1080f);
-
-        newStyle.imageUp.setMinHeight(height);
-        newStyle.imageUp.setMinWidth(width);
-        newStyle.imageDown.setMinHeight(height);
-        newStyle.imageDown.setMinWidth(width);
-        newStyle.imageOver.setMinHeight(height);
-        newStyle.imageOver.setMinWidth(width);
-        newStyle.imageDisabled.setMinHeight(height);
-        newStyle.imageDisabled.setMinWidth(width);
-
-        mixButton.setStyle(newStyle);
-
+        adjustSize(mixButton);
         table.add(mixButton);
         buttonMatrix[0] = mixButton;
+        buttons.add(mixButton);
 
         mixButton.addListener(new ClickListener() {
             @Override
@@ -205,28 +179,16 @@ public class MixingTable extends MenuTable {
             button.setChecked(false);
         }
         masteryTable.updateCheckBoxes();
-        masteryTable.screen.equippedSpells_table.resize();
-        masteryTable.screen.knownSpells_table.resize();
+        masteryTable.screen.equippedSpells_table.updateSpells();
+        masteryTable.screen.knownSpells_table.updateSpells();
         masteryTable.screen.selectedSpell_Button = null;
         updateButtons();
     }
     public void create_clearButton() {
         clearButton = new ImageButton(masteryTableSkin, "clear_button");
-        ImageButton.ImageButtonStyle newStyle = clearButton.getStyle();
-        float width = button_width * (Gdx.graphics.getWidth()/1920f);
-        float height = button_height * (Gdx.graphics.getHeight()/1080f);
-
-        newStyle.imageUp.setMinHeight(height);
-        newStyle.imageUp.setMinWidth(width);
-        newStyle.imageDown.setMinHeight(height);
-        newStyle.imageDown.setMinWidth(width);
-        newStyle.imageOver.setMinHeight(height);
-        newStyle.imageOver.setMinWidth(width);
-        newStyle.imageDisabled.setMinHeight(height);
-        newStyle.imageDisabled.setMinWidth(width);
-
-        clearButton.setStyle(newStyle);
+        adjustSize(clearButton);
         table.add(clearButton);
+        buttons.add(clearButton);
         buttonMatrix[1] = clearButton;
         clearButton.addListener(new ClickListener() {
             @Override
@@ -248,22 +210,10 @@ public class MixingTable extends MenuTable {
     }
     public void create_forgetButton() {
         forgetButton = new ImageButton(masteryTableSkin, "forget_button");
-        ImageButton.ImageButtonStyle newStyle = forgetButton.getStyle();
-        float width = button_width * (Gdx.graphics.getWidth()/1920f);
-        float height = button_height * (Gdx.graphics.getHeight()/1080f);
-
-        newStyle.imageUp.setMinHeight(height);
-        newStyle.imageUp.setMinWidth(width);
-        newStyle.imageDown.setMinHeight(height);
-        newStyle.imageDown.setMinWidth(width);
-        newStyle.imageOver.setMinHeight(height);
-        newStyle.imageOver.setMinWidth(width);
-        newStyle.imageDisabled.setMinHeight(height);
-        newStyle.imageDisabled.setMinWidth(width);
-
-        forgetButton.setStyle(newStyle);
+        adjustSize(forgetButton);
         table.add(forgetButton);
         buttonMatrix[2] = forgetButton;
+        buttons.add(forgetButton);
         forgetButton.addListener(new ClickListener() {
 
             @Override
@@ -275,14 +225,35 @@ public class MixingTable extends MenuTable {
                     spell_to_forget.forget();
 
                     masteryTable.screen.selectedSpell_Button = null;
-                    masteryTable.screen.equippedSpells_table.resize();
-                    masteryTable.screen.knownSpells_table.resize();
+                    masteryTable.screen.equippedSpells_table.updateSpells();
+                    masteryTable.screen.knownSpells_table.updateSpells();
                     updateButtons();
-
                 }
-
             }
         });
+    }
+
+    public void adjustSize(ImageButton button) {
+        ImageButton.ImageButtonStyle style = button.getStyle();
+        ImageButton.ImageButtonStyle newStyle = new ImageButton.ImageButtonStyle();
+        float width = button_width * xRatio;
+        float height = button_height * yRatio;
+
+        newStyle.imageUp = new TextureRegionDrawable(((TextureRegionDrawable) style.imageUp).getRegion());
+        newStyle.imageDown = new TextureRegionDrawable(((TextureRegionDrawable) style.imageDown).getRegion());
+        newStyle.imageOver = new TextureRegionDrawable(((TextureRegionDrawable) style.imageOver).getRegion());
+        newStyle.imageDisabled = new TextureRegionDrawable(((TextureRegionDrawable) style.imageDisabled).getRegion());
+
+        newStyle.imageUp.setMinHeight(height);
+        newStyle.imageUp.setMinWidth(width);
+        newStyle.imageDown.setMinHeight(height);
+        newStyle.imageDown.setMinWidth(width);
+        newStyle.imageOver.setMinHeight(height);
+        newStyle.imageOver.setMinWidth(width);
+        newStyle.imageDisabled.setMinHeight(height);
+        newStyle.imageDisabled.setMinWidth(width);
+
+        button.setStyle(newStyle);
     }
 
     @Override
@@ -345,15 +316,21 @@ public class MixingTable extends MenuTable {
         if(x_pos == 2 && !forgetButton.isDisabled()) {
             masteryTable.screen.selectedSpell_Button.spell.forget();
             masteryTable.screen.selectedSpell_Button = null;
-            masteryTable.screen.equippedSpells_table.resize();
-            masteryTable.screen.knownSpells_table.resize();
+            masteryTable.screen.equippedSpells_table.updateSpells();
+            masteryTable.screen.knownSpells_table.updateSpells();
             updateButtons();
         }
     }
 
     @Override
     public void resize() {
-
+        adjustTableSize();
+        labelTable.clear();
+        createLabels();
+        for(Button button : buttons) {
+            ImageButton butt = (ImageButton) button;
+            adjustSize(butt);
+        }
     }
 
     public void swapToEquippedTable() {

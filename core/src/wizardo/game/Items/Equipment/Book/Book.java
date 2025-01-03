@@ -37,6 +37,7 @@ public abstract class Book extends Equipment {
     }
 
     public void pickup() {
+        super.pickup();
         if(player.inventory.equippedBook == null) {
             this.equip();
         } else {

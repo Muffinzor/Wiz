@@ -3,9 +3,8 @@ package wizardo.game.Screens.Battle.Controls;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.ControllerAdapter;
 import wizardo.game.Player.Pawn;
-import wizardo.game.Player.Player;
 import wizardo.game.Screens.Battle.BattleScreen;
-import wizardo.game.Screens.Character.CharacterScreen;
+import wizardo.game.Screens.CharacterScreen.CharacterScreen;
 import wizardo.game.Screens.EscapeMenu.EscapeScreen;
 
 import static wizardo.game.Screens.BaseScreen.controllerActive;

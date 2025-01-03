@@ -36,6 +36,7 @@ public class ItemUtils {
         PROJSPEED,
 
         REGEN,
+        MAXSHIELD,
         DEFENSE,
         WALKSPEED,
         LUCK,

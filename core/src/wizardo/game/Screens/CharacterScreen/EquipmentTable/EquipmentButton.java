@@ -1,8 +1,5 @@
-package wizardo.game.Screens.Character.InventoryTable;
+package wizardo.game.Screens.CharacterScreen.EquipmentTable;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -13,17 +10,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import wizardo.game.Items.Equipment.Equipment;
-import wizardo.game.Screens.Character.CharacterScreen;
-import wizardo.game.Screens.Character.EquipmentTable.GearPanel;
-import wizardo.game.Screens.Character.EquipmentTable.MenuButton;
-import wizardo.game.Screens.Popups.AreYouSureScreen;
+import wizardo.game.Screens.CharacterScreen.CharacterScreen;
 
 import static wizardo.game.Resources.ScreenResources.CharacterScreenResources.*;
-import static wizardo.game.Resources.ScreenResources.CharacterScreenResources.redQuality;
 import static wizardo.game.Screens.BaseScreen.xRatio;
 import static wizardo.game.Screens.BaseScreen.yRatio;
 
-public class InventoryButton extends ImageButton implements MenuButton {
+public class EquipmentButton extends ImageButton implements MenuButton {
 
     boolean hovered;
 
@@ -32,16 +25,14 @@ public class InventoryButton extends ImageButton implements MenuButton {
 
     Sprite sprite;
     Sprite spriteOver;
-    float spriteRatio = 0.7f;
 
-    public InventoryButton(Skin skin, CharacterScreen screen, Equipment piece) {
-        super(skin, "inventory");
+    public EquipmentButton(Skin skin, CharacterScreen screen, Equipment piece) {
+        super(skin);
         this.screen = screen;
         this.piece = piece;
-
         if(piece != null) {
-            setup();
-            addClickListener();
+           setup();
+           addClickListener();
         }
         adjustSize();
     }
@@ -58,11 +49,8 @@ public class InventoryButton extends ImageButton implements MenuButton {
         newStyle.imageUp = new TextureRegionDrawable(((TextureRegionDrawable) style.imageUp).getRegion());
         newStyle.imageOver = new TextureRegionDrawable(((TextureRegionDrawable) style.imageOver).getRegion());
 
-        float ogWidth = newStyle.imageUp.getMinWidth();
-        float ogHeigth = newStyle.imageUp.getMinHeight();
-
-        float WIDTH = xRatio * ogWidth;
-        float HEIGHT = yRatio * ogHeigth;
+        float WIDTH = xRatio * 115;
+        float HEIGHT = yRatio * 110;
 
         newStyle.imageUp.setMinWidth(WIDTH);
         newStyle.imageUp.setMinHeight(HEIGHT);
@@ -73,8 +61,6 @@ public class InventoryButton extends ImageButton implements MenuButton {
         setStyle(newStyle);
 
     }
-
-
 
     public void drawItem() {
         if(piece != null) {
@@ -89,7 +75,7 @@ public class InventoryButton extends ImageButton implements MenuButton {
                 frame.set(sprite);
             }
 
-            frame.setScale(piece.displayScale * spriteRatio);
+            frame.setScale(xRatio * piece.displayScale, yRatio * piece.displayScale);
             frame.rotate(piece.displayRotation);
             frame.setCenter(getCenterPoint().x, getCenterPoint().y);
 
@@ -100,10 +86,11 @@ public class InventoryButton extends ImageButton implements MenuButton {
     public void drawQuality(SpriteBatch batch) {
         Sprite frame = screen.getSprite();
         frame.set(getQualitySprite());
-        frame.setScale(0.8f);
         frame.setCenter(getCenterPoint().x, getCenterPoint().y);
+        frame.setScale(xRatio, yRatio);
         frame.draw(batch);
     }
+
     public Sprite getQualitySprite() {
         Sprite sprite = null;
         switch(piece.quality) {
@@ -115,63 +102,39 @@ public class InventoryButton extends ImageButton implements MenuButton {
         return sprite;
     }
 
+    public void addClickListener() {
+        MenuButton button = this;
+        this.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                handleClick();
+                screen.panelStage.clear();
+            }
+            @Override
+            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                hovered = true;
+                GearPanel panel = new GearPanel(screen.panelStage, piece, true, button);
+                screen.activePanel = panel;
+            }
+            @Override
+            public void exit(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                hovered = false;
+                screen.activePanel.dispose();
+            }
+        });
+    }
+
     public void handleClick() {
         if(piece != null) {
-            piece.equip();
+            piece.storeAfterUnequip();
             screen.inventory_table.resize();
             screen.equipment_table.resize();
             screen.mastery_table.updateChanges();
             screen.equippedSpells_table.resize();
             screen.knownSpells_table.resize();
+            screen.stats_Table.createNewPanel();
         }
     }
-
-    public void handleRightClick() {
-        if(piece != null) {
-            screen.game.addNewScreen(new AreYouSureScreen(screen.game, "This will destroy the item"));
-        }
-    }
-
-    public void addClickListener() {
-        MenuButton button = this;
-        this.addListener(new ClickListener() {
-
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                if (button == Input.Buttons.RIGHT) {
-                    handleRightClick();
-                    return true;
-                }
-                return super.touchDown(event, x, y, pointer, button);
-            }
-
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                if (event.getButton() == Input.Buttons.LEFT) {
-                    handleClick();
-                } else if (event.getButton() == Input.Buttons.RIGHT) {
-                    handleRightClick();
-                }
-                screen.panelStage.clear();
-            }
-
-            @Override
-            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                hovered = true;
-                screen.activePanel = new GearPanel(screen.panelStage, piece, false, button);
-                spriteRatio = 0.8f;
-            }
-
-            @Override
-            public void exit(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                hovered = false;
-                screen.activePanel.dispose();
-                spriteRatio = 0.7f;
-            }
-
-        });
-    }
-
 
     @Override
     public Vector2 getCenterPoint() {
@@ -179,9 +142,11 @@ public class InventoryButton extends ImageButton implements MenuButton {
         float y;
         x = getX();
         x += getParent().getX();
+        x += getParent().getParent().getX();
 
         y = getY();
         y += getParent().getY();
+        y += getParent().getParent().getY();
 
         x += getWidth()/2f;
         y += getHeight()/2f;

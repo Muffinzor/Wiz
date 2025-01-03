@@ -73,8 +73,7 @@ public class ScrollDrop extends Drop {
         pickedUp = true;
         stateTime = 0;
         BottomText text = new BottomText();
-        Vector2 position = new Vector2(Gdx.graphics.getWidth()/2f, 100);
-        text.setAll(displayText, position, inventorySkin.getFont("Gear_Title"), textColor);
+        text.setAll(displayText, body.getPosition(), inventorySkin.getFont("Gear_Title"), textColor);
         screen.displayManager.textManager.addBottomText(text);
     }
 
@@ -87,18 +86,18 @@ public class ScrollDrop extends Drop {
         }
 
         switch(Mastery) {
-            case FROSTBOLT -> displayText = "+1 Frostbolts Mastery";
-            case ICESPEAR -> displayText = "+1 Ice Spear Mastery";
-            case FROZENORB -> displayText = "+1 Frozen Orb Mastery";
-            case FLAMEJET -> displayText = "+1 Flamejet Mastery";
-            case FIREBALL -> displayText = "+1 Fireball Mastery";
-            case OVERHEAT -> displayText = "+1 Overheat Mastery";
-            case CHARGEDBOLTS -> displayText = "+1 Chargedbolts Mastery";
-            case CHAIN -> displayText = "+1 Chain Lightning Mastery";
-            case THUNDERSTORM -> displayText = "+1 Chain Lightning Mastery";
-            case MISSILES -> displayText = "+1 Arcane Missiles Mastery";
-            case BEAM -> displayText = "+1 Energy Beam Mastery";
-            case RIFTS -> displayText = "+1 Rifts Mastery";
+            case FROSTBOLT -> displayText = "Frostbolts Scroll";
+            case ICESPEAR -> displayText = "Ice Spear Scroll";
+            case FROZENORB -> displayText = "Frozen Orb Scroll";
+            case FLAMEJET -> displayText = "Flamejet Scroll";
+            case FIREBALL -> displayText = "Fireball Scroll";
+            case OVERHEAT -> displayText = "Overheat Scroll";
+            case CHARGEDBOLTS -> displayText = "Chargedbolts Scroll";
+            case CHAIN -> displayText = "Chain Lightning Scroll";
+            case THUNDERSTORM -> displayText = "Thunderstorm Scroll";
+            case MISSILES -> displayText = "Arcane Missiles Scroll";
+            case BEAM -> displayText = "Energy Beam Scroll";
+            case RIFTS -> displayText = "Rifts Scroll";
         }
 
     }

@@ -40,6 +40,7 @@ public abstract class Hat extends Equipment {
     }
 
     public void pickup() {
+        super.pickup();
         if(player.inventory.equippedHat == null) {
             this.equip();
         } else {

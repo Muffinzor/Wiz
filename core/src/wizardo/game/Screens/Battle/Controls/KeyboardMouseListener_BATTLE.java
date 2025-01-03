@@ -4,7 +4,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import wizardo.game.Player.Pawn;
 import wizardo.game.Screens.Battle.BattleScreen;
-import wizardo.game.Screens.Character.CharacterScreen;
+import wizardo.game.Screens.CharacterScreen.CharacterScreen;
 import wizardo.game.Screens.DevScreen.Cheat_Screen;
 import wizardo.game.Screens.EscapeMenu.EscapeScreen;
 import wizardo.game.Screens.LevelUp.LevelUpScreen;

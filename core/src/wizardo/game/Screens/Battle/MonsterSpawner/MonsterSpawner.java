@@ -33,6 +33,7 @@ public class MonsterSpawner {
     float meleeSpawnTimer = 0;
     float rangedSpawnTimer = 0;
     float packTimer = 0;
+    float demonTimer = 0;
     float targetedSpawnTimer = 0;
 
 
@@ -79,6 +80,7 @@ public class MonsterSpawner {
         spawnRangedMonsters();
         spawnPack();
         spawnMonstersInEmptyQuadrant();
+        spawnDemon();
 
     }
 
@@ -90,8 +92,17 @@ public class MonsterSpawner {
         packTimer += delta;
         rangedSpawnTimer += delta;
         targetedSpawnTimer += delta;
+        demonTimer += delta;
     }
 
+
+    public void spawnDemon() {
+        if(demonTimer > 230f) {
+            demonTimer = 0;
+            Monster monster = new MawDemon(screen, null, this);
+            spawnMonster(monster);
+        }
+    }
     public void spawnMeleeMonsters() {
         if(meleeSpawnTimer > 2f) {
             meleeSpawnTimer = 0;
@@ -177,7 +188,7 @@ public class MonsterSpawner {
             }
 
             for (int i = 0; i < 8 * spawnRatio; i++) {
-                Vector2 position = SpellUtils.getClearRandomPositionCone(player.pawn.getPosition(), 34, 40, angle);
+                Vector2 position = SpellUtils.getClearRandomPositionCone(player.pawn.getPosition(), 34, 50, angle);
                 Monster monster = new TEST_MELEE(screen, position, this);
                 spawnMonster(monster);
             }
@@ -195,10 +206,10 @@ public class MonsterSpawner {
     public Vector2 getSpawnPosition() {
         Vector2 playerPosition = player.pawn.getPosition();
         if(direction == null) {
-            return SpellUtils.getClearRandomPositionRing(playerPosition, 32, 40);
+            return SpellUtils.getClearRandomPositionRing(playerPosition, 32, 50);
         } else {
             float angle = direction.angleDeg();
-            return SpellUtils.getClearRandomPositionCone(playerPosition, 32, 40, angle);
+            return SpellUtils.getClearRandomPositionCone(playerPosition, 32, 50, angle);
         }
     }
 

@@ -1,4 +1,4 @@
-package wizardo.game.Screens.Character.Anims;
+package wizardo.game.Screens.CharacterScreen.Anims;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 

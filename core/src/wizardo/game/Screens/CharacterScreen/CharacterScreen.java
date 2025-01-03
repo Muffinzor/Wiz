@@ -1,4 +1,4 @@
-package wizardo.game.Screens.Character;
+package wizardo.game.Screens.CharacterScreen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -6,20 +6,20 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import wizardo.game.Display.MenuTable;
+import wizardo.game.Items.Equipment.Equipment;
 import wizardo.game.Resources.ScreenResources.CharacterScreenResources;
 import wizardo.game.Screens.BaseScreen;
-import wizardo.game.Screens.Character.Anims.Screen_Anim;
-import wizardo.game.Screens.Character.BookTable.EquippedTable;
-import wizardo.game.Screens.Character.BookTable.KnownTable;
-import wizardo.game.Screens.Character.BookTable.SpellIcon_Button;
-import wizardo.game.Screens.Character.EquipmentTable.EquipmentTable;
-import wizardo.game.Screens.Character.EquipmentTable.GearPanel;
-import wizardo.game.Screens.Character.InventoryTable.InventoryTable;
-import wizardo.game.Screens.Character.MasteryTable.MasteryTable;
-import wizardo.game.Screens.Character.StatsTable.StatsTable;
+import wizardo.game.Screens.CharacterScreen.Anims.Screen_Anim;
+import wizardo.game.Screens.CharacterScreen.BookTable.EquippedSpells_Table;
+import wizardo.game.Screens.CharacterScreen.BookTable.KnownSpells_Table;
+import wizardo.game.Screens.CharacterScreen.BookTable.SpellIcon_Button;
+import wizardo.game.Screens.CharacterScreen.EquipmentTable.EquipmentTable;
+import wizardo.game.Screens.CharacterScreen.EquipmentTable.GearPanel;
+import wizardo.game.Screens.CharacterScreen.InventoryTable.InventoryTable;
+import wizardo.game.Screens.CharacterScreen.MasteryTable.MasteryTable;
+import wizardo.game.Screens.CharacterScreen.StatsTable.StatsTable;
 import wizardo.game.Wizardo;
 
 import java.util.ArrayList;
@@ -33,11 +33,12 @@ public class CharacterScreen extends BaseScreen {
     public ArrayList<Screen_Anim> anims;
 
     public MasteryTable mastery_table;
-    public EquippedTable equippedSpells_table;
-    public KnownTable knownSpells_table;
+    public EquippedSpells_Table equippedSpells_table;
+    public KnownSpells_Table knownSpells_table;
     public EquipmentTable equipment_table;
     public InventoryTable inventory_table;
     public StatsTable stats_Table;
+    public Equipment selectedEquipmentPiece;
 
     public Button selectedButton;
     public MenuTable activeTable;
@@ -64,9 +65,42 @@ public class CharacterScreen extends BaseScreen {
         mastery_table = new MasteryTable(stage, masteryTableSkin, game, this);
         activeTable = mastery_table;
 
-        equippedSpells_table = new EquippedTable(stage, bookTableSkin, game, this);
-        knownSpells_table = new KnownTable(stage, bookTableSkin, game, this);
+        equipment_table = new EquipmentTable(stage, inventorySkin, game, this);
+        inventory_table = new InventoryTable(stage, inventorySkin, game, this);
+
+        equippedSpells_table = new EquippedSpells_Table(stage, bookTableSkin, game, this);
+        knownSpells_table = new KnownSpells_Table(stage, bookTableSkin, game, this);
         stats_Table = new StatsTable(stage);
+    }
+    @Override
+    public void resize(int width, int height) {
+        super.resize(width, height);
+
+        background.setSize(width, height);
+        batch.setProjectionMatrix(uiCamera.combined);
+
+        stage.setViewport(new ScreenViewport(uiCamera));
+        stage.getViewport().update(width, height, true);
+
+        panelStage.clear();
+        panelStage.getViewport().update(width, height, true);
+
+        equipment_table.resize();
+        inventory_table.resize();
+
+        mastery_table.resize();
+        mastery_table.updateChanges();
+        mastery_table.updateCheckBoxes();
+        mastery_table.updateSelectedButton();
+
+        equippedSpells_table.resize();
+        knownSpells_table.resize();
+
+        activeTable = mastery_table;
+
+        setInputs();
+
+        stats_Table.createNewPanel();
 
     }
 
@@ -107,7 +141,12 @@ public class CharacterScreen extends BaseScreen {
 
     @Override
     public void resume() {
-        resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        if(selectedEquipmentPiece != null && choiceConfirmed) {
+            player.inventory.destroyItem(selectedEquipmentPiece);
+            selectedEquipmentPiece = null;
+            choiceConfirmed = false;
+            inventory_table.resize();
+        }
         selectedSpell_Button = null;
         paused = false;
     }
@@ -125,38 +164,6 @@ public class CharacterScreen extends BaseScreen {
         }
     }
 
-    @Override
-    public void resize(int width, int height) {
-        super.resize(width, height);
-
-        stage.clear();
-        stage = new Stage(new ScreenViewport(uiCamera));
-        stage.getViewport().update(width, height, true);
-
-        panelStage.clear();
-        panelStage = new Stage(new ScreenViewport(uiCamera));
-        panelStage.getViewport().update(width, height, true);
-
-        equipment_table = new EquipmentTable(stage, inventorySkin, game, this);
-        inventory_table = new InventoryTable(stage, inventorySkin, game, this);
-
-        mastery_table = new MasteryTable(stage, masteryTableSkin, game, this);
-        mastery_table.updateSelectedButton();
-
-        equippedSpells_table = new EquippedTable(stage, bookTableSkin, game, this);
-        knownSpells_table = new KnownTable(stage, bookTableSkin, game, this);
-
-        activeTable = mastery_table;
-        selectedSpell_Button = null;
-
-        background.setSize(width, height);
-        batch.setProjectionMatrix(uiCamera.combined);
-        setInputs();
-
-        stats_Table.dispose();
-        stats_Table = new StatsTable(stage);
-
-    }
 
     public void drawSelectedButton() {
 

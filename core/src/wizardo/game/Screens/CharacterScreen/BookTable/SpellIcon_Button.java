@@ -1,16 +1,13 @@
-package wizardo.game.Screens.Character.BookTable;
+package wizardo.game.Screens.CharacterScreen.BookTable;
 
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import wizardo.game.Display.MenuTable;
-import wizardo.game.Screens.Character.Anims.SpellSwap_Anim;
-import wizardo.game.Screens.Character.CharacterScreen;
+import wizardo.game.Screens.CharacterScreen.Anims.SpellSwap_Anim;
+import wizardo.game.Screens.CharacterScreen.CharacterScreen;
 import wizardo.game.Spells.Spell;
-import wizardo.game.Spells.SpellUtils;
 
 import static wizardo.game.Resources.Skins.bookTableSkin;
 import static wizardo.game.Screens.BaseScreen.xRatio;
@@ -21,16 +18,19 @@ public class SpellIcon_Button extends ImageButton {
 
     CharacterScreen screen;
     public Spell spell;
+    public boolean equipped;
 
     public SpellIcon_Button(Spell spell, boolean equipped, CharacterScreen screen) {
-        super(getStyleForSpell(spell, bookTableSkin, equipped));
+        super(getStyleForSpell(spell, bookTableSkin));
+        adjustSize();
+        this.equipped = equipped;
         this.screen = screen;
         this.spell = spell;
 
         addClickListener();
     }
 
-    private static ImageButtonStyle getStyleForSpell(Spell spell, Skin skin, boolean equipped) {
+    private static ImageButtonStyle getStyleForSpell(Spell spell, Skin skin) {
         String name = spell.name;
         ImageButtonStyle style = null;
 
@@ -216,8 +216,12 @@ public class SpellIcon_Button extends ImageButton {
                 break;
         }
 
-        ImageButtonStyle newStyle = new ImageButtonStyle(style);
-        newStyle.imageUp = new TextureRegionDrawable(((TextureRegionDrawable) style.imageUp).getRegion());
+        return style;
+    }
+
+    public void adjustSize() {
+        ImageButtonStyle newStyle = new ImageButtonStyle(getStyle());
+        newStyle.imageUp = new TextureRegionDrawable(((TextureRegionDrawable) getStyle().imageUp).getRegion());
 
         float SPELLBUTTON_SIZE_X = 128 * xRatio;
         float SPELLBUTTON_SIZE_Y = 128 * yRatio;
@@ -230,10 +234,12 @@ public class SpellIcon_Button extends ImageButton {
         newStyle.imageUp.setMinWidth(SPELLBUTTON_SIZE_X);
         newStyle.imageUp.setMinHeight(SPELLBUTTON_SIZE_Y);
 
-        return newStyle;
+        setStyle(newStyle);
     }
 
     public Vector2 getCenter() {
+        float x = getParent().getParent().getX();
+        float y = getParent().getParent().getY();
 
         float table_x = getParent().getX();
         float table_y = getParent().getY();
@@ -241,8 +247,8 @@ public class SpellIcon_Button extends ImageButton {
         float own_x = getX();
         float own_y = getY();
 
-        float actual_x = table_x + own_x + getWidth()/2f;
-        float actual_y = table_y + own_y + getHeight()/2f;
+        float actual_x = x + table_x + own_x + getWidth()/2f;
+        float actual_y = y + table_y + own_y + getHeight()/2f;
 
         return new Vector2(actual_x, actual_y);
     }
@@ -260,12 +266,12 @@ public class SpellIcon_Button extends ImageButton {
         screen.selected_scale = 1;
 
         if(screen.selectedSpell_Button != null) {
-            if (getParent().equals(screen.knownSpells_table.table) &&
-                    screen.selectedSpell_Button.getParent().equals(screen.equippedSpells_table.table)) {
+            if (getParent().getParent().equals(screen.knownSpells_table.table) &&
+                    screen.selectedSpell_Button.getParent().getParent().equals(screen.equippedSpells_table.table)) {
                 attemptSwap(true);
                 return;
-            } else if (getParent().equals(screen.equippedSpells_table.table) &&
-                    screen.selectedSpell_Button.getParent().equals(screen.knownSpells_table.table)) {
+            } else if (getParent().getParent().equals(screen.equippedSpells_table.table) &&
+                    screen.selectedSpell_Button.getParent().getParent().equals(screen.knownSpells_table.table)) {
                 attemptSwap(false);
                 return;
             }
@@ -307,8 +313,8 @@ public class SpellIcon_Button extends ImageButton {
                 createSwapAnims(screen.selectedSpell_Button, this, spell_equipped, spell_known);
             }
 
-            screen.knownSpells_table.resize();
-            screen.equippedSpells_table.resize();
+            screen.knownSpells_table.updateSpells();
+            screen.equippedSpells_table.updateSpells();
             screen.selectedSpell_Button = null;
 
             return;
@@ -328,13 +334,15 @@ public class SpellIcon_Button extends ImageButton {
             } else {
                 createSwapAnims(screen.selectedSpell_Button, this, spell_equipped, spell_known);
             }
-            screen.knownSpells_table.resize();
-            screen.equippedSpells_table.resize();
+            screen.knownSpells_table.updateSpells();
+            screen.equippedSpells_table.updateSpells();
             screen.selectedSpell_Button = null;
             screen.mastery_table.mixingTable.updateButtons();
         } else {
             screen.selectedSpell_Button = this;
         }
+
+
 
     }
 

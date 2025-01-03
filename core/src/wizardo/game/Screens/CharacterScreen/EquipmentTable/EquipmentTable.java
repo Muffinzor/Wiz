@@ -1,4 +1,4 @@
-package wizardo.game.Screens.Character.EquipmentTable;
+package wizardo.game.Screens.CharacterScreen.EquipmentTable;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -7,9 +7,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import wizardo.game.Display.MenuTable;
-import wizardo.game.Screens.Character.CharacterScreen;
+import wizardo.game.Screens.CharacterScreen.CharacterScreen;
 import wizardo.game.Wizardo;
 
+import static wizardo.game.Screens.BaseScreen.xRatio;
+import static wizardo.game.Screens.BaseScreen.yRatio;
 import static wizardo.game.Wizardo.player;
 
 public class EquipmentTable extends MenuTable {
@@ -24,7 +26,11 @@ public class EquipmentTable extends MenuTable {
     public EquipmentTable(Stage stage, Skin skin, Wizardo game, CharacterScreen screen) {
         super(stage, skin, game);
         this.screen = screen;
-        resize();
+
+        createButtons();
+        adjustSize();
+
+        stage.addActor(table);
     }
 
     public void update() {
@@ -34,28 +40,21 @@ public class EquipmentTable extends MenuTable {
         }
     }
 
-    public void createTable() {
-
-        //adjustFontSize();
-        float xRatio = Gdx.graphics.getWidth() / 1920f;
-        float yRatio = Gdx.graphics.getHeight() / 1080f;
-
+    public void adjustSize() {
         float width = 400 * xRatio;
         float height = 465 * yRatio;
 
         int x_pos = Math.round(100 * xRatio);
         int y_pos = Math.round(445 * yRatio);
 
-        table = new Table();
         table.setPosition(x_pos, y_pos);
         table.setWidth(width);
         table.setHeight(height);
-        stage.addActor(table);
 
-        //table.setDebug(true);
-
-        createButtons();
-
+        for(Button button : buttons) {
+            EquipmentButton equipButton = (EquipmentButton) button;
+            equipButton.adjustSize();
+        }
     }
 
     public void createButtons() {
@@ -144,12 +143,9 @@ public class EquipmentTable extends MenuTable {
     @Override
     public void resize() {
         table.clear();
-        table.remove();
-
         buttons.clear();
-
-        buttonsMatrix = new EquipmentButton[2][4];
-        createTable();
+        createButtons();
+        adjustSize();
     }
 
 

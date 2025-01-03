@@ -1,14 +1,12 @@
-package wizardo.game.Screens.Character.StatsTable;
+package wizardo.game.Screens.CharacterScreen.StatsTable;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Container;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
@@ -71,6 +69,7 @@ public class StatsTable {
         container.validate();
     }
 
+
     public StatsTable(Stage stage) {
         this.stage = stage;
 
@@ -78,20 +77,28 @@ public class StatsTable {
         container.align(Align.topLeft);
         contentTable = new Table();
 
+        stage.addActor(container);
+        container.setActor(contentTable);
+
+        createNewPanel();
+
+    }
+
+
+    public void createNewPanel() {
         setup();
         setPosition();
-        stage.addActor(container);
-        container.setActor(contentTable); // Set the contentTable as the actor for the container
-
-
+        contentTable.clear();
         leftTable = new Table();
         rightTable = new Table();
-
         contentTable.add(leftTable).fill().expandX().width(container.getWidth() / 2f);
         contentTable.add(rightTable).fill().expandX().width(container.getWidth() / 2f);
+        addTitles();
+        SpellCastingTable();
+        container.pack();
+    }
 
-
-
+    public void addTitles() {
         Table titleLabel = new Table();
         Label label = new Label("Damage", inventorySkin, "Stats_Title");
         //label.setColor(Skins.light_yellow);
@@ -105,16 +112,6 @@ public class StatsTable {
         label2.setAlignment(Align.center);
         rightTable.add(label2).expandX().fill();
         rightTable.row().padBottom(20);
-
-
-        //container.setDebug(true);
-        //contentTable.setDebug(true);
-        //leftTable.setDebug(true);
-        //rightTable.setDebug(true);
-
-
-        SpellCastingTable();
-        container.pack();
     }
 
     public void SpellCastingTable() {
@@ -163,7 +160,7 @@ public class StatsTable {
         elementalTable.add(arcane).expandX().fill();
         arcane.setAlignment(Align.left);
 
-        String arcString = "" + (int) player.spellbook.lightningBonusDmg + "%";
+        String arcString = "" + (int) player.spellbook.arcaneBonusDmg + "%";
         Label arcDmg = new Label(arcString, inventorySkin, "Gear_Text");
         arcDmg.setColor(Color.GREEN);
         elementalTable.add(arcDmg);
@@ -175,7 +172,7 @@ public class StatsTable {
         elementalTable.add(all).expandX().fill();
         all.setAlignment(Align.left);
 
-        String allString = "" + (int) player.spellbook.lightningBonusDmg + "%";
+        String allString = "" + (int) player.spellbook.allBonusDmg + "%";
         Label allDmg = new Label(allString, inventorySkin, "Gear_Text");
         allDmg.setColor(Color.GREEN);
         elementalTable.add(allDmg);

@@ -193,6 +193,7 @@ public class FrostArcane_Spells {
 
         Orbit_Spell frostarcane17 = new Orbit_Spell();
         frostarcane17.frostbolt = true;
+        frostarcane17.anim_element = FROST;
         frostarcane17.spellParts.add(FROSTBOLT);
         frostarcane17.spellParts.add(FROZENORB);
         frostarcane17.spellParts.add(RIFTS);
