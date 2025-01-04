@@ -100,7 +100,11 @@ public class MonsterManager {
             bodiesRemovalCounter = 0;
             for(Monster monster : dyingMonsters) {
                 if(monster.alpha <= 0) {
-                    world.destroyBody(monster.body);
+                    if(monster.basic) {
+                        screen.monsterSpawner.bodyPool.poolBody(monster.body);
+                    } else {
+                        world.destroyBody(monster.body);
+                    }
                     monstersRemoved.add(monster);
                 }
             }

@@ -59,6 +59,7 @@ public class Icespear_Projectile extends Icespear_Spell {
     public void update(float delta) {
         if(!initialized) {
             speed = getScaledSpeed();
+            minimumTimeForSplit *= (1 - player.spellbook.projSpeedBonus/100f);
             duration = duration * MathUtils.random(0.75f, 1);
             pickAnim();
             createBody();
@@ -255,6 +256,7 @@ public class Icespear_Projectile extends Icespear_Spell {
             frame.setScale(scale);
         }
         screen.displayManager.spriteRenderer.regular_sorted_sprites.add(frame);
+        screen.centerSort(frame, body.getPosition().y * PPM - 8);
 
     }
 

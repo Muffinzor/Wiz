@@ -85,7 +85,7 @@ public class ChestLoot {
         }
     }
     public void WoodenChest() {
-
+        powerLoot();
         int loots = MathUtils.random(1,2);
         for (int i = 0; i < loots; i++) {
             drops.add(woodenChestDropTable());
@@ -93,7 +93,7 @@ public class ChestLoot {
     }
 
     public void powerLoot() {
-        Equipment rare = chest.screen.dropManager.getEquipmentForDrop(ALL, ItemUtils.EquipQuality.RARE, "Tal's Regalia");
+        Equipment rare = chest.screen.dropManager.getEquipmentForDrop(ALL, ItemUtils.EquipQuality.RARE, "The Phoenix Pelt");
         drops.add(new EquipmentDrop(chest.body.getPosition(), rare));
         Equipment rare2 = chest.screen.dropManager.getEquipmentForDrop(ALL, ItemUtils.EquipQuality.RARE, "The Duke's Signet");
         drops.add(new EquipmentDrop(chest.body.getPosition(), rare2));

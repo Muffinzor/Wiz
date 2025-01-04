@@ -95,6 +95,36 @@ public class MapUtils {
 
         return body;
     }
+    public static Body createLowObstacleBody_FromTiledMap(MapChunk chunk, MapObject object, float radius) {
+        Body body;
+        BodyDef def = new BodyDef();
+
+        float x = object.getProperties().get("x", Float.class) + chunk.x_pos;
+        float y = object.getProperties().get("y", Float.class) + chunk.y_pos;
+
+        def.type = BodyDef.BodyType.StaticBody;
+
+
+        def.position.set(x/PPM, y/PPM);
+        def.fixedRotation = true;
+        def.linearDamping = 10000f;
+        def.angularDamping = 10000f;
+        body = world.createBody(def);
+
+        CircleShape shape = new CircleShape();
+        shape.setRadius(radius / PPM);
+
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = shape;
+        fixtureDef.filter.categoryBits = SHORT_OBSTACLE;
+        fixtureDef.isSensor = false;
+
+        body.createFixture(fixtureDef);
+        shape.dispose();
+
+        return body;
+    }
+
 
     /**
      * Creates an impassable body to the shape of the Object passed in argument,

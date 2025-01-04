@@ -55,7 +55,7 @@ public class BattleScreen extends BaseScreen {
 
         mainCamera.viewportWidth = Gdx.graphics.getWidth();
         mainCamera.viewportHeight = Gdx.graphics.getHeight();
-        mainCamera.zoom = 1f;
+        mainCamera.zoom = 4f;
 
         createNewWorld();
         rayHandler = new RayHandler(world);

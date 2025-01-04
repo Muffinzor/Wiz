@@ -1,5 +1,6 @@
 package wizardo.game.Maps.DecorObjects;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.MapObject;
 import wizardo.game.Lighting.RoundLight;
@@ -18,6 +19,8 @@ public class PortalObject extends TriggerObject {
     public RoundLight light;
     boolean active;
 
+    public static Sprite stoneCircle = new Sprite(new Texture("Maps/Decor/PortalCircle.png"));
+
     public PortalObject(MapChunk chunk, MapObject object, boolean active) {
         super(chunk, object);
         this.active = active;
@@ -34,6 +37,7 @@ public class PortalObject extends TriggerObject {
         }
 
         stateTime += delta;
+        drawStoneCircle();
         drawSprite();
 
     }
@@ -62,6 +66,13 @@ public class PortalObject extends TriggerObject {
         frame.setAlpha(0.8f);
         frame.setCenter(triggerBody.getPosition().x * PPM, triggerBody.getPosition().y * PPM + 20);
         chunk.screen.displayManager.spriteRenderer.regular_sorted_sprites.add(frame);
+    }
+
+    public void drawStoneCircle() {
+        Sprite frame = getSprite(chunk.screen);
+        frame.set(stoneCircle);
+        frame.setCenter(triggerBody.getPosition().x * PPM, triggerBody.getPosition().y * PPM - 5);
+        chunk.screen.displayManager.spriteRenderer.under_sprites.add(frame);
     }
 
     public void createBody() {

@@ -45,7 +45,7 @@ public class Legendary_FireRobes extends Robes {
         super.equip();
         aura = new FlameAura();
         player.screen.spellManager.add(aura);
-        player.pawn.light.setLight(0.7f,0.25f,0,0.8f,250, player.pawn.body.getPosition());
+        player.pawn.light.setLight(0.9f,0.3f,0,0.8f,300, player.pawn.body.getPosition());
     }
 
     public void unequip() {

@@ -90,16 +90,21 @@ public class DungeonChunk extends MapChunk {
                 StandingTorchObject torch = new StandingTorchObject(this, object);
                 layerObjects.add(torch);
             }
+
+            if(object.getName().equals("Brazier")) {
+                BrazierObject brazier = new BrazierObject(this, object);
+                layerObjects.add(brazier);
+            }
         }
 
         decor = map.getLayers().get("ObstacleBodies").getObjects();
         for (MapObject object : decor) {
 
             if(object.getName().equals("Pillar")) {
-                if(Math.random() >= 0.4f) {
+                if(Math.random() >= 0.2f) {
                     PillarTorchObject torch = new PillarTorchObject(this, object);
                     layerObjects.add(torch);
-                } else if(Math.random() > 0.8f) {
+                } else {
                     WallFlagObject flag = new WallFlagObject(this, object);
                     layerObjects.add(flag);
                 }
@@ -116,10 +121,10 @@ public class DungeonChunk extends MapChunk {
                 }
             }
             if(object.getName().equals("Building2")) {
-                if(Math.random() >= 0.4f) {
+                if(Math.random() >= 0.7f) {
                     PillarTorchObject torch = new PillarTorchObject(this, object);
                     layerObjects.add(torch);
-                } else if(Math.random() >= 0.7f) {
+                } else {
                     WallFlagObject flag = new WallFlagObject(this, object);
                     layerObjects.add(flag);
                 }
@@ -128,6 +133,13 @@ public class DungeonChunk extends MapChunk {
                 MapShop shop = new MapShop(this, object);
                 layerObjects.add(shop);
             }
+
+            if(object.getName().equals("FirePillar")) {
+                FirePillarObject pillar = new FirePillarObject(this, object);
+                layerObjects.add(pillar);
+            }
+
+
         }
     }
 

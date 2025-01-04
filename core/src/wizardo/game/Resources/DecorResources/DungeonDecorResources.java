@@ -85,16 +85,48 @@ public class DungeonDecorResources {
         standingbreak2 = new Animation<>(0.06f, frames3);
     }
 
+    /**
+     * FIRE PILLAR
+     */
+    public static String firePillarPath = "Maps/Decor/Dungeon/FirePillar/GreenFirePillar.atlas";
+    public static Animation<Sprite> firePillar;
+    public static void loadFirePillarAnimations() {
+        TextureAtlas atlas = assetManager.get(firePillarPath, TextureAtlas.class);
+        Sprite[] frames1 = new Sprite[19];
+        for (int i = 0; i < frames1.length; i++) {
+            frames1[i] = atlas.createSprite("fire" + (i+1));
+        }
+        firePillar = new Animation<>(0.06f, frames1);
+    }
+
+    /**
+     * BRAZIER
+     */
+    public static String brazierPath = "Maps/Decor/Dungeon/Brazier/Brazier.atlas";
+    public static Animation<Sprite> brazierAnim;
+    public static void loadBrazierAnimations() {
+        TextureAtlas atlas = assetManager.get(brazierPath, TextureAtlas.class);
+        Sprite[] frames1 = new Sprite[8];
+        for (int i = 0; i < frames1.length; i++) {
+            frames1[i] = atlas.createSprite("brazier" + (i+1));
+        }
+        brazierAnim = new Animation<>(0.06f, frames1);
+    }
+
 
 
     public static void loadAnimations() {
         loadVaseAnimations();
         loadStandingTorchAnimations();
         loadShopAnimations();
+        loadFirePillarAnimations();
+        loadBrazierAnimations();
     }
     public static void loadAtlas() {
         assetManager.load(vasePath, TextureAtlas.class);
         assetManager.load(shopPath, TextureAtlas.class);
         assetManager.load(standingTorchPath, TextureAtlas.class);
+        assetManager.load(firePillarPath, TextureAtlas.class);
+        assetManager.load(brazierPath, TextureAtlas.class);
     }
 }

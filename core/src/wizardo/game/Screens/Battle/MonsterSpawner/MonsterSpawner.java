@@ -9,6 +9,7 @@ import wizardo.game.Monsters.TEST_MELEE;
 import wizardo.game.Monsters.TEST_RANGED;
 import wizardo.game.Screens.Battle.BattleScreen;
 import wizardo.game.Spells.SpellUtils;
+import wizardo.game.Utils.BodyPool;
 
 import static wizardo.game.Wizardo.player;
 
@@ -36,9 +37,12 @@ public class MonsterSpawner {
     float demonTimer = 0;
     float targetedSpawnTimer = 0;
 
+    public BodyPool bodyPool;
+
 
     public MonsterSpawner(BattleScreen screen) {
         this.screen = screen;
+        bodyPool = new BodyPool();
 
         playerPreviousLocation = player.pawn.getPosition();
         playerCurrentLocation = player.pawn.getPosition();

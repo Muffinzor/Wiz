@@ -21,6 +21,8 @@ public class TEST_MELEE extends MonsterMelee {
         maxHP = 30;
         xp = 5;
 
+        basic = true;
+
         dmg = 5;
 
         massValue = 5f;

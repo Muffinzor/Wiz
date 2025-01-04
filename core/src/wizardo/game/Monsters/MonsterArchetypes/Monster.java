@@ -70,6 +70,7 @@ public abstract class Monster {
     public float maxHP;
     public int dmg;
     public int xp;
+    public boolean basic;
     public boolean elite;
 
     public boolean dead;
@@ -178,8 +179,13 @@ public abstract class Monster {
     }
 
     public void createBody() {
-        body = BodyFactory.monsterBody(position, bodyRadius);
+        if(basic) {
+            body = spawner.bodyPool.getBody(position);
+        } else {
+            body = BodyFactory.monsterBody(position, bodyRadius);
+        }
         body.setUserData(this);
+        body.setActive(true);
         MassData mass = new MassData();
         float massMin = massValue * 0.8f;
         float massMax = massValue * 1.2f;
@@ -267,10 +273,7 @@ public abstract class Monster {
     }
 
     public void dispose() {
-        if(body != null) {
-            //world.destroyBody(body);
-            //body = null;
-        }
+
     }
 
     public void timers(float delta) {

@@ -22,7 +22,7 @@ public class MapManager {
     public BattleScreen screen;
     public OrthographicCamera camera;
 
-    public static final int CHUNK_SIZE = 2048;
+    public static final int CHUNK_SIZE = 1920;   // 60 x 60 -> 32px tiles
     public static final int INITIAL_GRID_SIZE = 2; // 9x9
 
     int startingTileX = 50;
@@ -62,7 +62,7 @@ public class MapManager {
     }
 
     private void setPlayerStartPosition() {
-        player.pawn.body.setTransform((2048f / PPM) * startingTileX + 1024f/PPM, (2048f / PPM) * startingTileY + 1024f/PPM, 0);
+        player.pawn.body.setTransform((1920f / PPM) * startingTileX + 960f/PPM, (1920f / PPM) * startingTileY + 960f/PPM, 0);
         camera.position.set(player.pawn.getPosition().scl(PPM), 0);
     }
 
@@ -85,9 +85,9 @@ public class MapManager {
 
     private void loadStartingChunk(int playerChunkX, int playerChunkY, String biome) {
         if (biome.equals("Dungeon")) {
-            loadMapChunk("Maps/TEST/Map_Project2.tmx", startingTileX, startingTileY);
+            loadMapChunk("Maps/DungeonMaps/Chunks/StartingChunk.tmx", startingTileX, startingTileY);
         } else {
-            loadMapChunk("Maps/TEST/Map_Project2.tmx", startingTileX, startingTileY);
+            loadMapChunk("Maps/DungeonMaps/Chunks/StartingChunk.tmx", startingTileX, startingTileY);
         }
     }
     private void loadInitialGrid(String biome) {

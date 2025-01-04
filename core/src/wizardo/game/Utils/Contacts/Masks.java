@@ -10,7 +10,7 @@ public class Masks {
     public static final short MONSTER = 0x0008;
 
     public static final short OBSTACLE = 0x0010;
-    public static final short AVOID_ZONE = 0x0020;
+    public static final short SHORT_OBSTACLE = 0x0020;
     public static final short INTANGIBLE_DROP = 0x0040;
     public static final short MONSTER_PROJECTILE = 0x0080;
 
@@ -28,11 +28,12 @@ public class Masks {
 
     public static final short EVENT_MASK = PAWN;
 
-    public static final short MONSTER_MASK = (short) ( SPELL | OBSTACLE | PAWN | DECOR | MONSTER | AVOID_ZONE | LIGHT_PROJECTILE);
+    public static final short MONSTER_MASK = (short) ( SPELL | OBSTACLE | PAWN | DECOR | MONSTER | LIGHT_PROJECTILE | SHORT_OBSTACLE);
 
     public static final short DECOR_MASK = (short) ( SPELL | MONSTER_PROJECTILE | PAWN | MONSTER | DROP );
 
     public static final short DROP_MASK = (short) (PAWN | DECOR | OBSTACLE | DROP);
+
     public static final short INTANGIBLE_MASK = (short) (DECOR | OBSTACLE | DROP);
 
     public static final short MONSTER_PROJECTILE_MASK = (short) (PAWN | SPELL | OBSTACLE | DECOR);
