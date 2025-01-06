@@ -6,11 +6,9 @@ import wizardo.game.Maps.Dungeon.DungeonChunk;
 import wizardo.game.Screens.Battle.BattleScreen;
 import wizardo.game.Wizardo;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
-import static wizardo.game.Maps.MapGeneration.ChunkPaths.chunkPaths;
-import static wizardo.game.Maps.MapGeneration.ChunkPaths.fillChunks;
+import static wizardo.game.Maps.MapGeneration.ChunkPaths.*;
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.player;
 
@@ -23,7 +21,7 @@ public class MapManager {
     public OrthographicCamera camera;
 
     public static final int CHUNK_SIZE = 1920;   // 60 x 60 -> 32px tiles
-    public static final int INITIAL_GRID_SIZE = 2; // 9x9
+    public static final int INITIAL_GRID_SIZE = 1; // 9x9
 
     int startingTileX = 50;
     int startingTileY = 50;
@@ -100,11 +98,97 @@ public class MapManager {
     private void loadChunksAroundPlayer(int playerChunkX, int playerChunkY) {
         for (int x = playerChunkX - INITIAL_GRID_SIZE; x <= playerChunkX + INITIAL_GRID_SIZE; x++) {
             for (int y = playerChunkY - INITIAL_GRID_SIZE; y <= playerChunkY + INITIAL_GRID_SIZE; y++) {
-                if (x == startingTileX && y == startingTileY) continue;
-                loadMapChunk(getRandomChunk(), x, y);
+                if (x == startingTileX && y == startingTileY) continue;  // Skip starting chunk
+                String chunkKey = chunkKey(x, y);
+                if(chunks.containsKey(chunkKey)) continue;              // Skip if already loaded;
+
+                String chunkPath = getConnectedChunkPath(x, y);
+                loadMapChunk(chunkPath, x, y);
             }
         }
     }
+
+    private String getConnectedChunkPath(int x_position, int y_position) {
+        Map<String, List<Integer>> newTileRequiredConnections = new HashMap<>();
+        System.out.println("Checking connections for chunk: " + x_position + ", " + y_position);
+
+        if (chunkExists(x_position, y_position - 1)) {
+            List<Integer> connection = getNeighborConnection(x_position, y_position - 1, "north");
+            if (!connection.isEmpty()) {  // Only add non-empty connections
+                newTileRequiredConnections.put("south", connection);
+            }
+        }
+        if (chunkExists(x_position, y_position + 1)) {
+            List<Integer> connection = getNeighborConnection(x_position, y_position + 1, "south");
+            if (!connection.isEmpty()) {  // Only add non-empty connections
+                newTileRequiredConnections.put("north", connection);
+            }
+        }
+        if (chunkExists(x_position - 1, y_position)) {
+            List<Integer> connection = getNeighborConnection(x_position - 1, y_position, "east");
+            if (!connection.isEmpty()) {  // Only add non-empty connections
+                newTileRequiredConnections.put("west", connection);
+            }
+        }
+        if (chunkExists(x_position + 1, y_position)) {
+            List<Integer> connection = getNeighborConnection(x_position + 1, y_position, "west");
+            if (!connection.isEmpty()) {  // Only add non-empty connections
+                newTileRequiredConnections.put("east", connection);
+            }
+        }
+
+        return findMatchingTile(newTileRequiredConnections);
+
+    }
+
+    public String findMatchingTile(Map<String, List<Integer>> requiredConnections) {
+        ArrayList<String> paths = new ArrayList<>();
+
+        for(String checkedTile : chunkPaths) {
+            Map<String, List<Integer>> checkedTileConnections = chunkConnections.get(checkedTile);
+            boolean matching = true;
+
+            for (Map.Entry<String, List<Integer>> entry : requiredConnections.entrySet()) {
+                String direction = entry.getKey();
+                List<Integer> requiredConnection = entry.getValue();
+
+                // If the tile connection does not exist or doesn't match, mark as non-matching
+                List<Integer> tileConnection = checkedTileConnections.get(direction);
+
+                if (tileConnection != null && !tileConnection.equals(requiredConnection)) {
+                    matching = false;
+                    break;
+                }
+            }
+
+            if (matching) {
+                paths.add(checkedTile);
+            }
+        }
+
+        // Ensure paths list is not empty before accessing
+        if (paths.isEmpty()) {
+            return startingChunkPath(); // Return a fallback path if no match found
+        }
+
+        // Shuffle the list and return a random matching path
+        Collections.shuffle(paths);
+        return paths.getFirst();  // Now you're calling get(0) which works for ArrayLists, not getFirst() which doesn't exist
+    }
+
+    private List<Integer> getNeighborConnection(int neighborX, int neighborY, String direction) {
+        String neighborKey = chunks.get(chunkKey(neighborX, neighborY)).pathToFile;
+        Map<String, List<Integer>> connections = chunkConnections.get(neighborKey);
+
+        if (connections != null) {
+            List<Integer> connection = connections.get(direction);
+            if (connection != null) return connection;
+        }
+        return Collections.emptyList();  // No connection available, return an empty list
+    }
+
+
+
     private void loadNewChunks(int playerChunkX, int playerChunkY) {
         int dx = playerChunkX - loadedChunksX;
         int dy = playerChunkY - loadedChunksY;
@@ -120,7 +204,8 @@ public class MapManager {
             }
             for (int x = startChunkX; x <= endChunkX; x++) {
                 for (int y = playerChunkY - INITIAL_GRID_SIZE; y <= playerChunkY + INITIAL_GRID_SIZE; y++) {
-                    loadMapChunk(getRandomChunk(), x, y);
+                    String chunkPath = getConnectedChunkPath(x, y);
+                    loadMapChunk(chunkPath, x, y);
                 }
             }
         }
@@ -136,7 +221,8 @@ public class MapManager {
             }
             for (int y = startChunkY; y <= endChunkY; y++) {
                 for (int x = playerChunkX - INITIAL_GRID_SIZE; x <= playerChunkX + INITIAL_GRID_SIZE; x++) {
-                    loadMapChunk(getRandomChunk(), x, y);
+                    String chunkPath = getConnectedChunkPath(x, y);
+                    loadMapChunk(chunkPath, x, y);
                 }
             }
         }
@@ -144,6 +230,12 @@ public class MapManager {
     private String getRandomChunk() {
         int index = MathUtils.random(chunkPaths.size() - 1);
         return chunkPaths.get(index);
+    }
+
+    private boolean chunkExists(int x_position, int y_position) {
+        // This method checks if a chunk at the given position already exists in the loaded map
+        String chunkKey = chunkKey(x_position, y_position);
+        return chunks.containsKey(chunkKey);
     }
 
 

@@ -2,7 +2,7 @@ package wizardo.game.Utils.Contacts;
 
 import com.badlogic.gdx.physics.box2d.*;
 import wizardo.game.Items.Drop.Drop;
-import wizardo.game.Maps.LayerObject;
+import wizardo.game.Maps.EnvironmentObject;
 import wizardo.game.Maps.TriggerObject;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Monsters.MonsterActions.MonsterSpell;
@@ -96,11 +96,11 @@ public class WizContactListener implements ContactListener {
         } else
 
         if(f1isMonster && f2isDecor || f2isMonster && f1isDecor) {
-            LayerObject object;
+            EnvironmentObject object;
             if(f1isMonster) {
-                object = (LayerObject) f2.getBody().getUserData();
+                object = (EnvironmentObject) f2.getBody().getUserData();
             } else {
-                object = (LayerObject) f1.getBody().getUserData();
+                object = (EnvironmentObject) f1.getBody().getUserData();
             }
             object.collided = true;
         } else
@@ -172,7 +172,7 @@ public class WizContactListener implements ContactListener {
         Spell spell = (Spell) spellFix.getBody().getUserData();
         spell.handleCollision(decorFix);
 
-        LayerObject decor = (LayerObject) decorFix.getBody().getUserData();
+        EnvironmentObject decor = (EnvironmentObject) decorFix.getBody().getUserData();
         decor.collided = true;
     }
 

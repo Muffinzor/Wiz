@@ -4,7 +4,7 @@ package wizardo.game.Maps.Hub;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.physics.box2d.Body;
-import wizardo.game.Maps.LayerObject;
+import wizardo.game.Maps.EnvironmentObject;
 import wizardo.game.Maps.MapGeneration.MapChunk;
 import wizardo.game.Maps.DecorObjects.PortalObject;
 import wizardo.game.Screens.BaseScreen;
@@ -25,7 +25,7 @@ public class HubChunk extends MapChunk {
             initialize();
         }
 
-        for(LayerObject object : layerObjects) {
+        for(EnvironmentObject object : layerObjects) {
             object.update(delta);
         }
 

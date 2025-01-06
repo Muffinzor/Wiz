@@ -8,7 +8,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Maps.Chest;
-import wizardo.game.Maps.LayerObject;
+import wizardo.game.Maps.EnvironmentObject;
 import wizardo.game.Maps.Shop.MapShop;
 import wizardo.game.Screens.BaseScreen;
 import wizardo.game.Wizardo;
@@ -30,20 +30,25 @@ public abstract class MapChunk {
     public Vector2 chunkCenter;
 
     public ArrayList<Body> bodies;
-    public ArrayList<LayerObject> layerObjects;
+    public ArrayList<EnvironmentObject> layerObjects;
+    public ArrayList<EnvironmentObject> objectsToAdd;
 
     public MapShop shop;
     public boolean rolledShop;
+
+    public String pathToFile;
 
     public MapChunk(String pathToFile, float x, float y, Wizardo game, BaseScreen screen) {
         this.game = game;
         this.screen = screen;
         this.map = new TmxMapLoader().load(pathToFile);
+        this.pathToFile = pathToFile;
         this.mapRenderer = new OrthogonalTiledMapRenderer(map);
         x_pos = x;
         y_pos = y;
         bodies = new ArrayList<>();
         layerObjects = new ArrayList<>();
+        objectsToAdd = new ArrayList<>();
         rolledShop = Math.random() > 0.1f;
     }
 
@@ -69,11 +74,20 @@ public abstract class MapChunk {
                 layerObjects.add(chest);
             }
 
-            if(object.getName().equals("TestChest")) {
-                Chest chest = new Chest(this, object, 0);
+            if(object.getName().equals("TrueChest")) {
+                Chest chest = new Chest(this, object, -2);
                 layerObjects.add(chest);
             }
 
         }
+    }
+
+    public void addLayerObject(EnvironmentObject layerObject) {
+        objectsToAdd.add(layerObject);
+    }
+
+    public void mergeLists() {
+        layerObjects.addAll(objectsToAdd);
+        objectsToAdd.clear();
     }
 }

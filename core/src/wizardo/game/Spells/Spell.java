@@ -19,7 +19,7 @@ import wizardo.game.Items.Equipment.Staff.Legendary_ArcaneStaff;
 import wizardo.game.Items.Equipment.Staff.Legendary_FireStaff;
 import wizardo.game.Items.Equipment.Staff.Legendary_FrostStaff;
 import wizardo.game.Items.Equipment.Staff.Legendary_LightningStaff;
-import wizardo.game.Maps.LayerObject;
+import wizardo.game.Maps.EnvironmentObject;
 import wizardo.game.Monsters.MonsterActions.MonsterSpell;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Screens.BaseScreen;
@@ -97,7 +97,7 @@ public abstract class Spell implements Cloneable {
 
     }
 
-    public void handleCollision(LayerObject decor) {
+    public void handleCollision(EnvironmentObject decor) {
         decor.collided = true;
     }
 

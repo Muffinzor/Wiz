@@ -5,20 +5,14 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import wizardo.game.Maps.LayerObject;
+import wizardo.game.Maps.EnvironmentObject;
 import wizardo.game.Maps.MapGeneration.MapChunk;
 
+import static wizardo.game.Resources.DecorResources.DungeonDecorResources.*;
 import static wizardo.game.Utils.Constants.PPM;
 
-public class WallFlagObject extends LayerObject {
+public class WallFlagObject extends EnvironmentObject {
 
-    public static Sprite redFlag = new Sprite(new Texture("Maps/Decor/Dungeon/Flags/Red.png"));
-    public static Sprite blueFlag = new Sprite(new Texture("Maps/Decor/Dungeon/Flags/Blue.png"));
-    public static Sprite goldenFlag = new Sprite(new Texture("Maps/Decor/Dungeon/Flags/Golden.png"));
-    public static Sprite whiteFlag = new Sprite(new Texture("Maps/Decor/Dungeon/Flags/White.png"));
-    public static Sprite blackFlag = new Sprite(new Texture("Maps/Decor/Dungeon/Flags/Black.png"));
-    public static Sprite greenFlag = new Sprite(new Texture("Maps/Decor/Dungeon/Flags/Green.png"));
-    public static Sprite purpleFlag = new Sprite(new Texture("Maps/Decor/Dungeon/Flags/Purple.png"));
 
     Sprite flag1;
     Sprite flag2;
@@ -37,7 +31,7 @@ public class WallFlagObject extends LayerObject {
 
     public void setup() {
         if(pillar) {
-            setPillarPosition();
+            setCenterPosition();
         } else {
             setBuildingPosition();
             configuration = MathUtils.random(1,3);
@@ -60,12 +54,17 @@ public class WallFlagObject extends LayerObject {
 
     }
 
-    public void setPillarPosition() {
+    public void setCenterPosition() {
         Float width = object.getProperties().get("width", Float.class);
         x = object.getProperties().get("x", Float.class) + chunk.x_pos + width/2;
         y = object.getProperties().get("y", Float.class) + chunk.y_pos + 42;
         x = x/PPM;
         y = y/PPM;
+
+        if(object.getName().equals("Building2")) {
+            y = y - 0.2f;
+        }
+
 
         position1 = new Vector2(x, y);
     }

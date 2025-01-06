@@ -55,12 +55,12 @@ public class BattleScreen extends BaseScreen {
 
         mainCamera.viewportWidth = Gdx.graphics.getWidth();
         mainCamera.viewportHeight = Gdx.graphics.getHeight();
-        mainCamera.zoom = 4f;
+        mainCamera.zoom = 1f;
 
         createNewWorld();
         rayHandler = new RayHandler(world);
         rayHandler.setCulling(false);
-        rayHandler.setAmbientLight(0.3f);
+        rayHandler.setAmbientLight(0.45f);
         lightManager.rayHandler = rayHandler;
 
         Pawn playerPawn = new Pawn(this);
@@ -149,6 +149,12 @@ public class BattleScreen extends BaseScreen {
         // Lerp'd
         mainCamera.position.x += (targetX - mainCamera.position.x) * 0.05f;
         mainCamera.position.y += (targetY - mainCamera.position.y) * 0.05f;
+
+        mainCamera.position.set(
+                Math.round(mainCamera.position.x),
+                Math.round(mainCamera.position.y),
+                mainCamera.position.z
+        );
 
         mainCamera.update();
 

@@ -4,14 +4,22 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.math.MathUtils;
 
 import static wizardo.game.Wizardo.assetManager;
 
 public class DungeonDecorResources {
 
-    public static Sprite pillar_sprite = new Sprite(new Texture("Maps/Decor/Dungeon/pillar.png"));
-    public static Sprite building1_sprite = new Sprite(new Texture("Maps/Decor/Dungeon/building1.png"));
-    public static Sprite building2_sprite = new Sprite(new Texture("Maps/Decor/Dungeon/building2.png"));
+    public static Sprite pillar_sprite = new Sprite(new Texture("Maps/Decor/Dungeon/pillar_type2.png"));
+    public static Sprite building1_sprite = new Sprite(new Texture("Maps/Decor/Dungeon/building1_type2.png"));
+
+    public static Sprite squareBuilding_sprite1 = new Sprite(new Texture("Maps/Decor/Dungeon/building2.png"));
+
+    public static Sprite crypt_sprite1 = new Sprite(new Texture("Maps/Decor/Dungeon/building2_type1.png"));
+    public static Sprite crypt_sprite2 = new Sprite(new Texture("Maps/Decor/Dungeon/building2_type2.png"));
+    public static Sprite crypt_sprite3 = new Sprite(new Texture("Maps/Decor/Dungeon/building2_type3.png"));
+
+    public static Sprite goldStatueLeft = new Sprite(new Texture("Maps/Decor/Dungeon/StatueLeft.png"));
 
     public static Animation<Sprite> dungeonshop_anim;
     public static String shopPath = "Maps/Decor/Dungeon/Shop.atlas";
@@ -112,6 +120,64 @@ public class DungeonDecorResources {
         }
         brazierAnim = new Animation<>(0.06f, frames1);
     }
+
+
+    /**
+     * WALL DECORATIONS
+     */
+
+    public static Sprite painting1 = new Sprite(new Texture("Maps/Decor/Dungeon/BuildingDeco/painting1.png"));
+    public static Sprite painting2 = new Sprite(new Texture("Maps/Decor/Dungeon/BuildingDeco/painting2.png"));
+    public static Sprite chains_single = new Sprite(new Texture("Maps/Decor/Dungeon/BuildingDeco/chains_single.png"));
+    public static Sprite chains_skelly = new Sprite(new Texture("Maps/Decor/Dungeon/BuildingDeco/chains_skelly.png"));
+    public static Sprite chains_double = new Sprite(new Texture("Maps/Decor/Dungeon/BuildingDeco/chains_double.png"));
+    public static Sprite gargoyleFace = new Sprite(new Texture("Maps/Decor/Dungeon/BuildingDeco/wall_gargoyle_face.png"));
+
+    public static Sprite redFlag = new Sprite(new Texture("Maps/Decor/Dungeon/Flags/Red.png"));
+    public static Sprite blueFlag = new Sprite(new Texture("Maps/Decor/Dungeon/Flags/Blue.png"));
+    public static Sprite goldenFlag = new Sprite(new Texture("Maps/Decor/Dungeon/Flags/Golden.png"));
+    public static Sprite whiteFlag = new Sprite(new Texture("Maps/Decor/Dungeon/Flags/White.png"));
+    public static Sprite blackFlag = new Sprite(new Texture("Maps/Decor/Dungeon/Flags/Black.png"));
+    public static Sprite greenFlag = new Sprite(new Texture("Maps/Decor/Dungeon/Flags/Green.png"));
+    public static Sprite purpleFlag = new Sprite(new Texture("Maps/Decor/Dungeon/Flags/Purple.png"));
+
+    public static Sprite getRandomFlag() {
+        Sprite flag = null;
+        int random = MathUtils.random(1,7);
+        switch (random) {
+            case 1 -> flag = redFlag;
+            case 2 -> flag = blueFlag;
+            case 3 -> flag = goldenFlag;
+            case 4 -> flag = greenFlag;
+            case 5 -> flag = whiteFlag;
+            case 6 -> flag = blackFlag;
+            case 7 -> flag = purpleFlag;
+        }
+        return flag;
+    }
+
+    public static Sprite getWallDeco(boolean singleCenter) {
+        Sprite sprite = null;
+        int random;
+        if(singleCenter) {
+            random = MathUtils.random(6,7);
+        } else {
+            random = MathUtils.random(1,5);
+        }
+        switch (random) {
+            case 1 -> sprite = painting1;
+            case 2 -> sprite = painting2;
+            case 3 -> sprite = chains_single;
+            case 4 -> sprite = chains_double;
+            case 5 -> sprite = getRandomFlag();
+            case 6 -> sprite = chains_skelly;
+            case 7 -> sprite = gargoyleFace;
+        }
+        return sprite;
+    }
+
+
+
 
 
 

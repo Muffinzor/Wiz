@@ -2,11 +2,17 @@ package wizardo.game.Maps.Dungeon;
 
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
+import com.badlogic.gdx.maps.objects.CircleMapObject;
+import com.badlogic.gdx.maps.objects.EllipseMapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import wizardo.game.Maps.Buildings.Crypt_Building;
+import wizardo.game.Maps.Buildings.Pillar_Building;
+import wizardo.game.Maps.Buildings.Square_Building;
+import wizardo.game.Maps.Chest;
 import wizardo.game.Maps.DecorObjects.*;
-import wizardo.game.Maps.LayerObject;
+import wizardo.game.Maps.EnvironmentObject;
 import wizardo.game.Maps.MapGeneration.MapChunk;
 import wizardo.game.Maps.MapUtils;
 import wizardo.game.Maps.Shop.MapShop;
@@ -26,7 +32,6 @@ public class DungeonChunk extends MapChunk {
     public DungeonChunk(String pathToFile, float x, float y, Wizardo game, BattleScreen screen) {
         super(pathToFile, x, y, game, screen);
         chunkCenter = new Vector2(x + CHUNK_SIZE / 2f, y + CHUNK_SIZE / 2f);
-
         decorRenderer = new DecorRenderer(this);
     }
 
@@ -40,9 +45,11 @@ public class DungeonChunk extends MapChunk {
                 initialize();
             }
 
-            for(LayerObject object : layerObjects) {
+            for(EnvironmentObject object : layerObjects) {
                 object.update(delta);
             }
+            layerObjects.removeIf(object -> object.toBeRemoved);
+
 
             screen.mainCamera.translate(-x_pos, -y_pos);
             screen.mainCamera.update();
@@ -53,6 +60,8 @@ public class DungeonChunk extends MapChunk {
 
             screen.mainCamera.translate(x_pos, y_pos);
             screen.mainCamera.update();
+
+            mergeLists();
 
         } else {
             disposeBodies();
@@ -70,7 +79,9 @@ public class DungeonChunk extends MapChunk {
             if(object instanceof RectangleMapObject) {
                 MapUtils.createRectangleObstacleBody(this, (RectangleMapObject) object);
             }
-
+            if(object instanceof EllipseMapObject) {
+                MapUtils.EllipseObstacleBody(this, (EllipseMapObject) object);
+            }
         }
     }
     public void createDecor() {
@@ -82,8 +93,13 @@ public class DungeonChunk extends MapChunk {
             }
 
             if(object.getName().equals("Vase") && Math.random() >= 0.75) {
-                VaseObject vase = new VaseObject(this, object);
+                VaseObject vase = new VaseObject(this, object, null);
                 layerObjects.add(vase);
+            }
+
+            if(object.getName().equals(("VaseCluster"))) {
+                VaseCluster cluster = new VaseCluster(this, object);
+                layerObjects.add(cluster);
             }
 
             if(object.getName().equals("StandingTorch") && Math.random() >= 0.5) {
@@ -95,39 +111,32 @@ public class DungeonChunk extends MapChunk {
                 BrazierObject brazier = new BrazierObject(this, object);
                 layerObjects.add(brazier);
             }
+
+            if(object.getName().equals("Doodad")) {
+                if(Math.random() >= 0.0f) {
+                    Chest chest = new Chest(this, object, -1);
+                    layerObjects.add(chest);
+                } else if(Math.random() >= 0.75f) {
+                    DoodadObject doodad = new DoodadObject(this, object);
+                    layerObjects.add(doodad);
+                }
+            }
         }
 
         decor = map.getLayers().get("ObstacleBodies").getObjects();
         for (MapObject object : decor) {
 
             if(object.getName().equals("Pillar")) {
-                if(Math.random() >= 0.2f) {
-                    PillarTorchObject torch = new PillarTorchObject(this, object);
-                    layerObjects.add(torch);
-                } else {
-                    WallFlagObject flag = new WallFlagObject(this, object);
-                    layerObjects.add(flag);
-                }
+                Pillar_Building pillar = new Pillar_Building(this, object);
+                layerObjects.add(pillar);
             }
-
-            if(object.getName().equals("Building1")) {
-                if(Math.random() >= 0.4f) {
-                    PillarTorchObject torch = new PillarTorchObject(this, object);
-                    layerObjects.add(torch);
-                }
-                if(Math.random() >= 0.7f) {
-                    WallFlagObject flag = new WallFlagObject(this, object);
-                    layerObjects.add(flag);
-                }
+            if(object.getName().equals("Crypt")) {
+                Crypt_Building crypt = new Crypt_Building(this, object);
+                layerObjects.add(crypt);
             }
             if(object.getName().equals("Building2")) {
-                if(Math.random() >= 0.7f) {
-                    PillarTorchObject torch = new PillarTorchObject(this, object);
-                    layerObjects.add(torch);
-                } else {
-                    WallFlagObject flag = new WallFlagObject(this, object);
-                    layerObjects.add(flag);
-                }
+                Square_Building building = new Square_Building(this, object);
+                layerObjects.add(building);
             }
             if(object.getName().equals("BuildingShop") && rolledShop) {
                 MapShop shop = new MapShop(this, object);
@@ -137,6 +146,11 @@ public class DungeonChunk extends MapChunk {
             if(object.getName().equals("FirePillar")) {
                 FirePillarObject pillar = new FirePillarObject(this, object);
                 layerObjects.add(pillar);
+            }
+
+            if(object.getName().equals("Doodad")) {
+                DoodadObject doodad = new DoodadObject(this, object);
+                layerObjects.add(doodad);
             }
 
 
@@ -152,7 +166,7 @@ public class DungeonChunk extends MapChunk {
         bodies.clear();
     }
     public void disposeDecor() {
-        for (LayerObject object : layerObjects) {
+        for (EnvironmentObject object : layerObjects) {
             object.dispose();
         }
     }
@@ -164,6 +178,7 @@ public class DungeonChunk extends MapChunk {
             createDecor();
             alreadySeen = true;
         }
+
 
     }
 }

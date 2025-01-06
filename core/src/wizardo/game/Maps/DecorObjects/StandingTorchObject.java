@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Lighting.RoundLight;
-import wizardo.game.Maps.LayerObject;
+import wizardo.game.Maps.EnvironmentObject;
 import wizardo.game.Maps.MapGeneration.MapChunk;
 import wizardo.game.Maps.MapUtils;
 import wizardo.game.Resources.DecorResources.DungeonDecorResources;
@@ -15,7 +15,7 @@ import wizardo.game.Resources.DecorResources.DungeonDecorResources;
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.world;
 
-public class StandingTorchObject extends LayerObject {
+public class StandingTorchObject extends EnvironmentObject {
 
     Body body;
     RoundLight light = null;

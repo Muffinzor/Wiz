@@ -7,12 +7,12 @@ import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import wizardo.game.Lighting.RoundLight;
-import wizardo.game.Maps.LayerObject;
+import wizardo.game.Maps.EnvironmentObject;
 import wizardo.game.Maps.MapGeneration.MapChunk;
 
 import static wizardo.game.Utils.Constants.PPM;
 
-public class PillarTorchObject extends LayerObject {
+public class WallTorchObject extends EnvironmentObject {
 
     public static Animation<Sprite> walltorch_anim;
     static {
@@ -27,16 +27,13 @@ public class PillarTorchObject extends LayerObject {
     RoundLight light;
     boolean flipX;
 
-    public PillarTorchObject(MapChunk chunk, MapObject object) {
+    Vector2 position;
+
+    public WallTorchObject(MapChunk chunk, MapObject object, Vector2 position) {
         super(chunk, object);
-        float width = object.getProperties().get("width", Float.class);
-        x = object.getProperties().get("x", Float.class) + chunk.x_pos + width/2;
-        y = object.getProperties().get("y", Float.class) + chunk.y_pos + 45;
-        x = x/PPM;
-        y = y/PPM;
+        this.position = position;
         stateTime = (float) Math.random();
         flipX = MathUtils.randomBoolean();
-
     }
 
     @Override
@@ -53,14 +50,14 @@ public class PillarTorchObject extends LayerObject {
 
     public void createLight() {
         light = chunk.screen.lightManager.pool.getLight();
-        light.setLight(0.7f, 0.3f, 0, 0.9f, 75, new Vector2(x,y + 0.25f));
+        light.setLight(0.7f, 0.3f, 0, 0.9f, 75, new Vector2(position.x, position.y + 0.2f));
         chunk.screen.lightManager.addLight(light);
     }
 
     public void drawFrame() {
         Sprite frame = chunk.screen.getSprite();
         frame.set(walltorch_anim.getKeyFrame(stateTime, true));
-        frame.setCenter(x * PPM, y * PPM);
+        frame.setCenter(position.x * PPM, position.y * PPM);
         frame.setScale(0.35f);
         frame.flip(flipX, false);
         chunk.screen.addSortedSprite(frame);

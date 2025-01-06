@@ -167,7 +167,7 @@ public class Pawn {
 
     public void createLight() {
         light = getLight(screen);
-        light.setLight(0,0,0,0.8f,120, body.getPosition());
+        light.setLight(0,0,0,0.65f,120, body.getPosition());
 
     }
 

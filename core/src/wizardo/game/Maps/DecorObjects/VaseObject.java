@@ -4,8 +4,9 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import wizardo.game.Maps.LayerObject;
+import wizardo.game.Maps.EnvironmentObject;
 import wizardo.game.Maps.MapGeneration.MapChunk;
 import wizardo.game.Maps.MapUtils;
 import wizardo.game.Resources.DecorResources.DungeonDecorResources;
@@ -13,15 +14,20 @@ import wizardo.game.Resources.DecorResources.DungeonDecorResources;
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.world;
 
-public class VaseObject extends LayerObject {
+public class VaseObject extends EnvironmentObject {
 
     Body body;
     Sprite sprite;
     Animation<Sprite> anim;
     boolean destroyed;
 
-    public VaseObject(MapChunk chunk, MapObject object) {
+    Vector2 position;
+
+    public VaseObject(MapChunk chunk, MapObject object, Vector2 position) {
         super(chunk, object);
+        if(position != null) {
+            this.position = position;
+        }
         Float width = object.getProperties().get("width", Float.class);
         Float height = object.getProperties().get("height", Float.class);
         x = object.getProperties().get("x", Float.class) + chunk.x_pos + width/2;
@@ -62,7 +68,11 @@ public class VaseObject extends LayerObject {
     }
 
     public void createBody() {
-        body = MapUtils.createCircleDecorBody_FromTiledMap(chunk, object, 8, false, false);
+        if(position != null) {
+            body = MapUtils.createCircleDecorBody_FromVector(position, 8, false, false);
+        } else {
+            body = MapUtils.createCircleDecorBody_FromTiledMap(chunk, object, 8, false, false);
+        }
         body.setUserData(this);
         if(destroyed) {
             body.setActive(false);

@@ -3,7 +3,8 @@ package wizardo.game.Maps;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.maps.objects.EllipseMapObject;
+import com.badlogic.gdx.math.Ellipse;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Lighting.RoundLight;
@@ -15,6 +16,9 @@ import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.player;
 import static wizardo.game.Wizardo.world;
 
+/**
+ * tier -2 in constructor to randomly select from Metal tier and above
+ */
 public class Chest extends TriggerObject {
 
     int tier;
@@ -28,12 +32,19 @@ public class Chest extends TriggerObject {
     BattleScreen screen;
     public ChestLoot loot;
 
+    boolean fromEllipseObject;  //if doodad rolled a chest
+    Vector2 ellipseCenter;
+
     public void findTier() {
         if(tier < 0) {
+
             float goldChance = 0.95f - (player.stats.luck/100f) * 0.05f;
             float stoneChance = 0.85f - (player.stats.luck/100f) * 0.05f;
             float redChance = 0.7f - (player.stats.luck/100f) * 0.075f;
             float metalChance = 0.45f - (player.stats.luck/100f) * 0.1f;
+            if(tier == - 2) {
+                metalChance = 0;
+            }
 
             double roll = Math.random();
             if(roll >= goldChance) {
@@ -73,6 +84,16 @@ public class Chest extends TriggerObject {
                 sprite = GeneralDecorResources.goldChest_anim.getKeyFrame(0);
                 openAnim = GeneralDecorResources.goldChest_anim;
             }
+        }
+        if(object instanceof EllipseMapObject) {
+            float width = object.getProperties().get("width", Float.class);
+            float height = object.getProperties().get("height", Float.class);
+            float x = object.getProperties().get("x", Float.class) + chunk.x_pos + width/2;
+            float y = object.getProperties().get("y", Float.class) + chunk.y_pos + height/2;
+
+            ellipseCenter = new Vector2(x/PPM, y/PPM);
+
+            fromEllipseObject = true;
         }
     }
 
@@ -123,11 +144,17 @@ public class Chest extends TriggerObject {
 
     public void createBody() {
         body = MapUtils.createCircleDecorBody_FromTiledMap(chunk, object, 8, false, true);
+        if(fromEllipseObject) {
+            body.setTransform(ellipseCenter, 0);
+        }
         body.setUserData(this);
     }
 
     public void createTriggerBody() {
         triggerBody = MapUtils.createEventTriggerBody(chunk, object, 60);
+        if(fromEllipseObject) {
+            triggerBody.setTransform(ellipseCenter, 0);
+        }
         triggerBody.setUserData(this);
     }
 

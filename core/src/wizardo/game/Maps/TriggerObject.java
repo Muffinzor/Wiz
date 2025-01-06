@@ -4,7 +4,7 @@ import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Maps.MapGeneration.MapChunk;
 
-public abstract class TriggerObject extends LayerObject{
+public abstract class TriggerObject extends EnvironmentObject {
 
     public Body triggerBody;
     

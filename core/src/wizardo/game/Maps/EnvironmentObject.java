@@ -3,7 +3,7 @@ package wizardo.game.Maps;
 import com.badlogic.gdx.maps.MapObject;
 import wizardo.game.Maps.MapGeneration.MapChunk;
 
-public abstract class LayerObject {
+public abstract class EnvironmentObject {
 
     public float x;
     public float y;
@@ -14,7 +14,9 @@ public abstract class LayerObject {
     public MapObject object;
     public float stateTime;
 
-    public LayerObject(MapChunk chunk, MapObject object) {
+    public boolean toBeRemoved;  //to clean the layerObject list
+
+    public EnvironmentObject(MapChunk chunk, MapObject object) {
         this.chunk = chunk;
         this.object = object;
     }

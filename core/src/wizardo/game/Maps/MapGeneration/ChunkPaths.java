@@ -5,6 +5,7 @@ import java.util.*;
 public class ChunkPaths {
 
     public static Map<String, Map<String, List<Integer>>> chunkConnections = new HashMap<>();
+    // String 1 = Path of the tmx file,  String 2 = Cardinal direction of the connections
     // 1 = middle only
     // 2 = two paths
     // 3 = one path left/up corner of edge
@@ -16,6 +17,8 @@ public class ChunkPaths {
     }
 
     public static void fillChunks(String biome) {
+        chunkConnections.put(startingChunkPath(), createTileConnections(2,2,2,2));
+
         chunkPaths.clear();
         if(biome.equals("Dungeon")) {
             String tile1 = "Maps/DungeonMaps/Chunks/Tile1.tmx";

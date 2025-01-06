@@ -30,15 +30,6 @@ public class DecorRenderer {
             Sprite frame = getSprite(chunk.screen);
 
             switch(object.getName()) {
-                case "Pillar" -> {
-                    frame.set(DungeonDecorResources.pillar_sprite);
-                    RectangleMapObject rectObject = (RectangleMapObject) object;
-                    float x = rectObject.getRectangle().x + chunk.x_pos;
-                    float y = rectObject.getRectangle().y + chunk.y_pos;
-                    frame.setPosition(x, y);
-                    chunk.screen.addSortedSprite(frame);
-                    chunk.screen.centerSort(frame, y + 30);
-                }
                 case "Building1", "BuildingShop" -> {
                     frame.set(DungeonDecorResources.building1_sprite);
                     RectangleMapObject rectObject = (RectangleMapObject) object;
@@ -48,14 +39,16 @@ public class DecorRenderer {
                     chunk.screen.addSortedSprite(frame);
                     chunk.screen.centerSort(frame, y + 30);
                 }
-                case "Building2" -> {
-                    frame.set(DungeonDecorResources.building2_sprite);
+                case "GoldStatue" -> {
+                    frame.set(DungeonDecorResources.goldStatueLeft);
                     RectangleMapObject rectObject = (RectangleMapObject) object;
+                    Float width = object.getProperties().get("width", Float.class);
+                    Float height = object.getProperties().get("height", Float.class);
                     float x = rectObject.getRectangle().x + chunk.x_pos;
                     float y = rectObject.getRectangle().y + chunk.y_pos;
-                    frame.setPosition(x, y);
+                    frame.setPosition(x - frame.getWidth()/2 + width/2, y);
                     chunk.screen.addSortedSprite(frame);
-                    chunk.screen.centerSort(frame, y + 30);
+                    chunk.screen.centerSort(frame, y + 5);
                 }
             }
 
