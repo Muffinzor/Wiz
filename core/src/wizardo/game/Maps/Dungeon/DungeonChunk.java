@@ -10,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Maps.Buildings.Crypt_Building;
 import wizardo.game.Maps.Buildings.Pillar_Building;
 import wizardo.game.Maps.Buildings.Square_Building;
+import wizardo.game.Maps.Buildings.Statue_Building;
 import wizardo.game.Maps.Chest;
 import wizardo.game.Maps.DecorObjects.*;
 import wizardo.game.Maps.EnvironmentObject;
@@ -97,7 +98,7 @@ public class DungeonChunk extends MapChunk {
                 layerObjects.add(vase);
             }
 
-            if(object.getName().equals(("VaseCluster"))) {
+            if(object.getName().equals(("VaseCluster")) && Math.random() >= 0.75) {
                 VaseCluster cluster = new VaseCluster(this, object);
                 layerObjects.add(cluster);
             }
@@ -137,6 +138,10 @@ public class DungeonChunk extends MapChunk {
             if(object.getName().equals("Building2")) {
                 Square_Building building = new Square_Building(this, object);
                 layerObjects.add(building);
+            }
+            if(object.getName().equals("Statue")) {
+                Statue_Building statue = new Statue_Building(this, object);
+                layerObjects.add(statue);
             }
             if(object.getName().equals("BuildingShop") && rolledShop) {
                 MapShop shop = new MapShop(this, object);

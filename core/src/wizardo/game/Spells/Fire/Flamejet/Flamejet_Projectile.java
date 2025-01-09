@@ -25,6 +25,8 @@ public class Flamejet_Projectile extends Flamejet_Spell {
 
     float distance = 5f;
 
+    int lightFrameCounter;
+
     public Flamejet_Projectile() {
 
         flipX = MathUtils.randomBoolean();
@@ -75,12 +77,19 @@ public class Flamejet_Projectile extends Flamejet_Spell {
         frame.set(anim.getKeyFrame(stateTime, false));
         frame.setOrigin(frame.getWidth()/2f, 0);
         frame.setRotation(rotation - 90);
-        frame.setPosition(spawnPosition.x * PPM - frame.getWidth()/2f, spawnPosition.y * PPM);
+
+        Vector2 offset = new Vector2(direction);
+        offset.nor().scl(-0.5f);
+        Vector2 trueSpawnPosition = spawnPosition.cpy().add(offset);
+
+        frame.setPosition(trueSpawnPosition.x * PPM - frame.getWidth()/2, trueSpawnPosition.y * PPM);
+
+
 
         float dst = spawnPosition.dst(body.getPosition()) + 2;
         float totalLength = frame.getHeight();
         float scale = dst*PPM/totalLength;
-        frame.setScale(1, scale);
+        frame.setScale(1.2f, 1.2f);
         frame.flip(flipX, false);
 
         if(scale < 0.9f) {
@@ -124,13 +133,17 @@ public class Flamejet_Projectile extends Flamejet_Spell {
     }
 
     public void createLight() {
-        if(multicasted) {
-            lightAlpha = lightAlpha/2f;
+        lightFrameCounter++;
+        if(lightFrameCounter >= 4) {
+            lightFrameCounter = 0;
+            if(multicasted) {
+                lightAlpha = lightAlpha/2f;
+            }
+            RoundLight light = screen.lightManager.pool.getLight();
+            light.setLight(red, green, blue, lightAlpha, 75, body.getPosition());
+            screen.lightManager.addLight(light);
+            light.dimKill(0.02f);
         }
-        RoundLight light = screen.lightManager.pool.getLight();
-        light.setLight(red, green, blue, lightAlpha, 75, body.getPosition());
-        screen.lightManager.addLight(light);
-        light.dimKill(0.04f);
     }
 
     public void frostbolts(Monster monster) {
@@ -180,10 +193,14 @@ public class Flamejet_Projectile extends Flamejet_Spell {
                 } else {
                     anim = FlamejetAnims.flamejet_frost_anim2;
                 }
-                blue = 0.5f;
+                blue = 0.8f;
             }
             case ARCANE -> {
-                anim = FlamejetAnims.flamejet_arcane_anim;
+                if(MathUtils.randomBoolean()) {
+                    anim = FlamejetAnims.flamejet_arcane_anim;
+                } else {
+                    anim = FlamejetAnims.flamejet_arcane_anim2;
+                }
                 red = 0.5f;
                 green = 0.2f;
                 blue = 0.75f;

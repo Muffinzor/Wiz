@@ -61,7 +61,8 @@ public class VaseCluster extends EnvironmentObject {
 
         ArrayList<Vector2> positions = new ArrayList<>();
         Random random = new Random();
-        int attemptsLeft = 5; // Prevents infinite loop or excessive overhead
+        int attemptsLeft = 10; // Prevents infinite loop or excessive overhead
+        quantity = (int) (clusterRadius * 10);
 
         while (positions.size() < quantity && attemptsLeft > 0) {
             double r = Math.sqrt(random.nextDouble()) * clusterRadius;

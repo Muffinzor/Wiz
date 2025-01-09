@@ -1,6 +1,7 @@
 package wizardo.game.Spells.Hybrid.DragonBreath;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Lighting.RoundLight;
@@ -21,6 +22,8 @@ import static wizardo.game.Wizardo.world;
 
 public class DragonBreath_Projectile extends DragonBreath_Spell {
 
+    Vector2 direction;
+
     ArrayList<Body> bodies;
     public boolean bodiesInactive;
 
@@ -29,11 +32,17 @@ public class DragonBreath_Projectile extends DragonBreath_Spell {
 
     float angle;
 
+    int lightFrames;
+
+    boolean flipY;
+
     public DragonBreath_Projectile() {
 
         bodies = new ArrayList<>();
         main_element = SpellUtils.Spell_Element.FIRE;
-        speed = 40;
+        speed = 11;
+
+        flipY = MathUtils.randomBoolean();
 
     }
     public void update(float delta) {
@@ -43,14 +52,16 @@ public class DragonBreath_Projectile extends DragonBreath_Spell {
             createBodies();
         }
 
-        if(!bodiesInactive) {
+        lightFrames--;
+        if(!bodiesInactive && lightFrames <= 0 && delta > 0) {
+            lightFrames = 2;
             createLights();
         }
 
         drawFrame();
         stateTime += delta;
 
-        if(stateTime > 0.13f && !bodiesInactive) {
+        if(stateTime > 0.41f && !bodiesInactive) {
             bodiesInactive = true;
             for(Body body : bodies) {
                 body.setLinearVelocity(0,0);
@@ -122,15 +133,23 @@ public class DragonBreath_Projectile extends DragonBreath_Spell {
     }
 
     public void drawFrame() {
+
+        Vector2 offset = new Vector2(direction);
+        offset.nor().scl(-3.5f);
+        Vector2 trueSpawn = new Vector2(spawnPosition.cpy().add(offset));
+
         Sprite frame = screen.getSprite();
         frame.set(anim.getKeyFrame(stateTime, false));
-        frame.setCenter(spawnPosition.x * PPM, spawnPosition.y * PPM);
+        frame.setPosition(trueSpawn.x * PPM, trueSpawn.y * PPM - frame.getHeight()/2);
+        frame.setOrigin(0, frame.getHeight()/2);
+        frame.setScale(0.9f, 1);
         frame.setRotation(angle);
+        frame.flip(false, flipY);
         screen.addUnderSprite(frame);
     }
 
     public void createBodies() {
-        Vector2 direction = new Vector2(targetPosition.sub(spawnPosition));
+        direction = new Vector2(targetPosition.cpy().sub(spawnPosition));
         if(!direction.isZero()) {
             direction.nor();
         } else {
@@ -139,8 +158,6 @@ public class DragonBreath_Projectile extends DragonBreath_Spell {
 
         Vector2 velocity = direction.scl(1);
         angle = direction.angleDeg();
-
-
 
         for (int i = 0; i < 5; i++) {
             Body body = BodyFactory.spellProjectileCircleBody(spawnPosition, 35, true);
@@ -162,9 +179,9 @@ public class DragonBreath_Projectile extends DragonBreath_Spell {
         for(Body body : bodies) {
             if(body.isActive()) {
                 RoundLight light = screen.lightManager.pool.getLight();
-                float ownAlpha = 0.55f + stateTime * 2;
-                light.setLight(red, green, blue, ownAlpha, 95, body.getPosition());
-                light.dimKill(0.0125f);
+                float ownAlpha = Math.min(0.33f + stateTime, 0.8f);
+                light.setLight(red, green, blue, ownAlpha, 80, body.getPosition());
+                light.dimKill(0.02f);
                 screen.lightManager.addLight(light);
             }
         }

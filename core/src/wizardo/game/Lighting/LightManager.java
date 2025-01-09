@@ -29,6 +29,10 @@ public class LightManager {
 
         activeLights.removeIf(roundLight -> roundLight.alpha <= 0);
 
+        if(pool.getPoolSize() > 400) {
+            pool.trimPoolSize();
+        }
+
     }
 
     public void addLight(RoundLight light) {

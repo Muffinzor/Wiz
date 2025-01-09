@@ -45,7 +45,7 @@ public abstract class Building extends EnvironmentObject {
     public void drawFrame() {
         Sprite frame = chunk.screen.getSprite();
         frame.set(sprite);
-        frame.setPosition(x * PPM, y * PPM);
+        frame.setCenter(x * PPM + frame.getWidth()/2, y * PPM + frame.getHeight()/2);
         chunk.screen.addSortedSprite(frame);
         chunk.screen.centerSort(frame, y * PPM + 30);
 

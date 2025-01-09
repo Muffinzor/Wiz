@@ -1,11 +1,15 @@
 package wizardo.game.Screens.LoadingScreen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import wizardo.game.Items.Drop.DropAnims;
+import wizardo.game.Maps.MapGeneration.ChunkPaths;
 import wizardo.game.Resources.DecorResources.DungeonDecorResources;
 import wizardo.game.Resources.EffectAnims.AuraAnims;
 import wizardo.game.Resources.EffectAnims.BlackHoleAnims;
@@ -54,6 +58,7 @@ public class LoadingScreen extends BaseScreen {
         if (assetManager.update() && !assetsFinishedLoading) {
             loadAnims();
             createAllSpells();
+            loadDungeonMaps();
             assetsFinishedLoading = true;
             game.addNewScreen(new MainMenuScreen(game));
         }
@@ -176,6 +181,18 @@ public class LoadingScreen extends BaseScreen {
 
         CharacterScreenResources.loadAnimations();
         LevelUpResources.loadAnimations();
+    }
+
+    public void loadDungeonMaps() {
+        assetManager.load("Maps/DungeonMaps/Tilesets/BigTiles.png", Texture.class);
+        assetManager.load("Maps/DungeonMaps/Tilesets/Carpet.png", Texture.class);
+        assetManager.load("Maps/DungeonMaps/Tilesets/Dungeon_Plus_Tiles.png", Texture.class);
+        assetManager.load("Maps/DungeonMaps/Tilesets/GreyStone.png", Texture.class);
+        assetManager.load("Maps/DungeonMaps/Tilesets/StoneGround.png", Texture.class);
+        assetManager.setLoader(TiledMap.class, new TmxMapLoader());
+        for(String path : ChunkPaths.getAllDungeonMapPaths()) {
+            assetManager.load(path, TiledMap.class);
+        }
     }
 
 }

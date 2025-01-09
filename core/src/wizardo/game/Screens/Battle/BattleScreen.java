@@ -36,19 +36,18 @@ public class BattleScreen extends BaseScreen {
     FPSLogger logger = new FPSLogger();
 
     public float stateTime;
-
-    boolean initialized;
     Sprite controllerTargetSprite;
-
-    public MonsterSpellManager monsterSpellManager;
 
     public Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
 
     public MapManager mapManager;
     public MonsterSpawner monsterSpawner;
+    public MonsterSpellManager monsterSpellManager;
     public DropManager dropManager;
 
-    private BattleUI battleUI;
+    private final BattleUI battleUI;
+
+    int COUNTER = 0;
 
     public BattleScreen(Wizardo game, String biome) {
         super(game);
@@ -113,11 +112,18 @@ public class BattleScreen extends BaseScreen {
         if(debug_camera) {
             Matrix4 debugMatrix = mainCamera.combined.cpy().scl(PPM);
             debugRenderer.render(world, debugMatrix);
-            logger.log();
         }
+        logger.log();
 
         if(player.stats.shield <= 0) {
             game.freshScreen(new MainMenuScreen(game));
+        }
+
+        COUNTER++;
+        if(COUNTER > 60) {
+            COUNTER = 0;
+            System.out.println("MONSTER POOL: " +  monsterSpawner.bodyPool.getSize());
+            System.out.println("LIGHT POOL: " +  lightManager.pool.getPoolSize());
         }
     }
 
@@ -149,12 +155,6 @@ public class BattleScreen extends BaseScreen {
         // Lerp'd
         mainCamera.position.x += (targetX - mainCamera.position.x) * 0.05f;
         mainCamera.position.y += (targetY - mainCamera.position.y) * 0.05f;
-
-        mainCamera.position.set(
-                Math.round(mainCamera.position.x),
-                Math.round(mainCamera.position.y),
-                mainCamera.position.z
-        );
 
         mainCamera.update();
 

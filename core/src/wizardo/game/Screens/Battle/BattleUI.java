@@ -79,7 +79,6 @@ public class BattleUI {
             float cursorX = playerScreenPosition.x + aimRadiusPixels * (float)Math.cos(angle);
             float cursorY = playerScreenPosition.y + aimRadiusPixels * (float)Math.sin(angle);
 
-
             // Draw the cursor at the calculated position
             Sprite frame = screen.displayManager.spriteRenderer.pool.getSprite();
             frame.set(screen.controllerTargetSprite);

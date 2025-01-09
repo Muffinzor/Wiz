@@ -43,6 +43,9 @@ public class Legendary_ShieldRobes extends Robes{
         super.equip();
         quantityRemoved += player.stats.maxShield * 0.3f;
         player.stats.maxShield = player.stats.maxShield * 0.7f;
+        if(player.stats.shield > player.stats.maxShield) {
+            player.stats.shield = player.stats.maxShield;
+        }
     }
 
     @Override

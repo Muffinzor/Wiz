@@ -15,6 +15,8 @@ import wizardo.game.Wizardo;
 
 import java.util.ArrayList;
 
+import static wizardo.game.Wizardo.assetManager;
+
 public abstract class MapChunk {
 
     public static final int CHUNK_SIZE = 2560;
@@ -41,7 +43,10 @@ public abstract class MapChunk {
     public MapChunk(String pathToFile, float x, float y, Wizardo game, BaseScreen screen) {
         this.game = game;
         this.screen = screen;
-        this.map = new TmxMapLoader().load(pathToFile);
+
+        //this.map = new TmxMapLoader().load(pathToFile);
+        this.map = assetManager.get(pathToFile, TiledMap.class);
+
         this.pathToFile = pathToFile;
         this.mapRenderer = new OrthogonalTiledMapRenderer(map);
         x_pos = x;

@@ -110,7 +110,6 @@ public class MapManager {
 
     private String getConnectedChunkPath(int x_position, int y_position) {
         Map<String, List<Integer>> newTileRequiredConnections = new HashMap<>();
-        System.out.println("Checking connections for chunk: " + x_position + ", " + y_position);
 
         if (chunkExists(x_position, y_position - 1)) {
             List<Integer> connection = getNeighborConnection(x_position, y_position - 1, "north");

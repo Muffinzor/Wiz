@@ -10,69 +10,66 @@ public class FlamejetAnims {
 
     public static Animation<Sprite> flamejet_fire_anim;
     public static Animation<Sprite> flamejet_fire_anim2;
-    public static String flamejet_fire_atlas_path = "Spells/Flamejet/fire1.atlas";
-    public static String flamejet_fire_atlas_path2 = "Spells/Flamejet/fire2.atlas";
-
+    public static String flamejet_fire_atlas_path = "Spells/Flamejet/Flamejet_Fire.atlas";
 
     public static Animation<Sprite> flamejet_frost_anim;
     public static Animation<Sprite> flamejet_frost_anim2;
-    public static String flamejet_frost_atlas_path = "Spells/Flamejet/frost1.atlas";
-    public static String flamejet_frost_atlas_path2 = "Spells/Flamejet/frost2.atlas";
+    public static String flamejet_frost_atlas_path = "Spells/Flamejet/Flamejet_Frost.atlas";
 
 
     public static Animation<Sprite> flamejet_arcane_anim;
-    public static String flamejet_arcane_atlas_path = "Spells/Flamejet/arcane1.atlas";
+    public static Animation<Sprite> flamejet_arcane_anim2;
+    public static String flamejet_arcane_atlas_path = "Spells/Flamejet/Flamejet_Arcane.atlas";
 
 
     public static void loadAnimations() {
 
         TextureAtlas fire_atlas = assetManager.get(flamejet_fire_atlas_path, TextureAtlas.class);
-        TextureAtlas fire_atlas2 = assetManager.get(flamejet_fire_atlas_path2, TextureAtlas.class);
-
-        Sprite[] fire_frames = new Sprite[61];
+        Sprite[] fire_frames = new Sprite[75];
         for (int i = 0; i < fire_frames.length; i++) {
-            fire_frames[i] = fire_atlas.createSprite("firespark" + (i+1));
+            fire_frames[i] = fire_atlas.createSprite("flamejet" + (i+1));
         }
         flamejet_fire_anim = new Animation<>(0.012f, fire_frames);
 
-        Sprite[] fire_frames2 = new Sprite[56];
+        Sprite[] fire_frames2 = new Sprite[75];
         for (int i = 0; i < fire_frames2.length; i++) {
-            fire_frames2[i] = fire_atlas2.createSprite("firespark" + (i+1));
+            fire_frames2[i] = fire_atlas.createSprite("flamejetTWO" + (i+1));
         }
         flamejet_fire_anim2 = new Animation<>(0.012f, fire_frames2);
 
 
         TextureAtlas frost_atlas = assetManager.get(flamejet_frost_atlas_path, TextureAtlas.class);
-        TextureAtlas frost_atlas2 = assetManager.get(flamejet_frost_atlas_path2, TextureAtlas.class);
-
-        Sprite[] frost_frames = new Sprite[61];
+        Sprite[] frost_frames = new Sprite[75];
         for (int i = 0; i < frost_frames.length; i++) {
-            frost_frames[i] = frost_atlas.createSprite("firespark" + (i+1));
+            frost_frames[i] = frost_atlas.createSprite("flamejet" + (i+1));
         }
         flamejet_frost_anim = new Animation<>(0.012f, frost_frames);
 
-        Sprite[] frost_frames2 = new Sprite[56];
+        Sprite[] frost_frames2 = new Sprite[75];
         for (int i = 0; i < frost_frames2.length; i++) {
-            frost_frames2[i] = frost_atlas2.createSprite("firespark" + (i+1));
+            frost_frames2[i] = frost_atlas.createSprite("flamejet" + (i+1));
         }
         flamejet_frost_anim2 = new Animation<>(0.012f, frost_frames2);
 
 
         TextureAtlas arcane_atlas = assetManager.get(flamejet_arcane_atlas_path, TextureAtlas.class);
-
-        Sprite[] arcane_frames = new Sprite[63];
-        for (int i = 0; i < arcane_frames.length; i++) {
-            arcane_frames[i] = arcane_atlas.createSprite("arcane" + (i+1));
+        Sprite[] arc_frames = new Sprite[75];
+        for (int i = 0; i < arc_frames.length; i++) {
+            arc_frames[i] = arcane_atlas.createSprite("flamejet" + (i+1));
         }
-        flamejet_arcane_anim = new Animation<>(0.012f, arcane_frames);
+        flamejet_arcane_anim = new Animation<>(0.012f, arc_frames);
+
+        Sprite[] arc_frames2 = new Sprite[75];
+        for (int i = 0; i < arc_frames2.length; i++) {
+            arc_frames2[i] = arcane_atlas.createSprite("flamejet" + (i+1));
+        }
+        flamejet_arcane_anim2 = new Animation<>(0.012f, arc_frames2);
 
     }
 
     public static void loadAtlas() {
         assetManager.load(flamejet_fire_atlas_path, TextureAtlas.class);
-        assetManager.load(flamejet_fire_atlas_path2, TextureAtlas.class);
         assetManager.load(flamejet_frost_atlas_path, TextureAtlas.class);
-        assetManager.load(flamejet_frost_atlas_path2, TextureAtlas.class);
         assetManager.load(flamejet_arcane_atlas_path, TextureAtlas.class);
     }
 }

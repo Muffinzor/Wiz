@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="60" height="60" tilewidth="32" tileheight="32" infinite="0" nextlayerid="17" nextobjectid="110">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="60" height="60" tilewidth="32" tileheight="32" infinite="0" nextlayerid="17" nextobjectid="118">
  <tileset firstgid="1" source="../Tilesets/FloorTiles.tsx"/>
  <tileset firstgid="201" source="../Tilesets/Carpets.tsx"/>
  <tileset firstgid="457" source="../Tilesets/GreyStone.tsx"/>
@@ -262,10 +262,20 @@
  </layer>
  <objectgroup id="8" name="DecorBodies">
   <object id="104" name="Portal" x="958" y="958" width="4" height="4"/>
+  <object id="110" name="VaseCluster" x="317" y="372" width="133" height="133">
+   <ellipse/>
+  </object>
+  <object id="113" name="VaseCluster" x="1469" y="369" width="133" height="133">
+   <ellipse/>
+  </object>
+  <object id="114" name="VaseCluster" x="1469" y="1521" width="133" height="133">
+   <ellipse/>
+  </object>
+  <object id="115" name="VaseCluster" x="318" y="1521" width="133" height="133">
+   <ellipse/>
+  </object>
  </objectgroup>
- <objectgroup id="9" name="LootBodies">
-  <object id="31" name="TrueChest" x="1536" y="452" width="8" height="8"/>
- </objectgroup>
+ <objectgroup id="9" name="LootBodies"/>
  <objectgroup id="7" name="ObstacleBodies">
   <object id="1" name="Pillar" x="800" y="1248" width="64" height="64"/>
   <object id="2" name="Pillar" x="1056" y="1248" width="64" height="64"/>

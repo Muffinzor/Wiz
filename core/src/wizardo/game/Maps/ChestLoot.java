@@ -85,7 +85,6 @@ public class ChestLoot {
         }
     }
     public void WoodenChest() {
-        powerLoot();
         int loots = MathUtils.random(1,2);
         for (int i = 0; i < loots; i++) {
             drops.add(woodenChestDropTable());

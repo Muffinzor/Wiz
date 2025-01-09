@@ -19,7 +19,9 @@ public class DungeonDecorResources {
     public static Sprite crypt_sprite2 = new Sprite(new Texture("Maps/Decor/Dungeon/building2_type2.png"));
     public static Sprite crypt_sprite3 = new Sprite(new Texture("Maps/Decor/Dungeon/building2_type3.png"));
 
-    public static Sprite goldStatueLeft = new Sprite(new Texture("Maps/Decor/Dungeon/StatueLeft.png"));
+    public static Sprite goldStatue1 = new Sprite(new Texture("Maps/Decor/Dungeon/Statue1.png"));
+    public static Sprite goldStatue2 = new Sprite(new Texture("Maps/Decor/Dungeon/Statue2.png"));
+    public static Sprite goldStatue3 = new Sprite(new Texture("Maps/Decor/Dungeon/Statue3.png"));
 
     public static Animation<Sprite> dungeonshop_anim;
     public static String shopPath = "Maps/Decor/Dungeon/Shop.atlas";

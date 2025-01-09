@@ -3,6 +3,7 @@ package wizardo.game.Lighting;
 import wizardo.game.Screens.BaseScreen;
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 
 public class LightPool {
 
@@ -25,5 +26,18 @@ public class LightPool {
     public void poolLight(RoundLight light) {
         light.resetLight();
         array.add(light);
+    }
+
+    public void trimPoolSize() {
+        int halfSize = array.size()/2;
+
+        for (int i = 0; i < halfSize; i++) {
+            RoundLight light = array.poll();
+            light.dispose();
+        }
+    }
+
+    public int getPoolSize() {
+        return array.size();
     }
 }

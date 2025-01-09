@@ -268,8 +268,8 @@ public abstract class Monster {
         }
         frame.flip(deathFrameFlip, false);
         frame.setPosition(body.getPosition().x * PPM - frame.getWidth() / 2, body.getPosition().y * PPM - bodyRadius);
-        screen.centerSort(frame, body.getPosition().y * PPM - bodyRadius + 10);
-        screen.displayManager.spriteRenderer.regular_sorted_sprites.add(frame);
+        //screen.centerSort(frame, body.getPosition().y * PPM - bodyRadius + 10);
+        screen.displayManager.spriteRenderer.under_sprites.add(frame);
     }
 
     public void dispose() {

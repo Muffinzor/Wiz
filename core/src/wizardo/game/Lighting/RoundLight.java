@@ -77,4 +77,8 @@ public class RoundLight {
         screen.lightManager.pool.poolLight(this);
     }
 
+    public void dispose() {
+        pointLight.remove();
+    }
+
 }

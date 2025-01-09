@@ -16,7 +16,7 @@ public class DragonBreath_CollisionDetector extends Spell {
     boolean hasCollided;
 
     public DragonBreath_CollisionDetector(Vector2 velocity, Body proj) {
-        this.velocity = new Vector2(velocity.cpy().scl(1.5f));
+        this.velocity = new Vector2(velocity.cpy().scl(1.1f));
         this.proj = proj;
     }
 
