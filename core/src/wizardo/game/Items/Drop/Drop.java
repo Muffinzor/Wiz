@@ -123,7 +123,6 @@ public abstract class Drop {
                 frame2.setCenter(body.getPosition().x * PPM, body.getPosition().y * PPM);
                 screen.addSortedSprite(frame2);
                 screen.centerSort(frame2, body.getPosition().y * PPM + 5);
-
             }
 
             Sprite frame = screen.getSprite();

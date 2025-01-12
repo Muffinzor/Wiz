@@ -1,10 +1,13 @@
 package wizardo.game.Screens.Battle;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import wizardo.game.Resources.PlayerResources;
 
+import static wizardo.game.Resources.Skins.inventorySkin;
 import static wizardo.game.Screens.BaseScreen.*;
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.player;
@@ -13,8 +16,11 @@ public class BattleUI {
 
     BattleScreen screen;
 
+    public Label goldLabel;
+
     public BattleUI(BattleScreen screen) {
         this.screen = screen;
+        goldPanel();
     }
 
     public void update() {
@@ -25,7 +31,6 @@ public class BattleUI {
     public void drawPlayerHP() {
         Sprite frame1 = screen.getSprite();
         frame1.set(PlayerResources.shieldEffect);
-        frame1.setScale(1, 1); // Ensure no scaling distortions
         frame1.setOrigin(0, 0);
         frame1.setPosition(80 * xRatio, 65 * yRatio);
 
@@ -47,7 +52,6 @@ public class BattleUI {
         screen.displayManager.spriteRenderer.ui_sprites.add(frame2);
 
     }
-
     public void drawControllerTarget() {
         if (controllerActive) {
             // Get the player's world position (in meters)
@@ -86,6 +90,19 @@ public class BattleUI {
             frame.setRotation(targetVector.angleDeg() - 45);  // Optional: Adjust for angle
             screen.displayManager.spriteRenderer.ui_sprites.add(frame);
         }
+    }
+    public void goldPanel() {
+        goldLabel = new Label("" + player.inventory.gold + "g", inventorySkin, "Gear_Name", Color.YELLOW);
+        goldLabel.setPosition(630 * xRatio,55 * yRatio);
+        screen.stage.addActor(goldLabel);
+    }
+
+    public void updateGoldPanel() {
+        goldLabel.setText("" + player.inventory.gold + "g");
+    }
+
+    public void resize() {
+        goldLabel.setPosition(630 * xRatio,55 * yRatio);
     }
 
 

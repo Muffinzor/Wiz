@@ -33,8 +33,8 @@ public class Legendary_SentientHat extends Hat {
 
         return String.format("""
             The Sentient Hat takes control of
-            your targeted spells and gives them
-            20%% reduced cooldown""");
+            your targeted spells and uses them
+            with 20%% reduced cooldown""");
     }
 
     public String getFlavorText() {
@@ -64,6 +64,13 @@ public class Legendary_SentientHat extends Hat {
         }
 
         if(list != null) {
+            for(Monster monster : list) {
+                if(monster.elite) {
+                    if(Math.random() >= 0.25f) {
+                        return monster;
+                    }
+                }
+            }
             Collections.shuffle(list);
             return list.getFirst();
         } else {

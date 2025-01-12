@@ -229,7 +229,7 @@ public class MonsterSpawner {
         if (killsLastCycle > 10) {
             spawnRatio = 1.0f + (killsLastCycle - 10 * spawnRatio) * 0.035f; // Increase ratio according to current rate and kills
             if(spawnRatio > previousRatio * 1.2f) {
-                spawnRatio = previousRatio * 1.2f; // Limit to 20% inrease
+                spawnRatio = previousRatio * 1.2f; // Limit to 20% increase
             }
         } else {
             spawnRatio = 1.0f;

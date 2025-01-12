@@ -85,6 +85,7 @@ public class DungeonChunk extends MapChunk {
             }
         }
     }
+
     public void createDecor() {
         MapObjects decor = map.getLayers().get("DecorBodies").getObjects();
         for (MapObject object : decor) {
@@ -143,7 +144,7 @@ public class DungeonChunk extends MapChunk {
                 Statue_Building statue = new Statue_Building(this, object);
                 layerObjects.add(statue);
             }
-            if(object.getName().equals("BuildingShop") && rolledShop) {
+            if(object.getName().equals("Shop") && rolledShop) {
                 MapShop shop = new MapShop(this, object);
                 layerObjects.add(shop);
             }

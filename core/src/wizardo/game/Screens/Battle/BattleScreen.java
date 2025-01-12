@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import wizardo.game.Maps.Chest;
 import wizardo.game.Maps.MapGeneration.MapManager;
 import wizardo.game.Monsters.*;
@@ -45,12 +47,14 @@ public class BattleScreen extends BaseScreen {
     public MonsterSpellManager monsterSpellManager;
     public DropManager dropManager;
 
-    private final BattleUI battleUI;
+    public final BattleUI battleUI;
 
     int COUNTER = 0;
 
     public BattleScreen(Wizardo game, String biome) {
         super(game);
+
+        stage = new Stage(new ScreenViewport(uiCamera));
 
         mainCamera.viewportWidth = Gdx.graphics.getWidth();
         mainCamera.viewportHeight = Gdx.graphics.getHeight();
@@ -74,7 +78,7 @@ public class BattleScreen extends BaseScreen {
         spellManager = new SpellManager(this);
         player.spellManager = spellManager;
         monsterSpellManager = new MonsterSpellManager(this);
-        dropManager = new DropManager(this);
+        this.dropManager = Wizardo.dropManager;
 
         battleUI = new BattleUI(this);
         cursorTexturePath = "Cursors/Battle_Cursor.png";
@@ -119,6 +123,9 @@ public class BattleScreen extends BaseScreen {
             game.freshScreen(new MainMenuScreen(game));
         }
 
+        stage.act(delta);
+        stage.draw();
+
         COUNTER++;
         if(COUNTER > 60) {
             COUNTER = 0;
@@ -157,7 +164,12 @@ public class BattleScreen extends BaseScreen {
         mainCamera.position.y += (targetY - mainCamera.position.y) * 0.05f;
 
         mainCamera.update();
+    }
 
+    @Override
+    public void resize(int width, int height) {
+        super.resize(width, height);
+        battleUI.resize();
     }
 
 }

@@ -45,6 +45,9 @@ public class ShopMenuTable extends MenuTable {
         container.pack();
 
         stage.setDebugAll(true);
+    }
+
+    public void update(float delta) {
 
     }
 

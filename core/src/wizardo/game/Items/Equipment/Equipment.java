@@ -26,6 +26,7 @@ public abstract class Equipment {
     public float displayScale = 1;
 
     public String name;
+    public int price;
     public String title;
     public String description;
     public String flavorText = null;
@@ -37,6 +38,16 @@ public abstract class Equipment {
 
     public void update(float delta) {
 
+    }
+
+    public int getPrice() {
+        switch(quality) {
+            case NORMAL -> price = 500;
+            case RARE -> price = 1000;
+            case EPIC -> price = 2500;
+            case LEGENDARY -> price = 5000;
+        }
+        return price;
     }
     public void pickup() {
         BottomText text = new BottomText();

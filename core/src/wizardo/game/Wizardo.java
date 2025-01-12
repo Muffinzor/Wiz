@@ -6,6 +6,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import wizardo.game.Items.Drop.DropManager;
 import wizardo.game.Player.Player;
 import wizardo.game.Screens.BaseScreen;
 import wizardo.game.Screens.LoadingScreen.LoadingScreen;
@@ -21,6 +22,7 @@ public class Wizardo extends Game {
 	public BaseScreen currentScreen;
 	public static World world;
 	public static Player player;
+	public static DropManager dropManager;
 	public static WizContactListener contactListener;
 	public static AssetManager assetManager;
 	public OrthographicCamera mainCamera;
@@ -38,6 +40,7 @@ public class Wizardo extends Game {
 		assetManager = new AssetManager();
 		contactListener = new WizContactListener();
 		loadSettings();
+		dropManager = new DropManager(this);
 		addNewScreen(new LoadingScreen(this));
 	}
 

@@ -3,6 +3,7 @@ package wizardo.game.Resources.EffectAnims;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import wizardo.game.Items.ItemUtils;
 
 import static wizardo.game.Wizardo.assetManager;
 
@@ -80,6 +81,17 @@ public class GearFlareAnims {
         }
         green_flare = new Animation<>(0.01f, frames4);
 
+    }
+
+    public static Animation<Sprite> getFlareAnim(ItemUtils.EquipQuality quality) {
+        Animation<Sprite> anim = null;
+        switch (quality) {
+            case NORMAL -> anim = green_flare;
+            case RARE -> anim = blue_flare;
+            case EPIC -> anim = purple_flare;
+            case LEGENDARY -> anim = red_flare;
+        }
+        return anim;
     }
 
     public static void loadAtlas() {

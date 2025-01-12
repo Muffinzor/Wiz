@@ -166,8 +166,6 @@ public class CharacterScreen extends BaseScreen {
 
 
     public void drawSelectedButton() {
-
-
         Sprite frame = getSprite();
         frame.set(CharacterScreenResources.selected_button_anim.getKeyFrame(stateTime, true));
 
@@ -188,7 +186,6 @@ public class CharacterScreen extends BaseScreen {
         batch.begin();
         frame.draw(batch);
         batch.end();
-
     }
 
     public void drawSelectedSpell() {

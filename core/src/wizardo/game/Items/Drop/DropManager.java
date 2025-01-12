@@ -15,6 +15,7 @@ import wizardo.game.Items.ItemUtils;
 import wizardo.game.Maps.Chest;
 import wizardo.game.Resources.EffectAnims.GearFlareAnims;
 import wizardo.game.Screens.Battle.BattleScreen;
+import wizardo.game.Wizardo;
 
 import java.util.ArrayList;
 
@@ -22,13 +23,13 @@ import static wizardo.game.Items.ItemUtils.EquipSlot.ALL;
 
 public class DropManager {
 
-    ArrayList<String> alreadyDroppedNameList;
-    BattleScreen screen;
+    Wizardo game;
 
+    ArrayList<String> alreadyDroppedNameList;
     ArrayList<Drop> drops;
 
-    public DropManager(BattleScreen screen) {
-        this.screen = screen;
+    public DropManager(Wizardo game) {
+        this.game = game;
         alreadyDroppedNameList = new ArrayList<>();
         drops = new ArrayList<>();
     }
@@ -50,14 +51,14 @@ public class DropManager {
 
     public void addDrop(Drop drop) {
         drops.add(drop);
-        drop.screen = screen;
-    }
-    public void removeDrop(Drop drop) {
-        drops.remove(drop);
+        if(game.currentScreen instanceof BattleScreen) {
+            drop.screen = (BattleScreen) game.currentScreen;
+        } else {
+            drop.screen = (BattleScreen) game.getPreviousScreen();
+        }
     }
 
     public void dropChestLoot(Chest chest) {
-
 
         ArrayList<Drop> drops = chest.loot.getDrops();
         for(Drop drop : drops) {

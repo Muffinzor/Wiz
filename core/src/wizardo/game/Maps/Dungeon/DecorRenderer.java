@@ -30,7 +30,7 @@ public class DecorRenderer {
             Sprite frame = getSprite(chunk.screen);
 
             switch(object.getName()) {
-                case "Building1", "BuildingShop" -> {
+                case "Building1", "Shop" -> {
                     frame.set(DungeonDecorResources.building1_sprite);
                     RectangleMapObject rectObject = (RectangleMapObject) object;
                     float x = rectObject.getRectangle().x + chunk.x_pos;

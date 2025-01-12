@@ -37,7 +37,7 @@ public class Inventory {
 
     public int dual_reagents;
     public int triple_reagents;
-    public int gold = 5400;
+    public int gold = 1000;
     public Equipment[] holdingBox;
 
     public Inventory() {

@@ -258,7 +258,9 @@ public class SpellUtils {
         return monstersInRange;
     }
 
-    /** recursive will also make the previous tiers available as picks */
+    /** recursive will also make the previous tiers available as picks.
+     * null element for all access
+     * */
     public static Spell_Name getRandomMastery(SpellUtils.Spell_Element element, int tier, boolean recursive) {
         List<Spell_Name> list = new ArrayList<>();
         if(element != null) {

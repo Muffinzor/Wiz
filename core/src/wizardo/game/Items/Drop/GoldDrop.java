@@ -1,12 +1,15 @@
 package wizardo.game.Items.Drop;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import wizardo.game.Display.Text.BottomText;
 import wizardo.game.Resources.EffectAnims.GearFlareAnims;
 
 import static wizardo.game.Resources.EffectAnims.GearFlareAnims.white_flare;
+import static wizardo.game.Resources.Skins.inventorySkin;
 import static wizardo.game.Wizardo.player;
 import static wizardo.game.Wizardo.world;
 
@@ -65,6 +68,13 @@ public class GoldDrop extends Drop{
     public void pickup() {
         pickedUp = true;
         stateTime = 0;
-        player.inventory.gold += MathUtils.random(10,20);
+        player.inventory.gold += goldAmount;
+        screen.battleUI.updateGoldPanel();
+
+        BottomText text = new BottomText();
+        text.setAll("+" + goldAmount, body.getPosition(), inventorySkin.getFont("Gear_Text"), Color.YELLOW);
+        screen.displayManager.textManager.addGoldText(text);
     }
+
+
 }
