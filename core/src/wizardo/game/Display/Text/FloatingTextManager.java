@@ -40,7 +40,7 @@ public class FloatingTextManager {
     }
 
     public void update(float delta) {
-        cycleBottomTexts(delta);
+        cycleBottomTexts();
 
         for(FloatingDamage text : activeDmgTexts) {
             text.update(delta);
@@ -98,14 +98,14 @@ public class FloatingTextManager {
         goldTextsQueue.add(text);
     }
 
-    public void cycleBottomTexts(float delta) {
-        bottomTextCooldown -= delta;
+    public void cycleBottomTexts() {
+        bottomTextCooldown -= Gdx.graphics.getDeltaTime();
         if(!bottomTextsQueue.isEmpty() && bottomTextCooldown <= 0) {
             activeBottomTexts.add(bottomTextsQueue.removeFirst());
             bottomTextCooldown = 1;
         }
 
-        goldTextCooldown -= delta;
+        goldTextCooldown -= Gdx.graphics.getDeltaTime();
         if(!goldTextsQueue.isEmpty() && goldTextCooldown <= 0) {
             activeGoldTexts.add(goldTextsQueue.removeFirst());
             goldTextCooldown = 0.33f;

@@ -13,10 +13,10 @@ public class BlizzardAnims {
     public static Animation<Sprite> blizzard_hit_anim1;
     public static Animation<Sprite> blizzard_hit_anim2;
     public static Animation<Sprite> blizzard_hit_anim3;
-    public static String blizzard_hit_anim_path = "Spells/Blizzard/Blizzard_Hit.atlas";
+    public static String blizzard_hit_anim_path = "Spells/Blizzard/Blizzard_hit.atlas";
 
     public static Animation<Sprite> blizzard_hit_anim_arcane;
-    public static String blizzard_hit_anim_path_arcane = "Spells/Blizzard/blizzard_hit_arcane.atlas";
+    public static String blizzard_hit_anim_path_arcane = "Spells/Blizzard/Blizzard_hit_arcane.atlas";
 
     public static void loadAnimations() {
 

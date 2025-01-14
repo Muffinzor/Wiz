@@ -20,7 +20,7 @@ public class Legendary_FireStaff extends Staff {
 
     public Legendary_FireStaff() {
         sprite = new Sprite(new Texture("Items/Staff/Sunstaff.png"));
-        spriteOver = new Sprite(new Texture("Items/Staff/Sunstaff_over.png"));
+        spriteOver = new Sprite(new Texture("Items/Staff/Sunstaff_Over.png"));
         displayRotation = 25;
 
         brandedMonsters = new ArrayList<>();

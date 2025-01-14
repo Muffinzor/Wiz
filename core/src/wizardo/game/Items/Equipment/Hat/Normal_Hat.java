@@ -39,7 +39,7 @@ public class Normal_Hat extends Hat{
                 spriteOver = new Sprite(new Texture("Items/Hat/NormalHat1_Over.png"));
             }
             case 2 -> {
-                sprite = new Sprite(new Texture("Items/Hat/Greenhat.png"));
+                sprite = new Sprite(new Texture("Items/Hat/GreenHat.png"));
                 spriteOver = new Sprite(new Texture("Items/Hat/GreenHat_Over.png"));
             }
         }
