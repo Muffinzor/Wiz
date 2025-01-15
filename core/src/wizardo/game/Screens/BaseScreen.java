@@ -68,7 +68,7 @@ public abstract class BaseScreen implements Screen {
 
     public boolean paused;
     public float globalCD = 0;
-    public boolean choiceConfirmed; //for popup
+    public boolean choiceConfirmed; //for popup screen
 
     protected ControllerAdapter controllerAdapter;
     protected InputProcessor inputProcessor;

@@ -106,6 +106,7 @@ public class StandingTorchObject extends EnvironmentObject {
                 light.dimKill(0.5f);
                 light = null;
             }
+            body = null;
             initialized = false;
         }
     }

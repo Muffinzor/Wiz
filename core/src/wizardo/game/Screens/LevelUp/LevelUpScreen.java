@@ -48,7 +48,7 @@ public class LevelUpScreen extends BaseScreen {
 
     @Override
     public void dispose() {
-
+        stage.clear();
     }
 
     public void adjustFontSize() {

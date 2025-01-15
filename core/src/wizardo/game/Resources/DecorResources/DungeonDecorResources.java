@@ -11,7 +11,13 @@ import static wizardo.game.Wizardo.assetManager;
 public class DungeonDecorResources {
 
     public static Sprite pillar_sprite = new Sprite(new Texture("Maps/Decor/Dungeon/pillar_type2.png"));
-    public static Sprite building1_sprite = new Sprite(new Texture("Maps/Decor/Dungeon/building1_type2.png"));
+    public static Sprite rectangleBuilding_sprite1 = new Sprite(new Texture("Maps/Decor/Dungeon/building1_type1.png"));
+    public static Sprite rectangleBuilding_sprite2 = new Sprite(new Texture("Maps/Decor/Dungeon/building1_type2.png"));
+    public static Sprite rectangleBuilding_sprite3 = new Sprite(new Texture("Maps/Decor/Dungeon/building1_type3.png"));
+    public static Sprite rectangleBuilding_sprite4 = new Sprite(new Texture("Maps/Decor/Dungeon/building1_type4.png"));
+    public static Sprite rectangleBuilding_sprite5 = new Sprite(new Texture("Maps/Decor/Dungeon/building1_type5.png"));
+    public static Sprite rectangleBuilding_sprite6 = new Sprite(new Texture("Maps/Decor/Dungeon/building1_type6.png"));
+    public static Sprite rectangleBuilding_shop = new Sprite(new Texture("Maps/Decor/Dungeon/building1_shop.png"));
 
     public static Sprite squareBuilding_sprite1 = new Sprite(new Texture("Maps/Decor/Dungeon/building2.png"));
 
@@ -31,7 +37,7 @@ public class DungeonDecorResources {
         for (int i = 0; i < frames1.length; i++) {
             frames1[i] = atlas.createSprite("dungeonshop" + (i+1));
         }
-        dungeonshop_anim = new Animation<>(0.12f, frames1);
+        dungeonshop_anim = new Animation<>(0.2f, frames1);
     }
 
     /**

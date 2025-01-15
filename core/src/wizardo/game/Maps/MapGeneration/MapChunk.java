@@ -3,7 +3,6 @@ package wizardo.game.Maps.MapGeneration;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -36,7 +35,7 @@ public abstract class MapChunk {
     public ArrayList<EnvironmentObject> objectsToAdd;
 
     public MapShop shop;
-    public boolean rolledShop;
+    public boolean canHaveShop;
 
     public String pathToFile;
 
@@ -54,7 +53,7 @@ public abstract class MapChunk {
         bodies = new ArrayList<>();
         layerObjects = new ArrayList<>();
         objectsToAdd = new ArrayList<>();
-        rolledShop = Math.random() > 0.1f;
+
     }
 
     public abstract void render(float delta);

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="60" height="60" tilewidth="32" tileheight="32" infinite="0" nextlayerid="9" nextobjectid="46">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="60" height="60" tilewidth="32" tileheight="32" infinite="0" nextlayerid="9" nextobjectid="56">
  <tileset firstgid="1" source="../Tilesets/BigTiles.tsx"/>
  <tileset firstgid="141" source="../Tilesets/FloorTiles.tsx"/>
  <tileset firstgid="341" source="../Tilesets/StoneGround.tsx"/>
@@ -197,7 +197,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,211,212,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="4" name="Carpets" width="60" height="60" visible="0">
+ <layer id="4" name="Carpets" width="60" height="60">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -216,9 +216,9 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,469,470,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,485,486,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,485,486,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,473,474,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,469,470,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,485,486,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,485,486,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -269,7 +269,7 @@
   <object id="5" name="Pillar" x="928" y="1056" width="64" height="64"/>
   <object id="6" name="Pillar" x="1248" y="1056" width="64" height="64"/>
   <object id="7" name="Pillar" x="608" y="1056" width="64" height="64"/>
-  <object id="8" name="Building1" x="832" y="416" width="256" height="128"/>
+  <object id="8" name="Shop" x="832" y="416" width="256" height="128"/>
   <object id="9" name="Building2" x="898" y="1312" width="128" height="128"/>
   <object id="10" name="Crypt" x="576" y="448" width="128" height="96"/>
   <object id="11" name="Crypt" x="1216" y="448" width="128" height="96"/>
@@ -295,16 +295,28 @@
   <object id="36" name="VaseCluster" x="864" y="1306" width="193" height="193">
    <ellipse/>
   </object>
+  <object id="48" name="VaseCluster" x="541" y="447" width="193" height="193">
+   <ellipse/>
+  </object>
+  <object id="49" name="VaseCluster" x="1184" y="442" width="193" height="193">
+   <ellipse/>
+  </object>
+  <object id="50" name="StandingTorch" x="590" y="550" width="4" height="4"/>
+  <object id="51" name="StandingTorch" x="686" y="550" width="4" height="4"/>
+  <object id="52" name="StandingTorch" x="1230" y="550" width="4" height="4"/>
+  <object id="53" name="StandingTorch" x="1326" y="550" width="4" height="4"/>
+  <object id="54" name="StandingTorch" x="864" y="550" width="4" height="4"/>
+  <object id="55" name="StandingTorch" x="1056" y="550" width="4" height="4"/>
  </objectgroup>
  <objectgroup id="7" name="LootBodies">
-  <object id="37" name="Chest" x="862" y="550" width="4" height="4"/>
-  <object id="38" name="Chest" x="588" y="551" width="4" height="4"/>
-  <object id="39" name="Chest" x="911" y="1444" width="4" height="4"/>
-  <object id="40" name="Chest" x="1007" y="1443" width="4" height="4"/>
-  <object id="41" name="Chest" x="1310" y="549" width="4" height="4"/>
+  <object id="38" name="Chest" x="608" y="572" width="4" height="4"/>
+  <object id="39" name="Chest" x="929" y="1445" width="4" height="4"/>
+  <object id="41" name="Chest" x="1309" y="555" width="4" height="4"/>
   <object id="42" name="Chest" x="1118" y="871" width="4" height="4"/>
   <object id="43" name="Chest" x="638" y="1127" width="4" height="4"/>
   <object id="44" name="Chest" x="222" y="442" width="4" height="4"/>
+  <object id="46" name="Chest" x="1696" y="1305" width="4" height="4"/>
+  <object id="47" name="Chest" x="1696" y="217" width="4" height="4"/>
  </objectgroup>
  <objectgroup id="8" name="EventBodies"/>
 </map>

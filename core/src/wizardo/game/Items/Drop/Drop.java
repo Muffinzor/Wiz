@@ -30,8 +30,7 @@ public abstract class Drop {
     public float lightRadius = 35f;
     public Vector2 spawnPosition;
     public boolean goToPlayer;
-    public Vector2 pickedUpLocation;
-    public float pickupRadius = 3;
+    public float pickupRadius = 5;
     int frameCounter;
 
     public Sprite sprite;
@@ -62,7 +61,7 @@ public abstract class Drop {
 
         drawFrame();
 
-        if(stateTime >= 30) {
+        if(stateTime >= 5) {
             fade(delta);
             return;
         }
@@ -91,9 +90,12 @@ public abstract class Drop {
             checkDistance();
         }
     }
+
     public void fade(float delta) {
         stateTime += delta;
-        alpha -= 0.02f;
+        if(delta > 0) {
+            alpha -= 0.02f;
+        }
         if(body.isActive()) {
             body.setActive(false);
         }
@@ -101,15 +103,18 @@ public abstract class Drop {
             light.dimKill(0.02f);
             light = null;
         }
-        if(alpha < 0.05f && !pickedUp) {
+        if(body != null && alpha <= 0.05f && !pickedUp) {
             world.destroyBody(body);
+            body = null;
         }
     }
 
     public void checkDistance() {
-        float dst = body.getPosition().dst(player.pawn.getPosition());
-        if(dst < pickupRadius * (1 + player.stats.pickupRadiusBonus/100f)) {
-            goToPlayer = !(this instanceof EquipmentDrop) || player.inventory.hasSpace();
+        if(body != null) {
+            float dst = body.getPosition().dst(player.pawn.getPosition());
+            if (dst < pickupRadius * (1 + player.stats.pickupRadiusBonus / 100f)) {
+                goToPlayer = !(this instanceof EquipmentDrop) || player.inventory.hasSpace();
+            }
         }
     }
 
@@ -155,12 +160,14 @@ public abstract class Drop {
     }
 
     public void becomeTangible() {
-        Filter filter = new Filter();
-        filter.categoryBits = DROP;
-        filter.maskBits = DROP_MASK;
-        body.getFixtureList().first().setFilterData(filter);
-        body.getFixtureList().first().setSensor(true);
-        intangible = false;
+        if(body != null) {
+            Filter filter = new Filter();
+            filter.categoryBits = DROP;
+            filter.maskBits = DROP_MASK;
+            body.getFixtureList().first().setFilterData(filter);
+            body.getFixtureList().first().setSensor(true);
+            intangible = false;
+        }
     }
 
     public void createLight() {
@@ -176,17 +183,19 @@ public abstract class Drop {
     }
 
     public void goToPlayer() {
-        Vector2 playerPosition = player.pawn.getPosition();
-        Vector2 currentPosition = body.getPosition();
-        Vector2 direction = new Vector2(playerPosition.sub(currentPosition));
-        if(direction.len() > 0) {
-            direction.nor();
-        } else {
-            direction.set(1,0);
-        }
+        if(body != null) {
+            Vector2 playerPosition = player.pawn.getPosition();
+            Vector2 currentPosition = body.getPosition();
+            Vector2 direction = new Vector2(playerPosition.sub(currentPosition));
+            if (direction.len() > 0) {
+                direction.nor();
+            } else {
+                direction.set(1, 0);
+            }
 
-        direction.scl(5);
-        body.setLinearVelocity(direction);
+            direction.scl(5);
+            body.setLinearVelocity(direction);
+        }
     }
 
     public void handleCollision() {
@@ -198,9 +207,13 @@ public abstract class Drop {
     public abstract void pickup();
 
     public void dispose() {
-        world.destroyBody(body);
+        if(body != null) {
+            world.destroyBody(body);
+            body = null;
+        }
         if(light != null) {
             light.dimKill(0.1f);
+            light = null;
         }
     }
 

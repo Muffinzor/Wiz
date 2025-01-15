@@ -1,6 +1,5 @@
 package wizardo.game.Maps.Dungeon;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -31,7 +30,7 @@ public class DecorRenderer {
 
             switch(object.getName()) {
                 case "Building1", "Shop" -> {
-                    frame.set(DungeonDecorResources.building1_sprite);
+                    frame.set(DungeonDecorResources.rectangleBuilding_sprite1);
                     RectangleMapObject rectObject = (RectangleMapObject) object;
                     float x = rectObject.getRectangle().x + chunk.x_pos;
                     float y = rectObject.getRectangle().y + chunk.y_pos;

@@ -2,15 +2,11 @@ package wizardo.game.Maps.Dungeon;
 
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
-import com.badlogic.gdx.maps.objects.CircleMapObject;
 import com.badlogic.gdx.maps.objects.EllipseMapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import wizardo.game.Maps.Buildings.Crypt_Building;
-import wizardo.game.Maps.Buildings.Pillar_Building;
-import wizardo.game.Maps.Buildings.Square_Building;
-import wizardo.game.Maps.Buildings.Statue_Building;
+import wizardo.game.Maps.Buildings.*;
 import wizardo.game.Maps.Chest;
 import wizardo.game.Maps.DecorObjects.*;
 import wizardo.game.Maps.EnvironmentObject;
@@ -42,7 +38,7 @@ public class DungeonChunk extends MapChunk {
 
         if(distance < 3000) {
 
-            if(bodies.isEmpty()) {
+            if(bodies.isEmpty() && delta > 0) {
                 initialize();
             }
 
@@ -51,13 +47,11 @@ public class DungeonChunk extends MapChunk {
             }
             layerObjects.removeIf(object -> object.toBeRemoved);
 
-
             screen.mainCamera.translate(-x_pos, -y_pos);
             screen.mainCamera.update();
 
             mapRenderer.setView(screen.mainCamera);
             mapRenderer.render();
-            decorRenderer.drawObstacles(delta);
 
             screen.mainCamera.translate(x_pos, y_pos);
             screen.mainCamera.update();
@@ -100,8 +94,8 @@ public class DungeonChunk extends MapChunk {
             }
 
             if(object.getName().equals(("VaseCluster")) && Math.random() >= 0.75) {
-                VaseCluster cluster = new VaseCluster(this, object);
-                layerObjects.add(cluster);
+                //VaseCluster cluster = new VaseCluster(this, object);
+                //layerObjects.add(cluster);
             }
 
             if(object.getName().equals("StandingTorch") && Math.random() >= 0.5) {
@@ -140,13 +134,25 @@ public class DungeonChunk extends MapChunk {
                 Square_Building building = new Square_Building(this, object);
                 layerObjects.add(building);
             }
+            if(object.getName().equals("Building1")) {
+                Rectangle_Building building = new Rectangle_Building(this, object, false);
+                layerObjects.add(building);
+            }
             if(object.getName().equals("Statue")) {
                 Statue_Building statue = new Statue_Building(this, object);
                 layerObjects.add(statue);
             }
-            if(object.getName().equals("Shop") && rolledShop) {
-                MapShop shop = new MapShop(this, object);
-                layerObjects.add(shop);
+            if(object.getName().equals("Shop")) {
+                if(canHaveShop) {
+                    MapShop shop = new MapShop(this, object);
+                    layerObjects.add(shop);
+                    Rectangle_Building building = new Rectangle_Building(this, object, true);
+                    layerObjects.add(building);
+                } else {
+                    Rectangle_Building building = new Rectangle_Building(this, object, false);
+                    layerObjects.add(building);
+                }
+
             }
 
             if(object.getName().equals("FirePillar")) {

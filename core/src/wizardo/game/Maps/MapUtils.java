@@ -145,21 +145,23 @@ public class MapUtils {
         float x = rectangle.x + chunk.x_pos + width / 2;
         float y = rectangle.y + chunk.y_pos + height / 2; //center position
         bodyDef.position.set(x / PPM, y / PPM);
-        Body body = world.createBody(bodyDef);
-        body.setUserData("Obstacle");
+        if(width > 0.05f && height > 0.05f) {
+            Body body = world.createBody(bodyDef);
+            body.setUserData("Obstacle");
 
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(width / 2 / PPM, height / 2 / PPM);
+            PolygonShape shape = new PolygonShape();
+            shape.setAsBox(width / 2 / PPM, height / 2 / PPM);
 
-        FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.filter.categoryBits = OBSTACLE;
-        fixtureDef.shape = shape;
-        fixtureDef.friction = 0;
-        fixtureDef.restitution = 0f;
+            FixtureDef fixtureDef = new FixtureDef();
+            fixtureDef.filter.categoryBits = OBSTACLE;
+            fixtureDef.shape = shape;
+            fixtureDef.friction = 0;
+            fixtureDef.restitution = 0f;
 
-        body.createFixture(fixtureDef);
-        shape.dispose();
-        chunk.bodies.add(body);
+            body.createFixture(fixtureDef);
+            shape.dispose();
+            chunk.bodies.add(body);
+        }
     }
 
     /**

@@ -58,8 +58,6 @@ public class LoadingScreen extends BaseScreen {
         if (assetManager.update() && !assetsFinishedLoading) {
             loadAnims();
             createAllSpells();
-            loadDungeonMaps();
-            assetsFinishedLoading = true;
             game.addNewScreen(new MainMenuScreen(game));
         }
 
@@ -135,6 +133,8 @@ public class LoadingScreen extends BaseScreen {
 
         CharacterScreenResources.loadAtlas();
         LevelUpResources.loadAtlas();
+
+        loadDungeonMaps();
     }
 
     public void loadAnims() {

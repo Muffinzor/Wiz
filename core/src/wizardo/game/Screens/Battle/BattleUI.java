@@ -43,7 +43,6 @@ public class BattleUI {
         frame1.setSize(renderWidth * xRatio, frame1.getHeight() * yRatio);
         screen.displayManager.spriteRenderer.ui_sprites.add(frame1);
 
-
         Sprite frame2 = screen.getSprite();
         frame2.set(PlayerResources.shieldBar);
         frame2.setScale(xRatio, yRatio);
@@ -52,6 +51,7 @@ public class BattleUI {
         screen.displayManager.spriteRenderer.ui_sprites.add(frame2);
 
     }
+
     public void drawControllerTarget() {
         if (controllerActive) {
             // Get the player's world position (in meters)

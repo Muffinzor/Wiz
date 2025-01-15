@@ -31,8 +31,8 @@ public class MonsterManager {
     public void update(float delta) {
 
         updateLiveMonsters(delta);
-
         updateDeadMonsters(delta);
+
     }
 
     public void addMonster(Monster monster) {
@@ -62,6 +62,7 @@ public class MonsterManager {
                 monster.alpha = 0.05f;
             }
         }
+
         liveMonsters.removeIf(monster -> monster.dead);
         liveMonsters.removeIf(monster -> monster.tooFar);
 
@@ -88,16 +89,20 @@ public class MonsterManager {
 
         }
 
-        bodiesRemoval();
+        if(delta > 0) {
+            bodiesRemoval();
+        }
 
     }
 
     /** spaced to prevent garbage collection crazyness **/
     public void bodiesRemoval() {
         bodiesRemovalCounter++;
-        ArrayList<Monster> monstersRemoved = new ArrayList<>();
         if(bodiesRemovalCounter >= 120) {
             bodiesRemovalCounter = 0;
+
+            ArrayList<Monster> monstersRemoved = new ArrayList<>();
+
             for(Monster monster : dyingMonsters) {
                 if(monster.alpha <= 0) {
                     if(monster.basic) {
@@ -108,9 +113,11 @@ public class MonsterManager {
                     monstersRemoved.add(monster);
                 }
             }
+
+            dyingMonsters.removeAll(monstersRemoved);
+            monstersRemoved.clear();
         }
-        dyingMonsters.removeAll(monstersRemoved);
-        monstersRemoved.clear();
+
     }
 
     public int getRangedMonstersCount() {

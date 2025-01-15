@@ -39,14 +39,16 @@ public class DropManager {
             drop.update(delta);
         }
 
-        for(Drop drop : drops) {
-            if(drop.pickedUp && drop.stateTime >= GearFlareAnims.gear_pop.getAnimationDuration()) {
-                drop.dispose();
+        if(delta > 0) {
+            for (Drop drop : drops) {
+                if (drop.pickedUp && drop.stateTime >= GearFlareAnims.gear_pop.getAnimationDuration()) {
+                    drop.dispose();
+                }
             }
-        }
 
-        drops.removeIf(drop -> drop.alpha <= 0.05f);
-        drops.removeIf(drop -> drop.pickedUp && drop.stateTime >= GearFlareAnims.gear_pop.getAnimationDuration());
+            drops.removeIf(drop -> drop.alpha <= 0.05f);
+            drops.removeIf(drop -> drop.pickedUp && drop.stateTime >= GearFlareAnims.gear_pop.getAnimationDuration());
+        }
     }
 
     public void addDrop(Drop drop) {

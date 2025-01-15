@@ -41,6 +41,26 @@ public class ChunkPaths {
             chunkPaths.add(tile5);
             chunkConnections.put(tile5, createTileConnections(1,1,1,1));
 
+            String tile6 = "Maps/DungeonMaps/Chunks/Tile6.tmx";
+            chunkPaths.add(tile6);
+            chunkConnections.put(tile6, createTileConnections(2,1,2,1));
+
+            String tile7 = "Maps/DungeonMaps/Chunks/Tile7.tmx";
+            chunkPaths.add(tile7);
+            chunkConnections.put(tile7, createTileConnections(1,2,1,2));
+
+            String tile8 = "Maps/DungeonMaps/Chunks/Tile8.tmx";
+            chunkPaths.add(tile8);
+            chunkConnections.put(tile8, createTileConnections(1,1,2,2));
+
+            String tile9 = "Maps/DungeonMaps/Chunks/Tile9.tmx";
+            chunkPaths.add(tile9);
+            chunkConnections.put(tile9, createTileConnections(2,1,1,2));
+
+            String tile10 = "Maps/DungeonMaps/Chunks/Tile10.tmx";
+            chunkPaths.add(tile10);
+            chunkConnections.put(tile10, createTileConnections(2,2,1,1));
+
         }
     }
 
@@ -72,6 +92,11 @@ public class ChunkPaths {
         dungeonMapPaths.add("Maps/DungeonMaps/Chunks/Tile3.tmx");
         dungeonMapPaths.add("Maps/DungeonMaps/Chunks/Tile4.tmx");
         dungeonMapPaths.add("Maps/DungeonMaps/Chunks/Tile5.tmx");
+        dungeonMapPaths.add("Maps/DungeonMaps/Chunks/Tile6.tmx");
+        dungeonMapPaths.add("Maps/DungeonMaps/Chunks/Tile7.tmx");
+        dungeonMapPaths.add("Maps/DungeonMaps/Chunks/Tile8.tmx");
+        dungeonMapPaths.add("Maps/DungeonMaps/Chunks/Tile9.tmx");
+        dungeonMapPaths.add("Maps/DungeonMaps/Chunks/Tile10.tmx");
         return dungeonMapPaths;
     }
 

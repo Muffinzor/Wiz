@@ -58,7 +58,7 @@ public class BattleScreen extends BaseScreen {
 
         mainCamera.viewportWidth = Gdx.graphics.getWidth();
         mainCamera.viewportHeight = Gdx.graphics.getHeight();
-        mainCamera.zoom = 1f;
+        mainCamera.zoom = 4f;
 
         createNewWorld();
         rayHandler = new RayHandler(world);
@@ -113,29 +113,35 @@ public class BattleScreen extends BaseScreen {
 
         player.update(delta);
 
-        if(debug_camera) {
-            Matrix4 debugMatrix = mainCamera.combined.cpy().scl(PPM);
-            debugRenderer.render(world, debugMatrix);
-        }
-        logger.log();
+        stage.act(delta);
+        stage.draw();
 
         if(player.stats.shield <= 0) {
             game.freshScreen(new MainMenuScreen(game));
         }
 
-        stage.act(delta);
-        stage.draw();
-
-        COUNTER++;
-        if(COUNTER > 60) {
-            COUNTER = 0;
-            System.out.println("MONSTER POOL: " +  monsterSpawner.bodyPool.getSize());
-            System.out.println("LIGHT POOL: " +  lightManager.pool.getPoolSize());
+        if(debug_camera) {
+            Matrix4 debugMatrix = mainCamera.combined.cpy().scl(PPM);
+            debugRenderer.render(world, debugMatrix);
+            logger.log();
+            COUNTER++;
+            if(COUNTER > 60) {
+                COUNTER = 0;
+                System.out.println("MONSTER POOL: " +  monsterSpawner.bodyPool.getSize());
+                System.out.println("LIGHT POOL: " +  lightManager.pool.getPoolSize());
+            }
         }
+
+
     }
 
     @Override
     public void resume() {
+        paused = false;
+    }
+
+    public void show() {
+        super.show();
         paused = false;
     }
 

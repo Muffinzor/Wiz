@@ -1,7 +1,6 @@
 package wizardo.game.Maps.MapGeneration;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.math.MathUtils;
 import wizardo.game.Maps.Dungeon.DungeonChunk;
 import wizardo.game.Screens.Battle.BattleScreen;
 import wizardo.game.Wizardo;
@@ -71,8 +70,10 @@ public class MapManager {
             MapChunk newChunk;
             if (biome.equals("Dungeon")) {
                 newChunk = new DungeonChunk(mapPath, chunkX * CHUNK_SIZE, chunkY * CHUNK_SIZE, game, screen);
+                newChunk.canHaveShop = canHaveShop(chunkX, chunkY);
             } else {
                 newChunk = new DungeonChunk(mapPath, chunkX * CHUNK_SIZE, chunkY * CHUNK_SIZE, game, screen);
+                newChunk.canHaveShop = canHaveShop(chunkX, chunkY);
             }
             chunks.put(chunkKey, newChunk);
         }
@@ -226,9 +227,24 @@ public class MapManager {
             }
         }
     }
-    private String getRandomChunk() {
-        int index = MathUtils.random(chunkPaths.size() - 1);
-        return chunkPaths.get(index);
+
+    private boolean canHaveShop(int x_position, int y_position) {
+        boolean canHaveShop = true;
+
+        for (int dx = x_position -2; dx <= x_position + 2; dx++) {
+            for (int dy = y_position -2 ; dy <= y_position + 2; dy++) {
+                if (dx == 0 && dy == 0) {
+                    continue;
+                }
+
+                if(chunkExists(dx, dy)) {
+                    if(chunks.get(chunkKey(dx, dy)).canHaveShop) {
+                        canHaveShop = false;
+                    }
+                }
+            }
+        }
+        return canHaveShop;
     }
 
     private boolean chunkExists(int x_position, int y_position) {

@@ -25,15 +25,10 @@ public class VaseObject extends EnvironmentObject {
 
     public VaseObject(MapChunk chunk, MapObject object, Vector2 position) {
         super(chunk, object);
+        body = null;
         if(position != null) {
             this.position = position;
         }
-        Float width = object.getProperties().get("width", Float.class);
-        Float height = object.getProperties().get("height", Float.class);
-        x = object.getProperties().get("x", Float.class) + chunk.x_pos + width/2;
-        y = object.getProperties().get("y", Float.class) + chunk.y_pos + height/2;
-        x = x/PPM;
-        y = y/PPM;
     }
 
     @Override
@@ -56,26 +51,27 @@ public class VaseObject extends EnvironmentObject {
     }
 
     public void drawFrame() {
-        Sprite frame = chunk.screen.getSprite();
-        if(!destroyed) {
-            frame.set(sprite);
-        } else {
-            frame.set(anim.getKeyFrame(stateTime, false));
+        if(body != null) {
+            Sprite frame = chunk.screen.getSprite();
+            if (!destroyed) {
+                frame.set(sprite);
+            } else {
+                frame.set(anim.getKeyFrame(stateTime, false));
+            }
+            frame.setCenter(body.getPosition().x * PPM, body.getPosition().y * PPM + 4);
+            chunk.screen.addSortedSprite(frame);
+            chunk.screen.centerSort(frame, body.getPosition().y * PPM);
         }
-        frame.setCenter(body.getPosition().x * PPM, body.getPosition().y * PPM + 4);
-        chunk.screen.addSortedSprite(frame);
-        chunk.screen.centerSort(frame, body.getPosition().y * PPM);
     }
 
     public void createBody() {
-        if(position != null) {
+
+        if(position != null && body == null) {
             body = MapUtils.createCircleDecorBody_FromVector(position, 8, false, false);
-        } else {
-            body = MapUtils.createCircleDecorBody_FromTiledMap(chunk, object, 8, false, false);
-        }
-        body.setUserData(this);
-        if(destroyed) {
-            body.setActive(false);
+            body.setUserData(this);
+            if(destroyed) {
+                body.setActive(false);
+            }
         }
     }
 
@@ -110,6 +106,7 @@ public class VaseObject extends EnvironmentObject {
         if(initialized) {
             world.destroyBody(body);
             initialized = false;
+            body = null;
         }
     }
 }

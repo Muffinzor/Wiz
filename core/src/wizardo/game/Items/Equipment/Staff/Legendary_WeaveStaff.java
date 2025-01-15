@@ -74,6 +74,7 @@ public class Legendary_WeaveStaff extends Staff {
             case 12 -> spell = firearcaneSpells[24];        // EnergyRain + Flamejet
         }
         Spell clone = spell.clone();
+        System.out.println("Weaving spell #" + random);
         player.screen.spellManager.add(clone);
     }
 

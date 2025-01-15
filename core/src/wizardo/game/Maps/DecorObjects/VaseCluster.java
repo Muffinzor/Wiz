@@ -43,13 +43,15 @@ public class VaseCluster extends EnvironmentObject {
 
     @Override
     public void update(float delta) {
-        positions = getPositions();
+        if(!toBeRemoved) {
+            positions = getPositions();
 
-        for(Vector2 position : positions) {
-            VaseObject vase = new VaseObject(chunk, object, position);
-            chunk.addLayerObject(vase);
+            for (Vector2 position : positions) {
+                VaseObject vase = new VaseObject(chunk, object, position);
+                chunk.addLayerObject(vase);
+            }
+            toBeRemoved = true;
         }
-        toBeRemoved = true;
     }
 
     @Override
@@ -61,8 +63,8 @@ public class VaseCluster extends EnvironmentObject {
 
         ArrayList<Vector2> positions = new ArrayList<>();
         Random random = new Random();
-        int attemptsLeft = 10; // Prevents infinite loop or excessive overhead
-        quantity = (int) (clusterRadius * 10);
+        int attemptsLeft = 15; // Prevents infinite loop or excessive overhead
+        quantity = Math.min(20, (int) (clusterRadius * 10));
 
         while (positions.size() < quantity && attemptsLeft > 0) {
             double r = Math.sqrt(random.nextDouble()) * clusterRadius;
@@ -82,12 +84,10 @@ public class VaseCluster extends EnvironmentObject {
             if (isValid && centerPoint.dst(x, y) <= clusterRadius - minimumSpread) {
                 if(!isCircleOverlappingWithObstacle(new Vector2(x,y), 10)) {
                     positions.add(new Vector2(x, y));
-                } else {
-                    attemptsLeft--;
+                    continue;
                 }
-            } else {
-                attemptsLeft--;
             }
+            attemptsLeft--;
         }
 
         return positions;

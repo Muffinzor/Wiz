@@ -1,5 +1,6 @@
 package wizardo.game.Screens.Shop;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -106,7 +107,7 @@ public class ShopTable_Scrolls extends MenuTable {
 
         container.pack();
 
-        container.setPosition(200, 200);
+        container.setPosition(Gdx.graphics.getWidth()/2 - container.getWidth()/2, 270);
 
         container.validate();
     }

@@ -42,7 +42,7 @@ public class Chest extends TriggerObject {
             float stoneChance = 0.85f - (player.stats.luck/100f) * 0.05f;
             float redChance = 0.7f - (player.stats.luck/100f) * 0.075f;
             float metalChance = 0.45f - (player.stats.luck/100f) * 0.1f;
-            if(tier == - 2) {
+            if(tier == -2) {
                 metalChance = 0;
             }
 

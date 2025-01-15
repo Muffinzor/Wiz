@@ -103,7 +103,7 @@ public class ShopTable_Gear extends MenuTable {
 
         container.pack();
 
-        container.setPosition(400, 400);
+        container.setPosition(Gdx.graphics.getWidth()/2 - container.getWidth()/2, 580);
 
         container.validate();
     }

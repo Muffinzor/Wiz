@@ -1,6 +1,7 @@
 package wizardo.game.Screens.Shop;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
@@ -22,6 +23,7 @@ import static wizardo.game.Resources.Skins.shopSkin;
 public class ShopScreen extends BaseScreen {
 
     ArrayList<Screen_Anim> anims;
+    Sprite background;
 
     float stateTime;
     Stage panelStage;

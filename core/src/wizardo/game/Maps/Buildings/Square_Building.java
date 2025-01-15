@@ -30,7 +30,9 @@ public class Square_Building extends Building {
             decoPosition2 = new Vector2(decoPosition1.x + width/3/PPM + 0.3f, decoPosition1.y);
             decoSprite1 = DungeonDecorResources.getWallDeco(false);
             decoSprite2 = DungeonDecorResources.getWallDeco(false);
-            while (decoSprite1 == decoSprite2) {
+            int attempts = 5;
+            while (decoSprite1 == decoSprite2 && attempts > 0) {
+                attempts--;
                 decoSprite2 = DungeonDecorResources.getWallDeco(false);
             }
         } else if(randomDecos >= 0.3f) {

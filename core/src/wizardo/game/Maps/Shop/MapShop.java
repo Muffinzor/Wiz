@@ -1,5 +1,6 @@
 package wizardo.game.Maps.Shop;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Vector2;
@@ -34,7 +35,7 @@ public class MapShop extends TriggerObject {
         }
 
         drawFrame();
-        stateTime += delta;
+        stateTime += Gdx.graphics.getDeltaTime();
     }
 
     public void createTriggerBody() {
