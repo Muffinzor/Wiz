@@ -32,7 +32,27 @@ public class FireballAnims {
     public static String fireball_arcane_atlas_path = "Spells/Fireball/Fireball_Arcane.atlas";
     public static String fireball_arcaneExplosion_atlas_path = "Spells/Fireball/ToonArcane_Explosion.atlas";
 
+
+    public static Animation<Sprite> fireball_explosion_anim_firelite;
+    public static Animation<Sprite> fireball_explosion_anim_firelite2;
+    public static String fireball_fireliteExplosion_atlas_path = "Spells/Fireball/ToonFirelite_Explosion.atlas";
+
     public static void loadAnimations() {
+        /** FIRELITE **/
+        TextureAtlas firelite_explosion_atlas = assetManager.get(fireball_fireliteExplosion_atlas_path, TextureAtlas.class);
+
+        Sprite[] fireliteExplosion_frames = new Sprite[60];
+        for (int i = 0; i < fireliteExplosion_frames.length; i++) {
+            fireliteExplosion_frames[i] = firelite_explosion_atlas.createSprite("explosionONE" + (i+1));
+        }
+        fireball_explosion_anim_firelite = new Animation<>(0.022f, fireliteExplosion_frames);
+        Sprite[] fireliteExplosion_frames2 = new Sprite[60];
+        for (int i = 0; i < fireliteExplosion_frames2.length; i++) {
+            fireliteExplosion_frames2[i] = firelite_explosion_atlas.createSprite("explosionTWO" + (i+1));
+        }
+        fireball_explosion_anim_firelite2 = new Animation<>(0.022f, fireliteExplosion_frames2);
+
+        /** ARCANE */
         TextureAtlas arc_proj_atlas = assetManager.get(fireball_arcane_atlas_path, TextureAtlas.class);
         TextureAtlas arc_explosion_atlas = assetManager.get(fireball_arcaneExplosion_atlas_path, TextureAtlas.class);
 
@@ -119,11 +139,13 @@ public class FireballAnims {
 
         assetManager.load(fireball_arcane_atlas_path, TextureAtlas.class);
         assetManager.load(fireball_arcaneExplosion_atlas_path, TextureAtlas.class);
+
+        assetManager.load(fireball_fireliteExplosion_atlas_path, TextureAtlas.class);
     }
 
     public static Animation<Sprite> getAnim(SpellUtils.Spell_Element anim_element) {
         switch(anim_element) {
-            case LIGHTNING, FIRELITE -> {
+            case LIGHTNING -> {
                 if(MathUtils.randomBoolean()) {
                     return fireball_explosion_anim_lightning;
                 } else {
@@ -135,6 +157,13 @@ public class FireballAnims {
                     return fireball_explosion_anim_fire;
                 } else {
                     return fireball_explosion_anim_fire2;
+                }
+            }
+            case FIRELITE -> {
+                if(MathUtils.randomBoolean()) {
+                    return fireball_explosion_anim_firelite;
+                } else {
+                    return fireball_explosion_anim_firelite2;
                 }
             }
             case FROST -> {

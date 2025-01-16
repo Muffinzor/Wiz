@@ -12,12 +12,30 @@ public class ChainLightningAnims {
     public static Animation<Sprite> chainlightning_long_lightning_anim;
     public static String chainlightning_atlas_path_lightning = "Spells/ChainLightning/lightning.atlas";
 
+    public static Animation<Sprite> sith_lightning_anim;
+    public static Animation<Sprite> sith_lightning_long_anim;
+    public static String sith_atlas_path = "Spells/ChainLightning/sith_lightning.atlas";
+
     public static Animation<Sprite> chainlightning_beam_anim;
     public static Animation<Sprite> chainlightning_long_beam_anim;
     public static String chainlightning_atlas_path_beam = "Spells/ChainLightning/laser.atlas";
     public static String chainlightning_atlas_path_beam_long = "Spells/ChainLightning/laser_long.atlas";
 
     public static void loadAnimations() {
+
+        TextureAtlas sith_atlas = assetManager.get(sith_atlas_path, TextureAtlas.class);
+
+        Sprite[] sith_frames = new Sprite[22];
+        for (int i = 0; i < sith_frames.length; i++) {
+            sith_frames[i] = sith_atlas.createSprite("chain" + (i+1));
+        }
+        sith_lightning_anim = new Animation<>(0.03f, sith_frames);
+
+        Sprite[] sithlong_frames = new Sprite[8];
+        for (int i = 0; i < sithlong_frames.length; i++) {
+            sithlong_frames[i] = sith_atlas.createSprite("long" + (i+1));
+        }
+        sith_lightning_long_anim = new Animation<>(0.03f, sithlong_frames);
 
         TextureAtlas atlas = assetManager.get(chainlightning_atlas_path_lightning, TextureAtlas.class);
 
@@ -55,5 +73,6 @@ public class ChainLightningAnims {
         assetManager.load(chainlightning_atlas_path_lightning, TextureAtlas.class);
         assetManager.load(chainlightning_atlas_path_beam, TextureAtlas.class);
         assetManager.load(chainlightning_atlas_path_beam_long, TextureAtlas.class);
+        assetManager.load(sith_atlas_path, TextureAtlas.class);
     }
 }

@@ -41,7 +41,7 @@ public class DropManager {
 
         if(delta > 0) {
             for (Drop drop : drops) {
-                if (drop.pickedUp && drop.stateTime >= GearFlareAnims.gear_pop.getAnimationDuration()) {
+                if ((drop.pickedUp && drop.stateTime >= GearFlareAnims.gear_pop.getAnimationDuration()) || drop.alpha <= 0.05f) {
                     drop.dispose();
                 }
             }

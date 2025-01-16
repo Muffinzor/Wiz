@@ -17,6 +17,7 @@ import wizardo.game.Utils.BodyFactory;
 import static wizardo.game.Spells.SpellUtils.Spell_Element.ARCANE;
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.player;
+import static wizardo.game.Wizardo.world;
 
 public class Laser_Projectile extends Laser_Spell {
 
@@ -50,6 +51,12 @@ public class Laser_Projectile extends Laser_Spell {
         adjustLight();
 
         stateTime += delta;
+
+        if(stateTime >= 2) {
+            world.destroyBody(body);
+            light.dimKill(0.5f);
+            screen.spellManager.remove(this);
+        }
     }
 
     public void handleCollision(Monster monster) {

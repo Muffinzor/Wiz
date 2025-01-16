@@ -40,7 +40,7 @@ public class DragonBreath_Projectile extends DragonBreath_Spell {
 
         bodies = new ArrayList<>();
         main_element = SpellUtils.Spell_Element.FIRE;
-        speed = 11;
+        speed = 12.5f;
 
         flipY = MathUtils.randomBoolean();
 
@@ -142,7 +142,7 @@ public class DragonBreath_Projectile extends DragonBreath_Spell {
         frame.set(anim.getKeyFrame(stateTime, false));
         frame.setPosition(trueSpawn.x * PPM, trueSpawn.y * PPM - frame.getHeight()/2);
         frame.setOrigin(0, frame.getHeight()/2);
-        frame.setScale(0.9f, 1);
+        frame.setScale(1.05f, 1.15f);
         frame.setRotation(angle);
         frame.flip(false, flipY);
         screen.addUnderSprite(frame);
@@ -160,7 +160,7 @@ public class DragonBreath_Projectile extends DragonBreath_Spell {
         angle = direction.angleDeg();
 
         for (int i = 0; i < 5; i++) {
-            Body body = BodyFactory.spellProjectileCircleBody(spawnPosition, 35, true);
+            Body body = BodyFactory.spellProjectileCircleBody(spawnPosition, 25, true);
             body.setUserData(this);
             Vector2 ownVelocity = velocity.cpy().rotateDeg(-20 + (i * 10));
             body.setLinearVelocity(ownVelocity.scl(speed));

@@ -76,7 +76,7 @@ public class SpellUtils {
 
             short obstacleCategory = 0x0010;
 
-            if ((fixture.getFilterData().categoryBits & obstacleCategory) != 0) {
+            if (fixture != null && (fixture.getFilterData().categoryBits & obstacleCategory) != 0) {
                 clearLOS.set(false);
                 return 0; // Stop raycast
             }

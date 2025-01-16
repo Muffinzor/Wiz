@@ -1,5 +1,6 @@
 package wizardo.game.Items.Equipment.Book;
 
+import wizardo.game.Items.Equipment.Amulet.Epic_DragonbreathAmulet;
 import wizardo.game.Items.Equipment.Equipment;
 import wizardo.game.Items.Equipment.EquipmentUtils;
 import wizardo.game.Items.ItemUtils;

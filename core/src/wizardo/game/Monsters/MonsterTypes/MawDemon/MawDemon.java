@@ -154,7 +154,6 @@ public class MawDemon extends Monster {
     }
     public void handleCollision(Monster monster) {
         if(charging) {
-            System.out.println("PUSH");
             // Get the monster's velocity
             Vector2 monsterVelocity = body.getLinearVelocity();
 

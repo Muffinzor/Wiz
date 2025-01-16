@@ -80,7 +80,6 @@ public class Blizzard_Spell extends Spell {
 
         if(stateTime >= duration) {
             screen.spellManager.remove(this);
-            System.out.println("total projs: " + projsSent);
         }
 
     }

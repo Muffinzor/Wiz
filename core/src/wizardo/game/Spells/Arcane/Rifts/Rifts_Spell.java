@@ -1,6 +1,7 @@
 package wizardo.game.Spells.Arcane.Rifts;
 
 import com.badlogic.gdx.math.Vector2;
+import wizardo.game.Items.Equipment.Amulet.Epic_RiftAmulet;
 import wizardo.game.Items.Equipment.Staff.Epic_RiftStaff;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Spells.Spell;
@@ -46,7 +47,7 @@ public class Rifts_Spell extends Spell {
 
             if (!initialized) {
                 initialized = true;
-                setTargetPosition();
+                setup();
             }
 
             stateTime += delta;
@@ -64,6 +65,10 @@ public class Rifts_Spell extends Spell {
 
         if (stateTime > riftsCast * interval) {
             Vector2 randomTarget = null;
+
+            if(player.inventory.equippedAmulet instanceof Epic_RiftAmulet) {
+                targetPosition = new Vector2(player.pawn.getPosition());
+            }
 
             if(player.inventory.equippedStaff instanceof Epic_RiftStaff) {
                 randomTarget = getUniqueStaffTarget();
@@ -88,7 +93,7 @@ public class Rifts_Spell extends Spell {
     }
 
     public Vector2 getUniqueStaffTarget() {
-        ArrayList<Monster> inRange = SpellUtils.findMonstersInRangeOfVector(targetPosition, spread * 1.8f, false);
+        ArrayList<Monster> inRange = SpellUtils.findMonstersInRangeOfVector(targetPosition, spread * 1.2f, false);
         Vector2 target = null;
         if(!inRange.isEmpty()) {
             int index = (int) (Math.random() * inRange.size());
@@ -116,7 +121,13 @@ public class Rifts_Spell extends Spell {
     /**
      * A REFAIRE SELON NEW CONTROLLER AIM ASSIST
      */
-    public void setTargetPosition() {
+    public void setup() {
+
+        if(player.inventory.equippedAmulet instanceof Epic_RiftAmulet) {
+            spread *= 2.5f;
+            maxRifts *= 2;
+        } else
+
         if(null == targetPosition) {
             Vector2 temp = getTargetPosition();
             Vector2 playerPos = player.pawn.body.getPosition();

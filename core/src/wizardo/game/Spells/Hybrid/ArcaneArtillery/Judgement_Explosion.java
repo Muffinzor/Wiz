@@ -6,8 +6,10 @@ import com.badlogic.gdx.math.Vector2;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Resources.SpellAnims.ExplosionAnims_Elemental;
+import wizardo.game.Spells.Arcane.ArcaneMissiles.ArcaneMissile_Projectile;
 import wizardo.game.Spells.Frost.Frozenorb.Frozenorb_Spell;
 import wizardo.game.Spells.Hybrid.EnergyRain.EnergyRain_Explosion;
+import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyFactory;
 
 import static wizardo.game.Spells.SpellUtils.Spell_Element.FROST;
@@ -64,6 +66,7 @@ public class Judgement_Explosion extends Judgement_Spell {
             createBody();
             createLight();
             frozenorb();
+            arcaneMissiles();
         }
 
         drawFrame();
@@ -144,6 +147,18 @@ public class Judgement_Explosion extends Judgement_Spell {
             orb.lightAlpha = 0.7f;
             orb.anim_element = FROST;
             screen.spellManager.add(orb);
+        }
+    }
+
+    public void arcaneMissiles() {
+        if(arcaneMissiles) {
+            int quantity = 4 + (player.spellbook.arcanemissile_lvl + 1)/2;
+            for (int i = 0; i < quantity; i++) {
+                Vector2 targetPosition = SpellUtils.getRandomVectorInRadius(body.getPosition(), 2);
+                ArcaneMissile_Projectile missile = new ArcaneMissile_Projectile(body.getPosition(), targetPosition);
+                missile.setElements(this);
+                screen.spellManager.add(missile);
+            }
         }
     }
 }

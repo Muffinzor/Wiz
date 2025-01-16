@@ -3,7 +3,9 @@ package wizardo.game.Maps;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Items.Drop.*;
+import wizardo.game.Items.Equipment.Amulet.Epic_DragonbreathAmulet;
 import wizardo.game.Items.Equipment.Equipment;
+import wizardo.game.Items.Equipment.Ring.Epic_OculusRing;
 import wizardo.game.Items.Equipment.Staff.Legendary_WeaveStaff;
 import wizardo.game.Items.ItemUtils;
 import wizardo.game.Utils.BodyFactory;
@@ -86,6 +88,7 @@ public class ChestLoot {
         }
     }
     public void WoodenChest() {
+        powerLoot();
         int loots = MathUtils.random(1,2);
         for (int i = 0; i < loots; i++) {
             drops.add(woodenChestDropTable());
@@ -93,10 +96,7 @@ public class ChestLoot {
     }
 
     public void powerLoot() {
-        Equipment rare = chest.screen.dropManager.getEquipmentForDrop(ALL, ItemUtils.EquipQuality.RARE, "The Phoenix Pelt");
-        drops.add(new EquipmentDrop(chest.body.getPosition(), rare));
-        Equipment rare2 = chest.screen.dropManager.getEquipmentForDrop(ALL, ItemUtils.EquipQuality.RARE, "The Duke's Signet");
-        drops.add(new EquipmentDrop(chest.body.getPosition(), rare2));
+        drops.add(new EquipmentDrop(chest.body.getPosition(), new Epic_DragonbreathAmulet()));
     }
 
     public Drop goldChestDropTable() {

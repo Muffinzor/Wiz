@@ -12,8 +12,7 @@ import static wizardo.game.Wizardo.player;
 public class Epic_Amulet extends Amulet {
 
     public Epic_Amulet() {
-        sprite = new Sprite(new Texture("Items/Amulets/PurpleAmmy.png"));
-        spriteOver = new Sprite(new Texture("Items/Amulets/PurpleAmmy_Over.png"));
+        setupSprites();
         displayScale = 0.85f;
 
         title = "Epic Amulet";
@@ -24,6 +23,24 @@ public class Epic_Amulet extends Amulet {
             getRareAmuletStats(this, 1);
         }
 
+    }
+
+    public void setupSprites() {
+        int random = MathUtils.random(1,3);
+        switch (random) {
+            case 1 -> {
+                sprite = new Sprite(new Texture("Items/Amulets/EpicAmmy1.png"));
+                spriteOver = new Sprite(new Texture("Items/Amulets/EpicAmmy1_Over.png"));
+            }
+            case 2 -> {
+                sprite = new Sprite(new Texture("Items/Amulets/EpicAmmy2.png"));
+                spriteOver = new Sprite(new Texture("Items/Amulets/EpicAmmy2_Over.png"));
+            }
+            case 3 -> {
+                sprite = new Sprite(new Texture("Items/Amulets/EpicAmmy3.png"));
+                spriteOver = new Sprite(new Texture("Items/Amulets/EpicAmmy3_Over.png"));
+            }
+        }
     }
 
 

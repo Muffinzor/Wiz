@@ -41,7 +41,7 @@ import static wizardo.game.Wizardo.*;
 public abstract class Spell implements Cloneable {
 
     public boolean raycasted;
-    public int aimReach = 15;
+    public float aimReach = 15;
 
     public Animation<Sprite> anim;
     public float red = 0;
@@ -623,7 +623,7 @@ public abstract class Spell implements Cloneable {
     }
 
     public void autoAimCheck() {
-        if(player.inventory.equippedHat instanceof Legendary_SentientHat) {
+        if(player.inventory.equippedHat instanceof Legendary_SentientHat && castByPawn) {
             Monster target = Legendary_SentientHat.findTarget();
             if(target != null) {
                 targetPosition = new Vector2(target.body.getPosition());

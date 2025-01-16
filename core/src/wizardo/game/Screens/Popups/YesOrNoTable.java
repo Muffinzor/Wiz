@@ -25,7 +25,7 @@ public class YesOrNoTable extends MenuTable {
         this.message = message;
 
         Sprite sprite = new Sprite(new Texture("Screens/SmallSheet.png"));
-        System.out.println(sprite.getWidth() + " " + sprite.getHeight());
+
         SpriteDrawable background = new SpriteDrawable(sprite);
         container = new Container<>();
         container.setSize(sprite.getWidth(), sprite.getHeight());

@@ -58,10 +58,9 @@ public abstract class Drop {
             createLight();
         }
 
-
         drawFrame();
 
-        if(stateTime >= 5) {
+        if(stateTime >= 30) {
             fade(delta);
             return;
         }
@@ -96,16 +95,12 @@ public abstract class Drop {
         if(delta > 0) {
             alpha -= 0.02f;
         }
-        if(body.isActive()) {
+        if(body != null && body.isActive()) {
             body.setActive(false);
         }
         if(light != null) {
             light.dimKill(0.02f);
             light = null;
-        }
-        if(body != null && alpha <= 0.05f && !pickedUp) {
-            world.destroyBody(body);
-            body = null;
         }
     }
 

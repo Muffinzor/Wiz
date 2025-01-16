@@ -13,7 +13,6 @@ import wizardo.game.Resources.SpellAnims.ChainLightningAnims;
 import wizardo.game.Spells.Arcane.Rifts.Rift_Zone;
 import wizardo.game.Spells.Fire.Fireball.Fireball_Explosion;
 import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Explosion;
-import wizardo.game.Spells.Hybrid.EnergyRain.ChainLightning_Splash;
 import wizardo.game.Spells.Lightning.ChargedBolts.ChargedBolts_Spell;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;

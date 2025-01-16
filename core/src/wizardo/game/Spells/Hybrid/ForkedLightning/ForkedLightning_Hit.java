@@ -1,4 +1,4 @@
-package wizardo.game.Spells.Unique.DukeLightning;
+package wizardo.game.Spells.Hybrid.ForkedLightning;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -6,64 +6,61 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.QueryCallback;
+import wizardo.game.Items.Equipment.Hat.Epic_ForkedLightningHat;
+import wizardo.game.Items.Equipment.Staff.Epic_ChainStaff;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Resources.SpellAnims.ChainLightningAnims;
-import wizardo.game.Spells.Spell;
+
+import wizardo.game.Spells.Fire.Fireball.Fireball_Explosion;
+import wizardo.game.Spells.Lightning.ChainLightning.ChainLightning_Splash;
+import wizardo.game.Spells.Lightning.ChargedBolts.ChargedBolts_Spell;
 import wizardo.game.Spells.SpellUtils;
+
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 
+import static wizardo.game.Spells.SpellUtils.Spell_Element.FIRELITE;
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.*;
 
-public class DukeLightningHit extends Spell {
+public class ForkedLightning_Hit extends ForkedLightning_Spell {
 
-    public int maxHits = 4;
-    public int currentHits = 1;
-    public float radius = 5;
-
-    boolean alreadyChained;
     public float duration = 0.3f;
 
     public Monster monsterFrom;
     public Monster monsterTo;
 
     public ArrayList<Monster> inRange;
-    public ArrayList<Monster> monstersHit = new ArrayList<>();
 
     boolean flipY;
+
+    boolean fromUniqueHat;
 
     public Animation<Sprite> longAnim;
 
     int frameCounter = 0;
 
-    public DukeLightningHit(Monster target) {
+    public ForkedLightning_Hit(Monster target) {
         monsterTo = target;
+
         flipY = MathUtils.randomBoolean();
+
     }
 
     public void update(float delta) {
         if(!initialized) {
-            if(originBody == null) {
-                originBody = player.pawn.body;
-            }
             initialized = true;
             pickAnim();
-            if(!monsterTo.elite) {
-                monsterTo.hp = 0;
-            } else {
-                monsterTo.hp -= 50 * player.level;
-            }
+            uniqueStaff();
+            singleChain();
+            dealDmg(monsterTo);
+            fireball(monsterTo);
+            chargedbolts(monsterTo);
         }
 
-        if(currentHits < maxHits && !alreadyChained && stateTime > 0.03f) {
-            alreadyChained = true;
-            inRange = findMonstersInRange(monsterTo.body, radius);
-            singleChain();
-        }
 
         stateTime += delta;
         drawFrame(delta);
@@ -107,47 +104,37 @@ public class DukeLightningHit extends Spell {
 
     }
 
-    @Override
-    public void dispose() {
-
-    }
-
-    @Override
-    public int getLvl() {
-        return 0;
-    }
-
-    @Override
-    public int getDmg() {
-        return 0;
-    }
-
     public void singleChain() {
-        Monster target;
-        target = normalTargeting();
+        if(player.inventory.equippedHat instanceof Epic_ForkedLightningHat && !fromUniqueHat) {
+            inRange = findMonstersInRange(monsterTo.body, 3);
+            if(!inRange.isEmpty()) {
+                Monster target;
+                target = normalTargeting();
 
-        if(target != null) {
-            DukeLightningHit chain = new DukeLightningHit(target);
-            chain.setNextChain(this);
-            monstersHit.add(target);
-            chain.monstersHit = monstersHit;
-            screen.spellManager.add(chain);
+                if(target != null) {
+                    ForkedLightning_Hit chain = new ForkedLightning_Hit(target);
+                    chain.setNextHit(this);
+                    chain.setElements(this);
+                    screen.spellManager.add(chain);
+                }
+            }
         }
     }
+
 
     public Monster normalTargeting() {
-        if(!inRange.isEmpty()) {
-            Collections.shuffle(inRange);
-            return inRange.removeFirst();
-        } else {
-            return null;
-        }
+        Collections.shuffle(inRange);
+        return inRange.removeFirst();
     }
 
-    public void setNextChain(DukeLightningHit thisHit) {
-        currentHits = thisHit.currentHits + 1;
+    public void setNextHit(ForkedLightning_Hit thisHit) {
+        fromUniqueHat = true;
+
         monsterFrom = thisHit.monsterTo;
         originBody = monsterFrom.body;
+
+        fireball = thisHit.fireball;
+        chargedbolts = thisHit.chargedbolts;
     }
 
     public void createLights(Vector2 direction, float distance) {
@@ -162,20 +149,31 @@ public class DukeLightningHit extends Spell {
         }
 
         for (int i = 0; i < numLights; i++) {
+            if(i == 0 && !fromUniqueHat) {
+                continue;
+            }
             Vector2 position = new Vector2(originBody.getPosition()).add(step.x * i, step.y * i);
             RoundLight light = screen.lightManager.pool.getLight();
-            light.setLight(red,green,blue,lightAlpha,30, position);
+            light.setLight(red,green,blue,lightAlpha,23, position);
             light.dimKill(0.1f);
             screen.lightManager.addLight(light);
         }
     }
 
 
-
     public void pickAnim() {
-        anim = ChainLightningAnims.chainlightning_lightning_anim;
-        longAnim = ChainLightningAnims.chainlightning_long_lightning_anim;
-        green = 0.6f;
+
+        if(player.inventory.equippedHat instanceof Epic_ForkedLightningHat) {
+            anim = ChainLightningAnims.sith_lightning_anim;
+            longAnim = ChainLightningAnims.sith_lightning_long_anim;
+            red = 1;
+            green = 0;
+        } else {
+            anim = ChainLightningAnims.chainlightning_lightning_anim;
+            longAnim = ChainLightningAnims.chainlightning_long_lightning_anim;
+            red = 0.85f;
+            green = 0.25f;
+        }
 
     }
 
@@ -200,7 +198,7 @@ public class DukeLightningHit extends Spell {
 
 
                 // Check if the distance is within the radius
-                if (distance <= radius && monster.body != body && !monstersHit.contains(monster) && monster.hp > 0) {
+                if (distance <= radius && monster.body != body && monster.hp > 0) {
                     boolean LOS = SpellUtils.hasLineOfSight(body.getPosition(), monster.body.getPosition());
                     if(LOS) {
                         monstersInRange.add(monster);
@@ -217,6 +215,49 @@ public class DukeLightningHit extends Spell {
         monstersInRange.removeIf(monster -> !seenMonsters.add(monster));
 
         return monstersInRange;
+    }
+
+
+    public void uniqueStaff() {
+        if(player.inventory.equippedStaff instanceof Epic_ChainStaff) {
+            float proc = 0.75f;
+            if(Math.random() >= proc) {
+                ChainLightning_Splash splash = new ChainLightning_Splash(monsterTo.body.getPosition());
+                splash.setElements(this);
+                screen.spellManager.add(splash);
+            }
+        }
+    }
+
+    public void chargedbolts(Monster monster) {
+        if(chargedbolts) {
+            float procRate = 0.95f - 0.05f * player.spellbook.chargedbolt_lvl;
+            int quantity = 3 + player.spellbook.chargedbolt_lvl / 5;
+            if (Math.random() >= procRate) {
+                for (int i = 0; i < quantity; i++) {
+                    ChargedBolts_Spell bolt = new ChargedBolts_Spell();
+                    bolt.flamejet = true;
+                    bolt.setElements(this);
+                    bolt.spawnPosition = new Vector2(monster.body.getPosition());
+                    bolt.targetPosition = SpellUtils.getRandomVectorInRadius(monster.body.getPosition(), 2);
+                    screen.spellManager.add(bolt);
+                }
+            }
+        }
+    }
+
+    public void fireball(Monster monster) {
+        if(fireball) {
+            float procRate = 0.98f - 0.02f * player.spellbook.fireball_lvl;
+            if(Math.random() >= procRate) {
+                Fireball_Explosion explosion = new Fireball_Explosion();
+                explosion.targetPosition = new Vector2(monster.body.getPosition());
+                explosion.setElements(this);
+                explosion.anim_element = FIRELITE;
+                explosion.firelite = true;
+                screen.spellManager.add(explosion);
+            }
+        }
     }
 
 }

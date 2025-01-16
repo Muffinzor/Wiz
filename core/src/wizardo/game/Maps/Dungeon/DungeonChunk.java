@@ -88,14 +88,9 @@ public class DungeonChunk extends MapChunk {
                 layerObjects.add(portal);
             }
 
-            if(object.getName().equals("Vase") && Math.random() >= 0.75) {
-                VaseObject vase = new VaseObject(this, object, null);
-                layerObjects.add(vase);
-            }
-
             if(object.getName().equals(("VaseCluster")) && Math.random() >= 0.75) {
-                //VaseCluster cluster = new VaseCluster(this, object);
-                //layerObjects.add(cluster);
+                VaseCluster cluster = new VaseCluster(this, object);
+                layerObjects.add(cluster);
             }
 
             if(object.getName().equals("StandingTorch") && Math.random() >= 0.5) {
@@ -103,20 +98,6 @@ public class DungeonChunk extends MapChunk {
                 layerObjects.add(torch);
             }
 
-            if(object.getName().equals("Brazier")) {
-                BrazierObject brazier = new BrazierObject(this, object);
-                layerObjects.add(brazier);
-            }
-
-            if(object.getName().equals("Doodad")) {
-                if(Math.random() >= 0.0f) {
-                    Chest chest = new Chest(this, object, -1);
-                    layerObjects.add(chest);
-                } else if(Math.random() >= 0.75f) {
-                    DoodadObject doodad = new DoodadObject(this, object);
-                    layerObjects.add(doodad);
-                }
-            }
         }
 
         decor = map.getLayers().get("ObstacleBodies").getObjects();

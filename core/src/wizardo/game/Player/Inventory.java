@@ -1,6 +1,7 @@
 package wizardo.game.Player;
 
 import wizardo.game.Items.Equipment.Amulet.Amulet;
+import wizardo.game.Items.Equipment.Amulet.Epic_DragonbreathAmulet;
 import wizardo.game.Items.Equipment.Amulet.Legendary_FireballAmulet;
 import wizardo.game.Items.Equipment.Book.Book;
 import wizardo.game.Items.Equipment.Book.Legendary_GoldBook;
@@ -37,15 +38,17 @@ public class Inventory {
 
     public int dual_reagents;
     public int triple_reagents;
-    public int gold = 1000;
+    public int gold = 0;
     public Equipment[] holdingBox;
 
     public Inventory() {
 
-        dual_reagents = 30;
-        triple_reagents = 30;
+        dual_reagents = 1;
+        triple_reagents = 1;
         holdingBox = new Equipment[15];
         equippedGear = new ArrayList<>();
+
+        holdingBox[0] = new Epic_DragonbreathAmulet();
 
     }
 

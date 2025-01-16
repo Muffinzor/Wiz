@@ -131,7 +131,9 @@ public class EquipmentButton extends ImageButton implements MenuButton {
             screen.equipment_table.resize();
             screen.mastery_table.updateChanges();
             screen.equippedSpells_table.resize();
+            screen.equippedSpells_table.updateSpells();
             screen.knownSpells_table.resize();
+            screen.knownSpells_table.updateSpells();
             screen.stats_Table.createNewPanel();
         }
     }

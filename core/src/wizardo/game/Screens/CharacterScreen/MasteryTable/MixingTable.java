@@ -7,12 +7,14 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import wizardo.game.Display.MenuTable;
+import wizardo.game.Items.Equipment.Ring.Epic_OculusRing;
 import wizardo.game.Screens.CharacterScreen.Anims.SpellCreation_Anim;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Wizardo;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import static wizardo.game.Resources.Skins.masteryTableSkin;
 import static wizardo.game.Screens.BaseScreen.xRatio;
@@ -129,6 +131,14 @@ public class MixingTable extends MenuTable {
             mixButton.setDisabled(true);
         } else if (parts.size() == 3 && player.inventory.triple_reagents < 1) {
             mixButton.setDisabled(true);
+            if(player.inventory.equippedRing instanceof Epic_OculusRing) {
+                Epic_OculusRing ring = (Epic_OculusRing) player.inventory.equippedRing;
+                Collections.sort(ring.masteries);
+                Collections.sort(parts);
+                if(ring.masteries.equals(parts) && getMixedSpell(parts).canMix()) {
+                    mixButton.setDisabled(false);
+                }
+            }
         }
 
         if(!parts.isEmpty()) {
@@ -170,6 +180,23 @@ public class MixingTable extends MenuTable {
     public void handleMix() {
         Spell spell = getMixedSpell(parts);
         spell.learn();
+
+        if(parts.size() == 2) {
+            player.inventory.dual_reagents --;
+        }
+        if(parts.size() == 3) {
+            if(player.inventory.equippedRing instanceof Epic_OculusRing) {
+                Epic_OculusRing ring = (Epic_OculusRing) player.inventory.equippedRing;
+                Collections.sort(ring.masteries);
+                Collections.sort(parts);
+                if(!ring.masteries.equals(parts)) {
+                    player.inventory.triple_reagents--;
+                }
+            } else {
+                player.inventory.triple_reagents--;
+            }
+        }
+        System.out.println("TRIPLE REAGENTS LEFT: " + player.inventory.triple_reagents);
 
         boolean equipped = player.spellbook.equippedSpells.contains(spell);
         masteryTable.screen.anims.add(new SpellCreation_Anim(spell.anim_element, masteryTable.screen, equipped));

@@ -90,7 +90,7 @@ public class StatsBuffer {
             case FLARE -> player.spellbook.flashBonusDmg += basicValue(quality);
             case GRAVITY -> player.spellbook.gravityBonusDmg += basicValue(quality);
             case SHARP -> player.spellbook.sharpBonusDmg += basicValue(quality);
-            case VOLTAGE -> player.spellbook.voltageBonusDmg += basicValue(quality);
+            case VOLTAGE -> player.spellbook.conductiveBonusDmg += basicValue(quality);
 
             case EMPYREAN -> empyrean(quality);
             case FORCE -> force(quality);

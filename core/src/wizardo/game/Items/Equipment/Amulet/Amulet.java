@@ -87,6 +87,8 @@ public abstract class Amulet extends Equipment {
         list.add(new Epic_Amulet());
         list.add(new Epic_Amulet());
         list.add(new Epic_StormAmulet());
+        list.add(new Epic_RiftAmulet());
+        list.add(new Epic_DragonbreathAmulet());
 
         return list;
     }

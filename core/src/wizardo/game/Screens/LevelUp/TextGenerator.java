@@ -256,7 +256,7 @@ public class TextGenerator {
             +%d %% Flash spell damage
             
             Flash spells :
-            Flamejet, Forked Lightning,
+            Flamejet, Thunderstorm
             Lightning Hands, Dragonbreath
             """, dmg);
 
@@ -467,7 +467,7 @@ public class TextGenerator {
              
             Conductive spells :
             Chargedbolts, Chain Lightning,
-            Thunderstorm
+            Forked Lightning
             """, dmg);
 
         return text;

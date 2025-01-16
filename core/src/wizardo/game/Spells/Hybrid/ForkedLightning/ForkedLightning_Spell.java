@@ -1,13 +1,10 @@
 package wizardo.game.Spells.Hybrid.ForkedLightning;
 
-import com.badlogic.gdx.math.Vector2;
+
+import wizardo.game.Items.Equipment.Hat.Epic_ForkedLightningHat;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
-import wizardo.game.Spells.Fire.Fireball.Fireball_Explosion;
-import wizardo.game.Spells.Lightning.ChainLightning.ChainLightning_Hit;
-import wizardo.game.Spells.Lightning.ChargedBolts.ChargedBolts_Spell;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
-
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -20,7 +17,7 @@ public class ForkedLightning_Spell extends Spell {
     int hits;
 
     boolean fromOtherSpell;
-    float targetRadius = 2.5f;
+    float targetRadius = 2.8f;
 
     public boolean chargedbolts;
     public boolean fireball;
@@ -28,9 +25,10 @@ public class ForkedLightning_Spell extends Spell {
     public ForkedLightning_Spell() {
 
         name = "Forked Lightning";
+        dmg = 26;
 
         raycasted = true;
-        aimReach = 4;
+        aimReach = 3.8f;
 
         cooldown = 0.1f;
 
@@ -53,14 +51,12 @@ public class ForkedLightning_Spell extends Spell {
 
         for (int i = 0; i < hits; i++) {
             if(inRange.size() >= i+1) {
-                ChainLightning_Hit chain = new ChainLightning_Hit(inRange.get(i));
-                chain.maxHits = 1;
-                chain.forked = true;
-                chain.originBody = originBody;
-                chain.setElements(this);
-                screen.spellManager.add(chain);
-                chargedbolts(inRange.get(i));
-                fireball(inRange.get(i));
+                ForkedLightning_Hit hit = new ForkedLightning_Hit(inRange.get(i));
+                hit.originBody = originBody;
+                hit.fireball = fireball;
+                hit.chargedbolts = chargedbolts;
+                hit.setElements(this);
+                screen.spellManager.add(hit);
             }
         }
 
@@ -74,48 +70,16 @@ public class ForkedLightning_Spell extends Spell {
 
     }
 
-    public void chargedbolts(Monster monster) {
-        if(chargedbolts) {
-            float procRate = 0.95f - 0.05f * player.spellbook.chargedbolt_lvl;
-            int quantity = 3 + player.spellbook.chargedbolt_lvl / 5;
-            if (Math.random() >= procRate) {
-                for (int i = 0; i < quantity; i++) {
-                    ChargedBolts_Spell bolt = new ChargedBolts_Spell();
-                    bolt.flamejet = true;
-                    bolt.setElements(this);
-                    bolt.spawnPosition = new Vector2(monster.body.getPosition());
-                    bolt.targetPosition = SpellUtils.getRandomVectorInRadius(monster.body.getPosition(), 2);
-                    screen.spellManager.add(bolt);
-                }
-            }
-        }
-    }
-
-    public void fireball(Monster monster) {
-        if(fireball) {
-            float procRate = 0.98f - 0.02f * player.spellbook.fireball_lvl;
-            if(Math.random() >= procRate) {
-                Fireball_Explosion explosion = new Fireball_Explosion();
-                explosion.targetPosition = new Vector2(monster.body.getPosition());
-                explosion.setElements(this);
-                explosion.anim_element = FIRELITE;
-                explosion.firelite = true;
-                screen.spellManager.add(explosion);
-            }
-        }
-    }
-
     @Override
     public int getLvl() {
-        return 0;
+        return (player.spellbook.chainlightning_lvl + player.spellbook.flamejet_lvl)/2;
     }
 
     @Override
     public int getDmg() {
-        int dmg = this.dmg + getLvl() * 4;
-        dmg = (int) (dmg * (1 + player.spellbook.flashBonusDmg/100f));
+        int dmg = this.dmg + player.spellbook.chainlightning_lvl * 4;
+        dmg = (int) (dmg * (1 + player.spellbook.conductiveBonusDmg/100f));
         return dmg;
-
     }
 
     public void setup() {
@@ -137,7 +101,14 @@ public class ForkedLightning_Spell extends Spell {
         }
 
         hits = Math.max(player.spellbook.flamejet_lvl/2, 1);
+    }
 
-
+    @Override
+    public float getCooldown() {
+        float trueCD = cooldown;
+        if(player.inventory.equippedHat instanceof Epic_ForkedLightningHat) {
+            trueCD = 0.07f;
+        }
+        return trueCD;
     }
 }

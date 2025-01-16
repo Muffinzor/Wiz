@@ -1,4 +1,4 @@
-package wizardo.game.Spells.Hybrid.EnergyRain;
+package wizardo.game.Spells.Lightning.ChainLightning;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
@@ -7,12 +7,13 @@ import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Resources.SpellAnims.ExplosionAnims_Elemental;
+import wizardo.game.Spells.Spell;
 import wizardo.game.Utils.BodyFactory;
 
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.world;
 
-public class ChainLightning_Splash extends EnergyRain_Spell {
+public class ChainLightning_Splash extends ChainLightning_Spell {
 
     public boolean arcaneMissiles;
 
@@ -34,6 +35,7 @@ public class ChainLightning_Splash extends EnergyRain_Spell {
 
     public void update(float delta) {
         if(!initialized) {
+            dmg = dmg/2;
             pickAnim();
             createBody();
             createLight();

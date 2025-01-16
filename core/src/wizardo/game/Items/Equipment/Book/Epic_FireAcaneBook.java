@@ -19,7 +19,7 @@ public class Epic_FireAcaneBook extends Book {
         spriteOver = new Sprite(new Texture("Items/Spellbook/Daynightbook_Over.png"));
         displayScale = 0.8f;
 
-        name = "Heretic Incantations";
+        name = "Divine Incantations";
         title = "Epic Book";
         quality = ItemUtils.EquipQuality.EPIC;
 

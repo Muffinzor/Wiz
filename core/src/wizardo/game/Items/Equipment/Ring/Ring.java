@@ -89,6 +89,7 @@ public abstract class Ring extends Equipment {
         ArrayList<Equipment> list = new ArrayList<>();
 
         list.add(new Epic_OculusRing());
+        list.add(new Epic_NagelRing());
 
         return list;
     }

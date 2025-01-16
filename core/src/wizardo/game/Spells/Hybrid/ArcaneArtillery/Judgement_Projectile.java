@@ -148,7 +148,6 @@ public class Judgement_Projectile extends Judgement_Spell {
         explosion.frozenorb = frozenorb;
         explosion.arcaneMissiles = arcaneMissiles;
         explosion.rift = rift;
-        explosion.rift = rift;
         screen.spellManager.add(explosion);
     }
 

@@ -11,7 +11,6 @@ import static wizardo.game.Wizardo.player;
 public class ChargedBolts_Spell extends Spell {
 
     public float duration;
-    public int maxCollisions;
 
     public int bolts;
 
@@ -131,7 +130,7 @@ public class ChargedBolts_Spell extends Spell {
             dmg += 4 * player.spellbook.arcanemissile_lvl;
         }
 
-        dmg = (int) (dmg * (1 + player.spellbook.voltageBonusDmg/100f));
+        dmg = (int) (dmg * (1 + player.spellbook.conductiveBonusDmg /100f));
         if(overheat) {
             return dmg * 2;
         } else {

@@ -34,15 +34,9 @@ public class Judgement_Spell extends Spell {
         cooldown = 5;
     }
 
-    public void setup() {
-        if(player.inventory.equippedHat instanceof Legendary_TripleCastHat) {
-            projectiles = 2;
-        }
-    }
     @Override
     public void update(float delta) {
         if(!initialized) {
-            setup();
             initialized = true;
         }
 
@@ -63,6 +57,7 @@ public class Judgement_Spell extends Spell {
                 projectile.setElements(this);
                 projectile.frozenorb = frozenorb;
                 projectile.rift = rift;
+                projectile.arcaneMissiles = arcaneMissiles;
                 screen.spellManager.add(projectile);
             }
             projectilesCast ++;

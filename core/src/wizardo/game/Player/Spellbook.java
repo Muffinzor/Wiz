@@ -1,6 +1,5 @@
 package wizardo.game.Player;
 
-import wizardo.game.Spells.Hybrid.Orbit.Orbit_Spell;
 import wizardo.game.Spells.Spell;
 
 import java.util.ArrayList;
@@ -46,7 +45,7 @@ public class Spellbook {
     public int energyBonusDmg;
     public int gravityBonusDmg;
     public int sharpBonusDmg;
-    public int voltageBonusDmg;
+    public int conductiveBonusDmg;
     public float divineBonusDmg;
 
     // Wide Modifiers

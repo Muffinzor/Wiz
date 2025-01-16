@@ -70,7 +70,7 @@ public class Thunderstorm_Spell extends Spell {
 
         if(stateTime >= duration) {
             screen.spellManager.remove(this);
-            System.out.println("Thunders:" + thunderSent);
+
         }
 
     }
@@ -131,7 +131,7 @@ public class Thunderstorm_Spell extends Spell {
     @Override
     public int getDmg() {
         int dmg = this.dmg + 30 * getLvl();
-        dmg = (int) (dmg * (1 + player.spellbook.voltageBonusDmg/100f));
+        dmg = (int) (dmg * (1 + player.spellbook.flashBonusDmg /100f));
         return dmg;
     }
 
