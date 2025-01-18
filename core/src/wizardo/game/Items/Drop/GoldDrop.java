@@ -16,7 +16,6 @@ import static wizardo.game.Wizardo.world;
 public class GoldDrop extends Drop{
     int tier;
     int goldAmount;
-    float alpha;
 
     public GoldDrop(Vector2 spawnPosition, int tierMin, int tierMax) {
         this.spawnPosition = new Vector2(spawnPosition);

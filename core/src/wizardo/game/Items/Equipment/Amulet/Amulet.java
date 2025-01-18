@@ -77,6 +77,7 @@ public abstract class Amulet extends Equipment {
         list.add(new Rare_Amulet());
         list.add(new Rare_Amulet());
         list.add(new Rare_EliteAmulet());
+        list.add(new Rare_IcespearAmulet());
 
         return list;
     }
@@ -97,6 +98,7 @@ public abstract class Amulet extends Equipment {
         ArrayList<Equipment> list = new ArrayList<>();
 
         list.add(new Legendary_FireballAmulet());
+        list.add(new Legendary_FirstHitAmulet());
 
         return list;
     }
@@ -115,7 +117,7 @@ public abstract class Amulet extends Equipment {
             switch(roll) {
                 case 1 -> {
                     piece.gearStats.add(ItemUtils.GearStat.PROJSPEED);
-                    piece.quantity_gearStats.add(MathUtils.random(8,15));
+                    piece.quantity_gearStats.add(MathUtils.random(8,12));
                 }
                 case 2 -> {
                     piece.masteries.add(SpellUtils.getRandomMastery(null,1, true));
@@ -158,7 +160,7 @@ public abstract class Amulet extends Equipment {
                 }
                 case 2 -> {
                     piece.masteries.add(SpellUtils.getRandomMastery(null,1, false));
-                    piece.quantity_masteries.add(2);
+                    piece.quantity_masteries.add(1);
                 }
                 case 3 -> {
                     piece.gearStats.add(ItemUtils.GearStat.CASTSPEED);
@@ -170,7 +172,7 @@ public abstract class Amulet extends Equipment {
                 }
                 case 5 -> {
                     piece.gearStats.add(ItemUtils.GearStat.PROJSPEED);
-                    piece.quantity_gearStats.add(MathUtils.random(12,20));
+                    piece.quantity_gearStats.add(MathUtils.random(12,16));
                 }
             }
         } while(picks.size() < quantity);
@@ -213,7 +215,7 @@ public abstract class Amulet extends Equipment {
                 }
                 case 5 -> {
                     piece.gearStats.add(ItemUtils.GearStat.PROJSPEED);
-                    piece.quantity_gearStats.add(MathUtils.random(15,25));
+                    piece.quantity_gearStats.add(MathUtils.random(16,20));
                 }
                 case 6 -> {
                     ArrayList<ItemUtils.GearStat> list = new ArrayList<>();

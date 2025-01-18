@@ -35,7 +35,7 @@ public class SmallLaser_Projectile extends MonsterSpell {
     @Override
     public void checkState(float delta) {
 
-        if(hasCollided || stateTime > 2.5f || sentBack) {
+        if(hasCollided || stateTime > 5f || sentBack) {
             SmallLaser_Explosion hit = new SmallLaser_Explosion(body.getPosition(), originMonster);
             hit.sentBack = sentBack;
             screen.monsterSpellManager.toAdd(hit);

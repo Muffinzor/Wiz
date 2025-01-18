@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
+import wizardo.game.Items.Equipment.Ring.Rare_BeamRing;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Spells.Arcane.Rifts.Rift_Zone;
@@ -32,6 +33,7 @@ public class EnergyBeam_Projectile extends EnergyBeam_Spell {
     Sprite bodyTile;
     Sprite endTile;
     float alpha = 1;
+    float beamWidthRatio = 1;
     int frameCounter;
     int chainFrameInterval;
 
@@ -101,15 +103,14 @@ public class EnergyBeam_Projectile extends EnergyBeam_Spell {
     public void drawFrame() {
 
         float length = body.getPosition().dst(spawnPosition.x, spawnPosition.y);
-        Vector2 originPosition = new Vector2 (spawnPosition.cpy().add(direction.cpy().nor().scl(7.5f/PPM)));
-        Vector2 startFrame = new Vector2 (spawnPosition.cpy().add(direction.cpy().nor().scl(-12.5f/PPM)));
-
 
         //Start of laser
         Sprite frame = screen.getSprite();
         frame.set(endTile);
-        frame.setScale(0.5f);
-        frame.setCenter(startFrame.x * PPM, startFrame.y * PPM);
+        float height = frame.getHeight();
+        frame.setSize(frame.getWidth()/2 * beamWidthRatio, height/2 * beamWidthRatio);
+        frame.setOrigin(0, height/4 * beamWidthRatio);
+        frame.setPosition(spawnPosition.x * PPM, spawnPosition.y * PPM - height/4 * beamWidthRatio);
         frame.setRotation(rotation + 180);
         frame.setAlpha(alpha);
         screen.addUnderSprite(frame);
@@ -118,20 +119,21 @@ public class EnergyBeam_Projectile extends EnergyBeam_Spell {
         //Body of laser
         Sprite frame1 = screen.getSprite();
         frame1.set(bodyTile);
-        frame1.setScale(0.5f);
-        frame1.setPosition(originPosition.x * PPM - bodyTile.getWidth()/2, originPosition.y * PPM - bodyTile.getHeight()/2);
+        frame1.setSize(length * PPM, height/2 * beamWidthRatio);
+        frame1.setOrigin(0, height/4 * beamWidthRatio);
+        frame1.setPosition(spawnPosition.x * PPM , spawnPosition.y * PPM - height/4 * beamWidthRatio);
         frame1.setRotation(rotation);
-        frame1.setSize(length * PPM * 2, frame1.getHeight());
+
         frame1.setAlpha(alpha);
         screen.addUnderSprite(frame1);
 
         //End of laser
         Sprite frame2 = screen.getSprite();
         frame2.set(endTile);
-        Vector2 endPosition = new Vector2(body.getPosition().add(direction.cpy().nor().scl(0.3f)));
-        frame2.setScale(0.5f);
-        frame2.setSize(frame2.getWidth() * 3, frame2.getHeight());
-        frame2.setPosition(endPosition.x * PPM - endTile.getWidth()/2, endPosition.y * PPM - endTile.getHeight()/2);
+        Vector2 endPosition = new Vector2(body.getPosition());
+        frame2.setSize(frame2.getWidth() * 2 * beamWidthRatio, height/2 * beamWidthRatio);
+        frame2.setOrigin(0, height/4 * beamWidthRatio);
+        frame2.setPosition(endPosition.x * PPM, endPosition.y * PPM - height/4 * beamWidthRatio);
         frame2.setAlpha(alpha);
         frame2.setRotation(rotation);
 
@@ -149,8 +151,11 @@ public class EnergyBeam_Projectile extends EnergyBeam_Spell {
         rotation = direction.angleDeg();
         Vector2 bodySpawn = new Vector2(spawnPosition.cpy().add(direction.x * 2, direction.y * 2));
 
-
-        body = BodyFactory.spellProjectileDiamondBody(bodySpawn, 100, 20, rotation, true);
+        int height = 20;
+        if(player.inventory.equippedRing instanceof Rare_BeamRing) {
+            height = 40;
+        }
+        body = BodyFactory.spellProjectileDiamondBody(bodySpawn, 100, height, rotation, true);
         body.setUserData(this);
 
         Vector2 velocity = direction.cpy().scl(150);
@@ -179,6 +184,10 @@ public class EnergyBeam_Projectile extends EnergyBeam_Spell {
 
     public void pickAnim() {
         lightAlpha = 0.7f;
+        if(player.inventory.equippedRing instanceof Rare_BeamRing) {
+            beamWidthRatio *= 2;
+        }
+
         switch (anim_element) {
             case ARCANE -> {
                 bodyTile = arcaneTile;

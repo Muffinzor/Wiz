@@ -114,12 +114,11 @@ public class EquipmentButton extends ImageButton implements MenuButton {
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
                 hovered = true;
                 GearPanel panel = new GearPanel(screen.panelStage, piece, true, button);
-                screen.activePanel = panel;
             }
             @Override
             public void exit(InputEvent event, float x, float y, int pointer, Actor fromActor) {
                 hovered = false;
-                screen.activePanel.dispose();
+                screen.panelStage.clear();
             }
         });
     }

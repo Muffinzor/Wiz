@@ -201,7 +201,7 @@ public class GearPanel {
             return s;
         }
         switch(stat) {
-            case LUCK, DEFENSE, MASTERY_FROST, MASTERY_ARCANE, MASTERY_LIGHTNING, MASTERY_FIRE, REGEN, MASTERY_ALL -> s = "";
+            case MAXSHIELD, LUCK, DEFENSE, MASTERY_FROST, MASTERY_ARCANE, MASTERY_LIGHTNING, MASTERY_FIRE, REGEN, MASTERY_ALL -> s = "";
         }
         return s;
     }
@@ -271,6 +271,7 @@ public class GearPanel {
             case DEFENSE -> s = "Damage received reduced by: ";
             case PROJSPEED -> s = "Increased projectile speed: ";
             case WALKSPEED -> s = "Increased walking speed: ";
+            case MAXSHIELD -> s = "Increased maximum shield: ";
         }
         return s;
     }

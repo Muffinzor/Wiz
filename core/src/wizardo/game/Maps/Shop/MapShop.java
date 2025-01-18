@@ -10,6 +10,7 @@ import wizardo.game.Maps.MapGeneration.MapChunk;
 import wizardo.game.Maps.MapUtils;
 import wizardo.game.Maps.TriggerObject;
 import wizardo.game.Resources.DecorResources.DungeonDecorResources;
+import wizardo.game.Screens.Battle.BattleScreen;
 import wizardo.game.Screens.Popups.AreYouSureScreen;
 import wizardo.game.Screens.Shop.ShopScreen;
 import wizardo.game.Spells.SpellUtils;
@@ -23,8 +24,11 @@ public class MapShop extends TriggerObject {
 
     MapShopInventory inventory;
 
+    public BattleScreen screen;
+
     public MapShop(MapChunk chunk, MapObject object) {
         super(chunk, object);
+        this.screen = (BattleScreen) chunk.screen;
     }
 
     @Override
@@ -72,7 +76,7 @@ public class MapShop extends TriggerObject {
     }
 
     public void createInventory() {
-        inventory = new MapShopInventory();
+        inventory = new MapShopInventory(this);
         inventory.createInventory();
     }
 

@@ -1,21 +1,11 @@
 package wizardo.game.Items.Drop;
 
-import wizardo.game.Items.Equipment.Amulet.Epic_StormAmulet;
-import wizardo.game.Items.Equipment.Amulet.Legendary_FireballAmulet;
-import wizardo.game.Items.Equipment.Book.Epic_FireAcaneBook;
-import wizardo.game.Items.Equipment.Book.Epic_OrbitBook;
 import wizardo.game.Items.Equipment.Equipment;
 import wizardo.game.Items.Equipment.EquipmentUtils;
-import wizardo.game.Items.Equipment.Hat.*;
-import wizardo.game.Items.Equipment.Ring.Epic_OculusRing;
-import wizardo.game.Items.Equipment.Robes.Legendary_FreezeRobes;
-import wizardo.game.Items.Equipment.Robes.Rare_Robes;
-import wizardo.game.Items.Equipment.Staff.*;
 import wizardo.game.Items.ItemUtils;
 import wizardo.game.Maps.Chest;
 import wizardo.game.Resources.EffectAnims.GearFlareAnims;
 import wizardo.game.Screens.Battle.BattleScreen;
-import wizardo.game.Wizardo;
 
 import java.util.ArrayList;
 
@@ -23,13 +13,13 @@ import static wizardo.game.Items.ItemUtils.EquipSlot.ALL;
 
 public class DropManager {
 
-    Wizardo game;
+    BattleScreen screen;
 
     ArrayList<String> alreadyDroppedNameList;
     ArrayList<Drop> drops;
 
-    public DropManager(Wizardo game) {
-        this.game = game;
+    public DropManager(BattleScreen screen) {
+        this.screen = screen;
         alreadyDroppedNameList = new ArrayList<>();
         drops = new ArrayList<>();
     }
@@ -53,11 +43,7 @@ public class DropManager {
 
     public void addDrop(Drop drop) {
         drops.add(drop);
-        if(game.currentScreen instanceof BattleScreen) {
-            drop.screen = (BattleScreen) game.currentScreen;
-        } else {
-            drop.screen = (BattleScreen) game.getPreviousScreen();
-        }
+        drop.screen = screen;
     }
 
     public void dropChestLoot(Chest chest) {

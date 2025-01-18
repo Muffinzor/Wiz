@@ -2,7 +2,6 @@ package wizardo.game.Items.Equipment.Amulet;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.MathUtils;
 import wizardo.game.Items.ItemUtils;
 import wizardo.game.Spells.SpellUtils;
 

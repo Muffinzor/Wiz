@@ -22,7 +22,6 @@ public class Wizardo extends Game {
 	public BaseScreen currentScreen;
 	public static World world;
 	public static Player player;
-	public static DropManager dropManager;
 	public static WizContactListener contactListener;
 	public static AssetManager assetManager;
 	public OrthographicCamera mainCamera;
@@ -40,7 +39,6 @@ public class Wizardo extends Game {
 		assetManager = new AssetManager();
 		contactListener = new WizContactListener();
 		loadSettings();
-		dropManager = new DropManager(this);
 		addNewScreen(new LoadingScreen(this));
 	}
 
@@ -50,10 +48,10 @@ public class Wizardo extends Game {
 	@Override
 	public void render() {
 		if (!screenStack.isEmpty()) {
-			if (screenStack.size() > 1) {
-				screenStack.get(screenStack.size() - 2).render(Gdx.graphics.getDeltaTime());
+			int size = screenStack.size();
+			for (int i = Math.max(0, size - 4); i < size; i++) {
+				screenStack.get(i).render(Gdx.graphics.getDeltaTime());
 			}
-			screenStack.peek().render(Gdx.graphics.getDeltaTime());
 		}
 	}
 

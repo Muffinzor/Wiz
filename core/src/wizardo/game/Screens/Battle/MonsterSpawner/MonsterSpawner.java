@@ -124,7 +124,7 @@ public class MonsterSpawner {
         }
     }
     public void spawnRangedMonsters() {
-        if(rangedSpawnTimer > 2.5f && stateTime > 120) {
+        if(rangedSpawnTimer > 2.5f && stateTime > 0) {
             rangedSpawnTimer = 0;
             if(screen.monsterManager.getRangedMonstersCount() < 40) {
                 TEST_RANGED monster = new TEST_RANGED(screen, SpawnerUtils.getRandomRangeSpawnVector(), this);

@@ -1,5 +1,6 @@
 package wizardo.game.Spells.Frost.Frostbolt;
 
+import wizardo.game.Items.Equipment.Hat.Rare_FrostboltHat;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 
@@ -43,6 +44,9 @@ public class Frostbolt_Spell extends Spell {
             }
         }
         projectiles += extraProjs;
+        if(player.inventory.equippedHat instanceof Rare_FrostboltHat) {
+            projectiles++;
+        }
     }
 
     @Override

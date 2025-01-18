@@ -74,6 +74,8 @@ public abstract class Book extends Equipment {
     public static ArrayList<Equipment> getRareBooks() {
         ArrayList<Equipment> list = new ArrayList<>();
 
+        list.add(new Rare_FireballBook());
+
         return list;
     }
 

@@ -73,12 +73,12 @@ public class BattleScreen extends BaseScreen {
 
         mapManager = new MapManager(biome, game, this);
         monsterSpawner = new MonsterSpawner(this);
-
         monsterManager = new MonsterManager(this);
         spellManager = new SpellManager(this);
-        player.spellManager = spellManager;
         monsterSpellManager = new MonsterSpellManager(this);
-        this.dropManager = Wizardo.dropManager;
+        dropManager = new DropManager(this);
+
+        player.spellManager = spellManager;
 
         battleUI = new BattleUI(this);
         cursorTexturePath = "Cursors/Battle_Cursor.png";
@@ -158,7 +158,7 @@ public class BattleScreen extends BaseScreen {
 
     @Override
     public void dispose() {
-
+        rayHandler.dispose();
     }
 
     public void updateCamera() {

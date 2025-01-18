@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import wizardo.game.Items.Equipment.Book.Rare_FireballBook;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Resources.SpellAnims.FireballAnims;
@@ -82,6 +83,10 @@ public class Meteor_Explosion extends MeteorShower_Spell {
     }
 
     public void createBody() {
+        if(player.inventory.equippedBook instanceof Rare_FireballBook) {
+            explosionRadius *= 1.2f;
+            frameScale *= 1.2f;
+        }
         body = BodyFactory.spellExplosionBody(targetPosition, explosionRadius);
         body.setUserData(this);
     }
@@ -98,20 +103,20 @@ public class Meteor_Explosion extends MeteorShower_Spell {
             case LIGHTNING -> {
                 red = 0.75f;
                 green = 0.25f;
-                frameScale = 0.65f;
-                explosionRadius = 50;
+                frameScale = 0.7f;
+                explosionRadius = 60;
             }
             case FIRE -> {
                 red = 0.85f;
                 green = 0.25f;
-                frameScale = 0.65f;
-                explosionRadius = 70;
+                frameScale = 0.7f;
+                explosionRadius = 80;
             }
             case ARCANE -> {
                 red = 0.55f;
                 blue = 0.85f;
-                frameScale = 0.7f;
-                explosionRadius = 70;
+                frameScale = 0.75f;
+                explosionRadius = 80;
             }
         }
     }

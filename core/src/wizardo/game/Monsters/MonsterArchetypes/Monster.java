@@ -12,6 +12,7 @@ import wizardo.game.Items.Drop.GoldDrop;
 import wizardo.game.Items.Drop.PotionDrop;
 import wizardo.game.Items.Equipment.Book.Legendary_NecronomiconBook;
 import wizardo.game.Items.Equipment.Ring.Legendary_DukeRing;
+import wizardo.game.Items.Equipment.Robes.Legendary_LightningRobes;
 import wizardo.game.Items.Equipment.Staff.Legendary_FrostStaff;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.MonsterActionManager;
@@ -171,6 +172,12 @@ public abstract class Monster {
             dmg = this.dmg/2f;
         }
         player.stats.shield -= dmg;
+        player.pawn.hitTimer = 0.1f;
+
+        if(player.inventory.equippedRobes instanceof Legendary_LightningRobes) {
+            Legendary_LightningRobes robes = (Legendary_LightningRobes) player.inventory.equippedRobes;
+            robes.accumulatedDmg += dmg;
+        }
 
         if(player.inventory.equippedRing instanceof Legendary_DukeRing) {
             Legendary_DukeRing ring = (Legendary_DukeRing) player.inventory.equippedRing;

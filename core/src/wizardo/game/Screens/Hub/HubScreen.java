@@ -110,6 +110,7 @@ public class HubScreen extends BaseScreen {
     @Override
     public void dispose() {
         removeInputs();
+        rayHandler.dispose();
         batch.dispose();
         chunk.dispose();
     }

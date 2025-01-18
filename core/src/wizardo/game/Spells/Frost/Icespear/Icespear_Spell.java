@@ -14,7 +14,7 @@ public class Icespear_Spell extends Spell {
     public int maxSplits = 2;
     boolean canSplit;
 
-    int maxCollisions = 8;
+    int maxCollisions = 5;
     public float duration = 1.5f;
     public boolean indestructible;
 
@@ -49,11 +49,13 @@ public class Icespear_Spell extends Spell {
             minimumTimeForSplit = 0;
             flamejet = true;
         }
+        speed = getScaledSpeed();
     }
 
     public void update(float delta) {
         stateTime += delta;
         setup();
+
 
         autoAimCheck();
 

@@ -105,6 +105,10 @@ public abstract class Spell implements Cloneable {
 
     }
 
+    public void exitCollision(MonsterSpell monsterSpell) {
+
+    }
+
     @Override
     public Spell clone() {
         try {

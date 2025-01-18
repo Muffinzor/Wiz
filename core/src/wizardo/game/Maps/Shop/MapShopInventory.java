@@ -1,13 +1,12 @@
 package wizardo.game.Maps.Shop;
 
+import wizardo.game.Items.Drop.DropManager;
 import wizardo.game.Items.Drop.ScrollDrop;
 import wizardo.game.Items.Equipment.Equipment;
 import wizardo.game.Items.ItemUtils;
 import wizardo.game.Spells.SpellUtils;
 
 import java.util.ArrayList;
-
-import static wizardo.game.Wizardo.dropManager;
 
 public class MapShopInventory {
 
@@ -17,7 +16,10 @@ public class MapShopInventory {
 
     boolean legendaryRolled;
 
-    public MapShopInventory() {
+    DropManager dropManager;
+
+    public MapShopInventory(MapShop shop) {
+        this.dropManager = shop.screen.dropManager;
         this.gear = new ArrayList<>();
         this.scrolls = new ArrayList<>();
         solds = new Boolean[4];

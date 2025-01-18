@@ -22,7 +22,7 @@ public class DragonbreathAnims {
         for (int i = 0; i < frames.length; i++) {
             frames[i] = atlas.createSprite("dragonbreath" + (i+1));
         }
-        dragonbreath_anim_fire = new Animation<>(0.012f, frames);
+        dragonbreath_anim_fire = new Animation<>(0.015f, frames);
 
         TextureAtlas atlas_frost = assetManager.get(dragonbreath_atlas_path_frost, TextureAtlas.class);
 
@@ -30,7 +30,7 @@ public class DragonbreathAnims {
         for (int i = 0; i < frames_frost.length; i++) {
             frames_frost[i] = atlas_frost.createSprite("dragonbreath" + (i+1));
         }
-        dragonbreath_anim_frost = new Animation<>(0.012f, frames_frost);
+        dragonbreath_anim_frost = new Animation<>(0.015f, frames_frost);
 
     }
 

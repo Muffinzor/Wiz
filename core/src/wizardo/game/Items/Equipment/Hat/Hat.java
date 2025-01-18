@@ -81,6 +81,7 @@ public abstract class Hat extends Equipment {
 
         list.add(new Rare_Hat());
         list.add(new Rare_Hat());
+        list.add(new Rare_FrostboltHat());
 
         return list;
     }

@@ -3,7 +3,6 @@ package wizardo.game.Items.Equipment.Robes;
 import com.badlogic.gdx.math.MathUtils;
 import wizardo.game.Items.Equipment.Equipment;
 import wizardo.game.Items.Equipment.EquipmentUtils;
-import wizardo.game.Items.Equipment.Ring.Normal_Ring;
 import wizardo.game.Items.ItemUtils;
 import wizardo.game.Spells.SpellUtils;
 
@@ -88,15 +87,20 @@ public abstract class Robes extends Equipment {
     public static ArrayList<Equipment> getEpicRobes() {
         ArrayList<Equipment> list = new ArrayList<>();
 
+        list.add(new Epic_IronRobes());
+        list.add(new Epic_HasteCloak());
+
         return list;
     }
 
     public static ArrayList<Equipment> getLegendaryRobes() {
         ArrayList<Equipment> list = new ArrayList<>();
 
-        list.add(new Legendary_FreezeRobes());
+        list.add(new Legendary_FrostRobes());
         list.add(new Legendary_FireRobes());
         list.add(new Legendary_ShieldRobes());
+        list.add(new Legendary_LightningRobes());
+        list.add(new Legendary_ArcaneRobes());
 
         return list;
     }

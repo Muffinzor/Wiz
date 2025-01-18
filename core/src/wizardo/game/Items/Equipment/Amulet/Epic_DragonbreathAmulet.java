@@ -27,7 +27,7 @@ public class Epic_DragonbreathAmulet extends Amulet {
     public String getDescription() {
 
         return String.format("""
-            Dragonbreath is much wider""");
+            Dragonbreath's angle is doubled""");
     }
 
     public String getFlavorText() {

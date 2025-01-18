@@ -36,6 +36,8 @@ public class Pawn {
 
     public RoundLight light;
 
+    public float hitTimer;  //for red frames
+
 
     public Pawn(BaseScreen screen) {
         this.screen = screen;
@@ -46,6 +48,7 @@ public class Pawn {
 
     public void update(float delta) {
         stateTime += delta;
+        hitTimer -= delta;
         drawFrame();
 
         if(pushBackTimer > 0) {
@@ -113,7 +116,7 @@ public class Pawn {
     public void drawFrame() {
         Sprite frame = getSprite(screen);
         frame.set(PlayerResources.playerWalk.getKeyFrame(stateTime, true));
-        if(player.pawn.pushBackTimer > 0) {
+        if(player.pawn.pushBackTimer > 0 || hitTimer > 0) {
             frame.setColor(0.75f,0,0,1);
         }
         frame.setPosition(body.getPosition().x * PPM - frame.getWidth()/2f, body.getPosition().y * PPM - 8);

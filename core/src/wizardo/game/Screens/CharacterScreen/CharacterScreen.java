@@ -74,6 +74,8 @@ public class CharacterScreen extends BaseScreen {
     }
     @Override
     public void resize(int width, int height) {
+        if (width <= 0 || height <= 0) return;
+
         super.resize(width, height);
 
         background.setSize(width, height);

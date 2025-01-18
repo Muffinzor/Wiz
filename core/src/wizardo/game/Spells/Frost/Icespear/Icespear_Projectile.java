@@ -5,6 +5,8 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
+import wizardo.game.Items.Equipment.Amulet.Legendary_FirstHitAmulet;
+import wizardo.game.Items.Equipment.Amulet.Rare_IcespearAmulet;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Spells.Arcane.Rifts.Rift_Zone;
@@ -54,11 +56,14 @@ public class Icespear_Projectile extends Icespear_Spell {
         this.targetPosition = new Vector2(targetPosition);
         timerBeforeSplit = 0;
 
+        if(player.inventory.equippedAmulet instanceof Rare_IcespearAmulet) {
+            maxCollisions += 2;
+        }
+
     }
 
     public void update(float delta) {
         if(!initialized) {
-            speed = getScaledSpeed();
             minimumTimeForSplit *= (1 - player.spellbook.projSpeedBonus/100f);
             duration = duration * MathUtils.random(0.75f, 1);
             pickAnim();
@@ -119,6 +124,9 @@ public class Icespear_Projectile extends Icespear_Spell {
         }
 
         dealDmg(monster);
+        if(player.inventory.equippedAmulet instanceof Legendary_FirstHitAmulet && collisions == 0) {
+            dealDmg(monster);
+        }
 
         if(scale > 0.5f) {
 

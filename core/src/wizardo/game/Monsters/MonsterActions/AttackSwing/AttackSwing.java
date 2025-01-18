@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import wizardo.game.Items.Equipment.Robes.Epic_IronRobes;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Monsters.MonsterArchetypes.MonsterMelee;
 import wizardo.game.Monsters.MonsterActions.MonsterSpell;
@@ -47,7 +48,9 @@ public class AttackSwing extends MonsterSpell {
                 strength = 8;
                 duration = 0.2f;
             }
-            player.pawn.applyPush(direction, strength, duration, 0.9f);
+            if(!(player.inventory.equippedRobes instanceof Epic_IronRobes && monster.basic)) {
+                player.pawn.applyPush(direction, strength, duration, 0.9f);
+            }
             monster.dealDmg();
             hasHit = true;
         }

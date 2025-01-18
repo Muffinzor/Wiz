@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
+import wizardo.game.Items.Equipment.Amulet.Legendary_FirstHitAmulet;
 import wizardo.game.Items.Equipment.Staff.Epic_MissileStaff;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
@@ -102,6 +103,9 @@ public class ArcaneMissile_Projectile extends ArcaneMissile_Spell {
         collisions++;
         targetLocked = false;
         dealDmg(monster);
+        if(player.inventory.equippedAmulet instanceof Legendary_FirstHitAmulet && collisions == 1) {
+            dealDmg(monster);
+        }
 
         if(!(player.inventory.equippedStaff instanceof Epic_MissileStaff)) {
             float scaleLoss = 0.2f;

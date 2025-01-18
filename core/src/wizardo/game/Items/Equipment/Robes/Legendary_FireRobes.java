@@ -12,20 +12,19 @@ import static wizardo.game.Wizardo.player;
 
 public class Legendary_FireRobes extends Robes {
 
-    float stateTime;
     FlameAura aura;
 
     public Legendary_FireRobes() {
         sprite = new Sprite(new Texture("Items/Robes/FireRobes.png"));
         spriteOver = new Sprite(new Texture("Items/Robes/FireRobes_Over.png"));
-        displayScale = 1f;
+        displayScale = 0.9f;
 
         name = "The Phoenix Pelt";
         title = "Legendary Robes";
         quality = ItemUtils.EquipQuality.LEGENDARY;
 
         gearStats.add(ItemUtils.GearStat.FIREDMG);
-        quantity_gearStats.add(MathUtils.random(10, 15));
+        quantity_gearStats.add(MathUtils.random(15, 20));
 
     }
 

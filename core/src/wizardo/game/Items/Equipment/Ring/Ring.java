@@ -81,6 +81,7 @@ public abstract class Ring extends Equipment {
 
         list.add(new Rare_Ring());
         list.add(new Rare_Ring());
+        list.add(new Rare_BeamRing());
 
         return list;
     }
@@ -224,7 +225,7 @@ public abstract class Ring extends Equipment {
                 }
                 case 5 -> {
                     piece.gearStats.add(ItemUtils.GearStat.PROJSPEED);
-                    piece.quantity_gearStats.add(MathUtils.random(15,25));
+                    piece.quantity_gearStats.add(MathUtils.random(10,20));
                 }
                 case 6 -> {
                     piece.gearStats.add(ItemUtils.GearStat.REGEN);

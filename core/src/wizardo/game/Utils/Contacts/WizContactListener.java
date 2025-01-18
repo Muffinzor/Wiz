@@ -188,6 +188,25 @@ public class WizContactListener implements ContactListener {
         boolean f1isPawn = (f1.getFilterData().categoryBits & PAWN) != 0;
         boolean f2isPawn = (f2.getFilterData().categoryBits & PAWN) != 0;
 
+        boolean f1isSpell = (f1.getFilterData().categoryBits & SPELL) != 0;
+        boolean f2isSpell = (f2.getFilterData().categoryBits & SPELL) != 0;
+
+        boolean f1isMonsterSpell = (f1.getFilterData().categoryBits & MONSTER_PROJECTILE) != 0;
+        boolean f2isMonsterSpell = (f2.getFilterData().categoryBits & MONSTER_PROJECTILE) != 0;
+
+        /* SPELL + MONSTERSPELL */
+        if(f1isSpell && f2isMonsterSpell || f2isSpell && f1isMonsterSpell) {
+            if(f1isSpell) {
+                Spell spell = (Spell) f1.getBody().getUserData();
+                MonsterSpell proj = (MonsterSpell) f2.getBody().getUserData();
+                spell.exitCollision(proj);
+            } else {
+                Spell spell = (Spell) f2.getBody().getUserData();
+                MonsterSpell proj = (MonsterSpell) f1.getBody().getUserData();
+                spell.exitCollision(proj);
+            }
+        }
+
         /* PAWN + TRIGGER */
         if(f1isPawn && f2isTrigger || f2isPawn && f1isTrigger) {
             TriggerObject object;

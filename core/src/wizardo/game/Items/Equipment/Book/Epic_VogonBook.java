@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import wizardo.game.Items.ItemUtils;
 import wizardo.game.Spells.Unique.VogonAura;
+import wizardo.game.Spells.Unique.WarpAura;
 
 
 import static wizardo.game.Wizardo.player;

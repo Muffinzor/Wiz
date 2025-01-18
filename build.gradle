@@ -34,9 +34,11 @@ allprojects {
         maven { url "https://jitpack.io" }
     }
 
-    tasks.withType(JavaCompile) {
-        sourceCompatibility = '22'
-        targetCompatibility = '22'
+    tasks.withType(JavaCompile).tap {
+        configureEach {
+            sourceCompatibility = '22'
+            targetCompatibility = '22'
+        }
     }
 }
 
@@ -50,6 +52,26 @@ project(":desktop") {
         api "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
         api "com.badlogicgames.gdx-controllers:gdx-controllers-desktop:$gdxControllersVersion"
         api "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
+    }
+
+    tasks.register('Jar', Jar) {
+        group = "build"
+        description = "Assembles a JAR file containing all dependencies for LWJGL3."
+
+        manifest {
+            attributes 'Main-Class': 'wizardo.game.DesktopLauncher'
+        }
+
+        // Include compiled classes and resources
+        from {
+            configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+        }
+
+        // Exclude duplicates to prevent issues with resources
+        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+        // Include your module's compiled classes and resources
+        with jar
     }
 }
 

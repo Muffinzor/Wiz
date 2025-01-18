@@ -11,6 +11,9 @@ public class AuraAnims {
     public static Animation<Sprite> vogon_aura;
     public static String vogon_aura_path = "Spells/GearSpells/VogonAura/VogonAura.atlas";
 
+    public static Animation<Sprite> warp_aura;
+    public static String warp_aura_path = "Spells/GearSpells/WarpAura/Warp_Aura.atlas";
+
     public static Animation<Sprite> flame_aura;
     public static Animation<Sprite> flame_aura2;
     public static String flame_aura_path = "Spells/GearSpells/FireAura/FireAura.atlas";
@@ -36,9 +39,17 @@ public class AuraAnims {
         }
         vogon_aura = new Animation<>(0.04f, frames);
 
+        TextureAtlas warp_atlas = assetManager.get(warp_aura_path, TextureAtlas.class);
+        Sprite[] warp_frames = new Sprite[120];
+        for (int i = 0; i < warp_frames.length; i++) {
+            warp_frames[i] = warp_atlas.createSprite("aura" + (i+1));
+        }
+        warp_aura = new Animation<>(0.02f, warp_frames);
+
     }
 
     public static void loadAtlas() {
+        assetManager.load(warp_aura_path, TextureAtlas.class);
         assetManager.load(vogon_aura_path, TextureAtlas.class);
         assetManager.load(flame_aura_path, TextureAtlas.class);
     }

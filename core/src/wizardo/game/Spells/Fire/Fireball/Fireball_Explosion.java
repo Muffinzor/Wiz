@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import wizardo.game.Items.Equipment.Book.Rare_FireballBook;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Resources.SpellAnims.FireballAnims;
@@ -95,6 +96,10 @@ public class Fireball_Explosion extends Fireball_Spell {
     }
 
     public void createBody() {
+        if(player.inventory.equippedBook instanceof Rare_FireballBook) {
+            radius *= 1.2f;
+            frameScale *= 1.2f;
+        }
         body = BodyFactory.spellExplosionBody(targetPosition, radius * effectRatio * (1 + player.spellbook.fireballBonus/100f));
         body.setUserData(this);
     }

@@ -15,7 +15,7 @@ public class Legendary_ShieldRobes extends Robes{
     public Legendary_ShieldRobes() {
         sprite = new Sprite(new Texture("Items/Robes/ShieldRobes.png"));
         spriteOver = new Sprite(new Texture("Items/Robes/ShieldRobes_Over.png"));
-        displayScale = 0.75f;
+        displayScale = 0.7f;
 
         name = "Tal's Regalia";
         title = "Legendary Robes";
