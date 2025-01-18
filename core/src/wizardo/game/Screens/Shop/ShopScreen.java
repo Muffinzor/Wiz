@@ -23,7 +23,6 @@ import static wizardo.game.Resources.Skins.shopSkin;
 public class ShopScreen extends BaseScreen {
 
     ArrayList<Screen_Anim> anims;
-    Sprite background;
 
     float stateTime;
     Stage panelStage;

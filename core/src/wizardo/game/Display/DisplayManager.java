@@ -21,19 +21,17 @@ public class DisplayManager {
     public void update(float delta) {
         mainBatch.setProjectionMatrix(screen.mainCamera.combined);
 
+
         spriteRenderer.renderSprites();
 
         screen.rayHandler.setCombinedMatrix(screen.mainCamera);
         screen.rayHandler.updateAndRender();
-
         spriteRenderer.renderPostLightningSprites();
         spriteRenderer.renderUI();
-
         spriteRenderer.clearSpriteArrays();
 
         textManager.update(delta);
         textManager.renderAlLTexts();
-
     }
 
 }

@@ -2,6 +2,7 @@ package wizardo.game.Screens.Battle.Controls;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import wizardo.game.Items.Drop.Drop;
 import wizardo.game.Player.Pawn;
 import wizardo.game.Screens.Battle.BattleScreen;
 import wizardo.game.Screens.CharacterScreen.CharacterScreen;
@@ -75,6 +76,10 @@ public class KeyboardMouseListener_BATTLE implements InputProcessor {
 
         if (keycode == Input.Keys.F1) {
             screen.game.addNewScreen(new Cheat_Screen(screen.game));
+        }
+
+        if (keycode == Input.Keys.G) {
+            player.screen.dropManager.attractGold();
         }
 
 

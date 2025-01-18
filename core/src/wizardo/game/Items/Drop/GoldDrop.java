@@ -11,14 +11,13 @@ import wizardo.game.Resources.EffectAnims.GearFlareAnims;
 import static wizardo.game.Resources.EffectAnims.GearFlareAnims.white_flare;
 import static wizardo.game.Resources.Skins.inventorySkin;
 import static wizardo.game.Wizardo.player;
-import static wizardo.game.Wizardo.world;
 
 public class GoldDrop extends Drop{
     int tier;
     int goldAmount;
 
     public GoldDrop(Vector2 spawnPosition, int tierMin, int tierMax) {
-        this.spawnPosition = new Vector2(spawnPosition);
+        this.position = new Vector2(spawnPosition);
         tier = MathUtils.random(tierMin, tierMax);
 
         flareAnim = white_flare;
@@ -71,7 +70,7 @@ public class GoldDrop extends Drop{
         screen.battleUI.updateGoldPanel();
 
         BottomText text = new BottomText();
-        text.setAll("+" + goldAmount, body.getPosition(), inventorySkin.getFont("Gear_Text"), Color.YELLOW);
+        text.setAll("+" + goldAmount, position, inventorySkin.getFont("Gear_Text"), Color.YELLOW);
         screen.displayManager.textManager.addGoldText(text);
     }
 

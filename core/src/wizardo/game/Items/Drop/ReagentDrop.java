@@ -3,7 +3,6 @@ package wizardo.game.Items.Drop;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import wizardo.game.Resources.EffectAnims.GearFlareAnims;
 
@@ -21,7 +20,7 @@ public class ReagentDrop extends Drop {
      * @param chance from 0 to 1, chance to be better reagent
      */
     public ReagentDrop(Vector2 spawnPosition, float chance) {
-        this.spawnPosition = new Vector2(spawnPosition);
+        this.position = new Vector2(spawnPosition);
         displayScale = 0.25f;
         lightRadius = 25f;
         sprite = new Sprite(new Texture("Items/Drops/Potion.png"));
@@ -65,24 +64,22 @@ public class ReagentDrop extends Drop {
                 Sprite frame2 = screen.getSprite();
                 frame2.set(flareAnim.getKeyFrame(stateTime, true));
                 frame2.setScale(0.8f * flareScale);
-                frame2.setCenter(body.getPosition().x * PPM, body.getPosition().y * PPM);
+                frame2.setCenter(position.x * PPM, position.y * PPM);
                 screen.addSortedSprite(frame2);
-                screen.centerSort(frame2, body.getPosition().y * PPM + 5);
-
+                screen.centerSort(frame2, position.y * PPM + 5);
             }
-
             Sprite frame = screen.getSprite();
             frame.set(anim.getKeyFrame(stateTime, true));
-            frame.setCenter(body.getPosition().x * PPM, body.getPosition().y * PPM);
+            frame.setCenter(position.x * PPM, position.y * PPM);
             frame.flip(flipX, false);
             frame.setScale(displayScale);
             screen.addSortedSprite(frame);
-            screen.centerSort(frame, body.getPosition().y * PPM);
+            screen.centerSort(frame, position.y * PPM);
         } else {
             Sprite frame = screen.getSprite();
             frame.set(pickupAnim.getKeyFrame(stateTime, false));
             frame.rotate(flareRotation);
-            frame.setCenter(body.getPosition().x * PPM, body.getPosition().y * PPM);
+            frame.setCenter(position.x * PPM, position.y * PPM);
             screen.addSortedSprite(frame);
         }
     }

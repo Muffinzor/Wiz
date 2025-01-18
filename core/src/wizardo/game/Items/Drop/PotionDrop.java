@@ -13,7 +13,7 @@ import static wizardo.game.Wizardo.player;
 public class PotionDrop extends Drop {
 
     public PotionDrop(Vector2 spawnPosition) {
-        this.spawnPosition = new Vector2(spawnPosition);
+        this.position = new Vector2(spawnPosition);
         sprite = new Sprite(new Texture("Items/Drops/Potion.png"));
         flareAnim = white_flare;
         flareScale = 0.35f;
@@ -29,7 +29,7 @@ public class PotionDrop extends Drop {
     public void pickup() {
         pickedUp = true;
         stateTime = 0;
-        float regenAmount = MathUtils.random(10, 20) * (1 + (player.stats.luck/100f));
+        float regenAmount = player.stats.maxShield * 0.1f * MathUtils.random(0.9f, 1.1f);
         if(player.inventory.equippedRing instanceof Epic_NagelRing) {
             regenAmount *= 2;
         }

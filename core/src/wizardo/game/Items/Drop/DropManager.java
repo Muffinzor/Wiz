@@ -31,12 +31,11 @@ public class DropManager {
 
         if(delta > 0) {
             for (Drop drop : drops) {
-                if ((drop.pickedUp && drop.stateTime >= GearFlareAnims.gear_pop.getAnimationDuration()) || drop.alpha <= 0.05f) {
+                if ((drop.pickedUp && drop.stateTime >= GearFlareAnims.gear_pop.getAnimationDuration())) {
                     drop.dispose();
                 }
             }
 
-            drops.removeIf(drop -> drop.alpha <= 0.05f);
             drops.removeIf(drop -> drop.pickedUp && drop.stateTime >= GearFlareAnims.gear_pop.getAnimationDuration());
         }
     }
@@ -44,6 +43,14 @@ public class DropManager {
     public void addDrop(Drop drop) {
         drops.add(drop);
         drop.screen = screen;
+    }
+
+    public void attractGold() {
+        for(Drop drop : drops) {
+            if(drop instanceof GoldDrop) {
+                drop.goToPlayer = true;
+            }
+        }
     }
 
     public void dropChestLoot(Chest chest) {

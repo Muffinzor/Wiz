@@ -58,12 +58,12 @@ public class BattleScreen extends BaseScreen {
 
         mainCamera.viewportWidth = Gdx.graphics.getWidth();
         mainCamera.viewportHeight = Gdx.graphics.getHeight();
-        mainCamera.zoom = 4f;
+        mainCamera.zoom = 1.2f;
 
         createNewWorld();
         rayHandler = new RayHandler(world);
         rayHandler.setCulling(false);
-        rayHandler.setAmbientLight(0.45f);
+        rayHandler.setAmbientLight(0.35f);
         lightManager.rayHandler = rayHandler;
 
         Pawn playerPawn = new Pawn(this);
@@ -106,11 +106,11 @@ public class BattleScreen extends BaseScreen {
         monsterSpellManager.update(delta);
         dropManager.update(delta);
 
+
         battleUI.update();
         displayManager.update(delta);
         lightManager.update(delta);
         updateCamera();  // must be after displayManager.update
-
         player.update(delta);
 
         stage.act(delta);

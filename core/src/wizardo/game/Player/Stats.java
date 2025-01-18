@@ -7,7 +7,7 @@ public class Stats {
     public float baseRecharge = 1;
     public int bonusRechargeRate = 0;
 
-    public float runSpeed = 2.7f;
+    public float runSpeed = 12.7f;
     public int pickupRadiusBonus = 0;
     public int luck = 0;
 
@@ -28,11 +28,5 @@ public class Stats {
     public int bonusMastery_missiles;
     public int bonusMastery_beam;
     public int bonusMastery_rifts;
-
-
-    public Stats() {
-
-    }
-
 
 }

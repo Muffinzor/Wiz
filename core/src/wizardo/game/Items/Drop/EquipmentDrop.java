@@ -13,7 +13,7 @@ public class EquipmentDrop extends Drop {
 
     public EquipmentDrop(Vector2 spawnPosition, Equipment piece) {
         this.piece = piece;
-        this.spawnPosition = new Vector2(spawnPosition);
+        this.position = new Vector2(spawnPosition);
         stateTime = (float) Math.random();
     }
 
@@ -56,7 +56,6 @@ public class EquipmentDrop extends Drop {
             pickedUp = true;
             stateTime = 0;
         } else {
-            body.setLinearVelocity(0,0);
             goToPlayer = false;
             frameCounter = 0;
         }

@@ -70,7 +70,13 @@ project(":desktop") {
         // Exclude duplicates to prevent issues with resources
         duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 
-        // Include your module's compiled classes and resources
+        // Ensure native libraries (e.g. .dll, .so, .dylib) are included
+        from {
+            configurations.runtimeClasspath.filter { it.name.contains('natives-desktop') }
+                    .collect { zipTree(it) }
+        }
+
+        // Make sure the project jars are included
         with jar
     }
 }

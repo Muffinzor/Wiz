@@ -7,6 +7,7 @@ import wizardo.game.Items.ItemUtils;
 import wizardo.game.Spells.SpellUtils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class MapShopInventory {
 
@@ -29,8 +30,9 @@ public class MapShopInventory {
     }
 
     public void createInventory() {
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 4; i++) {
             gear.add(dropManager.getEquipmentForDrop(ItemUtils.EquipSlot.ALL, randomQuality(), null));
+            Collections.shuffle(gear);
         }
         for (int i = 0; i < 4; i++) {
             scrolls.add(SpellUtils.getRandomMastery(null, 3, true));
@@ -41,10 +43,10 @@ public class MapShopInventory {
         ItemUtils.EquipQuality quality = ItemUtils.EquipQuality.NORMAL;
         double random = Math.random();
 
-        if(random >= 0.95f && !legendaryRolled) {
+        if(random >= 0.9f && !legendaryRolled) {
             quality = ItemUtils.EquipQuality.LEGENDARY;
             legendaryRolled = true;
-        } else if(random >= 0.75f) {
+        } else if(random >= 0.7f) {
             quality = ItemUtils.EquipQuality.EPIC;
         } else if(random >= 0.4f) {
             quality = ItemUtils.EquipQuality.RARE;

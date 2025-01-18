@@ -1,6 +1,5 @@
 package wizardo.game.Items.Drop;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -10,11 +9,9 @@ import wizardo.game.Player.Levels.StatsBuffer;
 import wizardo.game.Resources.EffectAnims.GearFlareAnims;
 import wizardo.game.Spells.SpellUtils;
 
-import static com.badlogic.gdx.Input.Keys.T;
 import static wizardo.game.Resources.EffectAnims.GearFlareAnims.white_flare;
 import static wizardo.game.Resources.Skins.inventorySkin;
 import static wizardo.game.Spells.SpellUtils.whatElementIsThis;
-import static wizardo.game.Wizardo.world;
 
 public class ScrollDrop extends Drop {
 
@@ -37,7 +34,7 @@ public class ScrollDrop extends Drop {
      * @param recursive true if all tiers under specified are accessible
      */
     public ScrollDrop(Vector2 spawnPosition, SpellUtils.Spell_Name SpellType, SpellUtils.Spell_Element Element, int tier, boolean recursive) {
-        this.spawnPosition = new Vector2(spawnPosition);
+        this.position = new Vector2(spawnPosition);
         this.SpellType = SpellType;
         this.Element = Element;
         this.tier = tier;
@@ -73,7 +70,7 @@ public class ScrollDrop extends Drop {
         pickedUp = true;
         stateTime = 0;
         BottomText text = new BottomText();
-        text.setAll(displayText, body.getPosition(), inventorySkin.getFont("Gear_Title"), textColor);
+        text.setAll(displayText, position, inventorySkin.getFont("Gear_Title"), textColor);
         screen.displayManager.textManager.addBottomText(text);
     }
 

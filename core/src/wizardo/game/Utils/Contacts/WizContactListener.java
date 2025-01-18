@@ -1,7 +1,6 @@
 package wizardo.game.Utils.Contacts;
 
 import com.badlogic.gdx.physics.box2d.*;
-import wizardo.game.Items.Drop.Drop;
 import wizardo.game.Maps.EnvironmentObject;
 import wizardo.game.Maps.TriggerObject;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
@@ -39,9 +38,6 @@ public class WizContactListener implements ContactListener {
         boolean f1isDecor = (f1.getFilterData().categoryBits & DECOR) != 0;
         boolean f2isDecor = (f2.getFilterData().categoryBits & DECOR) != 0;
 
-        boolean f1isDrop = (f1.getFilterData().categoryBits & DROP) != 0;
-        boolean f2isDrop = (f2.getFilterData().categoryBits & DROP) != 0;
-
 
         /* PAWN + TRIGGER */
         if(f1isPawn && f2isTrigger || f2isPawn && f1isTrigger) {
@@ -54,17 +50,6 @@ public class WizContactListener implements ContactListener {
                 player.nearbyTriggerObject = object;
             }
             object.handleCollision();
-        } else
-
-        /* PAWN + ITEMDROP */
-        if(f1isPawn && f2isDrop || f2isPawn && f1isDrop) {
-            if(f2isDrop) {
-                Drop drop = (Drop) f2.getBody().getUserData();
-                drop.pickup();
-            } else {
-                Drop drop = (Drop) f1.getBody().getUserData();
-                drop.pickup();
-            }
         } else
 
         /* MONSTER + PAWN */

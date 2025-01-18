@@ -31,6 +31,7 @@ public class ShopTable_Gear extends MenuTable {
     Table gear1;
     Table gear2;
     Table gear3;
+    Table gear4;
 
     ArrayList<Label> prices;
 
@@ -54,15 +55,18 @@ public class ShopTable_Gear extends MenuTable {
         gear1 = new Table();
         gear2 = new Table();
         gear3 = new Table();
+        gear4 = new Table();
         table.add(gear1).expandX();
         table.add(gear2).expandX();
         table.add(gear3).expandX();
+        table.add(gear4).expandX();
     }
 
     public void createButtons() {
         ShopButton_Equipment gearButton1 = new ShopButton_Equipment(inventorySkin, screen, screen.shop.getGearList().get(0));
         ShopButton_Equipment gearButton2 = new ShopButton_Equipment(inventorySkin, screen, screen.shop.getGearList().get(1));
         ShopButton_Equipment gearButton3 = new ShopButton_Equipment(inventorySkin, screen, screen.shop.getGearList().get(2));
+        ShopButton_Equipment gearButton4 = new ShopButton_Equipment(inventorySkin, screen, screen.shop.getGearList().get(3));
 
         Label price1 = new Label(getPriceString(gearButton1.piece), inventorySkin, "Price_Etiquette");
         price1.setAlignment(Align.center);
@@ -73,6 +77,9 @@ public class ShopTable_Gear extends MenuTable {
         Label price3 = new Label(getPriceString(gearButton3.piece), inventorySkin, "Price_Etiquette");
         price3.setAlignment(Align.center);
         prices.add(price3);
+        Label price4 = new Label(getPriceString(gearButton4.piece), inventorySkin, "Price_Etiquette");
+        price4.setAlignment(Align.center);
+        prices.add(price4);
 
         gear1.add(price1).row();
         gear1.add(gearButton1);
@@ -86,15 +93,20 @@ public class ShopTable_Gear extends MenuTable {
         gear3.add(gearButton3);
         gear3.pad(10);
 
+        gear4.add(price4).row();
+        gear4.add(gearButton4);
+        gear4.pad(10);
+
         gearButtons.add(gearButton1);
         gearButtons.add(gearButton2);
         gearButtons.add(gearButton3);
+        gearButtons.add(gearButton4);
     }
 
     public void setupContainer() {
 
         Sprite background = new Sprite(new Texture("Screens/Shop/GearPanelBackground.png"));
-        background.setScale(xRatio, yRatio);
+        background.setScale(xRatio);
         SpriteDrawable backgroundDrawable = new SpriteDrawable(background);
 
         container.setBackground(backgroundDrawable);
