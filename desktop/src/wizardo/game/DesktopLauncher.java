@@ -17,7 +17,8 @@ public class DesktopLauncher {
 			if(isSteamDeck()) {
 				config.setFullscreenMode(Lwjgl3ApplicationConfiguration.getDisplayMode());
 			} else {
-				config.setWindowedMode(1600, 900);
+				config.setFullscreenMode(Lwjgl3ApplicationConfiguration.getDisplayMode());
+				//config.setWindowedMode(1600, 900);
 			}
 
 			new Lwjgl3Application(new Wizardo(), config);
