@@ -55,6 +55,9 @@ public class ControllerListener_TABLEMENU extends ControllerAdapter  {
             case 12: //D-pad UP
                 screen.menuTable.navigateUp();
                 return true;
+            case 1: //B
+                screen.game.setPreviousScreen();
+                return true;
         }
 
         if (buttonIndex == 0) {

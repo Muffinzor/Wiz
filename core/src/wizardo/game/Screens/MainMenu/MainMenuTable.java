@@ -179,8 +179,6 @@ public class MainMenuTable extends MenuTable {
     }
 
     public void pressSelectedButton() {
-        table.clearChildren();
-        table = null;
         switch (selectedButtonIndex) {
             case 0 -> game.addNewScreen(new HubScreen(game));
             case 1 -> System.out.println("Nope");
@@ -191,10 +189,8 @@ public class MainMenuTable extends MenuTable {
     public void resize() {
         buttons.clear();
         table.clearChildren();
-        table = new Table();
         setPosition();
         createButtons();
-        stage.addActor(table);
         updateButtonStates();
     }
 

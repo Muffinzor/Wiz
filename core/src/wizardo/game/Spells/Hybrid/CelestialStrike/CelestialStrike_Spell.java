@@ -17,7 +17,7 @@ public class CelestialStrike_Spell extends Spell {
     public CelestialStrike_Spell() {
 
         raycasted = true;
-        aimReach = 22;
+        aimReach = 15;
 
         name = "Celestial Strike";
 

@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.Align;
 import wizardo.game.Display.MenuTable;
 import wizardo.game.Items.Equipment.Equipment;
+import wizardo.game.Screens.CharacterScreen.EquipmentTable.GearPanel;
 import wizardo.game.Wizardo;
 
 import java.util.ArrayList;
@@ -27,6 +28,9 @@ public class ShopTable_Gear extends MenuTable {
     Container<Table> container;
 
     ArrayList<ShopButton_Equipment> gearButtons;
+
+    public int x_pos = 0;
+    public int y_pos = 0;
 
     Table gear1;
     Table gear2;
@@ -63,6 +67,7 @@ public class ShopTable_Gear extends MenuTable {
     }
 
     public void createButtons() {
+        float pad = 10 * xRatio;
         ShopButton_Equipment gearButton1 = new ShopButton_Equipment(inventorySkin, screen, screen.shop.getGearList().get(0));
         ShopButton_Equipment gearButton2 = new ShopButton_Equipment(inventorySkin, screen, screen.shop.getGearList().get(1));
         ShopButton_Equipment gearButton3 = new ShopButton_Equipment(inventorySkin, screen, screen.shop.getGearList().get(2));
@@ -83,19 +88,19 @@ public class ShopTable_Gear extends MenuTable {
 
         gear1.add(price1).row();
         gear1.add(gearButton1);
-        gear1.pad(10);
+        gear1.pad(pad);
 
         gear2.add(price2).row();
         gear2.add(gearButton2);
-        gear2.pad(10);
+        gear2.pad(pad);
 
         gear3.add(price3).row();
         gear3.add(gearButton3);
-        gear3.pad(10);
+        gear3.pad(pad);
 
         gear4.add(price4).row();
         gear4.add(gearButton4);
-        gear4.pad(10);
+        gear4.pad(pad);
 
         gearButtons.add(gearButton1);
         gearButtons.add(gearButton2);
@@ -106,7 +111,7 @@ public class ShopTable_Gear extends MenuTable {
     public void setupContainer() {
 
         Sprite background = new Sprite(new Texture("Screens/Shop/GearPanelBackground.png"));
-        background.setScale(xRatio);
+        background.setSize(background.getWidth() * xRatio, background.getHeight() * yRatio);
         SpriteDrawable backgroundDrawable = new SpriteDrawable(background);
 
         container.setBackground(backgroundDrawable);
@@ -115,7 +120,7 @@ public class ShopTable_Gear extends MenuTable {
 
         container.pack();
 
-        container.setPosition(Gdx.graphics.getWidth()/2 - container.getWidth()/2, 580);
+        container.setPosition(Gdx.graphics.getWidth()/2 - container.getWidth()/2, 630 * yRatio);
 
         container.validate();
     }
@@ -148,30 +153,67 @@ public class ShopTable_Gear extends MenuTable {
         return s;
     }
 
+    public void updateButtons() {
+        screen.selectedButton = gearButtons.get(x_pos);
+        for(ShopButton_Equipment button : gearButtons) {
+            button.hovered = false;
+        }
+        gearButtons.get(x_pos).hovered = true;
+        if(screen.activePanel != null) {
+            screen.activePanel.dispose();
+        }
+        if(!gearButtons.get(x_pos).isDisabled()) {
+            screen.activePanel = new GearPanel(screen.panelStage, gearButtons.get(x_pos).piece, false, gearButtons.get(x_pos));
+        }
+    }
+
+    public void exitTable() {
+        for(ShopButton_Equipment button : gearButtons) {
+            button.hovered = false;
+        }
+        if(screen.activePanel != null) {
+            screen.activePanel.dispose();
+        }
+    }
 
     @Override
     public void navigateDown() {
-
+        screen.menuTable = screen.scrollTable;
+        screen.scrollTable.x_pos = x_pos;
+        screen.selectedButton = screen.scrollTable.scrollButtons.get(x_pos);
+        exitTable();
     }
 
     @Override
     public void navigateUp() {
-
+        screen.menuTable = screen.scrollTable;
+        screen.scrollTable.x_pos = x_pos;
+        screen.selectedButton = screen.scrollTable.scrollButtons.get(x_pos);
+        exitTable();
     }
 
     @Override
     public void navigateLeft() {
-
+        x_pos--;
+        if(x_pos < 0) {
+            x_pos = 3;
+        }
+        updateButtons();
     }
 
     @Override
     public void navigateRight() {
-
+        x_pos++;
+        if(x_pos > 3) {
+            x_pos = 0;
+        }
+        updateButtons();
     }
 
     @Override
     public void pressSelectedButton() {
-
+        gearButtons.get(x_pos).handleClick();
+        updateButtons();
     }
 
     @Override

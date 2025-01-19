@@ -31,8 +31,7 @@ import wizardo.game.Spells.Unique.ThundergodBolt.ThundergodBolt_Spell;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import static wizardo.game.GameSettings.dmg_text_on;
-import static wizardo.game.GameSettings.sound_volume;
+import static wizardo.game.GameSettings.*;
 import static wizardo.game.Resources.Skins.mainMenuSkin;
 import static wizardo.game.Screens.BaseScreen.controllerActive;
 import static wizardo.game.Utils.Constants.PPM;
@@ -153,7 +152,7 @@ public abstract class Spell implements Cloneable {
 
     public Vector2 controllerAimAssist() {
         Vector2 target;
-        if(raycasted) {
+        if(true) {
             Monster closestTargeted = rayCastTargeting();
             if (closestTargeted != null) {
                 target = new Vector2(closestTargeted.body.getPosition().scl(0.9999f)); // Scaled to avoid crashy comparisons
@@ -180,42 +179,65 @@ public abstract class Spell implements Cloneable {
     public Monster rayCastTargeting() {
         Vector2 direction = new Vector2(player.pawn.targetVector);
         if (direction.isZero()) {
-            direction.set(0, 1);
+            direction.set(0, 1); // Default direction when targetVector is zero
         }
         direction.setLength(aimReach);
-        float angleRange = 16;
-        int RAY_COUNT = 13;
-        final Monster[] targetLock = {null};
-        final float[] shortestDistance = {Float.MAX_VALUE};
 
+        float angleRange = 15;  // Total angle range of the cone
+        int RAY_COUNT = 15;     // Number of rays in the cone
+
+        final Monster[] overallClosestTarget = {null};
+        final float[] shortestDistance = {Float.MAX_VALUE};
+        Monster middleRayTarget = null; // To store the result of the middle ray separately
+
+        // Raycasting callback
         RayCastCallback callback = (fixture, point, _, _) -> {
             Body body = fixture.getBody();
-
             if (body.getUserData() instanceof Monster) {
                 float distance = player.pawn.body.getPosition().dst(point);
-
                 if (distance < shortestDistance[0]) {
                     shortestDistance[0] = distance;
-                    targetLock[0] = (Monster) body.getUserData();
+                    overallClosestTarget[0] = (Monster) body.getUserData();
                 }
-                return -1;
+                return -1; // End this ray immediately if it hits a Monster
             }
-            return 0;
+            return 0; // Keep going if no Monster is hit
         };
 
-
+        // Cast all rays in the cone
         for (int i = 0; i < RAY_COUNT; i++) {
-            float angleOffset = -angleRange + i * (2 * angleRange / (RAY_COUNT - 1));
-            Vector2 rotatedDirection = direction.cpy().rotateDeg(angleOffset);  // Convert radians to degrees
+            float angleOffset = -angleRange + i * (2 * angleRange / (RAY_COUNT - 1)); // Angle for this ray
+            Vector2 rotatedDirection = direction.cpy().rotateDeg(angleOffset);       // Adjust direction by angle offset
+            Vector2 endPoint = player.pawn.body.getPosition().cpy().add(rotatedDirection); // Compute ray endpoint
 
-            Vector2 endPoint =  player.pawn.body.getPosition().cpy().add(rotatedDirection);
-
+            // Cast the ray
             world.rayCast(callback, player.pawn.body.getPosition(), endPoint);
+
+            // Handle the middle ray separately
+            if (i == RAY_COUNT / 2) {
+                // Cast the middle ray directly and check for its specific target
+                final Monster[] middleRayClosestTarget = {null};
+                final float[] middleRayShortestDistance = {Float.MAX_VALUE};
+
+                world.rayCast((fixture, point, _, _) -> {
+                    Body body = fixture.getBody();
+                    if (body.getUserData() instanceof Monster) {
+                        float distance = player.pawn.body.getPosition().dst(point);
+                        if (distance < middleRayShortestDistance[0]) {
+                            middleRayShortestDistance[0] = distance;
+                            middleRayClosestTarget[0] = (Monster) body.getUserData();
+                        }
+                        return -1;
+                    }
+                    return 0;
+                }, player.pawn.body.getPosition(), endPoint);
+
+                middleRayTarget = middleRayClosestTarget[0];
+            }
         }
 
-
-
-        return targetLock[0];
+        // Prioritize the middle ray's target if it exists, fallback to the closest overall target
+        return middleRayTarget != null ? middleRayTarget : overallClosestTarget[0];
     }
 
     public void playSound(Vector2 position) {
@@ -627,7 +649,20 @@ public abstract class Spell implements Cloneable {
     }
 
     public void autoAimCheck() {
-        if(player.inventory.equippedHat instanceof Legendary_SentientHat && castByPawn) {
+        if(player.inventory.equippedHat instanceof Legendary_SentientHat && castByPawn || autoAim_On) {
+            Monster target = Legendary_SentientHat.findTarget();
+            if(target != null) {
+                targetPosition = new Vector2(target.body.getPosition());
+            } else {
+                screen.spellManager.remove(this);
+            }
+        } else {
+            targetPosition = getTargetPosition();
+        }
+    }
+
+    public void completeAutoAimCheck() {
+        if(autoAim_On && castByPawn) {
             Monster target = Legendary_SentientHat.findTarget();
             if(target != null) {
                 targetPosition = new Vector2(target.body.getPosition());

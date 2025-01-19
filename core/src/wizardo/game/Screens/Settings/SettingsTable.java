@@ -17,6 +17,7 @@ import java.util.ArrayList;
 
 import static wizardo.game.GameSettings.*;
 import static wizardo.game.Resources.Skins.mainMenuSkin;
+import static wizardo.game.Wizardo.player;
 
 public class SettingsTable extends MenuTable {
 
@@ -27,12 +28,29 @@ public class SettingsTable extends MenuTable {
         stage.addActor(table);
 
         volume_slider();
+        autoAim_checkbox();
         dmg_numbers_checkbox();
         healthbars_checkbox();
         zoom();
         debug_camera_checkbox();
         quitButton();
 
+    }
+
+    public void autoAim_checkbox() {
+        CheckBox checkBox = new CheckBox("Auto-aim", mainMenuSkin);
+
+        checkBox.setChecked(autoAim_On);
+
+        checkBox.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                autoAim_On = !autoAim_On;
+            }
+        });
+
+        table.row();
+        table.add(checkBox);
     }
 
     public void volume_slider() {
@@ -100,24 +118,20 @@ public class SettingsTable extends MenuTable {
     }
 
     public void zoom() {
-        CheckBox checkBox = new CheckBox("Zoom", mainMenuSkin);
 
-        checkBox.setChecked(zoom);
-
-        checkBox.addListener(new ClickListener() {
+        ImageButton PLUS = new ImageButton(mainMenuSkin);
+        PLUS.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                zoom = !zoom;
-                if(zoom) {
-                    game.mainCamera.zoom = 0.8f;
-                } else {
-                    game.mainCamera.zoom = 1f;
+                zoomLevel += 1;
+                if(zoomLevel > 3) {
+                    zoomLevel = 0;
                 }
+                game.mainCamera.zoom = 0.8f + zoomLevel * 0.2f;
             }
         });
+        table.add(PLUS);
 
-        table.row();
-        table.add(checkBox);
     }
 
     public void quitButton() {

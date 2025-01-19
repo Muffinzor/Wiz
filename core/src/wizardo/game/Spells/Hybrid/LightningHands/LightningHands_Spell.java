@@ -36,7 +36,7 @@ public class LightningHands_Spell extends Spell {
 
         setup();
 
-        autoAimCheck();
+        completeAutoAimCheck();
 
         if(targetPosition == null) {
             return;

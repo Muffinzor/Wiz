@@ -8,6 +8,7 @@ import wizardo.game.Spells.SpellUtils;
 
 import java.util.ArrayList;
 
+import static wizardo.game.GameSettings.autoAim_On;
 import static wizardo.game.GameSettings.dmg_text_on;
 import static wizardo.game.Spells.SpellUtils.Spell_Element.FIRE;
 import static wizardo.game.Wizardo.player;
@@ -48,7 +49,7 @@ public class Flamejet_Spell extends Spell {
             originBody = player.pawn.body;
         }
 
-        if(arcaneMissile && targetPosition == null) {
+        if(autoAim_On || arcaneMissile && targetPosition == null) {
             ArrayList<Monster> inRange = SpellUtils.findMonstersInRangeOfVector(player.pawn.getPosition(), 7, true);
             if(inRange.isEmpty()) {
                 screen.spellManager.remove(this);

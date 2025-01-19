@@ -20,7 +20,6 @@ public class ControllerListener_CHARACTERSCREEN extends ControllerAdapter {
 
     @Override
     public boolean axisMoved(Controller controller, int axisIndex, float value) {
-
         activeTable = screen.activeTable;
 
         if(Math.abs(value) < 0.5f) {
@@ -67,13 +66,13 @@ public class ControllerListener_CHARACTERSCREEN extends ControllerAdapter {
 
     @Override
     public boolean buttonDown(Controller controller, int buttonIndex) {
+        System.out.println("CHARACTER SCREEN : Button " + buttonIndex + " pressed");
         if (!controllerActive) {
             controllerActive = true;
             screen.hideCursor();
         }
 
         activeTable = screen.activeTable;
-        System.out.println(buttonIndex);
 
         screen.globalCD = 0.3f;
 
@@ -90,9 +89,9 @@ public class ControllerListener_CHARACTERSCREEN extends ControllerAdapter {
             case 14: //D-pad RIGHT
                 activeTable.navigateRight();
                 return true;
-
             case 1: // B or Circle
                 screen.game.setPreviousScreen();
+                return true;
         }
 
         if (buttonIndex == 0) {

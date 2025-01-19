@@ -21,7 +21,7 @@ public class KnownSpells_Table extends MenuTable {
     Table firstRowTable;
     Table secondRowTable;
 
-    SpellIcon_Button[][] buttonsMatrix;
+    public SpellIcon_Button[][] buttonsMatrix;
     public int x_pos;
     public int y_pos;
 
@@ -130,8 +130,10 @@ public class KnownSpells_Table extends MenuTable {
     @Override
     public void navigateUp() {
         y_pos ++;
-        if(y_pos > 1) {
-            y_pos = 1;
+        if(buttons.size() < 3) {
+            y_pos = 0;
+        } else if(buttons.size() < 4) {
+            x_pos = 0;
         }
         updateSelectedButton();
     }
@@ -143,26 +145,26 @@ public class KnownSpells_Table extends MenuTable {
             screen.activeTable = screen.equippedSpells_table;
 
             if(player.spellbook.equippedSpells.size() == 1) {
-                screen.equippedSpells_table.x_position = 0;
-                screen.equippedSpells_table.y_position = 0;
+                screen.equippedSpells_table.x_pos = 0;
+                screen.equippedSpells_table.y_pos = 0;
                 screen.equippedSpells_table.updateSelectedButton();
                 return;
             }
 
             if(player.spellbook.equippedSpells.size() == 2) {
-                screen.equippedSpells_table.x_position = 1;
-                screen.equippedSpells_table.y_position = 0;
+                screen.equippedSpells_table.x_pos = 1;
+                screen.equippedSpells_table.y_pos = 0;
                 screen.equippedSpells_table.updateSelectedButton();
                 return;
             }
 
             if(player.spellbook.equippedSpells.size() == 3) {
                 if(y_pos == 1) {
-                    screen.equippedSpells_table.x_position = 0;
-                    screen.equippedSpells_table.y_position = 1;
+                    screen.equippedSpells_table.x_pos = 0;
+                    screen.equippedSpells_table.y_pos = 1;
                 } else {
-                    screen.equippedSpells_table.x_position = 1;
-                    screen.equippedSpells_table.y_position = 0;
+                    screen.equippedSpells_table.x_pos = 1;
+                    screen.equippedSpells_table.y_pos = 0;
                 }
                 screen.equippedSpells_table.updateSelectedButton();
                 return;

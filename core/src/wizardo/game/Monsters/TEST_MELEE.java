@@ -17,8 +17,8 @@ public class TEST_MELEE extends MonsterMelee {
     public TEST_MELEE(BattleScreen screen, Vector2 position, MonsterSpawner spawner) {
         super(screen, position, spawner);
         speed = 20f/PPM;
-        hp = 30;
-        maxHP = 30;
+        hp = 25;
+        maxHP = 25;
         xp = 5;
 
         basic = true;

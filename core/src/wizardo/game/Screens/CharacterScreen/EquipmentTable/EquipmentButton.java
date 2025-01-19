@@ -21,7 +21,7 @@ public class EquipmentButton extends ImageButton implements MenuButton {
     boolean hovered;
 
     CharacterScreen screen;
-    Equipment piece;
+    public Equipment piece;
 
     Sprite sprite;
     Sprite spriteOver;
@@ -108,17 +108,17 @@ public class EquipmentButton extends ImageButton implements MenuButton {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 handleClick();
-                screen.panelStage.clear();
+                screen.activePanel.dispose();
             }
             @Override
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
                 hovered = true;
-                GearPanel panel = new GearPanel(screen.panelStage, piece, true, button);
+                screen.activePanel = new GearPanel(screen.panelStage, piece, true, button);
             }
             @Override
             public void exit(InputEvent event, float x, float y, int pointer, Actor fromActor) {
                 hovered = false;
-                screen.panelStage.clear();
+                screen.activePanel.dispose();
             }
         });
     }
@@ -134,6 +134,8 @@ public class EquipmentButton extends ImageButton implements MenuButton {
             screen.knownSpells_table.resize();
             screen.knownSpells_table.updateSpells();
             screen.stats_Table.createNewPanel();
+            screen.selectedButton = screen.equipment_table.buttonsMatrix[screen.equipment_table.x_pos][screen.equipment_table.y_pos];
+            screen.activePanel.dispose();
         }
     }
 

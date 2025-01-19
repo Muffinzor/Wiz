@@ -65,7 +65,7 @@ public class MonsterSpawner {
         updateTimers(delta);
 
         if (killResetTimer >= cycleDuration) {
-            monsterToughnessRatio = monsterToughnessRatio * 1.05f;
+            monsterToughnessRatio = monsterToughnessRatio * 1.07f;
             monsterDamageRatio = monsterDamageRatio * 1.03f;
             updateSpawnRatio();
             killsLastCycle = 0;
@@ -101,7 +101,7 @@ public class MonsterSpawner {
 
 
     public void spawnDemon() {
-        if(demonTimer > 230f) {
+        if(demonTimer > 120f) {
             demonTimer = 0;
             Monster monster = new MawDemon(screen, null, this);
             spawnMonster(monster);

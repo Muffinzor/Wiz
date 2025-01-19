@@ -1,6 +1,5 @@
 package wizardo.game.Screens.LevelUp;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -15,7 +14,7 @@ import wizardo.game.Player.Levels.StatsBuffer;
 import wizardo.game.Resources.ScreenResources.LevelUpResources;
 import wizardo.game.Player.Levels.LevelUpEnums.*;
 
-import static wizardo.game.Spells.SpellUtils.Spell_Name.FROZENORB;
+import static wizardo.game.Screens.BaseScreen.xRatio;
 
 public class PanelButton extends TextButton {
 
@@ -44,7 +43,6 @@ public class PanelButton extends TextButton {
         pickStyle();
         adjustSize();
         setText(TextGenerator.getPanelText(type, quality));
-
         addClickListener();
     }
 
@@ -72,7 +70,7 @@ public class PanelButton extends TextButton {
         } else {
             frame.set(LevelUpResources.regular_panel);
         }
-        frame.setScale(Gdx.graphics.getWidth()/1920f, Gdx.graphics.getHeight()/1080f);
+        frame.setScale(xRatio);
         frame.setCenter(getCenter().x, getCenter().y);
 
         SpriteBatch batch = screen.batch;
@@ -83,10 +81,8 @@ public class PanelButton extends TextButton {
     public void drawQualityGem() {
         Sprite frame = screen.getSprite();
         frame.set(qualityGem);
-        float x_ratio = Gdx.graphics.getWidth()/1920f;
-        float y_ratio = Gdx.graphics.getHeight()/1080f;
-        frame.setScale(x_ratio, y_ratio);
-        frame.setCenter(getCenter().x, getCenter().y - getHeight()/2 + 26 * y_ratio);
+        frame.setScale(xRatio);
+        frame.setCenter(getCenter().x, getCenter().y - getHeight()/2 + 26 * xRatio);
 
         SpriteBatch batch = screen.batch;
         batch.begin();
@@ -97,6 +93,7 @@ public class PanelButton extends TextButton {
 
     public void handleClick() {
         StatsBuffer.apply_LevelUp(type, quality);
+        screen.game.setPreviousScreen();
     }
 
     public void addClickListener() {
@@ -105,7 +102,6 @@ public class PanelButton extends TextButton {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 handleClick();
-                screen.game.setPreviousScreen();
             }
 
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
@@ -121,16 +117,15 @@ public class PanelButton extends TextButton {
         });
     }
     public void adjustSize() {
-        float xRatio = Gdx.graphics.getWidth() / 1920f;
-        float yRatio = Gdx.graphics.getHeight() / 1080f;
 
         TextButton.TextButtonStyle style = this.style;
         TextButton.TextButtonStyle newStyle = new TextButton.TextButtonStyle();
         newStyle.up = new TextureRegionDrawable(((TextureRegionDrawable) style.up).getRegion());
-        newStyle.font = skin.getFont("SimpleFont26");
+        newStyle.font = this.style.font;
+        newStyle.fontColor = this.style.fontColor;
 
         float WIDTH = xRatio * 399;
-        float HEIGHT = yRatio * 692;
+        float HEIGHT = xRatio * 692;
 
         newStyle.up.setMinWidth(WIDTH);
         newStyle.up.setMinHeight(HEIGHT);
@@ -141,6 +136,7 @@ public class PanelButton extends TextButton {
         getLabelCell().pad(15 * xRatio);
 
         setStyle(newStyle);
+        this.style = newStyle;
     }
 
     public void updateFontColor() {
@@ -152,10 +148,9 @@ public class PanelButton extends TextButton {
         } else {
             updatedStyle.fontColor = skin.getColor("White");
         }
-        updatedStyle.up.setMinWidth(getWidth());
-        updatedStyle.up.setMinHeight(getHeight());
         setStyle(updatedStyle);
         this.style = updatedStyle;
+        adjustSize();
     }
 
     public Vector2 getCenter() {

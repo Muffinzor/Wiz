@@ -61,7 +61,6 @@ public class MainMenuScreen extends BaseScreen {
 
     @Override
     public void hide() {
-        removeInputs();
         MusicPlayer.getMusicPlayer().stopMusic();
     }
 
@@ -77,7 +76,7 @@ public class MainMenuScreen extends BaseScreen {
 
     @Override
     public void dispose() {
-        removeInputs();
+
         batch.dispose();
     }
 

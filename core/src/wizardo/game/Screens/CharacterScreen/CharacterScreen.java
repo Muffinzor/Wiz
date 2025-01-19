@@ -3,7 +3,6 @@ package wizardo.game.Screens.CharacterScreen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -93,17 +92,19 @@ public class CharacterScreen extends BaseScreen {
         mastery_table.resize();
         mastery_table.updateChanges();
         mastery_table.updateCheckBoxes();
-        mastery_table.updateSelectedButton();
 
         equippedSpells_table.resize();
         knownSpells_table.resize();
 
-        activeTable = mastery_table;
+        selectedButton = equippedSpells_table.buttonsMatrix[0][0];
+        equippedSpells_table.x_pos = 0;
+        equippedSpells_table.y_pos = 0;
+        equippedSpells_table.updateSelectedButton();
 
-        setInputs();
+        activeTable = equippedSpells_table;
 
         stats_Table.createNewPanel();
-
+        stage.setDebugAll(true);
     }
 
     @Override
@@ -114,6 +115,7 @@ public class CharacterScreen extends BaseScreen {
         batch.begin();
         background.draw(batch);
         batch.end();
+
 
         stage.act(delta);
         stage.draw();
@@ -168,26 +170,45 @@ public class CharacterScreen extends BaseScreen {
 
 
     public void drawSelectedButton() {
-        Sprite frame = getSprite();
-        frame.set(CharacterScreenResources.selected_button_anim.getKeyFrame(stateTime, true));
+        if(selectedButton != null) {
+            Sprite frame = getSprite();
+            frame.set(CharacterScreenResources.selected_button_anim.getKeyFrame(stateTime, true));
 
-        Vector2 buttonLocalPos = new Vector2(selectedButton.getX(), selectedButton.getY());
+            float x = selectedButton.getX();
+            float y = selectedButton.getY();
 
-        Vector2 tableLocalPos = new Vector2(selectedButton.getParent().getX(), selectedButton.getParent().getY());
+            if (selectedButton.getParent() != null) {
+                x += selectedButton.getParent().getX();
+                y += selectedButton.getParent().getY();
 
-        float screenButton_X = tableLocalPos.x + buttonLocalPos.x;
-        float screenButton_Y = tableLocalPos.y + buttonLocalPos.y;
+                if (selectedButton.getParent().getParent() != null) {
+                    x += selectedButton.getParent().getParent().getX();
+                    y += selectedButton.getParent().getParent().getY();
 
-        screenButton_X += selectedButton.getWidth()/2;
-        screenButton_Y += selectedButton.getHeight()/2;
+                    if (selectedButton.getParent().getParent().getParent() != null) {
+                        x += selectedButton.getParent().getParent().getParent().getX();
+                        y += selectedButton.getParent().getParent().getParent().getY();
 
-        frame.setScale(Gdx.graphics.getWidth()/1920f);
-        frame.setCenter(screenButton_X, screenButton_Y);
+                        if (selectedButton.getParent().getParent().getParent().getParent() != null) {
+                            x += selectedButton.getParent().getParent().getParent().getParent().getX();
+                            y += selectedButton.getParent().getParent().getParent().getParent().getY();
+                        }
+                    }
+                }
+            }
 
 
-        batch.begin();
-        frame.draw(batch);
-        batch.end();
+
+            x += selectedButton.getWidth() / 2;
+            y += selectedButton.getHeight() / 2;
+
+            frame.setScale(xRatio);
+            frame.setCenter(x, y);
+
+            batch.begin();
+            frame.draw(batch);
+            batch.end();
+        }
     }
 
     public void drawSelectedSpell() {
@@ -195,7 +216,7 @@ public class CharacterScreen extends BaseScreen {
             return; // Skip drawing if the button or its parent is null
         }
 
-        selected_rotation += 3f;
+        selected_rotation += 2f;
         if(selected_growing) {
             selected_scale += 0.0025f;
             if(selected_scale > 1) {

@@ -37,7 +37,7 @@ public class Frozenorb_Spell extends Spell {
 
         setup();
 
-        autoAimCheck();
+        completeAutoAimCheck();
 
         if(targetPosition == null) {
             return;

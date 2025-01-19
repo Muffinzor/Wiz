@@ -17,7 +17,6 @@ public class ControllerListener_LEVELUP extends ControllerAdapter {
 
     @Override
     public boolean axisMoved(Controller controller, int axisIndex, float value) {
-
         if(Math.abs(value) < 0.5f) {
             value = 0;
         } else if (!controllerActive) {
@@ -25,18 +24,18 @@ public class ControllerListener_LEVELUP extends ControllerAdapter {
             screen.hideCursor();
         }
 
-        if (axisIndex == 1) {
+        if (axisIndex == 0) {
 
             if (value > 0.5f && screen.globalCD <= 0) {
 
                 screen.globalCD = 0.3f;
-                screen.menuTable.navigateUp();
+                screen.table.navigateRight();
                 return true;
 
             } else if (value < -0.5f && screen.globalCD <= 0) {
 
                 screen.globalCD = 0.3f;
-                screen.menuTable.navigateDown();
+                screen.table.navigateLeft();
                 return true;
 
             }
@@ -46,21 +45,24 @@ public class ControllerListener_LEVELUP extends ControllerAdapter {
 
     @Override
     public boolean buttonDown(Controller controller, int buttonIndex) {
+        System.out.println("LEVEL SCREEN : Button " + buttonIndex + " pressed");
         screen.globalCD = 0.3f;
 
         switch (buttonIndex) {
-            case 11: //D-pad DOWN
-                screen.menuTable.navigateDown();
+            case 13: //D-pad LEFT
+                screen.table.navigateLeft();
                 return true;
-            case 12: //D-pad UP
-                screen.menuTable.navigateUp();
+            case 14: //D-pad RIGHT
+                screen.table.navigateRight();
                 return true;
         }
 
         if (buttonIndex == 0) {
-            screen.menuTable.pressSelectedButton();
+            screen.table.pressSelectedButton();
+            //screen.game.setPreviousScreen();
             return true;
         }
+
         return false;
     }
 

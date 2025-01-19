@@ -31,7 +31,6 @@ public class EscapeScreen extends BaseScreen {
 
     @Override
     public void show() {
-        super.show();
         paused = true;
     }
 
@@ -42,12 +41,12 @@ public class EscapeScreen extends BaseScreen {
 
     @Override
     public void resume() {
-        setInputs();
+
     }
 
     @Override
     public void dispose() {
-        removeInputs();
+
     }
 
     @Override

@@ -86,6 +86,8 @@ public abstract class BaseScreen implements Screen {
     protected String cursorTexturePath;
 
     public BaseScreen(Wizardo game) {
+        xRatio = Gdx.graphics.getWidth()/1920f;
+        yRatio = Gdx.graphics.getHeight()/1080f;
 
         this.game = game;
         mainCamera = game.mainCamera;
@@ -116,14 +118,6 @@ public abstract class BaseScreen implements Screen {
         uiCamera.viewportHeight = height;
         uiCamera.update();
         uiCamera.setToOrtho(false, width, height);
-    }
-
-    public void removeInputs() {
-        if(controllerAdapter != null) {
-            for (Controller controller : Controllers.getControllers()) {
-                controller.removeListener(controllerAdapter);
-            }
-        }
     }
 
 
@@ -168,7 +162,6 @@ public abstract class BaseScreen implements Screen {
 
     @Override
     public void show() {
-        setInputs();
         setCursorTexture();
         if(controllerActive) {
             hideCursor();
@@ -182,7 +175,7 @@ public abstract class BaseScreen implements Screen {
 
     @Override
     public void hide() {
-        removeInputs();
+
     }
 
     /**
@@ -237,15 +230,22 @@ public abstract class BaseScreen implements Screen {
         }
 
         if(this instanceof Cheat_Screen) {
-            inputProcessor = new KeyboardMouseListener_CHEATMENU( (Cheat_Screen) this);
+            inputProcessor = new KeyboardMouseListener_CHEATMENU(this);
             controllerAdapter = new ControllerListener_TABLEMENU(this);
         }
 
         for (Controller controller : Controllers.getControllers()) {
             controller.addListener(controllerAdapter);
+            break;
         }
 
         inputMultiplexer.addProcessor(inputProcessor);
+    }
+
+    public void removeInputs() {
+        for (Controller controller : Controllers.getControllers()) {
+            controller.removeListener(controllerAdapter);
+        }
     }
 
     public Sprite getSprite() {

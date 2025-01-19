@@ -15,10 +15,11 @@ public class DesktopLauncher {
 			config.setTitle("Wizardo");
 
 			if(isSteamDeck()) {
-				config.setFullscreenMode(Lwjgl3ApplicationConfiguration.getDisplayMode());
+				//config.setFullscreenMode(Lwjgl3ApplicationConfiguration.getDisplayMode());
+				config.setWindowedMode(1280, 800);
 			} else {
-				config.setFullscreenMode(Lwjgl3ApplicationConfiguration.getDisplayMode());
-				//config.setWindowedMode(1600, 900);
+				//config.setFullscreenMode(Lwjgl3ApplicationConfiguration.getDisplayMode());
+				config.setWindowedMode(1280, 800);
 			}
 
 			new Lwjgl3Application(new Wizardo(), config);

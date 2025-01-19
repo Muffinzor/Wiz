@@ -149,8 +149,6 @@ public class EscapeMenuTable extends MenuTable {
     }
 
     public void pressSelectedButton() {
-        table.clearChildren();
-        table = null;
         switch (selectedButtonIndex) {
             case 0 -> game.setPreviousScreen();
             case 1 -> System.out.println("Nope");

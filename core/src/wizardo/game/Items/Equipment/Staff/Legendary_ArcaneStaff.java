@@ -45,7 +45,6 @@ public class Legendary_ArcaneStaff extends Staff {
 
     public void castArcaneMissile(Monster monster) {
         if(Math.random() >= 0.8f) {
-            System.out.println("NEW MISSILE");
             ArcaneMissile_Spell missile = new ArcaneMissile_Spell();
             missile.spawnPosition = new Vector2(monster.body.getPosition());
             missile.targetPosition = SpellUtils.getRandomVectorInRadius(monster.body.getPosition(), 2);

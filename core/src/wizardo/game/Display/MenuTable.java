@@ -4,6 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import wizardo.game.Screens.CharacterScreen.EquipmentTable.MenuButton;
 import wizardo.game.Wizardo;
 
 import java.util.ArrayList;

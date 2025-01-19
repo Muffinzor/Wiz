@@ -32,7 +32,7 @@ public class ShopScreen extends BaseScreen {
     public ShopTable_Gear gearTable;
     public ShopTable_Scrolls scrollTable;
 
-    Button selectedButton;
+    public Button selectedButton;
     BattleScreen battle;
 
     public ShopScreen(Wizardo game, MapShop shop) {
@@ -46,6 +46,8 @@ public class ShopScreen extends BaseScreen {
 
         gearTable = new ShopTable_Gear(stage, shopSkin, game, this);
         scrollTable = new ShopTable_Scrolls(stage, shopSkin, game, this);
+        menuTable = scrollTable;
+        selectedButton = scrollTable.scrollButtons.getFirst();
     }
 
     @Override
@@ -93,24 +95,41 @@ public class ShopScreen extends BaseScreen {
     }
 
     public void drawSelectedButton() {
-        Sprite frame = getSprite();
-        frame.set(CharacterScreenResources.selected_button_anim.getKeyFrame(stateTime, true));
+        if(selectedButton != null) {
+            Sprite frame = getSprite();
+            frame.set(CharacterScreenResources.selected_button_anim.getKeyFrame(stateTime, true));
 
-        Vector2 buttonLocalPos = new Vector2(selectedButton.getX(), selectedButton.getY());
+            float x = selectedButton.getX();
+            float y = selectedButton.getY();
 
-        Vector2 tableLocalPos = new Vector2(selectedButton.getParent().getX(), selectedButton.getParent().getY());
+            x += selectedButton.getParent().getX();
+            y += selectedButton.getParent().getY();
 
-        float screenButton_X = tableLocalPos.x + buttonLocalPos.x;
-        float screenButton_Y = tableLocalPos.y + buttonLocalPos.y;
+            if (selectedButton.getParent().getParent() != null) {
+                x += selectedButton.getParent().getParent().getX();
+                y += selectedButton.getParent().getParent().getY();
 
-        screenButton_X += selectedButton.getWidth()/2;
-        screenButton_Y += selectedButton.getHeight()/2;
+                if (selectedButton.getParent().getParent().getParent() != null) {
+                    x += selectedButton.getParent().getParent().getParent().getX();
+                    y += selectedButton.getParent().getParent().getParent().getY();
 
-        frame.setScale(Gdx.graphics.getWidth()/1920f);
-        frame.setCenter(screenButton_X, screenButton_Y);
+                    if (selectedButton.getParent().getParent().getParent().getParent() != null) {
+                        x += selectedButton.getParent().getParent().getParent().getParent().getX();
+                        y += selectedButton.getParent().getParent().getParent().getParent().getY();
+                    }
+                }
 
-        batch.begin();
-        frame.draw(batch);
-        batch.end();
+            }
+
+            x += selectedButton.getWidth() / 2;
+            y += selectedButton.getHeight() / 2;
+
+            frame.setScale(xRatio);
+            frame.setCenter(x, y);
+
+            batch.begin();
+            frame.draw(batch);
+            batch.end();
+        }
     }
 }

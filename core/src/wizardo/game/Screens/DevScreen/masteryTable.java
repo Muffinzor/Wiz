@@ -39,6 +39,7 @@ public class masteryTable extends MenuTable {
         missilesButtons();
         beamButtons();
         riftsButtons();
+        reagentsButtons();
 
     }
 
@@ -341,6 +342,22 @@ public class masteryTable extends MenuTable {
         });
         table.add(MINUS);
         table.row();
+    }
+
+    public void reagentsButtons() {
+        Label label = new Label("", mainMenuSkin);
+        label.setText("Get Reagents");
+        table.add(label).padRight(5);
+        ImageButton PLUS = new ImageButton(mainMenuSkin);
+        PLUS.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                player.inventory.dual_reagents = 30;
+                player.inventory.triple_reagents = 30;
+            }
+        });
+        table.add(PLUS).padRight(5);
+
     }
 
 

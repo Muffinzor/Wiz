@@ -24,6 +24,9 @@ public class ShopTable_Scrolls extends MenuTable {
 
     ShopScreen screen;
 
+    public int x_pos = 0;
+    public int y_pos = 0;
+
     ArrayList<ShopButton_Scroll> scrollButtons;
     ArrayList<Label> spellPrices;
     ArrayList<Label> spellNames;
@@ -107,34 +110,55 @@ public class ShopTable_Scrolls extends MenuTable {
 
         container.pack();
 
-        container.setPosition(Gdx.graphics.getWidth()/2 - container.getWidth()/2, 270);
+        container.setPosition(Gdx.graphics.getWidth()/2 - container.getWidth()/2, 270 * yRatio);
 
         container.validate();
     }
 
+    public void updateButtons() {
+        screen.selectedButton = scrollButtons.get(x_pos);
+        for(ShopButton_Scroll button : scrollButtons) {
+            button.hovered = false;
+        }
+        scrollButtons.get(x_pos).hovered = true;
+    }
+
     @Override
     public void navigateDown() {
-
+        screen.menuTable = screen.gearTable;
+        screen.gearTable.x_pos = x_pos;
+        screen.gearTable.updateButtons();
     }
 
     @Override
     public void navigateUp() {
-
+        screen.menuTable = screen.gearTable;
+        screen.gearTable.x_pos = x_pos;
+        screen.gearTable.updateButtons();
     }
 
     @Override
     public void navigateLeft() {
-
+        x_pos--;
+        if(x_pos < 0) {
+            x_pos = 3;
+        }
+        updateButtons();
     }
 
     @Override
     public void navigateRight() {
-
+        x_pos++;
+        if(x_pos > 3) {
+            x_pos = 0;
+        }
+        updateButtons();
     }
 
     @Override
     public void pressSelectedButton() {
-
+        scrollButtons.get(x_pos).handleClick();
+        updateButtons();
     }
 
     @Override

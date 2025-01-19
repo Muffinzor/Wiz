@@ -29,6 +29,8 @@ public class DragonBreath_Spell extends Spell {
     @Override
     public void update(float delta) {
 
+        completeAutoAimCheck();
+
         if(player.inventory.equippedAmulet instanceof Epic_DragonbreathAmulet) {
             dualBreath();
         } else {

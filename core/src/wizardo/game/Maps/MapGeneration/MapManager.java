@@ -231,8 +231,8 @@ public class MapManager {
     private boolean canHaveShop(int x_position, int y_position) {
         boolean canHaveShop = true;
 
-        for (int dx = x_position -2; dx <= x_position + 2; dx++) {
-            for (int dy = y_position -2 ; dy <= y_position + 2; dy++) {
+        for (int dx = x_position -1; dx <= x_position + 1; dx++) {
+            for (int dy = y_position -1 ; dy <= y_position + 1; dy++) {
                 if (dx == 0 && dy == 0) {
                     continue;
                 }

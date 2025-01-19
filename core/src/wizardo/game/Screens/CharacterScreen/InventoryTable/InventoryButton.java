@@ -26,7 +26,7 @@ public class InventoryButton extends ImageButton implements MenuButton {
     boolean hovered;
 
     CharacterScreen screen;
-    Equipment piece;
+    public Equipment piece;
 
     Sprite sprite;
     Sprite spriteOver;
@@ -122,8 +122,12 @@ public class InventoryButton extends ImageButton implements MenuButton {
             screen.equipment_table.resize();
             screen.mastery_table.updateChanges();
             screen.equippedSpells_table.resize();
+            screen.equippedSpells_table.updateSpells();
             screen.knownSpells_table.resize();
+            screen.knownSpells_table.updateSpells();
             screen.stats_Table.createNewPanel();
+            screen.selectedButton = screen.inventory_table.buttonsMatrix[screen.inventory_table.x_pos][screen.inventory_table.y_pos];
+            screen.activePanel.dispose();
         }
     }
 

@@ -71,11 +71,12 @@ public class Wizardo extends Game {
 	 */
 	public void addNewScreen(BaseScreen newScreen) {
 		if (!screenStack.isEmpty()) {
-			screenStack.peek().removeInputs();
 			screenStack.peek().pause();
+			screenStack.peek().removeInputs();
 		}
 		screenStack.push(newScreen);
 		currentScreen = newScreen;
+		currentScreen.setInputs();
 		setScreen(newScreen);
 	}
 
@@ -85,10 +86,11 @@ public class Wizardo extends Game {
 	 */
 	public void skipToScreen(BaseScreen newScreen) {
 		if (!screenStack.isEmpty()) {
+			screenStack.peek().removeInputs();
 			screenStack.pop().dispose();
 		}
-		currentScreen.removeInputs();
 		currentScreen = newScreen;
+		currentScreen.setInputs();
 		screenStack.push(newScreen);
 		setScreen(newScreen);
 	}
@@ -99,12 +101,13 @@ public class Wizardo extends Game {
 	 */
 	public void freshScreen(BaseScreen newScreen) {
 		for(BaseScreen screen : screenStack) {
+			screenStack.peek().removeInputs();
 			screen.dispose();
 		}
 
 		screenStack.clear();
-		currentScreen.removeInputs();
 		currentScreen = newScreen;
+		currentScreen.setInputs();
 		screenStack.push(newScreen);
 		setScreen(newScreen);
 	}
@@ -114,10 +117,14 @@ public class Wizardo extends Game {
 	 */
 	public void setPreviousScreen() {
 		if (!screenStack.isEmpty()) {
+
+			screenStack.peek().removeInputs();
 			screenStack.pop().dispose();
+
 			if (!screenStack.isEmpty()) {
 				BaseScreen previousScreen = screenStack.peek();
 				currentScreen = previousScreen;
+				currentScreen.setInputs();
 				setScreen(previousScreen);
 				previousScreen.resume();
 			}

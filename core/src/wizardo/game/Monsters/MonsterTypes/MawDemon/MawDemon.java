@@ -2,6 +2,11 @@ package wizardo.game.Monsters.MonsterTypes.MawDemon;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
+import wizardo.game.Items.Drop.DropUtils;
+import wizardo.game.Items.Drop.EquipmentDrop;
+import wizardo.game.Items.Drop.ScrollDrop;
+import wizardo.game.Items.Equipment.EquipmentUtils;
+import wizardo.game.Items.ItemUtils;
 import wizardo.game.Maps.ChestLoot;
 import wizardo.game.Monsters.MonsterActions.SelfFireExplosion.SelfFireExplosion;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
@@ -27,8 +32,8 @@ public class MawDemon extends Monster {
         super(screen, position, spawner);
 
         speed = 1f;
-        hp = 10000;
-        maxHP = 10000;
+        hp = 3200;
+        maxHP = 3200;
         xp = 400;
         elite = true;
 
@@ -111,7 +116,17 @@ public class MawDemon extends Monster {
         super.onDeath();
         MawDemon_DeathExplosion explosion = new MawDemon_DeathExplosion(this);
         screen.monsterSpellManager.toAdd(explosion);
+
+        if(Math.random() > 0.5f) {
+            EquipmentDrop drop = new EquipmentDrop(body.getPosition(), screen.dropManager.getEquipmentForDrop(ItemUtils.EquipSlot.ALL, ItemUtils.EquipQuality.LEGENDARY, null));
+            screen.dropManager.addDrop(drop);
+        } else {
+            EquipmentDrop drop = new EquipmentDrop(body.getPosition(), screen.dropManager.getEquipmentForDrop(ItemUtils.EquipSlot.ALL, ItemUtils.EquipQuality.EPIC, null));
+            screen.dropManager.addDrop(drop);
+        }
     }
+
+
 
     public void handleCollision(Player player) {
         dealDmg();

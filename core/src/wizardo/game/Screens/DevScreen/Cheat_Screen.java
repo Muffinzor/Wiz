@@ -10,14 +10,14 @@ import static wizardo.game.Resources.Skins.mainMenuSkin;
 
 public class Cheat_Screen extends BaseScreen {
 
-    masteryTable table;
+    //masteryTable table;
 
 
     public Cheat_Screen(Wizardo game) {
         super(game);
 
         stage = new Stage(new ScreenViewport(uiCamera));
-        table = new masteryTable(stage, mainMenuSkin, game);
+        menuTable = new masteryTable(stage, mainMenuSkin, game);
 
     }
 

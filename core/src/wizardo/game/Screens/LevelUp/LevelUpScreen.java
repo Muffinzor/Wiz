@@ -66,13 +66,11 @@ public class LevelUpScreen extends BaseScreen {
     public void resize(int width, int height) {
         super.resize(width, height);
 
-
         stage.getViewport().update(width, height, true);
         adjustFontSize();
         table.resize();
 
         batch.setProjectionMatrix(uiCamera.combined);
-        setInputs();
 
     }
 }

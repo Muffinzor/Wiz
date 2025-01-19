@@ -8,6 +8,7 @@ import wizardo.game.Spells.SpellUtils;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import static wizardo.game.GameSettings.autoAim_On;
 import static wizardo.game.Screens.BaseScreen.controllerActive;
 import static wizardo.game.Spells.SpellUtils.Spell_Element.FIRELITE;
 import static wizardo.game.Wizardo.player;
@@ -28,7 +29,7 @@ public class ForkedLightning_Spell extends Spell {
         dmg = 26;
 
         raycasted = true;
-        aimReach = 3.8f;
+        aimReach = 3.5f;
 
         cooldown = 0.1f;
 
@@ -89,10 +90,24 @@ public class ForkedLightning_Spell extends Spell {
             fromOtherSpell = true;
         }
 
-        if(!controllerActive) {
-            targetPosition = SpellUtils.getTargetVector(originBody.getPosition(), getTargetPosition(), 4);
+        if(!controllerActive && !fromOtherSpell) {
+
+            if(autoAim_On) {
+                targetPosition = player.pawn.getPosition();
+                targetRadius = 7;
+            } else {
+                targetPosition = SpellUtils.getTargetVector(originBody.getPosition(), getTargetPosition(), 4);
+            }
+
         } else {
-            targetPosition = getTargetPosition();
+
+            if(autoAim_On) {
+                targetPosition = player.pawn.getPosition();
+                targetRadius = 7;
+            } else {
+                targetPosition = getTargetPosition();
+            }
+
         }
 
         if(fromOtherSpell) {

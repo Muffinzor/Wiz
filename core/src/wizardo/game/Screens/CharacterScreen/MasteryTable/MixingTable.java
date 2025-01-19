@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.Align;
 import wizardo.game.Display.MenuTable;
 import wizardo.game.Items.Equipment.Ring.Epic_OculusRing;
 import wizardo.game.Screens.CharacterScreen.Anims.SpellCreation_Anim;
+import wizardo.game.Screens.CharacterScreen.EquipmentTable.GearPanel;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Wizardo;
@@ -196,7 +197,6 @@ public class MixingTable extends MenuTable {
                 player.inventory.triple_reagents--;
             }
         }
-        System.out.println("TRIPLE REAGENTS LEFT: " + player.inventory.triple_reagents);
 
         boolean equipped = player.spellbook.equippedSpells.contains(spell);
         masteryTable.screen.anims.add(new SpellCreation_Anim(spell.anim_element, masteryTable.screen, equipped));
@@ -301,7 +301,6 @@ public class MixingTable extends MenuTable {
         x_pos--;
         if(x_pos < 0 && player.spellbook.knownSpells.isEmpty()) {
             swapToEquippedTable();
-            return;
         } else if(x_pos < 0) {
             masteryTable.screen.activeTable = masteryTable.screen.knownSpells_table;
             if(player.spellbook.knownSpells.size() == 1) {
@@ -311,9 +310,9 @@ public class MixingTable extends MenuTable {
             }
             masteryTable.screen.knownSpells_table.y_pos = 0;
             masteryTable.screen.knownSpells_table.updateSelectedButton();
-            return;
+        } else {
+            updateSelectedButton();
         }
-        updateSelectedButton();
     }
 
     @Override
@@ -361,17 +360,29 @@ public class MixingTable extends MenuTable {
     }
 
     public void swapToEquippedTable() {
-        masteryTable.screen.activeTable = masteryTable.screen.equippedSpells_table;
-        if(player.spellbook.equippedSpells.size() == 1) {
-            masteryTable.screen.equippedSpells_table.x_position = 0;
-            masteryTable.screen.equippedSpells_table.y_position = 0;
-            masteryTable.screen.equippedSpells_table.updateSelectedButton();
-        }
+        if(!player.spellbook.equippedSpells.isEmpty()) {
+            masteryTable.screen.activeTable = masteryTable.screen.equippedSpells_table;
+            if (player.spellbook.equippedSpells.size() == 1) {
+                masteryTable.screen.equippedSpells_table.x_pos = 0;
+                masteryTable.screen.equippedSpells_table.y_pos = 0;
+                masteryTable.screen.equippedSpells_table.updateSelectedButton();
+            }
 
-        if(player.spellbook.equippedSpells.size() > 1) {
-            masteryTable.screen.equippedSpells_table.x_position = 1;
-            masteryTable.screen.equippedSpells_table.y_position = 0;
-            masteryTable.screen.equippedSpells_table.updateSelectedButton();
+            if (player.spellbook.equippedSpells.size() > 1) {
+                masteryTable.screen.equippedSpells_table.x_pos = 1;
+                masteryTable.screen.equippedSpells_table.y_pos = 0;
+                masteryTable.screen.equippedSpells_table.updateSelectedButton();
+            }
+        } else {
+            masteryTable.screen.activeTable = masteryTable.screen.inventory_table;
+            masteryTable.screen.selectedButton = masteryTable.screen.inventory_table.buttonsMatrix[4][0];
+            masteryTable.screen.inventory_table.x_pos = 4;
+            masteryTable.screen.inventory_table.y_pos = 0;
+            if(masteryTable.screen.inventory_table.buttonsMatrix[4][0].piece != null) {
+                masteryTable.screen.activePanel = new GearPanel(masteryTable.screen.panelStage,
+                        masteryTable.screen.inventory_table.buttonsMatrix[4][0].piece, false,
+                        masteryTable.screen.inventory_table.buttonsMatrix[4][0]);
+            }
         }
     }
 

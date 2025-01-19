@@ -18,8 +18,8 @@ public class TEST_RANGED extends MonsterRanged {
     public TEST_RANGED(BattleScreen screen, Vector2 position, MonsterSpawner spawner) {
         super(screen, position, spawner);
         speed = 25f/PPM;
-        hp = 60;
-        maxHP = 60;
+        hp = 50;
+        maxHP = 50;
         xp = 15;
 
         dmg = 15;

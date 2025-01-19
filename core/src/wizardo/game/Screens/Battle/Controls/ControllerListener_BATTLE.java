@@ -1,10 +1,12 @@
 package wizardo.game.Screens.Battle.Controls;
 
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.ControllerAdapter;
 import wizardo.game.Player.Pawn;
 import wizardo.game.Screens.Battle.BattleScreen;
 import wizardo.game.Screens.CharacterScreen.CharacterScreen;
+import wizardo.game.Screens.DevScreen.Cheat_Screen;
 import wizardo.game.Screens.EscapeMenu.EscapeScreen;
 
 import static wizardo.game.Screens.BaseScreen.controllerActive;
@@ -28,7 +30,6 @@ public class ControllerListener_BATTLE extends ControllerAdapter {
 
     @Override
     public boolean axisMoved(Controller controller, int axisIndex, float value) {
-
         if(!controllerActive && value > 0.1f) {
             controllerActive = true;
             screen.hideCursor();
@@ -41,7 +42,6 @@ public class ControllerListener_BATTLE extends ControllerAdapter {
                 }
             }
             case 2, 3 -> {
-
 
                 if(axisIndex == 2) {
                     last_x_value = Math.abs(value);
@@ -65,10 +65,10 @@ public class ControllerListener_BATTLE extends ControllerAdapter {
             pawn.moveY(value);
         } else if (axisIndex == 2) {
             if(magnitude > 0.5f)
-            pawn.aimX(value);
+                pawn.aimX(value);
         } else if (axisIndex == 3) {
             if(magnitude > 0.5f)
-            pawn.aimY(-value);
+                pawn.aimY(-value);
         }
 
         // Left joystick: Axis 0 = left/right, Axis 1 = up/down
@@ -91,7 +91,20 @@ public class ControllerListener_BATTLE extends ControllerAdapter {
             case 3: // Y or Triangle
                 CharacterScreen char_screen = new CharacterScreen(screen.game);
                 screen.game.addNewScreen(char_screen);
+                return true;
+
+            case 9: // Left Bumper
+                Cheat_Screen cheats = new Cheat_Screen(screen.game);
+                screen.game.addNewScreen(cheats);
+                return true;
+
+            case 0: // A or X
+                if (player.nearbyTriggerObject != null) {
+                    player.nearbyTriggerObject.trigger();
+                }
         }
+
+
 
         if (buttonIndex == 0) {
             return true;

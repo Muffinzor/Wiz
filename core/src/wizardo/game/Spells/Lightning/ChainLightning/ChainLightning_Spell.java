@@ -8,6 +8,7 @@ import wizardo.game.Spells.SpellUtils;
 
 import java.util.ArrayList;
 
+import static wizardo.game.GameSettings.autoAim_On;
 import static wizardo.game.Screens.BaseScreen.controllerActive;
 import static wizardo.game.Wizardo.player;
 
@@ -55,7 +56,6 @@ public class ChainLightning_Spell extends Spell {
         }
 
         if(delta > 0) {
-
 
             Vector2 center = checkAutoAim();
             float radius = checkRadius();
@@ -168,7 +168,7 @@ public class ChainLightning_Spell extends Spell {
     }
 
     public Vector2 checkAutoAim() {
-        if(player.inventory.equippedHat instanceof Legendary_SentientHat) {
+        if(player.inventory.equippedHat instanceof Legendary_SentientHat || autoAim_On) {
             return new Vector2(player.pawn.getPosition());
         } else {
             return findTarget();
@@ -176,7 +176,7 @@ public class ChainLightning_Spell extends Spell {
     }
 
     public float checkRadius() {
-        if(player.inventory.equippedHat instanceof Legendary_SentientHat) {
+        if(player.inventory.equippedHat instanceof Legendary_SentientHat || autoAim_On) {
             return 8;
         } else {
             return 5;

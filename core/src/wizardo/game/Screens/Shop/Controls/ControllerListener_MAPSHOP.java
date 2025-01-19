@@ -55,12 +55,20 @@ public class ControllerListener_MAPSHOP extends ControllerAdapter {
             case 12: //D-pad UP
                 screen.menuTable.navigateUp();
                 return true;
+            case 13: //D-pad LEFT
+                screen.menuTable.navigateLeft();
+                return true;
+            case 14: //D-pad RIGHT
+                screen.menuTable.navigateRight();
+                return true;
+            case 1: // B or Circle
+                screen.game.setPreviousScreen();
+                return true;
+            case 0: // A or X
+                screen.menuTable.pressSelectedButton();
+                return true;
         }
 
-        if (buttonIndex == 0) {
-            screen.menuTable.pressSelectedButton();
-            return true;
-        }
         return false;
     }
 

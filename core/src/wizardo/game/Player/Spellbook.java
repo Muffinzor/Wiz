@@ -4,6 +4,8 @@ import wizardo.game.Spells.Spell;
 
 import java.util.ArrayList;
 
+import static wizardo.game.Spells.SpellBank.Frost_Spells.frostspells;
+
 public class Spellbook {
 
     public ArrayList<Spell> equippedSpells;
@@ -72,6 +74,7 @@ public class Spellbook {
     public Spellbook() {
         equippedSpells = new ArrayList<>();
         knownSpells = new ArrayList<>();
+        equippedSpells.add(frostspells[0]);
     }
 
 }

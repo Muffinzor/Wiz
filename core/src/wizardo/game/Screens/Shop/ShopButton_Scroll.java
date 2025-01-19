@@ -34,7 +34,7 @@ import static wizardo.game.Wizardo.player;
 
 public class ShopButton_Scroll extends ImageButton implements MenuButton {
 
-    boolean hovered;
+    public boolean hovered;
 
     ShopScreen screen;
 

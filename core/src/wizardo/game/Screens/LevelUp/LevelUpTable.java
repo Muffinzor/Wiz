@@ -21,6 +21,8 @@ public class LevelUpTable extends MenuTable {
 
     LevelUpScreen screen;
 
+    int x_pos = 1;
+
 
     public LevelUpTable(LevelUpScreen screen, Stage stage, Skin skin, Wizardo game) {
         super(stage, skin, game);
@@ -31,6 +33,7 @@ public class LevelUpTable extends MenuTable {
 
         createTable();
         createPanels();
+        updatePanels();
     }
 
     public void draw(float delta) {
@@ -70,6 +73,14 @@ public class LevelUpTable extends MenuTable {
 
     }
 
+    public void updatePanels() {
+        for (int i = 0; i < player.levelup_choices; i++) {
+            buttonsMatrix[i].selected = (i == x_pos);
+            buttonsMatrix[i].adjustSize();
+            buttonsMatrix[i].updateFontColor();
+        }
+    }
+
     @Override
     public void navigateDown() {
 
@@ -82,17 +93,25 @@ public class LevelUpTable extends MenuTable {
 
     @Override
     public void navigateLeft() {
-
+        x_pos --;
+        if(x_pos < 0) {
+            x_pos = player.levelup_choices - 1;
+        }
+        updatePanels();
     }
 
     @Override
     public void navigateRight() {
-
+        x_pos ++;
+        if(x_pos > player.levelup_choices - 1) {
+            x_pos = 0;
+        }
+        updatePanels();
     }
 
     @Override
     public void pressSelectedButton() {
-
+        buttonsMatrix[x_pos].handleClick();
     }
 
     @Override

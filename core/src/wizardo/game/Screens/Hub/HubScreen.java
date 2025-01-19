@@ -71,7 +71,6 @@ public class HubScreen extends BaseScreen {
     @Override
     public void show() {
         paused = false;
-        setInputs();
         setCursorTexture();
     }
 
@@ -85,7 +84,6 @@ public class HubScreen extends BaseScreen {
     public void hide() {
         paused = true;
         playerPawn.stop();
-        removeInputs();
     }
 
     public void updateCamera() {
@@ -109,7 +107,6 @@ public class HubScreen extends BaseScreen {
 
     @Override
     public void dispose() {
-        removeInputs();
         rayHandler.dispose();
         batch.dispose();
         chunk.dispose();

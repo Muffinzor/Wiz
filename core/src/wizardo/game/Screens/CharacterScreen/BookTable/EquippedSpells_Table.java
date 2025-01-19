@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import wizardo.game.Display.MenuTable;
 import wizardo.game.Screens.CharacterScreen.CharacterScreen;
+import wizardo.game.Screens.CharacterScreen.EquipmentTable.GearPanel;
 import wizardo.game.Wizardo;
 
 import static wizardo.game.Screens.BaseScreen.xRatio;
@@ -24,8 +25,8 @@ public class EquippedSpells_Table extends MenuTable {
     Table secondRowTable;
 
     public SpellIcon_Button[][] buttonsMatrix = new SpellIcon_Button[2][2];
-    public int x_position = 0;
-    public int y_position = 0;
+    public int x_pos = 0;
+    public int y_pos = 0;
 
     public EquippedSpells_Table(Stage stage, Skin skin, Wizardo game, CharacterScreen screen) {
         super(stage, skin, game);
@@ -40,6 +41,7 @@ public class EquippedSpells_Table extends MenuTable {
         adjustButtons();
         adjustSize();
         stage.addActor(table);
+        stage.setDebugAll(true);
 
     }
 
@@ -75,6 +77,7 @@ public class EquippedSpells_Table extends MenuTable {
         buttons.clear();
         createButtons();
         adjustButtons();
+        secondRow = buttons.size() > 2;
     }
 
     public void createButtons() {
@@ -103,9 +106,9 @@ public class EquippedSpells_Table extends MenuTable {
     @Override
     public void navigateDown() {
         if(secondRow) {
-            y_position--;
-            if (y_position < 0) {
-                y_position = 0;
+            y_pos--;
+            if (y_pos < 0) {
+                y_pos = 0;
             }
             updateSelectedButton();
         }
@@ -114,39 +117,49 @@ public class EquippedSpells_Table extends MenuTable {
     @Override
     public void navigateUp() {
         if(secondRow) {
-            y_position++;
-            x_position = 0;
-            if (y_position > 1) {
-                y_position = 1;
+            y_pos++;
+            x_pos = 0;
+            if (y_pos > 1) {
+                y_pos = 1;
             }
-            screen.selectedButton = buttonsMatrix[x_position][y_position];
+            screen.selectedButton = buttonsMatrix[x_pos][y_pos];
         }
     }
 
     @Override
     public void navigateLeft() {
-        x_position --;
-        if(x_position < 0) {
-            x_position = 0;
+        x_pos--;
+        if(x_pos < 0) {
+            screen.activeTable = screen.inventory_table;
+            screen.inventory_table.x_pos = 4;
+            screen.inventory_table.y_pos = 0;
+            screen.selectedButton = screen.inventory_table.buttonsMatrix[4][0];
+            if(screen.inventory_table.buttonsMatrix[4][0].piece != null) {
+                screen.activePanel = new GearPanel(screen.panelStage,
+                        screen.inventory_table.buttonsMatrix[4][0].piece, false,
+                        screen.inventory_table.buttonsMatrix[4][0]);
+            }
+        } else {
+            updateSelectedButton();
         }
-        updateSelectedButton();
+
     }
 
     @Override
     public void navigateRight() {
-        x_position ++;
+        x_pos++;
         if(player.spellbook.knownSpells.isEmpty()) {
-            if (x_position >= player.spellbook.equippedSpells.size() || x_position > 1 || y_position == 1 && x_position == 1) {
+            if (x_pos >= player.spellbook.equippedSpells.size() || x_pos > 1 || y_pos == 1 && x_pos == 1) {
                 screen.activeTable = screen.mastery_table.mixingTable;
                 screen.mastery_table.mixingTable.x_pos = 0;
                 screen.mastery_table.mixingTable.updateSelectedButton();
                 return;
             }
-        } else if(x_position > 1 || (x_position > 0 && player.spellbook.equippedSpells.size() == 1) ||
-                (x_position > 0 && y_position > 0)) {
+        } else if(x_pos > 1 || (x_pos > 0 && player.spellbook.equippedSpells.size() == 1) ||
+                (x_pos > 0 && y_pos > 0)) {
             screen.activeTable = screen.knownSpells_table;
             screen.knownSpells_table.x_pos = 0;
-            screen.knownSpells_table.y_pos = y_position;
+            screen.knownSpells_table.y_pos = y_pos;
             if(player.spellbook.knownSpells.size() <= 2) {
                 screen.knownSpells_table.y_pos = 0;
             }
@@ -157,12 +170,12 @@ public class EquippedSpells_Table extends MenuTable {
     }
 
     public void updateSelectedButton() {
-        screen.selectedButton = buttonsMatrix[x_position][y_position];
+        screen.selectedButton = buttonsMatrix[x_pos][y_pos];
     }
 
     @Override
     public void pressSelectedButton() {
-        SpellIcon_Button button = buttonsMatrix[x_position][y_position];
+        SpellIcon_Button button = buttonsMatrix[x_pos][y_pos];
         button.handleClick();
     }
 

@@ -51,7 +51,6 @@ public class EnergyBeam_Spell extends Spell {
 
         if(delta > 0) {
 
-
             EnergyBeam_Projectile beam = new EnergyBeam_Projectile(getSpawnPosition(), targetPosition);
             beam.setBeam(this);
             beam.setElements(this);

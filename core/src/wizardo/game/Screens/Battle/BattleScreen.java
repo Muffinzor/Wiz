@@ -2,6 +2,8 @@ package wizardo.game.Screens.Battle;
 
 import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.controllers.Controller;
+import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -58,7 +60,7 @@ public class BattleScreen extends BaseScreen {
 
         mainCamera.viewportWidth = Gdx.graphics.getWidth();
         mainCamera.viewportHeight = Gdx.graphics.getHeight();
-        mainCamera.zoom = 1.2f;
+        mainCamera.zoom = 1f;
 
         createNewWorld();
         rayHandler = new RayHandler(world);
@@ -131,7 +133,6 @@ public class BattleScreen extends BaseScreen {
                 System.out.println("LIGHT POOL: " +  lightManager.pool.getPoolSize());
             }
         }
-
 
     }
 

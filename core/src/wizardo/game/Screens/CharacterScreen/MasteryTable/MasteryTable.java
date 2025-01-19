@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import wizardo.game.Display.MenuTable;
 import wizardo.game.Screens.CharacterScreen.CharacterScreen;
+import wizardo.game.Screens.CharacterScreen.EquipmentTable.GearPanel;
 import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Wizardo;
 
@@ -344,17 +345,29 @@ public class MasteryTable extends MenuTable {
     }
 
     public void swapToEquippedTable() {
-        screen.activeTable = screen.equippedSpells_table;
-        if(player.spellbook.equippedSpells.size() == 1) {
-            screen.equippedSpells_table.x_position = 0;
-            screen.equippedSpells_table.y_position = 0;
-            screen.equippedSpells_table.updateSelectedButton();
-        }
+        if(!player.spellbook.equippedSpells.isEmpty()) {
+            screen.activeTable = screen.equippedSpells_table;
+            if (player.spellbook.equippedSpells.size() == 1) {
+                screen.equippedSpells_table.x_pos = 0;
+                screen.equippedSpells_table.y_pos = 0;
+                screen.equippedSpells_table.updateSelectedButton();
+            }
 
-        if(player.spellbook.equippedSpells.size() > 1) {
-            screen.equippedSpells_table.x_position = 1;
-            screen.equippedSpells_table.y_position = 0;
-            screen.equippedSpells_table.updateSelectedButton();
+            if (player.spellbook.equippedSpells.size() > 1) {
+                screen.equippedSpells_table.x_pos = 1;
+                screen.equippedSpells_table.y_pos = 0;
+                screen.equippedSpells_table.updateSelectedButton();
+            }
+        } else {
+            screen.activeTable = screen.inventory_table;
+            screen.selectedButton = screen.inventory_table.buttonsMatrix[4][0];
+            screen.inventory_table.x_pos = 4;
+            screen.inventory_table.y_pos = 0;
+            if(screen.inventory_table.buttonsMatrix[4][0].piece != null) {
+                screen.activePanel = new GearPanel(screen.panelStage,
+                        screen.inventory_table.buttonsMatrix[4][0].piece, false,
+                        screen.inventory_table.buttonsMatrix[4][0]);
+            }
         }
     }
 

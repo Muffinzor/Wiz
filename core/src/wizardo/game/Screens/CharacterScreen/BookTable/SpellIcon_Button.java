@@ -317,6 +317,13 @@ public class SpellIcon_Button extends ImageButton {
             screen.equippedSpells_table.updateSpells();
             screen.selectedSpell_Button = null;
 
+            if(!selected_is_equipped) {
+                screen.selectedButton = screen.equippedSpells_table.buttonsMatrix[screen.equippedSpells_table.x_pos][screen.equippedSpells_table.y_pos];
+                screen.activeTable = screen.equippedSpells_table;
+            } else {
+                screen.selectedButton = screen.knownSpells_table.buttonsMatrix[screen.knownSpells_table.x_pos][screen.knownSpells_table.y_pos];
+                screen.activeTable = screen.knownSpells_table;
+            }
             return;
         }
 
@@ -338,6 +345,13 @@ public class SpellIcon_Button extends ImageButton {
             screen.equippedSpells_table.updateSpells();
             screen.selectedSpell_Button = null;
             screen.mastery_table.mixingTable.updateButtons();
+            if(!selected_is_equipped) {
+                screen.selectedButton = screen.equippedSpells_table.buttonsMatrix[screen.equippedSpells_table.x_pos][screen.equippedSpells_table.y_pos];
+                screen.activeTable = screen.equippedSpells_table;
+            } else {
+                screen.selectedButton = screen.knownSpells_table.buttonsMatrix[screen.knownSpells_table.x_pos][screen.knownSpells_table.y_pos];
+                screen.activeTable = screen.knownSpells_table;
+            }
         } else {
             screen.selectedSpell_Button = this;
         }

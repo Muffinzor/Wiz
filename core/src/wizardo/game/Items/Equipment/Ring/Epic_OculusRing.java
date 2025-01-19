@@ -48,27 +48,29 @@ public class Epic_OculusRing extends Ring {
 
     public void picKElements() {
         element1 = SpellUtils.getRandomClassicElement();
-        element2 = SpellUtils.getRandomClassicElement();
+        while(element2 == null || element2 == element1) {
+            element2 = SpellUtils.getRandomClassicElement();
+        }
 
         if(MathUtils.randomBoolean()) {
-            mastery1 = SpellUtils.getRandomMastery(element1, 1, false);
+            mastery1 = SpellUtils.getRandomMastery(element1, 3, true);
         } else {
-            mastery1 = SpellUtils.getRandomMastery(element2, 1, false);
+            mastery1 = SpellUtils.getRandomMastery(element2, 3, true);
         }
 
         while(mastery2 == null || mastery2 == mastery1) {
             if (MathUtils.randomBoolean()) {
-                mastery2 = SpellUtils.getRandomMastery(element1, 2, false);
+                mastery2 = SpellUtils.getRandomMastery(element1, 3, true);
             } else {
-                mastery2 = SpellUtils.getRandomMastery(element2, 2, false);
+                mastery2 = SpellUtils.getRandomMastery(element2, 3, true);
             }
         }
 
         while(mastery3 == null || mastery3 == mastery1 || mastery3 == mastery2) {
             if (MathUtils.randomBoolean()) {
-                mastery3 = SpellUtils.getRandomMastery(element1, 3, false);
+                mastery3 = SpellUtils.getRandomMastery(element1, 3, true);
             } else {
-                mastery3 = SpellUtils.getRandomMastery(element2, 3, false);
+                mastery3 = SpellUtils.getRandomMastery(element2, 3, true);
             }
         }
     }
