@@ -98,6 +98,10 @@ public class ControllerListener_BATTLE extends ControllerAdapter {
                 screen.game.addNewScreen(cheats);
                 return true;
 
+            case 10: // Right Bumper
+                screen.dropManager.attractGold();
+                return true;
+
             case 0: // A or X
                 if (player.nearbyTriggerObject != null) {
                     player.nearbyTriggerObject.trigger();

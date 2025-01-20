@@ -28,7 +28,6 @@ import static wizardo.game.Wizardo.player;
 
 public class CharacterScreen extends BaseScreen {
 
-    float stateTime;
     public ArrayList<Screen_Anim> anims;
 
     public MasteryTable mastery_table;
@@ -39,7 +38,6 @@ public class CharacterScreen extends BaseScreen {
     public StatsTable stats_Table;
     public Equipment selectedEquipmentPiece;
 
-    public Button selectedButton;
     public MenuTable activeTable;
     public GearPanel activePanel;
     public Stage panelStage;
@@ -104,7 +102,7 @@ public class CharacterScreen extends BaseScreen {
         activeTable = equippedSpells_table;
 
         stats_Table.createNewPanel();
-        stage.setDebugAll(true);
+
     }
 
     @Override
@@ -165,49 +163,6 @@ public class CharacterScreen extends BaseScreen {
         setCursorTexture();
         if(controllerActive) {
             hideCursor();
-        }
-    }
-
-
-    public void drawSelectedButton() {
-        if(selectedButton != null) {
-            Sprite frame = getSprite();
-            frame.set(CharacterScreenResources.selected_button_anim.getKeyFrame(stateTime, true));
-
-            float x = selectedButton.getX();
-            float y = selectedButton.getY();
-
-            if (selectedButton.getParent() != null) {
-                x += selectedButton.getParent().getX();
-                y += selectedButton.getParent().getY();
-
-                if (selectedButton.getParent().getParent() != null) {
-                    x += selectedButton.getParent().getParent().getX();
-                    y += selectedButton.getParent().getParent().getY();
-
-                    if (selectedButton.getParent().getParent().getParent() != null) {
-                        x += selectedButton.getParent().getParent().getParent().getX();
-                        y += selectedButton.getParent().getParent().getParent().getY();
-
-                        if (selectedButton.getParent().getParent().getParent().getParent() != null) {
-                            x += selectedButton.getParent().getParent().getParent().getParent().getX();
-                            y += selectedButton.getParent().getParent().getParent().getParent().getY();
-                        }
-                    }
-                }
-            }
-
-
-
-            x += selectedButton.getWidth() / 2;
-            y += selectedButton.getHeight() / 2;
-
-            frame.setScale(xRatio);
-            frame.setCenter(x, y);
-
-            batch.begin();
-            frame.draw(batch);
-            batch.end();
         }
     }
 

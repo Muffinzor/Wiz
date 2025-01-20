@@ -39,7 +39,6 @@ public class BattleScreen extends BaseScreen {
 
     FPSLogger logger = new FPSLogger();
 
-    public float stateTime;
     Sprite controllerTargetSprite;
 
     public Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();

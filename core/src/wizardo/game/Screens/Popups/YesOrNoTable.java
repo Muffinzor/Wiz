@@ -20,6 +20,9 @@ public class YesOrNoTable extends MenuTable {
     Container<Table> container;
     String message;
 
+    public int x_pos = 0;
+    public int y_pos;
+
     public YesOrNoTable(Stage stage, Skin mainMenuSkin, Wizardo game, String message) {
         super(stage, mainMenuSkin, game);
         this.message = message;
@@ -31,7 +34,6 @@ public class YesOrNoTable extends MenuTable {
         container.setSize(sprite.getWidth(), sprite.getHeight());
 
         container.align(Align.center);
-        container.setDebug(true);
 
         container.setActor(table);
         container.setBackground(background);
@@ -63,6 +65,8 @@ public class YesOrNoTable extends MenuTable {
             }
         });
 
+        buttons.add(YesButton);
+
         ImageButton CancelButton = new ImageButton(skin, "RedCancel");
         table.add(CancelButton);
 
@@ -73,6 +77,8 @@ public class YesOrNoTable extends MenuTable {
                 game.setPreviousScreen();
             }
         });
+
+        buttons.add(CancelButton);
     }
 
     @Override
@@ -85,19 +91,39 @@ public class YesOrNoTable extends MenuTable {
 
     }
 
+    public void updateSelectedButton() {
+        game.currentScreen.selectedButton = buttons.get(x_pos);
+
+    }
+
     @Override
     public void navigateLeft() {
-
+        x_pos --;
+        if(x_pos < 0) {
+            x_pos = 1;
+        }
+        updateSelectedButton();
     }
 
     @Override
     public void navigateRight() {
-
+        x_pos ++;
+        if(x_pos > 1) {
+            x_pos = 0;
+        }
+        updateSelectedButton();
     }
 
     @Override
     public void pressSelectedButton() {
-
+        if(x_pos == 0) {
+            game.getPreviousScreen().choiceConfirmed = true;
+            game.setPreviousScreen();
+        }
+        if(x_pos == 1) {
+            game.getPreviousScreen().choiceConfirmed = false;
+            game.setPreviousScreen();
+        }
     }
 
     @Override

@@ -12,20 +12,28 @@ import static wizardo.game.Resources.Skins.mainMenuSkin;
 public class AreYouSureScreen extends BaseScreen {
 
     public float globalCD = 0;
-    public YesOrNoTable menuTable;
+    YesOrNoTable table;
 
     public AreYouSureScreen(Wizardo game, String message) {
         super(game);
 
         stage = new Stage(new ScreenViewport(uiCamera));
         menuTable = new YesOrNoTable(stage, mainMenuSkin, game, message);
-
+        table = (YesOrNoTable) menuTable;
     }
 
     @Override
     public void render(float delta) {
+
+        table.updateSelectedButton();
+
+        stateTime += delta;
+
         stage.act();
         stage.draw();
+        if(controllerActive) {
+            drawSelectedButton();
+        }
     }
 
     @Override

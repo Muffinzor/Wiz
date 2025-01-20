@@ -18,11 +18,13 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import wizardo.game.Controls.ControllerListener_TABLEMENU;
 import wizardo.game.Display.DisplayManager;
 import wizardo.game.Display.MenuTable;
 import wizardo.game.Lighting.LightManager;
 import wizardo.game.Monsters.MonsterManager;
+import wizardo.game.Resources.ScreenResources.CharacterScreenResources;
 import wizardo.game.Screens.Battle.BattleScreen;
 import wizardo.game.Screens.Battle.Controls.ControllerListener_BATTLE;
 import wizardo.game.Screens.Battle.Controls.KeyboardMouseListener_BATTLE;
@@ -84,6 +86,10 @@ public abstract class BaseScreen implements Screen {
     public Stage stage;
     public MenuTable menuTable;
     protected String cursorTexturePath;
+
+    public Button selectedButton;
+    public float stateTime;
+
 
     public BaseScreen(Wizardo game) {
         xRatio = Gdx.graphics.getWidth()/1920f;
@@ -234,6 +240,12 @@ public abstract class BaseScreen implements Screen {
             controllerAdapter = new ControllerListener_TABLEMENU(this);
         }
 
+
+        if(this instanceof Cheat_Screen) {
+            inputProcessor = new KeyboardMouseListener_TABLEMENU(this);
+            controllerAdapter = new ControllerListener_TABLEMENU(this);
+        }
+
         for (Controller controller : Controllers.getControllers()) {
             controller.addListener(controllerAdapter);
             break;
@@ -285,6 +297,48 @@ public abstract class BaseScreen implements Screen {
      */
     public void centerSort(Sprite frame, float y_pos) {
         displayManager.spriteRenderer.spritePositionMap.put(frame, y_pos);
+    }
+
+    public void drawSelectedButton() {
+        if(selectedButton != null) {
+            Sprite frame = getSprite();
+            frame.set(CharacterScreenResources.selected_button_anim.getKeyFrame(stateTime, true));
+
+            float x = selectedButton.getX();
+            float y = selectedButton.getY();
+
+            if (selectedButton.getParent() != null) {
+                x += selectedButton.getParent().getX();
+                y += selectedButton.getParent().getY();
+
+                if (selectedButton.getParent().getParent() != null) {
+                    x += selectedButton.getParent().getParent().getX();
+                    y += selectedButton.getParent().getParent().getY();
+
+                    if (selectedButton.getParent().getParent().getParent() != null) {
+                        x += selectedButton.getParent().getParent().getParent().getX();
+                        y += selectedButton.getParent().getParent().getParent().getY();
+
+                        if (selectedButton.getParent().getParent().getParent().getParent() != null) {
+                            x += selectedButton.getParent().getParent().getParent().getParent().getX();
+                            y += selectedButton.getParent().getParent().getParent().getParent().getY();
+                        }
+                    }
+                }
+            }
+
+
+
+            x += selectedButton.getWidth() / 2;
+            y += selectedButton.getHeight() / 2;
+
+            frame.setScale(xRatio);
+            frame.setCenter(x, y);
+
+            batch.begin();
+            frame.draw(batch);
+            batch.end();
+        }
     }
 
 

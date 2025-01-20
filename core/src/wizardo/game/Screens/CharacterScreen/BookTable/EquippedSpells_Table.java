@@ -41,7 +41,7 @@ public class EquippedSpells_Table extends MenuTable {
         adjustButtons();
         adjustSize();
         stage.addActor(table);
-        stage.setDebugAll(true);
+
 
     }
 

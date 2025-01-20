@@ -48,12 +48,23 @@ public class ControllerListener_TABLEMENU extends ControllerAdapter  {
         System.out.println("Button " + buttonIndex + " pressed");
         screen.globalCD = 0.3f;
 
+        if (!controllerActive) {
+            controllerActive = true;
+            screen.hideCursor();
+        }
+
         switch (buttonIndex) {
             case 11: //D-pad DOWN
                 screen.menuTable.navigateDown();
                 return true;
             case 12: //D-pad UP
                 screen.menuTable.navigateUp();
+                return true;
+            case 14: //D-pad DOWN
+                screen.menuTable.navigateRight();
+                return true;
+            case 13: //D-pad UP
+                screen.menuTable.navigateLeft();
                 return true;
             case 1: //B
                 screen.game.setPreviousScreen();

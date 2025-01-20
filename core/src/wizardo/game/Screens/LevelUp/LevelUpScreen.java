@@ -13,8 +13,6 @@ import wizardo.game.Wizardo;
 
 public class LevelUpScreen extends BaseScreen {
 
-    float stateTime;
-
     public Skin skin = Skins.levelUpSkin;
 
     public LevelUpTable table;
