@@ -3,6 +3,7 @@ package wizardo.game.Items.Equipment.Ring;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import wizardo.game.Items.ItemUtils;
+import wizardo.game.Spells.SpellUtils;
 
 public class Rare_BeamRing extends Ring{
 
@@ -14,6 +15,9 @@ public class Rare_BeamRing extends Ring{
         name = "Amplifying Halo";
         title = "Epic Ring";
         quality = ItemUtils.EquipQuality.RARE;
+
+        masteries.add(SpellUtils.Spell_Name.BEAM);
+        quantity_masteries.add(1);
 
     }
 

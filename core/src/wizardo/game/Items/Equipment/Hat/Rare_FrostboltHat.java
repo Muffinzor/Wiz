@@ -3,6 +3,7 @@ package wizardo.game.Items.Equipment.Hat;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import wizardo.game.Items.ItemUtils;
+import wizardo.game.Spells.SpellUtils;
 
 public class Rare_FrostboltHat extends Hat{
 
@@ -14,6 +15,9 @@ public class Rare_FrostboltHat extends Hat{
         name = "Sum's Hat";
         title = "Rare Hat";
         quality = ItemUtils.EquipQuality.RARE;
+
+        masteries.add(SpellUtils.Spell_Name.FROSTBOLT);
+        quantity_masteries.add(1);
 
     }
 

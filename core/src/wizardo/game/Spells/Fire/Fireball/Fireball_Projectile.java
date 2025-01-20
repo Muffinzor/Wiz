@@ -135,9 +135,9 @@ public class Fireball_Projectile extends Fireball_Spell {
     }
 
     public void picKAnim() {
-        lightAlpha = 0.8f;
-        if(effectRatio == 0.8f) {
-            lightAlpha = 0.72f;
+        lightAlpha = 0.82f;
+        if(effectRatio < 0.85f) {
+            lightAlpha = 0.65f;
         }
         switch(anim_element) {
             case FIRE -> {

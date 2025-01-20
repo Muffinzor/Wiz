@@ -28,10 +28,10 @@ public class ScrollDrop extends Drop {
     /**
      *
      * @param spawnPosition
-     * @param SpellType
-     * @param Element null if all accessible
+     * @param SpellType null if random
+     * @param Element null if random
      * @param tier 3 + recursive if all tier accessibles
-     * @param recursive true if all tiers under specified are accessible
+     * @param recursive true means all tiers under specified are accessible
      */
     public ScrollDrop(Vector2 spawnPosition, SpellUtils.Spell_Name SpellType, SpellUtils.Spell_Element Element, int tier, boolean recursive) {
         this.position = new Vector2(spawnPosition);

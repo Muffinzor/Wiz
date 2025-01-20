@@ -90,11 +90,11 @@ public class WarpAura extends Spell {
     public void adjustAlpha(int index) {
         float alpha = alphas.get(index);
         if(stateTimes.get(index) < anim.getAnimationDuration()/2) {
-            alpha += 0.01f;
+            alpha += 0.0075f;
             if(alpha > 0.33f) alpha = 0.33f;
             alphas.set(index, alpha);
         } else  {
-            alpha -= 0.01f;
+            alpha -= 0.0075f;
             if(alpha < 0) alpha = 0;
             alphas.set(index, alpha);
         }

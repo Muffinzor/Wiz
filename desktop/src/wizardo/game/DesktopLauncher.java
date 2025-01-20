@@ -2,6 +2,7 @@ package wizardo.game;
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
+import wizardo.game.Utils.ErrorLogger;
 import wizardo.game.Wizardo;
 
 import static wizardo.game.SettingsPref.loadVolume;
@@ -15,16 +16,16 @@ public class DesktopLauncher {
 			config.setTitle("Wizardo");
 
 			if(isSteamDeck()) {
-				//config.setFullscreenMode(Lwjgl3ApplicationConfiguration.getDisplayMode());
-				config.setWindowedMode(1280, 800);
+				config.setFullscreenMode(Lwjgl3ApplicationConfiguration.getDisplayMode());
+				//config.setWindowedMode(1280, 800);
 			} else {
-				//config.setFullscreenMode(Lwjgl3ApplicationConfiguration.getDisplayMode());
-				config.setWindowedMode(1280, 800);
+				config.setFullscreenMode(Lwjgl3ApplicationConfiguration.getDisplayMode());
+				//config.setWindowedMode(1600, 900);
 			}
 
 			new Lwjgl3Application(new Wizardo(), config);
 		} catch (Exception e) {
-			e.printStackTrace();
+			ErrorLogger.logError("Crash during runtime", e);
 		}
 
 	}

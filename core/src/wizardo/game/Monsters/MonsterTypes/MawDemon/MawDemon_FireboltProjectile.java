@@ -21,6 +21,7 @@ public class MawDemon_FireboltProjectile extends MawDemon_FireboltAttack{
 
     public MawDemon_FireboltProjectile(Monster monster) {
         super(monster);
+        isProjectile = true;
 
         speed = 5f;
     }

@@ -82,6 +82,7 @@ public class ChestLoot {
 
     }
     public void MetalChest() {
+        powerLoot();
         int loots = MathUtils.random(1,2);
         for (int i = 0; i < loots; i++) {
             drops.add(metalChestDropTable());
@@ -96,7 +97,8 @@ public class ChestLoot {
     }
 
     public void powerLoot() {
-        drops.add(new EquipmentDrop(chest.body.getPosition(), new Epic_DragonbreathAmulet()));
+        drops.add(new ReagentDrop(chest.body.getPosition(), 100));
+        drops.add(new ReagentDrop(chest.body.getPosition(), 0));
     }
 
     public Drop goldChestDropTable() {
@@ -260,10 +262,10 @@ public class ChestLoot {
             case 8,9,10,11 -> {
                 drop = new ScrollDrop(chest.body.getPosition(), null, null, 3, true);
             }
-            case 12,13,14,15,16,17,18,19,20 -> {
+            case 12,13,14,15,16,17,18,19 -> {
                 drop = new GoldDrop(chest.body.getPosition(), 2,4);
             }
-            case 21 -> {
+            case 20, 21 -> {
                 drop = new ReagentDrop(chest.body.getPosition(), 20);
             }
             case 22 -> {

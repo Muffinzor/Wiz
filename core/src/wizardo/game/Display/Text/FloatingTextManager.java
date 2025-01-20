@@ -90,7 +90,7 @@ public class FloatingTextManager {
         activeDmgTexts.add(text);
     }
     public void addBottomText(BottomText text) {
-        text.position = new Vector2(Gdx.graphics.getWidth()/2f - 150 * xRatio, 70 * yRatio);
+        text.position = new Vector2(Gdx.graphics.getWidth()/2f - 250 * xRatio, 85 * yRatio);
         bottomTextsQueue.add(text);
     }
     public void addGoldText(BottomText text) {

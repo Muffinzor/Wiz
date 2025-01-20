@@ -65,7 +65,7 @@ public class MonsterSpawner {
         updateTimers(delta);
 
         if (killResetTimer >= cycleDuration) {
-            monsterToughnessRatio = monsterToughnessRatio * 1.07f;
+            monsterToughnessRatio = monsterToughnessRatio * 1.075f;
             monsterDamageRatio = monsterDamageRatio * 1.03f;
             updateSpawnRatio();
             killsLastCycle = 0;
@@ -77,9 +77,6 @@ public class MonsterSpawner {
             directionTimer = 0;
         }
 
-        if(stateTime % 5 < delta) {
-
-        }
         spawnMeleeMonsters();
         spawnRangedMonsters();
         spawnPack();
@@ -101,7 +98,7 @@ public class MonsterSpawner {
 
 
     public void spawnDemon() {
-        if(demonTimer > 120f) {
+        if(demonTimer > 180f) {
             demonTimer = 0;
             Monster monster = new MawDemon(screen, null, this);
             spawnMonster(monster);
@@ -124,9 +121,9 @@ public class MonsterSpawner {
         }
     }
     public void spawnRangedMonsters() {
-        if(rangedSpawnTimer > 2.5f && stateTime > 0) {
+        if(rangedSpawnTimer > 3.2f && stateTime > 120) {
             rangedSpawnTimer = 0;
-            if(screen.monsterManager.getRangedMonstersCount() < 40) {
+            if(screen.monsterManager.getRangedMonstersCount() < 30) {
                 TEST_RANGED monster = new TEST_RANGED(screen, SpawnerUtils.getRandomRangeSpawnVector(), this);
                 spawnMonster(monster);
             }

@@ -92,6 +92,11 @@ public class BattleScreen extends BaseScreen {
     public void render(float delta) {
         stateTime += delta;
 
+
+        if(Math.random() > 0.95f) {
+            throw new RuntimeException("BattleScreen encountered a critical error and halted.");
+        }
+
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         if(paused) {
             delta = 0;

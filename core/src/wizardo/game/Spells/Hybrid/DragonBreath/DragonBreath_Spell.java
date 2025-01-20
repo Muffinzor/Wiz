@@ -18,7 +18,7 @@ public class DragonBreath_Spell extends Spell {
 
         name = "Dragonbreath";
 
-        dmg = 120;
+        dmg = 50;
 
         cooldown = 4f;
 

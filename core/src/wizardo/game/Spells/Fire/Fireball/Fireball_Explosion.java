@@ -107,7 +107,7 @@ public class Fireball_Explosion extends Fireball_Spell {
     public void createLight() {
         lightAlpha = 1;
         light = screen.lightManager.pool.getLight();
-        light.setLight(red, green, blue, lightAlpha, 250 * effectRatio, body.getPosition());
+        light.setLight(red, green, blue, lightAlpha * effectRatio, 250 * effectRatio, body.getPosition());
         light.toLightManager();
     }
 

@@ -117,11 +117,15 @@ public class MawDemon extends Monster {
         MawDemon_DeathExplosion explosion = new MawDemon_DeathExplosion(this);
         screen.monsterSpellManager.toAdd(explosion);
 
-        if(Math.random() > 0.5f) {
+        double roll = Math.random();
+        if(roll > 0.75f) {
             EquipmentDrop drop = new EquipmentDrop(body.getPosition(), screen.dropManager.getEquipmentForDrop(ItemUtils.EquipSlot.ALL, ItemUtils.EquipQuality.LEGENDARY, null));
             screen.dropManager.addDrop(drop);
-        } else {
+        } else if(roll > 0.5f){
             EquipmentDrop drop = new EquipmentDrop(body.getPosition(), screen.dropManager.getEquipmentForDrop(ItemUtils.EquipSlot.ALL, ItemUtils.EquipQuality.EPIC, null));
+            screen.dropManager.addDrop(drop);
+        } else {
+            ScrollDrop drop = new ScrollDrop(body.getPosition(), null, null, 3, true);
             screen.dropManager.addDrop(drop);
         }
     }

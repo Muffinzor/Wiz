@@ -1,12 +1,15 @@
 package wizardo.game.Items.Drop;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
+import wizardo.game.Display.Text.BottomText;
 import wizardo.game.Resources.EffectAnims.GearFlareAnims;
 
 import static wizardo.game.Resources.EffectAnims.GearFlareAnims.*;
+import static wizardo.game.Resources.Skins.inventorySkin;
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.player;
 
@@ -17,14 +20,14 @@ public class ReagentDrop extends Drop {
 
     /**
      * @param spawnPosition
-     * @param chance from 0 to 1, chance to be better reagent
+     * @param chance from 0 to 100, chance to be better reagent
      */
     public ReagentDrop(Vector2 spawnPosition, float chance) {
         this.position = new Vector2(spawnPosition);
         displayScale = 0.25f;
         lightRadius = 25f;
         sprite = new Sprite(new Texture("Items/Drops/Potion.png"));
-        triple = Math.random() > 1f - chance/100f;
+        triple = Math.random() >= 1f - chance/100f;
     }
 
     @Override
@@ -56,6 +59,15 @@ public class ReagentDrop extends Drop {
         } else {
             player.inventory.dual_reagents ++;
         }
+        String s = "Mixing Gem";
+        Color textColor = Color.TEAL;
+        if(triple) {
+            s = "Strong " + s;
+            textColor = Color.VIOLET;
+        }
+        BottomText text = new BottomText();
+        text.setAll(s, position, inventorySkin.getFont("Gear_Title"), textColor);
+        screen.displayManager.textManager.addBottomText(text);
     }
 
     public void drawFrame() {
