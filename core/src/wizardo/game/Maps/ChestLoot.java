@@ -46,8 +46,13 @@ public class ChestLoot {
     }
 
     public void GoldChest() {
-        Equipment legend = chest.screen.dropManager.getEquipmentForDrop(ALL, ItemUtils.EquipQuality.LEGENDARY, null);
-        drops.add(new EquipmentDrop(chest.body.getPosition(), legend));
+        Equipment drop;
+        if(Math.random() > 0.5f) {
+            drop = chest.screen.dropManager.getEquipmentForDrop(ALL, ItemUtils.EquipQuality.LEGENDARY, null);
+        } else {
+            drop = chest.screen.dropManager.getEquipmentForDrop(ALL, ItemUtils.EquipQuality.EPIC, null);
+        }
+        drops.add(new EquipmentDrop(chest.body.getPosition(), drop));
 
         int extraLoot = MathUtils.random(1,3);
         for (int i = 0; i < extraLoot; i++) {
@@ -56,8 +61,13 @@ public class ChestLoot {
 
     }
     public void StoneChest() {
-        Equipment epic = chest.screen.dropManager.getEquipmentForDrop(ALL, ItemUtils.EquipQuality.EPIC, null);
-        drops.add(new EquipmentDrop(chest.body.getPosition(), epic));
+        Equipment drop;
+        if(Math.random() > 0.25f) {
+            drop = chest.screen.dropManager.getEquipmentForDrop(ALL, ItemUtils.EquipQuality.EPIC, null);
+        } else {
+            drop = chest.screen.dropManager.getEquipmentForDrop(ALL, ItemUtils.EquipQuality.RARE, null);
+        }
+        drops.add(new EquipmentDrop(chest.body.getPosition(), drop));
 
         int extraLoot = MathUtils.random(0,3);
         for (int i = 0; i < extraLoot; i++) {
@@ -82,14 +92,12 @@ public class ChestLoot {
 
     }
     public void MetalChest() {
-        powerLoot();
         int loots = MathUtils.random(1,2);
         for (int i = 0; i < loots; i++) {
             drops.add(metalChestDropTable());
         }
     }
     public void WoodenChest() {
-        powerLoot();
         int loots = MathUtils.random(1,2);
         for (int i = 0; i < loots; i++) {
             drops.add(woodenChestDropTable());
@@ -105,7 +113,7 @@ public class ChestLoot {
         Drop drop = null;
         int roll = MathUtils.random(1,19);
         switch(roll) {
-            case 1,2 -> {
+            case 1 -> {
                 Equipment legend = chest.screen.dropManager.getEquipmentForDrop(ALL, ItemUtils.EquipQuality.LEGENDARY, null);
                 drop = new EquipmentDrop(chest.body.getPosition(), legend);
             }
@@ -126,7 +134,7 @@ public class ChestLoot {
             case 16,17 -> {
                 drop = new ReagentDrop(chest.body.getPosition(), 100);
             }
-            case 18,19 -> {
+            case 18,19,2 -> {
                 drop = new ReagentDrop(chest.body.getPosition(), 25);
             }
         }
@@ -134,7 +142,7 @@ public class ChestLoot {
     }
     public Drop stoneChestDropTable() {
         Drop drop = null;
-        int roll = MathUtils.random(1,19);
+        int roll = MathUtils.random(1,22);
         switch(roll) {
             case 1,2 -> {
                 Equipment legend = chest.screen.dropManager.getEquipmentForDrop(ALL, ItemUtils.EquipQuality.LEGENDARY, null);
@@ -154,10 +162,10 @@ public class ChestLoot {
             case 12,13,14,15 -> {
                 drop = new GoldDrop(chest.body.getPosition(), 5,6);
             }
-            case 16-> {
+            case 16, 17-> {
                 drop = new ReagentDrop(chest.body.getPosition(), 100);
             }
-            case 17,18,19 -> {
+            case 18,19, 20,21,22 -> {
                 drop = new ReagentDrop(chest.body.getPosition(), 25);
             }
         }
@@ -189,7 +197,7 @@ public class ChestLoot {
                 drop = new ReagentDrop(chest.body.getPosition(), 100);
             }
             case 17,18,22 -> {
-                drop = new ReagentDrop(chest.body.getPosition(), 20);
+                drop = new ReagentDrop(chest.body.getPosition(), 25);
             }
         }
         return drop;
@@ -222,14 +230,14 @@ public class ChestLoot {
             case 11,12,13,14,15,16 -> {
                 drop = new ScrollDrop(chest.body.getPosition(), null, null, 3, true);
             }
-            case 17,18,19,20,21,22,23,24,25,26,27 -> {
+            case 17,18,19,20,21,22,23,24,25 -> {
                 drop = new GoldDrop(chest.body.getPosition(), 3,4);
             }
-            case 28, 29 -> {
+            case 26, 27, 28, 29 -> {
                 drop = new ReagentDrop(chest.body.getPosition(), 20);
             }
             case 30 -> {
-                drop = new ReagentDrop(chest.body.getPosition(), 40);
+                drop = new ReagentDrop(chest.body.getPosition(), 60);
             }
         }
         return drop;
@@ -262,11 +270,11 @@ public class ChestLoot {
             case 8,9,10,11 -> {
                 drop = new ScrollDrop(chest.body.getPosition(), null, null, 3, true);
             }
-            case 12,13,14,15,16,17,18,19 -> {
+            case 12,13,14,15,16,17,18 -> {
                 drop = new GoldDrop(chest.body.getPosition(), 2,4);
             }
-            case 20, 21 -> {
-                drop = new ReagentDrop(chest.body.getPosition(), 20);
+            case 19, 20, 21 -> {
+                drop = new ReagentDrop(chest.body.getPosition(), 10);
             }
             case 22 -> {
                 drop = new ReagentDrop(chest.body.getPosition(), 40);

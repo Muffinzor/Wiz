@@ -140,7 +140,7 @@ public class MonsterSpawner {
                 randomizedDirection = SpellUtils.getRandomVectorInRadius(player.pawn.getPosition(), 1);
                 randomizedDirection.nor();
             }
-            randomizedDirection.scl(45);
+            randomizedDirection.scl(36);
             Vector2 centerpoint = player.pawn.getPosition().add(randomizedDirection);
 
             int count = (int) (8 * spawnRatio);
@@ -189,7 +189,7 @@ public class MonsterSpawner {
             }
 
             for (int i = 0; i < 8 * spawnRatio; i++) {
-                Vector2 position = SpellUtils.getClearRandomPositionCone(player.pawn.getPosition(), 34, 50, angle);
+                Vector2 position = SpellUtils.getClearRandomPositionCone(player.pawn.getPosition(), 34, 45, angle);
                 Monster monster = new TEST_MELEE(screen, position, this);
                 spawnMonster(monster);
             }
@@ -207,10 +207,10 @@ public class MonsterSpawner {
     public Vector2 getSpawnPosition() {
         Vector2 playerPosition = player.pawn.getPosition();
         if(direction == null) {
-            return SpellUtils.getClearRandomPositionRing(playerPosition, 32, 50);
+            return SpellUtils.getClearRandomPositionRing(playerPosition, 32, 45);
         } else {
             float angle = direction.angleDeg();
-            return SpellUtils.getClearRandomPositionCone(playerPosition, 32, 50, angle);
+            return SpellUtils.getClearRandomPositionCone(playerPosition, 32, 45, angle);
         }
     }
 

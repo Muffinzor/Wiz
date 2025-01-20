@@ -65,7 +65,7 @@ public class MovementManager {
 
     public void checkDistance() {
         float dst = monster.body.getPosition().dst(player.pawn.getPosition());
-        if(dst > 55) {
+        if(dst > 50) {
             monster.tooFar = true;
         }
     }
