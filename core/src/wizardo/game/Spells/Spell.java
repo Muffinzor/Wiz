@@ -12,9 +12,13 @@ import com.badlogic.gdx.physics.box2d.RayCastCallback;
 import wizardo.game.Account.Unlocked;
 import wizardo.game.Audio.Sounds.SoundPlayer;
 import wizardo.game.Display.Text.FloatingDamage;
+import wizardo.game.Items.Equipment.Amulet.Legendary_MarkAmulet;
 import wizardo.game.Items.Equipment.Amulet.Rare_EliteAmulet;
 import wizardo.game.Items.Equipment.Book.Epic_VogonBook;
+import wizardo.game.Items.Equipment.Book.Legendary_PulseBook;
+import wizardo.game.Items.Equipment.Hat.Epic_TeleportHat;
 import wizardo.game.Items.Equipment.Hat.Legendary_SentientHat;
+import wizardo.game.Items.Equipment.Ring.Epic_FrostRing;
 import wizardo.game.Items.Equipment.Staff.Legendary_ArcaneStaff;
 import wizardo.game.Items.Equipment.Staff.Legendary_FireStaff;
 import wizardo.game.Items.Equipment.Staff.Legendary_FrostStaff;
@@ -23,9 +27,14 @@ import wizardo.game.Maps.EnvironmentObject;
 import wizardo.game.Monsters.MonsterActions.MonsterSpell;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Screens.BaseScreen;
+import wizardo.game.Spells.Arcane.ArcaneMissiles.ArcaneMissile_Spell;
+import wizardo.game.Spells.Arcane.EnergyBeam.EnergyBeam_Spell;
+import wizardo.game.Spells.Frost.Icespear.Icespear_Spell;
+import wizardo.game.Spells.Hybrid.Laser.Laser_Spell;
 import wizardo.game.Spells.Lightning.ChainLightning.ChainLightning_Spell;
 import wizardo.game.Spells.SpellUtils.*;
 import wizardo.game.Spells.Unique.Brand.Brand_Explosion;
+import wizardo.game.Spells.Unique.TeleportMonster;
 import wizardo.game.Spells.Unique.ThundergodBolt.ThundergodBolt_Spell;
 
 import java.util.ArrayList;
@@ -525,18 +534,46 @@ public abstract class Spell implements Cloneable {
               if(anim_element == Spell_Element.LIGHTNING && !(this instanceof ThundergodBolt_Spell)) {
                   Legendary_LightningStaff.castThunderbolt(monster, this);
               }
-        }
+        } else
         if(player.inventory.equippedStaff instanceof Legendary_FireStaff) {
             if(anim_element == Spell_Element.FIRE && !(this instanceof Brand_Explosion)) {
                 Legendary_FireStaff staff = (Legendary_FireStaff) player.inventory.equippedStaff;
                 staff.castBrand(monster, this);
             }
-        }
+        } else
         if(player.inventory.equippedStaff instanceof Legendary_ArcaneStaff) {
             if(anim_element == Spell_Element.ARCANE && !arcaneCasted) {
                 Legendary_ArcaneStaff staff = (Legendary_ArcaneStaff) player.inventory.equippedStaff;
                 staff.castArcaneMissile(monster);
             }
+        }
+
+        if(player.inventory.equippedAmulet instanceof Legendary_MarkAmulet) {
+            if(this instanceof Icespear_Spell || this instanceof ArcaneMissile_Spell ||
+                    this instanceof Laser_Spell || this instanceof EnergyBeam_Spell) {
+                if(monster.marked) {
+                    Legendary_MarkAmulet ammy = (Legendary_MarkAmulet) player.inventory.equippedAmulet;
+                    ammy.detonateMonster(monster);
+                }
+            }
+        }
+
+        if(player.inventory.equippedRing instanceof Epic_FrostRing && anim_element.equals(Spell_Element.FROST)) {
+            if(Math.random() > 0.8f) {
+                monster.applyFreeze(2, 3.5f);
+            }
+        }
+
+        if(player.inventory.equippedHat instanceof Epic_TeleportHat && anim_element.equals(Spell_Element.ARCANE)) {
+            float procRate = Epic_TeleportHat.getProcTreshold(this);
+            if(!monster.elite && Math.random() >= procRate) {
+                TeleportMonster teleport = new TeleportMonster(monster);
+                screen.spellManager.add(teleport);
+            }
+        }
+
+        if(player.inventory.equippedBook instanceof Legendary_PulseBook book) {
+            book.createPulsar(monster, this);
         }
     }
     public float checkOtherModifiers(Monster monster, float dmg) {

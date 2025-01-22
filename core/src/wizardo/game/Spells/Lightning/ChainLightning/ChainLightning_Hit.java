@@ -28,6 +28,7 @@ import static wizardo.game.Wizardo.*;
 public class ChainLightning_Hit extends ChainLightning_Spell {
 
     boolean alreadyChained;
+    boolean hasDealtDmg;
     Body body;
     public boolean forked;
     public float duration = 0.3f;
@@ -56,7 +57,6 @@ public class ChainLightning_Hit extends ChainLightning_Spell {
         if(!initialized) {
             initialized = true;
             pickAnim();
-
             if(nested_spell != null) {
                 nested_projectiles();
             }
@@ -64,11 +64,15 @@ public class ChainLightning_Hit extends ChainLightning_Spell {
             rifts(monsterTo);
             fireball(monsterTo);
             laserBody();
-            dealDmg(monsterTo);
             uniqueStaff();
         }
 
-        if(currentHits < maxHits && !alreadyChained && stateTime > 0.03f) {
+        if(stateTime > 0.1f && !hasDealtDmg && monsterTo.hp > 0) {
+            dealDmg(monsterTo);
+            hasDealtDmg = true;
+        }
+
+        if(currentHits < maxHits && !alreadyChained && stateTime > 0.15f) {
             alreadyChained = true;
             inRange = findMonstersInRange(monsterTo.body, radius);
 
@@ -94,34 +98,39 @@ public class ChainLightning_Hit extends ChainLightning_Spell {
     public void drawFrame(float delta) {
         frameCounter++;
 
-        Sprite frame = screen.getSprite();
+        if(!monsterTo.teleporting) {
+            if(monsterFrom != null && monsterFrom.teleporting) {
+                return;
+            }
+            Sprite frame = screen.getSprite();
 
-        Vector2 origin = new Vector2(originBody.getPosition().scl(PPM));
-        Vector2 target = new Vector2(monsterTo.body.getPosition().scl(PPM));
+            Vector2 origin = new Vector2(originBody.getPosition().scl(PPM));
+            Vector2 target = new Vector2(monsterTo.body.getPosition().scl(PPM));
 
-        Vector2 direction = target.sub(origin);
-        float distance = direction.len();
-        float angle = direction.angleDeg();
+            Vector2 direction = target.sub(origin);
+            float distance = direction.len();
+            float angle = direction.angleDeg();
 
-        if(frameCounter > 4 && delta > 0) {
-            createLights(direction, distance);
-            frameCounter = 0;
+            if (frameCounter > 4 && delta > 0) {
+                createLights(direction, distance);
+                frameCounter = 0;
+            }
+
+
+            if (distance > 150) {
+                frame.set(longAnim.getKeyFrame(stateTime, true));
+            } else {
+                frame.set(anim.getKeyFrame(stateTime, true));
+            }
+
+            frame.setSize(distance, 90);
+            frame.setOrigin(0, frame.getHeight() / 2f);
+            frame.setRotation(angle);
+            frame.flip(false, flipY);
+            frame.setPosition(originBody.getPosition().x * PPM, originBody.getPosition().y * PPM - frame.getHeight() / 2);
+
+            screen.addSortedSprite(frame);
         }
-
-
-        if(distance > 150) {
-            frame.set(longAnim.getKeyFrame(stateTime, true));
-        } else {
-            frame.set(anim.getKeyFrame(stateTime, true));
-        }
-
-        frame.setSize(distance, 90);
-        frame.setOrigin(0,frame.getHeight() / 2f);
-        frame.setRotation(angle);
-        frame.flip(false, flipY);
-        frame.setPosition(originBody.getPosition().x * PPM, originBody.getPosition().y * PPM - frame.getHeight() / 2);
-
-        screen.addSortedSprite(frame);
 
     }
 

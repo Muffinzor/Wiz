@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
-import wizardo.game.Items.Equipment.Amulet.Legendary_FirstHitAmulet;
+import wizardo.game.Items.Equipment.Amulet.Legendary_MarkAmulet;
 import wizardo.game.Items.Equipment.Amulet.Rare_IcespearAmulet;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
@@ -22,6 +22,7 @@ import wizardo.game.Spells.Lightning.ChargedBolts.ChargedBolts_Spell;
 import wizardo.game.Spells.Lightning.Thunderstorm.Thunderstorm_Hit;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
+import wizardo.game.Spells.Unique.StaticOrb.StaticOrb;
 import wizardo.game.Utils.BodyFactory;
 
 import java.util.ArrayList;
@@ -124,9 +125,6 @@ public class Icespear_Projectile extends Icespear_Spell {
         }
 
         dealDmg(monster);
-        if(player.inventory.equippedAmulet instanceof Legendary_FirstHitAmulet && collisions == 0) {
-            dealDmg(monster);
-        }
 
         if(scale > 0.5f) {
 
@@ -159,9 +157,15 @@ public class Icespear_Projectile extends Icespear_Spell {
             frostbolts();
             thunderspear();
 
-            if (Math.random() >= player.spellbook.icespearBonus / 100f) {
-                collisions++;
+            collisions++;
+
+            if(player.inventory.equippedAmulet instanceof Legendary_MarkAmulet && collisions < 5) {
+                double procChance = Math.pow(2, -(collisions-1));
+                if(Math.random() <= procChance ) {
+                    monster.marked = true;
+                }
             }
+
 
         }
     }

@@ -20,6 +20,7 @@ import wizardo.game.Monsters.MonsterMovement.MovementManager;
 import wizardo.game.Monsters.MonsterStateManager.StateManager;
 import wizardo.game.Monsters.MonsterUtils;
 import wizardo.game.Player.Player;
+import wizardo.game.Resources.SpellAnims.MarkAnims;
 import wizardo.game.Screens.Battle.BattleScreen;
 import wizardo.game.Screens.Battle.MonsterSpawner.MonsterSpawner;
 import wizardo.game.Spells.Unique.CorpseExplosion.CorpseExplosion;
@@ -88,6 +89,10 @@ public abstract class Monster {
     public float slowRatio = 1;
 
     public int flamejetStacks = 0;
+    public boolean marked;  // for legendary ammy
+    int markRotation;
+
+    public boolean teleporting;
 
     public static Sprite greenHP = new Sprite(new Texture("Monsters/hpbar.png"));
     public static Sprite redHP = new Sprite(new Texture("Monsters/redbar.png"));
@@ -103,9 +108,15 @@ public abstract class Monster {
         stateTime = 0;
         frameCounter = 0;
         directionVector = new Vector2();
+        markRotation = MathUtils.random(360);
     }
 
     public void update(float delta) {
+        if(tooFar) {
+            System.out.println("TOO FAR");
+            System.out.println(body.getPosition());
+            System.out.println(player.pawn.body.getPosition());
+        }
         if(!initialized) {
             initialize();
             initialized = true;
@@ -115,6 +126,7 @@ public abstract class Monster {
 
         timers(delta);
         drawFrame();
+        drawMark();
         drawHealthBar();
 
         if(spawned) {
@@ -235,6 +247,23 @@ public abstract class Monster {
         screen.addSortedSprite(frame);
     }
 
+    public void drawMark() {
+        if(marked) {
+            Sprite frame = screen.getSprite();
+            frame.set(MarkAnims.markAnim.getKeyFrame(stateTime, true));
+            if(heavy || elite) {
+                frame.setScale(1.4f);
+                frame.setCenter(body.getPosition().x * PPM, body.getPosition().y * PPM - 5);
+            } else {
+                frame.setCenter(body.getPosition().x * PPM, body.getPosition().y * PPM);
+            }
+            frame.rotate(markRotation);
+            markRotation++;
+            screen.centerSort(frame, body.getPosition().y * PPM - 5);
+            screen.addSortedSprite(frame);
+        }
+    }
+
     public void drawHealthBar() {
         if(monster_health_bars && hp < maxHP && !spaghettified) {
             float healthPercentage = hp / maxHP;
@@ -257,7 +286,7 @@ public abstract class Monster {
 
     public void drawDeathFrame(float delta) {
         if(delta > 0) {
-            alpha -= 0.0025f;
+            alpha -= 0.0075f;
             if(alpha < 0) {
                 alpha = 0;
             }

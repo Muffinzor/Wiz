@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import wizardo.game.Items.Equipment.Ring.Epic_FrostRing;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Resources.SpellAnims.FrozenorbAnims;
@@ -164,9 +165,16 @@ public class Frozenorb_Projectile extends Frozenorb_Spell {
                 frameCounter = 0;
                 for (Monster monster : screen.monsterManager.liveMonsters) {
                     if (monster.body.getPosition().dst(body.getPosition()) < radius) {
-                        monster.hp -= getDmg()/12f;
+                        float dmg = getDmg()/12f;
+                        dmg = getScaledDmg(dmg);
+                        monster.hp -= dmg;
                         if(anim_element == FROST) {
                             monster.applySlow(2, slowRatio - 0.025f * getLvl());
+                            if(player.inventory.equippedRing instanceof Epic_FrostRing) {
+                                if(Math.random() > 0.9f) {
+                                    monster.applyFreeze(1.5f, 3f);
+                                }
+                            }
                         }
                     }
                 }

@@ -27,6 +27,7 @@ import wizardo.game.Resources.ScreenResources.LevelUpResources;
 import wizardo.game.Resources.SpellAnims.*;
 import wizardo.game.Screens.BaseScreen;
 import wizardo.game.Screens.MainMenu.MainMenuScreen;
+import wizardo.game.Spells.Unique.StaticOrb.StaticOrb;
 import wizardo.game.Wizardo;
 
 import static wizardo.game.Spells.SpellBank.AllSpells.createAllSpells;
@@ -115,6 +116,9 @@ public class LoadingScreen extends BaseScreen {
         BlackHoleAnims.loadAtlas();
         LightningBoltAnims.loadAtlas();
         IceGustAnims.loadAtlas();
+        MarkAnims.loadAtlas();
+        TeleportAnims.loadAtlas();
+        StaticOrbAnims.loadAtlas();
 
         GeneralDecorResources.loadAtlas();
         DungeonDecorResources.loadAtlas();
@@ -163,6 +167,9 @@ public class LoadingScreen extends BaseScreen {
         BlackHoleAnims.loadAnimations();
         LightningBoltAnims.loadAnimations();
         IceGustAnims.loadAnimations();
+        MarkAnims.loadAnimations();
+        TeleportAnims.loadAnimations();
+        StaticOrbAnims.loadAnimations();
 
         GeneralDecorResources.loadAnimations();
         DungeonDecorResources.loadAnimations();

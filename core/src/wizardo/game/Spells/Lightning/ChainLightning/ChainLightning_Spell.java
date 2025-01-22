@@ -163,6 +163,9 @@ public class ChainLightning_Spell extends Spell {
     public int getDmg() {
         int dmg = this.dmg;
         dmg += 8 * getLvl();
+        if(arcaneMissile) {
+            dmg += 4 * player.spellbook.arcanemissile_lvl;
+        }
         dmg = (int) (dmg * (1 + player.spellbook.conductiveBonusDmg /100f));
         return dmg;
     }

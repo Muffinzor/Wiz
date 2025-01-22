@@ -5,7 +5,8 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
-import wizardo.game.Items.Equipment.Amulet.Legendary_FirstHitAmulet;
+import wizardo.game.Items.Equipment.Amulet.Legendary_MarkAmulet;
+import wizardo.game.Items.Equipment.Hat.Epic_TeleportHat;
 import wizardo.game.Items.Equipment.Staff.Epic_MissileStaff;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
@@ -13,6 +14,7 @@ import wizardo.game.Spells.Arcane.Rifts.Rift_Zone;
 import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Explosion;
 import wizardo.game.Spells.Lightning.ChargedBolts.ChargedBolts_Spell;
 import wizardo.game.Spells.SpellUtils;
+import wizardo.game.Spells.Unique.TeleportMonster;
 import wizardo.game.Utils.BodyFactory;
 
 import java.util.ArrayList;
@@ -70,7 +72,7 @@ public class ArcaneMissile_Projectile extends ArcaneMissile_Spell {
         drawFrame();
         adjustLight();
 
-        if(delta > 0 && stateTime >= 0.2f && !hasCollided) {
+        if(delta > 0 && stateTime >= 0.4f && !hasCollided) {
             arcaneTargeting();
         }
 
@@ -103,8 +105,12 @@ public class ArcaneMissile_Projectile extends ArcaneMissile_Spell {
         collisions++;
         targetLocked = false;
         dealDmg(monster);
-        if(player.inventory.equippedAmulet instanceof Legendary_FirstHitAmulet && collisions == 1) {
-            dealDmg(monster);
+
+        if(player.inventory.equippedAmulet instanceof Legendary_MarkAmulet && collisions < 5) {
+            double procChance = Math.pow(2, -(collisions-1));
+            if(Math.random() <= procChance ) {
+                monster.marked = true;
+            }
         }
 
         if(!(player.inventory.equippedStaff instanceof Epic_MissileStaff)) {
@@ -193,6 +199,9 @@ public class ArcaneMissile_Projectile extends ArcaneMissile_Spell {
             direction.set(1,0);
         }
 
+        direction.rotateDeg(MathUtils.random(-5,5));
+        speed *= MathUtils.random(0.95f, 1.05f);
+
         Vector2 offset = new Vector2(direction.cpy().scl(1));
         Vector2 adjustedSpawn = new Vector2(spawnPosition.add(offset));
 
@@ -226,7 +235,7 @@ public class ArcaneMissile_Projectile extends ArcaneMissile_Spell {
     public void arcaneTargeting() {
         if(!targetLocked && !screen.monsterManager.liveMonsters.isEmpty()) {
 
-            ArrayList<Monster> inRange = SpellUtils.findMonstersInRangeOfVector(body.getPosition(), 6, true);
+            ArrayList<Monster> inRange = SpellUtils.findMonstersInRangeOfVector(body.getPosition(), 7, true);
             Collections.shuffle(inRange);
 
             float max = 0;

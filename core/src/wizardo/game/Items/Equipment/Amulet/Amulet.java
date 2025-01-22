@@ -98,7 +98,7 @@ public abstract class Amulet extends Equipment {
         ArrayList<Equipment> list = new ArrayList<>();
 
         list.add(new Legendary_FireballAmulet());
-        list.add(new Legendary_FirstHitAmulet());
+        list.add(new Legendary_MarkAmulet());
 
         return list;
     }

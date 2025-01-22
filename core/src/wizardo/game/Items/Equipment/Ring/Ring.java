@@ -3,6 +3,7 @@ package wizardo.game.Items.Equipment.Ring;
 import com.badlogic.gdx.math.MathUtils;
 import wizardo.game.Items.Equipment.Equipment;
 import wizardo.game.Items.Equipment.EquipmentUtils;
+import wizardo.game.Items.Equipment.Hat.Epic_ForkedLightningHat;
 import wizardo.game.Items.ItemUtils;
 import wizardo.game.Spells.SpellUtils;
 
@@ -91,6 +92,7 @@ public abstract class Ring extends Equipment {
 
         list.add(new Epic_OculusRing());
         list.add(new Epic_NagelRing());
+        list.add(new Epic_FrostRing());
 
         return list;
     }

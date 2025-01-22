@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import wizardo.game.Items.Equipment.Amulet.Legendary_FirstHitAmulet;
+import wizardo.game.Items.Equipment.Amulet.Legendary_MarkAmulet;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Spells.Arcane.Rifts.Rift_Zone;
@@ -62,7 +62,7 @@ public class Laser_Projectile extends Laser_Spell {
 
     public void handleCollision(Monster monster) {
         dealDmg(monster);
-        if(player.inventory.equippedAmulet instanceof Legendary_FirstHitAmulet && collisions == 0) {
+        if(player.inventory.equippedAmulet instanceof Legendary_MarkAmulet && collisions == 0) {
             dealDmg(monster);
         }
         rifts(monster);

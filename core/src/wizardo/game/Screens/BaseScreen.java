@@ -240,8 +240,7 @@ public abstract class BaseScreen implements Screen {
             controllerAdapter = new ControllerListener_TABLEMENU(this);
         }
 
-
-        if(this instanceof Cheat_Screen) {
+        if(this instanceof AreYouSureScreen) {
             inputProcessor = new KeyboardMouseListener_TABLEMENU(this);
             controllerAdapter = new ControllerListener_TABLEMENU(this);
         }

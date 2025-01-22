@@ -1,14 +1,13 @@
 package wizardo.game.Player;
 
 import wizardo.game.Items.Equipment.Amulet.Amulet;
-import wizardo.game.Items.Equipment.Amulet.Legendary_FirstHitAmulet;
-import wizardo.game.Items.Equipment.Amulet.Rare_IcespearAmulet;
+import wizardo.game.Items.Equipment.Amulet.Legendary_MarkAmulet;
 import wizardo.game.Items.Equipment.Book.Book;
-import wizardo.game.Items.Equipment.Book.Epic_OrbitBook;
-import wizardo.game.Items.Equipment.Book.Rare_FireballBook;
+import wizardo.game.Items.Equipment.Book.Legendary_PulseBook;
 import wizardo.game.Items.Equipment.Equipment;
+import wizardo.game.Items.Equipment.Hat.Epic_TeleportHat;
 import wizardo.game.Items.Equipment.Hat.Hat;
-import wizardo.game.Items.Equipment.Ring.Epic_OculusRing;
+import wizardo.game.Items.Equipment.Ring.Epic_FrostRing;
 import wizardo.game.Items.Equipment.Ring.Rare_BeamRing;
 import wizardo.game.Items.Equipment.Ring.Ring;
 import wizardo.game.Items.Equipment.Robes.*;
@@ -38,6 +37,9 @@ public class Inventory {
 
         holdingBox = new Equipment[15];
         equippedGear = new ArrayList<>();
+
+        holdingBox[0] = new Legendary_PulseBook();
+        holdingBox[1] = new Rare_BeamRing();
 
     }
 

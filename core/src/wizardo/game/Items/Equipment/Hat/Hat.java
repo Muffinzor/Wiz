@@ -93,6 +93,7 @@ public abstract class Hat extends Equipment {
         list.add(new Epic_Hat());
         list.add(new Epic_OrbitHat());
         list.add(new Epic_ForkedLightningHat());
+        list.add(new Epic_TeleportHat());
 
         return list;
     }

@@ -38,6 +38,7 @@ public class MonsterSpawner {
     float targetedSpawnTimer = 0;
 
     public BodyPool bodyPool;
+    int maxMeleeMonsters = 100;
 
 
     public MonsterSpawner(BattleScreen screen) {
@@ -94,6 +95,7 @@ public class MonsterSpawner {
         rangedSpawnTimer += delta;
         targetedSpawnTimer += delta;
         demonTimer += delta;
+        maxMeleeMonsters = Math.min(1000, (int) (100 * spawnRatio));
     }
 
 
@@ -107,7 +109,7 @@ public class MonsterSpawner {
     public void spawnMeleeMonsters() {
         if(meleeSpawnTimer > 2f) {
             meleeSpawnTimer = 0;
-            if(screen.monsterManager.liveMonsters.size() < 1200) {
+            if(screen.monsterManager.liveMonsters.size() < maxMeleeMonsters) {
                 for (int i = 0; i < 5; i++) {
                     Monster monster;
                     if(Math.random() >= 0.96f && stateTime > 0) {
@@ -130,7 +132,7 @@ public class MonsterSpawner {
         }
     }
     public void spawnPack() {
-        if(packTimer >= 15 && screen.monsterManager.liveMonsters.size() < 1200) {
+        if(packTimer >= 15 && screen.monsterManager.liveMonsters.size() < maxMeleeMonsters) {
             packTimer = 0;
 
             Vector2 randomizedDirection;
@@ -157,7 +159,7 @@ public class MonsterSpawner {
         }
     }
     public void spawnMonstersInEmptyQuadrant() {
-        if(targetedSpawnTimer > 2 && screen.monsterManager.liveMonsters.size() < 1200) {
+        if(targetedSpawnTimer > 2 && screen.monsterManager.liveMonsters.size() < maxMeleeMonsters) {
 
             targetedSpawnTimer = 0;
             int topLeft = 0, topRight = 0, bottomLeft = 0, bottomRight = 0;
@@ -236,8 +238,8 @@ public class MonsterSpawner {
         if (spawnRatio < previousRatio * 0.9f) {
             spawnRatio = previousRatio * 0.9f; // Limit to 10% reduction
         }
-        if( spawnRatio > 20) {
-            spawnRatio = 20;
+        if( spawnRatio > 10) {
+            spawnRatio = 10;
         }
     }
 }

@@ -108,9 +108,9 @@ public class EnergyBeam_Projectile extends EnergyBeam_Spell {
         Sprite frame = screen.getSprite();
         frame.set(endTile);
         float height = frame.getHeight();
-        frame.setSize(frame.getWidth()/2 * beamWidthRatio, height/2 * beamWidthRatio);
-        frame.setOrigin(0, height/4 * beamWidthRatio);
-        frame.setPosition(spawnPosition.x * PPM, spawnPosition.y * PPM - height/4 * beamWidthRatio);
+        frame.setSize(frame.getWidth() * beamWidthRatio, height * beamWidthRatio);
+        frame.setOrigin(0, height/2 * beamWidthRatio);
+        frame.setPosition(spawnPosition.x * PPM, spawnPosition.y * PPM - height/2 * beamWidthRatio);
         frame.setRotation(rotation + 180);
         frame.setAlpha(alpha);
         screen.addUnderSprite(frame);
@@ -119,9 +119,9 @@ public class EnergyBeam_Projectile extends EnergyBeam_Spell {
         //Body of laser
         Sprite frame1 = screen.getSprite();
         frame1.set(bodyTile);
-        frame1.setSize(length * PPM, height/2 * beamWidthRatio);
-        frame1.setOrigin(0, height/4 * beamWidthRatio);
-        frame1.setPosition(spawnPosition.x * PPM , spawnPosition.y * PPM - height/4 * beamWidthRatio);
+        frame1.setSize(length * PPM, height * beamWidthRatio);
+        frame1.setOrigin(0, height/2 * beamWidthRatio);
+        frame1.setPosition(spawnPosition.x * PPM , spawnPosition.y * PPM - height/2 * beamWidthRatio);
         frame1.setRotation(rotation);
 
         frame1.setAlpha(alpha);
@@ -131,9 +131,9 @@ public class EnergyBeam_Projectile extends EnergyBeam_Spell {
         Sprite frame2 = screen.getSprite();
         frame2.set(endTile);
         Vector2 endPosition = new Vector2(body.getPosition());
-        frame2.setSize(frame2.getWidth() * 2 * beamWidthRatio, height/2 * beamWidthRatio);
-        frame2.setOrigin(0, height/4 * beamWidthRatio);
-        frame2.setPosition(endPosition.x * PPM, endPosition.y * PPM - height/4 * beamWidthRatio);
+        frame2.setSize(frame2.getWidth() * 2 * beamWidthRatio, height * beamWidthRatio);
+        frame2.setOrigin(0, height/2 * beamWidthRatio);
+        frame2.setPosition(endPosition.x * PPM, endPosition.y * PPM - height/2 * beamWidthRatio);
         frame2.setAlpha(alpha);
         frame2.setRotation(rotation);
 
@@ -151,7 +151,7 @@ public class EnergyBeam_Projectile extends EnergyBeam_Spell {
         rotation = direction.angleDeg();
         Vector2 bodySpawn = new Vector2(spawnPosition.cpy().add(direction.x * 2, direction.y * 2));
 
-        int height = 20;
+        int height = 28;
         if(player.inventory.equippedRing instanceof Rare_BeamRing) {
             height = 40;
         }
@@ -185,7 +185,7 @@ public class EnergyBeam_Projectile extends EnergyBeam_Spell {
     public void pickAnim() {
         lightAlpha = 0.7f;
         if(player.inventory.equippedRing instanceof Rare_BeamRing) {
-            beamWidthRatio *= 2;
+            beamWidthRatio *= 1.5f;
         }
 
         switch (anim_element) {

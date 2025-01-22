@@ -19,8 +19,8 @@ public class DesktopLauncher {
 				config.setFullscreenMode(Lwjgl3ApplicationConfiguration.getDisplayMode());
 				//config.setWindowedMode(1280, 800);
 			} else {
-				config.setFullscreenMode(Lwjgl3ApplicationConfiguration.getDisplayMode());
-				//config.setWindowedMode(1600, 900);
+				//config.setFullscreenMode(Lwjgl3ApplicationConfiguration.getDisplayMode());
+				config.setWindowedMode(1600, 900);
 			}
 
 			new Lwjgl3Application(new Wizardo(), config);
@@ -30,10 +30,12 @@ public class DesktopLauncher {
 
 	}
 
+	/** this does not work, it returns false on my steamdeck **/
 	private static boolean isSteamDeck() {
 		// Check the environment variables or system properties
 		String osName = System.getProperty("os.name").toLowerCase();
 		String steamDeckEnv = System.getenv("STEAM_DECK");
 		return osName.contains("linux") && "1".equals(steamDeckEnv);
 	}
+
 }

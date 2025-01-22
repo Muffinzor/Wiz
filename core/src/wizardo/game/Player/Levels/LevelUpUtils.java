@@ -39,7 +39,7 @@ public class LevelUpUtils {
         if(player.spellbook.energybeam_lvl > 0) {
             list.add(ENERGY);
         }
-        if(player.spellbook.flamejet_lvl > 0) {
+        if(player.spellbook.flamejet_lvl > 0 || player.spellbook.thunderstorm_lvl > 0) {
             list.add(FLARE);
         }
         if(canBeEmpyrean()) {
@@ -214,9 +214,6 @@ public class LevelUpUtils {
             possible = true;
         }
         if(player.spellbook.chainlightning_lvl > 0) {
-            possible = true;
-        }
-        if(player.spellbook.thunderstorm_lvl > 0) {
             possible = true;
         }
 

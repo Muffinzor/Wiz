@@ -94,6 +94,7 @@ public abstract class Book extends Equipment {
 
         list.add(new Legendary_GoldBook());
         list.add(new Legendary_NecronomiconBook());
+        list.add(new Legendary_PulseBook());
 
 
         return list;
