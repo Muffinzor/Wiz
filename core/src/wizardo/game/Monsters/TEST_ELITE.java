@@ -34,7 +34,7 @@ public class TEST_ELITE extends MonsterMelee {
 
         movementManager = new MovementManager(this);
         stateManager = new MeleeStateManager(this);
-        monsterActionManager = new MonsterActionManager(this, 2.5f);
+        monsterActionManager = new MonsterActionManager(this, 2);
 
         state = MonsterUtils.MONSTER_STATE.ADVANCING;
         heavy = true;

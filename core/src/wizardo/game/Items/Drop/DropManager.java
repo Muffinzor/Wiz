@@ -48,6 +48,7 @@ public class DropManager {
     public void attractGold() {
         for(Drop drop : drops) {
             if(drop instanceof GoldDrop) {
+                drop.travelSpeed = 20;
                 drop.goToPlayer = true;
             }
         }

@@ -7,6 +7,7 @@ import wizardo.game.Monsters.MonsterArchetypes.MonsterMelee;
 import wizardo.game.Monsters.MonsterMovement.MovementManager;
 import wizardo.game.Monsters.MonsterActions.AttackSwing.AttackSwing;
 import wizardo.game.Monsters.MonsterStateManager.MeleeStateManager;
+import wizardo.game.Resources.MonsterResources.DragonManAnims;
 import wizardo.game.Resources.MonsterResources.MonsterWeapons;
 import wizardo.game.Resources.MonsterResources.SkeletonGiantAnims;
 import wizardo.game.Screens.Battle.BattleScreen;

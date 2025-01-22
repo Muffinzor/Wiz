@@ -100,7 +100,7 @@ public class MonsterSpawner {
 
 
     public void spawnDemon() {
-        if(demonTimer > 180f) {
+        if(demonTimer > 300f) {
             demonTimer = 0;
             Monster monster = new MawDemon(screen, null, this);
             spawnMonster(monster);
@@ -110,9 +110,9 @@ public class MonsterSpawner {
         if(meleeSpawnTimer > 2f) {
             meleeSpawnTimer = 0;
             if(screen.monsterManager.liveMonsters.size() < maxMeleeMonsters) {
-                for (int i = 0; i < 5; i++) {
+                for (int i = 0; i < spawnRatio; i++) {
                     Monster monster;
-                    if(Math.random() >= 0.96f && stateTime > 0) {
+                    if(Math.random() >= 0.16f && stateTime > 0) {
                         monster = new TEST_BIGMONSTER(screen, null, this);
                     } else {
                         monster = new TEST_MELEE(screen, null, this);
@@ -145,7 +145,7 @@ public class MonsterSpawner {
             randomizedDirection.scl(36);
             Vector2 centerpoint = player.pawn.getPosition().add(randomizedDirection);
 
-            int count = (int) (8 * spawnRatio);
+            int count = (int) (6 * spawnRatio);
             for (int i = 0; i < count; i++) {
                 Vector2 spawnPoint = SpellUtils.getClearRandomPosition(centerpoint, Math.min(2 * spawnRatio, 10));
                 Monster monster;
@@ -190,7 +190,7 @@ public class MonsterSpawner {
                 angle = 315;
             }
 
-            for (int i = 0; i < 8 * spawnRatio; i++) {
+            for (int i = 0; i < 6 * spawnRatio; i++) {
                 Vector2 position = SpellUtils.getClearRandomPositionCone(player.pawn.getPosition(), 34, 45, angle);
                 Monster monster = new TEST_MELEE(screen, position, this);
                 spawnMonster(monster);
@@ -226,9 +226,9 @@ public class MonsterSpawner {
 
         // Calculate the new ratio based on kills
         if (killsLastCycle > 10) {
-            spawnRatio = 1.0f + (killsLastCycle - 10 * spawnRatio) * 0.035f; // Increase ratio according to current rate and kills
-            if(spawnRatio > previousRatio * 1.2f) {
-                spawnRatio = previousRatio * 1.2f; // Limit to 20% increase
+            spawnRatio = 1.0f + (killsLastCycle - 10 * spawnRatio) * 0.035f; // 0.035 is arbitrary and just a test
+            if(spawnRatio > previousRatio * 1.15f) {
+                spawnRatio = previousRatio * 1.15f; // Limit to 15% increase
             }
         } else {
             spawnRatio = 1.0f;

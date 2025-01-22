@@ -22,7 +22,7 @@ public class Epic_TeleportHat extends Hat {
         sprite = new Sprite(new Texture("Items/Hat/PurpleFlameHat.png"));
         spriteOver = new Sprite(new Texture("Items/Hat/PurpleFlameHat_Over.png"));
 
-        name = "Guild's Legacy Hat";
+        name = "Navigator's Hat";
         title = "Epic Hat";
         quality = ItemUtils.EquipQuality.EPIC;
 

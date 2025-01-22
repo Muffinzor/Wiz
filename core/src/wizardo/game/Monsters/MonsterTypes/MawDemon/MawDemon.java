@@ -32,12 +32,12 @@ public class MawDemon extends Monster {
         super(screen, position, spawner);
 
         speed = 1f;
-        hp = 3200;
-        maxHP = 3200;
+        hp = 2800;
+        maxHP = 2800;
         xp = 400;
         elite = true;
 
-        dmg = 30;
+        dmg = 20;
 
         massValue = 10000f;
         bodyRadius = 30;

@@ -73,6 +73,7 @@ public class StaticPulse extends Spell {
             case LIGHTNING -> {
                 red = 0.5f;
                 green = 0.5f;
+                blue = 0.3f;
                 anim = StaticOrbAnims.staticpulse_anim_lightning;
             }
             case FIRE, FIRELITE -> {

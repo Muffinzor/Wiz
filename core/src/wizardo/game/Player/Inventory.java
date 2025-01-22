@@ -38,8 +38,9 @@ public class Inventory {
         holdingBox = new Equipment[15];
         equippedGear = new ArrayList<>();
 
+
         holdingBox[0] = new Legendary_PulseBook();
-        holdingBox[1] = new Rare_BeamRing();
+        holdingBox[1] = new Legendary_MarkAmulet();
 
     }
 

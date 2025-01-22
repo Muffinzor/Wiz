@@ -1,0 +1,11 @@
+DragonMan.png
+size:512,128
+repeat:none
+Walk1
+bounds:112,2,108,108
+Walk2
+bounds:332,2,108,108
+Walk3
+bounds:222,2,108,108
+Walk4
+bounds:2,2,108,108

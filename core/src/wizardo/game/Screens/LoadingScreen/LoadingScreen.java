@@ -30,6 +30,8 @@ import wizardo.game.Screens.MainMenu.MainMenuScreen;
 import wizardo.game.Spells.Unique.StaticOrb.StaticOrb;
 import wizardo.game.Wizardo;
 
+import static wizardo.game.Resources.MonsterResources.MONSTER_ANIMS.load_all_monster_anims;
+import static wizardo.game.Resources.MonsterResources.MONSTER_ANIMS.load_all_monster_atlas;
 import static wizardo.game.Spells.SpellBank.AllSpells.createAllSpells;
 import static wizardo.game.Wizardo.assetManager;
 
@@ -127,10 +129,7 @@ public class LoadingScreen extends BaseScreen {
         AuraAnims.loadAtlas();
         CorpseExplosionAnims.loadAtlas();
 
-        SkeletonAnims.loadAtlas();
-        SkeletonGiantAnims.loadAtlas();
-        AcolyteAnims.loadAtlas();
-        MawDemonAnims.loadAtlas();
+        load_all_monster_atlas();
 
         SmallProjectileAnims.loadAtlas();
         MonsterExplosions.loadAtlas();
@@ -178,10 +177,7 @@ public class LoadingScreen extends BaseScreen {
         AuraAnims.loadAnimations();
         CorpseExplosionAnims.loadAnimations();
 
-        SkeletonAnims.loadAnimations();
-        SkeletonGiantAnims.loadAnimations();
-        AcolyteAnims.loadAnimations();
-        MawDemonAnims.loadAnimations();
+        load_all_monster_anims();
 
         SmallProjectileAnims.loadAnimations();
         MonsterExplosions.loadAnimations();

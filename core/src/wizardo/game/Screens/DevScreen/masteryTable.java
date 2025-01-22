@@ -12,9 +12,12 @@ import wizardo.game.Display.MenuTable;
 import wizardo.game.GameSettings;
 import wizardo.game.Items.Equipment.Amulet.Epic_DragonbreathAmulet;
 import wizardo.game.Items.Equipment.Book.Legendary_NecronomiconBook;
+import wizardo.game.Items.Equipment.Book.Legendary_PulseBook;
+import wizardo.game.Items.Equipment.Hat.Epic_TeleportHat;
 import wizardo.game.Items.Equipment.Ring.Rare_BeamRing;
 import wizardo.game.Items.Equipment.Robes.Legendary_ArcaneRobes;
 import wizardo.game.Items.Equipment.Staff.Epic_FireballStaff;
+import wizardo.game.Items.Equipment.Staff.Legendary_ArcaneStaff;
 import wizardo.game.Items.Equipment.Staff.Legendary_FireStaff;
 import wizardo.game.Screens.MainMenu.MainMenuButton;
 import wizardo.game.Wizardo;
@@ -361,10 +364,12 @@ public class masteryTable extends MenuTable {
                 player.inventory.dual_reagents = 30;
                 player.inventory.triple_reagents = 30;
                 player.inventory.holdingBox[14] = new Legendary_ArcaneRobes();
-                player.inventory.holdingBox[13] = new Epic_FireballStaff();
+                player.inventory.holdingBox[13] = new Legendary_ArcaneStaff();
                 player.inventory.holdingBox[12] = new Legendary_NecronomiconBook();
                 player.inventory.holdingBox[11] = new Epic_DragonbreathAmulet();
                 player.inventory.holdingBox[10] = new Rare_BeamRing();
+                player.inventory.holdingBox[9] = new Legendary_PulseBook();
+                player.inventory.holdingBox[8] = new Epic_TeleportHat();
 
             }
         });

@@ -24,6 +24,7 @@ public abstract class Drop {
     public Vector2 velocity;
 
     public boolean goToPlayer;
+    public float travelSpeed = 10;
     public boolean tooFar;
     public float pickupRadius = 5;
     int frameCounter;
@@ -166,7 +167,7 @@ public abstract class Drop {
 
         if(!pickedUp) {
             velocity = new Vector2(player.pawn.getPosition().sub(position));
-            velocity.nor().scl(10);
+            velocity.nor().scl(travelSpeed);
             position.add(velocity.x * delta, velocity.y * delta);
 
             float dst = position.dst(player.pawn.getPosition());

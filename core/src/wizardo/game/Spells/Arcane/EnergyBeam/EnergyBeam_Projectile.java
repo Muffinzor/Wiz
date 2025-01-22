@@ -108,7 +108,7 @@ public class EnergyBeam_Projectile extends EnergyBeam_Spell {
         Sprite frame = screen.getSprite();
         frame.set(endTile);
         float height = frame.getHeight();
-        frame.setSize(frame.getWidth() * beamWidthRatio, height * beamWidthRatio);
+        frame.setSize(frame.getWidth()/1.5f * beamWidthRatio, height * beamWidthRatio);
         frame.setOrigin(0, height/2 * beamWidthRatio);
         frame.setPosition(spawnPosition.x * PPM, spawnPosition.y * PPM - height/2 * beamWidthRatio);
         frame.setRotation(rotation + 180);
