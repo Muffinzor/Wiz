@@ -120,7 +120,7 @@ public class ShopButton_Scroll extends ImageButton implements MenuButton {
         float ogHeigth = newStyle.imageUp.getMinHeight();
 
         float WIDTH = xRatio * ogWidth * 0.7f;
-        float HEIGHT = yRatio * ogHeigth * 0.7f;
+        float HEIGHT = xRatio * ogHeigth * 0.7f;
 
 
         newStyle.imageUp.setMinWidth(WIDTH);

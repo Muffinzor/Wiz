@@ -56,7 +56,7 @@ public class Pathfinder {
 
         direction.nor();
 
-        // Define angles for multiple rays (e.g., -20, -10, 0, 10, 20 degrees)
+        // Define angles for multiple rays
         float[] rayAngles = {-12, -6, 0, 6, 12}; // in degrees
 
         for (float angle : rayAngles) {
@@ -70,6 +70,9 @@ public class Pathfinder {
 
                     // Calculate direction from obstacle to monster
                     Vector2 obstacleToMonster = monster.body.getPosition().cpy().sub(fixture.getBody().getPosition());
+                    if(obstacleToMonster.isZero()) {
+                        obstacleToMonster.set(0,1);
+                    }
 
                     // Determine steering direction based on relative position
                     if (obstacleToMonster.crs(rayDir) > 0) {

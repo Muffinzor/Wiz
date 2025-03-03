@@ -24,7 +24,7 @@ public class ArcaneMissile_Spell extends Spell {
 
         name = "Arcane Missiles";
 
-        dmg = 36;
+        dmg = 16;
         speed = 225f/PPM;
         cooldown = 1.2f;
         autoaimable = true;
@@ -35,7 +35,7 @@ public class ArcaneMissile_Spell extends Spell {
 
     public void setup() {
         if(targetPosition == null) {
-            float bonus = (player.spellbook.arcanemissile_lvl - 1) / 2f;
+            float bonus = (player.spellbook.arcanemissile_lvl - 1) / 1.5f;        // change this value to modify the rate of increase
             if((bonus % 1) > 0) {
                 float remainder = bonus % 1;
                 if(Math.random() >= 1 - remainder) {
@@ -60,7 +60,7 @@ public class ArcaneMissile_Spell extends Spell {
                 return;
             }
 
-            for (int i = 0; i < 1 + extraProjs; i++) {
+            for (int i = 0; i < 3 + extraProjs; i++) {
                 ArcaneMissile_Projectile missile = new ArcaneMissile_Projectile(getSpawnPosition(), targetPosition);
                 missile.setElements(this);
                 missile.scale = scale;
@@ -95,7 +95,7 @@ public class ArcaneMissile_Spell extends Spell {
     @Override
     public int getDmg() {
         int dmg = this.dmg;
-        dmg += 8 * getLvl();
+        dmg += 2 * getLvl();
         dmg = (int) (dmg * (1 + player.spellbook.sharpBonusDmg/100f));
         return dmg;
     }

@@ -65,21 +65,6 @@ public class DungeonChunk extends MapChunk {
 
     }
 
-    @Override
-    public void createBodies() {
-        MapObjects obstacles = map.getLayers().get("ObstacleBodies").getObjects();
-
-        for(MapObject object : obstacles) {
-
-            if(object instanceof RectangleMapObject) {
-                MapUtils.createRectangleObstacleBody(this, (RectangleMapObject) object);
-            }
-            if(object instanceof EllipseMapObject) {
-                MapUtils.EllipseObstacleBody(this, (EllipseMapObject) object);
-            }
-        }
-    }
-
     public void createDecor() {
         MapObjects decor = map.getLayers().get("DecorBodies").getObjects();
         for (MapObject object : decor) {
@@ -88,7 +73,7 @@ public class DungeonChunk extends MapChunk {
                 layerObjects.add(portal);
             }
 
-            if(object.getName().equals(("VaseCluster")) && Math.random() >= 0.75) {
+            if(object.getName().equals(("VaseCluster")) && Math.random() >= 0.6) {
                 VaseCluster cluster = new VaseCluster(this, object);
                 layerObjects.add(cluster);
             }
@@ -97,7 +82,6 @@ public class DungeonChunk extends MapChunk {
                 StandingTorchObject torch = new StandingTorchObject(this, object);
                 layerObjects.add(torch);
             }
-
         }
 
         decor = map.getLayers().get("ObstacleBodies").getObjects();
@@ -171,7 +155,5 @@ public class DungeonChunk extends MapChunk {
             createDecor();
             alreadySeen = true;
         }
-
-
     }
 }

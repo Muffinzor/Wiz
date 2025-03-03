@@ -219,9 +219,6 @@ public abstract class Spell implements Cloneable {
             Vector2 rotatedDirection = direction.cpy().rotateDeg(angleOffset);       // Adjust direction by angle offset
             Vector2 endPoint = player.pawn.body.getPosition().cpy().add(rotatedDirection); // Compute ray endpoint
 
-            // Cast the ray
-            world.rayCast(callback, player.pawn.body.getPosition(), endPoint);
-
             // Handle the middle ray separately
             if (i == RAY_COUNT / 2) {
                 // Cast the middle ray directly and check for its specific target
@@ -242,6 +239,8 @@ public abstract class Spell implements Cloneable {
                 }, player.pawn.body.getPosition(), endPoint);
 
                 middleRayTarget = middleRayClosestTarget[0];
+            } else {
+                world.rayCast(callback, player.pawn.body.getPosition(), endPoint);
             }
         }
 

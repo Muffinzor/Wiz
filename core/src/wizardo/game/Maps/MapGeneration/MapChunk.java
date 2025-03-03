@@ -2,12 +2,15 @@ package wizardo.game.Maps.MapGeneration;
 
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
+import com.badlogic.gdx.maps.objects.EllipseMapObject;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Maps.Chest;
 import wizardo.game.Maps.EnvironmentObject;
+import wizardo.game.Maps.MapUtils;
 import wizardo.game.Maps.Shop.MapShop;
 import wizardo.game.Screens.BaseScreen;
 import wizardo.game.Wizardo;
@@ -43,7 +46,6 @@ public abstract class MapChunk {
         this.game = game;
         this.screen = screen;
 
-        //this.map = new TmxMapLoader().load(pathToFile);
         this.map = assetManager.get(pathToFile, TiledMap.class);
 
         this.pathToFile = pathToFile;
@@ -64,7 +66,18 @@ public abstract class MapChunk {
         layerObjects.clear();
     }
 
-    public abstract void createBodies();
+    public void createBodies() {
+        MapObjects obstacles = map.getLayers().get("ObstacleBodies").getObjects();
+
+        for(MapObject object : obstacles) {
+            if(object instanceof RectangleMapObject) {
+                MapUtils.createRectangleObstacleBody(this, (RectangleMapObject) object);
+            }
+            if(object instanceof EllipseMapObject) {
+                MapUtils.EllipseObstacleBody(this, (EllipseMapObject) object);
+            }
+        }
+    }
 
     public abstract void disposeBodies();
 

@@ -1,0 +1,1 @@
+jpackage --input . --main-jar desktop-1.0.jar --name Wizardo --type exe --main-class wizardo.game.DesktopLauncher --win-dir-chooser --runtime-image "C:\Program Files\Java\jdk-22"

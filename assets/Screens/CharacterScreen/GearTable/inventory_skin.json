@@ -163,6 +163,16 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 		imageOver: ArcaneScroll_Over
 		imageDisabled: ArcaneScroll
 	}
+	shop_reagent_normal: {
+		imageUp: GemHolder2
+		imageOver: GemHolder2_hover
+		imageDisabled: GemHolder2_disabled
+	}
+	shop_reagent_triple: {
+		imageUp: GemHolder
+		imageOver: GemHolder_hover
+		imageDisabled: GemHolder_disabled
+	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton$ImageTextButtonStyle: {
 	default: {

@@ -1,14 +1,13 @@
 package wizardo.game.Screens.EscapeMenu;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
-public class EscapeMenuButton extends TextButton {
+public class SelectionMenuButton extends TextButton {
 
-    public EscapeMenuButton(String text, Skin skin) {
+    public SelectionMenuButton(String text, Skin skin) {
         super(text, skin);
         TextButtonStyle style = skin.get("WoodButton", TextButtonStyle.class);
         setStyle(style);

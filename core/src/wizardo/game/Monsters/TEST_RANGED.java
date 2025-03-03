@@ -10,6 +10,7 @@ import wizardo.game.Monsters.MonsterStateManager.RangedStateManager;
 import wizardo.game.Resources.MonsterResources.AcolyteAnims;
 import wizardo.game.Screens.Battle.BattleScreen;
 import wizardo.game.Screens.Battle.MonsterSpawner.MonsterSpawner;
+import wizardo.game.Screens.Battle.MonsterSpawner.MonsterSpawner_Dungeon;
 
 import static wizardo.game.Utils.Constants.PPM;
 
@@ -29,7 +30,6 @@ public class TEST_RANGED extends MonsterRanged {
         width = 24;
         height = 32;
 
-        stateTime = (float) Math.random();
         spawn_anim = AcolyteAnims.acolyte_spawn_blue;
         walk_anim = AcolyteAnims.acolyte_walk_blue;
         death_anim = AcolyteAnims.acolyte_death_blue;
@@ -38,7 +38,7 @@ public class TEST_RANGED extends MonsterRanged {
         stateManager = new RangedStateManager(this, 4.5f, 12f);
         monsterActionManager = new MonsterActionManager(this, 6f);
 
-        state = MonsterUtils.MONSTER_STATE.ADVANCING;
+        state = MonsterUtils.MONSTER_STATE.SPAWNING;
 
         projectile = new SmallLaser_Action(this);
     }

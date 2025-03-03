@@ -1,7 +1,6 @@
 package wizardo.game.Maps.Shop;
 
 import wizardo.game.Items.Drop.DropManager;
-import wizardo.game.Items.Drop.ScrollDrop;
 import wizardo.game.Items.Equipment.Equipment;
 import wizardo.game.Items.ItemUtils;
 import wizardo.game.Spells.SpellUtils;
@@ -13,7 +12,8 @@ public class MapShopInventory {
 
     ArrayList<Equipment> gear;
     ArrayList<SpellUtils.Spell_Name> scrolls;
-    Boolean[] solds;
+    Boolean[] scroll_solds;
+    Boolean[] reagent_solds;
 
     boolean legendaryRolled;
 
@@ -23,10 +23,8 @@ public class MapShopInventory {
         this.dropManager = shop.screen.dropManager;
         this.gear = new ArrayList<>();
         this.scrolls = new ArrayList<>();
-        solds = new Boolean[4];
-        for (int i = 0; i < 4; i++) {
-            solds[i] = false;
-        }
+        scroll_solds = new Boolean[]{false, false, false, false};
+        reagent_solds = new Boolean[]{false, false};
     }
 
     public void createInventory() {

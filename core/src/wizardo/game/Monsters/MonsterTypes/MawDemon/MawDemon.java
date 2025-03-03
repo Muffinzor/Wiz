@@ -2,23 +2,18 @@ package wizardo.game.Monsters.MonsterTypes.MawDemon;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
-import wizardo.game.Items.Drop.DropUtils;
 import wizardo.game.Items.Drop.EquipmentDrop;
 import wizardo.game.Items.Drop.ScrollDrop;
-import wizardo.game.Items.Equipment.EquipmentUtils;
 import wizardo.game.Items.ItemUtils;
-import wizardo.game.Maps.ChestLoot;
-import wizardo.game.Monsters.MonsterActions.SelfFireExplosion.SelfFireExplosion;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Monsters.MonsterMovement.MovementManager;
 import wizardo.game.Monsters.MonsterUtils;
 import wizardo.game.Player.Player;
 import wizardo.game.Resources.MonsterResources.MawDemonAnims;
-import wizardo.game.Resources.MonsterResources.SkeletonGiantAnims;
 import wizardo.game.Screens.Battle.BattleScreen;
 import wizardo.game.Screens.Battle.MonsterSpawner.MonsterSpawner;
+import wizardo.game.Screens.Battle.MonsterSpawner.MonsterSpawner_Dungeon;
 
-import static wizardo.game.Monsters.MonsterUtils.MONSTER_STATE.ADVANCING;
 import static wizardo.game.Monsters.MonsterUtils.MONSTER_STATE.CHARGING;
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.player;

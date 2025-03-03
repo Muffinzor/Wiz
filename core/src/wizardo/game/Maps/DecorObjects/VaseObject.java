@@ -6,12 +6,15 @@ import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import wizardo.game.Items.Drop.GoldDrop;
+import wizardo.game.Items.Drop.MagnetDrop;
 import wizardo.game.Maps.EnvironmentObject;
 import wizardo.game.Maps.MapGeneration.MapChunk;
 import wizardo.game.Maps.MapUtils;
 import wizardo.game.Resources.DecorResources.DungeonDecorResources;
 
 import static wizardo.game.Utils.Constants.PPM;
+import static wizardo.game.Wizardo.player;
 import static wizardo.game.Wizardo.world;
 
 public class VaseObject extends EnvironmentObject {
@@ -44,8 +47,12 @@ public class VaseObject extends EnvironmentObject {
 
         if(collided && !destroyed) {
             destroyed = true;
+        }
+
+        if(destroyed && body.isActive()) {
             stateTime = 0;
             body.setActive(false);
+            drops();
         }
 
     }
@@ -65,7 +72,6 @@ public class VaseObject extends EnvironmentObject {
     }
 
     public void createBody() {
-
         if(position != null && body == null) {
             body = MapUtils.createCircleDecorBody_FromVector(position, 8, false, false);
             body.setUserData(this);
@@ -78,8 +84,20 @@ public class VaseObject extends EnvironmentObject {
     public void handleCollision() {
         if(body.isActive()) {
             destroyed = true;
-            stateTime = 0;
-            body.setActive(false);
+        }
+    }
+
+    public void drops() {
+        float gold_rate = 0.90f - player.stats.luck/500f;
+        if(Math.random() >= gold_rate) {
+            GoldDrop gold = new GoldDrop(body.getPosition(),1 , 2);
+            chunk.screen.dropManager.addDrop(gold);
+        }
+
+        float magnet_rate = 0.99f;
+        if(Math.random() >= magnet_rate) {
+            MagnetDrop magnet = new MagnetDrop(body.getPosition());
+            chunk.screen.dropManager.addDrop(magnet);
         }
     }
 

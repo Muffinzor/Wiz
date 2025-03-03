@@ -10,6 +10,9 @@ public class MONSTER_ANIMS {
         MawDemonAnims.loadAtlas();
         SkeletonAnims.loadAtlas();
         SkeletonGiantAnims.loadAtlas();
+        OrcMinionAnims.loadAtlas();
+        OrcBruteAnims.loadAtlas();
+        OrcShamanAnims.loadAtlas();
     }
 
     public static void load_all_monster_anims() {
@@ -18,5 +21,8 @@ public class MONSTER_ANIMS {
         MawDemonAnims.loadAnimations();
         SkeletonAnims.loadAnimations();
         SkeletonGiantAnims.loadAnimations();
+        OrcMinionAnims.loadAnimations();
+        OrcBruteAnims.loadAnimations();
+        OrcShamanAnims.loadAnimations();
     }
 }

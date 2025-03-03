@@ -2,8 +2,6 @@ package wizardo.game.Screens.Battle;
 
 import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.controllers.Controller;
-import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -13,25 +11,18 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import wizardo.game.Maps.Chest;
 import wizardo.game.Maps.MapGeneration.MapManager;
 import wizardo.game.Monsters.*;
-import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Monsters.MonsterActions.MonsterSpellManager;
-import wizardo.game.Monsters.MonsterTypes.MawDemon.MawDemon;
 import wizardo.game.Player.Pawn;
-import wizardo.game.Player.Player;
-import wizardo.game.Resources.ScreenResources.LevelUpResources;
 import wizardo.game.Screens.BaseScreen;
 import wizardo.game.Items.Drop.DropManager;
-import wizardo.game.Screens.Battle.MonsterSpawner.MonsterSpawner;
+import wizardo.game.Screens.Battle.MonsterSpawner.MonsterSpawner_Dungeon;
 import wizardo.game.Screens.MainMenu.MainMenuScreen;
 import wizardo.game.Spells.SpellManager;
-import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Wizardo;
 
 import static wizardo.game.GameSettings.debug_camera;
-import static wizardo.game.Spells.SpellBank.Frost_Spells.frostspells;
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.*;
 
@@ -44,9 +35,8 @@ public class BattleScreen extends BaseScreen {
     public Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
 
     public MapManager mapManager;
-    public MonsterSpawner monsterSpawner;
+    public MonsterSpawner_Dungeon monsterSpawner;
     public MonsterSpellManager monsterSpellManager;
-    public DropManager dropManager;
 
     public final BattleUI battleUI;
 
@@ -64,7 +54,12 @@ public class BattleScreen extends BaseScreen {
         createNewWorld();
         rayHandler = new RayHandler(world);
         rayHandler.setCulling(false);
-        rayHandler.setAmbientLight(0.35f);
+
+        if(biome.equals("Forest")) {
+            rayHandler.setAmbientLight(0.25f);
+        } else {
+            rayHandler.setAmbientLight(0.35f);
+        }
         lightManager.rayHandler = rayHandler;
 
         Pawn playerPawn = new Pawn(this);
@@ -73,7 +68,7 @@ public class BattleScreen extends BaseScreen {
         player.screen = this;
 
         mapManager = new MapManager(biome, game, this);
-        monsterSpawner = new MonsterSpawner(this);
+        monsterSpawner = new MonsterSpawner_Dungeon(this);
         monsterManager = new MonsterManager(this);
         spellManager = new SpellManager(this);
         monsterSpellManager = new MonsterSpellManager(this);
@@ -121,10 +116,10 @@ public class BattleScreen extends BaseScreen {
             game.freshScreen(new MainMenuScreen(game));
         }
 
+        logger.log();
         if(debug_camera) {
             Matrix4 debugMatrix = mainCamera.combined.cpy().scl(PPM);
             debugRenderer.render(world, debugMatrix);
-            logger.log();
             COUNTER++;
             if(COUNTER > 60) {
                 COUNTER = 0;

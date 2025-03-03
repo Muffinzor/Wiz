@@ -31,6 +31,7 @@ public class ShopScreen extends BaseScreen {
     MapShop shop;
     public ShopTable_Gear gearTable;
     public ShopTable_Scrolls scrollTable;
+    public ShopTable_Reagents reagentsTable;
 
     public Button selectedButton;
     BattleScreen battle;
@@ -46,6 +47,8 @@ public class ShopScreen extends BaseScreen {
 
         gearTable = new ShopTable_Gear(stage, shopSkin, game, this);
         scrollTable = new ShopTable_Scrolls(stage, shopSkin, game, this);
+        reagentsTable = new ShopTable_Reagents(stage, shopSkin, game, this);
+
         menuTable = scrollTable;
         selectedButton = scrollTable.scrollButtons.getFirst();
     }
@@ -60,6 +63,7 @@ public class ShopScreen extends BaseScreen {
 
         gearTable.drawItems();
         scrollTable.drawItems();
+        reagentsTable.drawGems();
 
         panelStage.act(delta);
         panelStage.draw();
@@ -72,6 +76,19 @@ public class ShopScreen extends BaseScreen {
         battle.displayManager.textManager.updateGoldTexts(delta);
         battle.displayManager.textManager.updateBottomTexts(delta);
 
+    }
+
+    @Override
+    public void resize(int width, int height) {
+        super.resize(width, height);
+        stage.setViewport(new ScreenViewport(uiCamera));
+        stage.getViewport().update(width, height, true);
+        batch.setProjectionMatrix(uiCamera.combined);
+        gearTable.resize();
+        scrollTable.resize();
+        reagentsTable.resize();
+
+        battle.resize(width, height);
     }
 
     @Override

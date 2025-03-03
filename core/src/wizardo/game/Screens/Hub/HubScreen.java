@@ -13,6 +13,7 @@ import wizardo.game.Player.Player;
 import wizardo.game.Screens.BaseScreen;
 import wizardo.game.Wizardo;
 
+import static wizardo.game.GameSettings.debug_camera;
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.createNewWorld;
 import static wizardo.game.Wizardo.world;
@@ -36,7 +37,7 @@ public class HubScreen extends BaseScreen {
 
         createNewWorld();
         rayHandler = new RayHandler(world);
-        rayHandler.setAmbientLight(0.3f);
+        rayHandler.setAmbientLight(0.75f);
         lightManager.rayHandler = rayHandler;
 
         playerPawn = new Pawn(this);
@@ -64,8 +65,10 @@ public class HubScreen extends BaseScreen {
         displayManager.update(delta);
         lightManager.update(delta);
 
-        Matrix4 debugMatrix = mainCamera.combined.cpy().scl(PPM);
-        debugRenderer.render(world, debugMatrix);
+        if(debug_camera) {
+            Matrix4 debugMatrix = mainCamera.combined.cpy().scl(PPM);
+            debugRenderer.render(world, debugMatrix);
+        }
     }
 
     @Override

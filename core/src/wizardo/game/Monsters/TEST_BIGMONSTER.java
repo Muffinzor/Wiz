@@ -7,11 +7,11 @@ import wizardo.game.Monsters.MonsterArchetypes.MonsterMelee;
 import wizardo.game.Monsters.MonsterMovement.MovementManager;
 import wizardo.game.Monsters.MonsterActions.AttackSwing.AttackSwing;
 import wizardo.game.Monsters.MonsterStateManager.MeleeStateManager;
-import wizardo.game.Resources.MonsterResources.DragonManAnims;
 import wizardo.game.Resources.MonsterResources.MonsterWeapons;
-import wizardo.game.Resources.MonsterResources.SkeletonGiantAnims;
+import wizardo.game.Resources.MonsterResources.OrcBruteAnims;
 import wizardo.game.Screens.Battle.BattleScreen;
 import wizardo.game.Screens.Battle.MonsterSpawner.MonsterSpawner;
+import wizardo.game.Screens.Battle.MonsterSpawner.MonsterSpawner_Dungeon;
 
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.player;
@@ -33,8 +33,8 @@ public class TEST_BIGMONSTER extends MonsterMelee {
         width = 32;
 
         stateTime = (float) Math.random();
-        walk_anim = SkeletonGiantAnims.skellygiant_walk;
-        death_anim = SkeletonGiantAnims.skellygiant_death;
+        walk_anim = OrcBruteAnims.orcBrute_walk;
+        death_anim = OrcBruteAnims.orcBrute_death;
         weaponSprite = MonsterWeapons.bone_axe;
 
         movementManager = new MovementManager(this);

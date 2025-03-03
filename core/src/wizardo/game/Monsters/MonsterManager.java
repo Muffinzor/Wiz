@@ -73,10 +73,6 @@ public class MonsterManager {
 
     }
 
-    /**
-     * doit etre implemented avec anim
-     * @param delta
-     */
     public void updateDeadMonsters(float delta) {
         for(Monster monster : dyingMonsters) {
 

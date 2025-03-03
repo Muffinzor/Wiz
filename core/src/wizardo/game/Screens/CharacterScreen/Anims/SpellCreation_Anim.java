@@ -102,9 +102,9 @@ public class SpellCreation_Anim extends Screen_Anim {
 
     public Vector2 setPosition() {
         if(equipped) {
-            return screen.equippedSpells_table.getCenter();
+            return new Vector2(screen.equippedSpells_table.getCenter().x, screen.equippedSpells_table.getCenter().y - 75 * yRatio);
         } else {
-            return screen.knownSpells_table.getCenter();
+            return new Vector2(screen.knownSpells_table.getCenter().x, screen.equippedSpells_table.getCenter().y - 75 * yRatio);
         }
     }
 

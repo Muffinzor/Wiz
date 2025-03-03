@@ -2,6 +2,7 @@ package wizardo.game.Maps.MapGeneration;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import wizardo.game.Maps.Dungeon.DungeonChunk;
+import wizardo.game.Maps.Forest.ForestChunk;
 import wizardo.game.Screens.Battle.BattleScreen;
 import wizardo.game.Wizardo;
 
@@ -70,11 +71,10 @@ public class MapManager {
             MapChunk newChunk;
             if (biome.equals("Dungeon")) {
                 newChunk = new DungeonChunk(mapPath, chunkX * CHUNK_SIZE, chunkY * CHUNK_SIZE, game, screen);
-                newChunk.canHaveShop = canHaveShop(chunkX, chunkY);
             } else {
-                newChunk = new DungeonChunk(mapPath, chunkX * CHUNK_SIZE, chunkY * CHUNK_SIZE, game, screen);
-                newChunk.canHaveShop = canHaveShop(chunkX, chunkY);
+                newChunk = new ForestChunk(mapPath, chunkX * CHUNK_SIZE, chunkY * CHUNK_SIZE, game, screen);
             }
+            newChunk.canHaveShop = canHaveShop(chunkX, chunkY);
             chunks.put(chunkKey, newChunk);
         }
     }
@@ -86,7 +86,7 @@ public class MapManager {
         if (biome.equals("Dungeon")) {
             loadMapChunk("Maps/DungeonMaps/Chunks/StartingChunk.tmx", startingTileX, startingTileY);
         } else {
-            loadMapChunk("Maps/DungeonMaps/Chunks/StartingChunk.tmx", startingTileX, startingTileY);
+            loadMapChunk("Maps/ForestMaps/Chunks/Forest_Chunk_1.tmx", startingTileX, startingTileY);
         }
     }
     private void loadInitialGrid(String biome) {
@@ -168,7 +168,7 @@ public class MapManager {
 
         // Ensure paths list is not empty before accessing
         if (paths.isEmpty()) {
-            return startingChunkPath(); // Return a fallback path if no match found
+            return startingChunkPath("Forest"); // Return a fallback path if no match found
         }
 
         // Shuffle the list and return a random matching path

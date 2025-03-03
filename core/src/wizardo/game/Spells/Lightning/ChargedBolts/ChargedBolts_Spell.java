@@ -24,10 +24,10 @@ public class ChargedBolts_Spell extends Spell {
 
         name = "Charged Bolts";
 
-        duration = 2.5f;
+        duration = 1.5f;
         cooldown = 0.8f;
         dmg = 12;
-        speed = 80f/PPM;
+        speed = 110f/PPM;
         bolts = 3;
         autoaimable = true;
 

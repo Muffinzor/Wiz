@@ -24,6 +24,7 @@ import wizardo.game.Resources.MonsterResources.MonsterProjectiles.SmallProjectil
 import wizardo.game.Resources.MonsterResources.SkeletonAnims;
 import wizardo.game.Resources.MonsterResources.SkeletonGiantAnims;
 import wizardo.game.Resources.ScreenResources.LevelUpResources;
+import wizardo.game.Resources.ScreenResources.ShopScreenResources;
 import wizardo.game.Resources.SpellAnims.*;
 import wizardo.game.Screens.BaseScreen;
 import wizardo.game.Screens.MainMenu.MainMenuScreen;
@@ -136,8 +137,10 @@ public class LoadingScreen extends BaseScreen {
 
         CharacterScreenResources.loadAtlas();
         LevelUpResources.loadAtlas();
+        ShopScreenResources.loadAtlas();
 
         loadDungeonMaps();
+        loadForestMaps();
     }
 
     public void loadAnims() {
@@ -184,6 +187,7 @@ public class LoadingScreen extends BaseScreen {
 
         CharacterScreenResources.loadAnimations();
         LevelUpResources.loadAnimations();
+        ShopScreenResources.loadAnimations();
     }
 
     public void loadDungeonMaps() {
@@ -194,6 +198,13 @@ public class LoadingScreen extends BaseScreen {
         assetManager.load("Maps/DungeonMaps/Tilesets/StoneGround.png", Texture.class);
         assetManager.setLoader(TiledMap.class, new TmxMapLoader());
         for(String path : ChunkPaths.getAllDungeonMapPaths()) {
+            assetManager.load(path, TiledMap.class);
+        }
+    }
+
+    public void loadForestMaps() {
+        assetManager.load("Maps/ForestMaps/Tilesets/grass-light-mid.png", Texture.class);
+        for(String path : ChunkPaths.getAllForestMapPaths()) {
             assetManager.load(path, TiledMap.class);
         }
     }

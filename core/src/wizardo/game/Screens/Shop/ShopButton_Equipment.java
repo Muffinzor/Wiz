@@ -43,7 +43,7 @@ public class ShopButton_Equipment extends ImageButton implements MenuButton {
 
     Sprite sprite;
     Sprite spriteOver;
-    float spriteRatio = 0.85f;
+    float spriteRatio = 1f;
 
     public ShopButton_Equipment(Skin skin, ShopScreen screen, Equipment piece) {
         super(skin, "shop_gear");
@@ -81,7 +81,7 @@ public class ShopButton_Equipment extends ImageButton implements MenuButton {
         float ogHeigth = newStyle.imageUp.getMinHeight();
 
         float WIDTH = xRatio * ogWidth * 0.7f;
-        float HEIGHT = yRatio * ogHeigth * 0.7f;
+        float HEIGHT = xRatio * ogHeigth * 0.7f;
 
 
         newStyle.imageUp.setMinWidth(WIDTH);
@@ -113,7 +113,7 @@ public class ShopButton_Equipment extends ImageButton implements MenuButton {
                 frame.set(sprite);
             }
 
-            frame.setScale(piece.displayScale * spriteRatio);
+            frame.setScale(piece.displayScale * xRatio * spriteRatio);
             frame.setCenter(getCenterPoint().x, getCenterPoint().y);
 
             frame.draw(batch);
@@ -203,7 +203,7 @@ public class ShopButton_Equipment extends ImageButton implements MenuButton {
                 if(!isDisabled()) {
                     hovered = true;
                     screen.activePanel = new GearPanel(screen.panelStage, piece, false, button);
-                    spriteRatio = 1f;
+                    spriteRatio = 1.2f;
                 }
             }
 
@@ -212,7 +212,7 @@ public class ShopButton_Equipment extends ImageButton implements MenuButton {
                 if(!isDisabled()) {
                     hovered = false;
                     screen.activePanel.dispose();
-                    spriteRatio = 0.85f;
+                    spriteRatio = 1f;
                 }
             }
         });

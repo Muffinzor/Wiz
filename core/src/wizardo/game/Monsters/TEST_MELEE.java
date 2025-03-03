@@ -6,9 +6,11 @@ import wizardo.game.Monsters.MonsterArchetypes.MonsterMelee;
 import wizardo.game.Monsters.MonsterMovement.MovementManager;
 import wizardo.game.Monsters.MonsterActions.AttackSwing.AttackSwing;
 import wizardo.game.Monsters.MonsterStateManager.MeleeStateManager;
-import wizardo.game.Resources.MonsterResources.SkeletonAnims;
+import wizardo.game.Resources.MonsterResources.MonsterWeapons;
+import wizardo.game.Resources.MonsterResources.OrcMinionAnims;
 import wizardo.game.Screens.Battle.BattleScreen;
 import wizardo.game.Screens.Battle.MonsterSpawner.MonsterSpawner;
+import wizardo.game.Screens.Battle.MonsterSpawner.MonsterSpawner_Dungeon;
 
 import static wizardo.game.Utils.Constants.PPM;
 
@@ -31,9 +33,9 @@ public class TEST_MELEE extends MonsterMelee {
         width = 20;
 
         stateTime = (float) Math.random();
-        walk_anim = SkeletonAnims.skelly_walk_T1;
-        death_anim = SkeletonAnims.skelly_death_T1;
-        weaponSprite = SkeletonAnims.bone;
+        walk_anim = OrcMinionAnims.orcMinion_walk_T1;
+        death_anim = OrcMinionAnims.orcMinion_death_T1;
+        weaponSprite = MonsterWeapons.short_sword;
 
         movementManager = new MovementManager(this);
 

@@ -26,9 +26,14 @@ public class MonsterUtils {
 
         AtomicBoolean clearLOS = new AtomicBoolean(true);
 
-        Vector2 origin = new Vector2(monster.body.getPosition());
+        Vector2 origin = monster.body.getPosition();
         Vector2 target = player.pawn.getPosition();
-        Vector2 direction = player.pawn.getPosition().cpy().sub(monster.body.getPosition()).nor();
+        Vector2 direction = player.pawn.getPosition().sub(monster.body.getPosition());
+        if(direction.isZero()) {
+            direction.set(1,0);
+        } else {
+            direction.nor();
+        }
         Vector2 perpendicular = new Vector2(-direction.y, direction.x).scl(monster.bodyRadius/PPM);
 
         Vector2 leftOrigin = origin.cpy().add(perpendicular);  // Offset to the left

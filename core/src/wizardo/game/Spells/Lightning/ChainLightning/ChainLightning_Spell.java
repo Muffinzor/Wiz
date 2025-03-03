@@ -109,7 +109,7 @@ public class ChainLightning_Spell extends Spell {
             } else {
                 for (Monster monster : inRange) {
                     float toOrigin = monster.body.getPosition().dst(center);
-                    if (toOrigin < dst && SpellUtils.hasLineOfSight(monster.body.getPosition(), getSpawnPosition())) {
+                    if (toOrigin < dst && toOrigin > 0 && SpellUtils.hasLineOfSight(monster.body.getPosition(), getSpawnPosition())) {
                         dst = toOrigin;
                         target = monster;
                     }

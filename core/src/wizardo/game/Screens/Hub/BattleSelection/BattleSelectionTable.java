@@ -10,11 +10,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import wizardo.game.Display.MenuTable;
 import wizardo.game.Screens.Battle.BattleScreen;
-import wizardo.game.Screens.EscapeMenu.EscapeMenuButton;
-import wizardo.game.Screens.Hub.HubScreen;
+import wizardo.game.Screens.EscapeMenu.SelectionMenuButton;
 import wizardo.game.Wizardo;
-
-import java.util.ArrayList;
 
 
 public class BattleSelectionTable extends MenuTable {
@@ -58,7 +55,7 @@ public class BattleSelectionTable extends MenuTable {
         table = null;
         switch (selectedButtonIndex) {
             case 0 -> game.freshScreen(new BattleScreen(game, "Dungeon"));
-            case 1 -> System.out.println("Nope");
+            case 1 -> game.freshScreen(new BattleScreen(game, "Forest"));
             case 2 -> game.setPreviousScreen();
         }
     }
@@ -82,12 +79,12 @@ public class BattleSelectionTable extends MenuTable {
 
     public void createButtons() {
 
-        EscapeMenuButton playButton = new EscapeMenuButton("Dungeon", skin);
-        buttons.add(playButton);
-        table.add(playButton);
+        SelectionMenuButton dungeon_button = new SelectionMenuButton("Dungeon", skin);
+        buttons.add(dungeon_button);
+        table.add(dungeon_button);
         table.row();
 
-        playButton.addListener(new InputListener() {
+        dungeon_button.addListener(new InputListener() {
             @Override
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
                 selectedButtonIndex = 0;
@@ -100,7 +97,7 @@ public class BattleSelectionTable extends MenuTable {
             }
         });
 
-        playButton.addListener(new ClickListener() {
+        dungeon_button.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 table.clearChildren();
@@ -108,12 +105,12 @@ public class BattleSelectionTable extends MenuTable {
             }
         });
 
-        EscapeMenuButton settingsButton = new EscapeMenuButton("Forest", skin);
-        buttons.add(settingsButton);
-        table.add(settingsButton);
+        SelectionMenuButton forest_button = new SelectionMenuButton("Forest", skin);
+        buttons.add(forest_button);
+        table.add(forest_button);
         table.row();
 
-        settingsButton.addListener(new InputListener() {
+        forest_button.addListener(new InputListener() {
             @Override
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
                 selectedButtonIndex = 1;
@@ -125,14 +122,15 @@ public class BattleSelectionTable extends MenuTable {
             }
         });
 
-        settingsButton.addListener(new ClickListener() {
+        forest_button.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                System.out.println("No settings");
+                table.clearChildren();
+                game.freshScreen(new BattleScreen(game, "Forest"));
             }
         });
 
-        EscapeMenuButton exitButton = new EscapeMenuButton("Cancel", skin);
+        SelectionMenuButton exitButton = new SelectionMenuButton("Cancel", skin);
         buttons.add(exitButton);
         table.add(exitButton);
 

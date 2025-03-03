@@ -5,13 +5,11 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Vector2;
 import wizardo.game.Items.Equipment.Equipment;
-import wizardo.game.Maps.EnvironmentObject;
 import wizardo.game.Maps.MapGeneration.MapChunk;
 import wizardo.game.Maps.MapUtils;
 import wizardo.game.Maps.TriggerObject;
 import wizardo.game.Resources.DecorResources.DungeonDecorResources;
 import wizardo.game.Screens.Battle.BattleScreen;
-import wizardo.game.Screens.Popups.AreYouSureScreen;
 import wizardo.game.Screens.Shop.ShopScreen;
 import wizardo.game.Spells.SpellUtils;
 
@@ -87,6 +85,9 @@ public class MapShop extends TriggerObject {
         return inventory.scrolls;
     }
     public Boolean[] getScrollSolds() {
-        return inventory.solds;
+        return inventory.scroll_solds;
+    }
+    public Boolean[] getReagentSolds() {
+        return inventory.reagent_solds;
     }
 }

@@ -92,6 +92,31 @@ public class MapUtils {
         fixtureDef.filter.maskBits = DECOR_MASK;
         fixtureDef.isSensor = isSensor;
 
+        body.createFixture(fixtureDef);
+        shape.dispose();
+
+        return body;
+    }
+    public static Body createCircleObstacleBody_FromTiledMap(MapChunk chunk, MapObject object, float radius) {
+        Body body;
+        BodyDef def = new BodyDef();
+
+        float x = object.getProperties().get("x", Float.class) + chunk.x_pos;
+        float y = object.getProperties().get("y", Float.class) + chunk.y_pos;
+
+        def.type = BodyDef.BodyType.StaticBody;
+
+        def.position.set(x/PPM, y/PPM);
+        body = world.createBody(def);
+        body.setUserData("Obstacle");
+
+        CircleShape shape = new CircleShape();
+        shape.setRadius(radius / PPM);
+
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = shape;
+        fixtureDef.filter.categoryBits = OBSTACLE;
+        fixtureDef.isSensor = false;
 
         body.createFixture(fixtureDef);
         shape.dispose();
@@ -106,7 +131,6 @@ public class MapUtils {
         float y = object.getProperties().get("y", Float.class) + chunk.y_pos;
 
         def.type = BodyDef.BodyType.StaticBody;
-
 
         def.position.set(x/PPM, y/PPM);
         def.fixedRotation = true;
@@ -151,6 +175,41 @@ public class MapUtils {
 
             PolygonShape shape = new PolygonShape();
             shape.setAsBox(width / 2 / PPM, height / 2 / PPM);
+
+            FixtureDef fixtureDef = new FixtureDef();
+            fixtureDef.filter.categoryBits = OBSTACLE;
+            fixtureDef.shape = shape;
+            fixtureDef.friction = 0;
+            fixtureDef.restitution = 0f;
+
+            body.createFixture(fixtureDef);
+            shape.dispose();
+            chunk.bodies.add(body);
+        }
+    }
+
+    /**
+     * Creates an impassable body to the shape of the Object passed in argument,
+     * adds it to the chunk's list of bodies to keep its reference
+     * @param chunk the tilemap chunk where the object is found
+     * @param object the RectangleMapObject
+     */
+    public static void createCircleObstacleBody(MapChunk chunk, RectangleMapObject object, float radius) {
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.StaticBody;
+
+        Rectangle rectangle = object.getRectangle();
+        float width = rectangle.width;
+        float height = rectangle.height;
+        float x = rectangle.x + chunk.x_pos + width / 2;
+        float y = rectangle.y + chunk.y_pos + height / 2;
+        bodyDef.position.set(x / PPM, y / PPM);
+        if(width > 0.05f && height > 0.05f) {
+            Body body = world.createBody(bodyDef);
+            body.setUserData("Obstacle");
+
+            CircleShape shape = new CircleShape();
+            shape.setRadius(radius / PPM);
 
             FixtureDef fixtureDef = new FixtureDef();
             fixtureDef.filter.categoryBits = OBSTACLE;

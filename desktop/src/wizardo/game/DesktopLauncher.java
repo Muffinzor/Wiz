@@ -20,7 +20,7 @@ public class DesktopLauncher {
 				//config.setWindowedMode(1280, 800);
 			} else {
 				//config.setFullscreenMode(Lwjgl3ApplicationConfiguration.getDisplayMode());
-				config.setWindowedMode(1600, 900);
+				config.setWindowedMode(1280, 800);
 			}
 
 			new Lwjgl3Application(new Wizardo(), config);

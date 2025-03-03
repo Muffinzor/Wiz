@@ -22,6 +22,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import wizardo.game.Controls.ControllerListener_TABLEMENU;
 import wizardo.game.Display.DisplayManager;
 import wizardo.game.Display.MenuTable;
+import wizardo.game.Items.Drop.DropManager;
 import wizardo.game.Lighting.LightManager;
 import wizardo.game.Monsters.MonsterManager;
 import wizardo.game.Resources.ScreenResources.CharacterScreenResources;
@@ -79,6 +80,7 @@ public abstract class BaseScreen implements Screen {
     public LightManager lightManager;
     public SpellManager spellManager;
     public MonsterManager monsterManager;
+    public DropManager dropManager;
 
     public OrthographicCamera mainCamera;
     public OrthographicCamera uiCamera;

@@ -19,7 +19,7 @@ public class PortalObject extends TriggerObject {
     public RoundLight light;
     boolean active;
 
-    public static Sprite stoneCircle = new Sprite(new Texture("Maps/Decor/PortalCircle.png"));
+    public static Sprite stoneCircle = new Sprite(new Texture("Maps/Decor/PortalEntrance.png"));
 
     public PortalObject(MapChunk chunk, MapObject object, boolean active) {
         super(chunk, object);
@@ -64,19 +64,21 @@ public class PortalObject extends TriggerObject {
         Sprite frame = getSprite(chunk.screen);
         frame.set(GeneralDecorResources.blue_portal_anim.getKeyFrame(stateTime, true));
         frame.setAlpha(0.8f);
-        frame.setCenter(triggerBody.getPosition().x * PPM, triggerBody.getPosition().y * PPM + 20);
+        frame.setCenter(triggerBody.getPosition().x * PPM, triggerBody.getPosition().y * PPM + 30);
+        chunk.screen.centerSort(frame, triggerBody.getPosition().y * PPM - 20);
         chunk.screen.displayManager.spriteRenderer.regular_sorted_sprites.add(frame);
     }
 
     public void drawStoneCircle() {
         Sprite frame = getSprite(chunk.screen);
         frame.set(stoneCircle);
-        frame.setCenter(triggerBody.getPosition().x * PPM, triggerBody.getPosition().y * PPM - 5);
-        chunk.screen.displayManager.spriteRenderer.under_sprites.add(frame);
+        frame.setCenter(triggerBody.getPosition().x * PPM, triggerBody.getPosition().y * PPM + 10);
+        chunk.screen.centerSort(frame, triggerBody.getPosition().y * PPM - 15);
+        chunk.screen.displayManager.spriteRenderer.regular_sorted_sprites.add(frame);
     }
 
     public void createBody() {
-        triggerBody = MapUtils.createEventTriggerBody(chunk, object, 15);
+        triggerBody = MapUtils.createEventTriggerBody(chunk, object, 10);
         triggerBody.setUserData(this);
     }
 

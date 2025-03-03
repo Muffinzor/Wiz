@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import wizardo.game.Display.MenuTable;
 import wizardo.game.Items.Equipment.Equipment;
@@ -52,7 +53,7 @@ public class ShopTable_Gear extends MenuTable {
 
         createTables();
         createButtons();
-
+        resizeLabels();
     }
 
     public void createTables() {
@@ -119,9 +120,7 @@ public class ShopTable_Gear extends MenuTable {
         container.align(Align.center);
 
         container.pack();
-
         container.setPosition(Gdx.graphics.getWidth()/2 - container.getWidth()/2, 630 * yRatio);
-
         container.validate();
     }
 
@@ -218,6 +217,36 @@ public class ShopTable_Gear extends MenuTable {
 
     @Override
     public void resize() {
+        resizeLabels();
+        resizeButtons();
+        resizeContainer();
+    }
 
+    public void resizeLabels() {
+        for (Label reagentPrice : prices) {
+            Label.LabelStyle originalStyle = inventorySkin.get("Price_Etiquette", Label.LabelStyle.class);
+            Label.LabelStyle newStyle = new Label.LabelStyle(originalStyle);
+            newStyle.background = new TextureRegionDrawable(((TextureRegionDrawable) originalStyle.background));
+
+            newStyle.background.setMinWidth(originalStyle.background.getMinWidth() * xRatio);
+            newStyle.background.setMinHeight(originalStyle.background.getMinHeight() * yRatio);
+
+            reagentPrice.setStyle(newStyle);
+            reagentPrice.setFontScale(Math.max(xRatio, 0.8f));
+        }
+    }
+
+    public void resizeContainer() {
+        Sprite background = new Sprite(new Texture("Screens/Shop/GearPanelBackground.png"));
+        background.setSize(background.getWidth() * xRatio, background.getHeight() * yRatio);
+        container.setBackground(new SpriteDrawable(background));
+        container.pack();
+        container.setPosition(Gdx.graphics.getWidth()/2 - container.getWidth()/2, 630 * yRatio);
+    }
+
+    public void resizeButtons() {
+        for(ShopButton_Equipment button : gearButtons) {
+            button.adjustSize();
+        }
     }
 }

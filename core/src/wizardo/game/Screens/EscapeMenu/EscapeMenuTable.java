@@ -10,12 +10,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import wizardo.game.Display.MenuTable;
-import wizardo.game.Screens.Hub.HubScreen;
 import wizardo.game.Screens.MainMenu.MainMenuScreen;
 import wizardo.game.Screens.Settings.SettingsScreen;
 import wizardo.game.Wizardo;
-
-import java.util.ArrayList;
 
 public class EscapeMenuTable extends MenuTable {
 
@@ -39,7 +36,7 @@ public class EscapeMenuTable extends MenuTable {
 
     public void createButtons() {
 
-        EscapeMenuButton playButton = new EscapeMenuButton("Resume", skin);
+        SelectionMenuButton playButton = new SelectionMenuButton("Resume", skin);
         buttons.add(playButton);
         table.add(playButton);
         table.row();
@@ -65,7 +62,7 @@ public class EscapeMenuTable extends MenuTable {
             }
         });
 
-        EscapeMenuButton settingsButton = new EscapeMenuButton("Settings", skin);
+        SelectionMenuButton settingsButton = new SelectionMenuButton("Settings", skin);
         buttons.add(settingsButton);
         table.add(settingsButton);
         table.row();
@@ -90,7 +87,7 @@ public class EscapeMenuTable extends MenuTable {
             }
         });
 
-        EscapeMenuButton exitButton = new EscapeMenuButton("Quit", skin);
+        SelectionMenuButton exitButton = new SelectionMenuButton("Quit", skin);
         buttons.add(exitButton);
         table.add(exitButton);
 

@@ -69,22 +69,23 @@ public class SpellUtils {
     }
 
     public static boolean hasLineOfSight(Vector2 origin, Vector2 target) {
+        if (origin.dst2(target) < 0.0001f) {
+            return false;
+        } else {
 
-        AtomicBoolean clearLOS = new AtomicBoolean(true);
+            AtomicBoolean clearLOS = new AtomicBoolean(true);
+            world.rayCast((fixture, point, normal, fraction) -> {
 
-        world.rayCast((fixture, point, normal, fraction) -> {
+                short obstacleCategory = 0x0010;
 
-            short obstacleCategory = 0x0010;
-
-            if (fixture != null && (fixture.getFilterData().categoryBits & obstacleCategory) != 0) {
-                clearLOS.set(false);
-                return 0; // Stop raycast
-            }
-            return 1; // Continue raycast
-        }, origin, target);
-
-        return clearLOS.get();
-
+                if (fixture != null && (fixture.getFilterData().categoryBits & obstacleCategory) != 0) {
+                    clearLOS.set(false);
+                    return 0; // Stop raycast
+                }
+                return 1; // Continue raycast
+            }, origin, target);
+            return clearLOS.get();
+        }
     }
 
     /**

@@ -66,7 +66,7 @@ public class AttackSwing extends MonsterSpell {
 
         if (body.isActive()) {
             Vector2 weaponTip = calculateHitBoxPosition();
-            body.setTransform(weaponTip, 0); // Keep the body rotation at 0
+            body.setTransform(weaponTip, 0);
         }
 
         if(stateTime >= swingDuration + 0.1f) {

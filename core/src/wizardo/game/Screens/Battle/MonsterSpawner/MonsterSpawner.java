@@ -13,10 +13,13 @@ import wizardo.game.Utils.BodyPool;
 
 import static wizardo.game.Wizardo.player;
 
-public class MonsterSpawner {
+public abstract class MonsterSpawner {
+
 
     public BattleScreen screen;
     float stateTime;
+
+    public boolean eliteAlive = false;
 
     Vector2 playerPreviousLocation;
     Vector2 playerCurrentLocation;
@@ -35,7 +38,7 @@ public class MonsterSpawner {
     float rangedSpawnTimer = 0;
     float packTimer = 0;
     float demonTimer = 0;
-    float targetedSpawnTimer = 0;
+    float emptyQuadrantSpawnTimer = 0;
 
     public BodyPool bodyPool;
     int maxMeleeMonsters = 100;
@@ -93,7 +96,7 @@ public class MonsterSpawner {
         meleeSpawnTimer += delta;
         packTimer += delta;
         rangedSpawnTimer += delta;
-        targetedSpawnTimer += delta;
+        emptyQuadrantSpawnTimer += delta;
         demonTimer += delta;
         maxMeleeMonsters = Math.min(1000, (int) (100 * spawnRatio));
     }
@@ -112,7 +115,7 @@ public class MonsterSpawner {
             if(screen.monsterManager.liveMonsters.size() < maxMeleeMonsters) {
                 for (int i = 0; i < spawnRatio; i++) {
                     Monster monster;
-                    if(Math.random() >= 0.16f && stateTime > 0) {
+                    if(Math.random() >= 0.9f && stateTime > 0) {
                         monster = new TEST_BIGMONSTER(screen, null, this);
                     } else {
                         monster = new TEST_MELEE(screen, null, this);
@@ -159,9 +162,9 @@ public class MonsterSpawner {
         }
     }
     public void spawnMonstersInEmptyQuadrant() {
-        if(targetedSpawnTimer > 2 && screen.monsterManager.liveMonsters.size() < maxMeleeMonsters) {
+        if(emptyQuadrantSpawnTimer > 2 && screen.monsterManager.liveMonsters.size() < maxMeleeMonsters) {
 
-            targetedSpawnTimer = 0;
+            emptyQuadrantSpawnTimer = 0;
             int topLeft = 0, topRight = 0, bottomLeft = 0, bottomRight = 0;
 
             Vector2 playerPos = player.pawn.getPosition();
@@ -226,7 +229,7 @@ public class MonsterSpawner {
 
         // Calculate the new ratio based on kills
         if (killsLastCycle > 10) {
-            spawnRatio = 1.0f + (killsLastCycle - 10 * spawnRatio) * 0.035f; // 0.035 is arbitrary and just a test
+            spawnRatio = 1.0f + (killsLastCycle - 10 * spawnRatio) * 0.025f; // 0.025 is arbitrary and just a test
             if(spawnRatio > previousRatio * 1.15f) {
                 spawnRatio = previousRatio * 1.15f; // Limit to 15% increase
             }

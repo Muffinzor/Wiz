@@ -30,7 +30,7 @@ public class Inventory {
 
     public int dual_reagents;
     public int triple_reagents;
-    public int gold = 0;
+    public int gold = 10000;
     public Equipment[] holdingBox;
 
     public Inventory() {

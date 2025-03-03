@@ -43,7 +43,7 @@ public class Orbit_Projectile extends Orbit_Spell {
         if(!initialized) {
             animTime = (float) Math.random();
             initialized = true;
-            speed *= 1 + player.spellbook.orbitSpeed/100f;
+            speed = getScaledSpeed();
             pickAnim();
             createBody();
             createLight();

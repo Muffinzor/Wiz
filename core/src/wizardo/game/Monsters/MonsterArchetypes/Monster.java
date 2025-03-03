@@ -23,8 +23,8 @@ import wizardo.game.Player.Player;
 import wizardo.game.Resources.SpellAnims.MarkAnims;
 import wizardo.game.Screens.Battle.BattleScreen;
 import wizardo.game.Screens.Battle.MonsterSpawner.MonsterSpawner;
+import wizardo.game.Screens.Battle.MonsterSpawner.MonsterSpawner_Dungeon;
 import wizardo.game.Spells.Unique.CorpseExplosion.CorpseExplosion;
-import wizardo.game.Spells.Unique.DukeLightning.DukeLightningHit;
 import wizardo.game.Utils.BodyFactory;
 
 import static wizardo.game.GameSettings.monster_health_bars;
@@ -35,9 +35,10 @@ public abstract class Monster {
 
     public BattleScreen screen;
     public Animation<Sprite> spawn_anim;
-    public boolean spawned = true;
+    public boolean spawned;
     public Animation<Sprite> walk_anim;
     public Animation<Sprite> death_anim;
+    public Animation<Sprite> idle_anim;
     public boolean deathFrameFlip;
     public Sprite weaponSprite;
     public float alpha = 1;
@@ -112,11 +113,6 @@ public abstract class Monster {
     }
 
     public void update(float delta) {
-        if(tooFar) {
-            System.out.println("TOO FAR");
-            System.out.println(body.getPosition());
-            System.out.println(player.pawn.body.getPosition());
-        }
         if(!initialized) {
             initialize();
             initialized = true;
@@ -149,16 +145,14 @@ public abstract class Monster {
     }
 
     public void handleSpawning() {
-        if(spawn_anim != null) {
-
-            if(stateTime < spawn_anim.getAnimationDuration() && body.isActive()) {
-                spawned = false;
+        if(!spawned) {
+            if(spawn_anim != null && stateTime < spawn_anim.getAnimationDuration()) {
                 body.setActive(false);
-            } else if(!body.isActive() && stateTime >= spawn_anim.getAnimationDuration()) {
+            } else {
                 spawned = true;
+                state = MonsterUtils.MONSTER_STATE.ADVANCING;
                 body.setActive(true);
             }
-
         }
     }
 
@@ -227,10 +221,23 @@ public abstract class Monster {
     public void drawFrame() {
         Sprite frame = screen.displayManager.spriteRenderer.pool.getSprite();
 
-        if(spawn_anim != null && stateTime <= spawn_anim.getAnimationDuration()) {
-            frame.set(spawn_anim.getKeyFrame(stateTime, false));
-        } else {
-            frame.set(walk_anim.getKeyFrame(stateTime, true));
+        switch(state) {
+            case ADVANCING -> frame.set(walk_anim.getKeyFrame(stateTime, true));
+            case SPAWNING -> {
+                if(spawn_anim != null && stateTime <= spawn_anim.getAnimationDuration()) {
+                    frame.set(spawn_anim.getKeyFrame(stateTime, false));
+                } else {
+                    frame.set(walk_anim.getKeyFrame(stateTime, true));
+                }
+            }
+            case ATTACKING -> {
+                if(idle_anim != null) {
+                    frame.set(idle_anim.getKeyFrame(stateTime, true));
+                } else {
+                    frame.set(walk_anim.getKeyFrame(stateTime, true));
+                }
+            }
+            default -> frame.set(walk_anim.getKeyFrame(stateTime, true));
         }
 
         frame.setPosition(body.getPosition().x * PPM - frame.getWidth()/2, body.getPosition().y * PPM - bodyRadius);
@@ -354,8 +361,8 @@ public abstract class Monster {
     public void onDeath() {
         corpseExplosion();
 
-        float potrate = 0.995f - player.stats.luck/2000f;
-        if(Math.random() >= potrate) {
+        float pot_rate = 0.995f - player.stats.luck/2000f;
+        if(Math.random() >= pot_rate) {
             PotionDrop potion = new PotionDrop(body.getPosition());
             screen.dropManager.addDrop(potion);
         }

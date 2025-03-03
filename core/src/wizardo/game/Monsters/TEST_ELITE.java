@@ -7,13 +7,13 @@ import wizardo.game.Monsters.MonsterStateManager.MeleeStateManager;
 import wizardo.game.Resources.MonsterResources.MonsterWeapons;
 import wizardo.game.Resources.MonsterResources.SkeletonGiantAnims;
 import wizardo.game.Screens.Battle.BattleScreen;
-import wizardo.game.Screens.Battle.MonsterSpawner.MonsterSpawner;
+import wizardo.game.Screens.Battle.MonsterSpawner.MonsterSpawner_Dungeon;
 
 import static wizardo.game.Utils.Constants.PPM;
 
 public class TEST_ELITE extends MonsterMelee {
 
-    public TEST_ELITE(BattleScreen screen, Vector2 position, MonsterSpawner spawner) {
+    public TEST_ELITE(BattleScreen screen, Vector2 position, MonsterSpawner_Dungeon spawner) {
         super(screen, position, spawner);
         speed = 20f/PPM;
         hp = 150;

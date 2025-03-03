@@ -206,7 +206,6 @@ public class WizContactListener implements ContactListener {
                     player.nearbyTriggerObject = null;
                 }
             }
-            object.handleCollision();
         }
     }
 

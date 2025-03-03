@@ -30,7 +30,7 @@ public class ArcaneMissile_Projectile extends ArcaneMissile_Spell {
 
     Body body;
     RoundLight light;
-    float frameScale = 0.35f;
+    float frameScale = 0.225f;
 
     float rotation;
     Vector2 direction;
@@ -88,10 +88,10 @@ public class ArcaneMissile_Projectile extends ArcaneMissile_Spell {
             body.setActive(false);
         }
 
-        if((hasCollided || stateTime - animTimeBuffer >= 2.5f) && delta > 0) {
+        if((hasCollided || stateTime - animTimeBuffer >= 1f) && delta > 0) {
             scale -= 0.02f;
             if(hasCollided) {
-                scale -= 0.02f;
+                scale -= 0.03f;
             }
         }
 
@@ -199,7 +199,7 @@ public class ArcaneMissile_Projectile extends ArcaneMissile_Spell {
             direction.set(1,0);
         }
 
-        direction.rotateDeg(MathUtils.random(-5,5));
+        direction.rotateDeg(MathUtils.random(-25,25));
         speed *= MathUtils.random(0.95f, 1.05f);
 
         Vector2 offset = new Vector2(direction.cpy().scl(1));
@@ -222,7 +222,7 @@ public class ArcaneMissile_Projectile extends ArcaneMissile_Spell {
 
     public void createLight() {
         light = screen.lightManager.pool.getLight();
-        light.setLight(red, green, blue, 0.9f, 45, body.getPosition());
+        light.setLight(red, green, blue, 0.9f, 30, body.getPosition());
         screen.lightManager.addLight(light);
     }
 
@@ -272,7 +272,7 @@ public class ArcaneMissile_Projectile extends ArcaneMissile_Spell {
             }
 
             //Clamp the angle difference to the maximum allowed increment
-            float maxRotationPerFrame = 8f;
+            float maxRotationPerFrame = 4f;
             float rotationStep = MathUtils.clamp(angleDiff, -maxRotationPerFrame, maxRotationPerFrame);
 
             direction.rotateDeg(rotationStep);

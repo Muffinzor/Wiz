@@ -24,6 +24,9 @@ public class RangedStateManager implements StateManager {
     }
 
     public void updateState(float delta) {
+        if(!monster.spawned) {
+            return;
+        }
 
         frameCounter ++;
         if(frameCounter >= 20) {
@@ -37,9 +40,7 @@ public class RangedStateManager implements StateManager {
             } else {
                 monster.state = ADVANCING;
             }
-
         }
-
     }
 
     public void hasLoS(float dst) {
