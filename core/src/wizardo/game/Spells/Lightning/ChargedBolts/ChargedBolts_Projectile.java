@@ -238,6 +238,7 @@ public class ChargedBolts_Projectile extends ChargedBolts_Spell {
             lightRadius = 35;
         }
         light = screen.lightManager.pool.getLight();
+        System.out.printf("red: %f, green: %f, blue: %f\n", red, green, blue);
         light.setLight(red, green, blue, lightAlpha, lightRadius, body.getPosition());
         screen.lightManager.addLight(light);
     }
@@ -351,12 +352,12 @@ public class ChargedBolts_Projectile extends ChargedBolts_Spell {
                 anim = chargedbolt_lightning_anim;
                 red = 0.4f;
                 green = 0.4f;
-
             }
             case ARCANE -> {
                 anim = chargedbolt_arcane_anim;
-                red = 0.6f;
-                blue = 0.9f;
+                red = 0.7f;
+                green = 0.35f;
+                blue = 0.85f;
             }
             case FIRE, FIRELITE -> {
                 anim = chargedbolt_fire_anim;

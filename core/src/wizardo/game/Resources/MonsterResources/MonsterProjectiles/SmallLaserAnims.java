@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
 import static wizardo.game.Wizardo.assetManager;
 
-public class SmallProjectileAnims {
+public class SmallLaserAnims {
 
     public static Sprite small_green =  new Sprite(new Texture("MonsterProjectiles/Small_Proj/small_green.png"));
 

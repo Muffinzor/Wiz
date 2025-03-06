@@ -50,6 +50,8 @@ public class Icespear_Projectile extends Icespear_Spell {
 
     int collisions;
 
+    boolean breakAnimationDone; //for multifixture contact, prevents duplicate anims
+
 
     public Icespear_Projectile(Vector2 spawnPosition, Vector2 targetPosition) {
 
@@ -172,8 +174,11 @@ public class Icespear_Projectile extends Icespear_Spell {
 
     public void handleCollision(Fixture fixture) {
         destroyed = true;
-        Icespear_Break hit = new Icespear_Break(body.getPosition());
-        screen.spellManager.add(hit);
+        if(!breakAnimationDone) {
+            Icespear_Break hit = new Icespear_Break(body.getPosition());
+            screen.spellManager.add(hit);
+            breakAnimationDone = true;
+        }
     }
 
     public float getProcRate() {

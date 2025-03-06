@@ -19,6 +19,13 @@ public class GeneralDecorResources {
     public static Animation<Sprite> goldChest_anim;
     public static String chest_atlas_path = "Maps/Decor/Chests.atlas";
 
+    public static Animation<Sprite> walltorch_anim;
+    public static Animation<Sprite> walltorch_anim_green;
+    public static Animation<Sprite> walltorch_anim_purp;
+    public static String walltorch_path = "Maps/Decor/Dungeon/WallTorch/torch.atlas";
+    public static String walltorch_path_green = "Maps/Decor/Dungeon/WallTorch/torch_green.atlas";
+    public static String walltorch_path_purp = "Maps/Decor/Dungeon/WallTorch/torch_purp.atlas";
+
     public static void loadAnimations() {
         loadChestAnims();
 
@@ -28,6 +35,27 @@ public class GeneralDecorResources {
             frames[i] = atlas.createSprite("portal" + (i + 1));
         }
         blue_portal_anim = new Animation<>(0.1f, frames);
+
+        Sprite[] torch_anim_purp = new Sprite[19];
+        TextureAtlas atlas_purp = assetManager.get(walltorch_path_purp, TextureAtlas.class);
+        for (int i = 0; i < torch_anim_purp.length; i++) {
+            torch_anim_purp[i] = atlas_purp.createSprite("torch" + (i+1));
+        }
+        walltorch_anim_purp = new Animation<>(0.1f, torch_anim_purp);
+
+        Sprite[] torch_anim_green = new Sprite[19];
+        TextureAtlas atlas_green = assetManager.get(walltorch_path_green, TextureAtlas.class);
+        for (int i = 0; i < torch_anim_green.length; i++) {
+            torch_anim_green[i] = atlas_green.createSprite("torch" + (i+1));
+        }
+        walltorch_anim_green = new Animation<>(0.1f, torch_anim_green);
+
+        Sprite[] torch_anim = new Sprite[19];
+        TextureAtlas atlas_torch = assetManager.get(walltorch_path, TextureAtlas.class);
+        for (int i = 0; i < torch_anim.length; i++) {
+            torch_anim[i] = atlas_torch.createSprite("torch" + (i+1));
+        }
+        walltorch_anim = new Animation<>(0.1f, torch_anim);
     }
     public static void loadChestAnims() {
         TextureAtlas atlas = assetManager.get(chest_atlas_path, TextureAtlas.class);
@@ -72,5 +100,8 @@ public class GeneralDecorResources {
     public static void loadAtlas() {
         assetManager.load(blue_portal_anim_path, TextureAtlas.class);
         assetManager.load(chest_atlas_path, TextureAtlas.class);
+        assetManager.load(walltorch_path_purp, TextureAtlas.class);
+        assetManager.load(walltorch_path_green, TextureAtlas.class);
+        assetManager.load(walltorch_path, TextureAtlas.class);
     }
 }

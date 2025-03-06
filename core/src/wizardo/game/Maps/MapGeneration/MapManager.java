@@ -83,11 +83,7 @@ public class MapManager {
     }
 
     private void loadStartingChunk(int playerChunkX, int playerChunkY, String biome) {
-        if (biome.equals("Dungeon")) {
-            loadMapChunk("Maps/DungeonMaps/Chunks/StartingChunk.tmx", startingTileX, startingTileY);
-        } else {
-            loadMapChunk("Maps/ForestMaps/Chunks/Forest_Chunk_1.tmx", startingTileX, startingTileY);
-        }
+        loadMapChunk(startingChunkPath(biome), startingTileX, startingTileY);
     }
     private void loadInitialGrid(String biome) {
         setPlayerStartPosition();

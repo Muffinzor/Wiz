@@ -30,6 +30,7 @@ public class DungeonChunk extends MapChunk {
         super(pathToFile, x, y, game, screen);
         chunkCenter = new Vector2(x + CHUNK_SIZE / 2f, y + CHUNK_SIZE / 2f);
         decorRenderer = new DecorRenderer(this);
+        biome = "Dungeon";
     }
 
     @Override

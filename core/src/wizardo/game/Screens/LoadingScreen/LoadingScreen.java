@@ -11,24 +11,21 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import wizardo.game.Items.Drop.DropAnims;
 import wizardo.game.Maps.MapGeneration.ChunkPaths;
 import wizardo.game.Resources.DecorResources.DungeonDecorResources;
+import wizardo.game.Resources.DecorResources.ForestDecorResources;
 import wizardo.game.Resources.EffectAnims.AuraAnims;
 import wizardo.game.Resources.EffectAnims.BlackHoleAnims;
 import wizardo.game.Resources.EffectAnims.CorpseExplosionAnims;
 import wizardo.game.Resources.EffectAnims.GearFlareAnims;
-import wizardo.game.Resources.MonsterResources.MawDemonAnims;
 import wizardo.game.Resources.MonsterResources.MonsterProjectiles.MonsterExplosions;
+import wizardo.game.Resources.MonsterResources.MonsterProjectiles.SmallFireboltAnims;
 import wizardo.game.Resources.ScreenResources.CharacterScreenResources;
 import wizardo.game.Resources.DecorResources.GeneralDecorResources;
-import wizardo.game.Resources.MonsterResources.AcolyteAnims;
-import wizardo.game.Resources.MonsterResources.MonsterProjectiles.SmallProjectileAnims;
-import wizardo.game.Resources.MonsterResources.SkeletonAnims;
-import wizardo.game.Resources.MonsterResources.SkeletonGiantAnims;
+import wizardo.game.Resources.MonsterResources.MonsterProjectiles.SmallLaserAnims;
 import wizardo.game.Resources.ScreenResources.LevelUpResources;
 import wizardo.game.Resources.ScreenResources.ShopScreenResources;
 import wizardo.game.Resources.SpellAnims.*;
 import wizardo.game.Screens.BaseScreen;
 import wizardo.game.Screens.MainMenu.MainMenuScreen;
-import wizardo.game.Spells.Unique.StaticOrb.StaticOrb;
 import wizardo.game.Wizardo;
 
 import static wizardo.game.Resources.MonsterResources.MONSTER_ANIMS.load_all_monster_anims;
@@ -125,6 +122,7 @@ public class LoadingScreen extends BaseScreen {
 
         GeneralDecorResources.loadAtlas();
         DungeonDecorResources.loadAtlas();
+        ForestDecorResources.loadAtlas();
         GearFlareAnims.loadAtlas();
         DropAnims.loadAtlas();
         AuraAnims.loadAtlas();
@@ -132,7 +130,8 @@ public class LoadingScreen extends BaseScreen {
 
         load_all_monster_atlas();
 
-        SmallProjectileAnims.loadAtlas();
+        SmallLaserAnims.loadAtlas();
+        SmallFireboltAnims.loadAtlas();
         MonsterExplosions.loadAtlas();
 
         CharacterScreenResources.loadAtlas();
@@ -175,6 +174,7 @@ public class LoadingScreen extends BaseScreen {
 
         GeneralDecorResources.loadAnimations();
         DungeonDecorResources.loadAnimations();
+        ForestDecorResources.loadAnimations();
         GearFlareAnims.loadAnimations();
         DropAnims.loadAnimations();
         AuraAnims.loadAnimations();
@@ -182,8 +182,9 @@ public class LoadingScreen extends BaseScreen {
 
         load_all_monster_anims();
 
-        SmallProjectileAnims.loadAnimations();
+        SmallLaserAnims.loadAnimations();
         MonsterExplosions.loadAnimations();
+        SmallFireboltAnims.loadAnimations();
 
         CharacterScreenResources.loadAnimations();
         LevelUpResources.loadAnimations();

@@ -35,7 +35,6 @@ public abstract class MonsterSpell implements Cloneable {
     public boolean sentBack;     //Repulsion Field flag
     public Body blackholeBody = null;
     public boolean blackholed;
-    public float pulledTime;
     public float redshift = 0.75f;
 
     public MonsterSpell(Monster monster) {
@@ -59,8 +58,6 @@ public abstract class MonsterSpell implements Cloneable {
             blackholeTargeting();
             checkState(delta);
         }
-
-
     }
 
     public abstract void checkState(float delta);

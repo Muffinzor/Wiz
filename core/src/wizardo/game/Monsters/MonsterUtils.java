@@ -41,8 +41,10 @@ public class MonsterUtils {
 
         world.rayCast((fixture, point, normal, fraction) -> {
             short obstacleCategory = 0x0010;
+            short short_obstacleCategory = 0x0020;
 
-            if (fixture != null && (fixture.getFilterData().categoryBits & obstacleCategory) != 0) {
+            if (fixture != null &&
+                    ((fixture.getFilterData().categoryBits & obstacleCategory) != 0 || (fixture.getFilterData().categoryBits & short_obstacleCategory) != 0)) {
                 clearLOS.set(false);
                 return 0; // Stop raycast
             }
@@ -51,8 +53,10 @@ public class MonsterUtils {
 
         world.rayCast((fixture, point, normal, fraction) -> {
             short obstacleCategory = 0x0010;
+            short short_obstacleCategory = 0x0020;
 
-            if ((fixture.getFilterData().categoryBits & obstacleCategory) != 0) {
+            if (fixture != null &&
+                    ((fixture.getFilterData().categoryBits & obstacleCategory) != 0 || (fixture.getFilterData().categoryBits & short_obstacleCategory) != 0)) {
                 clearLOS.set(false);
                 return 0; // Stop raycast
             }

@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import wizardo.game.Items.Drop.ScrollDrop;
 import wizardo.game.Monsters.MonsterActionManager;
 import wizardo.game.Monsters.MonsterActions.MonsterSpell;
-import wizardo.game.Monsters.MonsterActions.SmallProjectile.SmallLaser_Action;
+import wizardo.game.Monsters.MonsterActions.SmallLaser.SmallLaser_Action;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Monsters.MonsterMovement.MovementManager;
 import wizardo.game.Monsters.MonsterStateManager.RangedStateManager;

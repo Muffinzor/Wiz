@@ -8,7 +8,6 @@ import wizardo.game.Screens.Battle.MonsterSpawner.MonsterSpawner_Dungeon;
 public abstract class MonsterMelee extends Monster {
 
     public float attackRange;
-    public float hitboxRadius;
     public float rushDistance;
 
     public MonsterMelee(BattleScreen screen, Vector2 position, MonsterSpawner spawner) {

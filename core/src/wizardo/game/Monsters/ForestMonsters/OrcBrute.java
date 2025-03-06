@@ -10,8 +10,10 @@ import wizardo.game.Monsters.MonsterActions.AttackSwing.AttackSwing;
 import wizardo.game.Monsters.MonsterStateManager.MeleeStateManager;
 import wizardo.game.Monsters.MonsterUtils;
 import wizardo.game.Resources.MonsterResources.MonsterWeapons;
+import wizardo.game.Resources.MonsterResources.OrcBruteAnims;
 import wizardo.game.Resources.MonsterResources.SkeletonGiantAnims;
 import wizardo.game.Screens.Battle.BattleScreen;
+import wizardo.game.Screens.Battle.MonsterSpawner.MonsterSpawner;
 import wizardo.game.Screens.Battle.MonsterSpawner.MonsterSpawner_Dungeon;
 
 import static wizardo.game.Utils.Constants.PPM;
@@ -19,12 +21,12 @@ import static wizardo.game.Wizardo.player;
 
 public class OrcBrute extends MonsterMelee {
 
-    public OrcBrute(BattleScreen screen, Vector2 position, MonsterSpawner_Dungeon spawner) {
+    public OrcBrute(BattleScreen screen, Vector2 position, MonsterSpawner spawner) {
         super(screen, position, spawner);
         speed = 20f/PPM;
         hp = 150;
-        maxHP = 150;
-        xp = 30;
+        maxHP = 120;
+        xp = 25;
 
         dmg = 20;
 
@@ -34,9 +36,9 @@ public class OrcBrute extends MonsterMelee {
         width = 32;
 
         stateTime = (float) Math.random();
-        walk_anim = SkeletonGiantAnims.skellygiant_walk;
-        death_anim = SkeletonGiantAnims.skellygiant_death;
-        weaponSprite = MonsterWeapons.bone_axe;
+        walk_anim = OrcBruteAnims.orcBrute_walk;
+        death_anim = OrcBruteAnims.orcBrute_death;
+        weaponSprite = MonsterWeapons.orc_bludgeon;
 
         movementManager = new MovementManager(this);
         stateManager = new MeleeStateManager(this);

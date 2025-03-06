@@ -11,13 +11,14 @@ import wizardo.game.Monsters.MonsterUtils;
 import wizardo.game.Resources.MonsterResources.MonsterWeapons;
 import wizardo.game.Resources.MonsterResources.OrcMinionAnims;
 import wizardo.game.Screens.Battle.BattleScreen;
+import wizardo.game.Screens.Battle.MonsterSpawner.MonsterSpawner;
 import wizardo.game.Screens.Battle.MonsterSpawner.MonsterSpawner_Dungeon;
 
 import static wizardo.game.Utils.Constants.PPM;
 
 public class OrcMinion extends MonsterMelee {
 
-    public OrcMinion(BattleScreen screen, Vector2 position, MonsterSpawner_Dungeon spawner) {
+    public OrcMinion(BattleScreen screen, Vector2 position, MonsterSpawner spawner) {
         super(screen, position, spawner);
         speed = 20f/PPM;
         hp = 25;

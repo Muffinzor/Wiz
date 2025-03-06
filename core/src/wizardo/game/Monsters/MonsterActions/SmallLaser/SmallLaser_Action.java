@@ -1,4 +1,4 @@
-package wizardo.game.Monsters.MonsterActions.SmallProjectile;
+package wizardo.game.Monsters.MonsterActions.SmallLaser;
 
 import wizardo.game.Monsters.MonsterActions.MonsterSpell;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;

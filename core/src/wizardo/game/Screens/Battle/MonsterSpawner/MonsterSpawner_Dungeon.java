@@ -2,11 +2,11 @@ package wizardo.game.Screens.Battle.MonsterSpawner;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import wizardo.game.Monsters.DungeonMonsters.AcolyteBlue;
+import wizardo.game.Monsters.DungeonMonsters.Skeleton;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Monsters.MonsterTypes.MawDemon.MawDemon;
 import wizardo.game.Monsters.TEST_BIGMONSTER;
-import wizardo.game.Monsters.TEST_MELEE;
-import wizardo.game.Monsters.TEST_RANGED;
 import wizardo.game.Screens.Battle.BattleScreen;
 import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyPool;
@@ -48,18 +48,6 @@ public class MonsterSpawner_Dungeon extends MonsterSpawner {
 
         playerPreviousLocation = player.pawn.getPosition();
         playerCurrentLocation = player.pawn.getPosition();
-
-    }
-
-    public void calculateTrajectory() {
-        if(playerPreviousLocation.dst(playerCurrentLocation) > 1) {
-            direction = new Vector2(playerCurrentLocation.cpy().sub(playerPreviousLocation));
-        } else {
-            direction = null;
-        }
-
-        playerPreviousLocation.set(playerCurrentLocation);
-        playerCurrentLocation.set(player.pawn.getPosition());
 
     }
 
@@ -116,7 +104,7 @@ public class MonsterSpawner_Dungeon extends MonsterSpawner {
                     if(Math.random() >= 0.9f && stateTime > 0) {
                         monster = new TEST_BIGMONSTER(screen, null, this);
                     } else {
-                        monster = new TEST_MELEE(screen, null, this);
+                        monster = new Skeleton(screen, null, this);
                     }
                     spawnMonster(monster);
                 }
@@ -127,7 +115,7 @@ public class MonsterSpawner_Dungeon extends MonsterSpawner {
         if(rangedSpawnTimer > 3.2f && stateTime > 120) {
             rangedSpawnTimer = 0;
             if(screen.monsterManager.getRangedMonstersCount() < 30) {
-                TEST_RANGED monster = new TEST_RANGED(screen, SpawnerUtils.getRandomRangeSpawnVector(), this);
+                Monster monster = new AcolyteBlue(screen, SpawnerUtils.getRandomRangeSpawnVector(), this);
                 spawnMonster(monster);
             }
         }
@@ -153,7 +141,7 @@ public class MonsterSpawner_Dungeon extends MonsterSpawner {
                 if(Math.random() >= 0.95f) {
                     monster = new TEST_BIGMONSTER(screen, spawnPoint, this);
                 } else {
-                    monster = new TEST_MELEE(screen, spawnPoint, this);
+                    monster = new Skeleton(screen, spawnPoint, this);
                 }
                 spawnMonster(monster);
             }
@@ -193,7 +181,7 @@ public class MonsterSpawner_Dungeon extends MonsterSpawner {
 
             for (int i = 0; i < 6 * spawnRatio; i++) {
                 Vector2 position = SpellUtils.getClearRandomPositionCone(player.pawn.getPosition(), 34, 45, angle);
-                Monster monster = new TEST_MELEE(screen, position, this);
+                Monster monster = new Skeleton(screen, position, this);
                 spawnMonster(monster);
             }
         }

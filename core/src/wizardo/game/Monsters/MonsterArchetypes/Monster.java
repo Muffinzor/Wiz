@@ -64,6 +64,8 @@ public abstract class Monster {
     public float height;
     public float width;
     public float speed;
+    public float hitboxRadius;
+
     public Vector2 directionVector;
     public Vector2 position;
     public Vector2 deathPosition;

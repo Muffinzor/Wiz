@@ -38,11 +38,11 @@ public class Tree extends EnvironmentObject {
         int random = MathUtils.random(1,2);
         switch (random) {
             case 1 -> {
-                sprite = ForestDecorResources.green_tree_1;
+                sprite = ForestDecorResources.green_tree_dark_1;
                 shadow = ForestDecorResources.green_tree_shadow_1;
             }
             case 2 -> {
-                sprite = ForestDecorResources.green_tree_2;
+                sprite = ForestDecorResources.green_tree_dark_2;
                 shadow = ForestDecorResources.green_tree_shadow_2;
             }
         }

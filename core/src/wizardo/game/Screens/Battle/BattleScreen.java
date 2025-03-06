@@ -17,7 +17,9 @@ import wizardo.game.Monsters.MonsterActions.MonsterSpellManager;
 import wizardo.game.Player.Pawn;
 import wizardo.game.Screens.BaseScreen;
 import wizardo.game.Items.Drop.DropManager;
+import wizardo.game.Screens.Battle.MonsterSpawner.MonsterSpawner;
 import wizardo.game.Screens.Battle.MonsterSpawner.MonsterSpawner_Dungeon;
+import wizardo.game.Screens.Battle.MonsterSpawner.MonsterSpawner_Forest;
 import wizardo.game.Screens.MainMenu.MainMenuScreen;
 import wizardo.game.Spells.SpellManager;
 import wizardo.game.Wizardo;
@@ -35,7 +37,7 @@ public class BattleScreen extends BaseScreen {
     public Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
 
     public MapManager mapManager;
-    public MonsterSpawner_Dungeon monsterSpawner;
+    public MonsterSpawner monsterSpawner;
     public MonsterSpellManager monsterSpellManager;
 
     public final BattleUI battleUI;
@@ -49,14 +51,14 @@ public class BattleScreen extends BaseScreen {
 
         mainCamera.viewportWidth = Gdx.graphics.getWidth();
         mainCamera.viewportHeight = Gdx.graphics.getHeight();
-        mainCamera.zoom = 1f;
+        mainCamera.zoom = 4f;
 
         createNewWorld();
         rayHandler = new RayHandler(world);
         rayHandler.setCulling(false);
 
         if(biome.equals("Forest")) {
-            rayHandler.setAmbientLight(0.25f);
+            rayHandler.setAmbientLight(0.3f);
         } else {
             rayHandler.setAmbientLight(0.35f);
         }
@@ -68,7 +70,12 @@ public class BattleScreen extends BaseScreen {
         player.screen = this;
 
         mapManager = new MapManager(biome, game, this);
-        monsterSpawner = new MonsterSpawner_Dungeon(this);
+        if(biome.equals("Dungeon")) {
+            monsterSpawner = new MonsterSpawner_Dungeon(this);
+        } else {
+            monsterSpawner = new MonsterSpawner_Forest(this);
+        }
+
         monsterManager = new MonsterManager(this);
         spellManager = new SpellManager(this);
         monsterSpellManager = new MonsterSpellManager(this);

@@ -3,6 +3,7 @@ package wizardo.game.Maps.MapGeneration;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.EllipseMapObject;
+import com.badlogic.gdx.maps.objects.PolygonMapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -41,6 +42,7 @@ public abstract class MapChunk {
     public boolean canHaveShop;
 
     public String pathToFile;
+    public String biome;
 
     public MapChunk(String pathToFile, float x, float y, Wizardo game, BaseScreen screen) {
         this.game = game;
@@ -75,6 +77,9 @@ public abstract class MapChunk {
             }
             if(object instanceof EllipseMapObject) {
                 MapUtils.EllipseObstacleBody(this, (EllipseMapObject) object);
+            }
+            if(object instanceof PolygonMapObject) {
+                MapUtils.createOctagonalFountainBody(this, (PolygonMapObject) object);
             }
         }
     }

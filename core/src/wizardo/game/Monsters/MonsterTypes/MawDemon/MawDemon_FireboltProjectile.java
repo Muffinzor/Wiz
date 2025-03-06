@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
-import wizardo.game.Monsters.MonsterActions.SmallProjectile.SmallLaser_Explosion;
+import wizardo.game.Monsters.MonsterActions.SmallLaser.SmallLaser_Explosion;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Resources.SpellAnims.FrostboltAnims;
 import wizardo.game.Utils.BodyFactory;

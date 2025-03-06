@@ -31,7 +31,7 @@ public class ChainLightning_Hit extends ChainLightning_Spell {
     boolean hasDealtDmg;
     Body body;
     public boolean forked;
-    public float duration = 0.3f;
+    public float duration = 0.4f;
 
     public Monster monsterFrom;
     public Monster monsterTo;

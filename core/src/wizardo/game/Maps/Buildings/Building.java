@@ -10,27 +10,30 @@ import static wizardo.game.Utils.Constants.PPM;
 
 public abstract class Building extends EnvironmentObject {
 
-    Sprite sprite;
+    public Sprite sprite;
+    public boolean flipped;
+    public String name;
 
-    int x;
-    int y;
-    float width;
-    float height;
+    public float x;
+    public float y;
+    public float width;
+    public float height;
 
-    Sprite decoSprite1;
-    Vector2 decoPosition1;
-    Sprite decoSprite2;
-    Vector2 decoPosition2;
+    public Sprite decoSprite1;
+    public Vector2 decoPosition1;
+    public Sprite decoSprite2;
+    public Vector2 decoPosition2;
     int alignement;   // 1 = left, 2 = center, 3 = right
 
     public Building(MapChunk chunk, MapObject mapObject) {
         super(chunk, mapObject);
         width = mapObject.getProperties().get("width", Float.class);
         height = mapObject.getProperties().get("height", Float.class);
-        x = (int) (mapObject.getProperties().get("x", Float.class) + chunk.x_pos);
-        y = (int) (mapObject.getProperties().get("y", Float.class) + chunk.y_pos);
+        x = (mapObject.getProperties().get("x", Float.class) + chunk.x_pos);
+        y = (mapObject.getProperties().get("y", Float.class) + chunk.y_pos);
         x = x/PPM;
         y = y/PPM;
+        name = mapObject.getName();
     }
 
     public void setup() {
@@ -45,9 +48,11 @@ public abstract class Building extends EnvironmentObject {
     public void drawFrame() {
         Sprite frame = chunk.screen.getSprite();
         frame.set(sprite);
-        frame.setCenter(x * PPM + frame.getWidth()/2, y * PPM + frame.getHeight()/2);
+        frame.setOrigin(frame.getWidth()/2, 0);
+        frame.setPosition(x * PPM, y * PPM);
+        frame.flip(flipped, false);
         chunk.screen.addSortedSprite(frame);
-        chunk.screen.centerSort(frame, y * PPM + 30);
+        chunk.screen.centerSort(frame, y * PPM + height/2.5f);
 
         drawDeco();
     }

@@ -1,22 +1,23 @@
-package wizardo.game.Monsters.MonsterActions.SmallProjectile;
+package wizardo.game.Monsters.MonsterActions.SmallLaser;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
-import wizardo.game.Resources.MonsterResources.MonsterProjectiles.SmallProjectileAnims;
+import wizardo.game.Resources.MonsterResources.MonsterProjectiles.SmallLaserAnims;
+import wizardo.game.Resources.SpellAnims.ChargedboltsAnims;
 
 import static wizardo.game.Utils.Constants.PPM;
 
-public class SmallLaser_Explosion extends SmallLaser_Projectile {
+public class SmallFirebolts_Explosion extends SmallLaser_Projectile {
 
     Animation<Sprite> anim;
     boolean flipX;
     boolean flipY;
     int rotation;
 
-    public SmallLaser_Explosion(Vector2 spawnPosition, Monster monster) {
+    public SmallFirebolts_Explosion(Vector2 spawnPosition, Monster monster) {
         super(spawnPosition, monster);
 
         flipX = MathUtils.randomBoolean();
@@ -34,16 +35,8 @@ public class SmallLaser_Explosion extends SmallLaser_Projectile {
 
     @Override
     public void pickAnim() {
-        if(sentBack) {
-            anim = SmallProjectileAnims.purple_hit_anim;
-            red = 0.6f;
-            blue = 0.9f;
-        } else {
-            anim = SmallProjectileAnims.green_hit_anim;
-            red = 0.2f;
-            green = 0.9f;
-            blue = 0.25f;
-        }
+        anim = ChargedboltsAnims.chargedbolt_explosion_anim;
+        red = 0.9f;
     }
 
     @Override
@@ -53,7 +46,7 @@ public class SmallLaser_Explosion extends SmallLaser_Projectile {
         frame.setCenter(spawnPosition.x * PPM, spawnPosition.y * PPM);
         frame.setRotation(rotation);
         frame.flip(flipX, flipY);
-        frame.setScale(0.8f);
+        frame.setScale(0.35f);
         screen.centerSort(frame, spawnPosition.y * PPM - 10);
         screen.addSortedSprite(frame);
     }

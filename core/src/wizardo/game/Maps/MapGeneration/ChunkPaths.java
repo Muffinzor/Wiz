@@ -16,7 +16,7 @@ public class ChunkPaths {
         if(biome.equals("Dungeon")) {
             return "Maps/DungeonMaps/Chunks/StartingChunk.tmx";
         } else {
-            return "Maps/ForestMaps/Chunks/Forest_Chunk_1.tmx";
+            return "Maps/ForestMaps/Chunks/Forest_StartingChunk.tmx";
         }
 
     }
@@ -39,6 +39,14 @@ public class ChunkPaths {
         String tile1 = "Maps/ForestMaps/Chunks/Forest_Chunk_1.tmx";
         chunkPaths.add(tile1);
         chunkConnections.put(tile1, createTileConnections(0,0,0,0));
+
+        String tile2 = "Maps/ForestMaps/Chunks/Forest_Chunk_2.tmx";
+        chunkPaths.add(tile2);
+        chunkConnections.put(tile2, createTileConnections(0,0,0,1));
+
+        String tile3 = "Maps/ForestMaps/Chunks/Forest_Chunk_3.tmx";
+        chunkPaths.add(tile3);
+        chunkConnections.put(tile3, createTileConnections(0,1,0,0));
     }
 
     public static void dungeonChunks() {
@@ -122,7 +130,10 @@ public class ChunkPaths {
 
     public static ArrayList<String> getAllForestMapPaths() {
         ArrayList<String> forestMapPaths = new ArrayList<>();
+        forestMapPaths.add("Maps/ForestMaps/Chunks/Forest_StartingChunk.tmx");
         forestMapPaths.add("Maps/ForestMaps/Chunks/Forest_Chunk_1.tmx");
+        forestMapPaths.add("Maps/ForestMaps/Chunks/Forest_Chunk_2.tmx");
+        forestMapPaths.add("Maps/ForestMaps/Chunks/Forest_Chunk_3.tmx");
         return forestMapPaths;
     }
 

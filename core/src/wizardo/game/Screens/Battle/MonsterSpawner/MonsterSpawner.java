@@ -37,7 +37,7 @@ public abstract class MonsterSpawner {
     float meleeSpawnTimer = 0;
     float rangedSpawnTimer = 0;
     float packTimer = 0;
-    float demonTimer = 0;
+    float eliteTimer = 0;
     float emptyQuadrantSpawnTimer = 0;
 
     public BodyPool bodyPool;
@@ -62,7 +62,6 @@ public abstract class MonsterSpawner {
 
         playerPreviousLocation.set(playerCurrentLocation);
         playerCurrentLocation.set(player.pawn.getPosition());
-
     }
 
     public void update(float delta) {
@@ -86,7 +85,6 @@ public abstract class MonsterSpawner {
         spawnPack();
         spawnMonstersInEmptyQuadrant();
         spawnDemon();
-
     }
 
     public void updateTimers(float delta) {
@@ -97,14 +95,14 @@ public abstract class MonsterSpawner {
         packTimer += delta;
         rangedSpawnTimer += delta;
         emptyQuadrantSpawnTimer += delta;
-        demonTimer += delta;
+        eliteTimer += delta;
         maxMeleeMonsters = Math.min(1000, (int) (100 * spawnRatio));
     }
 
 
     public void spawnDemon() {
-        if(demonTimer > 300f) {
-            demonTimer = 0;
+        if(eliteTimer > 300f) {
+            eliteTimer = 0;
             Monster monster = new MawDemon(screen, null, this);
             spawnMonster(monster);
         }

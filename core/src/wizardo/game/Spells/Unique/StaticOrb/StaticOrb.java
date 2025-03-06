@@ -44,13 +44,13 @@ public class StaticOrb extends Spell {
         }
 
         stateTime += delta;
-        if(stateTime % 1 < delta) {
+        if(stateTime % 0.5 < delta) {
             StaticPulse pulse = new StaticPulse(body.getPosition());
             pulse.anim_element = anim_element;
             screen.spellManager.add(pulse);
         }
 
-        if(stateTime >= 3) {
+        if(stateTime >= 2.5f) {
             alpha -= 0.02f;
             if(light != null) {
                 light.dimKill(0.02f);

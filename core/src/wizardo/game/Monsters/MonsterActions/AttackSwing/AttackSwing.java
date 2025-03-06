@@ -29,13 +29,13 @@ public class AttackSwing extends MonsterSpell {
 
     boolean hasHit;
 
-    MonsterMelee monster;
+    Monster monster;
 
 
     public AttackSwing(Monster monster) {
         super(monster);
         this.weaponSprite = monster.weaponSprite;
-        this.monster = (MonsterMelee) originMonster;
+        this.monster = originMonster;
         flipY = player.pawn.getPosition().x < monster.body.getPosition().x;
     }
 

@@ -119,7 +119,7 @@ public class Pawn {
         if(player.pawn.pushBackTimer > 0 || hitTimer > 0) {
             frame.setColor(0.75f,0,0,1);
         }
-        frame.setPosition(body.getPosition().x * PPM - frame.getWidth()/2f, body.getPosition().y * PPM - 8);
+        frame.setPosition(body.getPosition().x * PPM - frame.getWidth()/2f, body.getPosition().y * PPM - 10);
         screen.displayManager.spriteRenderer.regular_sorted_sprites.add(frame);
 
         Vector3 mouseUnprojected = screen.mainCamera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));

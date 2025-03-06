@@ -9,22 +9,18 @@ import com.badlogic.gdx.math.Vector2;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Maps.EnvironmentObject;
 import wizardo.game.Maps.MapGeneration.MapChunk;
+import wizardo.game.Resources.DecorResources.GeneralDecorResources;
 
 import static wizardo.game.Utils.Constants.PPM;
 
 public class WallTorchObject extends EnvironmentObject {
 
-    public static Animation<Sprite> walltorch_anim;
-    static {
-        Sprite[] frames = new Sprite[19];
-        TextureAtlas atlas = new TextureAtlas("Maps/Decor/Dungeon/WallTorch/torch.atlas");
-        for (int i = 0; i < frames.length; i++) {
-            frames[i] = atlas.createSprite("torch" + (i+1));
-        }
-        walltorch_anim = new Animation<>(0.1f, frames);
-    }
+    Animation<Sprite> anim;
 
     RoundLight light;
+    float red;
+    float green;
+    float blue;
     boolean flipX;
 
     Vector2 position;
@@ -39,6 +35,7 @@ public class WallTorchObject extends EnvironmentObject {
     @Override
     public void update(float delta) {
         if(!initialized) {
+            pickAnim();
             createLight();
             initialized = true;
         }
@@ -48,15 +45,31 @@ public class WallTorchObject extends EnvironmentObject {
 
     }
 
+    public void pickAnim() {
+        switch(chunk.biome) {
+            case "Dungeon" -> {
+                anim = GeneralDecorResources.walltorch_anim_green;
+                green = 0.6f;
+                blue = 0.45f;
+                red = 0.1f;
+            }
+            case "Forest" -> {
+                anim = GeneralDecorResources.walltorch_anim;
+                red = 0.75f;
+                green = 0.3f;
+            }
+        }
+    }
+
     public void createLight() {
         light = chunk.screen.lightManager.pool.getLight();
-        light.setLight(0.7f, 0.3f, 0, 0.9f, 75, new Vector2(position.x, position.y + 0.2f));
+        light.setLight(red, green, blue, 0.9f, 75, new Vector2(position.x, position.y + 0.2f));
         chunk.screen.lightManager.addLight(light);
     }
 
     public void drawFrame() {
         Sprite frame = chunk.screen.getSprite();
-        frame.set(walltorch_anim.getKeyFrame(stateTime, true));
+        frame.set(anim.getKeyFrame(stateTime, true));
         frame.setCenter(position.x * PPM, position.y * PPM);
         frame.setScale(0.35f);
         frame.flip(flipX, false);

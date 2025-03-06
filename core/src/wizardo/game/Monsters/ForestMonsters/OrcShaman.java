@@ -6,14 +6,16 @@ import wizardo.game.Items.Drop.ScrollDrop;
 import wizardo.game.Monsters.MonsterActionManager;
 import wizardo.game.Monsters.MonsterActions.AttackSwing.AttackSwing;
 import wizardo.game.Monsters.MonsterActions.MonsterSpell;
-import wizardo.game.Monsters.MonsterActions.SmallProjectile.SmallLaser_Action;
+import wizardo.game.Monsters.MonsterActions.SmallFirebolts.SmallFirebolts_Action;
+import wizardo.game.Monsters.MonsterActions.SmallLaser.SmallLaser_Action;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Monsters.MonsterMovement.MovementManager;
 import wizardo.game.Monsters.MonsterStateManager.RangedStateManager;
 import wizardo.game.Monsters.MonsterUtils;
+import wizardo.game.Resources.MonsterResources.MonsterWeapons;
 import wizardo.game.Resources.MonsterResources.OrcShamanAnims;
 import wizardo.game.Screens.Battle.BattleScreen;
-import wizardo.game.Screens.Battle.MonsterSpawner.MonsterSpawner_Dungeon;
+import wizardo.game.Screens.Battle.MonsterSpawner.MonsterSpawner;
 
 import static wizardo.game.Utils.Constants.PPM;
 
@@ -21,14 +23,14 @@ public class OrcShaman extends Monster {
 
     MonsterSpell projectile;
 
-    public OrcShaman(BattleScreen screen, Vector2 position, MonsterSpawner_Dungeon spawner) {
+    public OrcShaman(BattleScreen screen, Vector2 position, MonsterSpawner spawner) {
         super(screen, position, spawner);
         speed = 25f/PPM;
         hp = 50;
         maxHP = 50;
         xp = 15;
 
-        dmg = 15;
+        dmg = 10;
 
         massValue = 75;
         bodyRadius = 12;
@@ -40,12 +42,14 @@ public class OrcShaman extends Monster {
         idle_anim = OrcShamanAnims.orcShaman_stop;
 
         movementManager = new MovementManager(this);
-        stateManager = new RangedStateManager(this, 4.5f, 12f);
-        monsterActionManager = new MonsterActionManager(this, 6f);
+        stateManager = new RangedStateManager(this, 3f, 9f);
+        monsterActionManager = new MonsterActionManager(this, 5f);
 
         state = MonsterUtils.MONSTER_STATE.ADVANCING;
 
-        projectile = new SmallLaser_Action(this);
+        projectile = new SmallFirebolts_Action(this);
+        hitboxRadius = 5;
+        weaponSprite = MonsterWeapons.short_staff;
     }
 
     @Override
@@ -61,7 +65,6 @@ public class OrcShaman extends Monster {
     public void initialize() {
         initialized = true;
         createBody();
-        createLight(30, 0.8f);
         speed = speed * MathUtils.random(0.9f, 1.1f);
     }
 

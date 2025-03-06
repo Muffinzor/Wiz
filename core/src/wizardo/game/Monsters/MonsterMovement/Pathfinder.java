@@ -28,9 +28,9 @@ public class Pathfinder {
         if(MonsterUtils.hasCompleteLoS(monster)) {
             return direction;
         } else {
+            System.out.println("OBSTACLE DETECTED");
             return avoidObstacle(direction, false);
         }
-
     }
 
     public Vector2 awayFromPlayer() {
@@ -47,50 +47,50 @@ public class Pathfinder {
     }
 
     private Vector2 avoidObstacle(Vector2 direction, boolean backwards) {
-
         Vector2 desiredDirection = new Vector2(direction);
-        float rayLength = direction.len(); // Ray length depends on the current direction
-        if (backwards) {
-            rayLength = 6; // Default length when moving backwards
-        }
+        float rayLength = backwards ? 6 : direction.len(); // Shorter ray when moving backwards
 
         direction.nor();
 
         // Define angles for multiple rays
-        float[] rayAngles = {-12, -6, 0, 6, 12}; // in degrees
+        float[] rayAngles = {-12, -6, 0, 6, 12}; // Wider spread to detect obstacles
 
         for (float angle : rayAngles) {
             Vector2 rayDir = new Vector2(direction).rotateDeg(angle);
 
             // Perform ray cast
             world.rayCast((fixture, point, normal, fraction) -> {
-                if (fixture.getBody().getUserData() != null && (fixture.getBody().getUserData().equals("Obstacle") ||
-                                                                fixture.getBody().getUserData().equals("Decor"))) {
-                    Vector2 avoidForce;
+                Body body = fixture.getBody();
 
-                    // Calculate direction from obstacle to monster
-                    Vector2 obstacleToMonster = monster.body.getPosition().cpy().sub(fixture.getBody().getPosition());
-                    if(obstacleToMonster.isZero()) {
-                        obstacleToMonster.set(0,1);
+                if (body.getUserData() != null && (body.getUserData().equals("Obstacle") || body.getUserData().equals("Decor"))) {
+                    Vector2 obstacleCenter = body.getPosition();
+                    Vector2 obstacleToMonster = monster.body.getPosition().cpy().sub(obstacleCenter);
+
+                    if (obstacleToMonster.isZero()) {
+                        obstacleToMonster.set(0, 1);
                     }
 
-                    // Determine steering direction based on relative position
+                    // Determine avoidance direction
+                    Vector2 avoidForce;
                     if (obstacleToMonster.crs(rayDir) > 0) {
                         avoidForce = new Vector2(-normal.y, normal.x); // Steer right
                     } else {
                         avoidForce = new Vector2(normal.y, -normal.x); // Steer left
                     }
 
-                    // Scale avoidance force based on distance to obstacle
-                    float dstToObstacle = fixture.getBody().getPosition().dst(monster.body.getPosition());
-                    desiredDirection.add(avoidForce.scl(300 / (dstToObstacle * dstToObstacle + 1))); // Avoid divide by 0
+                    // Scale avoidance force based on proximity to the whole obstacle, not just a fixture
+                    float dstToObstacle = obstacleCenter.dst(monster.body.getPosition());
+                    desiredDirection.add(avoidForce.scl(200 / (dstToObstacle * dstToObstacle + 1))); // Adjust scaling
+
+                    return 0; // Stop checking further fixtures on this body
                 }
-                return fraction; // Continue ray cast
+                return -1;
             }, monster.body.getPosition(), monster.body.getPosition().cpy().add(rayDir.scl(rayLength)));
         }
 
-        return desiredDirection;
+        return desiredDirection.nor(); // Normalize final movement direction
     }
+
 
     /** returns an obstacle fixture if it
      *  encounters one */
@@ -112,5 +112,54 @@ public class Pathfinder {
         // Return the fixture that was hit (either player or obstacle)
         return hitFixture[0];
     }
+
+    // OLD AVOID OBSTACLE, DOES NOT WORK WELL WITH ELLIPTICAL OBJECTS
+
+    /**
+    private Vector2 avoidObstacle(Vector2 direction, boolean backwards) {
+          Vector2 desiredDirection = new Vector2(direction);
+          float rayLength = backwards ? 6 : direction.len(); // Shorter ray when moving backwards
+
+          direction.nor();
+
+          // Define angles for multiple rays
+          float[] rayAngles = {-12, -6, 0, 6, 12}; // Wider spread to detect obstacles
+
+          for (float angle : rayAngles) {
+              Vector2 rayDir = new Vector2(direction).rotateDeg(angle);
+
+              // Perform ray cast
+              world.rayCast((fixture, point, normal, fraction) -> {
+                  Body body = fixture.getBody();
+
+               if (body.getUserData() != null && (body.getUserData().equals("Obstacle") || body.getUserData().equals("Decor"))) {
+                    Vector2 obstacleCenter = body.getPosition();
+                      Vector2 obstacleToMonster = monster.body.getPosition().cpy().sub(obstacleCenter);
+
+                      if (obstacleToMonster.isZero()) {
+                          obstacleToMonster.set(0, 1);
+                      }
+
+                      // Determine avoidance direction
+                      Vector2 avoidForce;
+                      if (obstacleToMonster.crs(rayDir) > 0) {
+                          avoidForce = new Vector2(-normal.y, normal.x); // Steer right
+                      } else {
+                          avoidForce = new Vector2(normal.y, -normal.x); // Steer left
+                      }
+
+                      // Scale avoidance force based on proximity to the whole obstacle, not just a fixture
+                      float dstToObstacle = obstacleCenter.dst(monster.body.getPosition());
+                      desiredDirection.add(avoidForce.scl(200 / (dstToObstacle * dstToObstacle + 1))); // Adjust scaling
+
+                      return 0; // Stop checking further fixtures on this body
+                 }
+                 return -1;
+              }, monster.body.getPosition(), monster.body.getPosition().cpy().add(rayDir.scl(rayLength)));
+          }
+
+          return desiredDirection.nor(); // Normalize final movement direction
+      }
+    */
 
 }

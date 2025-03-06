@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="60" height="60" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="28">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="60" height="60" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="32">
  <tileset firstgid="1" source="../ForestMaps/Tilesets/grass-light-to-mid.tsx"/>
  <tileset firstgid="404" source="../ForestMaps/Tilesets/grass-mid-to-light.tsx"/>
  <layer id="4" name="Tile Layer 1" width="60" height="60">

@@ -2,8 +2,10 @@ package wizardo.game.Maps;
 
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.EllipseMapObject;
+import com.badlogic.gdx.maps.objects.PolygonMapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Ellipse;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
@@ -152,7 +154,6 @@ public class MapUtils {
         return body;
     }
 
-
     /**
      * Creates an impassable body to the shape of the Object passed in argument,
      * adds it to the chunk's list of bodies to keep its reference
@@ -273,9 +274,9 @@ public class MapUtils {
         Body body = world.createBody(bodyDef);
 
         // Number of vertices per segment (must be between 3 and 8)
-        int numVerticesPerSegment = 8;
+        int numVerticesPerSegment = 6;
         // Total number of segments to approximate the ellipse
-        int numSegments = 16; // Adjust for more or less accuracy
+        int numSegments = 6; // Adjust for more or less accuracy
         float angleStep = (float) (2 * Math.PI / numSegments);
         float radiusX = width / 2 / PPM;
         float radiusY = height / 2 / PPM;
@@ -299,10 +300,56 @@ public class MapUtils {
 
             body.createFixture(fixtureDef);
 
+
             // Clean up
             shape.dispose();
         }
-
+        body.setUserData("Obstacle");
         return body;
+    }
+
+    public static void createOctagonalFountainBody(MapChunk chunk, PolygonMapObject object) {
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.StaticBody;
+
+        Polygon polygon = object.getPolygon();
+        float[] vertices = polygon.getTransformedVertices();
+
+        // Calculate center of polygon
+        float centerX = 0;
+        float centerY = 0;
+        for (int i = 0; i < vertices.length; i += 2) {
+            centerX += vertices[i];
+            centerY += vertices[i + 1];
+        }
+        centerX /= (vertices.length / 2);
+        centerY /= (vertices.length / 2);
+
+        bodyDef.position.set((centerX + chunk.x_pos) / PPM, (centerY + chunk.y_pos) / PPM);
+
+        if (vertices.length == 16) {
+            Body body = world.createBody(bodyDef);
+            body.setUserData("Obstacle");
+
+            PolygonShape shape = new PolygonShape();
+            Vector2[] box2dVertices = new Vector2[8];
+            for (int i = 0; i < 8; i++) {
+                float vx = (vertices[i * 2] - centerX) / PPM;
+                float vy = (vertices[i * 2 + 1] - centerY) / PPM;
+                box2dVertices[i] = new Vector2(vx, vy);
+            }
+
+            shape.set(box2dVertices);
+
+            FixtureDef fixtureDef = new FixtureDef();
+            fixtureDef.filter.categoryBits = SHORT_OBSTACLE;
+            fixtureDef.shape = shape;
+            fixtureDef.friction = 0;
+            fixtureDef.restitution = 0f;
+
+            body.createFixture(fixtureDef);
+            shape.dispose();
+            chunk.bodies.add(body);
+        }
     }
 }
