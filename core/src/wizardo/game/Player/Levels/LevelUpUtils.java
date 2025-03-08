@@ -18,6 +18,7 @@ public class LevelUpUtils {
     public static LevelUpQuality getRandomQuality() {
         double random = Math.random();
 
+
         if(random >= 0.94f) {
             return LEGENDARY;
         }
