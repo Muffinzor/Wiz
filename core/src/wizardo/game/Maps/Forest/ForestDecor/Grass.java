@@ -1,4 +1,4 @@
-package wizardo.game.Maps.ForestDecor;
+package wizardo.game.Maps.Forest.ForestDecor;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.MapObject;
@@ -39,7 +39,7 @@ public class Grass extends EnvironmentObject {
         frame.set(sprite);
         frame.setPosition(position.x * PPM - frame.getWidth()/2, position.y * PPM);
         frame.flip(flip, false);
-        chunk.screen.centerSort(frame, position.y * PPM + 10);
+        chunk.screen.centerSort(frame, position.y * PPM + 15);
         chunk.screen.addSortedSprite(frame);
     }
 

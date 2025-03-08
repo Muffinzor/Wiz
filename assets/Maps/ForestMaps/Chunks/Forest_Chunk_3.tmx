@@ -222,7 +222,7 @@
   </object>
  </objectgroup>
  <objectgroup id="6" name="LootBodies">
-  <object id="126" name="Chest" x="1120" y="1187" width="4" height="4"/>
+  <object id="126" name="Chest" x="1120" y="1185" width="4" height="4"/>
   <object id="127" name="Chest" x="1470" y="803" width="4" height="4"/>
   <object id="128" name="Chest" x="1182" y="675" width="4" height="4"/>
   <object id="130" name="Chest" x="628" y="840" width="4" height="4"/>
@@ -249,7 +249,7 @@
   <object id="125" name="Tree" x="902" y="760" width="8" height="8"/>
  </objectgroup>
  <objectgroup id="12" name="GrassBodies">
-  <object id="101" name="GrassCluster" x="-361" y="-378" width="2703.38" height="2662">
+  <object id="101" name="GrassCluster" x="-391" y="-372" width="2703.38" height="2662">
    <ellipse/>
   </object>
   <object id="131" name="GrassCluster" x="1612" y="136" width="284" height="284">

@@ -2,16 +2,13 @@ package wizardo.game.Maps.Dungeon;
 
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
-import com.badlogic.gdx.maps.objects.EllipseMapObject;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import wizardo.game.Maps.Buildings.*;
-import wizardo.game.Maps.Chest;
 import wizardo.game.Maps.DecorObjects.*;
+import wizardo.game.Maps.Dungeon.DungeonBuildings.DungeonBuilding;
+import wizardo.game.Maps.Dungeon.DungeonBuildings.Statue_Building;
 import wizardo.game.Maps.EnvironmentObject;
 import wizardo.game.Maps.MapGeneration.MapChunk;
-import wizardo.game.Maps.MapUtils;
 import wizardo.game.Maps.Shop.MapShop;
 import wizardo.game.Screens.Battle.BattleScreen;
 import wizardo.game.Wizardo;
@@ -22,14 +19,11 @@ import static wizardo.game.Wizardo.world;
 
 public class DungeonChunk extends MapChunk {
 
-    DecorRenderer decorRenderer;
-
     boolean alreadySeen;
 
     public DungeonChunk(String pathToFile, float x, float y, Wizardo game, BattleScreen screen) {
         super(pathToFile, x, y, game, screen);
         chunkCenter = new Vector2(x + CHUNK_SIZE / 2f, y + CHUNK_SIZE / 2f);
-        decorRenderer = new DecorRenderer(this);
         biome = "Dungeon";
     }
 
@@ -37,7 +31,11 @@ public class DungeonChunk extends MapChunk {
     public void render(float delta) {
         float distance = player.pawn.getPosition().scl(PPM).dst(chunkCenter);
 
-        if(distance < 3000) {
+        if(shop != null) {
+            shop.display_direction();
+        }
+
+        if(distance < 4500) {
 
             if(bodies.isEmpty() && delta > 0) {
                 initialize();
@@ -88,50 +86,35 @@ public class DungeonChunk extends MapChunk {
         decor = map.getLayers().get("ObstacleBodies").getObjects();
         for (MapObject object : decor) {
 
-            if(object.getName().equals("Pillar")) {
-                Pillar_Building pillar = new Pillar_Building(this, object);
-                layerObjects.add(pillar);
-            }
-            if(object.getName().equals("Crypt")) {
-                Crypt_Building crypt = new Crypt_Building(this, object);
-                layerObjects.add(crypt);
-            }
-            if(object.getName().equals("Building2")) {
-                Square_Building building = new Square_Building(this, object);
+            if(object.getName().equals("Pillar") ||
+                    object.getName().equals("Crypt") ||
+                    object.getName().equals("Building2") ||
+                    object.getName().equals("Building1")) {
+                DungeonBuilding building = new DungeonBuilding(this, object, false);
                 layerObjects.add(building);
             }
-            if(object.getName().equals("Building1")) {
-                Rectangle_Building building = new Rectangle_Building(this, object, false);
-                layerObjects.add(building);
-            }
+
             if(object.getName().equals("Statue")) {
                 Statue_Building statue = new Statue_Building(this, object);
                 layerObjects.add(statue);
             }
+
             if(object.getName().equals("Shop")) {
                 if(canHaveShop) {
                     MapShop shop = new MapShop(this, object);
                     layerObjects.add(shop);
-                    Rectangle_Building building = new Rectangle_Building(this, object, true);
+                    DungeonBuilding building = new DungeonBuilding(this, object, true);
                     layerObjects.add(building);
                 } else {
-                    Rectangle_Building building = new Rectangle_Building(this, object, false);
+                    DungeonBuilding building = new DungeonBuilding(this, object, false);
                     layerObjects.add(building);
                 }
 
             }
-
             if(object.getName().equals("FirePillar")) {
                 FirePillarObject pillar = new FirePillarObject(this, object);
                 layerObjects.add(pillar);
             }
-
-            if(object.getName().equals("Doodad")) {
-                DoodadObject doodad = new DoodadObject(this, object);
-                layerObjects.add(doodad);
-            }
-
-
         }
     }
 

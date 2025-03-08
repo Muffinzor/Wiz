@@ -270,7 +270,7 @@
   <object id="6" name="Pillar" x="1248" y="1056" width="64" height="64"/>
   <object id="7" name="Pillar" x="608" y="1056" width="64" height="64"/>
   <object id="8" name="Shop" x="832" y="416" width="256" height="128"/>
-  <object id="9" name="Building2" x="898" y="1312" width="128" height="128"/>
+  <object id="9" name="Building2" x="896" y="1312" width="128" height="128"/>
   <object id="10" name="Crypt" x="576" y="448" width="128" height="96"/>
   <object id="11" name="Crypt" x="1216" y="448" width="128" height="96"/>
   <object id="12" name="FirePillar" x="208" y="1042" width="32" height="27"/>

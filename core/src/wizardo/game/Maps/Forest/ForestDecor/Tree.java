@@ -1,4 +1,4 @@
-package wizardo.game.Maps.ForestDecor;
+package wizardo.game.Maps.Forest.ForestDecor;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.MapObject;

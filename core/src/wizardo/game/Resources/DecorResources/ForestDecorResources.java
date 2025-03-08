@@ -21,10 +21,16 @@ public class ForestDecorResources {
     public static String grass_path = "Maps/Decor/Forest/Grass.atlas";
     public static Sprite[] grass = new Sprite[8];
 
+    // Building Vegetation
+    public static String vines_path = "Maps/Decor/Forest/Vegetation/Vegetation.atlas";
+    public static Sprite[] vines = new Sprite[9];
+    public static Sprite[] herbs = new Sprite[3];
+    public static Sprite[] bushes = new Sprite[3];
+
     // Buildings
     public static Sprite rectangle_ruins1_stone = new Sprite(new Texture("Maps/Decor/Forest/Buildings/building1_s.png"));
     public static Sprite rectangle_ruins1_grass = new Sprite(new Texture("Maps/Decor/Forest/Buildings/building1_g.png"));
-    public static Sprite rectangle_ruins2_stone = new Sprite(new Texture("Maps/Decor/Forest/Buildings/building2_s2.png"));
+    public static Sprite rectangle_ruins2_stone = new Sprite(new Texture("Maps/Decor/Forest/Buildings/building2_s.png"));
     public static Sprite rectangle_ruins2_grass = new Sprite(new Texture("Maps/Decor/Forest/Buildings/building2_g.png"));
     public static Sprite pillar_h1_grass = new Sprite(new Texture("Maps/Decor/Forest/Buildings/pillar_h1_g.png"));
     public static Sprite pillar_h1_stone = new Sprite(new Texture("Maps/Decor/Forest/Buildings/pillar_h1_s.png"));
@@ -51,6 +57,18 @@ public class ForestDecorResources {
             grass[i] = atlas.createSprite("grass" + (i+1));
         }
 
+        TextureAtlas vines_atlas = assetManager.get(vines_path, TextureAtlas.class);
+        for (int i = 0; i < vines.length; i++) {
+            vines[i] = vines_atlas.createSprite("vine" + (i+1));
+        }
+
+        herbs[0] = new Sprite(new Texture("Maps/Decor/Forest/Vegetation/herbs1.png"));
+        herbs[1] = new Sprite(new Texture("Maps/Decor/Forest/Vegetation/herbs2.png"));
+        herbs[2] = new Sprite(new Texture("Maps/Decor/Forest/Vegetation/herbs3.png"));
+        bushes[0] = new Sprite(new Texture("Maps/Decor/Forest/Vegetation/bush1.png"));
+        bushes[1] = new Sprite(new Texture("Maps/Decor/Forest/Vegetation/bush2.png"));
+        bushes[2] = new Sprite(new Texture("Maps/Decor/Forest/Vegetation/bush3.png"));
+
         TextureAtlas fountain_atlas = assetManager.get(fountain_path, TextureAtlas.class);
         Sprite[] fountain_frames = new Sprite[8];
         for (int i = 0; i < fountain_frames.length; i++) {
@@ -61,6 +79,7 @@ public class ForestDecorResources {
 
     public static void loadAtlas() {
         assetManager.load(grass_path, TextureAtlas.class);
+        assetManager.load(vines_path, TextureAtlas.class);
         assetManager.load(fountain_path, TextureAtlas.class);
     }
 

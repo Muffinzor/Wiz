@@ -1,9 +1,10 @@
-package wizardo.game.Maps.Buildings;
+package wizardo.game.Maps.Dungeon.DungeonBuildings;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import wizardo.game.Maps.Buildings.Building;
 import wizardo.game.Maps.EnvironmentObject;
 import wizardo.game.Maps.MapGeneration.MapChunk;
 import wizardo.game.Resources.DecorResources.DungeonDecorResources;

@@ -12,8 +12,6 @@ public class Orbit_Spell extends Spell {
     public int orbs = 3;
     public float orbitRadius = 5;
 
-    public float speed = 2f;
-
     public boolean frostbolt;
 
     public float duration;
@@ -21,13 +19,13 @@ public class Orbit_Spell extends Spell {
     public Orbit_Spell() {
         name = "Orbit";
 
+        speed = 2;
         dmg = 20;
         cooldown = 12;
         duration = 6;
     }
 
     public void setup() {
-        speed *= 1 + (player.spellbook.projSpeedBonus/100f);
         orbitRadius = orbitRadius * (1 + player.spellbook.orbitingIceRadius/100f);
         if(player.inventory.equippedBook instanceof Epic_OrbitBook) {
             speed = speed * 1.2f;

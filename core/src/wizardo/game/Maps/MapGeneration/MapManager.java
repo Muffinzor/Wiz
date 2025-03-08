@@ -21,7 +21,7 @@ public class MapManager {
     public OrthographicCamera camera;
 
     public static final int CHUNK_SIZE = 1920;   // 60 x 60 -> 32px tiles
-    public static final int INITIAL_GRID_SIZE = 1; // 9x9
+    public static final int INITIAL_GRID_SIZE = 2; // 3x3
 
     int startingTileX = 50;
     int startingTileY = 50;
@@ -162,14 +162,13 @@ public class MapManager {
             }
         }
 
-        // Ensure paths list is not empty before accessing
+        // Fallback, but must never happen. muh immersion
         if (paths.isEmpty()) {
-            return startingChunkPath("Forest"); // Return a fallback path if no match found
+            return startingChunkPath(biome);
         }
 
-        // Shuffle the list and return a random matching path
         Collections.shuffle(paths);
-        return paths.getFirst();  // Now you're calling get(0) which works for ArrayLists, not getFirst() which doesn't exist
+        return paths.getFirst();
     }
 
     private List<Integer> getNeighborConnection(int neighborX, int neighborY, String direction) {
@@ -227,8 +226,8 @@ public class MapManager {
     private boolean canHaveShop(int x_position, int y_position) {
         boolean canHaveShop = true;
 
-        for (int dx = x_position -1; dx <= x_position + 1; dx++) {
-            for (int dy = y_position -1 ; dy <= y_position + 1; dy++) {
+        for (int dx = x_position -4; dx <= x_position + 4; dx++) {
+            for (int dy = y_position -4 ; dy <= y_position + 4; dy++) {
                 if (dx == 0 && dy == 0) {
                     continue;
                 }

@@ -1,18 +1,14 @@
-package wizardo.game.Maps.ForestDecor;
+package wizardo.game.Maps.Forest.ForestDecor;
 
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Vector2;
 import wizardo.game.Maps.EnvironmentObject;
-import wizardo.game.Maps.ForestDecor.Grass;
 import wizardo.game.Maps.MapGeneration.MapChunk;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 import static wizardo.game.Utils.Constants.PPM;
-import static wizardo.game.Utils.Methods.isCircleOverlappingWithObstacle;
-import static wizardo.game.Utils.Methods.isPositionOverlappingWithObstacle;
-import static wizardo.game.Wizardo.player;
 
 public class GrassCluster extends EnvironmentObject {
 

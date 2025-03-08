@@ -47,6 +47,10 @@ public class ChunkPaths {
         String tile3 = "Maps/ForestMaps/Chunks/Forest_Chunk_3.tmx";
         chunkPaths.add(tile3);
         chunkConnections.put(tile3, createTileConnections(0,1,0,0));
+
+        String tile4 = "Maps/ForestMaps/Chunks/Forest_Chunk_4.tmx";
+        chunkPaths.add(tile4);
+        chunkConnections.put(tile4, createTileConnections(0,0,0,0));
     }
 
     public static void dungeonChunks() {
@@ -134,6 +138,7 @@ public class ChunkPaths {
         forestMapPaths.add("Maps/ForestMaps/Chunks/Forest_Chunk_1.tmx");
         forestMapPaths.add("Maps/ForestMaps/Chunks/Forest_Chunk_2.tmx");
         forestMapPaths.add("Maps/ForestMaps/Chunks/Forest_Chunk_3.tmx");
+        forestMapPaths.add("Maps/ForestMaps/Chunks/Forest_Chunk_4.tmx");
         return forestMapPaths;
     }
 

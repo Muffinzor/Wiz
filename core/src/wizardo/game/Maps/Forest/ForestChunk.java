@@ -5,15 +5,13 @@ import com.badlogic.gdx.maps.MapObjects;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import wizardo.game.Maps.Dungeon.DecorRenderer;
 import wizardo.game.Maps.EnvironmentObject;
 import wizardo.game.Maps.Forest.ForestBuildings.ForestBuilding;
 import wizardo.game.Maps.Forest.ForestBuildings.ForestFountain;
 import wizardo.game.Maps.Forest.ForestBuildings.ForestStone;
-import wizardo.game.Maps.ForestDecor.GrassCluster;
-import wizardo.game.Maps.ForestDecor.Tree;
+import wizardo.game.Maps.Forest.ForestDecor.GrassCluster;
+import wizardo.game.Maps.Forest.ForestDecor.Tree;
 import wizardo.game.Maps.MapGeneration.MapChunk;
-import wizardo.game.Maps.Shop.MapShop;
 import wizardo.game.Screens.Battle.BattleScreen;
 import wizardo.game.Wizardo;
 
@@ -23,14 +21,11 @@ import static wizardo.game.Wizardo.world;
 
 public class ForestChunk extends MapChunk {
 
-    DecorRenderer decorRenderer;
-
     boolean alreadySeen;
 
     public ForestChunk(String pathToFile, float x, float y, Wizardo game, BattleScreen screen) {
         super(pathToFile, x, y, game, screen);
         chunkCenter = new Vector2(x + CHUNK_SIZE / 2f, y + CHUNK_SIZE / 2f);
-        decorRenderer = new DecorRenderer(this);
         biome = "Forest";
     }
 
@@ -38,7 +33,11 @@ public class ForestChunk extends MapChunk {
     public void render(float delta) {
         float distance = player.pawn.getPosition().scl(PPM).dst(chunkCenter);
 
-        if(distance < 3000) {
+        if(shop != null) {
+            shop.display_direction();
+        }
+
+        if(distance < 4500) {
 
             if(bodies.isEmpty() && delta > 0) {
                 initialize();
@@ -112,14 +111,6 @@ public class ForestChunk extends MapChunk {
                 layerObjects.add(fountain);
             }
 
-            if(object.getName().equals("Shop")) {
-                if(canHaveShop) {
-                    MapShop shop = new MapShop(this, object);
-                    layerObjects.add(shop);
-                }
-                //Rectangle_Building building = new Rectangle_Building(this, object, true);
-                //layerObjects.add(building);
-            }
         }
     }
 

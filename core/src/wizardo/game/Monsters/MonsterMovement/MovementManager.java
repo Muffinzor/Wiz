@@ -42,7 +42,7 @@ public class MovementManager {
 
     public void walk(boolean backwards) {
         frameCounter ++;
-        if(frameCounter >= 20) {
+        if(frameCounter >= 30) {
             checkDistance();
             if(backwards) {
                 monster.directionVector = pathfinder.awayFromPlayer();

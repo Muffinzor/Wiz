@@ -73,11 +73,11 @@ public class MonsterSpawner_Forest extends MonsterSpawner {
             directionTimer = 0;
         }
 
-        //spawnMeleeMonsters();
-        //spawnRangedMonsters();
-        //spawnPack();
-        //spawnMonstersInEmptyQuadrant();
-        //spawnDemon();
+        spawnMeleeMonsters();
+        spawnRangedMonsters();
+        spawnPack();
+        spawnMonstersInEmptyQuadrant();
+        spawnDemon();
     }
 
     public void updateTimers(float delta) {

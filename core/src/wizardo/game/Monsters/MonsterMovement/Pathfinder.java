@@ -28,7 +28,6 @@ public class Pathfinder {
         if(MonsterUtils.hasCompleteLoS(monster)) {
             return direction;
         } else {
-            System.out.println("OBSTACLE DETECTED");
             return avoidObstacle(direction, false);
         }
     }

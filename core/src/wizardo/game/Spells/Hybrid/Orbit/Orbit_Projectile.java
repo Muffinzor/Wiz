@@ -47,7 +47,6 @@ public class Orbit_Projectile extends Orbit_Spell {
             pickAnim();
             createBody();
             createLight();
-
         }
 
         stateTime += delta;

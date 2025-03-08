@@ -3,12 +3,10 @@ package wizardo.game.Maps.Hub;
 
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
-import com.badlogic.gdx.maps.objects.EllipseMapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.physics.box2d.Body;
-import wizardo.game.Maps.DecorObjects.StandingTorchObject;
 import wizardo.game.Maps.EnvironmentObject;
-import wizardo.game.Maps.ForestDecor.Tree;
+import wizardo.game.Maps.Forest.ForestDecor.Tree;
 import wizardo.game.Maps.MapGeneration.MapChunk;
 import wizardo.game.Maps.DecorObjects.PortalObject;
 import wizardo.game.Maps.MapUtils;

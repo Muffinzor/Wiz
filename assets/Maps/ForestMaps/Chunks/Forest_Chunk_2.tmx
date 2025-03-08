@@ -229,10 +229,10 @@
   <object id="138" name="Tree" x="1560" y="596" width="8" height="8"/>
  </objectgroup>
  <objectgroup id="6" name="LootBodies">
-  <object id="133" name="Chest" x="216" y="835" width="4" height="4"/>
-  <object id="134" name="Chest" x="1599" y="1218" width="4" height="4"/>
-  <object id="135" name="Chest" x="552" y="1570" width="4" height="4"/>
-  <object id="136" name="Chest" x="1237" y="1307" width="4" height="4"/>
+  <object id="133" name="Chest" x="216" y="832" width="4" height="4"/>
+  <object id="134" name="Chest" x="1598" y="1216" width="4" height="4"/>
+  <object id="135" name="Chest" x="551" y="1568" width="4" height="4"/>
+  <object id="136" name="Chest" x="1237" y="1304" width="4" height="4"/>
   <object id="137" name="Chest" x="190" y="146" width="4" height="4"/>
  </objectgroup>
  <objectgroup id="5" name="DecorBodies">

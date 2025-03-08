@@ -1,0 +1,16 @@
+Crash occured with this screen on top of the stack: wizardo.game.Screens.Battle.BattleScreen@29d80d2b
+
+Crash during runtime
+java.lang.IllegalArgumentException: sprite cannot be null.
+	at com.badlogic.gdx.graphics.g2d.Sprite.set(Sprite.java:106)
+	at wizardo.game.Maps.Buildings.Building.drawGoodDeco(Building.java:72)
+	at wizardo.game.Maps.Buildings.Building.drawFrame(Building.java:66)
+	at wizardo.game.Maps.Buildings.Building.update(Building.java:55)
+	at wizardo.game.Maps.Forest.ForestChunk.render(ForestChunk.java:48)
+	at wizardo.game.Maps.MapGeneration.MapManager.render(MapManager.java:58)
+	at wizardo.game.Screens.Battle.BattleScreen.render(BattleScreen.java:103)
+	at wizardo.game.Wizardo.render(Wizardo.java:53)
+	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Window.update(Lwjgl3Window.java:387)
+	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application.loop(Lwjgl3Application.java:193)
+	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application.<init>(Lwjgl3Application.java:167)
+	at wizardo.game.DesktopLauncher.main(DesktopLauncher.java:26)

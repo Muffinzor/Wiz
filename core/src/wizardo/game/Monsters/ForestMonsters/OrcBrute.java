@@ -24,7 +24,7 @@ public class OrcBrute extends MonsterMelee {
     public OrcBrute(BattleScreen screen, Vector2 position, MonsterSpawner spawner) {
         super(screen, position, spawner);
         speed = 20f/PPM;
-        hp = 150;
+        hp = 120;
         maxHP = 120;
         xp = 25;
 
@@ -43,7 +43,7 @@ public class OrcBrute extends MonsterMelee {
         movementManager = new MovementManager(this);
         stateManager = new MeleeStateManager(this);
         monsterActionManager = new MonsterActionManager(this, 2.5f);
-        attackRange = 1.5f;
+        attackRange = 1.75f;
         hitboxRadius = 20;
         rushDistance = 0;
 

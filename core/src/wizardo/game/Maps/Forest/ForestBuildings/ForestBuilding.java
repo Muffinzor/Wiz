@@ -4,7 +4,6 @@ import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import wizardo.game.Maps.Buildings.Building;
-import wizardo.game.Maps.Buildings.Rectangle_Building;
 import wizardo.game.Maps.DecorObjects.WallTorchObject;
 import wizardo.game.Maps.MapGeneration.MapChunk;
 import wizardo.game.Maps.Shop.MapShop;
@@ -14,11 +13,14 @@ import static wizardo.game.Utils.Constants.PPM;
 
 public class ForestBuilding extends Building {
 
+    ForestBuilding_Decoration decoration;
+
     public ForestBuilding(MapChunk chunk, MapObject mapObject) {
         super(chunk, mapObject);
         pickSprite();
         createTorch();
         createShop();
+        decoration = new ForestBuilding_Decoration(this);
     }
 
     public void pickSprite() {
@@ -64,6 +66,7 @@ public class ForestBuilding extends Building {
     public void createShop() {
         if((name.equals("Building1_s") || name.equals("Building1_g")) && chunk.canHaveShop) {
             MapShop shop = new MapShop(chunk, object);
+            chunk.shop = shop;
             chunk.layerObjects.add(shop);
         }
     }
