@@ -1,0 +1,12 @@
+Crash occured with this screen on top of the stack: wizardo.game.Screens.CharacterScreen.CharacterScreen@7544a1e4
+
+Crash during runtime
+java.lang.NullPointerException: Cannot invoke "com.badlogic.gdx.graphics.g2d.Sprite.setCenter(float, float)" because "spell_frame" is null
+	at wizardo.game.Screens.CharacterScreen.SpellLabel.SpellLabel.drawFrame(SpellLabel.java:73)
+	at wizardo.game.Screens.CharacterScreen.CharacterScreen.draw_spell_panel(CharacterScreen.java:147)
+	at wizardo.game.Screens.CharacterScreen.CharacterScreen.render(CharacterScreen.java:127)
+	at wizardo.game.Wizardo.render(Wizardo.java:53)
+	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Window.update(Lwjgl3Window.java:387)
+	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application.loop(Lwjgl3Application.java:193)
+	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application.<init>(Lwjgl3Application.java:167)
+	at wizardo.game.DesktopLauncher.main(DesktopLauncher.java:26)

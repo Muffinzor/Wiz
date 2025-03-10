@@ -95,11 +95,19 @@ public class SpellIcons {
     public static Sprite laser_arcane = new Sprite(new Texture("Spells/SPELL_ICONS/lasers_arcane.png"));
     public static Sprite laser_lightning = new Sprite(new Texture("Spells/SPELL_ICONS/lasers_lightning.png"));
 
+    public static Sprite dragonbreath_fire = new Sprite(new Texture("Spells/SPELL_ICONS/dragonbreath_fire.png"));
+    public static Sprite dragonbreath_frost = new Sprite(new Texture("Spells/SPELL_ICONS/dragonbreath_frost.png"));
+    public static Sprite dragonbreath_arcane = new Sprite(new Texture("Spells/SPELL_ICONS/dragonbreath_arcane.png"));
+
     public static Sprite celestialstrike_coldlite = new Sprite(new Texture("Spells/SPELL_ICONS/celestialstrike_coldlite.png"));
 
     public static Sprite lightninghands_firelite = new Sprite(new Texture("Spells/SPELL_ICONS/lightninghands_firelite.png"));
 
     public static Sprite forkedlightning_firelite = new Sprite(new Texture("Spells/SPELL_ICONS/forkedlightning_firelite.png"));
+
+    public static Sprite frostnova_frost = new Sprite(new Texture("Spells/SPELL_ICONS/frostnova_frost.png"));
+
+    public static Sprite repulsionfield_arcane = new Sprite(new Texture("Spells/SPELL_ICONS/repulsionfield_arcane.png"));
 
 
 }

@@ -98,7 +98,7 @@ public class MixingTable extends MenuTable {
     }
 
     public void updateForgetButton() {
-        if(forgetButton != null) {
+        if(masteryTable.screen.selectedSpell_Button != null && forgetButton != null) {
             if (player.spellbook.equippedSpells.contains(masteryTable.screen.selectedSpell_Button.spell) &&
                     player.spellbook.equippedSpells.size() == 1 && player.spellbook.knownSpells.isEmpty()) {
                         forgetButton.setDisabled(true);

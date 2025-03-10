@@ -1,5 +1,8 @@
 package wizardo.game.Spells.Hybrid.CelestialStrike;
 
+import com.badlogic.gdx.math.Vector2;
+import wizardo.game.Items.Equipment.Hat.Legendary_SentientHat;
+import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 
@@ -22,10 +25,8 @@ public class CelestialStrike_Spell extends Spell {
         string_name = "Celestial Strike";
 
         dmg = 120;
-        cooldown = 1.6f;
+        cooldown = 2.4f;
         autoaimable = true;
-
-        main_element = SpellUtils.Spell_Element.LIGHTNING;
 
         anim_element = SpellUtils.Spell_Element.COLDLITE;
 
@@ -37,7 +38,13 @@ public class CelestialStrike_Spell extends Spell {
             initialized = true;
         }
 
-        autoAimCheck();
+
+        Monster target = Legendary_SentientHat.findTarget();
+        if(target != null) {
+            targetPosition = new Vector2(target.body.getPosition());
+        } else {
+            screen.spellManager.remove(this);
+        }
 
         if(targetPosition == null) {
             return;

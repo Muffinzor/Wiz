@@ -96,6 +96,7 @@ public class FrostLightning_Spells {
         // 8. Thunderstorm + FrozenOrb
 
         CelestialStrike_Spell frostlite8 = new CelestialStrike_Spell();
+        frostlite8.anim_element = COLDLITE;
         frostlite8.spellParts.add(FROZENORB);
         frostlite8.spellParts.add(THUNDERSTORM);
         frostliteSpells[8] = frostlite8;
@@ -172,7 +173,7 @@ public class FrostLightning_Spells {
         ChainLightning_Spell frostlite15 = new ChainLightning_Spell();
         frostlite15.frostbolts = true;
         frostlite15.spear = true;
-        frostlite15.anim_element = COLDLITE;
+        frostlite15.anim_element = FROST;
         frostlite15.textColor = Skins.light_blue;
         frostlite15.spellParts.add(CHAIN);
         frostlite15.spellParts.add(ICESPEAR);
@@ -185,7 +186,7 @@ public class FrostLightning_Spells {
         ChainLightning_Spell chain16 = new ChainLightning_Spell();
         chain16.frostbolts = true;
         frostlite16.nested_spell = chain16;
-        frostlite16.anim_element = COLDLITE;
+        frostlite16.anim_element = FROST;
         frostlite16.spellParts.add(CHAIN);
         frostlite16.spellParts.add(FROSTBOLT);
         frostlite16.spellParts.add(FROZENORB);
@@ -278,9 +279,8 @@ public class FrostLightning_Spells {
         // 25. Frozenorb + Chargedbolts + Frostbolts
 
         Frozenorb_Spell frostlite25 = new Frozenorb_Spell();
-        frostlite25.nested_spell = frostliteSpells[0];
-        frostlite25.textColor = Skins.light_teal;
-        frostlite25.anim_element = LIGHTNING;
+        frostlite25.nested_spell = frostliteSpells[27];
+        frostlite25.anim_element = FROST;
         frostlite25.spellParts.add(FROZENORB);
         frostlite25.spellParts.add(CHARGEDBOLTS);
         frostlite25.spellParts.add(FROSTBOLT);

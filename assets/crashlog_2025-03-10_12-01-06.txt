@@ -1,0 +1,18 @@
+Crash occured with this screen on top of the stack: wizardo.game.Screens.Battle.BattleScreen@301ec38b
+
+Crash during runtime
+java.lang.NullPointerException: Cannot invoke "wizardo.game.Spells.SpellUtils$Spell_Element.ordinal()" because "this.main_element" is null
+	at wizardo.game.Spells.Spell.getScaledDmg(Spell.java:486)
+	at wizardo.game.Spells.Spell.dealDmg(Spell.java:506)
+	at wizardo.game.Spells.Hybrid.CelestialStrike.CelestialStrike_Hit.handleCollision(CelestialStrike_Hit.java:60)
+	at wizardo.game.Utils.Contacts.WizContactListener.Spell_Monster_Contact(WizContactListener.java:154)
+	at wizardo.game.Utils.Contacts.WizContactListener.beginContact(WizContactListener.java:79)
+	at com.badlogic.gdx.physics.box2d.World.beginContact(World.java:989)
+	at com.badlogic.gdx.physics.box2d.World.jniStep(Native Method)
+	at com.badlogic.gdx.physics.box2d.World.step(World.java:692)
+	at wizardo.game.Screens.Battle.BattleScreen.render(BattleScreen.java:100)
+	at wizardo.game.Wizardo.render(Wizardo.java:53)
+	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Window.update(Lwjgl3Window.java:387)
+	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application.loop(Lwjgl3Application.java:193)
+	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application.<init>(Lwjgl3Application.java:167)
+	at wizardo.game.DesktopLauncher.main(DesktopLauncher.java:26)

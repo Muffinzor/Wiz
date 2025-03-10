@@ -22,11 +22,14 @@ import wizardo.game.Spells.Frost.Icespear.Icespear_Spell;
 import wizardo.game.Spells.Hybrid.ArcaneArtillery.Judgement_Spell;
 import wizardo.game.Spells.Hybrid.Blizzard.Blizzard_Spell;
 import wizardo.game.Spells.Hybrid.CelestialStrike.CelestialStrike_Spell;
+import wizardo.game.Spells.Hybrid.DragonBreath.DragonBreath_Spell;
 import wizardo.game.Spells.Hybrid.EnergyRain.EnergyRain_Spell;
 import wizardo.game.Spells.Hybrid.ForkedLightning.ForkedLightning_Spell;
+import wizardo.game.Spells.Hybrid.FrostNova.FrostNova_Spell;
 import wizardo.game.Spells.Hybrid.Laser.Laser_Spell;
 import wizardo.game.Spells.Hybrid.LightningHands.LightningHands_Spell;
 import wizardo.game.Spells.Hybrid.MeteorShower.MeteorShower_Spell;
+import wizardo.game.Spells.Hybrid.RepulsionField.RepulsionField_Spell;
 import wizardo.game.Spells.Lightning.ChainLightning.ChainLightning_Spell;
 import wizardo.game.Spells.Lightning.ChargedBolts.ChargedBolts_Spell;
 import wizardo.game.Spells.Lightning.Thunderstorm.Thunderstorm_Spell;
@@ -225,8 +228,21 @@ public class SpellIcon_Button extends ImageButton {
                 case LIGHTNING -> frame = laser_lightning;
             }
         }
+        if(spell instanceof DragonBreath_Spell) {
+            switch(spell.anim_element) {
+                case FROST -> frame = dragonbreath_frost;
+                case FIRE -> frame = dragonbreath_fire;
+                case ARCANE -> frame = dragonbreath_arcane;
+            }
+        }
         if(spell instanceof LightningHands_Spell) {
             frame = lightninghands_firelite;
+        }
+        if(spell instanceof FrostNova_Spell) {
+            frame = frostnova_frost;
+        }
+        if(spell instanceof RepulsionField_Spell) {
+            frame = repulsionfield_arcane;
         }
         if(spell instanceof ForkedLightning_Spell) {
             frame = forkedlightning_firelite;

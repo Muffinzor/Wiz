@@ -483,20 +483,23 @@ public abstract class Spell implements Cloneable {
      */
     public int getScaledDmg(float unscaledDmg) {
         float scaledDmg = unscaledDmg;
-        switch(main_element) {
+        switch(anim_element) {
             case ARCANE -> scaledDmg *= (1 + player.spellbook.arcaneBonusDmg/100);
             case FROST -> scaledDmg *= (1 + player.spellbook.frostBonusDmg/100);
             case FIRE -> scaledDmg *= (1 + player.spellbook.fireBonusDmg/100);
             case LIGHTNING -> scaledDmg *= (1 + player.spellbook.lightningBonusDmg/100);
-        }
-        if(bonus_element != null) {
-            switch (bonus_element) {
-                case ARCANE -> scaledDmg *= (1 + player.spellbook.arcaneBonusDmg/100 / 2);
-                case FROST -> scaledDmg *= (1 + player.spellbook.frostBonusDmg/100 / 2);
-                case FIRE -> scaledDmg *= (1 + player.spellbook.fireBonusDmg/100 / 2);
-                case LIGHTNING -> scaledDmg *= (1 + player.spellbook.lightningBonusDmg/100 / 2);
+            case COLDLITE -> {
+                float liteBonus = (player.spellbook.lightningBonusDmg/100 * 0.75f);
+                float coldBonus = (player.spellbook.frostBonusDmg/100 * 0.75f);
+                scaledDmg *= (1 + liteBonus + coldBonus);
+            }
+            case FIRELITE ->  {
+                float liteBonus = (player.spellbook.lightningBonusDmg/100 * 0.75f);
+                float fireBonus = (player.spellbook.fireBonusDmg/100 * 0.75f);
+                scaledDmg *= (1 + liteBonus + fireBonus);
             }
         }
+
         scaledDmg *= (1 + player.spellbook.allBonusDmg/100f);
         return (int) scaledDmg;
     }
