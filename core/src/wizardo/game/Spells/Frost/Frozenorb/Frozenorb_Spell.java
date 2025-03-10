@@ -15,7 +15,7 @@ public class Frozenorb_Spell extends Spell {
 
     public Frozenorb_Spell() {
 
-        name = "Frozen Orb";
+        string_name = "Frozen Orb";
 
         speed = 60f/PPM;
         cooldown = 8f;

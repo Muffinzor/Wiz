@@ -23,7 +23,7 @@ public class Fireball_Spell extends Spell {
 
     public Fireball_Spell() {
 
-        name = "Fireball";
+        string_name = "Fireball";
 
         dmg = 50;
         cooldown = 2;

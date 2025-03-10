@@ -19,7 +19,7 @@ public class CelestialStrike_Spell extends Spell {
         raycasted = true;
         aimReach = 15;
 
-        name = "Celestial Strike";
+        string_name = "Celestial Strike";
 
         dmg = 120;
         cooldown = 1.6f;

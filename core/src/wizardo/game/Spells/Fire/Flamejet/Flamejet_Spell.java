@@ -26,7 +26,7 @@ public class Flamejet_Spell extends Spell {
 
     public Flamejet_Spell() {
 
-        name = "Flamejet";
+        string_name = "Flamejet";
 
         speed = 20;
         cooldown = 0.6f;

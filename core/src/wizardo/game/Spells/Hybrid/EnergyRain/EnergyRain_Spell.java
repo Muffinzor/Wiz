@@ -30,7 +30,7 @@ public class EnergyRain_Spell extends Spell {
 
         multicastable = false;
 
-        name = "Energy Rain";
+        string_name = "Energy Rain";
         cooldown = 12;
         dmg = 75;
         interval = 0.2f;

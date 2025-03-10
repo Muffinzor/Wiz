@@ -141,6 +141,7 @@ public class ChargedBolts_Projectile extends ChargedBolts_Spell {
             collisions++;
         }
         frostbolts(monster);
+        frozenorb(monster);
         dealDmg(monster);
         canSplit = canSplit() && stateTime > 0.2f;
         canExplode = canExplode() && stateTime > 0.2f;
@@ -226,7 +227,7 @@ public class ChargedBolts_Projectile extends ChargedBolts_Spell {
             bolt.spawnPosition = new Vector2(body.getPosition());
             bolt.targetPosition = new Vector2(body.getPosition().cpy().add(direction));
             bolt.setNext(this);
-            bolt.duration = duration - stateTime;
+            bolt.duration = duration - stateTime/2;
             bolt.setElements(this);
             screen.spellManager.add(bolt);
         }
@@ -238,7 +239,6 @@ public class ChargedBolts_Projectile extends ChargedBolts_Spell {
             lightRadius = 35;
         }
         light = screen.lightManager.pool.getLight();
-        System.out.printf("red: %f, green: %f, blue: %f\n", red, green, blue);
         light.setLight(red, green, blue, lightAlpha, lightRadius, body.getPosition());
         screen.lightManager.addLight(light);
     }
@@ -337,6 +337,18 @@ public class ChargedBolts_Projectile extends ChargedBolts_Spell {
                 screen.spellManager.add(explosion);
             }
 
+        }
+    }
+
+    private void frozenorb(Monster monster) {
+        if(frozenorb) {
+
+            float freezeChance =  0.65f - 0.05f * player.spellbook.frozenorb_lvl;
+
+            if(Math.random() >= freezeChance) {
+                float duration = 1.2f + 0.12f * player.spellbook.frozenorb_lvl;
+                monster.applyFreeze(duration, duration * 1.5f);
+            }
         }
     }
 

@@ -27,7 +27,7 @@ public class Blizzard_Spell extends Spell {
 
         multicastable = false;
 
-        name = "Blizzard";
+        string_name = "Blizzard";
 
         cooldown = 12;
 

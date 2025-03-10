@@ -33,7 +33,7 @@ public class MeteorShower_Spell extends Spell {
 
         multicastable = false;
 
-        name = "Meteor Shower";
+        string_name = "Meteor Shower";
 
         cooldown = 12;
 

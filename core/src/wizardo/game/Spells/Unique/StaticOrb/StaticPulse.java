@@ -100,7 +100,7 @@ public class StaticPulse extends Spell {
 
     public void createLight() {
         light = screen.lightManager.pool.getLight();
-        light.setLight(red, green, blue, 1, 160, body.getPosition());
+        light.setLight(red, green, blue, 0.65f, 120, body.getPosition());
         screen.lightManager.addLight(light);
         light.dimKill(0.012f);
     }

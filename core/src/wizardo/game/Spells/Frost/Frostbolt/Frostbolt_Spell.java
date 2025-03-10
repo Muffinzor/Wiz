@@ -11,13 +11,16 @@ public class Frostbolt_Spell extends Spell {
     public int projectiles = 1;
 
     public boolean chargedbolt;
+    public boolean chainlightning;
+    public boolean thunderstorm;
     public boolean missile;
     public boolean rifts;
+    public boolean beam;
     public boolean superBolt; // Frostbolt + Fireball + Overheat
 
     public Frostbolt_Spell() {
 
-        name = "Frostbolts";
+        string_name = "Frostbolts";
 
         speed = 7;
         radius = 25;
@@ -46,6 +49,10 @@ public class Frostbolt_Spell extends Spell {
         projectiles += extraProjs;
         if(player.inventory.equippedHat instanceof Rare_FrostboltHat) {
             projectiles++;
+        }
+        if(beam) {
+            speed += 0.5f * player.spellbook.energybeam_lvl;
+            speed += 2f;
         }
     }
 
@@ -85,15 +92,22 @@ public class Frostbolt_Spell extends Spell {
         if(superBolt) {
             dmg += 5 * player.spellbook.fireball_lvl;
         }
+        if(beam) {
+            dmg += 2 * player.spellbook.energybeam_lvl;
+        }
         dmg = (int) (dmg * (1 + player.spellbook.explosivesBonusDmg/100f));
         return dmg;
     }
 
     public void setBolt(Frostbolt_Spell parent) {
+        this.speed = parent.speed;
+        this.beam = parent.beam;
         this.missile = parent.missile;
         this.rifts = parent.rifts;
         this.superBolt = parent.superBolt;
         this.chargedbolt = parent.chargedbolt;
+        this.chainlightning = parent.chainlightning;
+        this.thunderstorm = parent.thunderstorm;
         this.projectiles = parent.projectiles;
     }
 }

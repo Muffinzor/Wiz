@@ -66,7 +66,9 @@ public abstract class Spell implements Cloneable {
     public float stateTime = 0;
     public boolean initialized;
     public String soundPath;
-    public String name;
+    public String string_name;
+    public Spell_Name spell_enum;
+
 
     public int dmg;
     public float dmgVariance = 0.15f;   //      0.85 - 1.15 by default
@@ -91,9 +93,6 @@ public abstract class Spell implements Cloneable {
     public Spell_Element bonus_element;
     public ArrayList<Spell_Name> spellParts = new ArrayList<>();
 
-    public Spell() {
-
-    }
 
     public abstract void update(float delta);
 
@@ -256,7 +255,7 @@ public abstract class Spell implements Cloneable {
     }
 
     public String toString() {
-        return name;
+        return string_name;
     }
 
     public void setElements(Spell spellParent) {
@@ -295,11 +294,22 @@ public abstract class Spell implements Cloneable {
             spells_in_inventory.add(player.spellbook.utility_spell);
         }
 
-        Collections.sort(spellParts);
-        for(Spell spell : spells_in_inventory) {
-            Collections.sort(spell.spellParts);
-            if(spell.spellParts.equals(this.spellParts)) {
+        ArrayList<Spell_Name> thisSpellPartsCopy = new ArrayList<>(spellParts);
+
+        if (spellParts.size() > 2) {
+            Collections.sort(thisSpellPartsCopy);
+        }
+
+        for (Spell spell : spells_in_inventory) {
+            ArrayList<Spell_Name> spellPartsCopy = new ArrayList<>(spell.spellParts);
+
+            if (spellPartsCopy.size() > 2) {
+                Collections.sort(spellPartsCopy);
+            }
+
+            if (spellPartsCopy.equals(thisSpellPartsCopy)) {
                 alreadyOwned = true;
+                break;
             }
         }
 
@@ -398,11 +408,11 @@ public abstract class Spell implements Cloneable {
             ArrayList<String> spells_equipped = new ArrayList<>();
 
             for(Spell spell : player.spellbook.equippedSpells) {
-                spells_equipped.add(spell.name);
+                spells_equipped.add(spell.string_name);
             }
 
             for(Spell spell : player.spellbook.knownSpells) {
-                if(!spells_equipped.contains(spell.name)) {
+                if(!spells_equipped.contains(spell.string_name)) {
                     player.spellbook.equippedSpells.add(spell);
                     player.spellbook.knownSpells.remove(spell);
                     spell.resetCD();
@@ -588,25 +598,12 @@ public abstract class Spell implements Cloneable {
 
     public void dmgText(int dmg, Monster monster) {
         String s = "" + dmg;
+        Color color;
 
-        Color color = Color.RED;
         if(textColor != null) {
             color = textColor;
         } else {
-            switch(anim_element) {
-                case FIRE -> color = mainMenuSkin.getColor("LightOrange");
-                case FROST -> color = mainMenuSkin.getColor("LightBlue");
-                case ARCANE -> color = mainMenuSkin.getColor("LightPink");
-                case LIGHTNING -> color = mainMenuSkin.getColor("LightYellow");
-                case COLDLITE -> color = mainMenuSkin.getColor("LightTeal");
-                case FIRELITE -> {
-                    if(MathUtils.randomBoolean()) {
-                        color = mainMenuSkin.getColor("LightOrange");
-                    } else {
-                        color = mainMenuSkin.getColor("LightYellow");
-                    }
-                }
-            }
+            color = get_element_color();
         }
 
         FloatingDamage text = screen.displayManager.textManager.pool.getDmgText();
@@ -614,6 +611,32 @@ public abstract class Spell implements Cloneable {
         Vector2 randomPosition = SpellUtils.getRandomVectorInRadius(monsterTextHeight, 0.5f);
         text.setAll(s, randomPosition.scl(PPM), mainMenuSkin.getFont("DamageNumbers"), color);
         screen.displayManager.textManager.addDmgText(text);
+    }
+
+    public Color get_element_color() {
+        Color color = null;
+        switch(anim_element) {
+            case FIRE -> color = mainMenuSkin.getColor("LightRed");
+            case FROST -> color = mainMenuSkin.getColor("LightBlue");
+            case ARCANE -> color = mainMenuSkin.getColor("LightPink");
+            case LIGHTNING -> color = mainMenuSkin.getColor("LightYellow");
+            case COLDLITE -> color = mainMenuSkin.getColor("LightTeal");
+            case FIRELITE -> color = mainMenuSkin.getColor("LightOrange");
+        }
+        return color;
+    }
+
+    public String get_element_string() {
+        String s = "";
+        switch(anim_element) {
+            case FIRE -> s = "Fire";
+            case FROST -> s = "Frost";
+            case ARCANE -> s = "Arcane";
+            case LIGHTNING -> s = "Lightning";
+            case COLDLITE -> s = "Coldlite";
+            case FIRELITE -> s = "Firelite";
+        }
+        return s;
     }
 
     public boolean isLearnable() {

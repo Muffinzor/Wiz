@@ -19,10 +19,11 @@ public class ChargedBolts_Spell extends Spell {
     public boolean spear;
     public boolean flamejet;
     public boolean overheat;
+    public boolean frozenorb;
 
     public ChargedBolts_Spell() {
 
-        name = "Charged Bolts";
+        string_name = "Charged Bolts";
 
         duration = 1.5f;
         cooldown = 0.8f;
@@ -101,6 +102,7 @@ public class ChargedBolts_Spell extends Spell {
         flamejet = thisBolt.flamejet;
         overheat = thisBolt.overheat;
         spear = thisBolt.spear;
+        frozenorb = thisBolt.frozenorb;
         speed = thisBolt.speed;
         duration = thisBolt.duration;
     }

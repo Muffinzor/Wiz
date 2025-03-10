@@ -185,7 +185,7 @@ public class Icespear_Projectile extends Icespear_Spell {
         float procRate = 1;
         float level = (getLvl() + nested_spell.getLvl())/2f;
         if(nested_spell instanceof ChargedBolts_Spell) {
-            procRate = 0.925f - 0.025f * level;
+            procRate = 0.0925f - 0.025f * level;
         }
         return procRate;
     }
@@ -300,6 +300,11 @@ public class Icespear_Projectile extends Icespear_Spell {
             }
             case LIGHTNING -> {
                 anim = icespear_anim_lightning;
+                green = 0.5f;
+                red = 0.5f;
+            }
+            case COLDLITE -> {
+                anim = icespear_anim_coldlite;
                 green = 0.5f;
                 blue = 0.65f;
             }

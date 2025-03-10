@@ -31,7 +31,8 @@ public class ChainLightning_Hit extends ChainLightning_Spell {
     boolean hasDealtDmg;
     Body body;
     public boolean forked;
-    public float duration = 0.4f;
+    public float duration;
+    public float chain_minimum_time;
 
     public Monster monsterFrom;
     public Monster monsterTo;
@@ -49,6 +50,9 @@ public class ChainLightning_Hit extends ChainLightning_Spell {
     public ChainLightning_Hit(Monster target) {
         monsterTo = target;
 
+        duration = 0.4f;
+        chain_minimum_time = MathUtils.random(0.125f, 0.15f);
+
         flipY = MathUtils.randomBoolean();
 
     }
@@ -63,6 +67,7 @@ public class ChainLightning_Hit extends ChainLightning_Spell {
             frostbolts(monsterTo);
             rifts(monsterTo);
             fireball(monsterTo);
+            frozenorb(monsterTo);
             laserBody();
             uniqueStaff();
         }
@@ -76,7 +81,7 @@ public class ChainLightning_Hit extends ChainLightning_Spell {
             alreadyChained = true;
             inRange = findMonstersInRange(monsterTo.body, radius);
 
-            if(splits < maxSplits && inRange.size() > 1) {
+            if(splits < maxSplits && Math.random() >= splitChance && inRange.size() > 1) {
                 splitChain();
             } else if(!inRange.isEmpty()) {
                 singleChain();
@@ -179,19 +184,21 @@ public class ChainLightning_Hit extends ChainLightning_Spell {
 
         Monster target1 = inRange.removeFirst();
         Monster target2 = inRange.removeFirst();
+        monstersHit.add(target1);
+        monstersHit.add(target2);
 
         ChainLightning_Hit chain = new ChainLightning_Hit(target1);
         chain.setNextChain(this);
+        chain.currentHits = chain.currentHits/2;
         chain.setElements(this);
-        chain.monstersHit = new ArrayList<>(monstersHit);
-        chain.monstersHit.add(target1);
+        chain.monstersHit = monstersHit;
         screen.spellManager.add(chain);
 
-        ChainLightning_Hit chain2 = new ChainLightning_Hit(target1);
+        ChainLightning_Hit chain2 = new ChainLightning_Hit(target2);
         chain2.setNextChain(this);
+        chain2.currentHits = chain2.currentHits/2;
         chain2.setElements(this);
-        chain2.monstersHit = new ArrayList<>(monstersHit);
-        chain2.monstersHit.add(target2);
+        chain2.monstersHit = monstersHit;
         screen.spellManager.add(chain2);
 
     }
@@ -216,6 +223,7 @@ public class ChainLightning_Hit extends ChainLightning_Spell {
         maxHits = thisHit.maxHits;
         currentHits = thisHit.currentHits + 1;
         splits = thisHit.splits;
+        splitChance = thisHit.splitChance;
         maxSplits = thisHit.maxSplits;
 
         nested_spell = thisHit.nested_spell;
@@ -227,6 +235,7 @@ public class ChainLightning_Hit extends ChainLightning_Spell {
         frostbolts = thisHit.frostbolts;
         arcaneMissile = thisHit.arcaneMissile;
         rifts = thisHit.rifts;
+        frozenorb = thisHit.frozenorb;
     }
 
     public void createLights(Vector2 direction, float distance) {
@@ -430,6 +439,16 @@ public class ChainLightning_Hit extends ChainLightning_Spell {
                 explosion.targetPosition = new Vector2(monster.body.getPosition());
                 explosion.setElements(this);
                 screen.spellManager.add(explosion);
+            }
+        }
+    }
+
+    public void frozenorb(Monster monster) {
+        if(frozenorb) {
+            float proc_chance = 0.8f - 0.05f * player.spellbook.frozenorb_lvl;
+            if(Math.random() >= proc_chance) {
+                float duration = 1.2f + 0.12f * player.spellbook.frozenorb_lvl;
+                monster.applyFreeze(duration, duration * 1.5f);
             }
         }
     }

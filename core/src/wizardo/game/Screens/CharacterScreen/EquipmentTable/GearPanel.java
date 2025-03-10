@@ -95,8 +95,6 @@ public class GearPanel {
         stage.addActor(container);
         createTitleLabel();
         createGemImage();
-
-
     }
 
     public void setPosition() {

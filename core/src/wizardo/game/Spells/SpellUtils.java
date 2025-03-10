@@ -1,9 +1,11 @@
 package wizardo.game.Spells;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.QueryCallback;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
+import wizardo.game.Resources.Skins;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -60,7 +62,7 @@ public class SpellUtils {
             case OVERHEAT -> s = "Overheat";
             case CHARGEDBOLTS -> s = "Chargedbolts";
             case CHAIN -> s = "Chain";
-            case THUNDERSTORM -> s = "Storm";
+            case THUNDERSTORM -> s = "Thundertorm";
             case MISSILES -> s = "Missiles";
             case BEAM -> s = "Beam";
             case RIFTS -> s = "Rifts";
@@ -316,4 +318,16 @@ public class SpellUtils {
         }
         return element;
     }
+
+    public static Color get_base_color(Spell_Name spell) {
+        Color color = null;
+        switch(spell) {
+            case FROSTBOLT, ICESPEAR, FROZENORB -> color = Skins.light_blue;
+            case FLAMEJET, FIREBALL, OVERHEAT -> color = Skins.light_red;
+            case CHARGEDBOLTS, CHAIN, THUNDERSTORM -> color = Skins.light_yellow;
+            case MISSILES, BEAM, RIFTS -> color = Skins.light_pink;
+        }
+        return color;
+    }
+
 }

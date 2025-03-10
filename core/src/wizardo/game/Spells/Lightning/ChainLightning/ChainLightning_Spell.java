@@ -20,8 +20,10 @@ public class ChainLightning_Spell extends Spell {
 
     public int splits = 0;
     public int maxSplits = 0;
+    public float splitChance = 0;
 
     public boolean frostbolts;
+    public boolean frozenorb;
     public boolean arcaneMissile;
     public boolean rifts;
     public boolean beam;
@@ -36,7 +38,7 @@ public class ChainLightning_Spell extends Spell {
         raycasted = true;
         aimReach = 5;
 
-        name = "Chain Lightning";
+        string_name = "Chain Lightning";
 
         cooldown = 1.2f;
         dmg = 35;
@@ -72,12 +74,9 @@ public class ChainLightning_Spell extends Spell {
     public void setup() {
         maxHits = maxHits + getLvl()/2;
         if(spear) {
-            dmg += player.spellbook.icespear_lvl * 5;
-            for (int i = 0; i < 2; i++) {
-                maxHits = maxHits - (player.spellbook.icespear_lvl/4);
-            }
+            splitChance = 0.9f - 0.05f * player.spellbook.icespear_lvl;
             maxSplits = 1 + player.spellbook.icespear_lvl / 4;
-            radius = 3;
+            radius = 4;
         }
     }
 
@@ -138,6 +137,7 @@ public class ChainLightning_Spell extends Spell {
     public void setChain(ChainLightning_Spell parentChain) {
         nested_spell = parentChain.nested_spell;
         frostbolts = parentChain.frostbolts;
+        frozenorb = parentChain.frozenorb;
         rifts = parentChain.rifts;
         fireball = parentChain.fireball;
         beam = parentChain.beam;
@@ -146,6 +146,7 @@ public class ChainLightning_Spell extends Spell {
         radius = parentChain.radius;
         maxSplits = parentChain.maxSplits;
         maxHits = parentChain.maxHits;
+        splitChance = parentChain.splitChance;
     }
 
 

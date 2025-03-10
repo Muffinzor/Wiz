@@ -31,7 +31,8 @@ public class Rifts_Spell extends Spell {
 
         multicastable = false;
 
-        name = "Rifts";
+        string_name = "Rifts";
+        spell_enum = SpellUtils.Spell_Name.RIFTS;
 
         cooldown = 5f;
         dmg = 24;

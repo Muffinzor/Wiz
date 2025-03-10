@@ -20,7 +20,7 @@ import static wizardo.game.Spells.SpellUtils.Spell_Name.*;
 
 public class FrostArcane_Spells {
 
-    public static Spell[] frostarcaneSpells = new Spell[27];
+    public static Spell[] frostarcaneSpells = new Spell[30];
 
     public static void createFrostArcane_Spells() {
 
@@ -29,24 +29,24 @@ public class FrostArcane_Spells {
         ArcaneMissile_Spell frostarcane0 = new ArcaneMissile_Spell();
         frostarcane0.anim_element = FROST;
         frostarcane0.frostbolt = true;
-        frostarcane0.spellParts.add(FROSTBOLT);
         frostarcane0.spellParts.add(MISSILES);
+        frostarcane0.spellParts.add(FROSTBOLT);
         frostarcaneSpells[0] = frostarcane0;
 
         // 1. Frostbolt + Beam
 
-        EnergyBeam_Spell frostarcane1 = new EnergyBeam_Spell();
-        frostarcane1.frostbolt = true;
-        frostarcane1.anim_element = FROST;
+        Frostbolt_Spell frostarcane1 = new Frostbolt_Spell();
+        frostarcane1.beam = true;
+        frostarcane1.anim_element = ARCANE;
         frostarcane1.spellParts.add(FROSTBOLT);
         frostarcane1.spellParts.add(BEAM);
         frostarcaneSpells[1] = frostarcane1;
 
         // 2. Frostbolt + Rift
 
-        Rifts_Spell frostarcane2 = new Rifts_Spell();
-        frostarcane2.frostbolt = true;
-        frostarcane2.anim_element = FROST;
+        Frostbolt_Spell frostarcane2 = new Frostbolt_Spell();
+        frostarcane2.rifts = true;
+        frostarcane2.anim_element = ARCANE;
         frostarcane2.spellParts.add(FROSTBOLT);
         frostarcane2.spellParts.add(RIFTS);
         frostarcaneSpells[2] = frostarcane2;
@@ -298,6 +298,33 @@ public class FrostArcane_Spells {
         frostarcane26.spellParts.add(BEAM);
         frostarcane26.spellParts.add(RIFTS);
         frostarcaneSpells[26] = frostarcane26;
+
+        // 27. Frostbolt + ArcaneMissile
+
+        Frostbolt_Spell frostarcane27 = new Frostbolt_Spell();
+        frostarcane27.anim_element = FROST;
+        frostarcane27.missile = true;
+        frostarcane27.spellParts.add(FROSTBOLT);
+        frostarcane27.spellParts.add(MISSILES);
+        frostarcaneSpells[27] = frostarcane27;
+
+        // 28. Beam + Frostbolt
+
+        EnergyBeam_Spell frostarcane28 = new EnergyBeam_Spell();
+        frostarcane28.frostbolt = true;
+        frostarcane28.anim_element = FROST;
+        frostarcane28.spellParts.add(BEAM);
+        frostarcane28.spellParts.add(FROSTBOLT);
+        frostarcaneSpells[28] = frostarcane28;
+
+        // 29. Rift + Frostbolt
+
+        Rifts_Spell frostarcane29 = new Rifts_Spell();
+        frostarcane29.frostbolt = true;
+        frostarcane29.anim_element = FROST;
+        frostarcane29.spellParts.add(RIFTS);
+        frostarcane29.spellParts.add(FROSTBOLT);
+        frostarcaneSpells[29] = frostarcane29;
 
         for (Spell frostfireSpell : frostarcaneSpells) {
 

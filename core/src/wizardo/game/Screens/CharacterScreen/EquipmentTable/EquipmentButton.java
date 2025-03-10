@@ -65,7 +65,6 @@ public class EquipmentButton extends ImageButton implements MenuButton {
     public void drawItem() {
         if(piece != null) {
             SpriteBatch batch = screen.batch;
-            batch.begin();
             drawQuality(batch);
 
             Sprite frame = screen.getSprite();
@@ -80,7 +79,6 @@ public class EquipmentButton extends ImageButton implements MenuButton {
             frame.setCenter(getCenterPoint().x, getCenterPoint().y);
 
             frame.draw(batch);
-            batch.end();
         }
     }
     public void drawQuality(SpriteBatch batch) {
@@ -113,6 +111,9 @@ public class EquipmentButton extends ImageButton implements MenuButton {
             @Override
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
                 hovered = true;
+                if(screen.activePanel != null) {
+                    screen.activePanel.dispose();
+                }
                 screen.activePanel = new GearPanel(screen.panelStage, piece, true, button);
             }
             @Override
@@ -124,6 +125,7 @@ public class EquipmentButton extends ImageButton implements MenuButton {
     }
 
     public void handleClick() {
+        screen.selectedSpell_Button = null;
         if(piece != null) {
             piece.storeAfterUnequip();
             screen.inventory_table.resize();
@@ -135,7 +137,6 @@ public class EquipmentButton extends ImageButton implements MenuButton {
             screen.knownSpells_table.updateSpells();
             screen.stats_Table.createNewPanel();
             screen.selectedButton = screen.equipment_table.buttonsMatrix[screen.equipment_table.x_pos][screen.equipment_table.y_pos];
-            screen.activePanel.dispose();
         }
     }
 

@@ -408,4 +408,11 @@ public class MasteryTable extends MenuTable {
         table.clear();
         table.remove();
     }
+
+    public void uncheckAll() {
+        parts.clear();
+        for(Button button : buttons) {
+            button.setChecked(false);
+        }
+    }
 }

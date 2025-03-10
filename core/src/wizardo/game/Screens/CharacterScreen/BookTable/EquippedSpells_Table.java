@@ -45,6 +45,13 @@ public class EquippedSpells_Table extends MenuTable {
 
     }
 
+    public void draw() {
+        for(Button button : buttons) {
+            SpellIcon_Button spell_button = (SpellIcon_Button) button;
+            spell_button.drawButton();
+        }
+    }
+
     public void adjustSize() {
         float width = 230 * xRatio;
         float height = 130 * yRatio;

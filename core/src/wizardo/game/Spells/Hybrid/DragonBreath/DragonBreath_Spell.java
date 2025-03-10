@@ -16,7 +16,7 @@ public class DragonBreath_Spell extends Spell {
 
     public DragonBreath_Spell() {
 
-        name = "Dragonbreath";
+        string_name = "Dragonbreath";
 
         dmg = 50;
 
@@ -57,8 +57,6 @@ public class DragonBreath_Spell extends Spell {
         Vector2 direction = new Vector2(targetPosition.sub(spawnPosition));
         Vector2 target1 = new Vector2(spawnPosition.cpy().add(direction.cpy().rotateDeg(25)));
         Vector2 target2 = new Vector2(spawnPosition.cpy().add(direction.cpy().rotateDeg(-25)));
-        System.out.println(target1);
-        System.out.println(target2);
         shootBreath(target1);
         shootBreath(target2);
     }

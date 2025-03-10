@@ -220,12 +220,9 @@ public class Frozenorb_Projectile extends Frozenorb_Spell {
             }
             case LIGHTNING, COLDLITE -> {
                 anim = FrozenorbAnims.frozenorb_anim_lightning;
-                green = 0.6f;
-                blue = 0.75f;
-                if(anim_element == COLDLITE) {
-                    green = 0.2f;
-                }
-                scale = 0.9f;
+                green = 0.65f;
+                red = 0.75f;
+                scale = 0.8f;
             }
             case ARCANE -> {
                 anim = FrozenorbAnims.frozenorb_anim_arcane;

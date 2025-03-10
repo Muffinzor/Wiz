@@ -19,7 +19,7 @@ public class LightningHands_Spell extends Spell {
 
     public LightningHands_Spell() {
 
-        name = "Lightning Hands";
+        string_name = "Lightning Hands";
 
         cooldown = 3.2f;
         autoaimable = true;

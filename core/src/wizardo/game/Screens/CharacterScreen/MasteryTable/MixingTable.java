@@ -5,11 +5,11 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Align;
 import wizardo.game.Display.MenuTable;
 import wizardo.game.Items.Equipment.Ring.Epic_OculusRing;
 import wizardo.game.Screens.CharacterScreen.Anims.SpellCreation_Anim;
 import wizardo.game.Screens.CharacterScreen.EquipmentTable.GearPanel;
+import wizardo.game.Screens.CharacterScreen.SpellLabel.SpellLabel;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Wizardo;
@@ -20,8 +20,8 @@ import java.util.Collections;
 import static wizardo.game.Resources.Skins.masteryTableSkin;
 import static wizardo.game.Screens.BaseScreen.xRatio;
 import static wizardo.game.Screens.BaseScreen.yRatio;
-import static wizardo.game.Spells.SpellMixer.getMixedSpell;
-import static wizardo.game.Spells.SpellUtils.getSpellString;
+import static wizardo.game.Spells.SpellMixer.get_mixed_spell;
+import static wizardo.game.Spells.SpellMixer.inverted_spell_exists;
 import static wizardo.game.Wizardo.player;
 
 public class MixingTable extends MenuTable {
@@ -31,12 +31,7 @@ public class MixingTable extends MenuTable {
     public ImageButton mixButton;
     public ImageButton clearButton;
     public ImageButton forgetButton;
-
-    public Table labelTable;
-    public Label spell_dominance;
-    public Label elemental_dominance;
-    public Label spell_parts;
-    public Label status;
+    public ImageButton invertButton;
 
     Button[] buttonMatrix = new Button[3];
     float button_width = 155;
@@ -48,71 +43,29 @@ public class MixingTable extends MenuTable {
     public MixingTable(Stage stage, Skin skin, Wizardo game, MasteryTable masteryTable) {
         super(stage, skin, game);
         this.masteryTable = masteryTable;
-        this.labelTable = new Table();
         this.parts = masteryTable.parts;
 
         create_mixButton();
         create_clearButton();
-        create_forgetButton();
+        create_invertButton();
+        //create_forgetButton();
 
         adjustTableSize();
-        createLabels();
 
         updateButtons();
 
         stage.addActor(table);
-        stage.addActor(labelTable);
     }
 
     public void adjustTableSize() {
-        int x_pos = Math.round(1330 * xRatio);
-        int y_pos = Math.round(300 * yRatio);
-        float height = 150 * yRatio;
-        float width = 530 * xRatio;
-
-        labelTable.setPosition(x_pos, y_pos);
-        labelTable.setSize(width, height);
-
-
-        int x_pos2 = Math.round(1330 * xRatio);
-        int y_pos2 = Math.round(130 * yRatio);
-        float width2 = 530f * xRatio;
-        float height2 = 100f * yRatio;
+        int x_pos2 = Math.round(1344 * xRatio);
+        int y_pos2 = Math.round(90 * yRatio);
+        float width2 = 536f * xRatio;
+        float height2 = 90 * yRatio;
 
         table.setPosition(x_pos2, y_pos2);
         table.setWidth(width2);
         table.setHeight(height2);
-    }
-
-    public void createLabels() {
-        labelTable.top().left();
-
-        String spell;
-        if(!parts.isEmpty()) {
-            spell = getMixedSpell(parts).name;
-        } else {
-            spell = "";
-        }
-        spell_dominance = new Label("Spell Dominance : " + spell, skin);
-        labelTable.add(spell_dominance).align(Align.left);
-        labelTable.row();
-
-        String element;
-        if(!parts.isEmpty()) {
-            element = getMixedSpell(parts).anim_element.toString().toLowerCase();
-        } else {
-            element = "";
-        }
-        elemental_dominance = new Label("Elemental Dominance :" + element, skin);
-        labelTable.add(elemental_dominance).align(Align.left);
-        labelTable.row();
-
-        spell_parts = new Label("Parts : " + getPartsString(), skin);
-        labelTable.add(spell_parts).align(Align.left);
-        labelTable.row();
-
-        status = new Label("Status : ", skin);
-        labelTable.add(status).align(Align.left);
     }
 
     public void updateSelectedButton() {
@@ -123,9 +76,10 @@ public class MixingTable extends MenuTable {
         mixButton.setDisabled(parts.isEmpty());
         clearButton.setDisabled(parts.isEmpty());
         updateForgetButton();
+        updateInvertButton();
 
         if(!parts.isEmpty()) {
-            mixButton.setDisabled(!getMixedSpell(parts).canMix());
+            mixButton.setDisabled(!get_mixed_spell(parts).canMix());
         }
 
         if (parts.size() == 2 && player.inventory.dual_reagents < 1) {
@@ -136,28 +90,27 @@ public class MixingTable extends MenuTable {
                 Epic_OculusRing ring = (Epic_OculusRing) player.inventory.equippedRing;
                 Collections.sort(ring.masteries);
                 Collections.sort(parts);
-                if(ring.masteries.equals(parts) && getMixedSpell(parts).canMix()) {
+                if(ring.masteries.equals(parts) && get_mixed_spell(parts).canMix()) {
                     mixButton.setDisabled(false);
                 }
             }
         }
-
-        if(!parts.isEmpty()) {
-            spell_dominance.setText("Spell Dominance : " + getMixedSpell(parts).name);
-            elemental_dominance.setText("Elemental Dominance : " + getMixedSpell(parts).anim_element.toString().toLowerCase());
-        } else {
-            spell_dominance.setText("Spell Dominance : ");
-            elemental_dominance.setText("Elemental Dominance : ");
-        }
-        spell_parts.setText("Parts : " + getPartsString());
     }
 
     public void updateForgetButton() {
-        forgetButton.setDisabled(masteryTable.screen.selectedSpell_Button == null);
-        if(masteryTable.screen.selectedSpell_Button != null) {
+        if(forgetButton != null) {
             if (player.spellbook.equippedSpells.contains(masteryTable.screen.selectedSpell_Button.spell) &&
                     player.spellbook.equippedSpells.size() == 1 && player.spellbook.knownSpells.isEmpty()) {
-                forgetButton.setDisabled(true);
+                        forgetButton.setDisabled(true);
+            }
+        }
+    }
+    public void updateInvertButton() {
+        if(invertButton != null) {
+            if(parts.size() != 2) {
+                invertButton.setDisabled(true);
+            } else {
+                invertButton.setDisabled(!inverted_spell_exists(parts));
             }
         }
     }
@@ -179,15 +132,14 @@ public class MixingTable extends MenuTable {
         });
     }
     public void handleMix() {
-        Spell spell = getMixedSpell(parts);
+        Spell spell = get_mixed_spell(parts);
         spell.learn();
 
         if(parts.size() == 2) {
             player.inventory.dual_reagents --;
         }
         if(parts.size() == 3) {
-            if(player.inventory.equippedRing instanceof Epic_OculusRing) {
-                Epic_OculusRing ring = (Epic_OculusRing) player.inventory.equippedRing;
+            if(player.inventory.equippedRing instanceof Epic_OculusRing ring) {
                 Collections.sort(ring.masteries);
                 Collections.sort(parts);
                 if(!ring.masteries.equals(parts)) {
@@ -214,7 +166,7 @@ public class MixingTable extends MenuTable {
     public void create_clearButton() {
         clearButton = new ImageButton(masteryTableSkin, "clear_button");
         adjustSize(clearButton);
-        table.add(clearButton);
+        table.add(clearButton).padLeft(10 * xRatio).padRight(10 * xRatio);
         buttons.add(clearButton);
         buttonMatrix[1] = clearButton;
         clearButton.addListener(new ClickListener() {
@@ -227,13 +179,60 @@ public class MixingTable extends MenuTable {
                     for (Button button : masteryTable.buttons) {
                         button.setChecked(false);
                     }
+                    if(masteryTable.screen.spell_label != null) {
+                        masteryTable.screen.spell_label.dispose();
+                    }
                     masteryTable.updateCheckBoxes();
                     updateButtons();
 
                 }
-
             }
         });
+    }
+    public void create_invertButton() {
+        invertButton = new ImageButton(masteryTableSkin, "invert_button");
+        adjustSize(invertButton);
+        table.add(invertButton);
+        buttonMatrix[2] = invertButton;
+        buttons.add(invertButton);
+        invertButton.addListener(new ClickListener() {
+
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+
+                if(!invertButton.isDisabled()) {
+                    SpellUtils.Spell_Name temp = parts.getFirst();
+                    parts.set(0, parts.get(1));
+                    parts.set(1, temp);
+                    if(masteryTable.screen.spell_label != null) {
+                        masteryTable.screen.spell_label.dispose();
+                    }
+                    masteryTable.screen.spell_label = new SpellLabel(masteryTable.screen.stage, masteryTable.screen, parts);
+                    updateButtons();
+                }
+            }
+        });
+    }
+    public void handle_thirdButton() {
+        if(masteryTable.screen.selectedSpell_Button != null && forgetButton == null) {
+            switch_thirdButton();
+        }
+        if(masteryTable.screen.selectedSpell_Button == null && forgetButton != null) {
+            switch_thirdButton();
+        }
+    }
+    public void switch_thirdButton() {
+        if(invertButton != null) {
+            invertButton.remove();
+            buttons.remove(invertButton);
+            invertButton = null;
+            create_forgetButton();
+        } else {
+            forgetButton.remove();
+            buttons.remove(forgetButton);
+            forgetButton = null;
+            create_invertButton();
+        }
     }
     public void create_forgetButton() {
         forgetButton = new ImageButton(masteryTableSkin, "forget_button");
@@ -351,8 +350,6 @@ public class MixingTable extends MenuTable {
     @Override
     public void resize() {
         adjustTableSize();
-        labelTable.clear();
-        createLabels();
         for(Button button : buttons) {
             ImageButton butt = (ImageButton) button;
             adjustSize(butt);
@@ -389,29 +386,8 @@ public class MixingTable extends MenuTable {
     public void dispose() {
         mixButton.remove();
         clearButton.remove();
-        labelTable.clear();
-        labelTable.remove();
         table.clear();
         table.remove();
     }
-
-    public String getPartsString() {
-
-        StringBuilder s = new StringBuilder();
-        if(!parts.isEmpty()) {
-            int counter = 0;
-            for(SpellUtils.Spell_Name part : parts) {
-                s.append(getSpellString(part));
-                if((counter == 0 && parts.size() > 1) || (counter == 1 && parts.size() > 2)) {
-                    s.append(" + ");
-                }
-                counter++;
-            }
-        }
-
-        return s.toString();
-    }
-
-
 
 }

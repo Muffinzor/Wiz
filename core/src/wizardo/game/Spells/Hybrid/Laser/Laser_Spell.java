@@ -28,7 +28,7 @@ public class Laser_Spell extends Spell {
 
     public Laser_Spell() {
 
-        name = "Lasers";
+        string_name = "Lasers";
 
         cooldown = 0.8f;
         speed = 15f;

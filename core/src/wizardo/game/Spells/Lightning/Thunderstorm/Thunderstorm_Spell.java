@@ -27,7 +27,7 @@ public class Thunderstorm_Spell extends Spell {
 
     public Thunderstorm_Spell() {
 
-        name = "Thunderstorm";
+        string_name = "Thunderstorm";
 
         interval = 1/frequency;
         cooldown = 8f;

@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import wizardo.game.Display.MenuTable;
 import wizardo.game.Items.Equipment.Equipment;
@@ -18,6 +17,7 @@ import wizardo.game.Screens.CharacterScreen.EquipmentTable.EquipmentTable;
 import wizardo.game.Screens.CharacterScreen.EquipmentTable.GearPanel;
 import wizardo.game.Screens.CharacterScreen.InventoryTable.InventoryTable;
 import wizardo.game.Screens.CharacterScreen.MasteryTable.MasteryTable;
+import wizardo.game.Screens.CharacterScreen.SpellLabel.SpellLabel;
 import wizardo.game.Screens.CharacterScreen.StatsTable.StatsTable;
 import wizardo.game.Wizardo;
 
@@ -36,6 +36,7 @@ public class CharacterScreen extends BaseScreen {
     public EquipmentTable equipment_table;
     public InventoryTable inventory_table;
     public StatsTable stats_Table;
+    public SpellLabel spell_label;
     public Equipment selectedEquipmentPiece;
 
     public MenuTable activeTable;
@@ -65,10 +66,11 @@ public class CharacterScreen extends BaseScreen {
         equipment_table = new EquipmentTable(stage, inventorySkin, game, this);
         inventory_table = new InventoryTable(stage, inventorySkin, game, this);
 
-        equippedSpells_table = new EquippedSpells_Table(stage, bookTableSkin, game, this);
-        knownSpells_table = new KnownSpells_Table(stage, bookTableSkin, game, this);
+        equippedSpells_table = new EquippedSpells_Table(stage, inventorySkin, game, this);
+        knownSpells_table = new KnownSpells_Table(stage, inventorySkin, game, this);
         stats_Table = new StatsTable(stage);
     }
+
     @Override
     public void resize(int width, int height) {
         if (width <= 0 || height <= 0) return;
@@ -102,7 +104,6 @@ public class CharacterScreen extends BaseScreen {
         activeTable = equippedSpells_table;
 
         stats_Table.createNewPanel();
-
     }
 
     @Override
@@ -120,20 +121,31 @@ public class CharacterScreen extends BaseScreen {
 
         equipment_table.update();
         inventory_table.update();
-
-        panelStage.act(delta);
-        panelStage.draw();
-
-        if(controllerActive) {
-            drawSelectedButton();
-        }
+        batch.begin();
+        equippedSpells_table.draw();
+        knownSpells_table.draw();
+        draw_spell_panel();
+        batch.end();
 
         if(selectedSpell_Button != null && !paused) {
             drawSelectedSpell();
         }
 
+        if(controllerActive) {
+            drawSelectedButton();
+        }
+
+        panelStage.act(delta);
+        panelStage.draw();
+
         drawSpellCreation(delta);
 
+    }
+
+    public void draw_spell_panel() {
+        if(spell_label != null) {
+            spell_label.drawFrame();
+        }
     }
 
     @Override

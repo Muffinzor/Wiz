@@ -116,6 +116,7 @@ public class InventoryButton extends ImageButton implements MenuButton {
     }
 
     public void handleClick() {
+        screen.selectedSpell_Button = null;
         if(piece != null) {
             piece.equip();
             screen.inventory_table.resize();
@@ -132,6 +133,7 @@ public class InventoryButton extends ImageButton implements MenuButton {
     }
 
     public void handleRightClick() {
+        screen.selectedSpell_Button = null;
         if(piece != null) {
             screen.selectedEquipmentPiece = piece;
             screen.game.addNewScreen(new AreYouSureScreen(screen.game, "This will destroy the item"));
@@ -164,6 +166,9 @@ public class InventoryButton extends ImageButton implements MenuButton {
             @Override
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
                 hovered = true;
+                if(screen.activePanel != null) {
+                    screen.activePanel.dispose();
+                }
                 screen.activePanel = new GearPanel(screen.panelStage, piece, false, button);
                 spriteRatio = 0.8f;
             }

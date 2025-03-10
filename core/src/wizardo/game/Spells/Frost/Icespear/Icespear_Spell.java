@@ -33,7 +33,7 @@ public class Icespear_Spell extends Spell {
 
     public Icespear_Spell() {
 
-        name = "Ice Spear";
+        string_name = "Ice Spear";
 
         dmg = 32;
         speed = 400f/PPM;

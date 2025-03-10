@@ -6,231 +6,231 @@ filter: Linear, Linear
 repeat: none
 LTPerfume-2(1)
   rotate: false
-  xy: 509, 1888
+  xy: 509, 1880
   size: 506, 89
   orig: 506, 89
   offset: 0, 0
   index: -1
 Colorfiction - Juice - Freeform
   rotate: false
-  xy: 1, 1802
+  xy: 1, 1794
   size: 506, 67
   orig: 506, 67
   offset: 0, 0
   index: -1
 Colorfiction - Messy(11)
   rotate: false
-  xy: 1, 1948
+  xy: 1, 1940
   size: 506, 97
   orig: 506, 97
   offset: 0, 0
   index: -1
 Colorfiction - Messy(13)
   rotate: false
-  xy: 1, 1552
+  xy: 1, 1544
   size: 504, 155
   orig: 504, 155
   offset: 0, 0
   index: -1
 Colorfiction - Messy(14)
   rotate: false
-  xy: 1017, 1948
+  xy: 1017, 1940
   size: 506, 97
   orig: 506, 97
   offset: 0, 0
   index: -1
 DePixelBreit
   rotate: false
-  xy: 1, 1871
+  xy: 1, 1863
   size: 506, 75
   orig: 506, 75
   offset: 0, 0
   index: -1
 DePixelKlein
   rotate: false
-  xy: 509, 1823
+  xy: 509, 1815
   size: 504, 63
   orig: 504, 63
   offset: 0, 0
   index: -1
 PixelOperatorMono8-Bold
   rotate: false
-  xy: 1, 1709
+  xy: 1, 1701
   size: 505, 91
   orig: 505, 91
   offset: 0, 0
   index: -1
 PixelOperatorSC
   rotate: false
-  xy: 509, 1979
+  xy: 509, 1971
   size: 506, 66
   orig: 506, 66
   offset: 0, 0
   index: -1
 gearBoxOver
   rotate: false
-  xy: 1659, 1957
+  xy: 445, 1232
   size: 88, 88
   orig: 88, 88
   offset: 0, 0
   index: -1
 gearBoxSmall
   rotate: false
-  xy: 1749, 1957
+  xy: 445, 1142
   size: 88, 88
   orig: 88, 88
   offset: 0, 0
   index: -1
+small_etiquette2
+  rotate: false
+  xy: 1525, 1977
+  size: 200, 60
+  orig: 200, 60
+  offset: 0, 0
+  index: -1
 GearSlot_Selected
   rotate: false
-  xy: 340, 91
+  xy: 340, 83
   size: 115, 110
   orig: 115, 110
   offset: 0, 0
   index: -1
 Gear_Slot
   rotate: false
-  xy: 223, 91
+  xy: 223, 83
   size: 115, 110
   orig: 115, 110
   offset: 0, 0
   index: -1
 GemHolder
   rotate: false
-  xy: 1, 1
+  xy: 445, 1060
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
 GemHolder2
   rotate: false
-  xy: 1921, 1965
+  xy: 445, 814
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
 GemHolder2_disabled
   rotate: false
-  xy: 445, 1248
+  xy: 445, 732
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
 GemHolder2_hover
   rotate: false
-  xy: 445, 1166
+  xy: 445, 650
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
 GemHolder_disabled
   rotate: false
-  xy: 83, 1
+  xy: 445, 896
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
 GemHolder_hover
   rotate: false
-  xy: 1839, 1965
+  xy: 445, 978
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
 ArcaneScroll
   rotate: false
-  xy: 1, 305
+  xy: 1, 297
   size: 220, 220
   orig: 220, 220
   offset: 0, 0
   index: -1
 ArcaneScroll_Over
   rotate: false
-  xy: 1, 83
+  xy: 1, 75
   size: 220, 220
   orig: 220, 220
   offset: 0, 0
   index: -1
 FireScroll
   rotate: false
-  xy: 223, 1091
+  xy: 223, 1083
   size: 220, 220
   orig: 220, 220
   offset: 0, 0
   index: -1
 FireScroll_Over
   rotate: false
-  xy: 223, 869
+  xy: 223, 861
   size: 220, 220
   orig: 220, 220
   offset: 0, 0
   index: -1
 FrostScroll
   rotate: false
-  xy: 223, 647
+  xy: 223, 639
   size: 220, 220
   orig: 220, 220
   offset: 0, 0
   index: -1
 FrostScroll_Over
   rotate: false
-  xy: 223, 425
+  xy: 223, 417
   size: 220, 220
   orig: 220, 220
   offset: 0, 0
   index: -1
 LightningScroll
   rotate: false
-  xy: 223, 203
+  xy: 223, 195
   size: 220, 220
   orig: 220, 220
   offset: 0, 0
   index: -1
 LightningScroll_Over
   rotate: false
-  xy: 378, 1330
+  xy: 378, 1322
   size: 220, 220
   orig: 220, 220
   offset: 0, 0
   index: -1
 ShopGearButton
   rotate: false
-  xy: 1, 789
+  xy: 1, 781
   size: 220, 260
   orig: 220, 260
   offset: 0, 0
   index: -1
 ShopGearButton_Disabled
   rotate: false
-  xy: 1, 527
+  xy: 1, 519
   size: 220, 260
   orig: 220, 260
   offset: 0, 0
   index: -1
 ShopGearButton_Selected
   rotate: false
-  xy: 1, 1051
+  xy: 1, 1043
   size: 220, 260
   orig: 220, 260
   offset: 0, 0
   index: -1
 small_etiquette
   rotate: false
-  xy: 1525, 1973
+  xy: 1, 1
   size: 132, 72
   orig: 132, 72
   offset: 0, 0
   index: -1
-small_etiquette2
-  rotate: false
-  xy: 1017, 1896
-  size: 200, 50
-  orig: 200, 50
-  offset: 0, 0
-  index: -1
 Panel_Blank
   rotate: false
-  xy: 1, 1313
+  xy: 1, 1305
   size: 375, 237
   split: 58, 58, 66, 71
   pad: 0, 0, 0, 0

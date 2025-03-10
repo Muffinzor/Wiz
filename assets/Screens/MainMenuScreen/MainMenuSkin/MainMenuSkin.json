@@ -14,16 +14,16 @@ com.badlogic.gdx.graphics.g2d.BitmapFont: {
 	}
 }
 com.badlogic.gdx.graphics.Color: {
-	LightGreen: {
-		r: 0.33707866
-		g: 1
-		b: 0
-		a: 1
-	}
 	LightBlue: {
 		r: 0.27450982
 		g: 0.6666667
 		b: 1
+		a: 1
+	}
+	LightGreen: {
+		r: 0.33707866
+		g: 1
+		b: 0
 		a: 1
 	}
 	LightOrange: {
@@ -38,6 +38,12 @@ com.badlogic.gdx.graphics.Color: {
 		b: 0.80784315
 		a: 1
 	}
+	LightRed: {
+		r: 1
+		g: 0.38039216
+		b: 0.38039216
+		a: 1
+	}
 	LightTeal: {
 		r: 0.24313726
 		g: 1
@@ -48,6 +54,12 @@ com.badlogic.gdx.graphics.Color: {
 		r: 1
 		g: 0.84705883
 		b: 0.25490198
+		a: 1
+	}
+	SoftGreen: {
+		r: 0.69803923
+		g: 0.9529412
+		b: 0.7411765
 		a: 1
 	}
 	White: {

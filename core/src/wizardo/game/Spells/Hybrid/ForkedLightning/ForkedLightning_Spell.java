@@ -25,7 +25,7 @@ public class ForkedLightning_Spell extends Spell {
 
     public ForkedLightning_Spell() {
 
-        name = "Forked Lightning";
+        string_name = "Forked Lightning";
         dmg = 26;
 
         raycasted = true;

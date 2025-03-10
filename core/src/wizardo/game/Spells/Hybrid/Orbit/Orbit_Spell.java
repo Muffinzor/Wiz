@@ -17,7 +17,7 @@ public class Orbit_Spell extends Spell {
     public float duration;
 
     public Orbit_Spell() {
-        name = "Orbit";
+        string_name = "Orbit";
 
         speed = 2;
         dmg = 20;

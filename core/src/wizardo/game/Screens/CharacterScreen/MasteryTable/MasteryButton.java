@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
+import wizardo.game.Screens.CharacterScreen.SpellLabel.SpellLabel;
 import wizardo.game.Spells.SpellUtils.*;
 
 import java.util.ArrayList;
@@ -88,14 +89,11 @@ public class MasteryButton extends CheckBox {
     }
 
     public void handleClick() {
-
+        table.screen.selectedSpell_Button = null;
         if(controllerActive) {
-
             this.setChecked(!isChecked());
         }
-
         if(!isDisabled()) {
-
             if(parts.contains(spell)) {
                 parts.remove(spell);
             } else {
@@ -103,7 +101,18 @@ public class MasteryButton extends CheckBox {
             }
             table.updateCheckBoxes();
             table.mixingTable.updateButtons();
+        }
+        table.screen.mastery_table.mixingTable.handle_thirdButton();
+        update_spell_panel();
+    }
 
+    public void update_spell_panel() {
+        if(table.screen.spell_label != null) {
+            table.screen.spell_label.dispose();
+            table.screen.spell_label = null;
+        }
+        if(!parts.isEmpty()) {
+            table.screen.spell_label = new SpellLabel(table.screen.stage, table.screen, parts);
         }
     }
 

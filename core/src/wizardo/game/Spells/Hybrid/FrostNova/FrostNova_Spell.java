@@ -14,7 +14,7 @@ public class FrostNova_Spell extends Spell {
 
         multicastable = false;
 
-        name = "Frost Nova";
+        string_name = "Frost Nova";
 
         dmg = 45;
         cooldown = 6.4f;

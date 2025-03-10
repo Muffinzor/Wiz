@@ -29,7 +29,8 @@ public class EnergyBeam_Spell extends Spell {
 
     public EnergyBeam_Spell() {
 
-        name = "Energy Beam";
+        string_name = "Energy Beam";
+        spell_enum = SpellUtils.Spell_Name.BEAM;
 
         dmg = 80;
         cooldown = 3.2f;

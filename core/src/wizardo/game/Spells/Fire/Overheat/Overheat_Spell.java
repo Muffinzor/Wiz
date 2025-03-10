@@ -21,7 +21,7 @@ public class Overheat_Spell extends Spell {
 
         multicastable = false;
 
-        name = "Overheat";
+        string_name = "Overheat";
 
         radius = 200;
         cooldown = 6.4f;

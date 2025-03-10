@@ -13,7 +13,7 @@ public class RepulsionField_Spell extends Spell {
 
     public RepulsionField_Spell() {
 
-        name = "Repulsion Field";
+        string_name = "Repulsion Field";
 
         cooldown = 3.2f;
 

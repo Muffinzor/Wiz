@@ -10,14 +10,17 @@ import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Spells.Arcane.Rifts.Rift_Zone;
 import wizardo.game.Spells.Fire.Overheat.Overheat_Explosion;
+import wizardo.game.Spells.Lightning.Thunderstorm.Thunderstorm_Hit;
 import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyFactory;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import static wizardo.game.Resources.SpellAnims.FrostboltAnims.*;
 import static wizardo.game.Spells.SpellUtils.Spell_Element.FIRE;
 import static wizardo.game.Spells.SpellUtils.Spell_Element.FROST;
+import static wizardo.game.Spells.SpellUtils.hasLineOfSight;
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.*;
 
@@ -93,6 +96,9 @@ public class Frostbolt_Projectile extends Frostbolt_Spell{
     }
 
     public void handleCollision(Monster monster) {
+        if(beam) {
+            dealDmg(monster);
+        }
         hasCollided = true;
         legendaryAmuletEffect(monster);
         rift();
@@ -117,8 +123,8 @@ public class Frostbolt_Projectile extends Frostbolt_Spell{
             }
             case LIGHTNING, COLDLITE -> {
                 anim = frostbolt_projectile_anim_lightning;
+                red = 0.5f;
                 green = 0.5f;
-                blue = 0.75f;
                 frameScale = 0.5f;
             }
             case FIRE -> {
@@ -126,15 +132,34 @@ public class Frostbolt_Projectile extends Frostbolt_Spell{
                 red = 0.7f;
                 green = 0.25f;
             }
+            case ARCANE -> {
+                anim = frostbolt_projectile_anim_arcane;
+                red = 0.8f;
+                blue = 0.75f;
+            }
         }
     }
 
     public void regularExplosion() {
+        thunder();
+
         Frostbolt_Explosion explosion = new Frostbolt_Explosion();
         explosion.targetPosition = new Vector2(body.getPosition());
         explosion.setBolt(this);
         explosion.setElements(this);
         screen.spellManager.add(explosion);
+    }
+
+    public void thunder() {
+        if(thunderstorm) {
+            float proc_chance = 0.95f - 0.025f * player.spellbook.thunderstorm_lvl;
+            if(Math.random() >= proc_chance) {
+                Vector2 randomPos = SpellUtils.getClearRandomPosition(body.getPosition(), 1);
+                Thunderstorm_Hit thunder = new Thunderstorm_Hit(randomPos);
+                thunder.setElements(this);
+                screen.spellManager.add(thunder);
+            }
+        }
     }
 
     public void superExplosion() {
@@ -208,14 +233,23 @@ public class Frostbolt_Projectile extends Frostbolt_Spell{
 
     public void arcaneTarget() {
 
-        if(stateTime > 0.1f) {
+        if(stateTime > 0.25f) {
 
             ArrayList<Monster> inRange = SpellUtils.findMonstersInRangeOfVector(body.getPosition(), 8, true);
 
             if(!targetLocked && !inRange.isEmpty()) {
-                int randomIndex = (int) (Math.random() * inRange.size());
-                targetMonster =  inRange.get(randomIndex);
-                targetLocked = true;
+
+                float min = Float.MAX_VALUE;
+                for(Monster monster : inRange) {
+                    if(monster.hp > 0 && monster.body != null && hasLineOfSight(body.getPosition(), monster.body.getPosition())) {
+                        float dst = body.getPosition().dst(monster.body.getPosition());
+                        if(dst < min) {
+                            targetMonster = monster;
+                            targetLocked = true;
+                            min = dst;
+                        }
+                    }
+                }
 
             } else if (targetLocked && targetMonster != null && targetMonster.hp > 0) {
                 Vector2 targetPosition = targetMonster.body.getPosition();
@@ -231,18 +265,16 @@ public class Frostbolt_Projectile extends Frostbolt_Spell{
                 float currentAngle = direction.angleDeg();
                 float angleDiff = targetAngle - currentAngle;
 
-                // Ensure the shortest rotation direction
+                // find the shortest rotation direction
                 if (angleDiff > 180) {
                     angleDiff -= 360;
                 } else if (angleDiff < -180) {
                     angleDiff += 360;
                 }
 
-                // Clamp the angle difference to the maximum allowed increment (5 degrees)
-                float maxRotationPerFrame = 5f;
+                float maxRotationPerFrame = 3 + 0.3f * player.spellbook.arcanemissile_lvl;
                 float rotationStep = MathUtils.clamp(angleDiff, -maxRotationPerFrame, maxRotationPerFrame);
 
-                // Apply the rotation step to the current direction
                 direction.rotateDeg(rotationStep);
 
                 if (direction.len() > 0) {
@@ -260,11 +292,10 @@ public class Frostbolt_Projectile extends Frostbolt_Spell{
 
     public void rift() {
         if(rifts) {
-            float procRate = 0.85f - 0.05f * player.spellbook.rift_lvl;
+            float procRate = 0.75f - 0.025f * player.spellbook.rift_lvl;
             if(Math.random() >= procRate) {
                 Rift_Zone rift = new Rift_Zone(new Vector2(body.getPosition()));
                 rift.setElements(this);
-                rift.anim_element = FROST;
                 screen.spellManager.add(rift);
             }
         }

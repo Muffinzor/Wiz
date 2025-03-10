@@ -22,7 +22,8 @@ public class ArcaneMissile_Spell extends Spell {
 
     public ArcaneMissile_Spell() {
 
-        name = "Arcane Missiles";
+        string_name = "Arcane Missiles";
+        spell_enum = SpellUtils.Spell_Name.MISSILES;
 
         dmg = 16;
         speed = 225f/PPM;

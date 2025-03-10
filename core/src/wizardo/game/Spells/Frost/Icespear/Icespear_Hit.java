@@ -56,6 +56,11 @@ public class Icespear_Hit extends Icespear_Spell {
             case LIGHTNING -> {
                 anim = icespear_hit_anim_lightning;
                 green = 0.5f;
+                red = 0.65f;
+            }
+            case COLDLITE -> {
+                anim = icespear_hit_anim_coldlite;
+                green = 0.5f;
                 blue = 0.65f;
             }
         }

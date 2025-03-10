@@ -8,9 +8,13 @@ import wizardo.game.Items.Equipment.Staff.Epic_FrostboltStaff;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Resources.SpellAnims.ExplosionAnims_Toon;
+import wizardo.game.Spells.Lightning.ChainLightning.ChainLightning_Hit;
 import wizardo.game.Spells.Lightning.ChargedBolts.ChargedBolts_Spell;
 import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyFactory;
+
+import java.util.ArrayList;
+import java.util.Collections;
 
 import static wizardo.game.Resources.SpellAnims.FrostboltAnims.*;
 import static wizardo.game.Spells.SpellUtils.Spell_Element.*;
@@ -70,7 +74,6 @@ public class Frostbolt_Explosion extends Frostbolt_Spell{
 
 
     public void drawFrame() {
-
         Sprite frame = screen.getSprite();
         frame.set(anim.getKeyFrame(stateTime, false));
         frame.setCenter(targetPosition.x * PPM, targetPosition.y * PPM);
@@ -80,13 +83,13 @@ public class Frostbolt_Explosion extends Frostbolt_Spell{
 
         screen.centerSort(frame, targetPosition.y * PPM - 15);
         screen.displayManager.spriteRenderer.regular_sorted_sprites.add(frame);
-
     }
 
     public void handleCollision(Monster monster) {
         dealDmg(monster);
+        chainlightning(monster);
 
-        if(!anim_element.equals(FIRE)) {
+        if(anim_element.equals(FROST)) {
             float duration = 2;
             float immunity = 4;
             float treshold = (0.8f - player.spellbook.frostboltBonus/100f);
@@ -101,7 +104,23 @@ public class Frostbolt_Explosion extends Frostbolt_Spell{
                 monster.applySlow(2.5f, 0.7f);
             }
         }
+    }
 
+    public void chainlightning(Monster monster) {
+        if(chainlightning) {
+            float proc_chance = 0.85f - 0.05f * player.spellbook.chainlightning_lvl;
+            if(Math.random() >= proc_chance) {
+                ArrayList<Monster> inRange = SpellUtils.findMonstersInRangeOfVector(monster.body.getPosition(), 3, true);
+                if(!inRange.isEmpty()) {
+                    Collections.shuffle(inRange);
+                    ChainLightning_Hit chain = new ChainLightning_Hit(inRange.getFirst());
+                    chain.originBody = monster.body;
+                    chain.setElements(this);
+                    chain.maxHits = 0;
+                    screen.spellManager.add(chain);
+                }
+            }
+        }
     }
 
     public void createBody() {
@@ -132,8 +151,16 @@ public class Frostbolt_Explosion extends Frostbolt_Spell{
                 green = 0.25f;
                 frameScale = 0.65f;
             }
+            case LIGHTNING -> {
+                red = 0.5f;
+                green = 0.5f;
+            }
             case COLDLITE -> {
                 green = 0.5f;
+                blue = 0.65f;
+            }
+            case ARCANE -> {
+                red = 0.82f;
                 blue = 0.75f;
             }
         }

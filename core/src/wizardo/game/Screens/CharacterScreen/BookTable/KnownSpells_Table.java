@@ -76,6 +76,13 @@ public class KnownSpells_Table extends MenuTable {
         adjustButtons();
     }
 
+    public void draw() {
+        for(Button button : buttons) {
+            SpellIcon_Button spell_button = (SpellIcon_Button) button;
+            spell_button.drawButton();
+        }
+    }
+
 
     public void createButtons() {
 

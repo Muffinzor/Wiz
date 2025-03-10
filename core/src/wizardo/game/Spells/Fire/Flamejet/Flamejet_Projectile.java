@@ -187,7 +187,7 @@ public class Flamejet_Projectile extends Flamejet_Spell {
                 red = 0.5f;
                 green = 0.2f;
             }
-            case FROST -> {
+            case FROST, COLDLITE -> {
                 if(MathUtils.randomBoolean()) {
                     anim = FlamejetAnims.flamejet_frost_anim;
                 } else {
@@ -204,6 +204,15 @@ public class Flamejet_Projectile extends Flamejet_Spell {
                 red = 0.5f;
                 green = 0.2f;
                 blue = 0.75f;
+            }
+            case LIGHTNING -> {
+                if(MathUtils.randomBoolean()) {
+                    anim = FlamejetAnims.flamejet_lightning_anim;
+                } else {
+                    anim = FlamejetAnims.flamejet_lightning_anim2;
+                }
+                red = 0.55f;
+                green = 0.5f;
             }
         }
 

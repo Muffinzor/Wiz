@@ -161,6 +161,12 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 		imageOver: clear_over
 		imageDisabled: forget_disabled
 	}
+	invert_button: {
+		imageUp: invert_normal
+		imageDown: invert_down
+		imageOver: invert_over
+		imageDisabled: forget_disabled
+	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 	default: {

@@ -50,7 +50,7 @@ public class StaticOrb extends Spell {
             screen.spellManager.add(pulse);
         }
 
-        if(stateTime >= 2.5f) {
+        if(stateTime >= 2.4f) {
             alpha -= 0.02f;
             if(light != null) {
                 light.dimKill(0.02f);
@@ -115,7 +115,7 @@ public class StaticOrb extends Spell {
     }
     public void createLight() {
         light = screen.lightManager.pool.getLight();
-        light.setLight(red, green, blue, 1, 50, body.getPosition());
+        light.setLight(red, green, blue, 1, 60, body.getPosition());
         screen.lightManager.addLight(light);
     }
 

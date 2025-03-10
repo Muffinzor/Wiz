@@ -26,6 +26,10 @@ public class IcespearAnims {
     public static Animation<Sprite> icespear_hit_anim_lightning;
     public static String icespear_atlas_path_lightning = "Spells/Icespear/Icespear_Lightning.atlas";
 
+    public static Animation<Sprite> icespear_anim_coldlite;
+    public static Animation<Sprite> icespear_hit_anim_coldlite;
+    public static String icespear_atlas_path_coldlite = "Spells/Icespear/Icespear_Coldlite.atlas";
+
     public static Animation<Sprite> icespear_break;
     public static String icespear_break_path = "Spells/Icespear/icespear_break.atlas";
 
@@ -39,9 +43,23 @@ public class IcespearAnims {
         }
         icespear_break = new Animation<>(0.008f, IceSpearHitFrames);
 
+        TextureAtlas coldlite_atlas = assetManager.get(icespear_atlas_path_coldlite, TextureAtlas.class);
+
+        Sprite[] coldlite_frames = new Sprite[30];
+        for (int i = 0; i < coldlite_frames.length; i++) {
+            coldlite_frames[i] = coldlite_atlas.createSprite("spear" + (i+1));
+        }
+        icespear_anim_coldlite = new Animation<>(0.1f, coldlite_frames);
+
+        Sprite[] coldlitehit_frames = new Sprite[16];
+        for (int i = 0; i < coldlitehit_frames.length; i++) {
+            coldlitehit_frames[i] = coldlite_atlas.createSprite("hit" + (i+1));
+        }
+        icespear_hit_anim_coldlite = new Animation<>(0.015f, coldlitehit_frames);
+
         TextureAtlas lite_atlas = assetManager.get(icespear_atlas_path_lightning, TextureAtlas.class);
 
-        Sprite[] lite_frames = new Sprite[8];
+        Sprite[] lite_frames = new Sprite[30];
         for (int i = 0; i < lite_frames.length; i++) {
             lite_frames[i] = lite_atlas.createSprite("spear" + (i+1));
         }
@@ -107,5 +125,6 @@ public class IcespearAnims {
         assetManager.load(icespear_atlas_path_arcane, TextureAtlas.class);
         assetManager.load(icespear_atlas_path_lightning, TextureAtlas.class);
         assetManager.load(icespear_break_path, TextureAtlas.class);
+        assetManager.load(icespear_atlas_path_coldlite, TextureAtlas.class);
     }
 }

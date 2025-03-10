@@ -1,7 +1,6 @@
 package wizardo.game.Spells.Hybrid.ArcaneArtillery;
 
 import com.badlogic.gdx.math.Vector2;
-import wizardo.game.Items.Equipment.Hat.Legendary_TripleCastHat;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
@@ -25,7 +24,7 @@ public class Judgement_Spell extends Spell {
     public boolean rift; //for multiple energy rain explosions
 
     public Judgement_Spell() {
-        name = "Judgement";
+        string_name = "Judgement";
 
         dmg = 80;
 

@@ -40,10 +40,12 @@ public class EquipmentTable extends MenuTable {
     }
 
     public void update() {
+        screen.batch.begin();
         for(Button button : buttons) {
             EquipmentButton equipButton = (EquipmentButton) button;
             equipButton.drawItem();
         }
+        screen.batch.end();
     }
 
     public void adjustSize() {
