@@ -224,9 +224,6 @@
   <object id="115" name="Small_pillar" x="1088" y="1536" width="32" height="26"/>
   <object id="116" name="PillarH_g" x="1216" y="1264" width="96" height="40"/>
   <object id="117" name="PillarH_g" x="736" y="1272" width="96" height="40"/>
-  <object id="131" name="Tree" x="1296" y="320" width="8" height="8"/>
-  <object id="132" name="Tree" x="1744" y="176" width="8" height="8"/>
-  <object id="138" name="Tree" x="1560" y="596" width="8" height="8"/>
  </objectgroup>
  <objectgroup id="6" name="LootBodies">
   <object id="133" name="Chest" x="216" y="832" width="4" height="4"/>
@@ -249,6 +246,9 @@
   <object id="127" name="Tree" x="312" y="1408" width="8" height="8"/>
   <object id="129" name="Tree" x="760" y="1752" width="8" height="8"/>
   <object id="130" name="Tree" x="1816" y="1384" width="8" height="8"/>
+  <object id="131" name="Tree" x="1296" y="320" width="8" height="8"/>
+  <object id="132" name="Tree" x="1744" y="176" width="8" height="8"/>
+  <object id="138" name="Tree" x="1560" y="596" width="8" height="8"/>
  </objectgroup>
  <objectgroup id="12" name="GrassBodies">
   <object id="101" name="GrassCluster" x="-400" y="-384" width="2729.79" height="2688">

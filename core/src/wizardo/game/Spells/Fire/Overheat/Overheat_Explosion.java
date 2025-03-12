@@ -54,7 +54,7 @@ public class Overheat_Explosion extends Overheat_Spell {
         createLight();
         sendProjectiles();
         if(thunderstorm) {
-            pushStrength = 8 + 0.75f * player.spellbook.thunderstorm_lvl;
+            pushStrength = 7 + 2 * player.spellbook.thunderstorm_lvl;
             pushDuration = 0.75f;
             pushDecay = 0.91f;
         } else {
@@ -161,8 +161,8 @@ public class Overheat_Explosion extends Overheat_Spell {
 
     public void immediateFrostbolts() {
         if(frostbolts) {
-            int quantity = 2 + 2 * player.spellbook.frostbolt_lvl;
-            float radius = 5 + 0.12f * player.spellbook.frostbolt_lvl;
+            int quantity = 3 + 3 * player.spellbook.frostbolt_lvl;
+            float radius = 4 + player.spellbook.frostbolt_lvl;
             for (int i = 0; i < quantity; i++) {
                 Frostbolt_Explosion explosion = new Frostbolt_Explosion();
                 explosion.setElements(this);
@@ -173,58 +173,48 @@ public class Overheat_Explosion extends Overheat_Spell {
     }
 
     public void delayedFrostbolts(float delta) {
-
         if(frostbolts) {
-
-            float level = (getLvl() + player.spellbook.frostbolt_lvl)/2f;
-            float interval = 0.2f - 0.015f * level;
-
+            float interval = 0.2f - 0.04f * player.spellbook.frostbolt_lvl;
             if(stateTime % interval < delta) {
-
-                float radius = 5 + 0.12f * player.spellbook.frostbolt_lvl;
+                float radius = 4 + player.spellbook.frostbolt_lvl;
                 Frostbolt_Explosion explosion = new Frostbolt_Explosion();
                 explosion.setElements(this);
                 explosion.targetPosition = SpellUtils.getRandomVectorInRadius(body.getPosition(), radius);
                 screen.spellManager.add(explosion);
-
             }
         }
-
     }
 
     public void fireball(Monster monster) {
-
         if(fireball) {
-            float level = (getLvl() + player.spellbook.fireball_lvl)/2f;
-            float procRate = 0.85f - 0.025f * level;
-
+            float procRate = 0.9f - 0.1f * player.spellbook.fireball_lvl;
             if(Math.random() >= procRate) {
                 Overheat_TriggerExplosion fireball = new Overheat_TriggerExplosion();
                 fireball.frozenorb = frozenorb;
-                fireball.nested_spell = nested_spell;
                 fireball.setElements(this);
                 fireball.targetPosition = new Vector2(monster.body.getPosition());
                 screen.spellManager.add(fireball);
             }
         }
-
     }
 
     public void chainLightning() {
-        int quantity = 2 + player.spellbook.chainlightning_lvl / 5;
-        ArrayList<Monster> possibleTargets = SpellUtils.findMonstersInRangeOfVector(getSpawnPosition(), 5, true);
-        if(!possibleTargets.isEmpty()) {
-            Collections.shuffle(possibleTargets);
-            for (int i = 0; i < quantity; i++) {
-                if(!possibleTargets.isEmpty()) {
-                    ChainLightning_Hit chain = new ChainLightning_Hit(possibleTargets.removeFirst());
-                    chain.setElements(this);
-                    chain.fireball = fireball;
-                    if(chargedbolts) {
-                        chain.nested_spell = new ChargedBolts_Spell();
+        if(chainlightning) {
+            int quantity = 2 + player.spellbook.chainlightning_lvl;
+            ArrayList<Monster> possibleTargets = SpellUtils.findMonstersInRangeOfVector(getSpawnPosition(), 5, true);
+            if (!possibleTargets.isEmpty()) {
+                Collections.shuffle(possibleTargets);
+                for (int i = 0; i < quantity; i++) {
+                    if (!possibleTargets.isEmpty()) {
+                        ChainLightning_Hit chain = new ChainLightning_Hit(possibleTargets.removeFirst());
+                        chain.setElements(this);
+                        chain.fireball = fireball;
+                        if (chargedbolts) {
+                            chain.nested_spell = new ChargedBolts_Spell();
+                        }
+                        chain.originBody = body;
+                        screen.spellManager.add(chain);
                     }
-                    chain.originBody = body;
-                    screen.spellManager.add(chain);
                 }
             }
         }
@@ -232,7 +222,7 @@ public class Overheat_Explosion extends Overheat_Spell {
 
     public void icespear() {
         if(icespear) {
-            int quantity = 9 + 3 * player.spellbook.icespear_lvl;
+            int quantity = 6 + 6 * player.spellbook.icespear_lvl;
             for (int i = 0; i < quantity; i++) {
                 Icespear_Spell spear = new Icespear_Spell();
                 spear.duration = 1f;
@@ -248,7 +238,7 @@ public class Overheat_Explosion extends Overheat_Spell {
 
     public void flameBeams() {
         if(flameBeam) {
-            int quantity = 2 + player.spellbook.energybeam_lvl/4;
+            int quantity = 1 + player.spellbook.energybeam_lvl;
             ArrayList<Monster> inRange = SpellUtils.findMonstersInRangeOfVector(body.getPosition(), 6, true);
             Collections.shuffle(inRange);
             int trueQuantity = Math.min(inRange.size(), quantity);
@@ -265,36 +255,7 @@ public class Overheat_Explosion extends Overheat_Spell {
         immediateFrostbolts();
         icespear();
         flameBeams();
-
-        if(chainlightning) {
-            chainLightning();
-        }
-
-        if(nested_spell != null) {
-
-            int quantity = getQuantity();
-
-            for (int i = 0; i < quantity; i++) {
-                Spell proj = nested_spell.clone();
-                proj.setElements(this);
-                proj.targetPosition = SpellUtils.getRandomVectorInRadius(body.getPosition(), 5);
-                proj.spawnPosition = new Vector2(body.getPosition());
-                screen.spellManager.add(proj);
-
-            }
-        }
-
+        chainLightning();
     }
 
-
-    public int getQuantity() {
-        int quantity = 0;
-        double level = (getLvl() + nested_spell.getLvl()) /2f;
-
-        if(nested_spell instanceof Icespear_Spell) {
-            quantity = 5 + (int) (3 * level);
-        }
-
-        return quantity;
-    }
 }

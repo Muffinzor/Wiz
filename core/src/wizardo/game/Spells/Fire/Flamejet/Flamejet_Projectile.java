@@ -109,8 +109,8 @@ public class Flamejet_Projectile extends Flamejet_Spell {
         }
 
 
-        if(!icespear) {
-            float angleVariation = Math.min(quantity * 4, 16);
+        if(!icespear && quantity > 1) {
+            float angleVariation = Math.min(quantity * 5, 20);
             float randomAngle = MathUtils.random(-angleVariation, angleVariation);
             direction.rotateDeg(randomAngle);
         }
@@ -148,7 +148,7 @@ public class Flamejet_Projectile extends Flamejet_Spell {
 
     public void frostbolts(Monster monster) {
         if(frostbolts) {
-            float procRate = .92f - player.spellbook.frostbolt_lvl * 0.02f;
+            float procRate = .90f - player.spellbook.frostbolt_lvl * 0.05f;
             if(Math.random() >= procRate) {
                 Frostbolt_Explosion explosion = new Frostbolt_Explosion();
                 explosion.targetPosition = SpellUtils.getRandomVectorInRadius(monster.body.getPosition(), 0.5f);
@@ -160,7 +160,7 @@ public class Flamejet_Projectile extends Flamejet_Spell {
 
     public void rift(Monster monster) {
         if(rift) {
-            float procRate = .975f - player.spellbook.rift_lvl * 0.025f;
+            float procRate = .90f - player.spellbook.rift_lvl * 0.05f;
             if(Math.random() >= procRate) {
                 Rift_Zone rift = new Rift_Zone(monster.body.getPosition());
                 rift.setElements(this);

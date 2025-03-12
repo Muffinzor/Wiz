@@ -28,7 +28,7 @@ public class DragonBreath_Projectile extends DragonBreath_Spell {
     public boolean bodiesInactive;
 
     int fireballProcs = 0;
-    public int maxFireballProcs = 5;
+    public int maxFireballProcs;
 
     float angle;
 
@@ -48,6 +48,7 @@ public class DragonBreath_Projectile extends DragonBreath_Spell {
     public void update(float delta) {
         if(!initialized) {
             initialized = true;
+            maxFireballProcs = player.spellbook.fireball_lvl;
             pickAnim();
             createBodies();
         }
@@ -79,6 +80,8 @@ public class DragonBreath_Projectile extends DragonBreath_Spell {
 
     public void handleCollision(Monster monster) {
         dealDmg(monster);
+        monster.applyBurn(getDmg()/2f, 3);
+
         if(frostbolts) {
             frostbolts(monster);
         }
@@ -111,8 +114,7 @@ public class DragonBreath_Projectile extends DragonBreath_Spell {
     }
 
     public void frostbolts(Monster monster) {
-        float level = (getLvl() + player.spellbook.frostbolt_lvl)/2f;
-        float procRate = 0.925f - 0.025f * level;
+        float procRate = 0.85f - (0.05f * player.spellbook.frostbolt_lvl);
         if(Math.random() >= procRate) {
             Frostbolt_Explosion explosion = new Frostbolt_Explosion();
             explosion.targetPosition = new Vector2(monster.body.getPosition());
@@ -122,7 +124,7 @@ public class DragonBreath_Projectile extends DragonBreath_Spell {
     }
 
     public void fireball(Monster monster) {
-        float procRate = .985f - (0.005f * player.spellbook.fireball_lvl);
+        float procRate = 0.88f;
         if(fireballProcs < maxFireballProcs && Math.random() >= procRate) {
             Fireball_Explosion explosion1 = new Fireball_Explosion();
             explosion1.targetPosition = new Vector2(monster.body.getPosition());
@@ -133,7 +135,6 @@ public class DragonBreath_Projectile extends DragonBreath_Spell {
     }
 
     public void drawFrame() {
-
         Vector2 offset = new Vector2(direction);
         offset.nor().scl(-3.5f);
         Vector2 trueSpawn = new Vector2(spawnPosition.cpy().add(offset));

@@ -12,7 +12,7 @@ public class OverheatAnims {
     public static Animation<Sprite> overheat_anim_fire;
     public static String overheat_atlas_path_fire = "Spells/Overheat/Overheat_fire.atlas";
     public static Animation<Sprite> overheat_anim_frost;
-    public static String overheat_atlas_path_frost = "Spells/Overheat/frost.atlas";
+    public static String overheat_atlas_path_frost = "Spells/Overheat/Overheat_frost.atlas";
     public static Animation<Sprite> overheat_anim_lightning;
     public static String overheat_atlas_path_lightning = "Spells/Overheat/lightning.atlas";
     public static Animation<Sprite> overheat_anim_coldlite;
@@ -52,10 +52,9 @@ public class OverheatAnims {
         }
         overheat_anim_fire = new Animation<>(0.02f, fire_frames);
 
-        Sprite[] frost_frames = new Sprite[51];
-
-        for (int i = 0; i < frost_frames.length ; i++) {
-            frost_frames[i] = frost.createSprite("overheat" + (i + 1));
+        Sprite[] frost_frames = new Sprite[60];
+        for (int i = 0; i < frost_frames.length; i++) {
+            frost_frames[i] = frost.createSprite("explosion" + (i+1));
         }
         overheat_anim_frost = new Animation<>(0.02f, frost_frames);
 

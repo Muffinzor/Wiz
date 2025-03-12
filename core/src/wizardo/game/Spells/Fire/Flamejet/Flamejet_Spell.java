@@ -21,7 +21,7 @@ public class Flamejet_Spell extends Spell {
     public boolean rift;
 
     public float interval;
-    public int quantity = 1;
+    public float quantity = 1;
     int flamesCast;
 
     public Flamejet_Spell() {
@@ -29,8 +29,8 @@ public class Flamejet_Spell extends Spell {
         string_name = "Flamejet";
 
         speed = 20;
-        cooldown = 0.6f;
-        dmg = 25;
+        cooldown = 1f;
+        dmg = 20;
 
         main_element = FIRE;
 
@@ -55,7 +55,7 @@ public class Flamejet_Spell extends Spell {
                 screen.spellManager.remove(this);
                 return;
             } else {
-                arcaneTargeting(inRange);
+                autoTargeting(inRange);
             }
         }
 
@@ -71,7 +71,7 @@ public class Flamejet_Spell extends Spell {
 
         stateTime += delta;
 
-        if(flamesCast >= quantity) {
+        if(stateTime >= getCooldown()) {
             screen.spellManager.remove(this);
         }
 
@@ -79,9 +79,9 @@ public class Flamejet_Spell extends Spell {
 
     public void setup() {
         if(targetPosition == null) {
-            quantity = 2 + Math.min((player.spellbook.flamejet_lvl-1)/2, 5);
+            quantity = 1 + player.spellbook.flamejet_lvl;
         }
-        interval = cooldown / quantity;
+        interval = getCooldown() / quantity;
     }
 
     public void setFlame(Flamejet_Spell thisFlame) {
@@ -93,7 +93,7 @@ public class Flamejet_Spell extends Spell {
         originBody = thisFlame.originBody;
     }
 
-    public void arcaneTargeting(ArrayList<Monster> inRange) {
+    public void autoTargeting(ArrayList<Monster> inRange) {
         Monster target = null;
         if(!inRange.isEmpty()) {
             float dst = Float.MAX_VALUE;
@@ -125,8 +125,7 @@ public class Flamejet_Spell extends Spell {
     @Override
     public int getDmg() {
         int dmg = this.dmg;
-        dmg += 4 * getLvl();
-        dmg = (int) (dmg * (1 + player.spellbook.flashBonusDmg/100f));
+        dmg += 8 * getLvl();
         return dmg;
     }
 

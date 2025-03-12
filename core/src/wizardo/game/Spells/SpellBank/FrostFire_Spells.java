@@ -184,9 +184,9 @@ public class FrostFire_Spells {
         frostfire16.flamejet = true;
         frostfire16.anim_element = FIRE;
         frostfire16.overheat = true;
+        frostfire16.spellParts.add(ICESPEAR);
         frostfire16.spellParts.add(FLAMEJET);
         frostfire16.spellParts.add(OVERHEAT);
-        frostfire16.spellParts.add(ICESPEAR);
         frostfireSpells[16] = frostfire16;
 
         // 17. Flamejet + Overheat + Frozenorb

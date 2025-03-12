@@ -9,6 +9,7 @@ import static wizardo.game.Wizardo.player;
 public class ArcaneMissile_Spell extends Spell {
 
     public float extraProjs;
+    public int projectiles = 3;
 
     public boolean rift;
     public boolean riftBolts; //for Missiles + rifts + chargedbolts
@@ -36,16 +37,9 @@ public class ArcaneMissile_Spell extends Spell {
 
     public void setup() {
         if(targetPosition == null) {
-            float bonus = (player.spellbook.arcanemissile_lvl - 1) / 1.5f;        // change this value to modify the rate of increase
-            if((bonus % 1) > 0) {
-                float remainder = bonus % 1;
-                if(Math.random() >= 1 - remainder) {
-                    extraProjs ++;
-                }
-                extraProjs += (float) Math.floor(bonus);
-            } else {
-                extraProjs = bonus;
-            }
+            projectiles = 3 + player.spellbook.arcane_missile_bonus_proj;
+        } else {
+            projectiles = 1;
         }
     }
 
@@ -61,7 +55,7 @@ public class ArcaneMissile_Spell extends Spell {
                 return;
             }
 
-            for (int i = 0; i < 3 + extraProjs; i++) {
+            for (int i = 0; i < projectiles + extraProjs; i++) {
                 ArcaneMissile_Projectile missile = new ArcaneMissile_Projectile(getSpawnPosition(), targetPosition);
                 missile.setElements(this);
                 missile.scale = scale;

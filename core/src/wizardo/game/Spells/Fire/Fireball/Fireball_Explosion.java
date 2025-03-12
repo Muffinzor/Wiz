@@ -156,13 +156,12 @@ public class Fireball_Explosion extends Fireball_Spell {
     }
 
     public void frozenOrb(Monster monster) {
-        float lvl = (getLvl() + player.spellbook.frozenorb_lvl)/2f;
-        float duration = 1.4f + 0.1f * lvl;
-        float slowRatio = .84f - 0.04f * lvl;
+        float duration = 0.8f + 0.4f * player.spellbook.frozenorb_lvl;
+        float slowRatio = .9f - 0.1f * player.spellbook.frozenorb_lvl;
 
         if(frozenorb) {
             if(monster.freezeImmunityTimer <= 0) {
-                monster.applyFreeze(duration, 6f);
+                monster.applyFreeze(duration, duration * 1.5f);
             } else {
                 monster.applySlow(2.5f, slowRatio);
             }
@@ -196,7 +195,7 @@ public class Fireball_Explosion extends Fireball_Spell {
 
     public void flamejets() {
         if(flamejets) {
-            int quantity = 2 + player.spellbook.flamejet_lvl;
+            int quantity = 3 + player.spellbook.flamejet_lvl * 2;
             for (int i = 0; i < quantity; i++) {
                 Flamejet_Spell flame = new Flamejet_Spell();
                 flame.setElements(this);
@@ -209,20 +208,7 @@ public class Fireball_Explosion extends Fireball_Spell {
     }
 
     public int getProjQuantity() {
-        int quantity = 0;
-        float level = (getLvl() + nested_spell.getLvl()) / 2f;
-
-        if(nested_spell instanceof Flamejet_Spell) {
-            quantity = 2 + (int) (level);
-        }
-        if(nested_spell instanceof ChargedBolts_Spell) {
-            quantity = 5 + (int) (level);
-        }
-        if(nested_spell instanceof ArcaneMissile_Spell) {
-            quantity = 2 + (int) (level);
-        }
-
-        return quantity;
+        return 3 + nested_spell.getLvl() * 2;
     }
 
     public void thunderstorm() {

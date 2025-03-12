@@ -25,7 +25,7 @@ public class Overheat_Spell extends Spell {
 
         radius = 200;
         cooldown = 6.4f;
-        dmg = 125;
+        dmg = 100;
 
         main_element = SpellUtils.Spell_Element.FIRE;
     }
@@ -52,8 +52,6 @@ public class Overheat_Spell extends Spell {
             thunder.setElements(this);
             screen.spellManager.add(thunder);
         }
-
-
     }
 
     @Override
@@ -69,8 +67,7 @@ public class Overheat_Spell extends Spell {
     @Override
     public int getDmg() {
         int dmg = this.dmg;
-        dmg += 25 * getLvl();
-        dmg = (int) (dmg * (1 + player.spellbook.explosivesBonusDmg/100f));
+        dmg += 50 * getLvl();
         return dmg;
     }
 

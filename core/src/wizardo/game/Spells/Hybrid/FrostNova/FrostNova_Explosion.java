@@ -20,7 +20,7 @@ public class FrostNova_Explosion extends FrostNova_Spell {
     RoundLight light;
 
     float radius = 135;
-    float sizeScaling = 1;
+    float sizeScaling;
     float freezeDuration = 2.25f;
 
     public FrostNova_Explosion(){

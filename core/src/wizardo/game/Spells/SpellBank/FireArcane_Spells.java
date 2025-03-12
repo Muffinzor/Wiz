@@ -38,8 +38,8 @@ public class FireArcane_Spells {
         Fireball_Spell firearcane1 = new Fireball_Spell();
         firearcane1.anim_element = ARCANE;
         firearcane1.nested_spell = new ArcaneMissile_Spell();
-        firearcane1.spellParts.add(MISSILES);
         firearcane1.spellParts.add(FIREBALL);
+        firearcane1.spellParts.add(MISSILES);
         firearcaneSpells[1] = firearcane1;
 
         // 2. ArcaneMissile + Overheat

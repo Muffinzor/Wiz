@@ -47,8 +47,8 @@ public class Fire_Spells {
         Overheat_Spell fire4 = new Overheat_Spell();
         fire4.fireball = true;
         fire4.anim_element = FIRE;
-        fire4.spellParts.add(FIREBALL);
         fire4.spellParts.add(OVERHEAT);
+        fire4.spellParts.add(FIREBALL);
         firespells[4] = fire4;
 
         // 5. Overheat + Flamejet
@@ -63,11 +63,9 @@ public class Fire_Spells {
         fire6.anim_element = FIRE;
         fire6.fireball = true;
         fire6.spellParts.add(FLAMEJET);
-        fire6.spellParts.add(FIREBALL);
         fire6.spellParts.add(OVERHEAT);
+        fire6.spellParts.add(FIREBALL);
         firespells[6] = fire6;
-
-
 
     }
 }

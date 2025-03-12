@@ -29,6 +29,10 @@ public class Spellbook {
     public int energybeam_lvl = 0;
     public int rift_lvl = 0;
 
+    // ARCANE MISSILES
+    public float arcane_missile_bonus_dmg;
+    public int arcane_missile_bonus_proj;
+
     // Elemental Dmg
     public float arcaneBonusDmg;
     public float frostBonusDmg;

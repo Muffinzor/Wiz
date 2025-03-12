@@ -85,6 +85,8 @@ public abstract class Monster {
     public boolean initialized;
     public boolean tooFar;
 
+    public float burnTimer = 0;
+    public float burnDmg = 0;
     public float thunderImmunityTimer = 0;
     public float freezeImmunityTimer = 0;
     public float freezeTimer = 0;
@@ -326,6 +328,11 @@ public abstract class Monster {
         freezeTimer -= delta;
         freezeImmunityTimer -= delta;
         slowedTimer -= delta;
+        burnTimer -= delta;
+
+        if(burnTimer > 0) {
+            hp -= burnDmg/180f;
+        }
 
         if(freezeTimer <= 0) {
             stateTime += delta;
@@ -358,6 +365,11 @@ public abstract class Monster {
                 slowRatio = 0.75f;
             }
         }
+    }
+
+    public void applyBurn(float burnDmg, float duration) {
+        this.burnTimer = duration;
+        this.burnDmg += burnDmg;
     }
 
     public void onDeath() {

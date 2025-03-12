@@ -2,6 +2,7 @@ package wizardo.game.Spells.Hybrid.DragonBreath;
 
 import com.badlogic.gdx.math.Vector2;
 import wizardo.game.Items.Equipment.Amulet.Epic_DragonbreathAmulet;
+import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 
@@ -18,7 +19,7 @@ public class DragonBreath_Spell extends Spell {
 
         string_name = "Dragonbreath";
 
-        dmg = 50;
+        dmg = 15;
 
         cooldown = 4f;
 
@@ -76,7 +77,6 @@ public class DragonBreath_Spell extends Spell {
         int dmg = this.dmg;
         dmg += 15 * player.spellbook.flamejet_lvl;
         dmg += 15 * player.spellbook.overheat_lvl;
-        dmg = (int) (dmg * (1 + player.spellbook.flashBonusDmg/100f));
         return dmg;
     }
 

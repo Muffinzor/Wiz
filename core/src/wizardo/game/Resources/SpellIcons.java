@@ -41,6 +41,7 @@ public class SpellIcons {
 
     public static Sprite overheat_fire = new Sprite(new Texture("Spells/SPELL_ICONS/overheat_fire.png"));
     public static Sprite overheat_lightning = new Sprite(new Texture("Spells/SPELL_ICONS/overheat_lightning.png"));
+    public static Sprite overheat_frost = new Sprite(new Texture("Spells/SPELL_ICONS/overheat_frost.png"));
 
     public static Sprite chargedbolts_frost = new Sprite(new Texture("Spells/SPELL_ICONS/chargedbolts_frost.png"));
     public static Sprite chargedbolts_fire = new Sprite(new Texture("Spells/SPELL_ICONS/chargedbolts_fire.png"));
@@ -98,6 +99,9 @@ public class SpellIcons {
     public static Sprite dragonbreath_fire = new Sprite(new Texture("Spells/SPELL_ICONS/dragonbreath_fire.png"));
     public static Sprite dragonbreath_frost = new Sprite(new Texture("Spells/SPELL_ICONS/dragonbreath_frost.png"));
     public static Sprite dragonbreath_arcane = new Sprite(new Texture("Spells/SPELL_ICONS/dragonbreath_arcane.png"));
+
+    public static Sprite orbit_arcane = new Sprite(new Texture("Spells/SPELL_ICONS/orbit_arcane.png"));
+    public static Sprite orbit_frost = new Sprite(new Texture("Spells/SPELL_ICONS/orbit_frost.png"));
 
     public static Sprite celestialstrike_coldlite = new Sprite(new Texture("Spells/SPELL_ICONS/celestialstrike_coldlite.png"));
 

@@ -29,6 +29,7 @@ import wizardo.game.Spells.Hybrid.FrostNova.FrostNova_Spell;
 import wizardo.game.Spells.Hybrid.Laser.Laser_Spell;
 import wizardo.game.Spells.Hybrid.LightningHands.LightningHands_Spell;
 import wizardo.game.Spells.Hybrid.MeteorShower.MeteorShower_Spell;
+import wizardo.game.Spells.Hybrid.Orbit.Orbit_Spell;
 import wizardo.game.Spells.Hybrid.RepulsionField.RepulsionField_Spell;
 import wizardo.game.Spells.Lightning.ChainLightning.ChainLightning_Spell;
 import wizardo.game.Spells.Lightning.ChargedBolts.ChargedBolts_Spell;
@@ -164,6 +165,7 @@ public class SpellIcon_Button extends ImageButton {
             switch(spell.anim_element) {
                 case FIRE -> frame = overheat_fire;
                 case LIGHTNING -> frame = overheat_lightning;
+                case FROST -> frame = overheat_frost;
             }
         }
         if(spell instanceof ArcaneMissile_Spell) {
@@ -233,6 +235,12 @@ public class SpellIcon_Button extends ImageButton {
                 case FROST -> frame = dragonbreath_frost;
                 case FIRE -> frame = dragonbreath_fire;
                 case ARCANE -> frame = dragonbreath_arcane;
+            }
+        }
+        if(spell instanceof Orbit_Spell) {
+            switch(spell.anim_element) {
+                case FROST -> frame = orbit_frost;
+                case ARCANE -> frame = orbit_arcane;
             }
         }
         if(spell instanceof LightningHands_Spell) {

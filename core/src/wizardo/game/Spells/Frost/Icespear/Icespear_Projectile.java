@@ -22,7 +22,6 @@ import wizardo.game.Spells.Lightning.ChargedBolts.ChargedBolts_Spell;
 import wizardo.game.Spells.Lightning.Thunderstorm.Thunderstorm_Hit;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
-import wizardo.game.Spells.Unique.StaticOrb.StaticOrb;
 import wizardo.game.Utils.BodyFactory;
 
 import java.util.ArrayList;
@@ -117,13 +116,14 @@ public class Icespear_Projectile extends Icespear_Spell {
      * BESOIN FAIRE PROC RATE
      */
     public void handleCollision(Monster monster) {
-        if(overheat) {
-            overheatChance();
-        }
 
         if(frozenorb && anim_element == FROST) {
             float duration = 0.8f + 0.2f * player.spellbook.frozenorb_lvl;
             monster.applyFreeze(duration, duration * 2);
+        }
+
+        if(overheat && flamejet) {
+            overheatChance();
         }
 
         dealDmg(monster);
@@ -174,7 +174,7 @@ public class Icespear_Projectile extends Icespear_Spell {
 
     public void handleCollision(Fixture fixture) {
         destroyed = true;
-        if(!breakAnimationDone) {
+        if(!breakAnimationDone) {  // This prevents shenanigans when breaking on a multifixture body
             Icespear_Break hit = new Icespear_Break(body.getPosition());
             screen.spellManager.add(hit);
             breakAnimationDone = true;
@@ -470,7 +470,7 @@ public class Icespear_Projectile extends Icespear_Spell {
     }
 
     public void overheatChance() {
-        float procRate = 1 - .05f * player.spellbook.overheat_lvl;
+        float procRate = 0.95f - .05f * player.spellbook.overheat_lvl;
         if(Math.random() >= procRate) {
             Overheat_TriggerExplosion explosion = new Overheat_TriggerExplosion();
             explosion.setElements(this);
