@@ -33,6 +33,14 @@ public class Spellbook {
     public float arcane_missile_bonus_dmg;
     public int arcane_missile_bonus_proj;
 
+    // FROSTBOLTS
+    public float frostbolts_bonus_dmg;
+    public int frostbolts_bonus_proj;
+
+    // FROZENORB
+    public float frozenorb_bonus_dmg;
+    public float frozenorb_bonus_radius;
+
     // Elemental Dmg
     public float arcaneBonusDmg;
     public float frostBonusDmg;

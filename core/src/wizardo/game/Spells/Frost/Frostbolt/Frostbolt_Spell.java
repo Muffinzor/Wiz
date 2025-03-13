@@ -21,8 +21,7 @@ public class Frostbolt_Spell extends Spell {
     public Frostbolt_Spell() {
 
         string_name = "Frostbolts";
-
-        speed = 7;
+        speed = 7f;
         radius = 25;
         dmg = 24;
         cooldown = 0.8f;
@@ -33,27 +32,19 @@ public class Frostbolt_Spell extends Spell {
     }
 
     public void setup() {
-        float extraProjs = 0;
-        if(targetPosition == null) {
-            float bonus = (player.spellbook.frostbolt_lvl - 1) / 2f;
-            if((bonus % 1) > 0) {
-                float remainder = bonus % 1;
-                if(Math.random() >= 1 - remainder) {
-                    extraProjs ++;
-                }
-                extraProjs += (float) Math.floor(bonus);
-            } else {
-                extraProjs = bonus;
+
+        if(targetPosition != null) {
+            projectiles = 1;
+        } else {
+            projectiles = getLvl();
+            if(player.inventory.equippedHat instanceof Rare_FrostboltHat) {
+                projectiles++;
             }
         }
-        projectiles += extraProjs;
-        if(player.inventory.equippedHat instanceof Rare_FrostboltHat) {
-            projectiles++;
-        }
         if(beam) {
-            speed += 0.5f * player.spellbook.energybeam_lvl;
-            speed += 2f;
+            speed += 2 * player.spellbook.energybeam_lvl;
         }
+
     }
 
     @Override
@@ -67,7 +58,6 @@ public class Frostbolt_Spell extends Spell {
         }
 
         for (int i = 0; i < projectiles; i++) {
-
             Frostbolt_Projectile bolt = new Frostbolt_Projectile(getSpawnPosition(), targetPosition);
             bolt.setBolt(this);
             bolt.setElements(this);
@@ -95,12 +85,10 @@ public class Frostbolt_Spell extends Spell {
         if(beam) {
             dmg += 2 * player.spellbook.energybeam_lvl;
         }
-        dmg = (int) (dmg * (1 + player.spellbook.explosivesBonusDmg/100f));
         return dmg;
     }
 
     public void setBolt(Frostbolt_Spell parent) {
-        this.speed = parent.speed;
         this.beam = parent.beam;
         this.missile = parent.missile;
         this.rifts = parent.rifts;

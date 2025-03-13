@@ -32,10 +32,9 @@ public class Icespear_Spell extends Spell {
     public boolean thunderspear; // for Icespear+Thunderstorm+Chargedbolts;
 
     public Icespear_Spell() {
-
         string_name = "Ice Spear";
 
-        dmg = 32;
+        dmg = 20;
         speed = 400f/PPM;
         cooldown = 0.8f;
         autoaimable = true;
@@ -55,8 +54,6 @@ public class Icespear_Spell extends Spell {
     public void update(float delta) {
         stateTime += delta;
         setup();
-
-
         autoAimCheck();
 
         if(targetPosition == null) {
@@ -68,9 +65,6 @@ public class Icespear_Spell extends Spell {
         screen.spellManager.add(spear);
         screen.spellManager.remove(this);
     }
-
-
-
 
     @Override
     public void dispose() {
@@ -108,8 +102,7 @@ public class Icespear_Spell extends Spell {
     @Override
     public int getDmg() {
         int dmg = this.dmg;
-        dmg += 8 * getLvl();
-        dmg = (int) (dmg * (1 + player.spellbook.sharpBonusDmg/100f));
+        dmg += 20 * getLvl();
         return dmg;
     }
 

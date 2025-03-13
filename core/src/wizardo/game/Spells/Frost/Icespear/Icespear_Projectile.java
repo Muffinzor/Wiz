@@ -118,7 +118,7 @@ public class Icespear_Projectile extends Icespear_Spell {
     public void handleCollision(Monster monster) {
 
         if(frozenorb && anim_element == FROST) {
-            float duration = 0.8f + 0.2f * player.spellbook.frozenorb_lvl;
+            float duration = 1.6f + 0.4f * player.spellbook.frozenorb_lvl;
             monster.applyFreeze(duration, duration * 2);
         }
 
@@ -167,8 +167,6 @@ public class Icespear_Projectile extends Icespear_Spell {
                     monster.marked = true;
                 }
             }
-
-
         }
     }
 
@@ -183,18 +181,16 @@ public class Icespear_Projectile extends Icespear_Spell {
 
     public float getProcRate() {
         float procRate = 1;
-        float level = (getLvl() + nested_spell.getLvl())/2f;
         if(nested_spell instanceof ChargedBolts_Spell) {
-            procRate = 0.0925f - 0.025f * level;
+            procRate = 0.9f - 0.05f * player.spellbook.chargedbolt_lvl;
         }
         return procRate;
     }
 
     public int getQuantity() {
         int quantity = 1;
-        int level = getLvl() + nested_spell.getLvl();
         if(nested_spell instanceof ChargedBolts_Spell) {
-            quantity = 3 + level/2;
+            quantity = 3 + 2 * player.spellbook.chargedbolt_lvl;
         }
         return quantity;
     }
@@ -258,13 +254,11 @@ public class Icespear_Projectile extends Icespear_Spell {
 
                 Vector2 direction = new Vector2(MathUtils.cosDeg(rotation), MathUtils.sinDeg(rotation));
                 flamejetSplit(direction);
-
             }
         }
     }
 
     public void drawFrame() {
-
         Sprite frame = screen.displayManager.spriteRenderer.pool.getSprite();
         frame.set(anim.getKeyFrame(stateTime, true));
         frame.setCenter(body.getPosition().x * PPM, body.getPosition().y * PPM);
@@ -279,7 +273,7 @@ public class Icespear_Projectile extends Icespear_Spell {
 
     public void pickAnim() {
         if(beam) {
-            scale = 2.5f;
+            scale = 2;
         }
         switch(anim_element) {
             case FROST -> {
@@ -332,7 +326,6 @@ public class Icespear_Projectile extends Icespear_Spell {
         body = BodyFactory.spellProjectileCircleBody(adjustedSpawn, radius, true);
         body.setUserData(this);
 
-
         Vector2 velocity = direction.scl(actualSpeed);
         body.setLinearVelocity(velocity);
         rotation = velocity.angleDeg();
@@ -343,7 +336,6 @@ public class Icespear_Projectile extends Icespear_Spell {
         if(beam) {
             radius = 75;
         }
-
         light = screen.lightManager.pool.getLight();
         light.setLight(red,green,blue,1,radius, body.getPosition());
         screen.lightManager.addLight(light);
@@ -357,7 +349,6 @@ public class Icespear_Projectile extends Icespear_Spell {
         if(celestialStrike) {
             float level = (getLvl() + player.spellbook.thunderstorm_lvl + player.spellbook.frozenorb_lvl) / 3f;
             float procRate = .95f - level * 0.05f;
-
             if(Math.random() >= procRate) {
                 CelestialStrike_Hit strike = new CelestialStrike_Hit();
                 strike.targetPosition = new Vector2(body.getPosition());
@@ -367,8 +358,8 @@ public class Icespear_Projectile extends Icespear_Spell {
         }
     }
     public void lightingOrbSplit() {
-        if(frozenorb && anim_element == LIGHTNING) {
-            float procRate = 0.95f - 0.025f * player.spellbook.frozenorb_lvl;
+        if(frozenorb && anim_element == LIGHTNING ) {
+            float procRate = 0.95f - 0.05f * player.spellbook.frozenorb_lvl;
             if(Math.random() >= procRate) {
                 Frozenorb_Spell orb = new Frozenorb_Spell();
                 orb.setElements(this);
@@ -416,8 +407,7 @@ public class Icespear_Projectile extends Icespear_Spell {
 
     public void rift() {
         if(rift) {
-            float procTreshold = 0.883f - .033f * player.spellbook.rift_lvl;
-
+            float procTreshold = 0.9f - .05f * player.spellbook.rift_lvl;
             if(Math.random() >= procTreshold) {
                 Rift_Zone rift = new Rift_Zone(body.getPosition());
                 rift.frostbolt = frostbolts;
@@ -429,8 +419,7 @@ public class Icespear_Projectile extends Icespear_Spell {
 
     public void frostbolts() {
         if(frostbolts) {
-            float procTreshold = 0.85f - .05f * player.spellbook.frostbolt_lvl;
-
+            float procTreshold = 0.9f - .1f * player.spellbook.frostbolt_lvl;
             if(Math.random() >= procTreshold) {
                 Frostbolt_Explosion explosion = new Frostbolt_Explosion();
                 explosion.targetPosition = new Vector2(body.getPosition());
@@ -442,8 +431,7 @@ public class Icespear_Projectile extends Icespear_Spell {
 
     public void thunderspear() {
         if(thunderspear) {
-            float chargedboltsProc = 0.95f - 0.05f * player.spellbook.chargedbolt_lvl;
-
+            float chargedboltsProc = 0.95f - 0.1f * player.spellbook.chargedbolt_lvl;
             if(Math.random() >= chargedboltsProc) {
                 int quantity = 3 + player.spellbook.chargedbolt_lvl/2;
                 for (int i = 0; i < quantity; i++) {
@@ -459,7 +447,7 @@ public class Icespear_Projectile extends Icespear_Spell {
     }
     public void thundersplit() {
         if(thunderspear) {
-            float thunderProc = 0.65f - 0.05f * player.spellbook.thunderstorm_lvl;
+            float thunderProc = 0.75f - 0.15f * player.spellbook.thunderstorm_lvl;
             if(Math.random() >= thunderProc) {
                 Thunderstorm_Hit thunder = new Thunderstorm_Hit(body.getPosition());
                 thunder.setElements(this);

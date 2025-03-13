@@ -42,7 +42,6 @@ public class ChargedBolts_Spell extends Spell {
 
         if(spawnPosition != null) {
             bolts = 1;
-            speed = 55f/PPM;
         } else {
             bolts = 2 + getLvl();
             if(overheat) {

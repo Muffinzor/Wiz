@@ -47,8 +47,8 @@ public class Frozenorb_Projectile extends Frozenorb_Spell {
     }
 
     public void setup() {
-        radius = 2.85f + 0.15f * getLvl();
-        radius += (1 + player.spellbook.iceRadiusBonus/100f);
+        radius = 2.5f;
+        radius *= (1 + player.spellbook.frozenorb_bonus_radius/100f);
         pickAnim();
         createBody();
         createLight();
@@ -132,7 +132,7 @@ public class Frozenorb_Projectile extends Frozenorb_Spell {
         frame.set(anim.getKeyFrame(stateTime, true));
 
         float immediatesScale = scale * (1 + player.spellbook.iceRadiusBonus/100f);
-        if(anim_element == COLDLITE) {
+        if(anim_element == COLDLITE || anim_element == LIGHTNING) {
             frame.setScale(0.7f * immediatesScale);
         } else {
             frame.setScale(immediatesScale);
@@ -185,9 +185,7 @@ public class Frozenorb_Projectile extends Frozenorb_Spell {
     public void shootProjectiles() {
         if(stateTime > castInterval * castCounter) {
             Spell proj = nested_spell.clone();
-
             setProj(proj);
-
             screen.spellManager.add(proj);
             castCounter++;
         }
@@ -239,25 +237,25 @@ public class Frozenorb_Projectile extends Frozenorb_Spell {
         float level = (getLvl() + nested_spell.getLvl()) / 2f;
 
         if(nested_spell instanceof ChainLightning_Spell) {
-            interval = 0.65f - 0.05f * level;
+            interval = 0.7f - 0.1f * level;
         }
         if(nested_spell instanceof Frostbolt_Spell) {
-            interval = 0.25f - 0.02f * level;
+            interval = 0.225f - 0.05f * level;
         }
         if(nested_spell instanceof ChargedBolts_Spell) {
-            interval = 0.21f - 0.02f * level;
+            interval = 0.21f - 0.05f * level;
         }
         if(nested_spell instanceof Flamejet_Spell) {
-            interval = 0.15f - 0.0125f * level;
+            interval = 0.175f - 0.025f * level;
         }
         if(nested_spell instanceof Icespear_Spell) {
-            interval = 0.15f - 0.01f * level;
+            interval = 0.2f - 0.025f * level;
         }
         if(nested_spell instanceof ArcaneMissile_Spell) {
-            interval = 0.3f - 0.0125f * level;
+            interval = 0.27f - 0.05f * level;
         }
         if(nested_spell instanceof Laser_Spell) {
-            interval = 0.2f - 0.015f * level;
+            interval = 0.24f - 0.024f * (player.spellbook.arcanemissile_lvl + player.spellbook.frozenorb_lvl)/2f;
         }
 
         return interval;
@@ -270,9 +268,7 @@ public class Frozenorb_Projectile extends Frozenorb_Spell {
             nova.targetPosition = new Vector2(body.getPosition());
             screen.spellManager.add(nova);
 
-            if(nested_spell instanceof Frostbolt_Spell) {
-                nova.frostbolts = true;
-            } else if(nested_spell instanceof Icespear_Spell) {
+            if(nested_spell instanceof Icespear_Spell) {
                 int projs = 10 + nested_spell.getLvl() * 2;
                 for (int i = 0; i < projs; i++) {
                     Spell spear = nested_spell.clone();

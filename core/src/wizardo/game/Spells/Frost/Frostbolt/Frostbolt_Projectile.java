@@ -46,7 +46,6 @@ public class Frostbolt_Projectile extends Frostbolt_Spell{
 
         speed = speed * MathUtils.random(0.9f, 1.1f);
         soundPath = "Sounds/Spells/IceThrow1.wav";
-
     }
 
     @Override

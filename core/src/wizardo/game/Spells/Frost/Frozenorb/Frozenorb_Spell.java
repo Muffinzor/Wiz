@@ -9,7 +9,7 @@ import static wizardo.game.Wizardo.player;
 
 public class Frozenorb_Spell extends Spell {
 
-    public float duration = 6f;
+    public float duration = 4f;
     public float slowRatio = 0.8f;
     public boolean frostnova;
 
@@ -17,9 +17,9 @@ public class Frozenorb_Spell extends Spell {
 
         string_name = "Frozen Orb";
 
-        speed = 60f/PPM;
-        cooldown = 8f;
-        dmg = 50;   // per second
+        speed = 80f/PPM;
+        cooldown = 6f;
+        dmg = 30;   // per second
         autoaimable = true;
 
         main_element = SpellUtils.Spell_Element.FROST;
@@ -28,8 +28,8 @@ public class Frozenorb_Spell extends Spell {
 
     public void setup() {
         if(player.inventory.equippedStaff instanceof Epic_FrozenorbStaff) {
-            speed = speed * (2/3f);
-            duration = duration * (2/3f);
+            speed = speed * (0.5f);
+            duration = duration * (0.5f);
         }
     }
 
@@ -73,8 +73,7 @@ public class Frozenorb_Spell extends Spell {
     @Override
     public int getDmg() {
         int dmg = this.dmg;
-        dmg += 10 * getLvl();
-        dmg = (int) (dmg * (1 + player.spellbook.gravityBonusDmg/100f));
+        dmg += 30 * getLvl();
         if(player.inventory.equippedStaff instanceof Epic_FrozenorbStaff) {
             dmg = (dmg * 150)/100;
         }
@@ -83,7 +82,7 @@ public class Frozenorb_Spell extends Spell {
 
     public float getCooldown() {
         if(player.inventory.equippedStaff instanceof Epic_FrozenorbStaff) {
-            return cooldown * (2/3f);
+            return cooldown * (0.5f);
         }
         return cooldown;
     }

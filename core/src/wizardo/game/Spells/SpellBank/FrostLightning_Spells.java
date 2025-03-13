@@ -247,8 +247,7 @@ public class FrostLightning_Spells {
 
         Icespear_Spell frostlite22 = new Icespear_Spell();
         frostlite22.thunderspear = true;
-        frostlite22.anim_element = LIGHTNING;
-        frostlite22.textColor = Skins.light_teal;
+        frostlite22.anim_element = COLDLITE;
         frostlite22.spellParts.add(THUNDERSTORM);
         frostlite22.spellParts.add(ICESPEAR);
         frostlite22.spellParts.add(CHARGEDBOLTS);

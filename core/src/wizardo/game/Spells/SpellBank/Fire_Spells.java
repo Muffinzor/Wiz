@@ -66,6 +66,5 @@ public class Fire_Spells {
         fire6.spellParts.add(OVERHEAT);
         fire6.spellParts.add(FIREBALL);
         firespells[6] = fire6;
-
     }
 }
