@@ -8,6 +8,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import wizardo.game.Items.Equipment.Ring.Rare_BeamRing;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
+import wizardo.game.Spells.Arcane.ArcaneMissiles.ArcaneMissile_Spell;
 import wizardo.game.Spells.Arcane.Rifts.Rift_Zone;
 import wizardo.game.Spells.Fire.Fireball.Fireball_Explosion;
 import wizardo.game.Spells.Fire.Flamejet.Flamejet_Spell;
@@ -96,6 +97,7 @@ public class EnergyBeam_Projectile extends EnergyBeam_Spell {
     public void explode() {
         EnergyBeam_Explosion explosion = new EnergyBeam_Explosion();
         explosion.targetPosition = new Vector2(body.getPosition());
+        explosion.frostbolt = frostbolt || frozenorb;
         explosion.setElements(this);
         screen.spellManager.add(explosion);
     }
@@ -115,7 +117,6 @@ public class EnergyBeam_Projectile extends EnergyBeam_Spell {
         frame.setAlpha(alpha);
         screen.addUnderSprite(frame);
 
-
         //Body of laser
         Sprite frame1 = screen.getSprite();
         frame1.set(bodyTile);
@@ -123,7 +124,6 @@ public class EnergyBeam_Projectile extends EnergyBeam_Spell {
         frame1.setOrigin(0, height/2 * beamWidthRatio);
         frame1.setPosition(spawnPosition.x * PPM , spawnPosition.y * PPM - height/2 * beamWidthRatio);
         frame1.setRotation(rotation);
-
         frame1.setAlpha(alpha);
         screen.addUnderSprite(frame1);
 
@@ -151,9 +151,9 @@ public class EnergyBeam_Projectile extends EnergyBeam_Spell {
         rotation = direction.angleDeg();
         Vector2 bodySpawn = new Vector2(spawnPosition.cpy().add(direction.x * 2, direction.y * 2));
 
-        int height = 28;
+        int height = 28 + (int) (28 * player.spellbook.energybeam_bonus_width);
         if(player.inventory.equippedRing instanceof Rare_BeamRing) {
-            height = 40;
+            height += 14;
         }
         body = BodyFactory.spellProjectileDiamondBody(bodySpawn, 100, height, rotation, true);
         body.setUserData(this);
@@ -185,8 +185,9 @@ public class EnergyBeam_Projectile extends EnergyBeam_Spell {
     public void pickAnim() {
         lightAlpha = 0.7f;
         if(player.inventory.equippedRing instanceof Rare_BeamRing) {
-            beamWidthRatio *= 1.5f;
+            beamWidthRatio += 0.5f;
         }
+        beamWidthRatio += player.spellbook.energybeam_bonus_width;
 
         switch (anim_element) {
             case ARCANE -> {
@@ -219,7 +220,7 @@ public class EnergyBeam_Projectile extends EnergyBeam_Spell {
 
     public void flamejets() {
         if(flamejet) {
-            float procRate = 0.833f - 0.033f * player.spellbook.flamejet_lvl;
+            float procRate = 0.9f - 0.1f * player.spellbook.flamejet_lvl;
 
             if(Math.random() >= procRate) {
                 int jets = MathUtils.random(2,4);
@@ -234,14 +235,12 @@ public class EnergyBeam_Projectile extends EnergyBeam_Spell {
                     float angle = initialAngle - halfConeAngle + (stepSize * i);
                     newDirection = new Vector2(MathUtils.cosDeg(angle), MathUtils.sinDeg(angle));
 
-
                     Flamejet_Spell jet = new Flamejet_Spell();
                     jet.setElements(this);
                     jet.spawnPosition = new Vector2(body.getPosition());
                     jet.targetPosition = new Vector2(body.getPosition().add(newDirection));
                     screen.spellManager.add(jet);
                 }
-
             }
         }
     }
@@ -249,17 +248,23 @@ public class EnergyBeam_Projectile extends EnergyBeam_Spell {
     public void fireball(Monster monster) {
         if(fireball && monster.heavy) {
             if(overheat) {
-                float procRate = 0.84f - 0.04f * player.spellbook.overheat_lvl;
+                float procRate = 0.95f - 0.05f * player.spellbook.overheat_lvl;
                 if(Math.random() >= procRate) {
                     Overheat_Explosion overheat = new Overheat_Explosion(new Vector2(body.getPosition()));
                     overheat.setElements(this);
                     overheat.radius = overheat.radius - 30;
                     screen.spellManager.add(overheat);
+                    hasCollided = true;
+                    body.setLinearVelocity(0,0);
+                    return;
                 }
             }
             Fireball_Explosion explosion = new Fireball_Explosion();
             explosion.setElements(this);
             explosion.flamejets = flamejet;
+            if(arcaneMissile) {
+                explosion.nested_spell = new ArcaneMissile_Spell();
+            }
             explosion.targetPosition = new Vector2(body.getPosition());
             screen.spellManager.add(explosion);
 
@@ -274,19 +279,15 @@ public class EnergyBeam_Projectile extends EnergyBeam_Spell {
 
     public void frostbolts(Monster monster) {
         if(frostbolt) {
-
             monster.applySlow(3, 0.7f);
-
-            float procRate = .825f - .025f * player.spellbook.frostbolt_lvl;
+            float procRate = .9f - .1f * player.spellbook.frostbolt_lvl;
             if(monstersHit == 1) {
                 procRate = 0;
             }
             if (Math.random() > procRate) {
-                Vector2 randomSpawn = SpellUtils.getRandomVectorInRadius(monster.body.getPosition(), 0.75f);
-
+                Vector2 randomSpawn = SpellUtils.getRandomVectorInRadius(monster.body.getPosition(), monster.bodyRadius/16f);
                 Frostbolt_Explosion explosion = new Frostbolt_Explosion();
                 explosion.setElements(this);
-
                 explosion.targetPosition = randomSpawn;
                 screen.spellManager.add(explosion);
             }
@@ -304,12 +305,12 @@ public class EnergyBeam_Projectile extends EnergyBeam_Spell {
 
     public void chargedbolts() {
         if(chargedbolts) {
-            float procRate = .9f - 0.05f * player.spellbook.chargedbolt_lvl;
+            float procRate = .9f - 0.1f * player.spellbook.chargedbolt_lvl;
             if(monstersHit == 1) {
                 procRate = 0;
             }
             if(Math.random() >= procRate) {
-                int quantity = 3 + player.spellbook.chargedbolt_lvl/2;
+                int quantity = 3 + player.spellbook.chargedbolts_bonus_proj;
                 for (int i = 0; i < quantity; i++) {
                     ChargedBolts_Spell bolt = new ChargedBolts_Spell();
                     bolt.spawnPosition = new Vector2(body.getPosition());
@@ -322,16 +323,15 @@ public class EnergyBeam_Projectile extends EnergyBeam_Spell {
     }
 
     public void chainLightning() {
-        if(chainlightning) {
-            int level = (getLvl() + player.spellbook.chainlightning_lvl) /2;
-            if (level >= 8) {
+        if(chainlightning && !hasCollided) {
+            int chain_level = player.spellbook.chainlightning_lvl;
+            if (chain_level >= 3) {
                 chainFrameInterval = 1;
-            } else if (level >= 4) {
+            } else if (chain_level == 2) {
                 chainFrameInterval = 2;
             } else {
                 chainFrameInterval = 3;
             }
-
             frameCounter++;
             if (frameCounter >= chainFrameInterval) {
                 EnergyBeam_ChainLightningBody chainBody = new EnergyBeam_ChainLightningBody();
@@ -346,8 +346,7 @@ public class EnergyBeam_Projectile extends EnergyBeam_Spell {
 
     public void thunderstorm(Monster monster) {
         if(thunderstorm) {
-            int level = (getLvl() + player.spellbook.thunderstorm_lvl) / 2;
-            float procRate = 0.825f - 0.025f * level;
+            float procRate = 0.9f - 0.05f * player.spellbook.thunderstorm_lvl;;
             if(monstersHit == 1) {
                 procRate = 0;
             }
@@ -357,6 +356,5 @@ public class EnergyBeam_Projectile extends EnergyBeam_Spell {
                 screen.spellManager.add(thunder);
             }
         }
-
     }
 }

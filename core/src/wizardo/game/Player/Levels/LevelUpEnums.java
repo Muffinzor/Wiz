@@ -35,7 +35,7 @@ public class LevelUpEnums {
         FROZENORB,
         OVERHEAT,
         THUNDERSTORM,
-        RIFTS
+        RIFTS,
     }
 
     public static LevelUps getRandomT1() {

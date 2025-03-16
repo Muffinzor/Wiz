@@ -28,8 +28,8 @@ public class Frozenorb_Spell extends Spell {
 
     public void setup() {
         if(player.inventory.equippedStaff instanceof Epic_FrozenorbStaff) {
-            speed = speed * (0.5f);
-            duration = duration * (0.5f);
+            speed = speed * (0.66f);
+            duration = duration * (0.66f);
         }
     }
 

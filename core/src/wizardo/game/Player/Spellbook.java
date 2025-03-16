@@ -29,9 +29,22 @@ public class Spellbook {
     public int energybeam_lvl = 0;
     public int rift_lvl = 0;
 
+    // CHARGEDBOLTS
+    public float chargedbolts_bonus_dmg;
+    public int chargedbolts_bonus_proj;
+
+    // CHAIN LIGHTNING
+    public int chainlightning_bonus_dmg;
+    public int chainlightning_bonus_jump;
+
     // ARCANE MISSILES
     public float arcane_missile_bonus_dmg;
     public int arcane_missile_bonus_proj;
+    public int arcane_missile_bonus_rotation;
+
+    // ENERGY BEAM
+    public float energybeam_bonus_dmg;
+    public float energybeam_bonus_width;
 
     // FROSTBOLTS
     public float frostbolts_bonus_dmg;

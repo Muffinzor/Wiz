@@ -50,28 +50,28 @@ public class EnergyBeam_ChainLightningBody extends Spell {
                 chain.nested_spell = new ChargedBolts_Spell();
             }
             chain.originBody = body;
-            chain.maxHits = 2;
+            chain.maxHits = 1 + player.spellbook.chainlightning_bonus_jump;
             chain.setElements(this);
             screen.spellManager.add(chain);
             inRange.remove(target);
         }
 
-        if(player.spellbook.chainlightning_lvl >= 4 && !inRange.isEmpty()) {
+        if(player.spellbook.chainlightning_lvl >= 2 && !inRange.isEmpty()) {
             int index = MathUtils.random(0, inRange.size() - 1);
             Monster target = inRange.remove(index);
             ChainLightning_Hit chain = new ChainLightning_Hit(target);
             chain.originBody = body;
-            chain.maxHits = 3;
+            chain.maxHits = 1 + player.spellbook.chainlightning_bonus_jump;
             chain.setElements(this);
             screen.spellManager.add(chain);
         }
 
-        if(player.spellbook.chainlightning_lvl >= 8 && !inRange.isEmpty()) {
+        if(player.spellbook.chainlightning_lvl >= 3 && !inRange.isEmpty()) {
             int index = MathUtils.random(0, inRange.size() - 1);
             Monster target = inRange.remove(index);
             ChainLightning_Hit chain = new ChainLightning_Hit(target);
             chain.originBody = body;
-            chain.maxHits = 3;
+            chain.maxHits = 1 + player.spellbook.chainlightning_bonus_jump;
             chain.setElements(this);
             screen.spellManager.add(chain);
         }

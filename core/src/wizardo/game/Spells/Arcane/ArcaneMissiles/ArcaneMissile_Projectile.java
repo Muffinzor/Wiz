@@ -44,6 +44,7 @@ public class ArcaneMissile_Projectile extends ArcaneMissile_Spell {
     boolean hasCollided;
     public boolean hasSplit;
 
+    float duration = 1;
     float animTimeBuffer;
 
 
@@ -88,7 +89,7 @@ public class ArcaneMissile_Projectile extends ArcaneMissile_Spell {
             body.setActive(false);
         }
 
-        if((hasCollided || stateTime - animTimeBuffer >= 1f) && delta > 0) {
+        if((hasCollided || stateTime - animTimeBuffer >= duration) && delta > 0) {
             scale -= 0.02f;
             if(hasCollided) {
                 scale -= 0.03f;
@@ -98,7 +99,6 @@ public class ArcaneMissile_Projectile extends ArcaneMissile_Spell {
         if(canSplit && !hasSplit) {
             split();
         }
-
     }
 
     public void handleCollision(Monster monster) {
@@ -114,41 +114,14 @@ public class ArcaneMissile_Projectile extends ArcaneMissile_Spell {
         }
 
         if(!(player.inventory.equippedStaff instanceof Epic_MissileStaff)) {
-            float scaleLoss = 0.2f;
-            scaleLoss *= 1 - player.spellbook.arcanemissileBonus / 100f;
+            float scaleLoss = 0.225f - 0.025f * getLvl();
             scale -= scaleLoss;
         }
 
         frostbolt(monster);
-
-        if(rift && scale >= 0.05f) {
-            float procRate = 0.925f - 0.025f * player.spellbook.rift_lvl;
-            if(Math.random() >= procRate) {
-                Rift_Zone rift = new Rift_Zone(body.getPosition());
-                if(riftBolts) {
-                    ChargedBolts_Spell bolt = new ChargedBolts_Spell();
-                    bolt.arcaneMissile = true;
-                    rift.nested_spell = bolt;
-                }
-                rift.setElements(this);
-                screen.spellManager.add(rift);
-                scale -= (0.5f - 0.025f * player.spellbook.rift_lvl);
-            }
-        }
-
-        if(overheat && scale > 0) {
-            if(!(player.inventory.equippedStaff instanceof Epic_MissileStaff)) {
-                scale -= 0.2f;
-            }
-            float procRate = scale;
-            if(scale > 0.2f && Math.random() >= procRate) {
-                ArcaneMissile_Explosion explosion = new ArcaneMissile_Explosion(body.getPosition());
-                explosion.setElements(this);
-                explosion.flamejet = flamejet;
-                screen.spellManager.add(explosion);
-                scale = 0;
-            }
-        }
+        rifts();
+        overheat();
+        chargedbolts();
     }
 
     public void handleCollision(Fixture fix) {
@@ -187,6 +160,11 @@ public class ArcaneMissile_Projectile extends ArcaneMissile_Spell {
             case FROST -> {
                 anim = arcanemissile_anim_frost;
                 blue = 0.7f;
+            }
+            case LIGHTNING -> {
+                anim = arcanemissile_anim_lightning;
+                green = 0.5f;
+                red = 0.5f;
             }
         }
     }
@@ -272,7 +250,7 @@ public class ArcaneMissile_Projectile extends ArcaneMissile_Spell {
             }
 
             //Clamp the angle difference to the maximum allowed increment
-            float maxRotationPerFrame = 4f;
+            float maxRotationPerFrame = turnSpeed;
             float rotationStep = MathUtils.clamp(angleDiff, -maxRotationPerFrame, maxRotationPerFrame);
 
             direction.rotateDeg(rotationStep);
@@ -319,9 +297,57 @@ public class ArcaneMissile_Projectile extends ArcaneMissile_Spell {
     }
     public void frostbolt(Monster monster) {
         if(frostbolt) {
-            float freezeProc = 0.8f - 0.08f * player.spellbook.frostbolt_lvl;
+            float freezeProc = 0.9f - 0.1f * player.spellbook.frostbolt_lvl;
             if(Math.random() >= freezeProc) {
                 monster.applyFreeze(1.5f, 3);
+            } else {
+                monster.applySlow(1.5f, 0.8f);
+            }
+        }
+    }
+
+    public void rifts() {
+        if(rift && scale >= 0.05f) {
+            float procRate = 0.95f - 0.05f * player.spellbook.rift_lvl;
+            if(Math.random() >= procRate) {
+                Rift_Zone rift = new Rift_Zone(body.getPosition());
+                if(chargedbolts) {
+                    ChargedBolts_Spell bolt = new ChargedBolts_Spell();
+                    bolt.arcaneMissile = true;
+                    rift.nested_spell = bolt;
+                }
+                rift.setElements(this);
+                screen.spellManager.add(rift);
+                scale -= 0.2f;
+            }
+        }
+    }
+
+    public void chargedbolts() {
+        if(chargedbolts) {
+            float procRate = 0.9f - 0.1f * player.spellbook.chargedbolt_lvl;
+            int quantity = 3 + player.spellbook.chargedbolts_bonus_proj;
+            if(Math.random() >= procRate) {
+                for (int i = 0; i < quantity; i++) {
+                    ChargedBolts_Spell bolt = new ChargedBolts_Spell();
+                    bolt.spawnPosition = new Vector2(body.getPosition());
+                    bolt.targetPosition = new Vector2(SpellUtils.getRandomVectorInRadius(body.getPosition(), 2));
+                    bolt.setElements(this);
+                    screen.spellManager.add(bolt);
+                }
+            }
+        }
+    }
+
+    public void overheat() {
+        if(overheat && scale > 0.05f) {
+            float procRate = scale;
+            if(scale > 0.2f && Math.random() >= procRate) {
+                ArcaneMissile_Explosion explosion = new ArcaneMissile_Explosion(body.getPosition());
+                explosion.setElements(this);
+                explosion.flamejet = flamejet;
+                screen.spellManager.add(explosion);
+                scale = 0;
             }
         }
     }

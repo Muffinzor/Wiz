@@ -32,7 +32,7 @@ public class EnergyBeam_Spell extends Spell {
         string_name = "Energy Beam";
         spell_enum = SpellUtils.Spell_Name.BEAM;
 
-        dmg = 80;
+        dmg = 60;
         cooldown = 3.2f;
         autoaimable = true;
 
@@ -42,8 +42,6 @@ public class EnergyBeam_Spell extends Spell {
 
     @Override
     public void update(float delta) {
-        setup();
-
         autoAimCheck();
 
         if(targetPosition == null) {
@@ -51,17 +49,14 @@ public class EnergyBeam_Spell extends Spell {
         }
 
         if(delta > 0) {
-
             EnergyBeam_Projectile beam = new EnergyBeam_Projectile(getSpawnPosition(), targetPosition);
             beam.setBeam(this);
             beam.setElements(this);
             screen.spellManager.add(beam);
 
-
             uniqueStaff();
             screen.spellManager.remove(this);
         }
-
     }
 
     public void uniqueStaff() {
@@ -102,31 +97,10 @@ public class EnergyBeam_Spell extends Spell {
         return player.spellbook.energybeam_lvl;
     }
 
-    public void setup() {
-        if(arcaneMissile) {
-            ArrayList<Monster> inRange = SpellUtils.findMonstersInRangeOfVector(player.pawn.getPosition(), 15, true);
-            Monster target = null;
-            if(!inRange.isEmpty()) {
-                float max = 0;
-                for(Monster monster : inRange) {
-                    if(monster.heavy && monster.hp > max) {
-                        target = monster;
-                        max = monster.hp;
-                    }
-                }
-            }
-
-            if(target != null) {
-                targetPosition = target.body.getPosition();
-            }
-        }
-    }
-
     @Override
     public int getDmg() {
         int dmg = this.dmg;
-        dmg += getLvl() * 20;
-        dmg = (int) (dmg * (1 + player.spellbook.energyBonusDmg/100f));
+        dmg += getLvl() * 60;
 
         if(monstersHit == 1) {
             dmg = (int) (dmg * (1f + player.spellbook.energybeamBonus/100f));

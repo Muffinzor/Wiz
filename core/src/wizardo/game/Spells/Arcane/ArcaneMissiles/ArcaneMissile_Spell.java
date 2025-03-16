@@ -8,17 +8,17 @@ import static wizardo.game.Wizardo.player;
 
 public class ArcaneMissile_Spell extends Spell {
 
-    public float extraProjs;
-    public int projectiles = 3;
+    public int projectiles;
 
     public boolean rift;
-    public boolean riftBolts; //for Missiles + rifts + chargedbolts
     public boolean icespear;
     public boolean overheat;
     public boolean flamejet;
     public boolean frostbolt;
+    public boolean chargedbolts;
 
     public float scale = 1; //for fireball cast
+    public float turnSpeed;
 
 
     public ArcaneMissile_Spell() {
@@ -26,7 +26,7 @@ public class ArcaneMissile_Spell extends Spell {
         string_name = "Arcane Missiles";
         spell_enum = SpellUtils.Spell_Name.MISSILES;
 
-        dmg = 16;
+        dmg = 12;
         speed = 225f/PPM;
         cooldown = 1.2f;
         autoaimable = true;
@@ -41,6 +41,7 @@ public class ArcaneMissile_Spell extends Spell {
         } else {
             projectiles = 1;
         }
+        turnSpeed = 4 + player.spellbook.arcane_missile_bonus_rotation;
     }
 
     @Override
@@ -55,7 +56,7 @@ public class ArcaneMissile_Spell extends Spell {
                 return;
             }
 
-            for (int i = 0; i < projectiles + extraProjs; i++) {
+            for (int i = 0; i < projectiles; i++) {
                 ArcaneMissile_Projectile missile = new ArcaneMissile_Projectile(getSpawnPosition(), targetPosition);
                 missile.setElements(this);
                 missile.scale = scale;
@@ -71,10 +72,11 @@ public class ArcaneMissile_Spell extends Spell {
     public void setMissile(ArcaneMissile_Spell parent) {
         rift = parent.rift;
         flamejet = parent.flamejet;
-        riftBolts = parent.riftBolts;
         icespear = parent.icespear;
         overheat = parent.overheat;
         frostbolt = parent.frostbolt;
+        chargedbolts = parent.chargedbolts;
+        turnSpeed = parent.turnSpeed;
     }
 
     @Override
@@ -90,8 +92,7 @@ public class ArcaneMissile_Spell extends Spell {
     @Override
     public int getDmg() {
         int dmg = this.dmg;
-        dmg += 2 * getLvl();
-        dmg = (int) (dmg * (1 + player.spellbook.sharpBonusDmg/100f));
+        dmg += 6 * getLvl();
         return dmg;
     }
 

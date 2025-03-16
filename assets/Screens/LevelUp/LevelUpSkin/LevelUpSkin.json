@@ -49,9 +49,6 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 	luck: {
 		imageUp: Panel_Luck
 	}
-	projectiles: {
-		imageUp: Panel_Projectiles
-	}
 	red: {
 		imageUp: Panel_Red
 	}
@@ -108,7 +105,6 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 	}
 	projectiles: {
 		font: SimpleFont26
-		up: Panel_Projectiles
 	}
 	red: {
 		font: SimpleFont26

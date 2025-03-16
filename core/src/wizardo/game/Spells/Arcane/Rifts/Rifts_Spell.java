@@ -35,7 +35,7 @@ public class Rifts_Spell extends Spell {
         spell_enum = SpellUtils.Spell_Name.RIFTS;
 
         cooldown = 5f;
-        dmg = 24;
+        dmg = 16;
 
         main_element = SpellUtils.Spell_Element.ARCANE;
 
@@ -172,14 +172,8 @@ public class Rifts_Spell extends Spell {
     @Override
     public int getDmg() {
         int dmg = this.dmg;
-        dmg += 8 * getLvl();
+        dmg += 16 * getLvl();
 
-        if(overheat) {
-            dmg += 100;
-            dmg += 20 * player.spellbook.overheat_lvl;
-        }
-
-        dmg = (int) (dmg * (1 + player.spellbook.gravityBonusDmg/100f));
         return dmg;
     }
 

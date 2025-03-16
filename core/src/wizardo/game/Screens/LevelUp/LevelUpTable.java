@@ -11,6 +11,7 @@ import wizardo.game.Wizardo;
 
 import java.util.ArrayList;
 
+import static wizardo.game.Screens.BaseScreen.controllerActive;
 import static wizardo.game.Wizardo.player;
 
 public class LevelUpTable extends MenuTable {
@@ -33,7 +34,10 @@ public class LevelUpTable extends MenuTable {
 
         createTable();
         createPanels();
-        updatePanels();
+        if(controllerActive) {
+            updatePanels();
+        }
+
     }
 
     public void draw(float delta) {

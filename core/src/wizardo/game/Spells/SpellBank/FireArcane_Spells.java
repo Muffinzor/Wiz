@@ -217,9 +217,9 @@ public class FireArcane_Spells {
         firearcane19.anim_element = ARCANE;
         firearcane19.fireball = true;
         firearcane19.arcaneMissile = true;
-        firearcane19.spellParts.add(FIREBALL);
-        firearcane19.spellParts.add(MISSILES);
         firearcane19.spellParts.add(BEAM);
+        firearcane19.spellParts.add(MISSILES);
+        firearcane19.spellParts.add(FIREBALL);
         firearcaneSpells[19] = firearcane19;
 
         // 20. ArcaneMissile + Beam + Overheat

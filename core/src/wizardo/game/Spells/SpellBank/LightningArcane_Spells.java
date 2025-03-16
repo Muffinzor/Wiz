@@ -18,7 +18,7 @@ import static wizardo.game.Spells.SpellUtils.Spell_Name.*;
 
 public class LightningArcane_Spells {
 
-    public static Spell[] litearcaneSpells = new Spell[27];
+    public static Spell[] litearcaneSpells = new Spell[28];
 
     public static void createLightningArcane_Spells() {
 
@@ -216,7 +216,7 @@ public class LightningArcane_Spells {
 
         ArcaneMissile_Spell litearcane19 = new ArcaneMissile_Spell();
         litearcane19.rift = true;
-        litearcane19.riftBolts = true;
+        litearcane19.chargedbolts = true;
         litearcane19.anim_element = ARCANE;
         litearcane19.spellParts.add(RIFTS);
         litearcane19.spellParts.add(MISSILES);
@@ -295,6 +295,14 @@ public class LightningArcane_Spells {
         litearcane26.spellParts.add(RIFTS);
         litearcane26.spellParts.add(THUNDERSTORM);
         litearcaneSpells[26] = litearcane26;
+
+        // 27. Arcane Missiles + Chargedbolts
+        ArcaneMissile_Spell litearcane27 = new ArcaneMissile_Spell();
+        litearcane27.chargedbolts = true;
+        litearcane27.anim_element = LIGHTNING;
+        litearcane27.spellParts.add(MISSILES);
+        litearcane27.spellParts.add(CHARGEDBOLTS);
+        litearcaneSpells[27] = litearcane27;
 
         for (Spell spell : litearcaneSpells) {
 

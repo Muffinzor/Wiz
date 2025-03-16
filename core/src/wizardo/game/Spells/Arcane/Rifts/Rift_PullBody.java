@@ -11,7 +11,6 @@ import static wizardo.game.Wizardo.world;
 public class Rift_PullBody extends Spell {
 
     Body body;
-
     float strength;
     float duration;
     float decay;
@@ -19,17 +18,9 @@ public class Rift_PullBody extends Spell {
     public Rift_PullBody(Vector2 targetPosition, float radius, boolean overheat) {
         this.targetPosition = new Vector2(targetPosition);
         this.radius = radius;
-
-        if(overheat) {
-            strength = 3;
-            duration = 0.85f;
-            decay = 0.92f;
-        } else {
-            strength = 1.5f;
-            duration = 0.55f;
-            decay = 0.89f;
-        }
-
+        strength = 1.5f;
+        duration = 0.55f;
+        decay = 0.89f;
     }
 
     @Override
@@ -43,7 +34,6 @@ public class Rift_PullBody extends Spell {
             world.destroyBody(body);
             screen.spellManager.remove(this);
         }
-
     }
 
     public void createBody() {
@@ -56,6 +46,7 @@ public class Rift_PullBody extends Spell {
             Vector2 toCenter = body.getPosition().sub(monster.body.getPosition());
             monster.movementManager.applyPush(toCenter, strength, duration, 0.89f);
         } catch (Exception e) {
+            System.out.println("Pulling failed");
             // Do nothing, just be a failure.
         }
     }

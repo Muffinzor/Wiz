@@ -138,19 +138,18 @@ public class Rift_Explosion extends Rifts_Spell {
 
     public void frostbolt(Monster monster) {
         monster.applySlow(4, 0.75f);
-        float frozenproc = 0.9f - player.spellbook.frostbolt_lvl * .05f;
+        float frozenproc = 0.9f - player.spellbook.frostbolt_lvl * .1f;
 
-        if(monster.freezeImmunityTimer <= 0 && Math.random() > frozenproc) {
-            monster.applyFreeze(3, 7);
-            monster.hp -= 20 * player.spellbook.frostbolt_lvl;
+        if(Math.random() > frozenproc) {
+            monster.applyFreeze(2.5f, 5);
         }
     }
 
     public void chargedbolts() {
         if(chargedbolt) {
-            float procRate = 0.33f;
+            float procRate = 0.95f - 0.1f * player.spellbook.chargedbolt_lvl;
             if (Math.random() >= procRate) {
-                int quantity = 3 + player.spellbook.chargedbolt_lvl / 2;
+                int quantity = 3 + player.spellbook.chargedbolts_bonus_proj;
                 for (int i = 0; i < quantity; i++) {
                     ChargedBolts_Spell bolt = new ChargedBolts_Spell();
                     bolt.setElements(this);
@@ -177,11 +176,11 @@ public class Rift_Explosion extends Rifts_Spell {
                         }
                     }
                 }
-
                 if(target != null) {
                     ChainLightning_Hit chain = new ChainLightning_Hit(target);
                     chain.originBody = body;
                     chain.setElements(this);
+                    chain.maxHits = player.spellbook.chainlightning_lvl + player.spellbook.chainlightning_bonus_jump;
                     chain.arcaneMissile = arcanemissiles;
                     screen.spellManager.add(chain);
                 }

@@ -44,8 +44,8 @@ public class EnergyBeam_FreezeBody extends Spell {
     }
 
     public void handleCollision(Monster monster) {
-        float freezeDuration = 1.4f + 0.1f * player.spellbook.frozenorb_lvl;
-        monster.applyFreeze(freezeDuration, freezeDuration * 2.5f);
+        float freezeDuration = 1.75f + 0.25f * player.spellbook.frozenorb_lvl;
+        monster.applyFreeze(freezeDuration, freezeDuration * 2);
     }
 
     @Override
