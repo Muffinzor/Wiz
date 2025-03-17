@@ -14,7 +14,7 @@ import static wizardo.game.Wizardo.player;
 public class Thunderstorm_Spell extends Spell {
 
     public float interval;
-    public float frequency = 10f;
+    public float hits_per_second = 3;
     public float duration = 4f;
 
     public ArrayList<Monster> inRange;
@@ -28,11 +28,9 @@ public class Thunderstorm_Spell extends Spell {
     public Thunderstorm_Spell() {
 
         string_name = "Thunderstorm";
-
-        interval = 1/frequency;
         cooldown = 8f;
         dmg = 60;
-        radius = 16;
+        radius = 14;
 
         main_element = SpellUtils.Spell_Element.LIGHTNING;
     }
@@ -84,7 +82,7 @@ public class Thunderstorm_Spell extends Spell {
             while(attempts < 10) {
                 int index = (int) (Math.random() * inRange.size());
                 attempts++;
-                if(inRange.get(index).thunderImmunityTimer <= 0) {
+                if(inRange.get(index).thunderImmunityTimer <= 0 && inRange.get(index).hp > 0) {
                     target = inRange.get(index).body.getPosition();
                     inRange.get(index).thunderImmunityTimer = 0.5f;
                     break;
@@ -104,7 +102,7 @@ public class Thunderstorm_Spell extends Spell {
             while(attempts < 10) {
                 int index = MathUtils.random(0, Math.min(inRange.size() - 1, 5));
                 attempts++;
-                if(inRange.get(index).thunderImmunityTimer <= 0) {
+                if(inRange.get(index).thunderImmunityTimer <= 0 && inRange.get(index).hp > 0) {
                     target = inRange.get(index).body.getPosition();
                     break;
                 }
@@ -114,7 +112,19 @@ public class Thunderstorm_Spell extends Spell {
     }
 
     public Vector2 riftTargeting() {
-        Vector2 target = SpellUtils.getClearRandomPosition(spawnPosition, 3.5f);
+        Vector2 target = null;
+        if(!inRange.isEmpty()) {
+            int attempts = 0;
+            while(attempts < 10) {
+                int index = (int) (Math.random() * inRange.size());
+                attempts++;
+                if(inRange.get(index).thunderImmunityTimer <= 0 && inRange.get(index).hp > 0) {
+                    target = inRange.get(index).body.getPosition();
+                    inRange.get(index).thunderImmunityTimer = 0.5f;
+                    break;
+                }
+            }
+        }
         return target;
     }
 
@@ -131,21 +141,22 @@ public class Thunderstorm_Spell extends Spell {
     @Override
     public int getDmg() {
         int dmg = this.dmg + 30 * getLvl();
-        dmg = (int) (dmg * (1 + player.spellbook.flashBonusDmg /100f));
         return dmg;
     }
 
     public void setup() {
-        frequency = 3 * (0.9f + getLvl()/10f);
-        frequency = frequency * (1 + player.spellbook.empyreanFrequencyBonus/100f);
-        interval = 1/frequency;
+        hits_per_second += player.spellbook.thunderstorm_bonus_frequence;
+        hits_per_second = hits_per_second * (1 + player.spellbook.empyreanFrequencyBonus/100f);
+        interval = 1/hits_per_second;
         if(rifts) {
             spawnPosition = getTargetPosition();
-            radius = 3.5f;
+            inRange = SpellUtils.findMonstersInRangeOfVector(spawnPosition, 6, false);
+            if(inRange.isEmpty()) {
+                inRange = SpellUtils.findMonstersInRangeOfVector(player.pawn.getPosition(), 14, false);
+            }
         }
         if(player.inventory.equippedAmulet instanceof Epic_StormAmulet) {
             duration += 2;
         }
     }
-
 }

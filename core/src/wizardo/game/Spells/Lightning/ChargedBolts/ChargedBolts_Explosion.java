@@ -101,6 +101,8 @@ public class ChargedBolts_Explosion extends Spell {
 
     @Override
     public int getDmg() {
-        return 24 + player.spellbook.flamejet_lvl + 8;
+        int dmg = 24 + player.spellbook.flamejet_lvl * 8;
+        dmg *= (int) (1 + player.spellbook.chargedbolts_bonus_dmg/100f);
+        return dmg;
     }
 }

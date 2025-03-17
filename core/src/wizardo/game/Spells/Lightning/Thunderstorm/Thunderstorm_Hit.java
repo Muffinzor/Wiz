@@ -30,11 +30,8 @@ public class Thunderstorm_Hit extends Thunderstorm_Spell {
     boolean flipX;
 
     public Thunderstorm_Hit(Vector2 targetPosition) {
-
         this.targetPosition = new Vector2(targetPosition);
-
         flipX = MathUtils.randomBoolean();
-
     }
 
     public void update(float delta) {
@@ -48,7 +45,6 @@ public class Thunderstorm_Hit extends Thunderstorm_Spell {
         }
 
         drawFrame();
-
         stateTime += delta;
 
         if(stateTime > 0.2f) {
@@ -63,7 +59,7 @@ public class Thunderstorm_Hit extends Thunderstorm_Spell {
 
     public void handleCollision(Monster monster) {
         dealDmg(monster);
-        //rifts(monster);
+        rifts(monster);
     }
 
     public void drawFrame() {
@@ -72,6 +68,7 @@ public class Thunderstorm_Hit extends Thunderstorm_Spell {
         frame.setScale(0.7f);
         frame.flip(flipX, false);
         frame.setPosition(body.getPosition().x * PPM - frame.getWidth()/2, body.getPosition().y * PPM - 170);
+        screen.centerSort(frame, body.getPosition().y * PPM - 10);
         screen.addSortedSprite(frame);
     }
 
@@ -111,6 +108,7 @@ public class Thunderstorm_Hit extends Thunderstorm_Spell {
         body = BodyFactory.spellExplosionBody(adjustedPosition, 40);
         body.setUserData(this);
     }
+
     public void createLight() {
         for (int i = 1; i < 5; i++) {
             RoundLight lighty = screen.lightManager.pool.getLight();
@@ -142,13 +140,12 @@ public class Thunderstorm_Hit extends Thunderstorm_Spell {
                     screen.spellManager.add(proj);
                 }
             }
-
         }
     }
 
     public void rifts(Monster monster) {
         if(rifts) {
-            float procRate = 0.925f - 0.025f * player.spellbook.rift_lvl;
+            float procRate = 0.095f - 0.05f * player.spellbook.rift_lvl;
             if(Math.random() >= procRate) {
                 Rift_Zone rift = new Rift_Zone(monster.body.getPosition());
                 rift.setElements(this);
@@ -159,7 +156,7 @@ public class Thunderstorm_Hit extends Thunderstorm_Spell {
 
     public void overheat() {
         if(overheat) {
-            float procRate = 0.96f - 0.01f * player.spellbook.overheat_lvl;
+            float procRate = 1f - 0.05f * player.spellbook.overheat_lvl;
             if(Math.random() >= procRate) {
                 Overheat_Explosion explosion = new Overheat_Explosion(body.getPosition());
                 explosion.fromThunder = true;
@@ -174,35 +171,35 @@ public class Thunderstorm_Hit extends Thunderstorm_Spell {
         return projRadius;
     }
 
-
     public float getProcRate() {
-        float procRate = 0.5f;
-        float level = (float) (getLvl() + nested_spell.getLvl()) / 2;
+        float procRate = 1;
         if(nested_spell instanceof ChargedBolts_Spell) {
-            procRate = 0.525f - level * .025f;
+            procRate = 0.8f - 0.1f * player.spellbook.chargedbolt_lvl;
         }
         if(nested_spell instanceof Flamejet_Spell) {
-            procRate = 0.675f - level * 0.025f;
+            procRate = 0.85f - 0.1f * player.spellbook.flamejet_lvl;
         }
         if(nested_spell instanceof ForkedLightning_Spell) {
-            procRate = 0;
+            float level = player.spellbook.chargedbolt_lvl + player.spellbook.chainlightning_lvl;
+            level = level/2f;
+            procRate = 0.9f - level * 0.1f;
         }
         return procRate;
     }
     public int getQuantity() {
         int quantity = 1;
         if(nested_spell instanceof ChargedBolts_Spell) {
-            quantity = 2 + nested_spell.getLvl();
+            quantity = 3 + player.spellbook.chargedbolts_bonus_proj;
         }
         if(nested_spell instanceof Frostbolt_Spell) {
-            quantity = 2 + nested_spell.getLvl()/2;
+            quantity = 3 + player.spellbook.frostbolts_bonus_proj;
         }
         if(nested_spell instanceof Flamejet_Spell) {
-            quantity = 2 + nested_spell.getLvl()/2;
+            quantity = 3 + player.spellbook.flamejet_lvl;
         }
         if(nested_spell instanceof ForkedLightning_Spell) {
             float level = (player.spellbook.chainlightning_lvl + player.spellbook.flamejet_lvl)/2f;
-            quantity = (int) (1 + level/5);
+            quantity = (int) (1 + level);
         }
         return quantity;
     }

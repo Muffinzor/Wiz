@@ -30,7 +30,6 @@ public class ChainLightning_Hit extends ChainLightning_Spell {
     boolean alreadyChained;
     boolean hasDealtDmg;
     Body body;
-    public boolean forked;
     public float duration;
     public float chain_minimum_time;
 
@@ -148,7 +147,7 @@ public class ChainLightning_Hit extends ChainLightning_Spell {
         }
 
         if(rifts) {
-            float procTreshold = 0.9333f - 0.0333f * player.spellbook.rift_lvl;
+            float procTreshold = 0.95f - 0.05f * player.spellbook.rift_lvl;
 
             if(Math.random() >= procTreshold) {
                 Rift_Zone rift = new Rift_Zone(monster.body.getPosition());
@@ -200,7 +199,6 @@ public class ChainLightning_Hit extends ChainLightning_Spell {
         chain2.setElements(this);
         chain2.monstersHit = monstersHit;
         screen.spellManager.add(chain2);
-
     }
 
     public Monster normalTargeting() {
@@ -209,13 +207,10 @@ public class ChainLightning_Hit extends ChainLightning_Spell {
     }
 
     public Monster missileTargeting() {
-
         inRange.sort((m1, m2) -> Float.compare(m2.hp, m1.hp));
         int index = MathUtils.random(0, Math.min(3, inRange.size() - 1));
-
         Monster newTarget = inRange.get(index);
         monstersHit.clear();
-
         return newTarget;
     }
 
@@ -248,7 +243,6 @@ public class ChainLightning_Hit extends ChainLightning_Spell {
         if(numLights < 1) {
             numLights = 1;
         }
-
         for (int i = 0; i < numLights; i++) {
             if(forked && i == 0) {
                 continue;
@@ -263,22 +257,18 @@ public class ChainLightning_Hit extends ChainLightning_Spell {
 
     public void laserBody() {
         if(beam) {
-            // Calculate the direction vector from originBody to monsterTo
             Vector2 direction = monsterTo.body.getPosition().sub(originBody.getPosition());
             float distance = direction.len();  // Get the length of the direction vector
             float angle = direction.angleDeg();  // Get the angle of the direction vector
 
-            // Calculate the midpoint between originBody and monsterTo
             Vector2 origin = new Vector2(originBody.getPosition());
             Vector2 target = new Vector2(monsterTo.body.getPosition());
             Vector2 midpoint = origin.cpy().lerp(target, 0.5f);  // Get the midpoint
 
-            // Create the rectangle body with the midpoint as the position
             body = BodyFactory.spellRectangleBody(midpoint, distance, 0.35f, angle, true);
             body.setUserData(this);
         }
     }
-
     public void pickAnim() {
         if(beam) {
             anim = ChainLightningAnims.chainlightning_beam_anim;
@@ -363,8 +353,6 @@ public class ChainLightning_Hit extends ChainLightning_Spell {
         return monstersInRange;
     }
 
-
-
     public void nested_projectiles() {
         float procRate = getProcRate();
         float quantity = getQuantity();
@@ -379,21 +367,20 @@ public class ChainLightning_Hit extends ChainLightning_Spell {
                 screen.spellManager.add(proj);
             }
         }
-
     }
 
     public float getProcRate() {
         float procRate = 1;
         float level = (float) (getLvl() + nested_spell.getLvl()) / 2;
         if(nested_spell instanceof ChargedBolts_Spell) {
-            procRate = 0.875f - level * .025f;
+            procRate = 0.85f - level * .1f;
         }
         return procRate;
     }
     public int getQuantity() {
         int quantity = 1;
         if(nested_spell instanceof ChargedBolts_Spell) {
-            quantity = 2 + nested_spell.getLvl()/3;
+            quantity = 3 + player.spellbook.chargedbolt_lvl;
         }
         return quantity;
     }
@@ -402,26 +389,21 @@ public class ChainLightning_Hit extends ChainLightning_Spell {
      * @param monster
      */
     public void frostbolts(Monster monster) {
-
         if(frostbolts) {
-            float procTreshold = 0.5f;
+            float procTreshold = 0.85f - 0.1f * player.spellbook.frostbolt_lvl;
             if(Math.random() >= procTreshold) {
-
                 Vector2 adjusted = SpellUtils.getRandomVectorInRadius(monster.body.getPosition(), 0.5f);
                 Frostbolt_Explosion explosion = new Frostbolt_Explosion();
                 explosion.targetPosition = new Vector2(adjusted);
                 explosion.screen = screen;
                 explosion.setElements(this);
                 screen.spellManager.add(explosion);
-
             }
         }
     }
     public void rifts(Monster monster) {
-
         if(rifts) {
-            float level = (getLvl() + player.spellbook.rift_lvl)/2f;
-            float procRate = 0.9f - 0.025f * level;
+            float procRate = 0.9f - 0.1f * player.spellbook.rift_lvl;
             if(Math.random() >= procRate) {
                 Rift_Zone rift = new Rift_Zone(monster.body.getPosition());
                 rift.setElements(this);
@@ -430,10 +412,8 @@ public class ChainLightning_Hit extends ChainLightning_Spell {
         }
     }
     public void fireball(Monster monster) {
-
         if(fireball) {
-            float level = (getLvl() + player.spellbook.fireball_lvl)/2f;
-            float procRate = 0.9f - 0.025f * level;
+            float procRate = 1f - 0.1f * player.spellbook.fireball_lvl;
             if(Math.random() >= procRate) {
                 Fireball_Explosion explosion = new Fireball_Explosion();
                 explosion.targetPosition = new Vector2(monster.body.getPosition());
@@ -445,10 +425,10 @@ public class ChainLightning_Hit extends ChainLightning_Spell {
 
     public void frozenorb(Monster monster) {
         if(frozenorb) {
-            float proc_chance = 0.8f - 0.05f * player.spellbook.frozenorb_lvl;
+            float proc_chance = 0.8f - 0.2f * player.spellbook.frozenorb_lvl;
             if(Math.random() >= proc_chance) {
-                float duration = 1.2f + 0.12f * player.spellbook.frozenorb_lvl;
-                monster.applyFreeze(duration, duration * 1.5f);
+                float duration = 1.5f + 0.5f * player.spellbook.frozenorb_lvl;
+                monster.applyFreeze(duration, duration * 2f);
             }
         }
     }

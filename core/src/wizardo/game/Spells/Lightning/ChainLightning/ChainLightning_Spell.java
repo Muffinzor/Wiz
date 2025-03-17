@@ -21,6 +21,7 @@ public class ChainLightning_Spell extends Spell {
     public int splits = 0;
     public int maxSplits = 0;
     public float splitChance = 0;
+    public boolean forked;
 
     public boolean frostbolts;
     public boolean frozenorb;
@@ -32,22 +33,17 @@ public class ChainLightning_Spell extends Spell {
 
     boolean randomTarget;
 
-
     public ChainLightning_Spell() {
-
         raycasted = true;
         aimReach = 5;
 
         string_name = "Chain Lightning";
 
         cooldown = 1.2f;
-        dmg = 35;
+        dmg = 32;
         autoaimable = true;
 
-
         main_element = SpellUtils.Spell_Element.LIGHTNING;
-
-
     }
 
     @Override
@@ -58,24 +54,19 @@ public class ChainLightning_Spell extends Spell {
         }
 
         if(delta > 0) {
-
             Vector2 center = checkAutoAim();
             float radius = checkRadius();
-
             ArrayList<Monster> inRange = SpellUtils.findMonstersInRangeOfVector(center, radius, true);
-
             shootLightning(center, inRange);
-
             screen.spellManager.remove(this);
-
         }
     }
 
     public void setup() {
-        maxHits = maxHits + getLvl()/2;
+        maxHits += player.spellbook.chainlightning_bonus_jump;
         if(spear) {
             splitChance = 0.9f - 0.05f * player.spellbook.icespear_lvl;
-            maxSplits = 1 + player.spellbook.icespear_lvl / 4;
+            maxSplits = player.spellbook.icespear_lvl;
             radius = 4;
         }
     }
@@ -114,7 +105,6 @@ public class ChainLightning_Spell extends Spell {
                     }
                 }
             }
-
             if (target != null) {
                 ChainLightning_Hit chain = new ChainLightning_Hit(target);
                 chain.firstChain = true;
@@ -127,9 +117,7 @@ public class ChainLightning_Spell extends Spell {
                 } else {
                     chain.originBody = player.pawn.body;
                 }
-
                 screen.spellManager.add(chain);
-
             }
         }
     }
@@ -149,7 +137,6 @@ public class ChainLightning_Spell extends Spell {
         splitChance = parentChain.splitChance;
     }
 
-
     @Override
     public void dispose() {
 
@@ -163,11 +150,13 @@ public class ChainLightning_Spell extends Spell {
     @Override
     public int getDmg() {
         int dmg = this.dmg;
-        dmg += 8 * getLvl();
-        if(arcaneMissile) {
-            dmg += 4 * player.spellbook.arcanemissile_lvl;
+        if(forked) {
+            dmg = this.dmg/2;
         }
-        dmg = (int) (dmg * (1 + player.spellbook.conductiveBonusDmg /100f));
+        dmg += 16 * getLvl();
+        if(arcaneMissile) {
+            dmg += 8 * (player.spellbook.arcanemissile_lvl - 1);
+        }
         return dmg;
     }
 
@@ -186,5 +175,4 @@ public class ChainLightning_Spell extends Spell {
             return 5;
         }
     }
-
 }

@@ -131,7 +131,6 @@ public class ChargedBolts_Spell extends Spell {
             dmg += 4 * player.spellbook.arcanemissile_lvl;
         }
 
-        dmg = (int) (dmg * (1 + player.spellbook.conductiveBonusDmg /100f));
         if(overheat) {
             return dmg * 2;
         } else {

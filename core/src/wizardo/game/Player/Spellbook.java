@@ -34,8 +34,12 @@ public class Spellbook {
     public int chargedbolts_bonus_proj;
 
     // CHAIN LIGHTNING
-    public int chainlightning_bonus_dmg;
+    public float chainlightning_bonus_dmg;
     public int chainlightning_bonus_jump;
+
+    // THUNDERSTORM
+    public float thunderstorm_bonus_dmg;
+    public float thunderstorm_bonus_frequence;  //increments of 0.5f atm
 
     // ARCANE MISSILES
     public float arcane_missile_bonus_dmg;
@@ -94,7 +98,6 @@ public class Spellbook {
     public int chainlightningBonus;
     public int icespearBonus;
     public int fireballBonus;
-
 
     public Spellbook() {
         equippedSpells = new ArrayList<>();

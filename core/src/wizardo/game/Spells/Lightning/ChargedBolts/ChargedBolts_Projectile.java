@@ -202,7 +202,7 @@ public class ChargedBolts_Projectile extends ChargedBolts_Spell {
 
     public boolean canSplit() {
         if(spear) {
-            float procRate = 0.95f - 0.05f * player.spellbook.icespear_lvl;
+            float procRate = 1f - 0.1f * player.spellbook.icespear_lvl;
             return Math.random() >= procRate;
         }
         return false;
@@ -253,14 +253,11 @@ public class ChargedBolts_Projectile extends ChargedBolts_Spell {
         if(stateTime > 0.5f) {
 
             if(!targetLocked) {
-
                 ArrayList<Monster> inRange = SpellUtils.findMonstersInRangeOfVector(body.getPosition(), 2.5f, true);
-
                 if(!inRange.isEmpty()) {
                     targetMonster = inRange.get(MathUtils.random(inRange.size() - 1));
                     targetLocked = true;
                 }
-
             } else if (targetLocked && targetMonster != null && targetMonster.hp > 0) {
                 Vector2 targetPosition = targetMonster.body.getPosition();
                 Vector2 missilePosition = body.getPosition();
@@ -281,7 +278,7 @@ public class ChargedBolts_Projectile extends ChargedBolts_Spell {
                 }
 
                 // Clamp the angle difference to the maximum allowed
-                float maxRotationPerFrame = 5f;
+                float maxRotationPerFrame = 4 + player.spellbook.arcanemissile_lvl;
                 float rotationStep = MathUtils.clamp(angleDiff, -maxRotationPerFrame, maxRotationPerFrame);
 
                 direction.rotateDeg(rotationStep);
@@ -326,8 +323,7 @@ public class ChargedBolts_Projectile extends ChargedBolts_Spell {
      */
     private void frostbolts(Monster monster) {
         if(frostbolts) {
-
-            float procTreshold = .825f - player.spellbook.frostbolt_lvl * .025f;
+            float procTreshold = .9f - player.spellbook.frostbolt_lvl * .1f;
             if(Math.random() >= procTreshold) {
                 Frostbolt_Explosion explosion = new Frostbolt_Explosion();
                 explosion.targetPosition = new Vector2(monster.body.getPosition());
@@ -342,12 +338,11 @@ public class ChargedBolts_Projectile extends ChargedBolts_Spell {
 
     private void frozenorb(Monster monster) {
         if(frozenorb) {
-
-            float freezeChance =  0.65f - 0.05f * player.spellbook.frozenorb_lvl;
+            float freezeChance =  0.85f - 0.15f * player.spellbook.frozenorb_lvl;
 
             if(Math.random() >= freezeChance) {
-                float duration = 1.2f + 0.12f * player.spellbook.frozenorb_lvl;
-                monster.applyFreeze(duration, duration * 1.5f);
+                float duration = 1f + 0.5f * player.spellbook.frozenorb_lvl;
+                monster.applyFreeze(duration, duration * 2);
             }
         }
     }
