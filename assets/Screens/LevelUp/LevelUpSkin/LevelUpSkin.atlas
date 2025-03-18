@@ -60,6 +60,13 @@ Panel_Ice
   orig: 399, 692
   offset: 0, 0
   index: -1
+Panel_Frozenorb
+  rotate: false
+  xy: 1204, 1310
+  size: 399, 692
+  orig: 399, 692
+  offset: 0, 0
+  index: -1
 Panel_Luck
   rotate: false
   xy: 1204, 616
@@ -159,20 +166,48 @@ Panel_Voltage
   index: -1
 
 LevelUpSkin3.png
-size: 1024, 1024
+size: 2048, 2048
 format: RGBA8888
 filter: Linear, Linear
 repeat: none
 Panel_Chain
   rotate: false
-  xy: 402, 107
+  xy: 1, 1
   size: 399, 692
   orig: 399, 692
   offset: 0, 0
   index: -1
 Panel_IceSpear
   rotate: false
-  xy: 1, 107
+  xy: 1, 695
+  size: 399, 692
+  orig: 399, 692
+  offset: 0, 0
+  index: -1
+Panel_Overheat
+  rotate: false
+  xy: 402, 695
+  size: 399, 692
+  orig: 399, 692
+  offset: 0, 0
+  index: -1
+Panel_Projectiles
+  rotate: false
+  xy: 402, 1
+  size: 399, 692
+  orig: 399, 692
+  offset: 0, 0
+  index: -1
+Panel_Rifts
+  rotate: false
+  xy: 803, 695
+  size: 399, 692
+  orig: 399, 692
+  offset: 0, 0
+  index: -1
+Panel_Thunderstorm
+  rotate: false
+  xy: 803, 1
   size: 399, 692
   orig: 399, 692
   offset: 0, 0

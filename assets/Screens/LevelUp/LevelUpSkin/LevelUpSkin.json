@@ -158,5 +158,21 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 		font: SimpleFont26
 		up: Panel_IceSpear
 	}
+	thunderstorm: {
+		font: SimpleFont26
+		up: Panel_Thunderstorm
+	}
+	frozenorb: {
+		font: SimpleFont26
+		up: Panel_Frozenorb
+	}
+	rifts: {
+		font: SimpleFont26
+		up: Panel_Rifts
+	}
+	overheat: {
+		font: SimpleFont26
+		up: Panel_Overheat
+	}
 }
 }

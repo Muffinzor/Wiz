@@ -110,25 +110,25 @@ public class MapManager {
 
         if (chunkExists(x_position, y_position - 1)) {
             List<Integer> connection = getNeighborConnection(x_position, y_position - 1, "north");
-            if (!connection.isEmpty()) {  // Only add non-empty connections
+            if (!connection.isEmpty()) {
                 newTileRequiredConnections.put("south", connection);
             }
         }
         if (chunkExists(x_position, y_position + 1)) {
             List<Integer> connection = getNeighborConnection(x_position, y_position + 1, "south");
-            if (!connection.isEmpty()) {  // Only add non-empty connections
+            if (!connection.isEmpty()) {
                 newTileRequiredConnections.put("north", connection);
             }
         }
         if (chunkExists(x_position - 1, y_position)) {
             List<Integer> connection = getNeighborConnection(x_position - 1, y_position, "east");
-            if (!connection.isEmpty()) {  // Only add non-empty connections
+            if (!connection.isEmpty()) {
                 newTileRequiredConnections.put("west", connection);
             }
         }
         if (chunkExists(x_position + 1, y_position)) {
             List<Integer> connection = getNeighborConnection(x_position + 1, y_position, "west");
-            if (!connection.isEmpty()) {  // Only add non-empty connections
+            if (!connection.isEmpty()) {
                 newTileRequiredConnections.put("east", connection);
             }
         }
@@ -148,9 +148,7 @@ public class MapManager {
                 String direction = entry.getKey();
                 List<Integer> requiredConnection = entry.getValue();
 
-                // If the tile connection does not exist or doesn't match, mark as non-matching
                 List<Integer> tileConnection = checkedTileConnections.get(direction);
-
                 if (tileConnection != null && !tileConnection.equals(requiredConnection)) {
                     matching = false;
                     break;
@@ -179,7 +177,7 @@ public class MapManager {
             List<Integer> connection = connections.get(direction);
             if (connection != null) return connection;
         }
-        return Collections.emptyList();  // No connection available, return an empty list
+        return Collections.emptyList();  // No connection available
     }
 
 
@@ -231,7 +229,6 @@ public class MapManager {
                 if (dx == 0 && dy == 0) {
                     continue;
                 }
-
                 if(chunkExists(dx, dy)) {
                     if(chunks.get(chunkKey(dx, dy)).canHaveShop) {
                         canHaveShop = false;
@@ -243,11 +240,9 @@ public class MapManager {
     }
 
     private boolean chunkExists(int x_position, int y_position) {
-        // This method checks if a chunk at the given position already exists in the loaded map
         String chunkKey = chunkKey(x_position, y_position);
         return chunks.containsKey(chunkKey);
     }
-
 
     public void dispose() {
         for (MapChunk chunk : chunks.values()) {

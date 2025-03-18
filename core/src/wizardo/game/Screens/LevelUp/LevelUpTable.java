@@ -74,7 +74,6 @@ public class LevelUpTable extends MenuTable {
             buttons.add(panel);
             buttonsMatrix[i] = panel;
         }
-
     }
 
     public void updatePanels() {

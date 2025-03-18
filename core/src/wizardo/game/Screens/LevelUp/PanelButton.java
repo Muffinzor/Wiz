@@ -31,6 +31,8 @@ public class PanelButton extends TextButton {
     public LevelUpQuality quality;
     public boolean selected;
 
+    public int mastery_dmg_buff = 30;
+
     public PanelButton(LevelUpScreen screen, LevelUps type, LevelUpQuality quality) {
         super("", screen.skin);
         this.screen = screen;
@@ -60,7 +62,6 @@ public class PanelButton extends TextButton {
         }
     }
 
-
     public void drawLiteralFrame(float delta) {
         stateTime += delta;
 
@@ -88,7 +89,6 @@ public class PanelButton extends TextButton {
         batch.begin();
         frame.draw(batch);
         batch.end();
-
     }
 
     public void handleClick() {
@@ -97,7 +97,6 @@ public class PanelButton extends TextButton {
     }
 
     public void addClickListener() {
-
         this.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -113,11 +112,9 @@ public class PanelButton extends TextButton {
                 selected = false;
                 updateFontColor();
             }
-
         });
     }
     public void adjustSize() {
-
         TextButton.TextButtonStyle style = this.style;
         TextButton.TextButtonStyle newStyle = new TextButton.TextButtonStyle();
         newStyle.up = new TextureRegionDrawable(((TextureRegionDrawable) style.up).getRegion());
@@ -138,7 +135,6 @@ public class PanelButton extends TextButton {
         setStyle(newStyle);
         this.style = newStyle;
     }
-
     public void updateFontColor() {
         TextButton.TextButtonStyle updatedStyle = new TextButton.TextButtonStyle();
         updatedStyle.up = style.up;
@@ -152,7 +148,6 @@ public class PanelButton extends TextButton {
         this.style = updatedStyle;
         adjustSize();
     }
-
     public Vector2 getCenter() {
         float table_x = getParent().getX();
         float table_y = getParent().getY();
