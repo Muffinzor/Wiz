@@ -102,8 +102,8 @@ public class EnergyBeam_Spell extends Spell {
         int dmg = this.dmg;
         dmg += getLvl() * 60;
 
-        if(monstersHit == 1) {
-            dmg = (int) (dmg * (1f + player.spellbook.energybeamBonus/100f));
+        if(monstersHit <= 3) {
+            dmg = (int) (dmg * (1f + player.spellbook.energybeam_bonus_firsthits/100f));
         }
 
         return dmg;

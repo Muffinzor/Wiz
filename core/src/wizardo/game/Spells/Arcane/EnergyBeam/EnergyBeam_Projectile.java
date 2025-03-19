@@ -151,7 +151,7 @@ public class EnergyBeam_Projectile extends EnergyBeam_Spell {
         rotation = direction.angleDeg();
         Vector2 bodySpawn = new Vector2(spawnPosition.cpy().add(direction.x * 2, direction.y * 2));
 
-        int height = 28 + (int) (28 * player.spellbook.energybeam_bonus_width);
+        int height = 28 + (int) (28 * player.spellbook.energybeam_bonus_width/100f);
         if(player.inventory.equippedRing instanceof Rare_BeamRing) {
             height += 14;
         }
@@ -187,7 +187,7 @@ public class EnergyBeam_Projectile extends EnergyBeam_Spell {
         if(player.inventory.equippedRing instanceof Rare_BeamRing) {
             beamWidthRatio += 0.5f;
         }
-        beamWidthRatio += player.spellbook.energybeam_bonus_width;
+        beamWidthRatio += player.spellbook.energybeam_bonus_width/100f;
 
         switch (anim_element) {
             case ARCANE -> {

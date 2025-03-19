@@ -95,10 +95,6 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 		font: SimpleFont26
 		up: Panel_Gravity
 	}
-	ice: {
-		font: SimpleFont26
-		up: Panel_Ice
-	}
 	luck: {
 		font: SimpleFont26
 		up: Panel_Luck
@@ -117,10 +113,6 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 	sharp: {
 		font: SimpleFont26
 		up: Panel_SharpProjectiles
-	}
-	space: {
-		font: SimpleFont26
-		up: Panel_Space
 	}
 	voltage: {
 		font: SimpleFont26
@@ -173,6 +165,22 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 	overheat: {
 		font: SimpleFont26
 		up: Panel_Overheat
+	}
+	arcane: {
+		font: SimpleFont26
+		up: Panel_Space
+	}
+	frost: {
+		font: SimpleFont26
+		up: Panel_Ice
+	}
+	fire: {
+		font: SimpleFont26
+		up: Panel_Fire
+	}
+	lightning: {
+		font: SimpleFont26
+		up: Panel_Lightning
 	}
 }
 }

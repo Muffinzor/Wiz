@@ -1,10 +1,13 @@
 package wizardo.game.Screens.LevelUp;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import wizardo.game.Display.MenuTable;
+import wizardo.game.Player.Levels.Choices.B_Element;
+import wizardo.game.Player.Levels.Choices.B_Shield;
 import wizardo.game.Player.Levels.LevelUpEnums;
 import wizardo.game.Player.Levels.LevelUpUtils;
 import wizardo.game.Wizardo;
@@ -42,8 +45,7 @@ public class LevelUpTable extends MenuTable {
 
     public void draw(float delta) {
         for(PanelButton button : buttonsMatrix) {
-            button.drawLiteralFrame(delta);
-            button.drawQualityGem();
+            button.drawPanel(delta);
         }
     }
 
@@ -65,15 +67,26 @@ public class LevelUpTable extends MenuTable {
     public void createPanels() {
         ArrayList<LevelUpEnums.LevelUps> choices = new ArrayList<>();
 
-        for (int i = 0; i < player.levelup_choices; i++) {
-            LevelUpEnums.LevelUpQuality quality = LevelUpUtils.getRandomQuality();
-            LevelUpEnums.LevelUps type = LevelUpUtils.getPossibleChoice(quality, choices);
-            choices.add(type);
-            PanelButton panel = new PanelButton(screen, type, quality);
+        for (int i = 0; i < 2; i++) {
+            PanelButton panel;
+            switch(MathUtils.random(1,3)) {
+                case 2 -> panel = player.levelUpManager.get_random_t2(screen, choices);
+                case 3 -> panel = player.levelUpManager.get_random_t3(screen, choices);
+                default -> panel = player.levelUpManager.get_random_t1(screen, choices);
+            }
             table.add(panel).padLeft(15).padRight(15);
             buttons.add(panel);
             buttonsMatrix[i] = panel;
         }
+        PanelButton panel = new B_Element(screen);
+        table.add(panel).padLeft(15).padRight(15);
+        buttons.add(panel);
+        buttonsMatrix[2] = panel;
+
+        PanelButton panel2 = new B_Shield(screen);
+        table.add(panel2).padLeft(15).padRight(15);
+        buttons.add(panel2);
+        buttonsMatrix[3] = panel2;
     }
 
     public void updatePanels() {

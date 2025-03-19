@@ -29,34 +29,74 @@ public class Spellbook {
     public int energybeam_lvl = 0;
     public int rift_lvl = 0;
 
+    // FLAMEJET
+    public int flamejet_bonus_dmg;
+    public int flamejet_bonus_flames;
+
+    // FIREBALL
+    public int fireball_bonus_dmg;
+    public int fireball_bonus_radius;
+    public int fireball_bonus_knockback;
+
+    // OVERHEAT
+    public int overheat_bonus_dmg;
+    public int overheat_bonus_cdreduction;
+    public int overheat_bonus_radius;
+
     // CHARGEDBOLTS
-    public float chargedbolts_bonus_dmg;
+    public int chargedbolts_bonus_dmg;
     public int chargedbolts_bonus_proj;
+    public int chargedbolts_bonus_duration;
 
     // CHAIN LIGHTNING
-    public float chainlightning_bonus_dmg;
+    public int chainlightning_bonus_dmg;
     public int chainlightning_bonus_jump;
+    public int chainlightning_bonus_crit;
 
     // THUNDERSTORM
-    public float thunderstorm_bonus_dmg;
-    public float thunderstorm_bonus_frequence;  //increments of 0.5f atm
+    public int thunderstorm_bonus_dmg;
+    public int thunderstorm_bonus_duration;
+    public int thunderstorm_bonus_splash;
+
 
     // ARCANE MISSILES
-    public float arcane_missile_bonus_dmg;
+    public int arcane_missile_bonus_dmg;
     public int arcane_missile_bonus_proj;
     public int arcane_missile_bonus_rotation;
 
     // ENERGY BEAM
-    public float energybeam_bonus_dmg;
-    public float energybeam_bonus_width;
+    public int energybeam_bonus_dmg;
+    public int energybeam_bonus_width;
+    public int energybeam_bonus_firsthits;
+
+    // RIFTS
+    public int rifts_bonus_dmg;
+    public int rifts_bonus_spread;
+    public int rifts_bonus_quantity;
 
     // FROSTBOLTS
-    public float frostbolts_bonus_dmg;
+    public int frostbolts_bonus_dmg;
     public int frostbolts_bonus_proj;
 
+    // ICESPEAR
+    public int icespear_bonus_dmg;
+    public int icespear_bonus_shard;
+    public int icespear_bonus_split_chance;
+
     // FROZENORB
-    public float frozenorb_bonus_dmg;
-    public float frozenorb_bonus_radius;
+    public int frozenorb_bonus_dmg;
+    public int frozenorb_bonus_radius;
+    public int frozenorb_bonus_proj_quantity;
+
+    // ELEMENTS
+    public int frost_bonus_cdreduction;
+    public int frost_bonus_multicast;
+    public int fire_bonus_cdreduction;
+    public int fire_bonus_multicast;
+    public int lightning_bonus_cdreduction;
+    public int lightning_bonus_multicast;
+    public int arcane_bonus_cdreduction;
+    public int arcane_bonus_multicast;
 
     // Elemental Dmg
     public float arcaneBonusDmg;

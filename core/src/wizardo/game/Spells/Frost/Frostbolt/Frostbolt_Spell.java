@@ -36,7 +36,7 @@ public class Frostbolt_Spell extends Spell {
         if(targetPosition != null) {
             projectiles = 1;
         } else {
-            projectiles = getLvl();
+            projectiles = getLvl() + player.spellbook.frostbolts_bonus_proj;
             if(player.inventory.equippedHat instanceof Rare_FrostboltHat) {
                 projectiles++;
             }

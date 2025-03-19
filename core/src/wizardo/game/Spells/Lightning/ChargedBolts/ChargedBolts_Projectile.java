@@ -69,7 +69,8 @@ public class ChargedBolts_Projectile extends ChargedBolts_Spell {
         stateTime = (float) Math.random();
         speed = speed * MathUtils.random(0.85f, 1.15f);
         speed = getScaledSpeed();
-        duration = duration * MathUtils.random(0.9f, 1.1f);
+        duration = duration * MathUtils.random(0.95f, 1.05f);
+        duration *= (1 + player.spellbook.chargedbolts_bonus_duration/100f);
     }
 
     public void update(float delta) {

@@ -14,7 +14,7 @@ import static wizardo.game.Wizardo.player;
 public class Thunderstorm_Spell extends Spell {
 
     public float interval;
-    public float hits_per_second = 3;
+    public float hits_per_second = 2.5f;
     public float duration = 4f;
 
     public ArrayList<Monster> inRange;
@@ -145,7 +145,7 @@ public class Thunderstorm_Spell extends Spell {
     }
 
     public void setup() {
-        hits_per_second += player.spellbook.thunderstorm_bonus_frequence;
+        hits_per_second += 0.5f * player.spellbook.thunderstorm_lvl;
         hits_per_second = hits_per_second * (1 + player.spellbook.empyreanFrequencyBonus/100f);
         interval = 1/hits_per_second;
         if(rifts) {

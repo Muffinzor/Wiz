@@ -43,7 +43,7 @@ public class ChargedBolts_Spell extends Spell {
         if(spawnPosition != null) {
             bolts = 1;
         } else {
-            bolts = 2 + getLvl();
+            bolts = 2 + getLvl() + player.spellbook.chargedbolts_bonus_proj;
             if(overheat) {
                 bolts = Math.max(bolts/2, 2);
             }

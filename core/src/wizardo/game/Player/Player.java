@@ -3,6 +3,7 @@ package wizardo.game.Player;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import wizardo.game.Items.Equipment.Equipment;
 import wizardo.game.Maps.TriggerObject;
+import wizardo.game.Player.Levels.LevelUp_Manager;
 import wizardo.game.Resources.PlayerResources;
 import wizardo.game.Screens.Battle.BattleScreen;
 import wizardo.game.Spells.SpellManager;
@@ -15,9 +16,10 @@ import static wizardo.game.Wizardo.player;
 public class Player {
 
     public BattleScreen screen;
+    public TriggerObject nearbyTriggerObject = null;
 
     public SpellManager spellManager;
-    public TriggerObject nearbyTriggerObject = null;
+    public LevelUp_Manager levelUpManager;
 
     public Pawn pawn;
     public Spellbook spellbook;
@@ -36,6 +38,7 @@ public class Player {
         this.pawn = pawn;
         this.spellbook = new Spellbook();
         this.inventory = new Inventory();
+        this.levelUpManager = new LevelUp_Manager();
         this.stats = new Stats();
     }
 

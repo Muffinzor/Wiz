@@ -94,9 +94,7 @@ public class StatsBuffer {
 
             case EMPYREAN -> empyrean(quality);
             case FORCE -> force(quality);
-            case ICE -> ice(quality);
             case PROJECTILES -> speed(quality);
-            case SPACE -> space(quality);
 
             case LUCK -> luck(quality);
             case RED -> defense(quality);

@@ -18,14 +18,13 @@ public class LevelUpUtils {
     public static LevelUpQuality getRandomQuality() {
         double random = Math.random();
 
-
-        if(random >= 0.94f) {
+        if(random >= 0.9f) {
             return LEGENDARY;
         }
-        if(random >= 0.85f) {
+        if(random >= 0.75f) {
             return EPIC;
         }
-        if(random >= 0.54f) {
+        if(random >= 0.45f) {
             return RARE;
         }
         return NORMAL;
@@ -52,9 +51,6 @@ public class LevelUpUtils {
         if(canBeFundamental()) {
             list.add(GRAVITY);
         }
-        if(player.spellbook.frozenorb_lvl > 0) {
-            list.add(ICE);
-        }
 
         if(canBeSharp()) {
             list.add(SHARP);
@@ -70,10 +66,6 @@ public class LevelUpUtils {
 
         if((player.spellbook.overheat_lvl > 0) && (quality == EPIC || quality == LEGENDARY)) {
             list.add(FORCE);
-        }
-
-        if(player.spellbook.rift_lvl > 0 && (quality == EPIC || quality == LEGENDARY)) {
-            list.add(SPACE);
         }
 
         for(LevelUps type : currentList) {
@@ -195,7 +187,6 @@ public class LevelUpUtils {
 
         return possible;
     }
-
     private static boolean canBeSharp() {
         boolean possible = false;
 

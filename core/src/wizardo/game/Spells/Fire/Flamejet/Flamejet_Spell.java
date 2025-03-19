@@ -21,7 +21,7 @@ public class Flamejet_Spell extends Spell {
     public boolean rift;
 
     public float interval;
-    public float quantity = 1;
+    public int quantity = 3;
     int flamesCast;
 
     public Flamejet_Spell() {
@@ -29,7 +29,7 @@ public class Flamejet_Spell extends Spell {
         string_name = "Flamejet";
 
         speed = 20;
-        cooldown = 1f;
+        cooldown = 2.5f;
         dmg = 20;
 
         main_element = FIRE;
@@ -71,7 +71,7 @@ public class Flamejet_Spell extends Spell {
 
         stateTime += delta;
 
-        if(stateTime >= getCooldown()) {
+        if(flamesCast >= quantity) {
             screen.spellManager.remove(this);
         }
 
@@ -79,7 +79,7 @@ public class Flamejet_Spell extends Spell {
 
     public void setup() {
         if(targetPosition == null) {
-            quantity = 1 + player.spellbook.flamejet_lvl;
+            quantity = 5 + player.spellbook.flamejet_bonus_flames;
         }
         interval = getCooldown() / quantity;
     }

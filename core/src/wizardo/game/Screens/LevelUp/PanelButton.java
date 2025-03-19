@@ -10,18 +10,19 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
-import wizardo.game.Player.Levels.StatsBuffer;
 import wizardo.game.Resources.ScreenResources.LevelUpResources;
 import wizardo.game.Player.Levels.LevelUpEnums.*;
 
+import static wizardo.game.Resources.ScreenResources.LevelUpResources.*;
+import static wizardo.game.Resources.ScreenResources.LevelUpResources.orange_gem;
 import static wizardo.game.Screens.BaseScreen.xRatio;
 
-public class PanelButton extends TextButton {
+public abstract class PanelButton extends TextButton {
 
     float stateTime;
 
     Skin skin;
-    Sprite qualityGem;
+    public Sprite qualityGem;
     TextButtonStyle style;
     LevelUpScreen screen;
     Stage stage;
@@ -32,19 +33,19 @@ public class PanelButton extends TextButton {
     public boolean selected;
 
     public int mastery_dmg_buff = 30;
+    public float bonus_effect_chance = 0.4f;
 
-    public PanelButton(LevelUpScreen screen, LevelUps type, LevelUpQuality quality) {
+    public PanelButton(LevelUpScreen screen) {
         super("", screen.skin);
         this.screen = screen;
         this.stage = screen.stage;
         this.table = screen.table;
         this.skin = screen.skin;
-        this.type = type;
-        this.quality = quality;
+    }
 
+    public void setup() {
         pickStyle();
         adjustSize();
-        setText(TextGenerator.getPanelText(type, quality));
         addClickListener();
     }
 
@@ -52,14 +53,19 @@ public class PanelButton extends TextButton {
         TextButton.TextButtonStyle style;
         style = skin.get(type.toString().toLowerCase(), TextButton.TextButtonStyle.class);
         this.style = style;
+    }
 
-        forceQuality();
+    public void set_gem_sprite() {
         switch(quality) {
-            case NORMAL -> qualityGem = LevelUpResources.green_gem;
-            case RARE -> qualityGem = LevelUpResources.blue_gem;
-            case EPIC -> qualityGem = LevelUpResources.purple_gem;
-            case LEGENDARY -> qualityGem = LevelUpResources.orange_gem;
+            case NORMAL -> qualityGem = green_gem;
+            case RARE -> qualityGem = blue_gem;
+            case EPIC -> qualityGem = purple_gem;
+            case LEGENDARY -> qualityGem = orange_gem;
         }
+    }
+
+    public void drawPanel(float delta) {
+        drawLiteralFrame(delta);
     }
 
     public void drawLiteralFrame(float delta) {
@@ -92,9 +98,11 @@ public class PanelButton extends TextButton {
     }
 
     public void handleClick() {
-        StatsBuffer.apply_LevelUp(type, quality);
+        apply_stats();
         screen.game.setPreviousScreen();
     }
+
+    public abstract void apply_stats();
 
     public void addClickListener() {
         this.addListener(new ClickListener() {
@@ -159,14 +167,6 @@ public class PanelButton extends TextButton {
         float actual_y = table_y + own_y + getHeight()/2f;
 
         return new Vector2(actual_x, actual_y);
-    }
-
-    public void forceQuality() {
-        switch(type) {
-            case FROSTBOLT, FLAMEJET, MISSILES, CHARGEDBOLT -> quality = LevelUpQuality.NORMAL;
-            case ICESPEAR, CHAIN, FIREBALL, BEAM -> quality = LevelUpQuality.RARE;
-            case FROZENORB, RIFTS, THUNDERSTORM, OVERHEAT -> quality = LevelUpQuality.EPIC;
-        }
     }
 
 }

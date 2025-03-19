@@ -1,4 +1,4 @@
-package wizardo.game.Screens.LevelUp.Choices;
+package wizardo.game.Player.Levels.Choices;
 
 import wizardo.game.Player.Levels.LevelUpEnums;
 import wizardo.game.Screens.LevelUp.LevelUpScreen;
@@ -10,9 +10,12 @@ public class M_Frostbolt extends PanelButton {
 
     int roll = 0;
 
-    public M_Frostbolt(LevelUpScreen screen, LevelUpEnums.LevelUps type, LevelUpEnums.LevelUpQuality quality) {
-        super(screen, type, quality);
+    int MAX_BONUS_PROJ = 5;
 
+    public M_Frostbolt(LevelUpScreen screen) {
+        super(screen);
+        type = LevelUpEnums.LevelUps.FROSTBOLT;
+        super.setup();
         pick_type();
         set_text();
     }
@@ -20,8 +23,7 @@ public class M_Frostbolt extends PanelButton {
     public void pick_type() {
         if(player.spellbook.frostbolt_lvl - player.stats.bonusMastery_frostbolt < 1) return;
 
-        float bonus_proj_chance = 0.6f;
-        if(player.spellbook.frostbolts_bonus_proj < 5 && Math.random() > bonus_proj_chance) {
+        if(player.spellbook.frostbolts_bonus_proj < MAX_BONUS_PROJ && Math.random() > bonus_effect_chance) {
             roll = 1;
             return;
         }
@@ -40,7 +42,7 @@ public class M_Frostbolt extends PanelButton {
     public void set_text() {
         String s = "";
         switch(roll) {
-            case 0 -> s = "+1 Mastery";
+            case 0 -> s = "Learn Frostbolts";
             case 1 -> s = "+1 Projectile";
             case 2 -> s = "+30% Damage";
         }
@@ -51,9 +53,4 @@ public class M_Frostbolt extends PanelButton {
             """, s);
         setText(text);
     }
-
-    public void draw(float delta) {
-        drawLiteralFrame(delta);
-    }
-
 }

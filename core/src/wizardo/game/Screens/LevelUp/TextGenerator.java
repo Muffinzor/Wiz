@@ -17,13 +17,11 @@ public class TextGenerator {
             case FLARE -> s = flare(quality);
             case FORCE -> s = force(quality);
             case GRAVITY -> s = gravity(quality);
-            case ICE -> s = ice(quality);
             case LUCK -> s = luck(quality);
             case PROJECTILES -> s = projectilesSpeed(quality);
             case RED -> s = red(quality);
             case REGEN -> s = regen(quality);
             case SHARP -> s = sharp(quality);
-            case SPACE -> s = space(quality);
             case VOLTAGE -> s = voltage(quality);
 
             case FROSTBOLT -> s = frostbolt();
