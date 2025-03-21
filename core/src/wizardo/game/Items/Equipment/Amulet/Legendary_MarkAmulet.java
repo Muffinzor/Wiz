@@ -24,11 +24,11 @@ public class Legendary_MarkAmulet extends Amulet {
         quality = ItemUtils.EquipQuality.LEGENDARY;
 
         masteries.add(SpellUtils.Spell_Name.MISSILES);
-        quantity_masteries.add(2);
+        quantity_masteries.add(1);
         masteries.add(SpellUtils.Spell_Name.ICESPEAR);
-        quantity_masteries.add(2);
+        quantity_masteries.add(1);
         gearStats.add(ItemUtils.GearStat.PROJSPEED);
-        quantity_gearStats.add(10);
+        quantity_gearStats.add(15);
 
     }
 

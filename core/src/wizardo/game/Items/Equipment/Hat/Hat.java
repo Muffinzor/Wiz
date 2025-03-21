@@ -111,26 +111,29 @@ public abstract class Hat extends Equipment {
         ArrayList<Integer> picks = new ArrayList<>();
 
         do {
-            int roll = MathUtils.random(1, 3);
+            int roll = MathUtils.random(1, 4);
             while (picks.contains(roll)) {
-                roll = MathUtils.random(1, 3);
+                roll = MathUtils.random(1, 4);
             }
             picks.add(roll);
 
             switch(roll) {
                 case 1 -> {
                     piece.gearStats.add(ItemUtils.GearStat.PROJSPEED);
-                    piece.quantity_gearStats.add(MathUtils.random(12,20));
+                    piece.quantity_gearStats.add(10);
                 }
                 case 2 -> {
-                    piece.masteries.add(SpellUtils.getRandomMastery(null,1, false));
-                    piece.quantity_masteries.add(1);
+                    piece.gearStats.add(ItemUtils.GearStat.MULTICAST);
+                    piece.quantity_gearStats.add(5);
                 }
                 case 3 -> {
                     piece.gearStats.add(ItemUtils.GearStat.CASTSPEED);
-                    piece.quantity_gearStats.add(MathUtils.random(4,6));
+                    piece.quantity_gearStats.add(5);
                 }
-
+                case 4 -> {
+                    piece.gearStats.add(ItemUtils.GearStat.ALLDMG);
+                    piece.quantity_gearStats.add(5);
+                }
             }
 
 
@@ -161,7 +164,7 @@ public abstract class Hat extends Equipment {
 
                     Collections.shuffle(list);
                     piece.gearStats.add(list.getFirst());
-                    piece.quantity_gearStats.add(MathUtils.random(5,10));
+                    piece.quantity_gearStats.add(10);
                 }
                 case 2 -> {
                     piece.masteries.add(SpellUtils.getRandomMastery(null,2, false));
@@ -177,7 +180,7 @@ public abstract class Hat extends Equipment {
                 }
                 case 5 -> {
                     piece.gearStats.add(ItemUtils.GearStat.LUCK);
-                    piece.quantity_gearStats.add(MathUtils.random(5,10));
+                    piece.quantity_gearStats.add(10);
                 }
             }
         } while(picks.size() < quantity);
@@ -197,11 +200,11 @@ public abstract class Hat extends Equipment {
 
                 case 1 -> {
                     piece.masteries.add(SpellUtils.getRandomMastery(null,2, false));
-                    piece.quantity_masteries.add(2);
+                    piece.quantity_masteries.add(1);
                 }
                 case 2 -> {
                     piece.masteries.add(SpellUtils.getRandomMastery(null,3, false));
-                    piece.quantity_masteries.add(2);
+                    piece.quantity_masteries.add(1);
                 }
                 case 3 -> {
                     piece.gearStats.add(ItemUtils.GearStat.CASTSPEED);
@@ -213,7 +216,7 @@ public abstract class Hat extends Equipment {
                 }
                 case 5 -> {
                     piece.gearStats.add(ItemUtils.GearStat.PROJSPEED);
-                    piece.quantity_gearStats.add(MathUtils.random(15,25));
+                    piece.quantity_gearStats.add(MathUtils.random(11,15));
                 }
             }
         } while(picks.size() < quantity);

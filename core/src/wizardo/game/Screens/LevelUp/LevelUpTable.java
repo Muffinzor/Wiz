@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import wizardo.game.Display.MenuTable;
 import wizardo.game.Player.Levels.Choices.B_Element;
+import wizardo.game.Player.Levels.Choices.B_Luck;
 import wizardo.game.Player.Levels.Choices.B_Shield;
 import wizardo.game.Player.Levels.LevelUpEnums;
 import wizardo.game.Player.Levels.LevelUpUtils;
@@ -78,7 +79,7 @@ public class LevelUpTable extends MenuTable {
             buttons.add(panel);
             buttonsMatrix[i] = panel;
         }
-        PanelButton panel = new B_Element(screen);
+        PanelButton panel = new B_Luck(screen);
         table.add(panel).padLeft(15).padRight(15);
         buttons.add(panel);
         buttonsMatrix[2] = panel;

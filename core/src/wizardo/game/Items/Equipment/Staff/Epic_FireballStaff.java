@@ -17,7 +17,7 @@ public class Epic_FireballStaff extends Staff {
         quality = ItemUtils.EquipQuality.EPIC;
 
         masteries.add(SpellUtils.Spell_Name.FIREBALL);
-        quantity_masteries.add(2);
+        quantity_masteries.add(1);
 
     }
 

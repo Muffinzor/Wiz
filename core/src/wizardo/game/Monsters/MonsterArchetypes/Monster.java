@@ -330,7 +330,7 @@ public abstract class Monster {
         slowedTimer -= delta;
         burnTimer -= delta;
 
-        if(burnTimer > 0) {
+        if(burnTimer > 0 && delta > 0) {
             hp -= burnDmg/180f;
         }
 

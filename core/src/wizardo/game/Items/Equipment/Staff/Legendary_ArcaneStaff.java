@@ -27,7 +27,7 @@ public class Legendary_ArcaneStaff extends Staff {
         quality = ItemUtils.EquipQuality.LEGENDARY;
 
         gearStats.add(ItemUtils.GearStat.MASTERY_ARCANE);
-        quantity_gearStats.add(2);
+        quantity_gearStats.add(1);
         gearStats.add(ItemUtils.GearStat.ARCANEDMG);
         quantity_gearStats.add(MathUtils.random(15,20));
 

@@ -8,7 +8,6 @@ import wizardo.game.Resources.EffectAnims.CorpseExplosionAnims;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Utils.BodyFactory;
 
-import static wizardo.game.GameSettings.dmg_text_on;
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.player;
 import static wizardo.game.Wizardo.world;
@@ -94,15 +93,10 @@ public class CorpseExplosion extends Spell {
 
     public void dealDmg(Monster monster) {
         float dmg = getDmg();
-        dmg = getScaledDmg(dmg);
+        dmg = apply_elemental_dmg_bonus(dmg);
         float randomFactor = MathUtils.random(1 - dmgVariance, 1 + dmgVariance);
         dmg *= randomFactor;
         monster.hp -= dmg;
-    }
-    public int getScaledDmg(float unscaledDmg) {
-        float scaledDmg = unscaledDmg;
-        scaledDmg *= (1 + player.spellbook.allBonusDmg/100f);
-        return (int) scaledDmg;
     }
 
     @Override

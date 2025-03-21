@@ -194,7 +194,7 @@ public abstract class Staff extends Equipment {
                 }
                 case 6 -> {
                     piece.gearStats.add(ItemUtils.GearStat.PROJSPEED);
-                    piece.quantity_gearStats.add(MathUtils.random(6,15));
+                    piece.quantity_gearStats.add(MathUtils.random(5,10));
                 }
 
             }
@@ -205,46 +205,34 @@ public abstract class Staff extends Equipment {
         ArrayList<Integer> picks = new ArrayList<>();
 
         do {
-            int roll = MathUtils.random(1, 6);
+            int roll = MathUtils.random(1, 5);
             while (picks.contains(roll)) {
-                roll = MathUtils.random(1, 6);
+                roll = MathUtils.random(1, 5);
             }
             picks.add(roll);
 
             switch(roll) {
 
                 case 1 -> {
-                    piece.masteries.add(SpellUtils.getRandomMastery(null,2, true));
-                    piece.quantity_masteries.add(2);
+                    piece.masteries.add(SpellUtils.getRandomMastery(null,3, true));
+                    piece.quantity_masteries.add(1);
                 }
                 case 2 -> {
-                    ArrayList<ItemUtils.GearStat> list = new ArrayList<>();
-                    list.add(ItemUtils.GearStat.MASTERY_FROST);
-                    list.add(ItemUtils.GearStat.MASTERY_FIRE);
-                    list.add(ItemUtils.GearStat.MASTERY_ARCANE);
-                    list.add(ItemUtils.GearStat.MASTERY_LIGHTNING);
-
-                    Collections.shuffle(list);
-                    piece.gearStats.add(list.getFirst());
-                    piece.quantity_gearStats.add(1);
-                }
-                case 3 -> {
                     piece.gearStats.add(ItemUtils.GearStat.CASTSPEED);
                     piece.quantity_gearStats.add(MathUtils.random(11,15));
                 }
-                case 4 -> {
+                case 3 -> {
                     piece.gearStats.add(ItemUtils.GearStat.MULTICAST);
                     piece.quantity_gearStats.add(MathUtils.random(11,15));
                 }
-                case 5 -> {
+                case 4 -> {
                     piece.gearStats.add(ItemUtils.GearStat.PROJSPEED);
-                    piece.quantity_gearStats.add(MathUtils.random(15,25));
+                    piece.quantity_gearStats.add(MathUtils.random(11,15));
                 }
-                case 6 -> {
+                case 5 -> {
                     piece.masteries.add(SpellUtils.getRandomMastery(null,3, false));
-                    piece.quantity_masteries.add(2);
+                    piece.quantity_masteries.add(1);
                 }
-
             }
         } while(picks.size() < quantity);
     }

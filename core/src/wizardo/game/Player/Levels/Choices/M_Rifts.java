@@ -5,6 +5,8 @@ import wizardo.game.Player.Levels.LevelUpEnums;
 import wizardo.game.Screens.LevelUp.LevelUpScreen;
 import wizardo.game.Screens.LevelUp.PanelButton;
 
+import static wizardo.game.Spells.SpellBank.Arcane_Spells.arcane_spells;
+import static wizardo.game.Spells.SpellBank.Fire_Spells.fire_spells;
 import static wizardo.game.Wizardo.player;
 
 public class M_Rifts extends PanelButton {
@@ -20,6 +22,8 @@ public class M_Rifts extends PanelButton {
         super.setup();
         pick_type();
         set_text();
+        learned_spell = arcane_spells[2];
+
     }
 
     public void pick_type() {
@@ -54,7 +58,7 @@ public class M_Rifts extends PanelButton {
             case 0 -> s = "Learn Rifts";
             case 1 -> s = "+10% Spread Radius";
             case 2 -> s = "10% More Rifts";
-            case 3 -> s = "+30% Damage";
+            case 3 -> s = String.format("+%d%% Damage", mastery_dmg_buff);
         }
         String text = String.format("""
             RIFTS

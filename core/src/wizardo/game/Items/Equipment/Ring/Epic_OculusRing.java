@@ -28,11 +28,11 @@ public class Epic_OculusRing extends Ring {
         picKElements();
 
         masteries.add(mastery1);
-        quantity_masteries.add(MathUtils.random(1,3));
+        quantity_masteries.add(1);
         masteries.add(mastery2);
-        quantity_masteries.add(MathUtils.random(1,3));
+        quantity_masteries.add(1);
         masteries.add(mastery3);
-        quantity_masteries.add(MathUtils.random(1,3));
+        quantity_masteries.add(1);
 
     }
 

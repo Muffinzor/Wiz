@@ -38,7 +38,6 @@ public class Icespear_Projectile extends Icespear_Spell {
     boolean hasSplit;
     Body body;
     RoundLight light;
-    boolean lightKilled;
     Vector2 direction;
     float rotation;
 
@@ -59,7 +58,7 @@ public class Icespear_Projectile extends Icespear_Spell {
         timerBeforeSplit = 0;
 
         if(player.inventory.equippedAmulet instanceof Rare_IcespearAmulet) {
-            maxCollisions += 2;
+            split_shards += 1;
         }
 
     }
@@ -97,24 +96,21 @@ public class Icespear_Projectile extends Icespear_Spell {
         if(destroyed || scale <= 0.05f) {
             world.destroyBody(body);
             screen.spellManager.remove(this);
-            if(!lightKilled) {
+            if(light != null) {
                 light.dimKill(0.5f);
-                lightKilled = true;
+                light = null;
             }
         }
 
         if(stateTime >= duration) {
             scale -= 0.05f;
-            if(!lightKilled) {
+            if(light != null) {
                 light.dimKill(0.05f);
-                lightKilled = true;
+                light = null;
             }
         }
     }
 
-    /**
-     * BESOIN FAIRE PROC RATE
-     */
     public void handleCollision(Monster monster) {
 
         if(frozenorb && anim_element == FROST) {
@@ -130,7 +126,7 @@ public class Icespear_Projectile extends Icespear_Spell {
 
         if(scale > 0.5f) {
 
-            if (timerBeforeSplit >= minimumTimeForSplit) {
+            if (timerBeforeSplit >= minimumTimeForSplit && Math.random() > split_chance) {
                 canSplit = true;
                 splitMonster = monster;
             }
@@ -219,7 +215,7 @@ public class Icespear_Projectile extends Icespear_Spell {
     }
 
     public void normalSplit() {
-        int shards = 2;
+        int shards = split_shards;
         float initialAngle = rotation;
         float halfCone = 8f * shards / 2;
         float stepSize = 8f * shards / (shards - 1);
@@ -238,7 +234,7 @@ public class Icespear_Projectile extends Icespear_Spell {
     }
 
     public void arcaneSplit(ArrayList<Monster> inRange) {
-        int shards = 2;
+        int shards = split_shards;
         inRange.remove(splitMonster);
         if(!inRange.isEmpty()) {
             for (int i = 0; i < shards; i++) {
@@ -342,7 +338,9 @@ public class Icespear_Projectile extends Icespear_Spell {
     }
 
     public void adjustLight() {
-        light.pointLight.setPosition(body.getPosition().scl(PPM));
+        if(light != null) {
+            light.pointLight.setPosition(body.getPosition().scl(PPM));
+        }
     }
 
     public void celestialStrike() {

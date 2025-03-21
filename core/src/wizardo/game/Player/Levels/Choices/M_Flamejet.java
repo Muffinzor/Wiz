@@ -4,6 +4,7 @@ import wizardo.game.Player.Levels.LevelUpEnums;
 import wizardo.game.Screens.LevelUp.LevelUpScreen;
 import wizardo.game.Screens.LevelUp.PanelButton;
 
+import static wizardo.game.Spells.SpellBank.Fire_Spells.fire_spells;
 import static wizardo.game.Wizardo.player;
 
 public class M_Flamejet extends PanelButton {
@@ -18,6 +19,7 @@ public class M_Flamejet extends PanelButton {
         super.setup();
         pick_type();
         set_text();
+        learned_spell = fire_spells[0];
     }
 
     public void pick_type() {
@@ -44,7 +46,7 @@ public class M_Flamejet extends PanelButton {
         switch(roll) {
             case 0 -> s = "Learn Flamejet";
             case 1 -> s = "+10% More Flames";
-            case 2 -> s = "+30% Damage";
+            case 2 -> s = String.format("+%d%% Damage", mastery_dmg_buff);
         }
         String text = String.format("""
             FLAMEJET

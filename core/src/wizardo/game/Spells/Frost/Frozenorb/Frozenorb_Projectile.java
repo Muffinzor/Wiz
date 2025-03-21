@@ -166,7 +166,7 @@ public class Frozenorb_Projectile extends Frozenorb_Spell {
                 for (Monster monster : screen.monsterManager.liveMonsters) {
                     if (monster.body.getPosition().dst(body.getPosition()) < radius) {
                         float dmg = getDmg()/12f;
-                        dmg = getScaledDmg(dmg);
+                        dmg = apply_elemental_dmg_bonus(dmg);
                         monster.hp -= dmg;
                         if(anim_element == FROST) {
                             monster.applySlow(2, slowRatio - 0.025f * getLvl());

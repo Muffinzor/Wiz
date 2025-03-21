@@ -17,7 +17,7 @@ public class Epic_RiftStaff extends Staff {
         quality = ItemUtils.EquipQuality.EPIC;
 
         masteries.add(SpellUtils.Spell_Name.RIFTS);
-        quantity_masteries.add(2);
+        quantity_masteries.add(1);
     }
 
     public String getDescription() {

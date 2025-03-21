@@ -20,7 +20,7 @@ public class Legendary_DukeRing extends Ring {
         quality = ItemUtils.EquipQuality.LEGENDARY;
 
         gearStats.add(ItemUtils.GearStat.MAXSHIELD);
-        quantity_gearStats.add(25);
+        quantity_gearStats.add(35);
         gearStats.add(ItemUtils.GearStat.WALKSPEED);
         quantity_gearStats.add(10);
 
@@ -30,7 +30,7 @@ public class Legendary_DukeRing extends Ring {
 
         return String.format("""
             When you take damage from close-by
-            monsters, retaliate in kind""");
+            monsters, kill the attacker""");
     }
 
     public String getFlavorText() {

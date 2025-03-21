@@ -17,12 +17,12 @@ public class Legendary_LightningStaff extends Staff {
         spriteOver = new Sprite(new Texture("Items/Staff/Thundergods_Over.png"));
         displayRotation = 25;
 
-        name = "Thundergod's Wrath";
+        name = "Thundergod's Ire";
         title = "Legendary Staff";
         quality = ItemUtils.EquipQuality.LEGENDARY;
 
         gearStats.add(ItemUtils.GearStat.MASTERY_LIGHTNING);
-        quantity_gearStats.add(2);
+        quantity_gearStats.add(1);
         gearStats.add(ItemUtils.GearStat.LITEDMG);
         quantity_gearStats.add(MathUtils.random(15,20));
 

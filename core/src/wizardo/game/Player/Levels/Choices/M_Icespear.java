@@ -5,6 +5,7 @@ import wizardo.game.Player.Levels.LevelUpEnums;
 import wizardo.game.Screens.LevelUp.LevelUpScreen;
 import wizardo.game.Screens.LevelUp.PanelButton;
 
+import static wizardo.game.Spells.SpellBank.Frost_Spells.frost_spells;
 import static wizardo.game.Wizardo.player;
 
 public class M_Icespear extends PanelButton {
@@ -20,6 +21,7 @@ public class M_Icespear extends PanelButton {
         super.setup();
         pick_type();
         set_text();
+        learned_spell = frost_spells[1];
     }
 
     public void pick_type() {
@@ -43,7 +45,7 @@ public class M_Icespear extends PanelButton {
         switch(roll) {
             case 0 -> player.spellbook.icespear_lvl++;
             case 1 -> player.spellbook.icespear_bonus_shard++;
-            case 2 -> player.spellbook.icespear_bonus_split_chance += 10;
+            case 2 -> player.spellbook.icespear_bonus_split_chance += 15;
             case 3 -> player.spellbook.icespear_bonus_dmg += mastery_dmg_buff;
         }
     }
@@ -53,8 +55,8 @@ public class M_Icespear extends PanelButton {
         switch(roll) {
             case 0 -> s = "Learn Icespear";
             case 1 -> s = "+1 Shard when Splitting";
-            case 2 -> s = "+10% Chance to Split";
-            case 3 -> s = "+30% Damage";
+            case 2 -> s = "+15% Chance to Split";
+            case 3 -> s = String.format("+%d%% Damage", mastery_dmg_buff);
         }
         String text = String.format("""
             ICESPEAR

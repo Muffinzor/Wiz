@@ -19,7 +19,7 @@ public class Legendary_FrostStaff extends Staff {
         quality = ItemUtils.EquipQuality.LEGENDARY;
 
         gearStats.add(ItemUtils.GearStat.MASTERY_FROST);
-        quantity_gearStats.add(2);
+        quantity_gearStats.add(1);
         gearStats.add(ItemUtils.GearStat.FROSTDMG);
         quantity_gearStats.add(MathUtils.random(15,20));
 

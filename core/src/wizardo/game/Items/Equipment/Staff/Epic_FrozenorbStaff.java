@@ -17,7 +17,7 @@ public class Epic_FrozenorbStaff extends Staff{
         quality = ItemUtils.EquipQuality.EPIC;
 
         masteries.add(SpellUtils.Spell_Name.FROZENORB);
-        quantity_masteries.add(2);
+        quantity_masteries.add(1);
     }
 
     public String getDescription() {

@@ -20,9 +20,9 @@ public class Legendary_FireballAmulet extends Amulet {
         quality = ItemUtils.EquipQuality.LEGENDARY;
 
         masteries.add(SpellUtils.Spell_Name.FIREBALL);
-        quantity_masteries.add(2);
+        quantity_masteries.add(1);
         masteries.add(SpellUtils.Spell_Name.FROSTBOLT);
-        quantity_masteries.add(2);
+        quantity_masteries.add(1);
     }
 
     public String getDescription() {

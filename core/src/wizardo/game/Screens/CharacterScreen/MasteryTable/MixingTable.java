@@ -181,7 +181,9 @@ public class MixingTable extends MenuTable {
                     }
                     if(masteryTable.screen.spell_label != null) {
                         masteryTable.screen.spell_label.dispose();
+                        masteryTable.screen.spell_label = null;
                     }
+                    masteryTable.screen.selectedSpell_Button = null;
                     masteryTable.updateCheckBoxes();
                     updateButtons();
 
@@ -249,7 +251,10 @@ public class MixingTable extends MenuTable {
 
                     Spell spell_to_forget = masteryTable.screen.selectedSpell_Button.spell;
                     spell_to_forget.forget();
-
+                    if(masteryTable.screen.spell_label != null) {
+                        masteryTable.screen.spell_label.dispose();
+                        masteryTable.screen.spell_label = null;
+                    }
                     masteryTable.screen.selectedSpell_Button = null;
                     masteryTable.screen.equippedSpells_table.updateSpells();
                     masteryTable.screen.knownSpells_table.updateSpells();

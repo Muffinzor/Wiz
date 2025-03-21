@@ -13,7 +13,7 @@ import static wizardo.game.Spells.SpellUtils.Spell_Name.*;
 
 public class Fire_Spells {
 
-    public static Spell[] firespells = new Spell[7];
+    public static Spell[] fire_spells = new Spell[7];
 
     public static void createFire_Spells() {
 
@@ -21,27 +21,27 @@ public class Fire_Spells {
         Flamejet_Spell fire0 = new Flamejet_Spell();
         fire0.anim_element = FIRE;
         fire0.spellParts.add(FLAMEJET);
-        firespells[0] = fire0;
+        fire_spells[0] = fire0;
 
         // 1. Fireball
         Fireball_Spell fire1 = new Fireball_Spell();
         fire1.anim_element = FIRE;
         fire1.spellParts.add(FIREBALL);
-        firespells[1] = fire1;
+        fire_spells[1] = fire1;
 
         // 2. Overheat
         Overheat_Spell fire2 = new Overheat_Spell();
         fire2.anim_element = FIRE;
         fire2.spellParts.add(OVERHEAT);
-        firespells[2] = fire2;
+        fire_spells[2] = fire2;
 
         // 3. Fireball + Flamejet
         Fireball_Spell fire3 = new Fireball_Spell();
         fire3.anim_element = FIRE;
-        fire3.nested_spell = firespells[0];
+        fire3.nested_spell = fire_spells[0];
         fire3.spellParts.add(FIREBALL);
         fire3.spellParts.add(FLAMEJET);
-        firespells[3] = fire3;
+        fire_spells[3] = fire3;
 
         // 4. Overheat + Fireball
         Overheat_Spell fire4 = new Overheat_Spell();
@@ -49,14 +49,14 @@ public class Fire_Spells {
         fire4.anim_element = FIRE;
         fire4.spellParts.add(OVERHEAT);
         fire4.spellParts.add(FIREBALL);
-        firespells[4] = fire4;
+        fire_spells[4] = fire4;
 
         // 5. Overheat + Flamejet
         DragonBreath_Spell fire5 = new DragonBreath_Spell();
         fire5.anim_element = FIRE;
         fire5.spellParts.add(FLAMEJET);
         fire5.spellParts.add(OVERHEAT);
-        firespells[5] = fire5;
+        fire_spells[5] = fire5;
 
         // 6. Overheat + Fireball + Flamejet
         DragonBreath_Spell fire6 = new DragonBreath_Spell();
@@ -65,6 +65,6 @@ public class Fire_Spells {
         fire6.spellParts.add(FLAMEJET);
         fire6.spellParts.add(OVERHEAT);
         fire6.spellParts.add(FIREBALL);
-        firespells[6] = fire6;
+        fire_spells[6] = fire6;
     }
 }

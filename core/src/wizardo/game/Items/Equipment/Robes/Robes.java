@@ -110,20 +110,20 @@ public abstract class Robes extends Equipment {
         ArrayList<Integer> picks = new ArrayList<>();
 
         do {
-            int roll = MathUtils.random(1, 3);
+            int roll = MathUtils.random(1, 4);
             while (picks.contains(roll)) {
-                roll = MathUtils.random(1, 3);
+                roll = MathUtils.random(1, 4);
             }
             picks.add(roll);
 
             switch(roll) {
                 case 1 -> {
                     piece.gearStats.add(ItemUtils.GearStat.MULTICAST);
-                    piece.quantity_gearStats.add(MathUtils.random(5,10));
+                    piece.quantity_gearStats.add(5);
                 }
                 case 2 -> {
-                    piece.masteries.add(SpellUtils.getRandomMastery(null,1, true));
-                    piece.quantity_masteries.add(1);
+                    piece.gearStats.add(ItemUtils.GearStat.WALKSPEED);
+                    piece.quantity_gearStats.add(5);
                 }
                 case 3 -> {
                     ArrayList<ItemUtils.GearStat> list = new ArrayList<>();
@@ -134,7 +134,11 @@ public abstract class Robes extends Equipment {
 
                     Collections.shuffle(list);
                     piece.gearStats.add(list.getFirst());
-                    piece.quantity_gearStats.add(MathUtils.random(5,10));
+                    piece.quantity_gearStats.add(5);
+                }
+                case 4 -> {
+                    piece.gearStats.add(ItemUtils.GearStat.REGEN);
+                    piece.quantity_gearStats.add(30);
                 }
             }
         } while(picks.size() < quantity);
@@ -156,7 +160,7 @@ public abstract class Robes extends Equipment {
             switch(roll) {
                 case 1 -> {
                     piece.gearStats.add(ItemUtils.GearStat.DEFENSE);
-                    piece.quantity_gearStats.add(MathUtils.random(2,3));
+                    piece.quantity_gearStats.add(MathUtils.random(1,2));
                 }
                 case 2 -> {
                     piece.masteries.add(SpellUtils.getRandomMastery(null,2, false));
@@ -164,11 +168,11 @@ public abstract class Robes extends Equipment {
                 }
                 case 3 -> {
                     piece.gearStats.add(ItemUtils.GearStat.REGEN);
-                    piece.quantity_gearStats.add(MathUtils.random(45,90));
+                    piece.quantity_gearStats.add(MathUtils.random(30,60));
                 }
                 case 4 -> {
                     piece.gearStats.add(ItemUtils.GearStat.ALLDMG);
-                    piece.quantity_gearStats.add(MathUtils.random(5,10));
+                    piece.quantity_gearStats.add(5);
                 }
                 case 5 -> {
                     piece.gearStats.add(ItemUtils.GearStat.LUCK);

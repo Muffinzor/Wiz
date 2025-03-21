@@ -16,19 +16,17 @@ public class Rare_IcespearAmulet extends Amulet {
         title = "Rare Amulet";
         quality = ItemUtils.EquipQuality.RARE;
 
-
         masteries.add(SpellUtils.Spell_Name.ICESPEAR);
         quantity_masteries.add(1);
-
 
     }
 
     public String getDescription() {
-        return "Ice spears last 2 additional hits";
+        return "Ice spears split into an additional shard";
     }
 
     public String getFlavorText() {
-        return "\"A durable spear\nfor a reliable wizard.\"";
+        return "\"A versatile spear\nfor a reliable wizard.\"";
     }
 
 }

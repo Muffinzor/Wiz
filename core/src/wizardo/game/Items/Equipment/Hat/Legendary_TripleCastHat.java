@@ -21,8 +21,8 @@ public class Legendary_TripleCastHat extends Hat {
 
         gearStats.add(ItemUtils.GearStat.MULTICAST);
         gearStats.add(ItemUtils.GearStat.LUCK);
-        quantity_gearStats.add(20);
-        quantity_gearStats.add(20);
+        quantity_gearStats.add(15);
+        quantity_gearStats.add(25);
 
 
     }

@@ -31,7 +31,7 @@ public class Legendary_FireStaff extends Staff {
         quality = ItemUtils.EquipQuality.LEGENDARY;
 
         gearStats.add(ItemUtils.GearStat.MASTERY_FIRE);
-        quantity_gearStats.add(2);
+        quantity_gearStats.add(1);
         gearStats.add(ItemUtils.GearStat.FIREDMG);
         quantity_gearStats.add(MathUtils.random(15,20));
 

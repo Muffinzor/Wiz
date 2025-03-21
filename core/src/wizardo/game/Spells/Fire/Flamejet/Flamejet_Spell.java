@@ -132,7 +132,8 @@ public class Flamejet_Spell extends Spell {
     public void dealDmg(Monster monster) {
         float dmg = getDmg();
         dmg += 4 * monster.flamejetStacks;
-        dmg = getScaledDmg(dmg);
+        dmg = apply_specific_spell_dmg_bonus(dmg);
+        dmg = apply_elemental_dmg_bonus(dmg);
         float randomFactor = MathUtils.random(1 - dmgVariance, 1 + dmgVariance);
         dmg *= randomFactor;
         monster.hp -= dmg;

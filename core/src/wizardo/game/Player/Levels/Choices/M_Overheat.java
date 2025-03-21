@@ -5,6 +5,8 @@ import wizardo.game.Player.Levels.LevelUpEnums;
 import wizardo.game.Screens.LevelUp.LevelUpScreen;
 import wizardo.game.Screens.LevelUp.PanelButton;
 
+import static wizardo.game.Spells.SpellBank.Fire_Spells.fire_spells;
+import static wizardo.game.Spells.SpellBank.Frost_Spells.frost_spells;
 import static wizardo.game.Wizardo.player;
 
 public class M_Overheat extends PanelButton {
@@ -20,6 +22,7 @@ public class M_Overheat extends PanelButton {
         super.setup();
         pick_type();
         set_text();
+        learned_spell = fire_spells[2];
     }
 
     public void pick_type() {
@@ -54,7 +57,7 @@ public class M_Overheat extends PanelButton {
             case 0 -> s = "Learn Overheat";
             case 1 -> s = "-10% Cooldown";
             case 2 -> s = "+10% Explosion Radius";
-            case 3 -> s = "+30% Damage";
+            case 3 -> s = String.format("+%d%% Damage", mastery_dmg_buff);
         }
         String text = String.format("""
             OVERHEAT

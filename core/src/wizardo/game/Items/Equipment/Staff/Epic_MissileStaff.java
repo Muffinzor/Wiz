@@ -17,7 +17,7 @@ public class Epic_MissileStaff extends Staff{
         quality = ItemUtils.EquipQuality.EPIC;
 
         masteries.add(SpellUtils.Spell_Name.MISSILES);
-        quantity_masteries.add(2);
+        quantity_masteries.add(1);
     }
 
     public String getDescription() {

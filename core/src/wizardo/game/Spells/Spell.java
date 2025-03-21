@@ -29,9 +29,17 @@ import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Screens.BaseScreen;
 import wizardo.game.Spells.Arcane.ArcaneMissiles.ArcaneMissile_Spell;
 import wizardo.game.Spells.Arcane.EnergyBeam.EnergyBeam_Spell;
+import wizardo.game.Spells.Arcane.Rifts.Rifts_Spell;
+import wizardo.game.Spells.Fire.Fireball.Fireball_Spell;
+import wizardo.game.Spells.Fire.Flamejet.Flamejet_Spell;
+import wizardo.game.Spells.Fire.Overheat.Overheat_Spell;
+import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Spell;
+import wizardo.game.Spells.Frost.Frozenorb.Frozenorb_Spell;
 import wizardo.game.Spells.Frost.Icespear.Icespear_Spell;
 import wizardo.game.Spells.Hybrid.Laser.Laser_Spell;
 import wizardo.game.Spells.Lightning.ChainLightning.ChainLightning_Spell;
+import wizardo.game.Spells.Lightning.ChargedBolts.ChargedBolts_Spell;
+import wizardo.game.Spells.Lightning.Thunderstorm.Thunderstorm_Hit;
 import wizardo.game.Spells.SpellUtils.*;
 import wizardo.game.Spells.Unique.Brand.Brand_Explosion;
 import wizardo.game.Spells.Unique.TeleportMonster;
@@ -481,32 +489,34 @@ public abstract class Spell implements Cloneable {
      * Dmg after scaling modifiers, elemental + allDmg
      * @return
      */
-    public int getScaledDmg(float unscaledDmg) {
+    public int apply_elemental_dmg_bonus(float unscaledDmg) {
         float scaledDmg = unscaledDmg;
-        switch(anim_element) {
-            case ARCANE -> scaledDmg *= (1 + player.spellbook.arcaneBonusDmg/100);
-            case FROST -> scaledDmg *= (1 + player.spellbook.frostBonusDmg/100);
-            case FIRE -> scaledDmg *= (1 + player.spellbook.fireBonusDmg/100);
-            case LIGHTNING -> scaledDmg *= (1 + player.spellbook.lightningBonusDmg/100);
-            case COLDLITE -> {
-                float liteBonus = (player.spellbook.lightningBonusDmg/100 * 0.75f);
-                float coldBonus = (player.spellbook.frostBonusDmg/100 * 0.75f);
-                scaledDmg *= (1 + liteBonus + coldBonus);
-            }
-            case FIRELITE ->  {
-                float liteBonus = (player.spellbook.lightningBonusDmg/100 * 0.75f);
-                float fireBonus = (player.spellbook.fireBonusDmg/100 * 0.75f);
-                scaledDmg *= (1 + liteBonus + fireBonus);
+        if(anim_element != null) {
+            switch (anim_element) {
+                case ARCANE -> scaledDmg *= (1 + player.spellbook.arcaneBonusDmg / 100);
+                case FROST -> scaledDmg *= (1 + player.spellbook.frostBonusDmg / 100);
+                case FIRE -> scaledDmg *= (1 + player.spellbook.fireBonusDmg / 100);
+                case LIGHTNING -> scaledDmg *= (1 + player.spellbook.lightningBonusDmg / 100);
+                case COLDLITE -> {
+                    float liteBonus = (player.spellbook.lightningBonusDmg / 100 * 0.75f);
+                    float coldBonus = (player.spellbook.frostBonusDmg / 100 * 0.75f);
+                    scaledDmg *= (1 + liteBonus + coldBonus);
+                }
+                case FIRELITE -> {
+                    float liteBonus = (player.spellbook.lightningBonusDmg / 100 * 0.75f);
+                    float fireBonus = (player.spellbook.fireBonusDmg / 100 * 0.75f);
+                    scaledDmg *= (1 + liteBonus + fireBonus);
+                }
             }
         }
-
         scaledDmg *= (1 + player.spellbook.allBonusDmg/100f);
         return (int) scaledDmg;
     }
 
     public void dealDmg(Monster monster) {
         float dmg = getDmg();
-        dmg = getScaledDmg(dmg);
+        dmg = apply_specific_spell_dmg_bonus(dmg);
+        dmg = apply_elemental_dmg_bonus(dmg);
         float randomFactor = MathUtils.random(1 - dmgVariance, 1 + dmgVariance);
         dmg *= randomFactor;
 
@@ -519,6 +529,25 @@ public abstract class Spell implements Cloneable {
         if(dmg_text_on) {
             dmgText( (int)dmg, monster);
         }
+    }
+
+    public float apply_specific_spell_dmg_bonus(float dmg) {
+        switch (this) {
+            case Frostbolt_Spell _ -> dmg *= (1 + player.spellbook.frostbolts_bonus_dmg / 100f);
+            case Icespear_Spell _ -> dmg *= (1 + player.spellbook.icespear_bonus_dmg / 100f);
+            case Frozenorb_Spell _ -> dmg *= (1 + player.spellbook.frozenorb_bonus_dmg / 100f);
+            case Flamejet_Spell _ -> dmg *= (1 + player.spellbook.flamejet_bonus_dmg / 100f);
+            case Fireball_Spell _ -> dmg *= (1 + player.spellbook.fireball_bonus_dmg / 100f);
+            case Overheat_Spell _ -> dmg *= (1 + player.spellbook.overheat_bonus_dmg / 100f);
+            case ChargedBolts_Spell _ -> dmg *= (1 + player.spellbook.chargedbolts_bonus_dmg / 100f);
+            case ChainLightning_Spell _ -> dmg *= (1 + player.spellbook.chainlightning_bonus_dmg / 100f);
+            case Thunderstorm_Hit _ -> dmg *= (1 + player.spellbook.thunderstorm_bonus_dmg / 100f);
+            case ArcaneMissile_Spell _ -> dmg *= (1 + player.spellbook.arcane_missile_bonus_dmg / 100f);
+            case EnergyBeam_Spell _ -> dmg *= (1 + player.spellbook.energybeam_bonus_dmg / 100f);
+            case Rifts_Spell _ -> dmg *= (1 + player.spellbook.rifts_bonus_dmg / 100f);
+            default -> {}
+        }
+        return dmg;
     }
 
     public float applyGearModifiers(Monster monster, float dmg) {

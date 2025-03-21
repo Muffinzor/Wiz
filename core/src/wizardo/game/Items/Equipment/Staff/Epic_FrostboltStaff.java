@@ -17,7 +17,7 @@ public class Epic_FrostboltStaff extends Staff {
         quality = ItemUtils.EquipQuality.EPIC;
 
         masteries.add(SpellUtils.Spell_Name.FROSTBOLT);
-        quantity_masteries.add(2);
+        quantity_masteries.add(1);
 
     }
 

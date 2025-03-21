@@ -9,6 +9,9 @@ import static wizardo.game.Wizardo.player;
 
 public class Icespear_Spell extends Spell {
 
+    float split_chance = 0.45f;
+    int split_shards = 2;
+
     float minimumTimeForSplit = 0.15f;
     public int currentSplits = 0;
     public int maxSplits = 2;
@@ -49,6 +52,8 @@ public class Icespear_Spell extends Spell {
             flamejet = true;
         }
         speed = getScaledSpeed();
+        split_shards += player.spellbook.icespear_bonus_shard;
+        split_chance -= player.spellbook.icespear_bonus_split_chance/100f;
     }
 
     public void update(float delta) {
@@ -97,6 +102,8 @@ public class Icespear_Spell extends Spell {
         this.speed = parent.speed;
         this.maxCollisions = parent.maxCollisions;
         this.minimumTimeForSplit = parent.minimumTimeForSplit;
+        this.split_chance = parent.split_chance;
+        this.split_shards = parent.split_shards;
     }
 
     @Override

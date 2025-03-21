@@ -5,6 +5,7 @@ import wizardo.game.Player.Levels.LevelUpEnums;
 import wizardo.game.Screens.LevelUp.LevelUpScreen;
 import wizardo.game.Screens.LevelUp.PanelButton;
 
+import static wizardo.game.Spells.SpellBank.Arcane_Spells.arcane_spells;
 import static wizardo.game.Wizardo.player;
 
 public class M_Arcanemissiles extends PanelButton {
@@ -20,6 +21,7 @@ public class M_Arcanemissiles extends PanelButton {
         super.setup();
         pick_type();
         set_text();
+        learned_spell = arcane_spells[0];
     }
 
     public void pick_type() {
@@ -48,13 +50,15 @@ public class M_Arcanemissiles extends PanelButton {
         }
     }
 
+
+
     public void set_text() {
         String s = "";
         switch(roll) {
             case 0 -> s = "Learn Arcane Missiles";
             case 1 -> s = "+1 Projectile";
             case 2 -> s = "20% Faster Tracking";
-            case 3 -> s = "+30% Damage";
+            case 3 -> s = String.format("+%d%% Damage", mastery_dmg_buff);
         }
         String text = String.format("""
             ARCANE MISSILES

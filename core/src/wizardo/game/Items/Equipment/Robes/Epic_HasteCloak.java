@@ -20,9 +20,9 @@ public class Epic_HasteCloak extends Robes {
         gearStats.add(ItemUtils.GearStat.WALKSPEED);
         quantity_gearStats.add(15);
         gearStats.add(ItemUtils.GearStat.CASTSPEED);
-        quantity_gearStats.add(10);
+        quantity_gearStats.add(15);
         gearStats.add(ItemUtils.GearStat.PROJSPEED);
-        quantity_gearStats.add(20);
+        quantity_gearStats.add(15);
 
     }
 

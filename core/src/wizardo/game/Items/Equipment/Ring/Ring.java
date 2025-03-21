@@ -203,8 +203,8 @@ public abstract class Ring extends Equipment {
             switch(roll) {
 
                 case 1 -> {
-                    piece.masteries.add(SpellUtils.getRandomMastery(null,2, false));
-                    piece.quantity_masteries.add(2);
+                    piece.masteries.add(SpellUtils.getRandomMastery(null,3, false));
+                    piece.quantity_masteries.add(1);
                 }
                 case 2 -> {
                     ArrayList<ItemUtils.GearStat> list = new ArrayList<>();
@@ -227,11 +227,11 @@ public abstract class Ring extends Equipment {
                 }
                 case 5 -> {
                     piece.gearStats.add(ItemUtils.GearStat.PROJSPEED);
-                    piece.quantity_gearStats.add(MathUtils.random(10,20));
+                    piece.quantity_gearStats.add(MathUtils.random(11,15));
                 }
                 case 6 -> {
                     piece.gearStats.add(ItemUtils.GearStat.REGEN);
-                    piece.quantity_gearStats.add(MathUtils.random(90,150));
+                    piece.quantity_gearStats.add(MathUtils.random(60,120));
                 }
 
             }

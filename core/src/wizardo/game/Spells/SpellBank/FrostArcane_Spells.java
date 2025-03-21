@@ -14,7 +14,7 @@ import wizardo.game.Spells.Hybrid.Orbit.Orbit_Spell;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 
-import static wizardo.game.Spells.SpellBank.Arcane_Spells.arcanespells;
+import static wizardo.game.Spells.SpellBank.Arcane_Spells.arcane_spells;
 import static wizardo.game.Spells.SpellUtils.Spell_Element.*;
 import static wizardo.game.Spells.SpellUtils.Spell_Name.*;
 
@@ -271,7 +271,7 @@ public class FrostArcane_Spells {
         // 24. Frozenorb + Arcanemissile + Beam
 
         Frozenorb_Spell frostarcane24 = new Frozenorb_Spell();
-        frostarcane24.nested_spell = arcanespells[3];
+        frostarcane24.nested_spell = arcane_spells[3];
         frostarcane24.anim_element = ARCANE;
         frostarcane24.spellParts.add(FROZENORB);
         frostarcane24.spellParts.add(MISSILES);
@@ -281,7 +281,7 @@ public class FrostArcane_Spells {
         // 25. Frozenorb + ArcaneMissile + Rift
 
         Frozenorb_Spell frostarcane25 = new Frozenorb_Spell();
-        frostarcane25.nested_spell = arcanespells[4];
+        frostarcane25.nested_spell = arcane_spells[4];
         frostarcane25.anim_element = ARCANE;
         frostarcane25.spellParts.add(FROZENORB);
         frostarcane25.spellParts.add(MISSILES);

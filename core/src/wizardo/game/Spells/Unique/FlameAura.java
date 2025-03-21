@@ -114,7 +114,7 @@ public class FlameAura extends Spell {
 
     public void dealDmg(Monster monster) {
         float dmg = getDmg() / 12f;
-        getScaledDmg(dmg);
+        apply_elemental_dmg_bonus(dmg);
         dmg = applyGearModifiers(monster, dmg);
         monster.hp -= dmg;
     }
@@ -149,7 +149,6 @@ public class FlameAura extends Spell {
                         Monster monster = (Monster) userData;
                         if (monster.body.getPosition().dst(center) < radius) {
                             dealDmg(monster);
-                            monster.hp -= getDmg() / 12f;
                         }
                     }
                     return true;

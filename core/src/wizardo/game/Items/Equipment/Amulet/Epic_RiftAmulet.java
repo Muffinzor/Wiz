@@ -16,11 +16,13 @@ public class Epic_RiftAmulet extends Amulet{
         title = "Epic Amulet";
         quality = ItemUtils.EquipQuality.EPIC;
         pickMasteries();
+        gearStats.add(ItemUtils.GearStat.ALLDMG);
+        quantity_gearStats.add(5);
     }
 
     public void pickMasteries() {
         masteries.add(SpellUtils.Spell_Name.RIFTS);
-        quantity_masteries.add(2);
+        quantity_masteries.add(1);
     }
 
     public String getDescription() {
