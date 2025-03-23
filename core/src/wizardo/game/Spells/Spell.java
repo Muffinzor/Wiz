@@ -101,7 +101,7 @@ public abstract class Spell implements Cloneable {
     public Spell_Element anim_element;
     public Spell_Element main_element;
     public Spell_Element bonus_element;
-    public ArrayList<LevelUpEnums.LevelUps> spellParts = new ArrayList<>();
+    public ArrayList<Spell_Name> spellParts = new ArrayList<>();
 
 
     public abstract void update(float delta);
@@ -260,7 +260,7 @@ public abstract class Spell implements Cloneable {
     public void playSound(Vector2 position) {
         float dst_factor = 1;
         float dst = player.pawn.body.getPosition().dst(position);
-        dst_factor -= dst * 0.025f;
+        dst_factor -= (dst * 0.025f);
         SoundPlayer.getSoundPlayer().playSound(soundPath, sound_volume);
     }
 
@@ -304,14 +304,14 @@ public abstract class Spell implements Cloneable {
             spells_in_inventory.add(player.spellbook.utility_spell);
         }
 
-        ArrayList<LevelUpEnums.LevelUps> thisSpellPartsCopy = new ArrayList<>(spellParts);
+        ArrayList<Spell_Name> thisSpellPartsCopy = new ArrayList<>(spellParts);
 
         if (spellParts.size() > 2) {
             Collections.sort(thisSpellPartsCopy);
         }
 
         for (Spell spell : spells_in_inventory) {
-            ArrayList<LevelUpEnums.LevelUps> spellPartsCopy = new ArrayList<>(spell.spellParts);
+            ArrayList<Spell_Name> spellPartsCopy = new ArrayList<>(spell.spellParts);
 
             if (spellPartsCopy.size() > 2) {
                 Collections.sort(spellPartsCopy);
@@ -675,7 +675,7 @@ public abstract class Spell implements Cloneable {
     }
 
     public boolean isLearnable() {
-        for(LevelUpEnums.LevelUps part : spellParts) {
+        for(Spell_Name part : spellParts) {
             switch(part) {
                 case FROSTBOLT -> {
                     if(player.spellbook.frostbolt_lvl < 1) {

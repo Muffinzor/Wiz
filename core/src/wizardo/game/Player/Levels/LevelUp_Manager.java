@@ -101,6 +101,7 @@ public class LevelUp_Manager {
         return level_up;
     }
 
+    /**
     public LevelUpEnums.LevelUps get_equipped_spell_buff(LevelUpScreen screen, ArrayList<LevelUpEnums.LevelUps> current_choices) {
         ArrayList<LevelUpEnums.LevelUps> list = new ArrayList<>();
         for(Spell spell : player.spellbook.equippedSpells) {
@@ -118,6 +119,7 @@ public class LevelUp_Manager {
         }
         return null;
     }
+     */
 
 
 }
