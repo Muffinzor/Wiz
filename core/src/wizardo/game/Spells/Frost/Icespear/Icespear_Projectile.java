@@ -228,7 +228,6 @@ public class Icespear_Projectile extends Icespear_Spell {
             spear.stateTime = stateTime;
             spear.setNextSpear(this);
             screen.spellManager.add(spear);
-
             flamejetSplit(direction);
         }
     }

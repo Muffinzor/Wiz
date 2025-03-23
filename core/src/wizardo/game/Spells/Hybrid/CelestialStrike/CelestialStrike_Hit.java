@@ -37,7 +37,7 @@ public class CelestialStrike_Hit extends CelestialStrike_Spell {
             initialized = true;
             createBody();
             createLight();
-            //createOrb();
+            createOrb();
         }
         drawSprite();
         stateTime += delta;
@@ -58,6 +58,7 @@ public class CelestialStrike_Hit extends CelestialStrike_Spell {
 
     public void handleCollision(Monster monster) {
         dealDmg(monster);
+        freeze(monster);
 
         float freezerate = 0.75f - 0.05f * player.spellbook.frozenorb_lvl;
         if(Math.random() >= freezerate) {
@@ -106,15 +107,16 @@ public class CelestialStrike_Hit extends CelestialStrike_Spell {
 
     public void frostbolts(float delta) {
         if(frostbolts && stateTime <= anim.getAnimationDuration()/2) {
-            float interval = 0.24f - 0.024f * player.spellbook.frostbolt_lvl;
-            float radius = 2f + 0.1f * player.spellbook.frostbolt_lvl;
-            if(interval < 0.06f) {
-                interval = 0.06f;
+            float interval = 0.3f - 0.05f * (player.spellbook.frostbolt_lvl + player.spellbook.frostbolts_bonus_proj/2f);
+            float radius = 2f + 0.4f * player.spellbook.frostbolt_lvl;
+            if(interval < 0.05f) {
+                interval = 0.05f;
             }
             if (stateTime % interval <= delta) {
                 Frostbolt_Explosion explosion = new Frostbolt_Explosion();
                 explosion.targetPosition = SpellUtils.getClearRandomPosition(body.getPosition(), radius);
                 explosion.setElements(this);
+                explosion.lightAlpha -= 0.1f * player.spellbook.frozenorb_lvl;
                 screen.spellManager.add(explosion);
             }
         }
@@ -122,7 +124,7 @@ public class CelestialStrike_Hit extends CelestialStrike_Spell {
 
     public void chargedbolts() {
         if(chargedbolts) {
-            int quantity = 6 + player.spellbook.chargedbolt_lvl;
+            int quantity = 6 + player.spellbook.chargedbolt_lvl * 2 + player.spellbook.chargedbolts_bonus_proj * 2;
             for (int i = 0; i < quantity; i++) {
                 ChargedBolts_Spell bolt = new ChargedBolts_Spell();
                 bolt.spawnPosition = new Vector2(body.getPosition());
@@ -133,13 +135,20 @@ public class CelestialStrike_Hit extends CelestialStrike_Spell {
         }
     }
 
+    public void freeze(Monster monster) {
+        float proc = 1 - player.spellbook.celestialstrike_bonus_freezechance/100f;
+        if(Math.random() >= proc) {
+            monster.applyFreeze(2.5f, 4);
+        }
+    }
+
     public void createOrb() {
         Frozenorb_Spell orb = new Frozenorb_Spell();
 
         orb.speed = 0;
-        orb.lightAlpha = 0.0f;
-        orb.anim_element = SpellUtils.Spell_Element.LIGHTNING;
-        orb.duration = 0.55f;
+        orb.lightAlpha = 0.6f;
+        orb.anim_element = SpellUtils.Spell_Element.COLDLITE;
+        orb.duration = 0.6f;
         orb.spawnPosition = new Vector2(targetPosition);
         screen.spellManager.add(orb);
     }

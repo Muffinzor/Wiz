@@ -88,6 +88,33 @@ public class Spellbook {
     public int frozenorb_bonus_radius;
     public int frozenorb_bonus_proj_quantity;
 
+    // --------- HYBRID SPELLS --------- //
+
+    // JUDGEMENT
+    public int judgement_bonus_cdreduction;  // increment of 0.4s removed per
+    public int judgement_bonus_dmg;
+
+    // BLIZZARD
+    public int blizzard_bonus_duration; // increment of 0.5s per
+    public int blizzard_bonus_splash_chance;
+
+    // CELESTIAL STRIKE
+    public int celestialstrike_bonus_dmg;
+    public int celestialstrike_bonus_cdreduction;
+    public int celestialstrike_bonus_freezechance;
+
+    // DRAGONBREATH
+    public int dragonbreath_bonus_dmg;
+    public int dragonbreath_bonus_burndmg;
+    public int dragonbreath_bonus_burnduration; // increment of 1s
+
+    // ENERGY RAIN
+    public int energyrain_bonus_dmg;
+    public int energyrain_bonus_proj;
+    public int energyrain_bonus_radius;
+
+
+
     // ELEMENTS
     public int frost_bonus_cdreduction;
     public int frost_bonus_multicast;

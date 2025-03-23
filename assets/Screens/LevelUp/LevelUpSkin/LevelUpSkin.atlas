@@ -191,6 +191,13 @@ Panel_IceSpear
   orig: 399, 692
   offset: 0, 0
   index: -1
+Panel_Judgement
+  rotate: false
+  xy: 1605, 616
+  size: 399, 692
+  orig: 399, 692
+  offset: 0, 0
+  index: -1
 Panel_Lightning
   rotate: false
   xy: 1605, 1310
@@ -222,6 +229,40 @@ Panel_Rifts
 Panel_Thunderstorm
   rotate: false
   xy: 803, 616
+  size: 399, 692
+  orig: 399, 692
+  offset: 0, 0
+  index: -1
+
+LevelUpSkin4.png
+size: 2048, 2048
+format: RGBA8888
+filter: Linear, Linear
+repeat: none
+Panel_Blizzard
+  rotate: false
+  xy: 1, 695
+  size: 399, 692
+  orig: 399, 692
+  offset: 0, 0
+  index: -1
+Panel_CelestialStrike
+  rotate: false
+  xy: 1, 1
+  size: 399, 692
+  orig: 399, 692
+  offset: 0, 0
+  index: -1
+Panel_Dragonbreath
+  rotate: false
+  xy: 402, 695
+  size: 399, 692
+  orig: 399, 692
+  offset: 0, 0
+  index: -1
+Panel_EnergyRain
+  rotate: false
+  xy: 402, 1
   size: 399, 692
   orig: 399, 692
   offset: 0, 0

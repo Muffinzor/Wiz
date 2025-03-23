@@ -1,6 +1,7 @@
 package wizardo.game.Spells.Hybrid.FrostNova;
 
 import com.badlogic.gdx.math.Vector2;
+import wizardo.game.Player.Levels.LevelUpEnums;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 
@@ -15,6 +16,7 @@ public class FrostNova_Spell extends Spell {
         multicastable = false;
 
         string_name = "Frost Nova";
+        levelup_enum = LevelUpEnums.LevelUps.FROSTNOVA;
 
         dmg = 45;
         cooldown = 6.4f;

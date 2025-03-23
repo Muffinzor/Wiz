@@ -46,7 +46,7 @@ public class M_Icespear extends PanelButton {
             case 0 -> player.spellbook.icespear_lvl++;
             case 1 -> player.spellbook.icespear_bonus_shard++;
             case 2 -> player.spellbook.icespear_bonus_split_chance += 15;
-            case 3 -> player.spellbook.icespear_bonus_dmg += mastery_dmg_buff;
+            case 3 -> player.spellbook.icespear_bonus_dmg += spell_dmg_buff;
         }
     }
 
@@ -56,7 +56,7 @@ public class M_Icespear extends PanelButton {
             case 0 -> s = "Learn Icespear";
             case 1 -> s = "+1 Shard when Splitting";
             case 2 -> s = "+15% Chance to Split";
-            case 3 -> s = String.format("+%d%% Damage", mastery_dmg_buff);
+            case 3 -> s = String.format("+%d%% Damage", spell_dmg_buff);
         }
         String text = String.format("""
             ICESPEAR

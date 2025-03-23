@@ -3,6 +3,7 @@ package wizardo.game.Spells.Hybrid.Laser;
 import com.badlogic.gdx.math.Vector2;
 import wizardo.game.Items.Equipment.Staff.Epic_EnergybeamStaff;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
+import wizardo.game.Player.Levels.LevelUpEnums;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 
@@ -29,6 +30,7 @@ public class Laser_Spell extends Spell {
     public Laser_Spell() {
 
         string_name = "Lasers";
+        levelup_enum = LevelUpEnums.LevelUps.LASERS;
 
         cooldown = 0.8f;
         speed = 15f;

@@ -46,7 +46,7 @@ public class M_Arcanemissiles extends PanelButton {
             case 0 -> player.spellbook.arcanemissile_lvl++;
             case 1 -> player.spellbook.arcane_missile_bonus_proj++;
             case 2 -> player.spellbook.arcane_missile_bonus_rotation++;
-            case 3 -> player.spellbook.arcane_missile_bonus_dmg += mastery_dmg_buff;
+            case 3 -> player.spellbook.arcane_missile_bonus_dmg += spell_dmg_buff;
         }
     }
 
@@ -58,7 +58,7 @@ public class M_Arcanemissiles extends PanelButton {
             case 0 -> s = "Learn Arcane Missiles";
             case 1 -> s = "+1 Projectile";
             case 2 -> s = "20% Faster Tracking";
-            case 3 -> s = String.format("+%d%% Damage", mastery_dmg_buff);
+            case 3 -> s = String.format("+%d%% Damage", spell_dmg_buff);
         }
         String text = String.format("""
             ARCANE MISSILES

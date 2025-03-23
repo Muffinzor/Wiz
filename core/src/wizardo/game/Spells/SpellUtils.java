@@ -39,16 +39,29 @@ public class SpellUtils {
     public enum Spell_Name {
         FROSTBOLT,
         FLAMEJET,
-        MISSILES,
         CHARGEDBOLTS,
+        MISSILES,
         ICESPEAR,
         FIREBALL,
-        BEAM,
         CHAIN,
+        BEAM,
         FROZENORB,
         OVERHEAT,
+        THUNDERSTORM,
         RIFTS,
-        THUNDERSTORM
+
+        JUDGEMENT,
+        BLIZZARD,
+        CELESTIALSTRIKE,
+        ENERGYRAIN,
+        FORKEDLIGHTNING,
+        FROSTNOVA,
+        LASERS,
+        LIGHTNINGHANDS,
+        METEORS,
+        ORBIT,
+        REPULSIONFIELD,
+        DRAGONBREATH
     }
 
     public static String getSpellString(Spell_Name spell) {

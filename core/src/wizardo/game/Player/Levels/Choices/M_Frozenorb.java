@@ -46,7 +46,7 @@ public class M_Frozenorb extends PanelButton {
             case 0 -> player.spellbook.frozenorb_lvl++;
             case 1 -> player.spellbook.frozenorb_bonus_radius += 10;
             case 2 -> player.spellbook.frozenorb_bonus_proj_quantity += 10;
-            case 3 -> player.spellbook.frozenorb_bonus_dmg += mastery_dmg_buff;
+            case 3 -> player.spellbook.frozenorb_bonus_dmg += spell_dmg_buff;
         }
     }
 
@@ -56,7 +56,7 @@ public class M_Frozenorb extends PanelButton {
             case 0 -> s = "Learn Frozen Orb";
             case 1 -> s = "+10% Area of Effect";
             case 2 -> s = "Shoots projectiles 10% faster";
-            case 3 -> s = String.format("+%d%% Damage", mastery_dmg_buff);
+            case 3 -> s = String.format("+%d%% Damage", spell_dmg_buff);
         }
         String text = String.format("""
             FROZEN ORB

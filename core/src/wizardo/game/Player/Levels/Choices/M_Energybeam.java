@@ -6,7 +6,6 @@ import wizardo.game.Screens.LevelUp.LevelUpScreen;
 import wizardo.game.Screens.LevelUp.PanelButton;
 
 import static wizardo.game.Spells.SpellBank.Arcane_Spells.arcane_spells;
-import static wizardo.game.Spells.SpellBank.Lightning_Spells.lightning_spells;
 import static wizardo.game.Wizardo.player;
 
 public class M_Energybeam extends PanelButton {
@@ -47,7 +46,7 @@ public class M_Energybeam extends PanelButton {
             case 0 -> player.spellbook.energybeam_lvl++;
             case 1 -> player.spellbook.energybeam_bonus_width += 20;
             case 2 -> player.spellbook.energybeam_bonus_firsthits += 20;
-            case 3 -> player.spellbook.energybeam_bonus_dmg += mastery_dmg_buff;
+            case 3 -> player.spellbook.energybeam_bonus_dmg += spell_dmg_buff;
         }
     }
 
@@ -57,7 +56,7 @@ public class M_Energybeam extends PanelButton {
             case 0 -> s = "Learn Energy Beam";
             case 1 -> s = "+10% Beam Width";
             case 2 -> s = first_hit_string();
-            case 3 -> s = String.format("+%d%% Damage", mastery_dmg_buff);
+            case 3 -> s = String.format("+%d%% Damage", spell_dmg_buff);
         }
         String text = String.format("""
             ENERGY BEAM

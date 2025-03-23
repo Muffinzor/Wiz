@@ -69,7 +69,7 @@ public class Frozenorb_Projectile extends Frozenorb_Spell {
         areaDmg(delta);
         adjustMovement();
         adjustLight();
-        adjustScale();
+        adjustScale(delta);
 
         if(frostnova && scale < 0.5f) {
             frostNova();
@@ -143,8 +143,8 @@ public class Frozenorb_Projectile extends Frozenorb_Spell {
         screen.centerSort(frame, body.getPosition().y * PPM - 20);
     }
 
-    public void adjustScale() {
-        if(stateTime > duration - 0.5f || hasCollided) {
+    public void adjustScale(float delta) {
+        if(delta > 0 && (stateTime > duration - 0.5f || hasCollided)) {
             scale = scale - 0.025f;
             if(scale <= 0.1f) {
                 screen.spellManager.remove(this);
@@ -216,10 +216,16 @@ public class Frozenorb_Projectile extends Frozenorb_Spell {
                 red = 0.5f;
                 green = 0.25f;
             }
-            case LIGHTNING, COLDLITE -> {
+            case LIGHTNING -> {
                 anim = FrozenorbAnims.frozenorb_anim_lightning;
                 green = 0.65f;
                 red = 0.75f;
+                scale = 0.8f;
+            }
+            case COLDLITE -> {
+                anim = FrozenorbAnims.frozenorb_anim_coldlite;
+                green = 0.65f;
+                blue = 0.75f;
                 scale = 0.8f;
             }
             case ARCANE -> {

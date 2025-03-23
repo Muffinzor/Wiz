@@ -151,7 +151,7 @@ public class Frostbolt_Projectile extends Frostbolt_Spell{
 
     public void thunder() {
         if(thunderstorm) {
-            float proc_chance = 0.95f - 0.025f * player.spellbook.thunderstorm_lvl;
+            float proc_chance = 0.90f - 0.05f * player.spellbook.thunderstorm_lvl;
             if(Math.random() >= proc_chance) {
                 Vector2 randomPos = SpellUtils.getClearRandomPosition(body.getPosition(), 1);
                 Thunderstorm_Hit thunder = new Thunderstorm_Hit(randomPos);

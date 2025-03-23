@@ -1,5 +1,6 @@
 package wizardo.game.Spells.Fire.Overheat;
 
+import wizardo.game.Player.Levels.LevelUpEnums;
 import wizardo.game.Spells.Lightning.Thunderstorm.Thunderstorm_Hit;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
@@ -19,9 +20,8 @@ public class Overheat_Spell extends Spell {
 
     public Overheat_Spell() {
 
-        multicastable = false;
-
         string_name = "Overheat";
+        levelup_enum = LevelUpEnums.LevelUps.OVERHEAT;
 
         radius = 200;
         cooldown = 6.4f;

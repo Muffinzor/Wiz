@@ -1,5 +1,6 @@
 package wizardo.game.Spells.Arcane.ArcaneMissiles;
 
+import wizardo.game.Player.Levels.LevelUpEnums;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 
@@ -24,7 +25,7 @@ public class ArcaneMissile_Spell extends Spell {
     public ArcaneMissile_Spell() {
 
         string_name = "Arcane Missiles";
-        spell_enum = SpellUtils.Spell_Name.MISSILES;
+        levelup_enum = LevelUpEnums.LevelUps.MISSILES;
 
         dmg = 12;
         speed = 225f/PPM;

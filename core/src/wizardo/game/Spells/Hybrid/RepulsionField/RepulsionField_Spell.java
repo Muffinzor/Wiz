@@ -1,5 +1,6 @@
 package wizardo.game.Spells.Hybrid.RepulsionField;
 
+import wizardo.game.Player.Levels.LevelUpEnums;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 
@@ -14,7 +15,7 @@ public class RepulsionField_Spell extends Spell {
     public RepulsionField_Spell() {
 
         string_name = "Repulsion Field";
-
+        levelup_enum = LevelUpEnums.LevelUps.REPULSIONFIELD;
         cooldown = 3.2f;
 
         anim_element = SpellUtils.Spell_Element.ARCANE;

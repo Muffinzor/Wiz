@@ -38,7 +38,7 @@ public class M_Frostbolt extends PanelButton {
         switch(roll) {
             case 0 -> player.spellbook.frostbolt_lvl++;
             case 1 -> player.spellbook.frostbolts_bonus_proj++;
-            case 2 -> player.spellbook.frostbolts_bonus_dmg += mastery_dmg_buff;
+            case 2 -> player.spellbook.frostbolts_bonus_dmg += spell_dmg_buff;
         }
     }
 
@@ -47,7 +47,7 @@ public class M_Frostbolt extends PanelButton {
         switch(roll) {
             case 0 -> s = "Learn Frostbolts";
             case 1 -> s = "+1 Projectile";
-            case 2 -> s = String.format("+%d%% Damage", mastery_dmg_buff);
+            case 2 -> s = String.format("+%d%% Damage", spell_dmg_buff);
         }
         String text = String.format("""
             FROSTBOLTS

@@ -3,6 +3,7 @@ package wizardo.game.Spells.Fire.Flamejet;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
+import wizardo.game.Player.Levels.LevelUpEnums;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 
@@ -21,12 +22,13 @@ public class Flamejet_Spell extends Spell {
     public boolean rift;
 
     public float interval;
-    public int quantity = 3;
+    public int quantity = 1;
     int flamesCast;
 
     public Flamejet_Spell() {
 
         string_name = "Flamejet";
+        levelup_enum = LevelUpEnums.LevelUps.FLAMEJET;
 
         speed = 20;
         cooldown = 2.5f;

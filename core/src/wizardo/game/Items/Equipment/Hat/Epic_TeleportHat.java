@@ -3,18 +3,11 @@ package wizardo.game.Items.Equipment.Hat;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Vector2;
 import wizardo.game.Items.ItemUtils;
-import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Spells.Arcane.EnergyBeam.EnergyBeam_Spell;
-import wizardo.game.Spells.Hybrid.ArcaneArtillery.Judgement_Spell;
-import wizardo.game.Spells.Lightning.ChainLightning.ChainLightning_Spell;
-import wizardo.game.Spells.Lightning.ChargedBolts.ChargedBolts_Spell;
+import wizardo.game.Spells.Hybrid.Judgement.Judgement_Spell;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
-import wizardo.game.Spells.Unique.TeleportMonster;
-
-import static wizardo.game.Wizardo.player;
 
 public class Epic_TeleportHat extends Hat {
 

@@ -5,6 +5,7 @@ import wizardo.game.Items.Equipment.Amulet.Legendary_MarkAmulet;
 import wizardo.game.Items.Equipment.Book.Book;
 import wizardo.game.Items.Equipment.Book.Legendary_PulseBook;
 import wizardo.game.Items.Equipment.Equipment;
+import wizardo.game.Items.Equipment.Hat.Epic_JudgementHat;
 import wizardo.game.Items.Equipment.Hat.Epic_TeleportHat;
 import wizardo.game.Items.Equipment.Hat.Hat;
 import wizardo.game.Items.Equipment.Ring.Epic_FrostRing;
@@ -39,7 +40,7 @@ public class Inventory {
         equippedGear = new ArrayList<>();
 
 
-        holdingBox[0] = new Legendary_PulseBook();
+        holdingBox[0] = new Epic_IcespearStaff();
         holdingBox[1] = new Legendary_MarkAmulet();
 
     }

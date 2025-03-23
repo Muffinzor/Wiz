@@ -1,6 +1,7 @@
 package wizardo.game.Spells.Hybrid.LightningHands;
 
 import com.badlogic.gdx.math.Vector2;
+import wizardo.game.Player.Levels.LevelUpEnums;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 
@@ -20,6 +21,7 @@ public class LightningHands_Spell extends Spell {
     public LightningHands_Spell() {
 
         string_name = "Lightning Hands";
+        levelup_enum = LevelUpEnums.LevelUps.LIGHTNINGHANDS;
 
         cooldown = 3.2f;
         autoaimable = true;

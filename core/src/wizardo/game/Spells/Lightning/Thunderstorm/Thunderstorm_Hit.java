@@ -10,6 +10,7 @@ import wizardo.game.Resources.SpellAnims.ThunderstormAnims;
 import wizardo.game.Spells.Arcane.Rifts.Rift_Zone;
 import wizardo.game.Spells.Fire.Flamejet.Flamejet_Spell;
 import wizardo.game.Spells.Fire.Overheat.Overheat_Explosion;
+import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Explosion;
 import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Spell;
 import wizardo.game.Spells.Hybrid.ForkedLightning.ForkedLightning_Spell;
 import wizardo.game.Spells.Lightning.ChargedBolts.ChargedBolts_Spell;
@@ -42,6 +43,7 @@ public class Thunderstorm_Hit extends Thunderstorm_Spell {
             createLight();
             nestedProjectiles();
             overheat();
+            frostbolts();
         }
 
         drawFrame();
@@ -138,6 +140,20 @@ public class Thunderstorm_Hit extends Thunderstorm_Spell {
                     proj.spawnPosition = new Vector2(body.getPosition());
                     proj.targetPosition = SpellUtils.getRandomVectorInRadius(body.getPosition(), getProjRadius());
                     screen.spellManager.add(proj);
+                }
+            }
+        }
+    }
+    public void frostbolts() {
+        if(frostbolts) {
+            float procRate = 0.9f - 0.1f * player.spellbook.frostbolt_lvl;
+            if(Math.random() >= procRate) {
+                int quantity = 2 + player.spellbook.frostbolt_lvl + player.spellbook.frostbolts_bonus_proj;
+                for (int i = 0; i < quantity; i++) {
+                    Frostbolt_Explosion explosion = new Frostbolt_Explosion();
+                    explosion.targetPosition = SpellUtils.getClearRandomPosition(body.getPosition(), 1.2f);
+                    explosion.setElements(this);
+                    screen.spellManager.add(explosion);
                 }
             }
         }

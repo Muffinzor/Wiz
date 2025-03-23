@@ -3,7 +3,7 @@ package wizardo.game.Spells.SpellBank;
 import wizardo.game.Spells.Arcane.ArcaneMissiles.ArcaneMissile_Spell;
 import wizardo.game.Spells.Arcane.EnergyBeam.EnergyBeam_Spell;
 import wizardo.game.Spells.Arcane.Rifts.Rifts_Spell;
-import wizardo.game.Spells.Hybrid.ArcaneArtillery.Judgement_Spell;
+import wizardo.game.Spells.Hybrid.Judgement.Judgement_Spell;
 import wizardo.game.Spells.Hybrid.EnergyRain.EnergyRain_Spell;
 
 import wizardo.game.Spells.Hybrid.Laser.Laser_Spell;
@@ -261,28 +261,28 @@ public class LightningArcane_Spells {
         litearcane23.beam = true;
         litearcane23.rifts = true;
         litearcane23.anim_element = ARCANE;
-        litearcane23.spellParts.add(BEAM);
         litearcane23.spellParts.add(RIFTS);
+        litearcane23.spellParts.add(BEAM);
         litearcane23.spellParts.add(CHAIN);
         litearcaneSpells[23] = litearcane23;
 
-        // 24. ArcaneMissiles + Beam + Thunderstorm
+        // 24. ArcaneMissiles + Rifts + Thunderstorm
 
-        Laser_Spell litearcane24 = new Laser_Spell();
-        litearcane24.thunderstorm = true;
+        Thunderstorm_Spell litearcane24 = new Thunderstorm_Spell();
+        litearcane24.rifts = true;
+        litearcane24.arcaneMissile = true;
         litearcane24.anim_element = ARCANE;
-        litearcane24.spellParts.add(BEAM);
-        litearcane24.spellParts.add(MISSILES);
         litearcane24.spellParts.add(THUNDERSTORM);
+        litearcane24.spellParts.add(RIFTS);
+        litearcane24.spellParts.add(MISSILES);
         litearcaneSpells[24] = litearcane24;
 
-        // 25. ArcaneMissiles + Rifts + Thunderstorm
+        // 25. ArcaneMissiles + Beam + Thunderstorm
 
         Judgement_Spell litearcane25 = new Judgement_Spell();
         litearcane25.anim_element = ARCANE;
-        litearcane25.thunderstorm = true;
-        litearcane25.rift = true;
-        litearcane25.spellParts.add(RIFTS);
+        litearcane25.ministorm = true;
+        litearcane25.spellParts.add(BEAM);
         litearcane25.spellParts.add(MISSILES);
         litearcane25.spellParts.add(THUNDERSTORM);
         litearcaneSpells[25] = litearcane25;

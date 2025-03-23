@@ -3,6 +3,7 @@ package wizardo.game.Spells.Lightning.ChainLightning;
 import com.badlogic.gdx.math.Vector2;
 import wizardo.game.Items.Equipment.Hat.Legendary_SentientHat;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
+import wizardo.game.Player.Levels.LevelUpEnums;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 
@@ -38,7 +39,7 @@ public class ChainLightning_Spell extends Spell {
         aimReach = 5;
 
         string_name = "Chain Lightning";
-
+        levelup_enum = LevelUpEnums.LevelUps.CHAIN;
         cooldown = 1.2f;
         dmg = 32;
         autoaimable = true;

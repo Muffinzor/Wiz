@@ -5,7 +5,6 @@ import wizardo.game.Player.Levels.LevelUpEnums;
 import wizardo.game.Screens.LevelUp.LevelUpScreen;
 import wizardo.game.Screens.LevelUp.PanelButton;
 
-import static wizardo.game.Spells.SpellBank.Fire_Spells.fire_spells;
 import static wizardo.game.Spells.SpellBank.Lightning_Spells.lightning_spells;
 import static wizardo.game.Wizardo.player;
 
@@ -47,7 +46,7 @@ public class M_Thunderstorm extends PanelButton {
             case 0 -> player.spellbook.thunderstorm_lvl++;
             case 1 -> player.spellbook.thunderstorm_bonus_duration += 10;
             case 2 -> player.spellbook.thunderstorm_bonus_splash += 10;
-            case 3 -> player.spellbook.thunderstorm_bonus_dmg += mastery_dmg_buff;
+            case 3 -> player.spellbook.thunderstorm_bonus_dmg += spell_dmg_buff;
         }
     }
 
@@ -57,7 +56,7 @@ public class M_Thunderstorm extends PanelButton {
             case 0 -> s = "Learn Thunderstorm";
             case 1 -> s = "+10% Duration";
             case 2 -> s = "+10% Splash Radius";
-            case 3 -> s = String.format("+%d%% Damage", mastery_dmg_buff);
+            case 3 -> s = String.format("+%d%% Damage", spell_dmg_buff);
         }
         String text = String.format("""
             THUNDERSTORM

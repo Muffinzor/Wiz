@@ -12,7 +12,7 @@ public class Epic_IcespearStaff extends Staff{
         spriteOver = new Sprite(new Texture("Items/Staff/Icespear_Over.png"));
         displayRotation = 25;
 
-        name = "Sorcerer Fern's Cane";
+        name = "Boomstaff";
         title = "Epic Staff";
         quality = ItemUtils.EquipQuality.EPIC;
 
@@ -22,12 +22,15 @@ public class Epic_IcespearStaff extends Staff{
 
     public String getDescription() {
         return String.format("""
-            Ice Spears can split immediately
-            and all contain Flamejet""");
+            Ice Spears are immediately broken into
+            shards and shards can split immediately
+            
+            +20%% Ice Spear speed
+            +1 Shard""");
     }
 
     public String getFlavorText() {
-        return "\"...To shreds you say?\"";
+        return " \"WizMart's top of the line.\"";
     }
 
 }

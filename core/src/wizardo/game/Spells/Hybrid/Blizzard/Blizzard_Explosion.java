@@ -23,10 +23,13 @@ public class Blizzard_Explosion extends Blizzard_Spell {
     Body body;
     RoundLight light;
 
+    float splash_scale = 1;
+
     public Blizzard_Explosion() {
-
-
-
+        radius = 25;
+        if(Math.random() >= 1 - player.spellbook.blizzard_bonus_splash_chance/100f) {
+            splash_scale = 2;
+        }
     }
 
     public void update(float delta) {
@@ -71,7 +74,8 @@ public class Blizzard_Explosion extends Blizzard_Spell {
     }
 
     public void createBody() {
-        body = BodyFactory.spellExplosionBody(targetPosition, radius);
+        System.out.println(radius);
+        body = BodyFactory.spellExplosionBody(targetPosition, radius * splash_scale);
         body.setUserData(this);
     }
 
@@ -89,7 +93,9 @@ public class Blizzard_Explosion extends Blizzard_Spell {
         frame.setRotation(rotation);
         frame.flip(flipX, flipY);
         if(frostbolts) {
-            frame.setScale(1.2f);
+            frame.setScale(1.2f * splash_scale);
+        } else {
+            frame.setScale(splash_scale);
         }
         screen.centerSort(frame, targetPosition.y * PPM);
         screen.addSortedSprite(frame);
@@ -97,7 +103,7 @@ public class Blizzard_Explosion extends Blizzard_Spell {
 
     public void frostbolts() {
         if(frostbolts) {
-            float procRate = 0.8f - 0.08f * player.spellbook.frostbolt_lvl;
+            float procRate = 0.8f - 0.1f * player.spellbook.frostbolt_lvl;
             if(Math.random() >= procRate) {
                 Frostbolt_Explosion bolt = new Frostbolt_Explosion();
                 bolt.screen = screen;

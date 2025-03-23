@@ -182,5 +182,25 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 		font: SimpleFont26
 		up: Panel_Lightning
 	}
+	judgement: {
+		font: SimpleFont26
+		up: Panel_Judgement
+	}
+	blizzard: {
+		font: SimpleFont26
+		up: Panel_Blizzard
+	}
+	celestialstrike: {
+		font: SimpleFont26
+		up: Panel_CelestialStrike
+	}
+	dragonbreath: {
+		font: SimpleFont26
+		up: Panel_Dragonbreath
+	}
+	energyrain: {
+		font: SimpleFont26
+		up: Panel_EnergyRain
+	}
 }
 }

@@ -13,7 +13,6 @@ import com.badlogic.gdx.utils.Align;
 import wizardo.game.Resources.ScreenResources.LevelUpResources;
 import wizardo.game.Player.Levels.LevelUpEnums.*;
 import wizardo.game.Spells.Spell;
-import wizardo.game.Spells.SpellUtils;
 
 import static wizardo.game.Resources.ScreenResources.LevelUpResources.*;
 import static wizardo.game.Resources.ScreenResources.LevelUpResources.orange_gem;
@@ -36,7 +35,7 @@ public abstract class PanelButton extends TextButton {
     public boolean selected;
 
     public Spell learned_spell;  // if this is a mastery powerup
-    public int mastery_dmg_buff = 30;
+    public int spell_dmg_buff = 30;
     public float bonus_effect_chance = 0.4f;
 
     public PanelButton(LevelUpScreen screen) {

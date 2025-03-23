@@ -2,6 +2,7 @@ package wizardo.game.Spells.Lightning.ChargedBolts;
 
 import com.badlogic.gdx.math.Vector2;
 import wizardo.game.Items.Equipment.Staff.Epic_ChargedboltStaff;
+import wizardo.game.Player.Levels.LevelUpEnums;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 
@@ -24,7 +25,7 @@ public class ChargedBolts_Spell extends Spell {
     public ChargedBolts_Spell() {
 
         string_name = "Charged Bolts";
-
+        levelup_enum = LevelUpEnums.LevelUps.CHARGEDBOLT;
         duration = 1.5f;
         cooldown = 0.8f;
         dmg = 12;

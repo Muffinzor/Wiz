@@ -357,26 +357,20 @@ public class FrostLightning_Spells {
         // 33. Thunderstorm + Frostbolts
 
         Thunderstorm_Spell frostlite33 = new Thunderstorm_Spell();
-        frostlite33.nested_spell = new Frostbolt_Explosion();
+        frostlite33.frostbolts = true;
         frostlite33.anim_element = FROST;
         frostlite33.spellParts.add(THUNDERSTORM);
         frostlite33.spellParts.add(FROSTBOLT);
         frostliteSpells[33] = frostlite33;
 
-
-
-
-
         for (Spell frostLiteSpell : frostliteSpells) {
 
             if(frostLiteSpell != null && frostLiteSpell.bonus_element == null) {
-
                 if (frostLiteSpell.main_element == LIGHTNING) {
                     frostLiteSpell.bonus_element = FROST;
                 } else {
                     frostLiteSpell.bonus_element = LIGHTNING;
                 }
-
             }
         }
     }

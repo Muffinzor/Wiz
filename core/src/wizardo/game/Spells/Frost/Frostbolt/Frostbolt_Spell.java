@@ -1,6 +1,7 @@
 package wizardo.game.Spells.Frost.Frostbolt;
 
 import wizardo.game.Items.Equipment.Hat.Rare_FrostboltHat;
+import wizardo.game.Player.Levels.LevelUpEnums;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 
@@ -21,6 +22,7 @@ public class Frostbolt_Spell extends Spell {
     public Frostbolt_Spell() {
 
         string_name = "Frostbolts";
+        levelup_enum = LevelUpEnums.LevelUps.FROSTBOLT;
         speed = 7f;
         radius = 25;
         dmg = 24;

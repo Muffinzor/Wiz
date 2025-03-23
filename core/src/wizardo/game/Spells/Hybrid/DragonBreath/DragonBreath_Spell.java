@@ -3,8 +3,11 @@ package wizardo.game.Spells.Hybrid.DragonBreath;
 import com.badlogic.gdx.math.Vector2;
 import wizardo.game.Items.Equipment.Amulet.Epic_DragonbreathAmulet;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
+import wizardo.game.Player.Levels.LevelUpEnums;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
+
+import java.util.ArrayList;
 
 import static wizardo.game.Wizardo.player;
 
@@ -15,21 +18,23 @@ public class DragonBreath_Spell extends Spell {
     public boolean fireball;
     public boolean rift;
 
+    public ArrayList<Monster> monsters_hit;
+
     public DragonBreath_Spell() {
 
         string_name = "Dragonbreath";
+        levelup_enum = LevelUpEnums.LevelUps.DRAGONBREATH;
 
         dmg = 15;
 
-        cooldown = 4f;
+        cooldown = 4.8f;
 
         main_element = SpellUtils.Spell_Element.FIRE;
-
     }
 
     @Override
     public void update(float delta) {
-
+        monsters_hit = new ArrayList<>();
         completeAutoAimCheck();
 
         if(player.inventory.equippedAmulet instanceof Epic_DragonbreathAmulet) {
@@ -48,6 +53,7 @@ public class DragonBreath_Spell extends Spell {
         dragonbreath.frozenorb = frozenorb;
         dragonbreath.fireball = fireball;
         dragonbreath.rift = rift;
+        dragonbreath.monsters_hit = monsters_hit;
         dragonbreath.setElements(this);
         screen.spellManager.add(dragonbreath);
     }

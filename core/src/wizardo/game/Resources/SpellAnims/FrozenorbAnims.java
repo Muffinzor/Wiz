@@ -12,10 +12,12 @@ public class FrozenorbAnims {
     public static Animation<Sprite> frozenorb_anim_fire;
     public static Animation<Sprite> frozenorb_anim_arcane;
     public static Animation<Sprite> frozenorb_anim_lightning;
+    public static Animation<Sprite> frozenorb_anim_coldlite;
     public static String frozenorb_atlas_path_frost = "Spells/Frozenorb/FrozenOrb_Frost.atlas";
     public static String frozenorb_atlas_path_fire = "Spells/Frozenorb/FrozenOrb_Fire.atlas";
     public static String frozenorb_atlas_path_arcane = "Spells/Frozenorb/FrozenOrb_Arcane.atlas";
     public static String frozenorb_atlas_path_lightning = "Spells/Frozenorb/lightning_orb.atlas";
+    public static String frozenorb_atlas_path_coldlite = "Spells/Frozenorb/coldlite_orb.atlas";
 
     public static Animation<Sprite> orbit_anim_frost;
     public static Animation<Sprite> orbit_anim_arcane;
@@ -25,6 +27,7 @@ public class FrozenorbAnims {
         TextureAtlas fire_atlas = assetManager.get(frozenorb_atlas_path_fire, TextureAtlas.class);
         TextureAtlas arcane_atlas = assetManager.get(frozenorb_atlas_path_arcane, TextureAtlas.class);
         TextureAtlas lightning_atlas = assetManager.get(frozenorb_atlas_path_lightning, TextureAtlas.class);
+        TextureAtlas coldlite_atlas = assetManager.get(frozenorb_atlas_path_coldlite, TextureAtlas.class);
 
         Sprite[] frost_frames = new Sprite[180];
         for (int i = 0; i < frost_frames.length; i++) {
@@ -50,6 +53,12 @@ public class FrozenorbAnims {
         }
         frozenorb_anim_lightning = new Animation<>(0.03f, lightning_frames);
 
+        Sprite[] coldlite_frames = new Sprite[8];
+        for (int i = 0; i < coldlite_frames.length; i++) {
+            coldlite_frames[i] = coldlite_atlas.createSprite("lightning" + (i + 1));
+        }
+        frozenorb_anim_coldlite = new Animation<>(0.03f, coldlite_frames);
+
         Sprite[] orbit_frames = new Sprite[160];
         for (int i = 20; i < orbit_frames.length + 20; i++) {
             orbit_frames[i - 20] = frost_atlas.createSprite("orb" + (i + 1));
@@ -69,6 +78,6 @@ public class FrozenorbAnims {
         assetManager.load(frozenorb_atlas_path_fire, TextureAtlas.class);
         assetManager.load(frozenorb_atlas_path_arcane, TextureAtlas.class);
         assetManager.load(frozenorb_atlas_path_lightning, TextureAtlas.class);
-
+        assetManager.load(frozenorb_atlas_path_coldlite, TextureAtlas.class);
     }
 }

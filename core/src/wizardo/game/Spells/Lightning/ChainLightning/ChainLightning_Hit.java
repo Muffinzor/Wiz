@@ -85,7 +85,6 @@ public class ChainLightning_Hit extends ChainLightning_Spell {
             } else if(!inRange.isEmpty()) {
                 singleChain();
             }
-
         }
 
         stateTime += delta;
@@ -119,7 +118,6 @@ public class ChainLightning_Hit extends ChainLightning_Spell {
                 createLights(direction, distance);
                 frameCounter = 0;
             }
-
 
             if (distance > 150) {
                 frame.set(longAnim.getKeyFrame(stateTime, true));
@@ -314,26 +312,21 @@ public class ChainLightning_Hit extends ChainLightning_Spell {
     }
 
     public ArrayList<Monster> findMonstersInRange(Body body, float radius) {
-        // List to hold found monsters
+
         ArrayList<Monster> monstersInRange = new ArrayList<>();
 
-        // Define the AABB that covers the circular area
         float lowerX = body.getPosition().x - radius;
         float lowerY = body.getPosition().y - radius;
         float upperX = body.getPosition().x + radius;
         float upperY = body.getPosition().y + radius;
 
-        // Use an anonymous QueryCallback
         QueryCallback callback = fixture -> {
-            // Check if the fixture belongs to a monster
+
             if (fixture.getBody().getUserData() instanceof Monster monster) {
                 Vector2 monsterPosition = fixture.getBody().getPosition();
 
-                // Calculate the distance from the player to the monster
                 float distance = body.getPosition().dst(monsterPosition);
 
-
-                // Check if the distance is within the radius
                 if (distance <= radius && monster.body != body && !monstersHit.contains(monster) && monster.hp > 0) {
                     boolean LOS = SpellUtils.hasLineOfSight(body.getPosition(), monster.body.getPosition());
                     if(LOS) {
@@ -341,7 +334,7 @@ public class ChainLightning_Hit extends ChainLightning_Spell {
                     }
                 }
             }
-            return true; // Continue the query
+            return true;
         };
 
         // Perform the query using the AABB
@@ -384,10 +377,7 @@ public class ChainLightning_Hit extends ChainLightning_Spell {
         }
         return quantity;
     }
-    /**
-     * NEED PROC RATE
-     * @param monster
-     */
+
     public void frostbolts(Monster monster) {
         if(frostbolts) {
             float procTreshold = 0.85f - 0.1f * player.spellbook.frostbolt_lvl;

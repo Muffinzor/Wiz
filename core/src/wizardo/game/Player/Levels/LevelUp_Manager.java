@@ -3,6 +3,8 @@ package wizardo.game.Player.Levels;
 import wizardo.game.Player.Levels.Choices.*;
 import wizardo.game.Screens.LevelUp.LevelUpScreen;
 import wizardo.game.Screens.LevelUp.PanelButton;
+import wizardo.game.Spells.Spell;
+import wizardo.game.Spells.SpellUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -97,6 +99,24 @@ public class LevelUp_Manager {
         }
         current_choices.add(list.getFirst());
         return level_up;
+    }
+
+    public LevelUpEnums.LevelUps get_equipped_spell_buff(LevelUpScreen screen, ArrayList<LevelUpEnums.LevelUps> current_choices) {
+        ArrayList<LevelUpEnums.LevelUps> list = new ArrayList<>();
+        for(Spell spell : player.spellbook.equippedSpells) {
+            if(!current_choices.contains(spell.levelup_enum))
+                list.add(spell.levelup_enum);
+        }
+        Collections.shuffle(list);
+        return list.getFirst();
+    }
+
+    public LevelUpEnums.LevelUps get_equipped_parts_buff(LevelUpScreen screen, ArrayList<LevelUpEnums.LevelUps> current_choices) {
+        ArrayList<LevelUpEnums.LevelUps> list = new ArrayList<>();
+        for(Spell spell : player.spellbook.equippedSpells) {
+
+        }
+        return null;
     }
 
 

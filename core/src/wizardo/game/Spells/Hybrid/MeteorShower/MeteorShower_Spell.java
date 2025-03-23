@@ -3,6 +3,7 @@ package wizardo.game.Spells.Hybrid.MeteorShower;
 import com.badlogic.gdx.math.Vector2;
 import wizardo.game.Items.Equipment.Amulet.Epic_StormAmulet;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
+import wizardo.game.Player.Levels.LevelUpEnums;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 
@@ -33,7 +34,8 @@ public class MeteorShower_Spell extends Spell {
 
         multicastable = false;
 
-        string_name = "Meteor Shower";
+        string_name = "Meteors";
+        levelup_enum = LevelUpEnums.LevelUps.METEORS;
 
         cooldown = 12;
 
@@ -112,7 +114,7 @@ public class MeteorShower_Spell extends Spell {
         interval = 1/frequency;
 
         if(player.inventory.equippedAmulet instanceof Epic_StormAmulet) {
-            duration *= 1.5f;
+            duration *= 1.3f;
         }
     }
 

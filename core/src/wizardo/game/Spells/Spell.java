@@ -26,6 +26,7 @@ import wizardo.game.Items.Equipment.Staff.Legendary_LightningStaff;
 import wizardo.game.Maps.EnvironmentObject;
 import wizardo.game.Monsters.MonsterActions.MonsterSpell;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
+import wizardo.game.Player.Levels.LevelUpEnums;
 import wizardo.game.Screens.BaseScreen;
 import wizardo.game.Spells.Arcane.ArcaneMissiles.ArcaneMissile_Spell;
 import wizardo.game.Spells.Arcane.EnergyBeam.EnergyBeam_Spell;
@@ -36,6 +37,7 @@ import wizardo.game.Spells.Fire.Overheat.Overheat_Spell;
 import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Spell;
 import wizardo.game.Spells.Frost.Frozenorb.Frozenorb_Spell;
 import wizardo.game.Spells.Frost.Icespear.Icespear_Spell;
+import wizardo.game.Spells.Hybrid.Judgement.Judgement_Spell;
 import wizardo.game.Spells.Hybrid.Laser.Laser_Spell;
 import wizardo.game.Spells.Lightning.ChainLightning.ChainLightning_Spell;
 import wizardo.game.Spells.Lightning.ChargedBolts.ChargedBolts_Spell;
@@ -75,7 +77,7 @@ public abstract class Spell implements Cloneable {
     public boolean initialized;
     public String soundPath;
     public String string_name;
-    public Spell_Name spell_enum;
+    public LevelUpEnums.LevelUps levelup_enum;
 
 
     public int dmg;
@@ -99,7 +101,7 @@ public abstract class Spell implements Cloneable {
     public Spell_Element anim_element;
     public Spell_Element main_element;
     public Spell_Element bonus_element;
-    public ArrayList<Spell_Name> spellParts = new ArrayList<>();
+    public ArrayList<LevelUpEnums.LevelUps> spellParts = new ArrayList<>();
 
 
     public abstract void update(float delta);
@@ -302,14 +304,14 @@ public abstract class Spell implements Cloneable {
             spells_in_inventory.add(player.spellbook.utility_spell);
         }
 
-        ArrayList<Spell_Name> thisSpellPartsCopy = new ArrayList<>(spellParts);
+        ArrayList<LevelUpEnums.LevelUps> thisSpellPartsCopy = new ArrayList<>(spellParts);
 
         if (spellParts.size() > 2) {
             Collections.sort(thisSpellPartsCopy);
         }
 
         for (Spell spell : spells_in_inventory) {
-            ArrayList<Spell_Name> spellPartsCopy = new ArrayList<>(spell.spellParts);
+            ArrayList<LevelUpEnums.LevelUps> spellPartsCopy = new ArrayList<>(spell.spellParts);
 
             if (spellPartsCopy.size() > 2) {
                 Collections.sort(spellPartsCopy);
@@ -473,11 +475,11 @@ public abstract class Spell implements Cloneable {
     public abstract int getDmg();
 
     public float getCooldown() {
-        float ratio = player.spellbook.castSpeed/100;
+        float castspeed_bonus = player.spellbook.castSpeed/100;
         if(player.inventory.equippedHat instanceof Legendary_SentientHat && autoaimable) {
-            ratio += 0.2f;
+            castspeed_bonus += 0.2f;
         }
-        return cooldown * (1 - ratio);
+        return Math.max(cooldown * (1 - castspeed_bonus), cooldown/2);
     }
 
 
@@ -545,6 +547,7 @@ public abstract class Spell implements Cloneable {
             case ArcaneMissile_Spell _ -> dmg *= (1 + player.spellbook.arcane_missile_bonus_dmg / 100f);
             case EnergyBeam_Spell _ -> dmg *= (1 + player.spellbook.energybeam_bonus_dmg / 100f);
             case Rifts_Spell _ -> dmg *= (1 + player.spellbook.rifts_bonus_dmg / 100f);
+            case Judgement_Spell _ -> dmg += (1 + player.spellbook.judgement_bonus_dmg / 100f);
             default -> {}
         }
         return dmg;
@@ -672,7 +675,7 @@ public abstract class Spell implements Cloneable {
     }
 
     public boolean isLearnable() {
-        for(Spell_Name part : spellParts) {
+        for(LevelUpEnums.LevelUps part : spellParts) {
             switch(part) {
                 case FROSTBOLT -> {
                     if(player.spellbook.frostbolt_lvl < 1) {

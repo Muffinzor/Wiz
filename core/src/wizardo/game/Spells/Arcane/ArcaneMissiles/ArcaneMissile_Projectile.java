@@ -212,7 +212,6 @@ public class ArcaneMissile_Projectile extends ArcaneMissile_Spell {
 
     public void arcaneTargeting() {
         if(!targetLocked && !screen.monsterManager.liveMonsters.isEmpty()) {
-
             ArrayList<Monster> inRange = SpellUtils.findMonstersInRangeOfVector(body.getPosition(), 7, true);
             Collections.shuffle(inRange);
 
@@ -249,7 +248,6 @@ public class ArcaneMissile_Projectile extends ArcaneMissile_Spell {
                 angleDiff += 360;
             }
 
-            //Clamp the angle difference to the maximum allowed increment
             float maxRotationPerFrame = turnSpeed;
             float rotationStep = MathUtils.clamp(angleDiff, -maxRotationPerFrame, maxRotationPerFrame);
 
@@ -263,7 +261,6 @@ public class ArcaneMissile_Projectile extends ArcaneMissile_Spell {
         } else if (targetMonster != null && targetMonster.hp <= 0) {
             targetLocked = false;
         }
-
     }
 
     public void split() {

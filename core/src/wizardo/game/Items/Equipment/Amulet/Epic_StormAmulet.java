@@ -36,7 +36,7 @@ public class Epic_StormAmulet extends Amulet {
     public String getDescription() {
         return String.format("""
             Thunderstorm, Blizzard, Meteor Shower
-            and Energy Rain last 50%% longer""");
+            and Energy Rain last 30%% longer""");
     }
 
     public String getFlavorText() {

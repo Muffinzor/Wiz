@@ -2,6 +2,7 @@ package wizardo.game.Spells.Hybrid.Blizzard;
 
 import com.badlogic.gdx.math.Vector2;
 import wizardo.game.Items.Equipment.Amulet.Epic_StormAmulet;
+import wizardo.game.Player.Levels.LevelUpEnums;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 
@@ -13,70 +14,58 @@ public class Blizzard_Spell extends Spell {
     public float blizz_radius;
 
     public float interval;
-    public float frequency;
-    public float duration = 6f;
+    public float duration;
 
     public boolean frostbolts;
     public boolean frozenorb;
     public boolean rift;
 
     public Vector2 blizzard_center;
-    int projsSent;
 
     public Blizzard_Spell() {
 
         multicastable = false;
 
         string_name = "Blizzard";
+        levelup_enum = LevelUpEnums.LevelUps.BLIZZARD;
 
         cooldown = 12;
-
+        duration = 4f;
         speed = 15;
         dmg = 24;
 
-        blizz_radius = 20;
-        radius = 25;
+        blizz_radius = 18;
 
         main_element = SpellUtils.Spell_Element.FROST;
     }
 
     public void setup() {
         if(!rift) {
-            frequency = 40 + 4 * player.spellbook.thunderstorm_lvl;
             blizzard_center = player.pawn.getPosition();
         } else {
-            frequency = 40 + 4 * player.spellbook.rift_lvl;
             blizzard_center = getTargetPosition();
-            blizz_radius = 5;
+            blizz_radius = 5.5f;
         }
-        frequency = frequency * (1 + player.spellbook.empyreanFrequencyBonus/100f);
-        interval = 1/frequency;
-
         if(player.inventory.equippedAmulet instanceof Epic_StormAmulet) {
-            duration *= 1.5f;
+            duration *= 1.3f;
         }
     }
 
     @Override
     public void update(float delta) {
-
         if(!initialized && delta > 0) {
             initialized = true;
             setup();
-            interval = 0.05f;
+            interval = get_interval();
         }
 
-        int projectiles = getNumberOfProjs();
-        for (int i = 0; i < projectiles; i++) {
-            sendProjectile(delta);
+        if(stateTime % interval < delta) {
+            for (int i = 0; i < 3; i++) {
+                sendProjectile(delta);
+            }
         }
-
 
         stateTime += delta;
-
-        if(stateTime > projsSent * interval) {
-            projsSent++;
-        }
 
         if(stateTime >= duration) {
             screen.spellManager.remove(this);
@@ -84,34 +73,21 @@ public class Blizzard_Spell extends Spell {
 
     }
 
-    public int getNumberOfProjs() {
-        int quantity = 1;
-        int relevantSpellLevel;
+    public float get_interval() {
+        float scaled = 0.06f;
         if(rift) {
-            relevantSpellLevel = player.spellbook.rift_lvl;
+            scaled -= 0.01f * player.spellbook.rift_lvl;
         } else {
-            relevantSpellLevel = player.spellbook.thunderstorm_lvl;
+            scaled -= 0.01f * player.spellbook.thunderstorm_lvl;
         }
-        float doubleProc = 1.1f - (relevantSpellLevel * 0.1f) - (player.spellbook.empyreanFrequencyBonus/100f);
-        if(doubleProc < 0) {
-            quantity++;
-            if(Math.random() > 1 - Math.abs(doubleProc)) {
-                quantity++;
-            }
-        } else {
-            if(Math.random() > doubleProc) {
-                quantity++;
-            }
-        }
-
-        return quantity;
+        return scaled;
     }
 
     public void sendProjectile(float delta) {
-        blizzard_center = player.pawn.getPosition();
-
+        if(!rift) {
+            blizzard_center = player.pawn.getPosition();
+        }
         if(delta > 0) {
-            projsSent++;
             Vector2 randomTarget = null;
             int attempts = 0;
             while (randomTarget == null && attempts < 10) {
@@ -145,8 +121,10 @@ public class Blizzard_Spell extends Spell {
     @Override
     public int getDmg() {
         int dmg = this.dmg;
-        dmg += 8 * player.spellbook.icespear_lvl;
-        dmg = (int) (dmg * (1 + player.spellbook.sharpBonusDmg/100f));
+        dmg += 12 * player.spellbook.icespear_lvl;
+        if(rift) {
+            dmg += 12 * player.spellbook.energybeam_lvl;
+        }
         return dmg;
     }
 

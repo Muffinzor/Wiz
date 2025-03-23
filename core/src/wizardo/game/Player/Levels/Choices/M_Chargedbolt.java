@@ -46,7 +46,7 @@ public class M_Chargedbolt extends PanelButton {
             case 0 -> player.spellbook.chargedbolt_lvl++;
             case 1 -> player.spellbook.chargedbolts_bonus_proj++;
             case 2 -> player.spellbook.chargedbolts_bonus_duration += 20;
-            case 3 -> player.spellbook.chargedbolts_bonus_dmg += mastery_dmg_buff;
+            case 3 -> player.spellbook.chargedbolts_bonus_dmg += spell_dmg_buff;
         }
     }
 
@@ -56,7 +56,7 @@ public class M_Chargedbolt extends PanelButton {
             case 0 -> s = "Learn Chargedbolts";
             case 1 -> s = "+1 Projectile";
             case 2 -> s = "+20% Duration";
-            case 3 -> s = String.format("+%d%% Damage", mastery_dmg_buff);
+            case 3 -> s = String.format("+%d%% Damage", spell_dmg_buff);
         }
         String text = String.format("""
             CHARGEDBOLTS

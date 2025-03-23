@@ -1,6 +1,9 @@
 package wizardo.game.Spells.Frost.Icespear;
 
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 import wizardo.game.Items.Equipment.Staff.Epic_IcespearStaff;
+import wizardo.game.Player.Levels.LevelUpEnums;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 
@@ -36,7 +39,7 @@ public class Icespear_Spell extends Spell {
 
     public Icespear_Spell() {
         string_name = "Ice Spear";
-
+        levelup_enum = LevelUpEnums.LevelUps.ICESPEAR;
         dmg = 20;
         speed = 400f/PPM;
         cooldown = 0.8f;
@@ -49,7 +52,8 @@ public class Icespear_Spell extends Spell {
     public void setup() {
         if(player.inventory.equippedStaff instanceof Epic_IcespearStaff) {
             minimumTimeForSplit = 0;
-            flamejet = true;
+            speed *= 1.2f;
+            split_shards ++;
         }
         speed = getScaledSpeed();
         split_shards += player.spellbook.icespear_bonus_shard;
@@ -65,10 +69,15 @@ public class Icespear_Spell extends Spell {
             return;
         }
 
-        Icespear_Projectile spear = new Icespear_Projectile(getSpawnPosition(), targetPosition);
-        spear.setNextSpear(this);
-        screen.spellManager.add(spear);
-        screen.spellManager.remove(this);
+        if(player.inventory.equippedStaff instanceof Epic_IcespearStaff && castByPawn) {
+            boomstaff_casting();
+            screen.spellManager.remove(this);
+        } else {
+            Icespear_Projectile spear = new Icespear_Projectile(getSpawnPosition(), targetPosition);
+            spear.setNextSpear(this);
+            screen.spellManager.add(spear);
+            screen.spellManager.remove(this);
+        }
     }
 
     @Override
@@ -111,6 +120,26 @@ public class Icespear_Spell extends Spell {
         int dmg = this.dmg;
         dmg += 20 * getLvl();
         return dmg;
+    }
+
+    public void boomstaff_casting() {
+        Vector2 direction = new Vector2(targetPosition.sub(player.pawn.body.getPosition()));
+
+        int shards = split_shards;
+        float initialAngle = direction.angleDeg();
+        float halfCone = 3f * shards / 2;
+        float stepSize = 3f * shards / (shards - 1);
+
+        for (int i = 0; i < shards; i++) {
+            float angle = initialAngle - halfCone + (stepSize * i);
+            Vector2 direction2 = new Vector2(MathUtils.cosDeg(angle), MathUtils.sinDeg(angle));
+            Icespear_Projectile spear = new Icespear_Projectile(player.pawn.getPosition(), player.pawn.getPosition().cpy().add(direction2));
+            spear.currentSplits = 1;
+            spear.scale = 0.9f;
+            spear.stateTime = stateTime;
+            spear.setNextSpear(this);
+            screen.spellManager.add(spear);
+        }
     }
 
 }

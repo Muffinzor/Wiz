@@ -3,6 +3,7 @@ package wizardo.game.Spells.Hybrid.ForkedLightning;
 
 import wizardo.game.Items.Equipment.Hat.Epic_ForkedLightningHat;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
+import wizardo.game.Player.Levels.LevelUpEnums;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ public class ForkedLightning_Spell extends Spell {
     public ForkedLightning_Spell() {
 
         string_name = "Forked Lightning";
+        levelup_enum = LevelUpEnums.LevelUps.FORKEDLIGHTNING;
         dmg = 26;
 
         raycasted = true;

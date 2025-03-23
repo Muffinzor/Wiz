@@ -79,8 +79,12 @@ public class DragonBreath_Projectile extends DragonBreath_Spell {
     }
 
     public void handleCollision(Monster monster) {
+        if(monsters_hit.contains(monster)) {
+            return;
+        }
         dealDmg(monster);
-        monster.applyBurn(getDmg()/2f, 3);
+        float burn_dmg = getDmg()/4f * (1 + player.spellbook.dragonbreath_bonus_burndmg/100f);
+        monster.applyBurn(burn_dmg, 2 + player.spellbook.dragonbreath_bonus_burnduration);
 
         if(frostbolts) {
             frostbolts(monster);
@@ -101,6 +105,7 @@ public class DragonBreath_Projectile extends DragonBreath_Spell {
         if(fireball) {
             fireball(monster);
         }
+        monsters_hit.add(monster);
     }
 
     public void rift(Monster monster) {

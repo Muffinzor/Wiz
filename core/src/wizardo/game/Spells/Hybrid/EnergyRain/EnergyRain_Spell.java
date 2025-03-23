@@ -3,6 +3,7 @@ package wizardo.game.Spells.Hybrid.EnergyRain;
 import com.badlogic.gdx.math.Vector2;
 import wizardo.game.Items.Equipment.Amulet.Epic_StormAmulet;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
+import wizardo.game.Player.Levels.LevelUpEnums;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 
@@ -31,6 +32,7 @@ public class EnergyRain_Spell extends Spell {
         multicastable = false;
 
         string_name = "Energy Rain";
+        levelup_enum = LevelUpEnums.LevelUps.ENERGYRAIN;
         cooldown = 12;
         dmg = 75;
         interval = 0.2f;
@@ -83,7 +85,7 @@ public class EnergyRain_Spell extends Spell {
         projectiles = (int) (projectiles * (1 + player.spellbook.empyreanFrequencyBonus/100f));
 
         if(player.inventory.equippedAmulet instanceof Epic_StormAmulet) {
-            projectiles = (projectiles * 150) / 100;
+            projectiles = (projectiles * 130) / 100;
         }
     }
 

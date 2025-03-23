@@ -46,7 +46,7 @@ public class M_Fireball extends PanelButton {
             case 0 -> player.spellbook.fireball_lvl++;
             case 1 -> player.spellbook.fireball_bonus_knockback += 10;
             case 2 -> player.spellbook.fireball_bonus_radius += 10;
-            case 3 -> player.spellbook.fireball_bonus_dmg += mastery_dmg_buff;
+            case 3 -> player.spellbook.fireball_bonus_dmg += spell_dmg_buff;
         }
     }
 
@@ -56,7 +56,7 @@ public class M_Fireball extends PanelButton {
             case 0 -> s = "Learn Fireball";
             case 1 -> s = "+10% Explosion Knockback";
             case 2 -> s = "+10% Explosion Radius";
-            case 3 -> s = String.format("+%d%% Damage", mastery_dmg_buff);
+            case 3 -> s = String.format("+%d%% Damage", spell_dmg_buff);
         }
         String text = String.format("""
             FIREBALL

@@ -6,7 +6,7 @@ import wizardo.game.Spells.Frost.Icespear.Icespear_Spell;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 
-import static wizardo.game.Spells.SpellUtils.Spell_Name.*;
+import static wizardo.game.Player.Levels.LevelUpEnums.LevelUps.*;
 
 public class Frost_Spells {
 

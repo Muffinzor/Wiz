@@ -46,7 +46,7 @@ public class M_Chainlightning extends PanelButton {
             case 0 -> player.spellbook.chainlightning_lvl++;
             case 1 -> player.spellbook.chainlightning_bonus_jump++;
             case 2 -> player.spellbook.chainlightning_bonus_crit += 10;
-            case 3 -> player.spellbook.chainlightning_bonus_dmg += mastery_dmg_buff;
+            case 3 -> player.spellbook.chainlightning_bonus_dmg += spell_dmg_buff;
         }
     }
 
@@ -56,7 +56,7 @@ public class M_Chainlightning extends PanelButton {
             case 0 -> s = "Learn Chain Lightning";
             case 1 -> s = "+1 Jump";
             case 2 -> s = "+10% Chance to deal double damage";
-            case 3 -> s = String.format("+%d%% Damage", mastery_dmg_buff);
+            case 3 -> s = String.format("+%d%% Damage", spell_dmg_buff);
         }
         String text = String.format("""
             CHAIN LIGHTNING

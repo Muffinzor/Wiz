@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import wizardo.game.Items.Equipment.Amulet.Epic_RiftAmulet;
 import wizardo.game.Items.Equipment.Staff.Epic_RiftStaff;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
+import wizardo.game.Player.Levels.LevelUpEnums;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 
@@ -32,7 +33,7 @@ public class Rifts_Spell extends Spell {
         multicastable = false;
 
         string_name = "Rifts";
-        spell_enum = SpellUtils.Spell_Name.RIFTS;
+        levelup_enum = LevelUpEnums.LevelUps.RIFTS;
 
         cooldown = 5f;
         dmg = 16;

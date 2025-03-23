@@ -331,7 +331,7 @@ public abstract class Monster {
         burnTimer -= delta;
 
         if(burnTimer > 0 && delta > 0) {
-            hp -= burnDmg/180f;
+            hp -= burnDmg/60f;
         }
 
         if(freezeTimer <= 0) {

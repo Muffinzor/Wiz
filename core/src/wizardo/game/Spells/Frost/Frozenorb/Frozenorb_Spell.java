@@ -1,6 +1,7 @@
 package wizardo.game.Spells.Frost.Frozenorb;
 
 import wizardo.game.Items.Equipment.Staff.Epic_FrozenorbStaff;
+import wizardo.game.Player.Levels.LevelUpEnums;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 
@@ -16,7 +17,7 @@ public class Frozenorb_Spell extends Spell {
     public Frozenorb_Spell() {
 
         string_name = "Frozen Orb";
-
+        levelup_enum = LevelUpEnums.LevelUps.FROZENORB;
         speed = 80f/PPM;
         cooldown = 6f;
         dmg = 30;   // per second

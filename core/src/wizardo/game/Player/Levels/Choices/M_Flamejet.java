@@ -37,7 +37,7 @@ public class M_Flamejet extends PanelButton {
         switch(roll) {
             case 0 -> player.spellbook.flamejet_lvl++;
             case 1 -> player.spellbook.flamejet_bonus_flames ++;
-            case 2 -> player.spellbook.flamejet_bonus_dmg += mastery_dmg_buff;
+            case 2 -> player.spellbook.flamejet_bonus_dmg += spell_dmg_buff;
         }
     }
 
@@ -46,7 +46,7 @@ public class M_Flamejet extends PanelButton {
         switch(roll) {
             case 0 -> s = "Learn Flamejet";
             case 1 -> s = "+10% More Flames";
-            case 2 -> s = String.format("+%d%% Damage", mastery_dmg_buff);
+            case 2 -> s = String.format("+%d%% Damage", spell_dmg_buff);
         }
         String text = String.format("""
             FLAMEJET

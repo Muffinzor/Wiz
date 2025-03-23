@@ -39,6 +39,19 @@ public class LevelUpEnums {
         OVERHEAT,
         THUNDERSTORM,
         RIFTS,
+
+        JUDGEMENT,
+        BLIZZARD,
+        CELESTIALSTRIKE,
+        ENERGYRAIN,
+        FORKEDLIGHTNING,
+        FROSTNOVA,
+        LASERS,
+        LIGHTNINGHANDS,
+        METEORS,
+        ORBIT,
+        REPULSIONFIELD,
+        DRAGONBREATH
     }
 
     public static LevelUps getRandomT1() {

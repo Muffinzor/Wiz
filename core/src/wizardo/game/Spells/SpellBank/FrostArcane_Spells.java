@@ -6,7 +6,7 @@ import wizardo.game.Spells.Arcane.Rifts.Rifts_Spell;
 import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Spell;
 import wizardo.game.Spells.Frost.Frozenorb.Frozenorb_Spell;
 import wizardo.game.Spells.Frost.Icespear.Icespear_Spell;
-import wizardo.game.Spells.Hybrid.ArcaneArtillery.Judgement_Spell;
+import wizardo.game.Spells.Hybrid.Judgement.Judgement_Spell;
 import wizardo.game.Spells.Hybrid.Blizzard.Blizzard_Spell;
 import wizardo.game.Spells.Hybrid.EnergyRain.EnergyRain_Spell;
 import wizardo.game.Spells.Hybrid.Laser.Laser_Spell;

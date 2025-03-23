@@ -6,7 +6,7 @@ import wizardo.game.Spells.Arcane.Rifts.Rifts_Spell;
 import wizardo.game.Spells.Fire.Fireball.Fireball_Spell;
 import wizardo.game.Spells.Fire.Flamejet.Flamejet_Spell;
 import wizardo.game.Spells.Fire.Overheat.Overheat_Spell;
-import wizardo.game.Spells.Hybrid.ArcaneArtillery.Judgement_Spell;
+import wizardo.game.Spells.Hybrid.Judgement.Judgement_Spell;
 import wizardo.game.Spells.Hybrid.DragonBreath.DragonBreath_Spell;
 import wizardo.game.Spells.Hybrid.EnergyRain.EnergyRain_Spell;
 import wizardo.game.Spells.Hybrid.Laser.Laser_Spell;

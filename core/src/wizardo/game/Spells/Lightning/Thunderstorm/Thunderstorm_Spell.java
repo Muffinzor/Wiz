@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import wizardo.game.Items.Equipment.Amulet.Epic_StormAmulet;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
+import wizardo.game.Player.Levels.LevelUpEnums;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 
@@ -19,15 +20,16 @@ public class Thunderstorm_Spell extends Spell {
 
     public ArrayList<Monster> inRange;
 
-    public boolean arcaneMissile;
+    public boolean arcaneMissile; // reduced immunityTimer
     public boolean rifts;
     public boolean overheat;
+    public boolean frostbolts;
 
     int thunderSent;
 
     public Thunderstorm_Spell() {
-
         string_name = "Thunderstorm";
+        levelup_enum = LevelUpEnums.LevelUps.THUNDERSTORM;
         cooldown = 8f;
         dmg = 60;
         radius = 14;
@@ -61,7 +63,9 @@ public class Thunderstorm_Spell extends Spell {
                 thunder.setElements(this);
                 thunder.rifts = rifts;
                 thunder.overheat = overheat;
+                thunder.arcaneMissile = arcaneMissile;
                 thunder.nested_spell = nested_spell;
+                thunder.frostbolts = frostbolts;
                 screen.spellManager.add(thunder);
             }
         }
@@ -95,15 +99,18 @@ public class Thunderstorm_Spell extends Spell {
     /** tries to target higher hp monsters */
     public Vector2 arcaneMissileTargeting() {
         Vector2 target = null;
-        inRange = SpellUtils.findMonstersInRangeOfVector(getSpawnPosition(), radius, false);
+        if(!rifts)
+            inRange = SpellUtils.findMonstersInRangeOfVector(getSpawnPosition(), radius, false);
         if(!inRange.isEmpty()) {
+            System.out.println("ARCANE TARGET");
             inRange.sort((m1, m2) -> Float.compare(m2.hp, m1.hp));
             int attempts = 0;
             while(attempts < 10) {
-                int index = MathUtils.random(0, Math.min(inRange.size() - 1, 5));
+                int index = MathUtils.random(0, Math.min(inRange.size() - 1, Math.max(0, 4 - player.spellbook.arcanemissile_lvl)));
                 attempts++;
                 if(inRange.get(index).thunderImmunityTimer <= 0 && inRange.get(index).hp > 0) {
                     target = inRange.get(index).body.getPosition();
+                    inRange.get(index).thunderImmunityTimer = 0.5f - 0.1f * player.spellbook.arcanemissile_lvl;
                     break;
                 }
             }
@@ -156,7 +163,7 @@ public class Thunderstorm_Spell extends Spell {
             }
         }
         if(player.inventory.equippedAmulet instanceof Epic_StormAmulet) {
-            duration += 2;
+            duration *= 1.3f;
         }
     }
 }

@@ -1,6 +1,7 @@
 package wizardo.game.Spells.Fire.Fireball;
 
 import wizardo.game.Items.Equipment.Staff.Epic_FireballStaff;
+import wizardo.game.Player.Levels.LevelUpEnums;
 import wizardo.game.Spells.Spell;
 
 import static wizardo.game.Spells.SpellUtils.Spell_Element.FIRE;
@@ -24,6 +25,7 @@ public class Fireball_Spell extends Spell {
     public Fireball_Spell() {
 
         string_name = "Fireball";
+        levelup_enum = LevelUpEnums.LevelUps.FIREBALL;
 
         dmg = 30;
         cooldown = 2;
@@ -32,7 +34,6 @@ public class Fireball_Spell extends Spell {
         autoaimable = true;
 
         main_element = FIRE;
-
     }
 
     public void setup() {

@@ -3,6 +3,7 @@ package wizardo.game.Spells.Hybrid.Orbit;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import wizardo.game.Items.Equipment.Book.Epic_OrbitBook;
+import wizardo.game.Player.Levels.LevelUpEnums;
 import wizardo.game.Spells.Spell;
 
 import static wizardo.game.Wizardo.player;
@@ -18,6 +19,7 @@ public class Orbit_Spell extends Spell {
 
     public Orbit_Spell() {
         string_name = "Orbit";
+        levelup_enum = LevelUpEnums.LevelUps.ORBIT;
 
         speed = 2;
         dmg = 20;
