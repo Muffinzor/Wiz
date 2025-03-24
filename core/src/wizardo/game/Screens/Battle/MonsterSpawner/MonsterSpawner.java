@@ -26,7 +26,7 @@ public abstract class MonsterSpawner {
     Vector2 direction;
     float directionTimer = 0;
 
-    float spawnRatio = 1.0f;
+    public float spawnRatio = 1.0f;
     float cycleDuration = 20;
     int killsLastCycle = 0;
     float killResetTimer = 0;

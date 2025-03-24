@@ -71,6 +71,7 @@ public class KeyboardMouseListener_BATTLE implements InputProcessor {
         }
 
         if (keycode == Input.Keys.SPACE) {
+            player.level++;
             screen.game.addNewScreen(new LevelUpScreen(screen.game));
         }
 

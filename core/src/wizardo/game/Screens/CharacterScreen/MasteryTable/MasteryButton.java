@@ -42,7 +42,7 @@ public class MasteryButton extends CheckBox {
             case FLAMEJET -> style = skin.get("flamejet", CheckBox.CheckBoxStyle.class);
             case FIREBALL -> style = skin.get("fireball", CheckBox.CheckBoxStyle.class);
             case OVERHEAT -> style = skin.get("overheat", CheckBox.CheckBoxStyle.class);
-            case CHARGEDBOLTS -> style = skin.get("chargedbolt", CheckBox.CheckBoxStyle.class);
+            case CHARGEDBOLT -> style = skin.get("chargedbolt", CheckBox.CheckBoxStyle.class);
             case CHAIN -> style = skin.get("chainlightning", CheckBox.CheckBoxStyle.class);
             case THUNDERSTORM -> style = skin.get("thunderstorm", CheckBox.CheckBoxStyle.class);
             case MISSILES -> style = skin.get("arcanemissile", CheckBox.CheckBoxStyle.class);

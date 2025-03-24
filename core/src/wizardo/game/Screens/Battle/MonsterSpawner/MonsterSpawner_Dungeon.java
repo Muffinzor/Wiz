@@ -60,6 +60,9 @@ public class MonsterSpawner_Dungeon extends MonsterSpawner {
             updateSpawnRatio();
             killsLastCycle = 0;
             killResetTimer = 0;
+
+            System.out.println("Spawn Ratio : " + spawnRatio);
+            System.out.println("Damage Ratio : " + monsterDamageRatio + ", Health Ratio : " + monsterToughnessRatio);
         }
 
         if(directionTimer > 0.5f) {

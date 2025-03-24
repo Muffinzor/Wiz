@@ -53,7 +53,7 @@ public class ChainLightning_Hit extends ChainLightning_Spell {
         chain_minimum_time = MathUtils.random(0.125f, 0.15f);
 
         flipY = MathUtils.randomBoolean();
-
+        lightAlpha = 1f;
     }
 
     public void update(float delta) {
@@ -247,8 +247,8 @@ public class ChainLightning_Hit extends ChainLightning_Spell {
             }
             Vector2 position = new Vector2(originBody.getPosition()).add(step.x * i, step.y * i);
             RoundLight light = screen.lightManager.pool.getLight();
-            light.setLight(red,green,blue,lightAlpha,23, position);
-            light.dimKill(0.1f);
+            light.setLight(red,green,blue,lightAlpha,21, position);
+            light.dimKill(0.075f);
             screen.lightManager.addLight(light);
         }
     }

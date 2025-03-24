@@ -12,8 +12,8 @@ public class M_Rifts extends PanelButton {
 
     int roll = 0;
 
-    int MAX_BONUS_SPREAD = 50;
-    int MAX_BONUS_QUANTITY = 50;
+    int MAX_BONUS_SPREAD = 30;
+    int MAX_BONUS_QUANTITY = 45;
 
     public M_Rifts(LevelUpScreen screen) {
         super(screen);
@@ -26,7 +26,7 @@ public class M_Rifts extends PanelButton {
     }
 
     public void pick_type() {
-        if(player.spellbook.rift_lvl - player.stats.bonusMastery_rifts < 1) return;
+        if(player.spellbook.rift_lvl == 0 && player.stats.bonusMastery_rifts == 0) return;
 
         // Default
         roll = 3;
@@ -46,7 +46,7 @@ public class M_Rifts extends PanelButton {
         switch(roll) {
             case 0 -> player.spellbook.rift_lvl++;
             case 1 -> player.spellbook.rifts_bonus_spread += 10;
-            case 2 -> player.spellbook.rifts_bonus_quantity += 10;
+            case 2 -> player.spellbook.rifts_bonus_quantity += 15;
             case 3 -> player.spellbook.rifts_bonus_dmg += spell_dmg_buff;
         }
     }
@@ -55,7 +55,7 @@ public class M_Rifts extends PanelButton {
         String s = "";
         switch(roll) {
             case 0 -> s = "Learn Rifts";
-            case 1 -> s = "+10% Spread Radius";
+            case 1 -> s = "+10% Spread and Radius";
             case 2 -> s = "10% More Rifts";
             case 3 -> s = String.format("+%d%% Damage", spell_dmg_buff);
         }

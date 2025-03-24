@@ -25,7 +25,7 @@ public class M_Energybeam extends PanelButton {
     }
 
     public void pick_type() {
-        if(player.spellbook.energybeam_lvl - player.stats.bonusMastery_beam < 1) return;
+        if(player.spellbook.energybeam_lvl == 0 && player.stats.bonusMastery_beam == 0) return;
 
         // Default
         roll = 3;

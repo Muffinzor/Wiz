@@ -72,9 +72,10 @@ public class Fireball_Explosion extends Fireball_Spell {
 
     public void handleCollision(Monster monster) {
         dealDmg(monster);
+        float push_str = 3 * (1 + player.spellbook.fireball_bonus_knockback/100f) * effectRatio;
 
         Vector2 direction = monster.body.getPosition().sub(body.getPosition());
-        monster.movementManager.applyPush(direction, 3, 0.2f, 0.9f);
+        monster.movementManager.applyPush(direction, push_str, 0.2f, 0.9f);
 
         frozenOrb(monster);
     }
@@ -88,7 +89,7 @@ public class Fireball_Explosion extends Fireball_Spell {
         frame.rotate(rotation);
         frame.flip(flipX, flipY);
 
-        frame.setScale(frameScale * effectRatio * (1 + player.spellbook.fireballBonus/100f));
+        frame.setScale(frameScale * effectRatio * (1 + player.spellbook.fireball_bonus_radius/100f));
 
         screen.centerSort(frame, body.getPosition().y * PPM - 10);
         screen.displayManager.spriteRenderer.regular_sorted_sprites.add(frame);
@@ -100,7 +101,7 @@ public class Fireball_Explosion extends Fireball_Spell {
             radius *= 1.2f;
             frameScale *= 1.2f;
         }
-        body = BodyFactory.spellExplosionBody(targetPosition, radius * effectRatio * (1 + player.spellbook.fireballBonus/100f));
+        body = BodyFactory.spellExplosionBody(targetPosition, radius * effectRatio * (1 + player.spellbook.fireball_bonus_radius/100f));
         body.setUserData(this);
     }
 
@@ -129,7 +130,7 @@ public class Fireball_Explosion extends Fireball_Spell {
 
     public void flameRifts() {
         if(flameRift) {
-            int quantity = 2 + (player.spellbook.rift_lvl / 4);
+            int quantity = 2 + player.spellbook.rift_lvl;
             for (int i = 0; i < quantity; i++) {
                 Vector2 randomPosition = SpellUtils.getClearRandomPosition(body.getPosition(), 3);
                 Rift_Zone rift = new Rift_Zone(randomPosition);

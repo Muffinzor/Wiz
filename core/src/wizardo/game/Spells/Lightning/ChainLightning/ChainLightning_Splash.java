@@ -15,8 +15,6 @@ import static wizardo.game.Wizardo.world;
 
 public class ChainLightning_Splash extends ChainLightning_Spell {
 
-    public boolean arcaneMissiles;
-
     Body body;
     RoundLight light;
 
@@ -30,12 +28,12 @@ public class ChainLightning_Splash extends ChainLightning_Spell {
         rotation = MathUtils.random(360);
         flipX = MathUtils.randomBoolean();
         flipY = MathUtils.randomBoolean();
+        splash = true;
 
     }
 
     public void update(float delta) {
         if(!initialized) {
-            dmg = dmg/2;
             pickAnim();
             createBody();
             createLight();

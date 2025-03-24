@@ -5,6 +5,9 @@ import wizardo.game.Player.Levels.LevelUpEnums;
 import wizardo.game.Player.Levels.LevelUpUtils;
 import wizardo.game.Screens.LevelUp.LevelUpScreen;
 import wizardo.game.Screens.LevelUp.PanelButton;
+
+import java.util.ArrayList;
+
 import static wizardo.game.Player.Levels.LevelUpEnums.LevelUpQuality.NORMAL;
 import static wizardo.game.Player.Levels.LevelUpEnums.LevelUpQuality.RARE;
 import static wizardo.game.Wizardo.player;
@@ -14,9 +17,11 @@ public class B_Element extends PanelButton {
     int type_roll;
     int ele_roll;
     int value;
+    LevelUpEnums.LevelUps element;
 
-    public B_Element(LevelUpScreen screen) {
+    public B_Element(LevelUpScreen screen, LevelUpEnums.LevelUps element) {
         super(screen);
+        this.element = element;
         pick_type();
         super.setup();
         calculate_value();
@@ -31,14 +36,18 @@ public class B_Element extends PanelButton {
         } else {
             type_roll = MathUtils.random(1, 3);
         }
-        ele_roll = MathUtils.random(1,4);
-        switch(ele_roll) {
-            case 1 -> type = LevelUpEnums.LevelUps.FIRE;
-            case 2 -> type = LevelUpEnums.LevelUps.FROST;
-            case 3 -> type = LevelUpEnums.LevelUps.LIGHTNING;
-            case 4 -> type = LevelUpEnums.LevelUps.ARCANE;
+
+        if(element != null) {
+            type = element;
+        } else {
+            ele_roll = MathUtils.random(1,4);
+            switch (ele_roll) {
+                case 1 -> type = LevelUpEnums.LevelUps.FIRE;
+                case 2 -> type = LevelUpEnums.LevelUps.FROST;
+                case 3 -> type = LevelUpEnums.LevelUps.LIGHTNING;
+                case 4 -> type = LevelUpEnums.LevelUps.ARCANE;
+            }
         }
-        System.out.println(quality);
         set_gem_sprite();
     }
 

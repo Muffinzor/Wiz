@@ -25,7 +25,7 @@ public class M_Icespear extends PanelButton {
     }
 
     public void pick_type() {
-        if(player.spellbook.icespear_lvl - player.stats.bonusMastery_icespear < 1) return;
+        if(player.spellbook.icespear_lvl == 0 && player.stats.bonusMastery_icespear == 0) return;
 
         // Default
         roll = 3;

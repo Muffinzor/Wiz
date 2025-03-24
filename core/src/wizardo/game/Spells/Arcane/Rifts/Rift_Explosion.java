@@ -23,6 +23,8 @@ import static wizardo.game.Wizardo.*;
 
 public class Rift_Explosion extends Rifts_Spell {
 
+    float scale = 1;
+
     Body body;
     RoundLight light;
 
@@ -36,6 +38,8 @@ public class Rift_Explosion extends Rifts_Spell {
         rotation = MathUtils.random(360);
         flipX = MathUtils.randomBoolean();
         flipY = MathUtils.randomBoolean();
+
+        scale += player.spellbook.rifts_bonus_spread/100f;
 
     }
 
@@ -78,23 +82,13 @@ public class Rift_Explosion extends Rifts_Spell {
         frame.setCenter(body.getPosition().x * PPM, body.getPosition().y * PPM);
         frame.flip(flipX, flipY);
         frame.setRotation(rotation);
-        if(flamejet) {
-            frame.setScale(1.2f);
-        } else if (overheat) {
-            frame.setScale(2f);
-        }
-        frame.setScale(0.6f);
+        frame.setScale(scale * 0.6f);
         screen.addSortedSprite(frame);
         screen.centerSort(frame, body.getPosition().y * PPM - 10);
     }
 
     public void createBody() {
-        if(overheat) {
-            radius = radius * 2.2f;
-        }
-        if(flamejet) {
-            radius = radius * 1.2f;
-        }
+        radius *= (1 + player.spellbook.rifts_bonus_spread/100f);
         body = BodyFactory.spellExplosionBody(targetPosition, radius);
         body.setUserData(this);
     }

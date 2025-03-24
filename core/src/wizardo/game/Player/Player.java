@@ -8,6 +8,7 @@ import wizardo.game.Resources.PlayerResources;
 import wizardo.game.Screens.Battle.BattleScreen;
 import wizardo.game.Spells.SpellManager;
 
+import static wizardo.game.Account.Unlocked.max_levelup_choices;
 import static wizardo.game.Screens.BaseScreen.xRatio;
 import static wizardo.game.Screens.BaseScreen.yRatio;
 import static wizardo.game.Utils.Constants.PPM;
@@ -27,9 +28,9 @@ public class Player {
     public Stats stats;
 
     public int level = 1;
-    public int currentXP = 0;
-    public int neededXP = 100;
-    public int levelup_choices = 4;
+    public float currentXP = 0;
+    public float neededXP = 100;
+    public int levelup_choices = max_levelup_choices;
 
     int shieldtick = 0;
 

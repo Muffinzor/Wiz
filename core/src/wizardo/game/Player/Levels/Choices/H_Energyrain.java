@@ -11,7 +11,7 @@ public class H_Energyrain extends PanelButton {
 
     int roll;
     int MAX_BONUS_PROJS = 8;
-    int MAX_BONUS_SPLASH = 40;
+    int MAX_BONUS_SPLASH = 30;
 
     public H_Energyrain(LevelUpScreen screen) {
         super(screen);

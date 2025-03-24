@@ -25,7 +25,7 @@ public class M_Thunderstorm extends PanelButton {
     }
 
     public void pick_type() {
-        if(player.spellbook.thunderstorm_lvl - player.stats.bonusMastery_thunderstorm < 1) return;
+        if(player.spellbook.thunderstorm_lvl == 0 && player.stats.bonusMastery_thunderstorm == 0) return;
 
         // Default
         roll = 3;

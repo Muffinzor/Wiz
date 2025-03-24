@@ -40,7 +40,7 @@ public class H_Blizzard extends PanelButton {
         switch(roll) {
             case 1 -> player.spellbook.blizzard_bonus_duration++;
             case 2 -> player.spellbook.blizzard_bonus_splash_chance += 10;
-            case 3 -> player.spellbook.judgement_bonus_dmg += spell_dmg_buff;
+            case 3 -> player.spellbook.blizzard_bonus_dmg += spell_dmg_buff;
         }
     }
 

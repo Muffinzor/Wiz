@@ -78,7 +78,7 @@ public class ShopTable_Scrolls extends MenuTable {
             return "sold";
         }
         switch(screen.shop.getScrollMasteries().get(index)) {
-            case FROSTBOLT, FLAMEJET, CHARGEDBOLTS, MISSILES -> price = "500g";
+            case FROSTBOLT, FLAMEJET, CHARGEDBOLT, MISSILES -> price = "500g";
             case ICESPEAR, FIREBALL, CHAIN, BEAM -> price = "650g";
             case FROZENORB, OVERHEAT, THUNDERSTORM, RIFTS ->  price = "800g";
         }

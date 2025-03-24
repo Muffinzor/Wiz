@@ -16,7 +16,7 @@ public class Lightning_Spells {
 
         ChargedBolts_Spell lite0 = new ChargedBolts_Spell();
         lite0.anim_element = LIGHTNING;
-        lite0.spellParts.add(CHARGEDBOLTS);
+        lite0.spellParts.add(CHARGEDBOLT);
         lightning_spells[0] = lite0;
 
         ChainLightning_Spell lite1 = new ChainLightning_Spell();
@@ -33,14 +33,14 @@ public class Lightning_Spells {
         lite3.nested_spell = new ChargedBolts_Spell();
         lite3.anim_element = LIGHTNING;
         lite3.spellParts.add(CHAIN);
-        lite3.spellParts.add(CHARGEDBOLTS);
+        lite3.spellParts.add(CHARGEDBOLT);
         lightning_spells[3] = lite3;
 
         Thunderstorm_Spell lite4 = new Thunderstorm_Spell();
         lite4.nested_spell = new ChargedBolts_Spell();
         lite4.anim_element = LIGHTNING;
         lite4.spellParts.add(THUNDERSTORM);
-        lite4.spellParts.add(CHARGEDBOLTS);
+        lite4.spellParts.add(CHARGEDBOLT);
         lightning_spells[4] = lite4;
 
         Thunderstorm_Spell lite5 = new Thunderstorm_Spell();
@@ -55,7 +55,7 @@ public class Lightning_Spells {
         lite6.anim_element = LIGHTNING;
         lite6.spellParts.add(CHAIN);
         lite6.spellParts.add(THUNDERSTORM);
-        lite6.spellParts.add(CHARGEDBOLTS);
+        lite6.spellParts.add(CHARGEDBOLT);
         lightning_spells[6] = lite6;
 
 

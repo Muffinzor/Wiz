@@ -16,7 +16,7 @@ public class Epic_ChargedboltStaff extends Staff {
         title = "Epic Staff";
         quality = ItemUtils.EquipQuality.EPIC;
 
-        masteries.add(SpellUtils.Spell_Name.CHARGEDBOLTS);
+        masteries.add(SpellUtils.Spell_Name.CHARGEDBOLT);
         quantity_masteries.add(1);
 
     }

@@ -83,7 +83,7 @@ public class DragonBreath_Projectile extends DragonBreath_Spell {
             return;
         }
         dealDmg(monster);
-        float burn_dmg = getDmg()/4f * (1 + player.spellbook.dragonbreath_bonus_burndmg/100f);
+        float burn_dmg = getDmg() * 0.8f * (1 + player.spellbook.dragonbreath_bonus_burndmg/100f);
         monster.applyBurn(burn_dmg, 2 + player.spellbook.dragonbreath_bonus_burnduration);
 
         if(frostbolts) {
@@ -110,6 +110,9 @@ public class DragonBreath_Projectile extends DragonBreath_Spell {
 
     public void rift(Monster monster) {
         float procRate = 0.985f - 0.015f * player.spellbook.rift_lvl;
+        if(monster.elite) {
+            procRate -= 0.4f;
+        }
         if(Math.random() >= procRate) {
             Rift_Zone rift = new Rift_Zone(monster.body.getPosition());
             rift.setElements(this);

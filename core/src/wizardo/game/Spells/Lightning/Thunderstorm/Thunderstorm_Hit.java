@@ -106,8 +106,9 @@ public class Thunderstorm_Hit extends Thunderstorm_Spell {
     }
 
     public void createBody() {
-        Vector2 adjustedPosition = new Vector2(SpellUtils.getRandomVectorInRadius(targetPosition, 15f/PPM));
-        body = BodyFactory.spellExplosionBody(adjustedPosition, 40);
+        float radius = 40 * (1 + player.spellbook.thunderstorm_bonus_splash/100f);
+        Vector2 adjustedPosition = new Vector2(SpellUtils.getRandomVectorInRadius(targetPosition, 14f/PPM));
+        body = BodyFactory.spellExplosionBody(adjustedPosition, radius);
         body.setUserData(this);
     }
 

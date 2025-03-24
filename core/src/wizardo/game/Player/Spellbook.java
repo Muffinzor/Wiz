@@ -41,7 +41,7 @@ public class Spellbook {
     // OVERHEAT
     public int overheat_bonus_dmg;
     public int overheat_bonus_cdreduction;
-    public int overheat_bonus_radius;
+    public int overheat_bonus_fullhpdmg;
 
     // CHARGEDBOLTS
     public int chargedbolts_bonus_dmg;
@@ -57,7 +57,6 @@ public class Spellbook {
     public int thunderstorm_bonus_dmg;
     public int thunderstorm_bonus_duration;
     public int thunderstorm_bonus_splash;
-
 
     // ARCANE MISSILES
     public int arcane_missile_bonus_dmg;
@@ -77,6 +76,7 @@ public class Spellbook {
     // FROSTBOLTS
     public int frostbolts_bonus_dmg;
     public int frostbolts_bonus_proj;
+    public int frostbolts_bonus_splash;
 
     // ICESPEAR
     public int icespear_bonus_dmg;
@@ -95,6 +95,7 @@ public class Spellbook {
     public int judgement_bonus_dmg;
 
     // BLIZZARD
+    public int blizzard_bonus_dmg;
     public int blizzard_bonus_duration; // increment of 0.5s per
     public int blizzard_bonus_splash_chance;
 
@@ -112,6 +113,29 @@ public class Spellbook {
     public int energyrain_bonus_dmg;
     public int energyrain_bonus_proj;
     public int energyrain_bonus_radius;
+
+    // LIGHTNING HANDS
+    public int lightninghands_bonus_dmg;
+    public int lightninghands_bonus_branch;
+    public int lightninghands_reducedcd;
+
+    // FORKED LIGHTNING
+    public int forkedlightning_bonus_dmg;
+
+    // FROST NOVA
+    public int frostnova_bonus_dmg;
+
+    // LASERS
+    public int lasers_bonus_dmg;
+
+    // METEORS
+    public int meteors_bonus_dmg;
+
+    // ORBIT
+    public int orbit_bonus_dmg;
+
+    // REPULSION FIELD
+    public int repulsion_bonus_dmg;
 
 
 

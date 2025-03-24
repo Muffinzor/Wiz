@@ -1,5 +1,6 @@
 package wizardo.game.Spells.Lightning.ChainLightning;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import wizardo.game.Items.Equipment.Hat.Legendary_SentientHat;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
@@ -10,12 +11,13 @@ import wizardo.game.Spells.SpellUtils;
 import java.util.ArrayList;
 
 import static wizardo.game.GameSettings.autoAim_On;
+import static wizardo.game.GameSettings.dmg_text_on;
 import static wizardo.game.Screens.BaseScreen.controllerActive;
 import static wizardo.game.Wizardo.player;
 
 public class ChainLightning_Spell extends Spell {
 
-    public int maxHits = 7;
+    public int maxHits = 6;
     public int currentHits = 1;
     public float radius = 5;
 
@@ -23,6 +25,7 @@ public class ChainLightning_Spell extends Spell {
     public int maxSplits = 0;
     public float splitChance = 0;
     public boolean forked;
+    public boolean splash;
 
     public boolean frostbolts;
     public boolean frozenorb;
@@ -151,12 +154,12 @@ public class ChainLightning_Spell extends Spell {
     @Override
     public int getDmg() {
         int dmg = this.dmg;
-        if(forked) {
-            dmg = this.dmg/2;
-        }
         dmg += 16 * getLvl();
         if(arcaneMissile) {
             dmg += 8 * (player.spellbook.arcanemissile_lvl - 1);
+        }
+        if(splash) {
+            dmg = dmg/2;
         }
         return dmg;
     }
@@ -174,6 +177,29 @@ public class ChainLightning_Spell extends Spell {
             return 8;
         } else {
             return 5;
+        }
+    }
+
+    @Override
+    public void dealDmg(Monster monster) {
+        float dmg = getDmg();
+        dmg = apply_specific_spell_dmg_bonus(dmg);
+        dmg = apply_elemental_dmg_bonus(dmg);
+        float randomFactor = MathUtils.random(1 - dmgVariance, 1 + dmgVariance);
+        dmg *= randomFactor;
+
+        checkGearProcs(monster);
+        dmg = applyGearModifiers(monster, dmg);
+        dmg = checkOtherModifiers(monster, dmg);
+
+        if(Math.random() >= 1 - player.spellbook.chainlightning_bonus_crit) {
+            dmg *= 2;
+        }
+
+        monster.hp -= dmg;
+
+        if(dmg_text_on) {
+            dmgText( (int)dmg, monster);
         }
     }
 }

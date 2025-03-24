@@ -14,18 +14,12 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import wizardo.game.Display.Text.BottomText;
 import wizardo.game.Items.Drop.ScrollDrop;
-import wizardo.game.Items.Equipment.Equipment;
 import wizardo.game.Screens.Battle.BattleScreen;
-import wizardo.game.Screens.CharacterScreen.CharacterScreen;
-import wizardo.game.Screens.CharacterScreen.EquipmentTable.GearPanel;
 import wizardo.game.Screens.CharacterScreen.EquipmentTable.MenuButton;
-import wizardo.game.Screens.Popups.AreYouSureScreen;
 import wizardo.game.Screens.Shop.Anims.Scroll_Anim;
 import wizardo.game.Spells.SpellUtils;
 
 import static wizardo.game.Player.Levels.StatsBuffer.apply_Scroll;
-import static wizardo.game.Resources.ScreenResources.CharacterScreenResources.*;
-import static wizardo.game.Resources.ScreenResources.CharacterScreenResources.redQuality;
 import static wizardo.game.Resources.Skins.inventorySkin;
 import static wizardo.game.Screens.BaseScreen.xRatio;
 import static wizardo.game.Screens.BaseScreen.yRatio;
@@ -92,7 +86,7 @@ public class ShopButton_Scroll extends ImageButton implements MenuButton {
                 sprite = ScrollDrop.getScrollSprite(SpellUtils.Spell_Element.FIRE);
                 spriteOver = new Sprite(new Texture("Items/Drops/Scrolls/fireScroll_Over.png"));
             }
-            case CHARGEDBOLTS, CHAIN, THUNDERSTORM -> {
+            case CHARGEDBOLT, CHAIN, THUNDERSTORM -> {
                 sprite = ScrollDrop.getScrollSprite(SpellUtils.Spell_Element.LIGHTNING);
                 spriteOver = new Sprite(new Texture("Items/Drops/Scrolls/lightningScroll_Over.png"));
             }
@@ -102,7 +96,7 @@ public class ShopButton_Scroll extends ImageButton implements MenuButton {
             }
         }
         switch(mastery) {
-            case FROSTBOLT, FLAMEJET, CHARGEDBOLTS, MISSILES -> price = 500;
+            case FROSTBOLT, FLAMEJET, CHARGEDBOLT, MISSILES -> price = 500;
             case ICESPEAR, FIREBALL, CHAIN, BEAM -> price = 650;
             case FROZENORB, OVERHEAT, THUNDERSTORM, RIFTS -> price = 800;
         }

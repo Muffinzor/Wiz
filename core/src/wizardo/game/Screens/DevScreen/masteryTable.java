@@ -391,6 +391,15 @@ public class masteryTable extends MenuTable {
         });
         table.add(PLUS2).padRight(5);
 
+        ImageButton PLUS3 = new ImageButton(mainMenuSkin);
+        PLUS3.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                player.screen.monsterSpawner.spawnRatio = 10f;
+            }
+        });
+        table.add(PLUS3).padRight(5);
+
 
     }
 

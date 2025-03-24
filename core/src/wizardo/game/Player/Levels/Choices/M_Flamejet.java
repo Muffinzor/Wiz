@@ -23,7 +23,7 @@ public class M_Flamejet extends PanelButton {
     }
 
     public void pick_type() {
-        if(player.spellbook.flamejet_lvl - player.stats.bonusMastery_flamejet < 1) return;
+        if(player.spellbook.flamejet_lvl == 0 && player.stats.bonusMastery_flamejet == 0) return;
 
         if(player.spellbook.flamejet_bonus_flames < MAX_BONUS_FLAMES && Math.random() > bonus_effect_chance) {
             roll = 1;
@@ -45,7 +45,7 @@ public class M_Flamejet extends PanelButton {
         String s = "";
         switch(roll) {
             case 0 -> s = "Learn Flamejet";
-            case 1 -> s = "+10% More Flames";
+            case 1 -> s = "+20% More Flames";
             case 2 -> s = String.format("+%d%% Damage", spell_dmg_buff);
         }
         String text = String.format("""

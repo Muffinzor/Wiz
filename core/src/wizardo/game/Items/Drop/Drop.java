@@ -112,7 +112,7 @@ public abstract class Drop {
             tooFar = true;
         } else {
             tooFar = false;
-            if(dst < pickupRadius * (1 + player.stats.pickupRadiusBonus/100f)) {
+            if(dst < pickupRadius * (1 + player.stats.bonus_pickup_radius/100f)) {
                 goToPlayer = !(this instanceof EquipmentDrop) || player.inventory.hasSpace();
             }
         }

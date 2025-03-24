@@ -25,7 +25,7 @@ public class M_Frozenorb extends PanelButton {
     }
 
     public void pick_type() {
-        if(player.spellbook.frozenorb_lvl - player.stats.bonusMastery_frozenorb < 1) return;
+        if(player.spellbook.frozenorb_lvl == 0 && player.stats.bonusMastery_frozenorb == 0) return;
 
         // Default
         roll = 3;

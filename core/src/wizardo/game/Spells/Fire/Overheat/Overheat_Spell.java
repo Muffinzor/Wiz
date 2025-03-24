@@ -1,10 +1,14 @@
 package wizardo.game.Spells.Fire.Overheat;
 
+import com.badlogic.gdx.math.MathUtils;
+import wizardo.game.Items.Equipment.Hat.Legendary_SentientHat;
+import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Player.Levels.LevelUpEnums;
 import wizardo.game.Spells.Lightning.Thunderstorm.Thunderstorm_Hit;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 
+import static wizardo.game.GameSettings.dmg_text_on;
 import static wizardo.game.Wizardo.player;
 
 public class Overheat_Spell extends Spell {
@@ -25,7 +29,7 @@ public class Overheat_Spell extends Spell {
 
         radius = 200;
         cooldown = 6.4f;
-        dmg = 100;
+        dmg = 90;
 
         main_element = SpellUtils.Spell_Element.FIRE;
     }
@@ -67,8 +71,37 @@ public class Overheat_Spell extends Spell {
     @Override
     public int getDmg() {
         int dmg = this.dmg;
-        dmg += 50 * getLvl();
+        dmg += 45 * getLvl();
         return dmg;
+    }
+
+    @Override
+    public float getCooldown() {
+        float castspeed_bonus = player.spellbook.castSpeed/100f + player.spellbook.overheat_bonus_cdreduction/100f;
+        return Math.max(cooldown * (1 - castspeed_bonus), cooldown/2);
+    }
+
+    @Override
+    public void dealDmg(Monster monster) {
+        float dmg = getDmg();
+        dmg = apply_specific_spell_dmg_bonus(dmg);
+        dmg = apply_elemental_dmg_bonus(dmg);
+        float randomFactor = MathUtils.random(1 - dmgVariance, 1 + dmgVariance);
+        dmg *= randomFactor;
+
+        checkGearProcs(monster);
+        dmg = applyGearModifiers(monster, dmg);
+        dmg = checkOtherModifiers(monster, dmg);
+
+        if(monster.hp / monster.maxHP >= 0.85f) {
+            dmg *= (1 + player.spellbook.overheat_bonus_fullhpdmg/100f);
+        }
+
+        monster.hp -= dmg;
+
+        if(dmg_text_on) {
+            dmgText( (int)dmg, monster);
+        }
     }
 
 }

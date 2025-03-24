@@ -123,7 +123,7 @@ public class BattleScreen extends BaseScreen {
             game.freshScreen(new MainMenuScreen(game));
         }
 
-        logger.log();
+        //logger.log();
         if(debug_camera) {
             Matrix4 debugMatrix = mainCamera.combined.cpy().scl(PPM);
             debugRenderer.render(world, debugMatrix);

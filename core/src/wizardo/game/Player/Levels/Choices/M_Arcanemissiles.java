@@ -25,7 +25,7 @@ public class M_Arcanemissiles extends PanelButton {
     }
 
     public void pick_type() {
-        if(player.spellbook.arcanemissile_lvl - player.stats.bonusMastery_missiles < 1) return;
+        if(player.spellbook.arcanemissile_lvl == 0 && player.stats.bonusMastery_missiles == 0) return;
 
         // Default
         roll = 3;

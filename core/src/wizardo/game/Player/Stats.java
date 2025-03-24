@@ -8,10 +8,11 @@ public class Stats {
     public int bonusRechargeRate = 0;
 
     public float runSpeed = 2.7f;
-    public int pickupRadiusBonus = 0;
+    public int bonus_pickup_radius = 0;
     public int luck = 0;
+    public int bonus_experience = 0;
 
-    public int damageReduction = 0;
+    public int defense = 0;
 
     public int bonusMastery_frostbolt;
     public int bonusMastery_icespear;

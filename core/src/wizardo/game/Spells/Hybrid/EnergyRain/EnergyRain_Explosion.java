@@ -79,6 +79,7 @@ public class EnergyRain_Explosion extends EnergyRain_Spell {
         frame.set(anim.getKeyFrame(stateTime, false));
         frame.setCenter(body.getPosition().x * PPM, body.getPosition().y * PPM);
         frame.setRotation(rotation);
+        frame.setScale(1 * (1 + player.spellbook.energyrain_bonus_radius/100f));
         frame.flip(flipX, flipY);
         screen.centerSort(frame, body.getPosition().y * PPM - 10);
         screen.addSortedSprite(frame);
@@ -103,7 +104,8 @@ public class EnergyRain_Explosion extends EnergyRain_Spell {
     }
 
     public void createBody() {
-        body = BodyFactory.spellExplosionBody(targetPosition, 75);
+        float radius = 75 * (1 + player.spellbook.energyrain_bonus_radius/100f);
+        body = BodyFactory.spellExplosionBody(targetPosition, radius);
         body.setUserData(this);
     }
     public void createLight() {

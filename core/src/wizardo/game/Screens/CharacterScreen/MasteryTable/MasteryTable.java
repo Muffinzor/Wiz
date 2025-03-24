@@ -171,7 +171,7 @@ public class MasteryTable extends MenuTable {
         table.row();
     }
     public void LightningButtons(int bottomPad, int topPad) {
-        MasteryButton chargedbolt_button = new MasteryButton("", masteryTableSkin, CHARGEDBOLTS, this);
+        MasteryButton chargedbolt_button = new MasteryButton("", masteryTableSkin, CHARGEDBOLT, this);
         table.add(chargedbolt_button).expand().padBottom(bottomPad).padTop(topPad);
         MasteryButton chain_button = new MasteryButton("", masteryTableSkin, CHAIN, this);
         table.add(chain_button).expand().padBottom(bottomPad).padTop(topPad);

@@ -46,7 +46,7 @@ public class MonsterManager {
             monster.update(delta);
             if(monster.dead) {
                 screen.monsterSpawner.registerKill();
-                player.currentXP += monster.xp;
+                player.currentXP += (monster.xp * (1 + player.stats.bonus_experience/100f));
                 monster.stateTime = 0;
                 dyingMonsters.add(monster);
                 if(monster.light != null) {

@@ -2,7 +2,6 @@ package wizardo.game.Screens.LevelUp.Controls;
 
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.ControllerAdapter;
-import wizardo.game.Screens.EscapeMenu.EscapeScreen;
 import wizardo.game.Screens.LevelUp.LevelUpScreen;
 
 import static wizardo.game.Screens.BaseScreen.controllerActive;
@@ -29,13 +28,13 @@ public class ControllerListener_LEVELUP extends ControllerAdapter {
             if (value > 0.5f && screen.globalCD <= 0) {
 
                 screen.globalCD = 0.3f;
-                screen.table.navigateRight();
+                screen.levelUpTable.navigateRight();
                 return true;
 
             } else if (value < -0.5f && screen.globalCD <= 0) {
 
                 screen.globalCD = 0.3f;
-                screen.table.navigateLeft();
+                screen.levelUpTable.navigateLeft();
                 return true;
 
             }
@@ -50,15 +49,15 @@ public class ControllerListener_LEVELUP extends ControllerAdapter {
 
         switch (buttonIndex) {
             case 13: //D-pad LEFT
-                screen.table.navigateLeft();
+                screen.levelUpTable.navigateLeft();
                 return true;
             case 14: //D-pad RIGHT
-                screen.table.navigateRight();
+                screen.levelUpTable.navigateRight();
                 return true;
         }
 
         if (buttonIndex == 0) {
-            screen.table.pressSelectedButton();
+            screen.levelUpTable.pressSelectedButton();
             //screen.game.setPreviousScreen();
             return true;
         }

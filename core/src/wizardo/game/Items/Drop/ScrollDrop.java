@@ -89,7 +89,7 @@ public class ScrollDrop extends Drop {
             case FLAMEJET -> displayText = "Flamejet Scroll";
             case FIREBALL -> displayText = "Fireball Scroll";
             case OVERHEAT -> displayText = "Overheat Scroll";
-            case CHARGEDBOLTS -> displayText = "Chargedbolts Scroll";
+            case CHARGEDBOLT -> displayText = "Chargedbolts Scroll";
             case CHAIN -> displayText = "Chain Lightning Scroll";
             case THUNDERSTORM -> displayText = "Thunderstorm Scroll";
             case MISSILES -> displayText = "Arcane Missiles Scroll";

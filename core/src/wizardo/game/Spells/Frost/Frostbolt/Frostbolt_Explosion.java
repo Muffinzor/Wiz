@@ -70,6 +70,8 @@ public class Frostbolt_Explosion extends Frostbolt_Spell{
         rotation = MathUtils.random(360);
         flipX = MathUtils.randomBoolean();
         flipY = MathUtils.randomBoolean();
+        float scale_max = 1 + player.spellbook.frostbolts_bonus_splash/100f;
+        frameScale = MathUtils.random(1, scale_max);
     }
 
 
@@ -124,13 +126,14 @@ public class Frostbolt_Explosion extends Frostbolt_Spell{
     }
 
     public void createBody() {
-        body = BodyFactory.spellExplosionBody(targetPosition, 35);
+        float radius = 35 * frameScale;
+        body = BodyFactory.spellExplosionBody(targetPosition, radius);
         body.setUserData(this);
     }
 
     public void createLight() {
         light = screen.lightManager.pool.getLight();
-        light.setLight(red,green,blue,lightAlpha,80, body.getPosition());
+        light.setLight(red,green,blue,lightAlpha,80 * frameScale,  body.getPosition());
         light.toLightManager();
         if(bonus_element == FIRE) {
             light.dimKill(0.01f);

@@ -152,6 +152,7 @@ public class Thunderstorm_Spell extends Spell {
     }
 
     public void setup() {
+        duration *= (1 + player.spellbook.thunderstorm_bonus_duration/100f);
         hits_per_second += 0.5f * player.spellbook.thunderstorm_lvl;
         hits_per_second = hits_per_second * (1 + player.spellbook.empyreanFrequencyBonus/100f);
         interval = 1/hits_per_second;
@@ -163,7 +164,7 @@ public class Thunderstorm_Spell extends Spell {
             }
         }
         if(player.inventory.equippedAmulet instanceof Epic_StormAmulet) {
-            duration *= 1.3f;
+            duration += 1.3f;
         }
     }
 }

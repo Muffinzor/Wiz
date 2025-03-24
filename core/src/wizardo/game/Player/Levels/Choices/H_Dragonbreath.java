@@ -37,7 +37,7 @@ public class H_Dragonbreath extends PanelButton {
 
     public void apply_stats() {
         switch(roll) {
-            case 1 -> player.spellbook.dragonbreath_bonus_burndmg += 25;
+            case 1 -> player.spellbook.dragonbreath_bonus_burndmg += 20;
             case 2 -> player.spellbook.dragonbreath_bonus_burnduration++;
             case 3 -> player.spellbook.dragonbreath_bonus_dmg += spell_dmg_buff;
         }
@@ -46,7 +46,7 @@ public class H_Dragonbreath extends PanelButton {
     public void set_text() {
         String s = "";
         switch(roll) {
-            case 1 -> s = "+15% DoT Intensity";
+            case 1 -> s = "+20% DoT Intensity";
             case 2 -> s = "+1s DoT Duration";
             case 3 -> s = String.format("+%d%% Damage", spell_dmg_buff);
         }

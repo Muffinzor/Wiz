@@ -23,7 +23,6 @@ import wizardo.game.Player.Player;
 import wizardo.game.Resources.SpellAnims.MarkAnims;
 import wizardo.game.Screens.Battle.BattleScreen;
 import wizardo.game.Screens.Battle.MonsterSpawner.MonsterSpawner;
-import wizardo.game.Screens.Battle.MonsterSpawner.MonsterSpawner_Dungeon;
 import wizardo.game.Spells.Unique.CorpseExplosion.CorpseExplosion;
 import wizardo.game.Utils.BodyFactory;
 
@@ -173,11 +172,11 @@ public abstract class Monster {
         if(light != null) {
             adjustLight();
         }
-
     }
 
     public void dealDmg() {
-        float dmg = this.dmg - player.stats.damageReduction;
+        float dmg = this.dmg;
+        dmg -= player.stats.defense;
         if(dmg < this.dmg/2f) {
             dmg = this.dmg/2f;
         }

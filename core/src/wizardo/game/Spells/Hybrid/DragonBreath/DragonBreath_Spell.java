@@ -25,9 +25,9 @@ public class DragonBreath_Spell extends Spell {
         string_name = "Dragonbreath";
         levelup_enum = LevelUpEnums.LevelUps.DRAGONBREATH;
 
-        dmg = 15;
+        dmg = 10;
 
-        cooldown = 4.8f;
+        cooldown = 3.2f;
 
         main_element = SpellUtils.Spell_Element.FIRE;
     }
@@ -81,8 +81,8 @@ public class DragonBreath_Spell extends Spell {
     @Override
     public int getDmg() {
         int dmg = this.dmg;
-        dmg += 15 * player.spellbook.flamejet_lvl;
-        dmg += 15 * player.spellbook.overheat_lvl;
+        dmg += 10 * player.spellbook.flamejet_lvl;
+        dmg += 10 * player.spellbook.overheat_lvl;
         return dmg;
     }
 

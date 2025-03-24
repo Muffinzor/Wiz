@@ -361,7 +361,7 @@ public class Icespear_Projectile extends Icespear_Spell {
                 Frozenorb_Spell orb = new Frozenorb_Spell();
                 orb.setElements(this);
                 orb.nested_spell = new ChainLightning_Spell();
-                orb.duration = 1.5f;
+                orb.duration = 1.3f + 0.2f * player.spellbook.frozenorb_lvl;
                 orb.speed = 0;
                 orb.spawnPosition = new Vector2(body.getPosition());
                 orb.targetPosition =  new Vector2(body.getPosition().x + 1, body.getPosition().y + 1);
@@ -374,7 +374,7 @@ public class Icespear_Projectile extends Icespear_Spell {
         if(flamejet) {
             Flamejet_Spell jet = new Flamejet_Spell();
             jet.frostbolts = frostbolts;
-            jet.lightAlpha = 0.75f;
+            jet.lightAlpha = 0.8f;
             jet.spawnPosition = new Vector2(body.getPosition());
             jet.targetPosition = new Vector2(body.getPosition().add(direction));
             jet.icespear = true;

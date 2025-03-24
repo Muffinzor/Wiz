@@ -25,7 +25,7 @@ public class M_Chainlightning extends PanelButton {
 
     public void pick_type() {
         // If spell is not learned
-        if(player.spellbook.chainlightning_lvl - player.stats.bonusMastery_chainlightning < 1) return;
+        if(player.spellbook.chainlightning_lvl == 0 && player.stats.bonusMastery_chainlightning == 0) return;
 
         // Default
         roll = 3;

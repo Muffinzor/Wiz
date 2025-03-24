@@ -374,7 +374,7 @@ public class TextGenerator {
             -%d Damage received
             
             Current damage reduction: %d
-            """, value, player.stats.damageReduction);
+            """, value, player.stats.defense);
 
         return text;
 

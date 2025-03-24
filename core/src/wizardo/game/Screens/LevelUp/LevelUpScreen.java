@@ -15,7 +15,8 @@ public class LevelUpScreen extends BaseScreen {
 
     public Skin skin = Skins.levelUpSkin;
 
-    public LevelUpTable table;
+    public LevelUpTable levelUpTable;
+    boolean initialized;
 
     public LevelUpScreen(Wizardo game) {
         super(game);
@@ -23,9 +24,7 @@ public class LevelUpScreen extends BaseScreen {
         stage = new Stage(new ScreenViewport(uiCamera));
 
         batch.setProjectionMatrix(uiCamera.combined);
-
-        table = new LevelUpTable(this, stage, skin, game);
-
+        levelUpTable = new LevelUpTable(this, stage, skin, game);
     }
 
     @Override
@@ -36,7 +35,7 @@ public class LevelUpScreen extends BaseScreen {
         stage.act(delta);
         stage.draw();
 
-        table.draw(delta);
+        levelUpTable.draw(delta);
     }
 
     @Override
@@ -66,7 +65,7 @@ public class LevelUpScreen extends BaseScreen {
 
         stage.getViewport().update(width, height, true);
         adjustFontSize();
-        table.resize();
+        levelUpTable.resize();
 
         batch.setProjectionMatrix(uiCamera.combined);
 

@@ -267,3 +267,17 @@ Panel_EnergyRain
   orig: 399, 692
   offset: 0, 0
   index: -1
+Panel_Experience
+  rotate: false
+  xy: 803, 1
+  size: 399, 692
+  orig: 399, 692
+  offset: 0, 0
+  index: -1
+Panel_Magnet
+  rotate: false
+  xy: 803, 695
+  size: 399, 692
+  orig: 399, 692
+  offset: 0, 0
+  index: -1

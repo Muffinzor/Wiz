@@ -208,7 +208,7 @@ public class GearPanel {
         switch(spell) {
             case FLAMEJET, FIREBALL, OVERHEAT -> color = inventorySkin.getColor("Fire");
             case FROSTBOLT, ICESPEAR, FROZENORB-> color = inventorySkin.getColor("Frost");
-            case CHARGEDBOLTS, CHAIN, THUNDERSTORM -> color = inventorySkin.getColor("Lightning");
+            case CHARGEDBOLT, CHAIN, THUNDERSTORM -> color = inventorySkin.getColor("Lightning");
             case MISSILES, BEAM, RIFTS -> color = inventorySkin.getColor("Arcane");
         }
         return color;
@@ -237,7 +237,7 @@ public class GearPanel {
             case FLAMEJET -> s = "Flamejet";
             case FIREBALL -> s = "Fireball";
             case OVERHEAT -> s = "Overheat";
-            case CHARGEDBOLTS -> s = "Chargedbolts";
+            case CHARGEDBOLT -> s = "Chargedbolts";
             case CHAIN -> s = "Chain Lightning";
             case THUNDERSTORM -> s = "Thunderstorm";
             case MISSILES -> s = "Arcane Missiles";

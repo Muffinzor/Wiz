@@ -40,7 +40,7 @@ public class SpellUtils {
         FROSTBOLT,
         FLAMEJET,
         MISSILES,
-        CHARGEDBOLTS,
+        CHARGEDBOLT,
         ICESPEAR,
         FIREBALL,
         BEAM,
@@ -48,7 +48,20 @@ public class SpellUtils {
         FROZENORB,
         OVERHEAT,
         RIFTS,
-        THUNDERSTORM
+        THUNDERSTORM,
+
+        JUDGEMENT,
+        BLIZZARD,
+        CELESTIALSTRIKE,
+        ENERGYRAIN,
+        FORKEDLIGHTNING,
+        FROSTNOVA,
+        LASERS,
+        LIGHTNINGHANDS,
+        METEORS,
+        ORBIT,
+        REPULSIONFIELD,
+        DRAGONBREATH
     }
 
     public static String getSpellString(Spell_Name spell) {
@@ -60,7 +73,7 @@ public class SpellUtils {
             case FLAMEJET -> s = "Flamejet";
             case FIREBALL -> s = "Fireball";
             case OVERHEAT -> s = "Overheat";
-            case CHARGEDBOLTS -> s = "Chargedbolts";
+            case CHARGEDBOLT -> s = "Chargedbolts";
             case CHAIN -> s = "Chain";
             case THUNDERSTORM -> s = "Thundertorm";
             case MISSILES -> s = "Missiles";
@@ -279,7 +292,7 @@ public class SpellUtils {
                     list.add(Spell_Name.OVERHEAT);
                 }
                 case LIGHTNING -> {
-                    list.add(Spell_Name.CHARGEDBOLTS);
+                    list.add(Spell_Name.CHARGEDBOLT);
                     list.add(Spell_Name.CHAIN);
                     list.add(Spell_Name.THUNDERSTORM);
                 }
@@ -313,7 +326,7 @@ public class SpellUtils {
         switch(spell) {
             case FROSTBOLT, ICESPEAR, FROZENORB -> element = Spell_Element.FROST;
             case FLAMEJET, FIREBALL, OVERHEAT -> element = Spell_Element.FIRE;
-            case CHARGEDBOLTS, CHAIN, THUNDERSTORM -> element = Spell_Element.LIGHTNING;
+            case CHARGEDBOLT, CHAIN, THUNDERSTORM -> element = Spell_Element.LIGHTNING;
             case MISSILES, BEAM, RIFTS -> element = Spell_Element.ARCANE;
         }
         return element;
@@ -324,7 +337,7 @@ public class SpellUtils {
         switch(spell) {
             case FROSTBOLT, ICESPEAR, FROZENORB -> color = Skins.light_blue;
             case FLAMEJET, FIREBALL, OVERHEAT -> color = Skins.light_red;
-            case CHARGEDBOLTS, CHAIN, THUNDERSTORM -> color = Skins.light_yellow;
+            case CHARGEDBOLT, CHAIN, THUNDERSTORM -> color = Skins.light_yellow;
             case MISSILES, BEAM, RIFTS -> color = Skins.light_pink;
         }
         return color;

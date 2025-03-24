@@ -8,11 +8,11 @@ import wizardo.game.Screens.LevelUp.PanelButton;
 import static wizardo.game.Player.Levels.LevelUpEnums.LevelUpQuality.RARE;
 import static wizardo.game.Wizardo.player;
 
-public class B_Shield extends PanelButton {
+public class B_Regen extends PanelButton {
 
-    public B_Shield(LevelUpScreen screen) {
+    public B_Regen(LevelUpScreen screen) {
         super(screen);
-        type = LevelUpEnums.LevelUps.SHIELD;
+        type = LevelUpEnums.LevelUps.REGEN;
         super.setup();
         pick_type();
         set_text();
@@ -20,43 +20,41 @@ public class B_Shield extends PanelButton {
 
     public void pick_type() {
         quality = LevelUpUtils.getRandomQuality();
+        if(quality == LevelUpEnums.LevelUpQuality.NORMAL) {
+            quality = RARE;
+        }
         set_gem_sprite();
     }
 
     public void apply_stats() {
-        buff_shield();
+        buff_regen();
     }
 
-    private void buff_shield() {
-        int value = 0;
+    private void buff_regen() {
         switch(quality) {
-            case NORMAL -> value = 10;
-            case RARE -> value = 15;
-            case EPIC -> value = 20;
-            case LEGENDARY -> value = 30;
+            case RARE -> player.stats.baseRecharge += 0.6f;
+            case EPIC -> player.stats.baseRecharge += 0.8f;
+            case LEGENDARY -> player.stats.baseRecharge += 1.2f;
         }
-        player.stats.maxShield += value;
-        player.stats.shield += value;
     }
 
-    private String shield_string() {
+    private String regen_string() {
         String q = "";
         switch (quality) {
-            case NORMAL -> q = "10";
-            case RARE -> q = "15";
-            case EPIC -> q = "20";
-            case LEGENDARY -> q = "30";
+            case RARE -> q = "0.6";
+            case EPIC -> q = "0.8";
+            case LEGENDARY -> q = "1.2";
         }
         return String.format("""
-            TENACITY
+            RESOLVE
             
-            +%s Maximum shield
-            Current max: %.0f
-            """, q, player.stats.maxShield);
+            +%s Shield per second
+            Current regen: %.1f
+            """, q, player.stats.baseRecharge);
     }
 
     public void set_text() {
-        setText(shield_string());
+        setText(regen_string());
     }
 
     public void drawPanel(float delta) {

@@ -12,7 +12,7 @@ public class M_Fireball extends PanelButton {
 
     int roll = 0;
 
-    int MAX_BONUS_KNOCKBACK = 30;
+    int MAX_BONUS_KNOCKBACK = 45;
     int MAX_BONUS_SPLASH = 30;
 
     public M_Fireball(LevelUpScreen screen) {
@@ -25,7 +25,7 @@ public class M_Fireball extends PanelButton {
     }
 
     public void pick_type() {
-        if(player.spellbook.fireball_lvl - player.stats.bonusMastery_fireball < 1) return;
+        if(player.spellbook.fireball_lvl == 0 && player.stats.bonusMastery_fireball == 0) return;
 
         // Default
         roll = 3;
@@ -44,7 +44,7 @@ public class M_Fireball extends PanelButton {
     public void apply_stats() {
         switch(roll) {
             case 0 -> player.spellbook.fireball_lvl++;
-            case 1 -> player.spellbook.fireball_bonus_knockback += 10;
+            case 1 -> player.spellbook.fireball_bonus_knockback += 15;
             case 2 -> player.spellbook.fireball_bonus_radius += 10;
             case 3 -> player.spellbook.fireball_bonus_dmg += spell_dmg_buff;
         }
@@ -54,8 +54,8 @@ public class M_Fireball extends PanelButton {
         String s = "";
         switch(roll) {
             case 0 -> s = "Learn Fireball";
-            case 1 -> s = "+10% Explosion Knockback";
-            case 2 -> s = "+10% Explosion Radius";
+            case 1 -> s = "+15% Explosion Knockback";
+            case 2 -> s = "+10% AoE Radius";
             case 3 -> s = String.format("+%d%% Damage", spell_dmg_buff);
         }
         String text = String.format("""

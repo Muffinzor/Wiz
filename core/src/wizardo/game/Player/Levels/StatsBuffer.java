@@ -25,7 +25,7 @@ public class StatsBuffer {
                     player.spellbook.frozenorb_lvl++;
                 }
             }
-            case CHARGEDBOLTS -> {
+            case CHARGEDBOLT -> {
                 if(player.spellbook.chargedbolt_lvl - player.stats.bonusMastery_chargedbolt < 10) {
                     player.spellbook.chargedbolt_lvl++;
                 }
@@ -200,11 +200,11 @@ public class StatsBuffer {
         switch(quality) {
             case EPIC ->  {
                 player.stats.luck += 5;
-                player.stats.pickupRadiusBonus += 10;
+                player.stats.bonus_pickup_radius += 10;
             }
             case LEGENDARY ->  {
                 player.stats.luck += 10;
-                player.stats.pickupRadiusBonus += 20;
+                player.stats.bonus_pickup_radius += 20;
             }
         }
     }
@@ -218,8 +218,8 @@ public class StatsBuffer {
     }
     private static void defense(LevelUpQuality quality) {
         switch(quality) {
-            case EPIC -> player.stats.damageReduction += 2;
-            case LEGENDARY -> player.stats.damageReduction += 3;
+            case EPIC -> player.stats.defense += 2;
+            case LEGENDARY -> player.stats.defense += 3;
         }
     }
 

@@ -30,7 +30,7 @@ public class LightningFire_Spells {
             litefire0.flamejet = true;
             litefire0.anim_element = FIRE;
             litefire0.spellParts.add(FLAMEJET);
-            litefire0.spellParts.add(CHARGEDBOLTS);
+            litefire0.spellParts.add(CHARGEDBOLT);
             litefireSpells[0] = litefire0;
 
             // 1. Flamejet + Chainlightning
@@ -55,7 +55,7 @@ public class LightningFire_Spells {
             litefire3.anim_element = LIGHTNING;
             litefire3.nested_spell = new ChargedBolts_Spell();
             litefire3.spellParts.add(FIREBALL);
-            litefire3.spellParts.add(CHARGEDBOLTS);
+            litefire3.spellParts.add(CHARGEDBOLT);
             litefireSpells[3] = litefire3;
 
             // 4. Fireball + ChainLightning
@@ -82,7 +82,7 @@ public class LightningFire_Spells {
             litefire6.anim_element = FIRE;
             litefire6.overheat = true;
             litefire6.spellParts.add(OVERHEAT);
-            litefire6.spellParts.add(CHARGEDBOLTS);
+            litefire6.spellParts.add(CHARGEDBOLT);
             litefireSpells[6] = litefire6;
 
             // 7. Overheat + Chainlighting
@@ -109,7 +109,7 @@ public class LightningFire_Spells {
             litefire9.chargedbolts = true;
             litefire9.spellParts.add(FLAMEJET);
             litefire9.spellParts.add(CHAIN);
-            litefire9.spellParts.add(CHARGEDBOLTS);
+            litefire9.spellParts.add(CHARGEDBOLT);
             litefireSpells[9] = litefire9;
 
             // 10. Flamejet + Chargedbolts + Thunderstorm
@@ -118,7 +118,7 @@ public class LightningFire_Spells {
             litefire10.nested_spell = litefire0;
             litefire10.anim_element = FIRE;
             litefire10.spellParts.add(FLAMEJET);
-            litefire10.spellParts.add(CHARGEDBOLTS);
+            litefire10.spellParts.add(CHARGEDBOLT);
             litefire10.spellParts.add(THUNDERSTORM);
             litefireSpells[10] = litefire10;
 
@@ -139,7 +139,7 @@ public class LightningFire_Spells {
             litefire12.nested_spell = new ChargedBolts_Spell();
             litefire12.anim_element = LIGHTNING;
             litefire12.spellParts.add(FIREBALL);
-            litefire12.spellParts.add(CHARGEDBOLTS);
+            litefire12.spellParts.add(CHARGEDBOLT);
             litefire12.spellParts.add(CHAIN);
             litefireSpells[12] = litefire12;
 
@@ -150,7 +150,7 @@ public class LightningFire_Spells {
             litefire13.nested_spell = new ChargedBolts_Spell();
             litefire13.thunderstorm = true;
             litefire13.spellParts.add(FIREBALL);
-            litefire13.spellParts.add(CHARGEDBOLTS);
+            litefire13.spellParts.add(CHARGEDBOLT);
             litefire13.spellParts.add(THUNDERSTORM);
             litefireSpells[13] = litefire13;
 
@@ -172,7 +172,7 @@ public class LightningFire_Spells {
             litefire15.chargedbolts = true;
             litefire15.spellParts.add(OVERHEAT);
             litefire15.spellParts.add(CHAIN);
-            litefire15.spellParts.add(CHARGEDBOLTS);
+            litefire15.spellParts.add(CHARGEDBOLT);
             litefireSpells[15] = litefire15;
 
 
@@ -183,7 +183,7 @@ public class LightningFire_Spells {
             litefire16.nested_spell = new ChargedBolts_Spell();
             litefire16.overheat = true;
             litefire16.spellParts.add(OVERHEAT);
-            litefire16.spellParts.add(CHARGEDBOLTS);
+            litefire16.spellParts.add(CHARGEDBOLT);
             litefire16.spellParts.add(THUNDERSTORM);
             litefireSpells[16] = litefire16;
 
@@ -205,7 +205,7 @@ public class LightningFire_Spells {
             firelite18.flamejets = true;
             firelite18.anim_element = FIRE;
             firelite18.spellParts.add(FIREBALL);
-            firelite18.spellParts.add(CHARGEDBOLTS);
+            firelite18.spellParts.add(CHARGEDBOLT);
             firelite18.spellParts.add(FLAMEJET);
             litefireSpells[18] = firelite18;
 
@@ -235,7 +235,7 @@ public class LightningFire_Spells {
             litefire21.chargedbolts = true;
             litefire21.spellParts.add(FLAMEJET);
             litefire21.spellParts.add(OVERHEAT);
-            litefire21.spellParts.add(CHARGEDBOLTS);
+            litefire21.spellParts.add(CHARGEDBOLT);
             litefireSpells[21] = litefire21;
 
             // 22. Flamejet + Overheat + Chainlightning
@@ -264,7 +264,7 @@ public class LightningFire_Spells {
             litefire24.anim_element = LIGHTNING;
             litefire24.spellParts.add(FIREBALL);
             litefire24.spellParts.add(OVERHEAT);
-            litefire24.spellParts.add(CHARGEDBOLTS);
+            litefire24.spellParts.add(CHARGEDBOLT);
             litefireSpells[24] = litefire24;
 
             // 25. Fireball + Overheat + Chainlightning

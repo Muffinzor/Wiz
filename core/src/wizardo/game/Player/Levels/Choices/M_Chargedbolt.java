@@ -25,7 +25,7 @@ public class M_Chargedbolt extends PanelButton {
     }
 
     public void pick_type() {
-        if(player.spellbook.chargedbolt_lvl - player.stats.bonusMastery_chargedbolt < 1) return;
+        if(player.spellbook.chargedbolt_lvl == 0 && player.stats.bonusMastery_chargedbolt == 0) return;
 
         // Default
         roll = 3;

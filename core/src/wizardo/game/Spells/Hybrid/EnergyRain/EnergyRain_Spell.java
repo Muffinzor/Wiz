@@ -34,7 +34,7 @@ public class EnergyRain_Spell extends Spell {
         string_name = "Energy Rain";
         levelup_enum = LevelUpEnums.LevelUps.ENERGYRAIN;
         cooldown = 12;
-        dmg = 75;
+        dmg = 65;
         interval = 0.2f;
         radius = 16;
 
@@ -75,14 +75,12 @@ public class EnergyRain_Spell extends Spell {
 
     @Override
     public int getDmg() {
-        int dmg = this.dmg + player.spellbook.energybeam_lvl * 25;
-        dmg = (int) (dmg * (1 + player.spellbook.energyBonusDmg/100f));
+        int dmg = this.dmg + player.spellbook.energybeam_lvl * 35;
         return dmg;
     }
 
     public void setup() {
-        projectiles = 6 + player.spellbook.rift_lvl * 2;
-        projectiles = (int) (projectiles * (1 + player.spellbook.empyreanFrequencyBonus/100f));
+        projectiles = 6 + player.spellbook.rift_lvl * 2 + player.spellbook.energyrain_bonus_proj;
 
         if(player.inventory.equippedAmulet instanceof Epic_StormAmulet) {
             projectiles = (projectiles * 130) / 100;

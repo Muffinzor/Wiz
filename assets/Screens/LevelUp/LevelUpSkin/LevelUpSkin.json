@@ -67,7 +67,7 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 		font: SimpleFont26
 		up: Panel_Space
 	}
-	crystal: {
+	shield: {
 		font: SimpleFont26
 		up: Panel_Crystal
 	}
@@ -102,7 +102,7 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 	projectiles: {
 		font: SimpleFont26
 	}
-	red: {
+	defense: {
 		font: SimpleFont26
 		up: Panel_Red
 	}
@@ -201,6 +201,14 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 	energyrain: {
 		font: SimpleFont26
 		up: Panel_EnergyRain
+	}
+	magnet: {
+		font: SimpleFont26
+		up: Panel_Magnet
+	}
+	experience: {
+		font: SimpleFont26
+		up: Panel_Experience
 	}
 }
 }

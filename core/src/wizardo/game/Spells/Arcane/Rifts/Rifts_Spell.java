@@ -124,7 +124,8 @@ public class Rifts_Spell extends Spell {
      * A REFAIRE SELON NEW CONTROLLER AIM ASSIST
      */
     public void setup() {
-
+        maxRifts = maxRifts * (100 + player.spellbook.rifts_bonus_quantity)/100;
+        spread *= (1 + player.spellbook.rifts_bonus_spread/100f);
         if(player.inventory.equippedAmulet instanceof Epic_RiftAmulet) {
             spread *= 2.5f;
             maxRifts *= 2;

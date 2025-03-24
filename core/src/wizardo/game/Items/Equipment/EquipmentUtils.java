@@ -60,9 +60,9 @@ public class EquipmentUtils {
                         player.spellbook.overheat_lvl += value;
                         player.stats.bonusMastery_overheat += value;
                     }
-                    case CHARGEDBOLTS -> {
+                    case CHARGEDBOLT -> {
                         player.spellbook.chargedbolt_lvl += value;
-                        player.stats.bonusMastery_overheat += value;
+                        player.stats.bonusMastery_chargedbolt += value;
                     }
                     case CHAIN -> {
                         player.spellbook.chainlightning_lvl += value;
@@ -112,7 +112,7 @@ public class EquipmentUtils {
                     case MULTICAST -> player.spellbook.multicast += value;
                     case LUCK -> player.stats.luck += value;
                     case REGEN -> player.stats.baseRecharge += value/100f;
-                    case DEFENSE -> player.stats.damageReduction += value;
+                    case DEFENSE -> player.stats.defense += value;
                     case PROJSPEED -> player.spellbook.projSpeedBonus += value;
                     case WALKSPEED -> player.stats.runSpeed += (value/100f) * 2.7f;
                     case MAXSHIELD -> {

@@ -37,8 +37,16 @@ import wizardo.game.Spells.Fire.Overheat.Overheat_Spell;
 import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Spell;
 import wizardo.game.Spells.Frost.Frozenorb.Frozenorb_Spell;
 import wizardo.game.Spells.Frost.Icespear.Icespear_Spell;
+import wizardo.game.Spells.Hybrid.CelestialStrike.CelestialStrike_Spell;
+import wizardo.game.Spells.Hybrid.EnergyRain.EnergyRain_Spell;
+import wizardo.game.Spells.Hybrid.ForkedLightning.ForkedLightning_Spell;
+import wizardo.game.Spells.Hybrid.FrostNova.FrostNova_Spell;
 import wizardo.game.Spells.Hybrid.Judgement.Judgement_Spell;
 import wizardo.game.Spells.Hybrid.Laser.Laser_Spell;
+import wizardo.game.Spells.Hybrid.LightningHands.LightningHands_Spell;
+import wizardo.game.Spells.Hybrid.MeteorShower.MeteorShower_Spell;
+import wizardo.game.Spells.Hybrid.Orbit.Orbit_Spell;
+import wizardo.game.Spells.Hybrid.RepulsionField.RepulsionField_Spell;
 import wizardo.game.Spells.Lightning.ChainLightning.ChainLightning_Spell;
 import wizardo.game.Spells.Lightning.ChargedBolts.ChargedBolts_Spell;
 import wizardo.game.Spells.Lightning.Thunderstorm.Thunderstorm_Hit;
@@ -547,7 +555,16 @@ public abstract class Spell implements Cloneable {
             case ArcaneMissile_Spell _ -> dmg *= (1 + player.spellbook.arcane_missile_bonus_dmg / 100f);
             case EnergyBeam_Spell _ -> dmg *= (1 + player.spellbook.energybeam_bonus_dmg / 100f);
             case Rifts_Spell _ -> dmg *= (1 + player.spellbook.rifts_bonus_dmg / 100f);
-            case Judgement_Spell _ -> dmg += (1 + player.spellbook.judgement_bonus_dmg / 100f);
+            case Judgement_Spell _ -> dmg *= (1 + player.spellbook.judgement_bonus_dmg / 100f);
+            case EnergyRain_Spell _ -> dmg *= (1 + player.spellbook.energyrain_bonus_dmg / 100f);
+            case CelestialStrike_Spell _ -> dmg *= (1 + player.spellbook.celestialstrike_bonus_dmg / 100f);
+            case LightningHands_Spell _ -> dmg *= (1 + player.spellbook.lightninghands_bonus_dmg / 100f);
+            case RepulsionField_Spell _ -> dmg *= (1 + player.spellbook.repulsion_bonus_dmg / 100f);
+            case ForkedLightning_Spell _ -> dmg *= (1 + player.spellbook.forkedlightning_bonus_dmg / 100f);
+            case Laser_Spell _ -> dmg *= (1 + player.spellbook.lasers_bonus_dmg / 100f);
+            case FrostNova_Spell _ -> dmg *= (1 + player.spellbook.frostnova_bonus_dmg / 100f);
+            case MeteorShower_Spell _ -> dmg *= (1 + player.spellbook.meteors_bonus_dmg / 100f);
+            case Orbit_Spell _ -> dmg *= (1 + player.spellbook.orbit_bonus_dmg / 100f);
             default -> {}
         }
         return dmg;
@@ -559,7 +576,6 @@ public abstract class Spell implements Cloneable {
         if(player.inventory.equippedStaff instanceof Legendary_FrostStaff && monster.freezeTimer > 0) {
             modifiedDmg = modifiedDmg * 1.5f;
         }
-
         if(player.inventory.equippedAmulet instanceof Rare_EliteAmulet && monster.heavy) {
             modifiedDmg = modifiedDmg * 1.2f;
         }
@@ -707,7 +723,7 @@ public abstract class Spell implements Cloneable {
                         return false;
                     }
                 }
-                case CHARGEDBOLTS -> {
+                case CHARGEDBOLT -> {
                     if(player.spellbook.chargedbolt_lvl < 1) {
                         return false;
                     }

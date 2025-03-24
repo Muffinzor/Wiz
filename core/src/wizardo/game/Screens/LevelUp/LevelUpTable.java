@@ -8,11 +8,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import wizardo.game.Display.MenuTable;
 import wizardo.game.Player.Levels.Choices.*;
 import wizardo.game.Player.Levels.LevelUpEnums;
-import wizardo.game.Player.Levels.LevelUpUtils;
 import wizardo.game.Wizardo;
 
 import java.util.ArrayList;
 
+import static wizardo.game.Player.Levels.LevelUpEnums.LevelUps.*;
+import static wizardo.game.Player.Levels.LevelUpEnums.LevelUps.LIGHTNING;
 import static wizardo.game.Screens.BaseScreen.controllerActive;
 import static wizardo.game.Wizardo.player;
 
@@ -22,9 +23,11 @@ public class LevelUpTable extends MenuTable {
     Stage stage;
     PanelButton[] buttonsMatrix;
 
-    LevelUpScreen screen;
+    public LevelUpScreen screen;
 
     int x_pos = 1;
+
+    public ArrayList<LevelUpEnums.LevelUps> elements_used;
 
 
     public LevelUpTable(LevelUpScreen screen, Stage stage, Skin skin, Wizardo game) {
@@ -33,6 +36,7 @@ public class LevelUpTable extends MenuTable {
         this.stage = stage;
         this.screen = screen;
         this.buttonsMatrix = new PanelButton[player.levelup_choices];
+        elements_used = new ArrayList<>();
 
         createTable();
         createPanels();
@@ -64,28 +68,47 @@ public class LevelUpTable extends MenuTable {
     }
 
     public void createPanels() {
-        ArrayList<LevelUpEnums.LevelUps> choices = new ArrayList<>();
-
-        for (int i = 0; i < 2; i++) {
-            PanelButton panel;
-            switch(MathUtils.random(1,3)) {
-                case 2 -> panel = player.levelUpManager.get_random_t2(screen, choices);
-                case 3 -> panel = player.levelUpManager.get_random_t3(screen, choices);
-                default -> panel = player.levelUpManager.get_random_t1(screen, choices);
-            }
+        ArrayList<LevelUpEnums.LevelUps> choices = player.levelUpManager.get_selection(screen);
+        for (int i = 0; i < choices.size(); i++) {
+            PanelButton panel = build_panel(choices.get(i));
             table.add(panel).padLeft(15).padRight(15);
             buttons.add(panel);
             buttonsMatrix[i] = panel;
         }
-        PanelButton panel = new H_Energyrain(screen);
-        table.add(panel).padLeft(15).padRight(15);
-        buttons.add(panel);
-        buttonsMatrix[2] = panel;
+    }
 
-        PanelButton panel2 = new H_Dragonbreath(screen);
-        table.add(panel2).padLeft(15).padRight(15);
-        buttons.add(panel2);
-        buttonsMatrix[3] = panel2;
+    public PanelButton build_panel(LevelUpEnums.LevelUps type) {
+        PanelButton panel = null;
+        switch(type) {
+            case FROSTBOLT -> panel = new M_Frostbolt(screen);
+            case ICESPEAR -> panel = new M_Icespear(screen);
+            case FROZENORB -> panel = new M_Frozenorb(screen);
+            case FLAMEJET -> panel = new M_Flamejet(screen);
+            case FIREBALL -> panel = new M_Fireball(screen);
+            case OVERHEAT -> panel = new M_Overheat(screen);
+            case CHARGEDBOLT -> panel = new M_Chargedbolt(screen);
+            case CHAIN -> panel = new M_Chainlightning(screen);
+            case THUNDERSTORM -> panel = new M_Thunderstorm(screen);
+            case MISSILES -> panel = new M_Arcanemissiles(screen);
+            case BEAM -> panel = new M_Energybeam(screen);
+            case RIFTS -> panel = new M_Rifts(screen);
+
+            case DRAGONBREATH -> panel = new H_Dragonbreath(screen);
+            case BLIZZARD -> panel = new H_Blizzard(screen);
+            case CELESTIALSTRIKE -> panel = new H_Celestialstrike(screen);
+            case JUDGEMENT -> panel = new H_Judgement(screen);
+            case ENERGYRAIN -> panel = new H_Energyrain(screen);
+
+            case LUCK -> panel = new B_Luck(screen);
+            case REGEN -> panel = new B_Regen(screen);
+            case MAGNET -> panel = new B_Magnet(screen);
+            case EXPERIENCE -> panel = new B_Experience(screen);
+            case SHIELD -> panel = new B_Shield(screen);
+            case DEFENSE -> panel = new B_Defense(screen);
+
+            case ELEMENT -> panel = new B_Element(screen, get_random_unique_element());
+        }
+        return panel;
     }
 
     public void updatePanels() {
@@ -137,7 +160,23 @@ public class LevelUpTable extends MenuTable {
         table.setHeight(height);
 
         for (PanelButton panel : buttonsMatrix) {
-            panel.adjustSize();
+                panel.adjustSize();
         }
+
+    }
+
+    public LevelUpEnums.LevelUps get_random_unique_element() {
+        LevelUpEnums.LevelUps element = null;
+        while(element == null || elements_used.contains(element)) {
+            int random = MathUtils.random(1,4);
+            switch(random) {
+                case 1 -> element = FIRE;
+                case 2 -> element = FROST;
+                case 3 -> element = ARCANE;
+                case 4 -> element = LIGHTNING;
+            }
+        }
+        elements_used.add(element);
+        return element;
     }
 }
