@@ -22,9 +22,6 @@ public class Frozenorb_Spell extends Spell {
         cooldown = 6f;
         dmg = 30;   // per second
         autoaimable = true;
-
-        main_element = SpellUtils.Spell_Element.FROST;
-
     }
 
     public void setup() {

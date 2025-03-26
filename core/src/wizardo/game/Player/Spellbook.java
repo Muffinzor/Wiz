@@ -121,21 +121,33 @@ public class Spellbook {
 
     // FORKED LIGHTNING
     public int forkedlightning_bonus_dmg;
+    public int forkedlightning_bonus_quantity;
+    public int forkedlightning_bonus_range;
 
     // FROST NOVA
     public int frostnova_bonus_dmg;
+    public int frostnova_bonus_shatterchance;
+    public int frostnova_bonus_radius;
 
     // LASERS
     public int lasers_bonus_dmg;
+    public int lasers_bonus_prismchance;
+    public int lasers_bonus_proj;
 
     // METEORS
     public int meteors_bonus_dmg;
+    public int meteors_bonus_frequency;
+    public int meteors_bonus_duration;
 
     // ORBIT
     public int orbit_bonus_dmg;
+    public int orbit_bonus_speed;
+    public int orbit_bonus_duration;
 
     // REPULSION FIELD
     public int repulsion_bonus_dmg;
+    public int repulsion_bonus_radius;
+    public int repulsion_bonus_cdreduction;
 
 
 

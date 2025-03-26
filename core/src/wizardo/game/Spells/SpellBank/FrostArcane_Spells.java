@@ -109,9 +109,9 @@ public class FrostArcane_Spells {
         Laser_Spell frostarcane9 = new Laser_Spell();
         frostarcane9.anim_element = FROST;
         frostarcane9.frostbolt = true;
-        frostarcane9.spellParts.add(FROSTBOLT);
         frostarcane9.spellParts.add(MISSILES);
         frostarcane9.spellParts.add(BEAM);
+        frostarcane9.spellParts.add(FROSTBOLT);
         frostarcaneSpells[9] = frostarcane9;
 
         // 10. Frostbolt + ArcaneMissile + Rifts
@@ -325,19 +325,6 @@ public class FrostArcane_Spells {
         frostarcane29.spellParts.add(RIFTS);
         frostarcane29.spellParts.add(FROSTBOLT);
         frostarcaneSpells[29] = frostarcane29;
-
-        for (Spell frostfireSpell : frostarcaneSpells) {
-
-            if(frostfireSpell != null && frostfireSpell.bonus_element == null) {
-
-                if (frostfireSpell.main_element == SpellUtils.Spell_Element.ARCANE) {
-                    frostfireSpell.bonus_element = FROST;
-                } else {
-                    frostfireSpell.bonus_element = SpellUtils.Spell_Element.ARCANE;
-                }
-
-            }
-        }
 
     }
 }

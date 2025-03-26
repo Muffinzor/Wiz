@@ -39,7 +39,6 @@ public class DragonBreath_Projectile extends DragonBreath_Spell {
     public DragonBreath_Projectile() {
 
         bodies = new ArrayList<>();
-        main_element = SpellUtils.Spell_Element.FIRE;
         speed = 12.5f;
 
         flipY = MathUtils.randomBoolean();

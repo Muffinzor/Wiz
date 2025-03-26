@@ -9,7 +9,7 @@ import static wizardo.game.Wizardo.player;
 
 public class LightningHands_Spell extends Spell {
 
-    int number_of_bolts = 3;
+    int number_of_bolts;
 
     Vector2 direction;
     float lightRadius = 150;
@@ -23,12 +23,11 @@ public class LightningHands_Spell extends Spell {
         string_name = "Lightning Hands";
         levelup_enum = LevelUpEnums.LevelUps.LIGHTNINGHANDS;
 
-        cooldown = 3.2f;
+        cooldown = 4.2f;
         autoaimable = true;
-
+        dmg = 40;
 
         anim_element = SpellUtils.Spell_Element.FIRELITE;
-        main_element = SpellUtils.Spell_Element.FIRELITE;
 
     }
 
@@ -47,7 +46,7 @@ public class LightningHands_Spell extends Spell {
         spawnPosition = getSpawnPosition();
         direction = targetPosition.cpy().sub(spawnPosition);
 
-        float coneAngle = Math.min(40, 25 + 5 * number_of_bolts);
+        float coneAngle = 10 + 8 * number_of_bolts;
         float angleStep = coneAngle / (number_of_bolts - 1);
         float startAngle = -coneAngle / 2;
 
@@ -63,8 +62,8 @@ public class LightningHands_Spell extends Spell {
     }
 
     public void setup() {
-        number_of_bolts = 3 + player.spellbook.flamejet_lvl / 5;
-        lightAlpha = 0.3f - 0.03f * number_of_bolts;
+        number_of_bolts = 2 + player.spellbook.lightninghands_bonus_branch;
+        lightAlpha = 0.3f - 0.025f * number_of_bolts;
     }
 
     public void setBolt(LightningHands_Spell parent) {
@@ -87,13 +86,12 @@ public class LightningHands_Spell extends Spell {
 
     @Override
     public int getDmg() {
-        int dmg = 100;
+        int dmg = this.dmg;
         dmg += 20 * player.spellbook.flamejet_lvl;
         dmg += 20 * player.spellbook.overheat_lvl;
         if(thunderstorm) {
-            dmg += 10 * player.spellbook.thunderstorm_lvl;
+            dmg += 20 * player.spellbook.thunderstorm_lvl;
         }
-        dmg = (int) (dmg * (1 + player.spellbook.flashBonusDmg/100f));
         return dmg;
     }
 }

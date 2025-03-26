@@ -44,8 +44,6 @@ public class Overheat_TriggerExplosion extends Spell {
 
         dmg = player.spellbook.fireball_lvl * 35;
 
-        main_element = FIRE;
-
     }
 
 

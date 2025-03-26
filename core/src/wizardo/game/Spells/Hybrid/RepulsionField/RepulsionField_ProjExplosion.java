@@ -34,8 +34,6 @@ public class RepulsionField_ProjExplosion extends Spell {
         flipX = MathUtils.randomBoolean();
         flipY = MathUtils.randomBoolean();
 
-        main_element = SpellUtils.Spell_Element.ARCANE;
-        bonus_element = FIRE;
     }
 
     @Override

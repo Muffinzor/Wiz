@@ -35,7 +35,6 @@ public class FlameAura extends Spell {
     public FlameAura() {
         anim = AuraAnims.flame_aura;
         anim2 = AuraAnims.flame_aura2;
-        main_element = FIRE;
 
         frameCounters = new int[i];
         stateTimes = new float[i];

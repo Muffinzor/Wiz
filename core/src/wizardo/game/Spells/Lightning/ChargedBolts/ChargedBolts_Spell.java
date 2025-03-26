@@ -33,10 +33,6 @@ public class ChargedBolts_Spell extends Spell {
         bolts = 3;
         autoaimable = true;
 
-
-        main_element = SpellUtils.Spell_Element.LIGHTNING;
-
-
     }
     @Override
     public void update(float delta) {

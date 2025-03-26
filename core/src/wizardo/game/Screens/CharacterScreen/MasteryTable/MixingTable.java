@@ -102,7 +102,11 @@ public class MixingTable extends MenuTable {
             if (player.spellbook.equippedSpells.contains(masteryTable.screen.selectedSpell_Button.spell) &&
                     player.spellbook.equippedSpells.size() == 1 && player.spellbook.knownSpells.isEmpty()) {
                         forgetButton.setDisabled(true);
+            } else {
+                forgetButton.setDisabled(false);
             }
+        } else if (masteryTable.screen.selectedSpell_Button == null && forgetButton != null) {
+            forgetButton.setDisabled(true);
         }
     }
     public void updateInvertButton() {

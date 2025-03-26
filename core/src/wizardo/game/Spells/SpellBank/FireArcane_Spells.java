@@ -206,9 +206,9 @@ public class FireArcane_Spells {
         Laser_Spell firearcane18 = new Laser_Spell();
         firearcane18.anim_element = FIRE;
         firearcane18.flamejet = true;
-        firearcane18.spellParts.add(FLAMEJET);
         firearcane18.spellParts.add(MISSILES);
         firearcane18.spellParts.add(BEAM);
+        firearcane18.spellParts.add(FLAMEJET);
         firearcaneSpells[18] = firearcane18;
 
         // 19. ArcaneMissile + Beam + Fireball
@@ -292,22 +292,6 @@ public class FireArcane_Spells {
         firearcane26.spellParts.add(RIFTS);
         firearcane26.spellParts.add(BEAM);
         firearcaneSpells[26] = firearcane26;
-
-
-
-
-        for (Spell firearcane : firearcaneSpells) {
-
-            if(firearcane != null && firearcane.bonus_element == null) {
-
-                if (firearcane.main_element == SpellUtils.Spell_Element.ARCANE) {
-                    firearcane.bonus_element = FIRE;
-                } else {
-                    firearcane.bonus_element = SpellUtils.Spell_Element.ARCANE;
-                }
-
-            }
-        }
 
     }
 }

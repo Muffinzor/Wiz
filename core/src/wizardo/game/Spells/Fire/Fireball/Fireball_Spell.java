@@ -33,7 +33,6 @@ public class Fireball_Spell extends Spell {
         speed = 200f/PPM;
         autoaimable = true;
 
-        main_element = FIRE;
     }
 
     public void setup() {

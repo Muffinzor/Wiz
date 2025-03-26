@@ -207,8 +207,8 @@ public class LightningArcane_Spells {
         Laser_Spell litearcane18 = new Laser_Spell();
         litearcane18.anim_element = LIGHTNING;
         litearcane18.chargedbolt = true;
-        litearcane18.spellParts.add(BEAM);
         litearcane18.spellParts.add(MISSILES);
+        litearcane18.spellParts.add(BEAM);
         litearcane18.spellParts.add(CHARGEDBOLT);
         litearcaneSpells[18] = litearcane18;
 
@@ -304,17 +304,5 @@ public class LightningArcane_Spells {
         litearcane27.spellParts.add(CHARGEDBOLT);
         litearcaneSpells[27] = litearcane27;
 
-        for (Spell spell : litearcaneSpells) {
-
-            if(spell != null && spell.bonus_element == null) {
-
-                if (spell.main_element == SpellUtils.Spell_Element.LIGHTNING) {
-                    spell.bonus_element = ARCANE;
-                } else {
-                    spell.bonus_element = SpellUtils.Spell_Element.LIGHTNING;
-                }
-
-            }
-        }
     }
 }

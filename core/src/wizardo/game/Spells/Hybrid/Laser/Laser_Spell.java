@@ -34,7 +34,7 @@ public class Laser_Spell extends Spell {
 
         cooldown = 0.8f;
         speed = 15f;
-        dmg = 10;
+        dmg = 12;
         autoaimable = true;
 
         inRange = new ArrayList<>();
@@ -95,7 +95,7 @@ public class Laser_Spell extends Spell {
 
         if(originBody == null) {
             originBody = player.pawn.body;
-            lasers = 3 + player.spellbook.arcanemissile_lvl/2;
+            lasers = 2 + player.spellbook.arcanemissile_lvl + player.spellbook.lasers_bonus_proj;
         } else {
             lasers = 1;
         }
@@ -148,8 +148,7 @@ public class Laser_Spell extends Spell {
     @Override
     public int getDmg() {
         int dmg = this.dmg;
-        dmg += 10 * player.spellbook.energybeam_lvl;
-        dmg = (int) (dmg * (1 + player.spellbook.energyBonusDmg/100f));
+        dmg += 12 * player.spellbook.energybeam_lvl;
         return dmg;
     }
 

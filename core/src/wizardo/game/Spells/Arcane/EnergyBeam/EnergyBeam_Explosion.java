@@ -23,9 +23,6 @@ public class EnergyBeam_Explosion extends EnergyRain_Spell {
     boolean flipY;
 
     public EnergyBeam_Explosion() {
-
-        main_element = ARCANE;
-
         rotation = MathUtils.random(360);
         flipX = MathUtils.randomBoolean();
         flipY = MathUtils.randomBoolean();

@@ -47,7 +47,6 @@ public class ChainLightning_Spell extends Spell {
         dmg = 32;
         autoaimable = true;
 
-        main_element = SpellUtils.Spell_Element.LIGHTNING;
     }
 
     @Override
@@ -177,29 +176,6 @@ public class ChainLightning_Spell extends Spell {
             return 8;
         } else {
             return 5;
-        }
-    }
-
-    @Override
-    public void dealDmg(Monster monster) {
-        float dmg = getDmg();
-        dmg = apply_specific_spell_dmg_bonus(dmg);
-        dmg = apply_elemental_dmg_bonus(dmg);
-        float randomFactor = MathUtils.random(1 - dmgVariance, 1 + dmgVariance);
-        dmg *= randomFactor;
-
-        checkGearProcs(monster);
-        dmg = applyGearModifiers(monster, dmg);
-        dmg = checkOtherModifiers(monster, dmg);
-
-        if(Math.random() >= 1 - player.spellbook.chainlightning_bonus_crit) {
-            dmg *= 2;
-        }
-
-        monster.hp -= dmg;
-
-        if(dmg_text_on) {
-            dmgText( (int)dmg, monster);
         }
     }
 }

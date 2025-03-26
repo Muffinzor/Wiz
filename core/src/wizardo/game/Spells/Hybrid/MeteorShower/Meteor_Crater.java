@@ -23,7 +23,7 @@ public class Meteor_Crater extends Spell {
         flipX = MathUtils.randomBoolean();
         flipY = MathUtils.randomBoolean();
 
-        main_element = FIRE;
+
         anim = MeteorAnims.meteor_crater_anim;
 
     }

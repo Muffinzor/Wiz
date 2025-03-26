@@ -298,18 +298,5 @@ public class FrostFire_Spells {
         frostfire26.spellParts.add(ICESPEAR);
         frostfireSpells[26] = frostfire26;
 
-
-        for (Spell frostfireSpell : frostfireSpells) {
-
-            if(frostfireSpell != null && frostfireSpell.bonus_element == null) {
-
-                if (frostfireSpell.main_element == SpellUtils.Spell_Element.FIRE) {
-                    frostfireSpell.bonus_element = FROST;
-                } else {
-                    frostfireSpell.bonus_element = SpellUtils.Spell_Element.FIRE;
-                }
-
-            }
-        }
     }
 }

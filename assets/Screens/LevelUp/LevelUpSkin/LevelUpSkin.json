@@ -210,5 +210,33 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 		font: SimpleFont26
 		up: Panel_Experience
 	}
+	lightninghands: {
+		font: SimpleFont26
+		up: Panel_LightningHands
+	}
+	meteors: {
+		font: SimpleFont26
+		up: Panel_Meteor
+	}
+	lasers: {
+		font: SimpleFont26
+		up: Panel_Lasers
+	}
+	orbit: {
+		font: SimpleFont26
+		up: Panel_Orbit
+	}
+	forkedlightning: {
+		font: SimpleFont26
+		up: Panel_ForkedLightning
+	}
+	frostnova: {
+		font: SimpleFont26
+		up: Panel_Frostnova
+	}
+	repulsionfield: {
+		font: SimpleFont26
+		up: Panel_Repulsion
+	}
 }
 }

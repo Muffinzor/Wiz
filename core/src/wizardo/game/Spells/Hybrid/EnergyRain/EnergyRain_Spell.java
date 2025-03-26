@@ -38,7 +38,6 @@ public class EnergyRain_Spell extends Spell {
         interval = 0.2f;
         radius = 16;
 
-        main_element = ARCANE;
     }
 
 

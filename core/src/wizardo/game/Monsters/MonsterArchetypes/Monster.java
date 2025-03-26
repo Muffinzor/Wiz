@@ -12,6 +12,7 @@ import wizardo.game.Items.Drop.GoldDrop;
 import wizardo.game.Items.Drop.PotionDrop;
 import wizardo.game.Items.Equipment.Book.Legendary_NecronomiconBook;
 import wizardo.game.Items.Equipment.Ring.Legendary_DukeRing;
+import wizardo.game.Items.Equipment.Robes.Legendary_FrostRobes;
 import wizardo.game.Items.Equipment.Robes.Legendary_LightningRobes;
 import wizardo.game.Items.Equipment.Staff.Legendary_FrostStaff;
 import wizardo.game.Lighting.RoundLight;
@@ -23,6 +24,8 @@ import wizardo.game.Player.Player;
 import wizardo.game.Resources.SpellAnims.MarkAnims;
 import wizardo.game.Screens.Battle.BattleScreen;
 import wizardo.game.Screens.Battle.MonsterSpawner.MonsterSpawner;
+import wizardo.game.Spells.Hybrid.FrostNova.FrostNova_MonsterShatter;
+import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Spells.Unique.CorpseExplosion.CorpseExplosion;
 import wizardo.game.Utils.BodyFactory;
 
@@ -37,6 +40,7 @@ public abstract class Monster {
     public boolean spawned;
     public Animation<Sprite> walk_anim;
     public Animation<Sprite> death_anim;
+    public Animation<Sprite> shatter_anim;
     public Animation<Sprite> idle_anim;
     public boolean deathFrameFlip;
     public Sprite weaponSprite;
@@ -78,6 +82,7 @@ public abstract class Monster {
     public boolean elite;
 
     public boolean dead;
+    public boolean shattered;      // Dead from frostnova shatter;
     public boolean spaghettified;  // Dead from blackhole
     public float redshift = 0.75f;     // ditto
 
@@ -91,6 +96,7 @@ public abstract class Monster {
     public float freezeTimer = 0;
     public float slowedTimer = 0;
     public float slowRatio = 1;
+    public SpellUtils.Spell_Element last_element_hit = null;
 
     public int flamejetStacks = 0;
     public boolean marked;  // for legendary ammy
@@ -100,7 +106,6 @@ public abstract class Monster {
 
     public static Sprite greenHP = new Sprite(new Texture("Monsters/hpbar.png"));
     public static Sprite redHP = new Sprite(new Texture("Monsters/redbar.png"));
-
 
     public Monster(BattleScreen screen, Vector2 position, MonsterSpawner spawner) {
         this.spawner = spawner;
@@ -183,13 +188,11 @@ public abstract class Monster {
         player.stats.shield -= dmg;
         player.pawn.hitTimer = 0.1f;
 
-        if(player.inventory.equippedRobes instanceof Legendary_LightningRobes) {
-            Legendary_LightningRobes robes = (Legendary_LightningRobes) player.inventory.equippedRobes;
+        if(player.inventory.equippedRobes instanceof Legendary_LightningRobes robes) {
             robes.accumulatedDmg += dmg;
         }
 
-        if(player.inventory.equippedRing instanceof Legendary_DukeRing) {
-            Legendary_DukeRing ring = (Legendary_DukeRing) player.inventory.equippedRing;
+        if(player.inventory.equippedRing instanceof Legendary_DukeRing ring) {
             ring.castDeathLightning(this);
         }
     }
@@ -302,15 +305,18 @@ public abstract class Monster {
             }
         }
         Sprite frame = screen.displayManager.spriteRenderer.pool.getSprite();
-        if(!spaghettified) {
-            frame.set(death_anim.getKeyFrame(stateTime, false));
+        if(shattered && shatter_anim != null) {
+            frame.set(shatter_anim.getKeyFrame(stateTime, false));
             frame.setAlpha(alpha);
-        } else {
+        } else if (spaghettified) {
             alpha -= 0.012f;
             redshift += 0.012f;
             stateTime -= delta;
             frame.set(walk_anim.getKeyFrames()[0]);
             frame.setColor(redshift,0.75f,0.75f,alpha);
+        } else {
+            frame.set(death_anim.getKeyFrame(stateTime, false));
+            frame.setAlpha(alpha);
         }
         frame.flip(deathFrameFlip, false);
         frame.setPosition(body.getPosition().x * PPM - frame.getWidth() / 2, body.getPosition().y * PPM - bodyRadius);
@@ -355,9 +361,8 @@ public abstract class Monster {
             if (freezeImmunityTimer <= 0) {
                 freezeTimer = duration;
                 freezeImmunityTimer = immunity;
-                if (player.inventory.equippedStaff instanceof Legendary_FrostStaff) {
-                    Legendary_FrostStaff staff = (Legendary_FrostStaff) player.inventory.equippedStaff;
-                    staff.castNova(this);
+                if(player.inventory.equippedRobes instanceof Legendary_FrostRobes robes) {
+                    robes.castNova(this);
                 }
             } else {
                 slowedTimer = duration;
@@ -373,6 +378,7 @@ public abstract class Monster {
 
     public void onDeath() {
         corpseExplosion();
+        shatter();
 
         float pot_rate = 0.995f - player.stats.luck/2000f;
         if(Math.random() >= pot_rate) {
@@ -392,6 +398,14 @@ public abstract class Monster {
             if(Math.random() >= 0.8f) {
                 CorpseExplosion explosion = new CorpseExplosion(this);
                 screen.spellManager.add(explosion);
+            }
+        }
+    }
+    public void shatter() {
+        if(player.inventory.equippedStaff instanceof Legendary_FrostStaff && freezeTimer > 0) {
+            if(Math.random() >= 0.8f) {
+                FrostNova_MonsterShatter shatter = new FrostNova_MonsterShatter(this);
+                screen.spellManager.add(shatter);
             }
         }
     }

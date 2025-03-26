@@ -61,8 +61,6 @@ public class ChargedBolts_Projectile extends ChargedBolts_Spell {
         currentWobbleOffset = new Vector2();
         targetWobbleOffset = new Vector2();
 
-        main_element = SpellUtils.Spell_Element.LIGHTNING;
-
     }
 
     public void setup() {

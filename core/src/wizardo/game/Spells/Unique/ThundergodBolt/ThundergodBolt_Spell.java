@@ -9,7 +9,6 @@ public class ThundergodBolt_Spell extends Spell {
 
     public ThundergodBolt_Spell() {
         speed = 30f;
-        main_element = SpellUtils.Spell_Element.LIGHTNING;
         anim_element = SpellUtils.Spell_Element.LIGHTNING;
     }
 

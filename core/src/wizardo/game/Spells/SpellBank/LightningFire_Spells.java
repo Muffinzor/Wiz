@@ -289,15 +289,6 @@ public class LightningFire_Spells {
             litefire26.spellParts.add(THUNDERSTORM);
             litefireSpells[26] = litefire26;
 
-            if(spell != null && spell.bonus_element == null) {
-
-                if (spell.main_element == SpellUtils.Spell_Element.LIGHTNING) {
-                    spell.bonus_element = FIRE;
-                } else {
-                    spell.bonus_element = SpellUtils.Spell_Element.LIGHTNING;
-                }
-
-            }
         }
     }
 }

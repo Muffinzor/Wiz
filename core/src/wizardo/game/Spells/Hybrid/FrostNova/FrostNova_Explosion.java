@@ -20,15 +20,15 @@ public class FrostNova_Explosion extends FrostNova_Spell {
     RoundLight light;
 
     float radius = 135;
-    float sizeScaling;
-    float freezeDuration = 2.25f;
+    float scale;
+    float freezeDuration = 2;
 
     public FrostNova_Explosion(){
 
         anim = ExplosionAnims_Elemental.frostnova_anim;
 
-        sizeScaling = 1 + ((player.spellbook.overheat_lvl - 1) * 0.05f) + (player.spellbook.iceRadiusBonus/100f); // 1.5 at lvl 10
-        freezeDuration += 0.25f * player.spellbook.frozenorb_lvl;
+        scale = 1 + player.spellbook.frostnova_bonus_radius/100f;
+        freezeDuration += 0.5f * player.spellbook.frozenorb_lvl;
 
     }
 
@@ -53,35 +53,39 @@ public class FrostNova_Explosion extends FrostNova_Spell {
     }
 
     public void handleCollision(Monster monster) {
-        dealDmg(monster);
-
-        if(monster.freezeImmunityTimer <= 0) {
-            monster.applyFreeze(freezeDuration, 1 + freezeDuration * 2);
+        if(Math.random() >= 0.9f - player.spellbook.frostnova_bonus_shatterchance/100f) {
+            FrostNova_MonsterShatter shatter = new FrostNova_MonsterShatter(monster);
+            screen.spellManager.add(shatter);
         } else {
-            float slowScale = .62f - 0.02f * player.spellbook.frozenorb_lvl;
-            monster.applySlow(4, slowScale);
+
+            if (monster.freezeImmunityTimer <= 0) {
+                monster.applyFreeze(freezeDuration, 2 + freezeDuration);
+            } else {
+                float slowScale = .65f - 0.05f * player.spellbook.frozenorb_lvl;
+                monster.applySlow(4, slowScale);
+            }
+
+            Vector2 direction = monster.body.getPosition().sub(body.getPosition());
+            float strength = 3 * (1 + player.spellbook.pushbackBonus / 100f);
+            monster.movementManager.applyPush(direction, strength, 0.5f, 0.9f);
+
+            frostbolts(monster);
         }
-
-        Vector2 direction = monster.body.getPosition().sub(body.getPosition());
-        float strength = 3 * (1 + player.spellbook.pushbackBonus/100f);
-        monster.movementManager.applyPush(direction, strength, 0.5f, 0.9f);
-
-        frostbolts(monster);
     }
 
     public void drawFrame() {
         Sprite frame = screen.getSprite();
         frame.set(anim.getKeyFrame(stateTime, false));
         frame.setCenter(targetPosition.x * PPM, targetPosition.y * PPM);
-        frame.setScale(1.15f * sizeScaling);
+        frame.setScale(1.15f * scale);
         frame.setAlpha(0.8f);
-        //screen.centerSort(frame, targetPosition.y * PPM);
+        screen.centerSort(frame, body.getPosition().y * PPM);
         screen.addSortedSprite(frame);
 
     }
 
     public void createBody() {
-        body = BodyFactory.spellExplosionBody(targetPosition, radius * sizeScaling);
+        body = BodyFactory.spellExplosionBody(targetPosition, radius * scale);
         body.setUserData(this);
     }
     public void createLight() {

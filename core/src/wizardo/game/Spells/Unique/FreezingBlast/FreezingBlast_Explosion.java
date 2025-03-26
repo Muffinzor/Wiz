@@ -28,7 +28,6 @@ public class FreezingBlast_Explosion extends Spell {
         flipY = MathUtils.randomBoolean();
         rotation = MathUtils.random(360);
 
-        main_element = FROST;
         anim_element = FROST;
 
         pickAnim();

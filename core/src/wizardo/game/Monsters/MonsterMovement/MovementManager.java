@@ -1,8 +1,11 @@
 package wizardo.game.Monsters.MonsterMovement;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 
+import static wizardo.game.Screens.BaseScreen.xRatio;
+import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.player;
 
 public class MovementManager {
@@ -65,7 +68,8 @@ public class MovementManager {
 
     public void checkDistance() {
         float dst = monster.body.getPosition().dst(player.pawn.getPosition());
-        if(dst > 50) {
+        System.out.println(dst + " vs " + (0.83 * Gdx.graphics.getWidth())/PPM);
+        if(dst > (0.83 * Gdx.graphics.getWidth())/PPM) {
             monster.tooFar = true;
         }
     }
@@ -80,7 +84,7 @@ public class MovementManager {
                 float pushStrength = strength;
                 float pushDuration = duration;
                 if (monster.heavy) {
-                    pushStrength = strength / 2f;
+                    pushStrength = strength * (2 / 3f);
                     if (decayRate < 1) {
                         pushDuration = duration * (2 / 3f);
                     }

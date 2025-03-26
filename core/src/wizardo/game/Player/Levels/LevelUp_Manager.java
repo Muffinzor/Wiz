@@ -4,6 +4,18 @@ import com.badlogic.gdx.math.MathUtils;
 import wizardo.game.Player.Levels.Choices.*;
 import wizardo.game.Screens.LevelUp.LevelUpScreen;
 import wizardo.game.Screens.LevelUp.PanelButton;
+import wizardo.game.Spells.Hybrid.Blizzard.Blizzard_Spell;
+import wizardo.game.Spells.Hybrid.CelestialStrike.CelestialStrike_Spell;
+import wizardo.game.Spells.Hybrid.DragonBreath.DragonBreath_Spell;
+import wizardo.game.Spells.Hybrid.EnergyRain.EnergyRain_Spell;
+import wizardo.game.Spells.Hybrid.ForkedLightning.ForkedLightning_Spell;
+import wizardo.game.Spells.Hybrid.FrostNova.FrostNova_Spell;
+import wizardo.game.Spells.Hybrid.Judgement.Judgement_Spell;
+import wizardo.game.Spells.Hybrid.Laser.Laser_Spell;
+import wizardo.game.Spells.Hybrid.LightningHands.LightningHands_Spell;
+import wizardo.game.Spells.Hybrid.MeteorShower.MeteorShower_Spell;
+import wizardo.game.Spells.Hybrid.Orbit.Orbit_Spell;
+import wizardo.game.Spells.Hybrid.RepulsionField.RepulsionField_Spell;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 
@@ -45,96 +57,14 @@ public class LevelUp_Manager {
         if(player.level % 12 == 2) {
             int replaced_index = MathUtils.random(0, max_levelup_choices-1);
             if(player.level >= 20)
-                list.set(replaced_index, get_learnable_mastery(3, false));
+                list.set(replaced_index, get_learnable_mastery(3, false, list));
             else if(player.level >= 10)
-                list.set(replaced_index, get_learnable_mastery(2, true));
+                list.set(replaced_index, get_learnable_mastery(2, true, list));
             else
-                list.set(replaced_index, get_learnable_mastery(1, false));
+                list.set(replaced_index, get_learnable_mastery(1, false, list));
         }
 
         return list;
-    }
-
-    public PanelButton get_random_t1(LevelUpScreen screen, ArrayList<LevelUpEnums.LevelUps> current_choices) {
-        ArrayList<LevelUpEnums.LevelUps> list = new ArrayList<>();
-
-        if(player.level/4 >= masteries[0] && !current_choices.contains(LevelUpEnums.LevelUps.FROSTBOLT)) {
-            list.add(LevelUpEnums.LevelUps.FROSTBOLT);
-        }
-        if(player.level/4 >= masteries[3] && !current_choices.contains(LevelUpEnums.LevelUps.FLAMEJET)) {
-            list.add(LevelUpEnums.LevelUps.FLAMEJET);
-        }
-        if(player.level/4 >= masteries[6] && !current_choices.contains(LevelUpEnums.LevelUps.CHARGEDBOLT)) {
-            list.add(LevelUpEnums.LevelUps.CHARGEDBOLT);
-        }
-        if(player.level/4 >= masteries[9] && !current_choices.contains(LevelUpEnums.LevelUps.MISSILES)) {
-            list.add(LevelUpEnums.LevelUps.MISSILES);
-        }
-
-        PanelButton level_up = null;
-        Collections.shuffle(list);
-        switch(list.getFirst()) {
-            case FROSTBOLT -> level_up = new M_Frostbolt(screen);
-            case FLAMEJET -> level_up = new M_Flamejet(screen);
-            case CHARGEDBOLT -> level_up = new M_Chargedbolt(screen);
-            case MISSILES -> level_up = new M_Arcanemissiles(screen);
-        }
-        current_choices.add(list.getFirst());
-        return level_up;
-    }
-    public PanelButton get_random_t2(LevelUpScreen screen, ArrayList<LevelUpEnums.LevelUps> current_choices) {
-        ArrayList<LevelUpEnums.LevelUps> list = new ArrayList<>();
-
-        if(player.level/4 >= masteries[1] && !current_choices.contains(LevelUpEnums.LevelUps.ICESPEAR)) {
-            list.add(LevelUpEnums.LevelUps.ICESPEAR);
-        }
-        if(player.level/4 >= masteries[4] && !current_choices.contains(LevelUpEnums.LevelUps.FIREBALL)) {
-            list.add(LevelUpEnums.LevelUps.FIREBALL);
-        }
-        if(player.level/4 >= masteries[7] && !current_choices.contains(LevelUpEnums.LevelUps.CHAIN)) {
-            list.add(LevelUpEnums.LevelUps.CHAIN);
-        }
-        if(player.level/4 >= masteries[10] && !current_choices.contains(LevelUpEnums.LevelUps.BEAM)) {
-            list.add(LevelUpEnums.LevelUps.BEAM);
-        }
-
-        PanelButton level_up = null;
-        Collections.shuffle(list);
-        switch(list.getFirst()) {
-            case ICESPEAR -> level_up = new M_Icespear(screen);
-            case FIREBALL -> level_up = new M_Fireball(screen);
-            case CHAIN -> level_up = new M_Chainlightning(screen);
-            case BEAM -> level_up = new M_Energybeam(screen);
-        }
-        current_choices.add(list.getFirst());
-        return level_up;
-    }
-    public PanelButton get_random_t3(LevelUpScreen screen, ArrayList<LevelUpEnums.LevelUps> current_choices) {
-        ArrayList<LevelUpEnums.LevelUps> list = new ArrayList<>();
-
-        if(player.level/4 >= masteries[2] && !current_choices.contains(LevelUpEnums.LevelUps.FROZENORB)) {
-            list.add(LevelUpEnums.LevelUps.FROZENORB);
-        }
-        if(player.level/4 >= masteries[5] && !current_choices.contains(LevelUpEnums.LevelUps.OVERHEAT)) {
-            list.add(LevelUpEnums.LevelUps.OVERHEAT);
-        }
-        if(player.level/4 >= masteries[8] && !current_choices.contains(LevelUpEnums.LevelUps.THUNDERSTORM)) {
-            list.add(LevelUpEnums.LevelUps.THUNDERSTORM);
-        }
-        if(player.level/4 >= masteries[11] && !current_choices.contains(LevelUpEnums.LevelUps.RIFTS)) {
-            list.add(LevelUpEnums.LevelUps.RIFTS);
-        }
-
-        PanelButton level_up = null;
-        Collections.shuffle(list);
-        switch(list.getFirst()) {
-            case FROZENORB -> level_up = new M_Frozenorb(screen);
-            case OVERHEAT -> level_up = new M_Overheat(screen);
-            case THUNDERSTORM -> level_up = new M_Thunderstorm(screen);
-            case RIFTS -> level_up = new M_Rifts(screen);
-        }
-        current_choices.add(list.getFirst());
-        return level_up;
     }
 
     public LevelUpEnums.LevelUps get_basic_level_up(ArrayList<LevelUpEnums.LevelUps> current_choices) {
@@ -153,8 +83,8 @@ public class LevelUp_Manager {
         int random = MathUtils.random(1, 18);
         switch(random) {
             case 1,2,3,4,5,6,7,8 -> list.add(ELEMENT);
-            case 9,10,11 -> list.add(get_learnable_mastery(2, false));
-            case 12 -> list.add(get_learnable_mastery(3, true));
+            case 9,10,11 -> list.add(get_learnable_mastery(2, false, current_choices));
+            case 12 -> list.add(get_learnable_mastery(3, true, current_choices));
             case 13,14,15 -> list.add(REGEN);
             case 16,17,18 -> list.add(DEFENSE);
         }
@@ -170,7 +100,7 @@ public class LevelUp_Manager {
                 list.add(spell.levelup_enum);
         }
         if(list.isEmpty()) {
-            list.add(get_learnable_mastery(1, true));
+            list.add(get_learnable_mastery(1, true, current_choices));
         }
         Collections.shuffle(list);
         return list.getFirst();
@@ -179,20 +109,54 @@ public class LevelUp_Manager {
     public LevelUpEnums.LevelUps get_equipped_parts_buff(ArrayList<LevelUpEnums.LevelUps> current_choices) {
         ArrayList<LevelUpEnums.LevelUps> list = new ArrayList<>();
         for(Spell spell : player.spellbook.equippedSpells) {
-            for(SpellUtils.Spell_Name part : spell.spellParts) {
-                switch(part) {
-                    case FROSTBOLT -> list.add(LevelUpEnums.LevelUps.FROSTBOLT);
-                    case ICESPEAR -> list.add(LevelUpEnums.LevelUps.ICESPEAR);
-                    case FROZENORB -> list.add(LevelUpEnums.LevelUps.FROZENORB);
-                    case FLAMEJET -> list.add(LevelUpEnums.LevelUps.FLAMEJET);
-                    case FIREBALL -> list.add(LevelUpEnums.LevelUps.FIREBALL);
-                    case OVERHEAT -> list.add(LevelUpEnums.LevelUps.OVERHEAT);
-                    case CHARGEDBOLT -> list.add(LevelUpEnums.LevelUps.CHARGEDBOLT);
-                    case CHAIN -> list.add(LevelUpEnums.LevelUps.CHAIN);
-                    case THUNDERSTORM -> list.add(LevelUpEnums.LevelUps.THUNDERSTORM);
-                    case MISSILES -> list.add(LevelUpEnums.LevelUps.MISSILES);
-                    case BEAM -> list.add(LevelUpEnums.LevelUps.BEAM);
-                    case RIFTS -> list.add(LevelUpEnums.LevelUps.RIFTS);
+            switch (spell) {
+                case MeteorShower_Spell _ -> {
+                    list.add(METEORS);
+                    if (spell.spellParts.contains(SpellUtils.Spell_Name.OVERHEAT)) list.add(OVERHEAT);
+                    if (spell.spellParts.contains(SpellUtils.Spell_Name.CHARGEDBOLT)) list.add(CHARGEDBOLT);
+                }
+                case FrostNova_Spell _ -> {
+                    list.add(FROSTNOVA);
+                    if(spell.spellParts.contains(SpellUtils.Spell_Name.FROSTBOLT)) list.add(FROSTBOLT);
+                }
+                case Blizzard_Spell _ -> {
+                    list.add(BLIZZARD);
+                    if(spell.spellParts.contains(SpellUtils.Spell_Name.FROSTBOLT)) list.add(FROSTBOLT);
+                }
+                case ForkedLightning_Spell _ -> {
+                    list.add(FORKEDLIGHTNING);
+                    if(spell.spellParts.contains(SpellUtils.Spell_Name.CHARGEDBOLT)) list.add(CHARGEDBOLT);
+                    if(spell.spellParts.contains(SpellUtils.Spell_Name.FIREBALL)) list.add(FIREBALL);
+                }
+                case RepulsionField_Spell _ -> list.add(REPULSIONFIELD);
+                case Judgement_Spell _ -> list.add(JUDGEMENT);
+                case EnergyRain_Spell _ -> list.add(ENERGYRAIN);
+                case CelestialStrike_Spell _ -> {
+                    list.add(CELESTIALSTRIKE);
+                    if(spell.spellParts.contains(SpellUtils.Spell_Name.CHARGEDBOLT)) list.add(CHARGEDBOLT);
+                    if(spell.spellParts.contains(SpellUtils.Spell_Name.FROSTBOLT)) list.add(FROSTBOLT);
+                }
+                case DragonBreath_Spell _ -> {
+                    list.add(DRAGONBREATH);
+                    if(spell.spellParts.contains(SpellUtils.Spell_Name.FIREBALL)) list.add(FIREBALL);
+                    if(spell.spellParts.contains(SpellUtils.Spell_Name.FROSTBOLT)) list.add(FROSTBOLT);
+                }
+                case LightningHands_Spell _ -> {
+                    list.add(LIGHTNINGHANDS);
+                    if(spell.spellParts.contains(SpellUtils.Spell_Name.CHARGEDBOLT)) list.add(CHARGEDBOLT);
+                    if(spell.spellParts.contains(SpellUtils.Spell_Name.CHAIN)) list.add(CHAIN);
+                }
+                case Laser_Spell _ -> {
+                    list.add(LASERS);
+                    if (spell.spellParts.size() > 2) {
+                        list.add(spellpart_to_levelup(spell.spellParts.get(2)));
+                    }
+                }
+                case Orbit_Spell _ -> list.add(ORBIT);
+                default -> {
+                    for (SpellUtils.Spell_Name part : spell.spellParts) {
+                        list.add(spellpart_to_levelup(part));
+                    }
                 }
             }
         }
@@ -201,14 +165,33 @@ public class LevelUp_Manager {
         list.removeAll(current_choices);
 
         if(list.isEmpty()) {
-            list.add(get_learnable_mastery(1, true));
+            list.add(get_learnable_mastery(1, true, current_choices));
         }
 
         Collections.shuffle(list);
         return list.getFirst();
     }
+    /** Embrace the Spaghetti, be one with the Spaghetti **/
+    public LevelUpEnums.LevelUps spellpart_to_levelup(SpellUtils.Spell_Name part) {
+        LevelUpEnums.LevelUps level = null;
+        switch(part) {
+            case FROSTBOLT -> level = FROSTBOLT;
+            case ICESPEAR -> level = ICESPEAR;
+            case FROZENORB -> level = FROZENORB;
+            case FLAMEJET -> level = FLAMEJET;
+            case FIREBALL -> level = FIREBALL;
+            case OVERHEAT -> level = OVERHEAT;
+            case CHARGEDBOLT -> level = CHARGEDBOLT;
+            case CHAIN -> level = CHAIN;
+            case THUNDERSTORM -> level = THUNDERSTORM;
+            case MISSILES -> level = MISSILES;
+            case BEAM -> level = BEAM;
+            case RIFTS -> level = RIFTS;
+        }
+        return level;
+    }
     /** Returns ELEMENT if all masteries from that selection are already learned **/
-    public LevelUpEnums.LevelUps get_learnable_mastery(int max_tier, boolean fixed_to_max) {
+    public LevelUpEnums.LevelUps get_learnable_mastery(int max_tier, boolean fixed_to_max, ArrayList<LevelUpEnums.LevelUps> current_choices) {
         ArrayList<LevelUpEnums.LevelUps> list = new ArrayList<>();
         switch(max_tier) {
             case 1 -> learnable_t1_masteries(list);
@@ -224,6 +207,7 @@ public class LevelUp_Manager {
                 }
             }
         }
+        list.removeAll(current_choices);
         if(!list.isEmpty()) {
             Collections.shuffle(list);
             return list.getFirst();

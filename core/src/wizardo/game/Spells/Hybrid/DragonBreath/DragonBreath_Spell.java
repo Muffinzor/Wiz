@@ -29,7 +29,6 @@ public class DragonBreath_Spell extends Spell {
 
         cooldown = 3.2f;
 
-        main_element = SpellUtils.Spell_Element.FIRE;
     }
 
     @Override

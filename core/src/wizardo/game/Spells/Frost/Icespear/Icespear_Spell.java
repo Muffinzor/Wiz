@@ -45,7 +45,6 @@ public class Icespear_Spell extends Spell {
         cooldown = 0.8f;
         autoaimable = true;
 
-        main_element = SpellUtils.Spell_Element.FROST;
 
     }
 

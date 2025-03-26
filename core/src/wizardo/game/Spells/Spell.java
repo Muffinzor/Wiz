@@ -40,6 +40,7 @@ import wizardo.game.Spells.Frost.Icespear.Icespear_Spell;
 import wizardo.game.Spells.Hybrid.CelestialStrike.CelestialStrike_Spell;
 import wizardo.game.Spells.Hybrid.EnergyRain.EnergyRain_Spell;
 import wizardo.game.Spells.Hybrid.ForkedLightning.ForkedLightning_Spell;
+import wizardo.game.Spells.Hybrid.FrostNova.FrostNova_ShardProjectile;
 import wizardo.game.Spells.Hybrid.FrostNova.FrostNova_Spell;
 import wizardo.game.Spells.Hybrid.Judgement.Judgement_Spell;
 import wizardo.game.Spells.Hybrid.Laser.Laser_Spell;
@@ -107,8 +108,6 @@ public abstract class Spell implements Cloneable {
 
 
     public Spell_Element anim_element;
-    public Spell_Element main_element;
-    public Spell_Element bonus_element;
     public ArrayList<Spell_Name> spellParts = new ArrayList<>();
 
 
@@ -277,20 +276,10 @@ public abstract class Spell implements Cloneable {
     }
 
     public void setElements(Spell spellParent) {
-        arcaneCasted = spellParent.arcaneCasted;
-        multicasted = spellParent.multicasted;
-        textColor = spellParent.textColor;
-        if(main_element != spellParent.main_element) {
-            this.bonus_element = spellParent.main_element;
-        }
-        if(this.bonus_element == null && spellParent.bonus_element != null) {
-            bonus_element = spellParent.bonus_element;
-        }
-        if(anim_element == null) {
-            anim_element = spellParent.anim_element;
-        }
-        if(main_element == null && anim_element != null) {
-            main_element = anim_element;
+        this.arcaneCasted = spellParent.arcaneCasted;
+        this.multicasted = spellParent.multicasted;
+        if(this.anim_element == null) {
+            this.anim_element = spellParent.anim_element;
         }
     }
 
@@ -535,6 +524,7 @@ public abstract class Spell implements Cloneable {
         dmg = checkOtherModifiers(monster, dmg);
 
         monster.hp -= dmg;
+        monster.last_element_hit = this.anim_element;
 
         if(dmg_text_on) {
             dmgText( (int)dmg, monster);
@@ -562,7 +552,7 @@ public abstract class Spell implements Cloneable {
             case RepulsionField_Spell _ -> dmg *= (1 + player.spellbook.repulsion_bonus_dmg / 100f);
             case ForkedLightning_Spell _ -> dmg *= (1 + player.spellbook.forkedlightning_bonus_dmg / 100f);
             case Laser_Spell _ -> dmg *= (1 + player.spellbook.lasers_bonus_dmg / 100f);
-            case FrostNova_Spell _ -> dmg *= (1 + player.spellbook.frostnova_bonus_dmg / 100f);
+            case FrostNova_Spell _, FrostNova_ShardProjectile _ -> dmg *= (1 + player.spellbook.frostnova_bonus_dmg / 100f);
             case MeteorShower_Spell _ -> dmg *= (1 + player.spellbook.meteors_bonus_dmg / 100f);
             case Orbit_Spell _ -> dmg *= (1 + player.spellbook.orbit_bonus_dmg / 100f);
             default -> {}
@@ -574,7 +564,9 @@ public abstract class Spell implements Cloneable {
         float modifiedDmg = dmg;
 
         if(player.inventory.equippedStaff instanceof Legendary_FrostStaff && monster.freezeTimer > 0) {
-            modifiedDmg = modifiedDmg * 1.5f;
+            if(monster.last_element_hit != null && monster.last_element_hit == Spell_Element.FROST) {
+                modifiedDmg = modifiedDmg * 1.2f;
+            }
         }
         if(player.inventory.equippedAmulet instanceof Rare_EliteAmulet && monster.heavy) {
             modifiedDmg = modifiedDmg * 1.2f;
@@ -639,8 +631,13 @@ public abstract class Spell implements Cloneable {
     public float checkOtherModifiers(Monster monster, float dmg) {
         float scaledDmg = dmg;
         if(this instanceof ChainLightning_Spell) {
-            if(Math.random() >= 1 - player.spellbook.chainlightningBonus/100f) {
+            if(Math.random() >= 1 - player.spellbook.chainlightning_bonus_crit/100f) {
                 scaledDmg = scaledDmg * 2;
+            }
+        }
+        if(this instanceof Overheat_Spell) {
+            if(monster.hp / monster.maxHP >= 0.85f) {
+                scaledDmg *= (1 + player.spellbook.overheat_bonus_fullhpdmg/100f);
             }
         }
         return scaledDmg;

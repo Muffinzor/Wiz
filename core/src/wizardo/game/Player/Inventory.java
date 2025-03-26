@@ -3,9 +3,11 @@ package wizardo.game.Player;
 import wizardo.game.Items.Equipment.Amulet.Amulet;
 import wizardo.game.Items.Equipment.Amulet.Legendary_MarkAmulet;
 import wizardo.game.Items.Equipment.Book.Book;
+import wizardo.game.Items.Equipment.Book.Epic_OrbitBook;
 import wizardo.game.Items.Equipment.Book.Legendary_PulseBook;
 import wizardo.game.Items.Equipment.Equipment;
 import wizardo.game.Items.Equipment.Hat.Epic_JudgementHat;
+import wizardo.game.Items.Equipment.Hat.Epic_OrbitHat;
 import wizardo.game.Items.Equipment.Hat.Epic_TeleportHat;
 import wizardo.game.Items.Equipment.Hat.Hat;
 import wizardo.game.Items.Equipment.Ring.Epic_FrostRing;
@@ -31,7 +33,7 @@ public class Inventory {
 
     public int dual_reagents;
     public int triple_reagents;
-    public int gold = 10000;
+    public int gold = 0;
     public Equipment[] holdingBox;
 
     public Inventory() {
@@ -39,15 +41,14 @@ public class Inventory {
         holdingBox = new Equipment[15];
         equippedGear = new ArrayList<>();
 
-
-        holdingBox[0] = new Epic_IcespearStaff();
-        holdingBox[1] = new Legendary_MarkAmulet();
+        holdingBox[0] = new Legendary_FrostStaff();
+        holdingBox[1] = new Legendary_FrostRobes();
 
     }
 
     public boolean hasSpace() {
-        for (int i = 0; i < holdingBox.length; i++) {
-            if(holdingBox[i] == null) {
+        for (Equipment item : holdingBox) {
+            if (item == null) {
                 return true;
             }
         }

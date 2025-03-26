@@ -361,15 +361,5 @@ public class FrostLightning_Spells {
         frostlite33.spellParts.add(FROSTBOLT);
         frostliteSpells[33] = frostlite33;
 
-        for (Spell frostLiteSpell : frostliteSpells) {
-
-            if(frostLiteSpell != null && frostLiteSpell.bonus_element == null) {
-                if (frostLiteSpell.main_element == LIGHTNING) {
-                    frostLiteSpell.bonus_element = FROST;
-                } else {
-                    frostLiteSpell.bonus_element = LIGHTNING;
-                }
-            }
-        }
     }
 }

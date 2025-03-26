@@ -34,7 +34,6 @@ public class Thunderstorm_Spell extends Spell {
         dmg = 60;
         radius = 14;
 
-        main_element = SpellUtils.Spell_Element.LIGHTNING;
     }
 
 

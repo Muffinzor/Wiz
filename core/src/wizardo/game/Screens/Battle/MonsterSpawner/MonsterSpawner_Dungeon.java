@@ -11,6 +11,7 @@ import wizardo.game.Screens.Battle.BattleScreen;
 import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyPool;
 
+import static wizardo.game.Screens.BaseScreen.xRatio;
 import static wizardo.game.Wizardo.player;
 
 public class MonsterSpawner_Dungeon extends MonsterSpawner {
@@ -134,12 +135,12 @@ public class MonsterSpawner_Dungeon extends MonsterSpawner {
                 randomizedDirection = SpellUtils.getRandomVectorInRadius(player.pawn.getPosition(), 1);
                 randomizedDirection.nor();
             }
-            randomizedDirection.scl(36);
+            randomizedDirection.scl(36 * xRatio);
             Vector2 centerpoint = player.pawn.getPosition().add(randomizedDirection);
 
             int count = (int) (6 * spawnRatio);
             for (int i = 0; i < count; i++) {
-                Vector2 spawnPoint = SpellUtils.getClearRandomPosition(centerpoint, Math.min(2 * spawnRatio, 10));
+                Vector2 spawnPoint = SpellUtils.getClearRandomPosition(centerpoint, Math.min(2 * spawnRatio, 6));
                 Monster monster;
                 if(Math.random() >= 0.95f) {
                     monster = new TEST_BIGMONSTER(screen, spawnPoint, this);
@@ -183,7 +184,7 @@ public class MonsterSpawner_Dungeon extends MonsterSpawner {
             }
 
             for (int i = 0; i < 6 * spawnRatio; i++) {
-                Vector2 position = SpellUtils.getClearRandomPositionCone(player.pawn.getPosition(), 34, 45, angle);
+                Vector2 position = SpellUtils.getClearRandomPositionCone(player.pawn.getPosition(), 32 * xRatio, 42 * xRatio, angle);
                 Monster monster = new Skeleton(screen, position, this);
                 spawnMonster(monster);
             }
@@ -201,10 +202,10 @@ public class MonsterSpawner_Dungeon extends MonsterSpawner {
     public Vector2 getSpawnPosition() {
         Vector2 playerPosition = player.pawn.getPosition();
         if(direction == null) {
-            return SpellUtils.getClearRandomPositionRing(playerPosition, 32, 45);
+            return SpellUtils.getClearRandomPositionRing(playerPosition, 32 * xRatio, 42 * xRatio);
         } else {
             float angle = direction.angleDeg();
-            return SpellUtils.getClearRandomPositionCone(playerPosition, 32, 45, angle);
+            return SpellUtils.getClearRandomPositionCone(playerPosition, 32 * xRatio, 42 * xRatio, angle);
         }
     }
 
@@ -226,9 +227,9 @@ public class MonsterSpawner_Dungeon extends MonsterSpawner {
             spawnRatio = 1.0f;
         }
 
-        // Clamp the decrease to a maximum of 10% per cycle
-        if (spawnRatio < previousRatio * 0.9f) {
-            spawnRatio = previousRatio * 0.9f; // Limit to 10% reduction
+        // Clamp the decrease to a maximum of 5% per cycle
+        if (spawnRatio < previousRatio * 0.95f) {
+            spawnRatio = previousRatio * 0.95f; // Limit to 5% reduction
         }
         if( spawnRatio > 10) {
             spawnRatio = 10;

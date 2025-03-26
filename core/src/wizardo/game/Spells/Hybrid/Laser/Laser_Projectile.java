@@ -2,6 +2,7 @@ package wizardo.game.Spells.Hybrid.Laser;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Items.Equipment.Amulet.Legendary_MarkAmulet;
@@ -30,14 +31,20 @@ public class Laser_Projectile extends Laser_Spell {
     Body body;
     RoundLight light;
     Sprite frame;
+    float scale = 1;
+
 
     Vector2 direction;
     float rotation;
+    float duration;
 
     int collisions = 0;
+    boolean prism_rolled;
+    boolean is_prism;
 
     public Laser_Projectile() {
-        main_element = ARCANE;
+
+        duration = 2f;
     }
 
     public void update(float delta) {
@@ -52,8 +59,14 @@ public class Laser_Projectile extends Laser_Spell {
         adjustLight();
 
         stateTime += delta;
+        if((stateTime >= duration || is_prism) && delta > 0) {
+            scale -= 0.05f;
+        }
 
-        if(stateTime >= 2) {
+        if(scale <= 0.05f || prism_rolled) {
+            if(prism_rolled) {
+                prism_split();
+            }
             world.destroyBody(body);
             light.dimKill(0.5f);
             screen.spellManager.remove(this);
@@ -71,12 +84,17 @@ public class Laser_Projectile extends Laser_Spell {
         thunderstorm(monster);
         flamejet(monster);
         collisions ++;
+
+        if(!is_prism && Math.random() >= 1 - player.spellbook.lasers_bonus_prismchance/100f) {
+            prism_rolled = true;
+        }
     }
 
     public void drawFrame() {
         Sprite clone = screen.getSprite();
         clone.set(frame);
         clone.setRotation(rotation);
+        clone.setScale(scale);
         clone.setCenter(body.getPosition().x * PPM, body.getPosition().y * PPM);
         screen.addSortedSprite(clone);
     }
@@ -222,6 +240,31 @@ public class Laser_Projectile extends Laser_Spell {
                 thunder.setElements(this);
                 screen.spellManager.add(thunder);
             }
+        }
+    }
+
+    public void prism_split() {
+        int shards = 5;
+        float initialAngle = rotation;
+        float halfCone = 8f * shards / 2;
+        float stepSize = 8f * shards / (shards - 1);
+
+        float[] angles = new float[5];
+        angles[0] = initialAngle - halfCone * MathUtils.random(0.7f, 1.3f);
+        angles[1] = initialAngle - MathUtils.random(stepSize * 0.7f, stepSize * 1.3f);
+        angles[2] = initialAngle * MathUtils.random(0.7f, 1.3f);
+        angles[3] = initialAngle + MathUtils.random(stepSize * 0.7f, stepSize * 1.3f);
+        angles[4] = initialAngle + halfCone * MathUtils.random(0.7f, 1.3f);
+        for (int i = 0; i < shards; i++) {
+            float angle = angles[i];
+            Vector2 direction = new Vector2(MathUtils.cosDeg(angle), MathUtils.sinDeg(angle));
+            Laser_Projectile laser = new Laser_Projectile();
+            laser.setLaser(this);
+            laser.spawnPosition = new Vector2(body.getPosition());
+            laser.targetPosition = new Vector2(body.getPosition().cpy().add(direction));
+            laser.is_prism = true;
+            laser.scale = 0.6f;
+            screen.spellManager.add(laser);
         }
     }
 

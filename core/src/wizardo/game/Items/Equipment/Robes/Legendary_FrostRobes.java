@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import wizardo.game.Items.ItemUtils;
+import wizardo.game.Monsters.MonsterArchetypes.Monster;
+import wizardo.game.Spells.Unique.FreezingBlast.FreezingBlast_Explosion;
 import wizardo.game.Spells.Unique.FreezingMist.FreezingMist_Pulse;
 
 import static wizardo.game.Wizardo.player;
@@ -28,8 +30,10 @@ public class Legendary_FrostRobes extends Robes{
 
     public String getDescription() {
         return String.format("""
-            Monsters near you will periodically
-            be frozen or slowed""");
+            Periodically release a freezing mist
+            
+            Freezing monsters can also release a
+            cloud of freezing mist""");
     }
 
     public String getFlavorText() {
@@ -42,6 +46,13 @@ public class Legendary_FrostRobes extends Robes{
             FreezingMist_Pulse gust = new FreezingMist_Pulse(player.pawn.getPosition());
             player.screen.spellManager.add(gust);
             stateTime = 0;
+        }
+    }
+
+    public void castNova(Monster monster) {
+        if(Math.random() >= 0.8f) {
+            FreezingBlast_Explosion nova = new FreezingBlast_Explosion(monster.body.getPosition());
+            monster.screen.spellManager.add(nova);
         }
     }
 }

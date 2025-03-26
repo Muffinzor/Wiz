@@ -31,9 +31,6 @@ public class ArcaneMissile_Spell extends Spell {
         speed = 225f/PPM;
         cooldown = 1.2f;
         autoaimable = true;
-
-        main_element = SpellUtils.Spell_Element.ARCANE;
-
     }
 
     public void setup() {

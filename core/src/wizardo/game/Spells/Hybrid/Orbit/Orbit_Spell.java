@@ -10,7 +10,7 @@ import static wizardo.game.Wizardo.player;
 
 public class Orbit_Spell extends Spell {
 
-    public int orbs = 3;
+    public int orbs;
     public float orbitRadius = 5;
 
     public boolean frostbolt;
@@ -22,16 +22,18 @@ public class Orbit_Spell extends Spell {
         levelup_enum = LevelUpEnums.LevelUps.ORBIT;
 
         speed = 2;
-        dmg = 20;
+        dmg = 30;
         cooldown = 12;
         duration = 6;
     }
 
     public void setup() {
-        orbitRadius = orbitRadius * (1 + player.spellbook.orbitingIceRadius/100f);
+        speed = speed * (1 + player.spellbook.orbit_bonus_speed /100f);
+        duration += player.spellbook.orbit_bonus_duration;
         if(player.inventory.equippedBook instanceof Epic_OrbitBook) {
             speed = speed * 1.2f;
         }
+        orbs = 2 + player.spellbook.rift_lvl;
     }
 
     @Override
@@ -50,9 +52,7 @@ public class Orbit_Spell extends Spell {
             float y = player.pawn.getPosition().y + orbitRadius * MathUtils.sin(angle);
             Vector2 startPos = new Vector2(x, y);
             Orbit_Projectile orb = new Orbit_Projectile(startPos, angle);
-            orb.setElements(this);
-            orb.frostbolt = frostbolt;
-            orb.orbitRadius = orbitRadius;
+            orb.set_orb(this);
             screen.spellManager.add(orb);
         }
 
@@ -66,12 +66,18 @@ public class Orbit_Spell extends Spell {
                 Vector2 startPos = new Vector2(x, y);
                 Orbit_Projectile orb = new Orbit_Projectile(startPos, angle);
                 orb.reverse = true;
-                orb.setElements(this);
-                orb.frostbolt = frostbolt;
-                orb.orbitRadius = orbitRadius;
+                orb.set_orb(this);
                 screen.spellManager.add(orb);
             }
         }
+    }
+
+    public void set_orb(Orbit_Spell orb) {
+        this.speed = orb.speed;
+        this.duration = orb.duration;
+        this.frostbolt = orb.frostbolt;
+        this.orbitRadius = orb.orbitRadius;
+        setElements(orb);
     }
 
     @Override
@@ -86,8 +92,6 @@ public class Orbit_Spell extends Spell {
 
     @Override
     public int getDmg() {
-        int dmg = this.dmg + 10 * player.spellbook.frozenorb_lvl;
-        dmg = (int) (dmg * (1 + player.spellbook.gravityBonusDmg/100f));
-        return dmg;
+        return this.dmg + 15 * player.spellbook.frozenorb_lvl;
     }
 }

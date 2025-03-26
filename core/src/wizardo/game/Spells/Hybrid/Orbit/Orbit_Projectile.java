@@ -33,10 +33,9 @@ public class Orbit_Projectile extends Orbit_Spell {
     public Orbit_Projectile(Vector2 spawnPosition, float angle) {
         this.spawnPosition = new Vector2(spawnPosition);
         this.angle = angle;
-        radius = 24 * (1 + player.spellbook.iceRadiusBonus/100f);
+        radius = 24;
 
         rotation = MathUtils.random(360);
-        anim = FrozenorbAnims.orbit_anim_frost;
     }
 
     public void update(float delta) {
@@ -116,11 +115,6 @@ public class Orbit_Projectile extends Orbit_Spell {
         if(alpha < 1) {
             frame.setAlpha(alpha);
         }
-
-        if(player.spellbook.iceRadiusBonus > 0) {
-            frame.setScale(1 + (player.spellbook.iceRadiusBonus/100f));
-        }
-
 
         frame.setCenter(body.getPosition().x * PPM, body.getPosition().y * PPM);
         screen.centerSort(frame, body.getPosition().y * PPM - 20);

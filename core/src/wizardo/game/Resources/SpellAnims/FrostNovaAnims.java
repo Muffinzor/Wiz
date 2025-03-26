@@ -1,5 +1,6 @@
 package wizardo.game.Resources.SpellAnims;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -9,8 +10,9 @@ import static wizardo.game.Wizardo.assetManager;
 public class FrostNovaAnims {
 
     public static Animation<Sprite> frostnova_anim;
-
     public static String frostnova_anim_path = "Spells/Frostnova/Frostnova.atlas";
+
+    public static Sprite frostnova_shard_sprite = new Sprite(new Texture("Spells/Frostnova/shard.png"));
 
     public static void loadAnimations() {
 

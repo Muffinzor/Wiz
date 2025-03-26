@@ -135,11 +135,7 @@ public class Frostbolt_Explosion extends Frostbolt_Spell{
         light = screen.lightManager.pool.getLight();
         light.setLight(red,green,blue,lightAlpha,80 * frameScale,  body.getPosition());
         light.toLightManager();
-        if(bonus_element == FIRE) {
-            light.dimKill(0.01f);
-        } else {
-            light.dimKill(0.015f);
-        }
+        light.dimKill(0.015f);
     }
 
     public void pickAnim() {

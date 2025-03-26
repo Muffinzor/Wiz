@@ -19,7 +19,7 @@ public class MeteorShower_Spell extends Spell {
     public ArrayList<Monster> inRange;
 
     public float interval;
-    public float frequency = 10;
+    public float frequency;
     public float duration = 4f;
 
     public boolean thunderstorm;
@@ -28,7 +28,7 @@ public class MeteorShower_Spell extends Spell {
     public boolean flamejets;
     public boolean arcaneMissile;
 
-    public float showerRadius = 15;
+    public float showerRadius = 14;
 
     public MeteorShower_Spell() {
 
@@ -41,7 +41,6 @@ public class MeteorShower_Spell extends Spell {
 
         speed = 8f;
 
-        main_element = FIRE;
     }
 
     @Override
@@ -98,24 +97,18 @@ public class MeteorShower_Spell extends Spell {
 
     public void setup() {
         if(thunderstorm) {
-            duration = 6;
-            frequency = 1.8f + 0.4f * player.spellbook.thunderstorm_lvl;
-            showerRadius += player.spellbook.thunderstorm_lvl * 0.75f;
-            main_element = LIGHTNING;
-            bonus_element = FIRE;
+            frequency = 1.5f + 0.5f * player.spellbook.thunderstorm_lvl;
         } else if (rift || arcaneMissile) {
-            duration = 8;
-            frequency = 1.8f + 0.4f * player.spellbook.rift_lvl;
-            showerRadius += player.spellbook.rift_lvl * 0.75f;
-            main_element = FIRE;
-            bonus_element = ARCANE;
+            frequency = 1.5f + 0.5f * player.spellbook.rift_lvl;
         }
-        frequency = frequency * (1 + player.spellbook.empyreanFrequencyBonus/100f);
+        frequency = frequency * (1 + player.spellbook.meteors_bonus_frequency/100f);
         interval = 1/frequency;
 
+        duration += player.spellbook.meteors_bonus_duration;
         if(player.inventory.equippedAmulet instanceof Epic_StormAmulet) {
             duration *= 1.3f;
         }
+
     }
 
     public void setMeteor(MeteorShower_Spell parentSpell) {
@@ -138,8 +131,7 @@ public class MeteorShower_Spell extends Spell {
 
     @Override
     public int getDmg() {
-        int dmg = 80 + 20 * player.spellbook.fireball_lvl;
-        dmg = (int) (dmg * (1 + player.spellbook.explosivesBonusDmg/100f));
+        int dmg = 50 + 50 * player.spellbook.fireball_lvl;
         return dmg;
     }
 }

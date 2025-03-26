@@ -34,7 +34,6 @@ public class Flamejet_Spell extends Spell {
         cooldown = 2.5f;
         dmg = 20;
 
-        main_element = FIRE;
 
         lightAlpha = 0.88f;
 
@@ -129,22 +128,6 @@ public class Flamejet_Spell extends Spell {
         int dmg = this.dmg;
         dmg += 8 * getLvl();
         return dmg;
-    }
-
-    public void dealDmg(Monster monster) {
-        float dmg = getDmg();
-        dmg += 4 * monster.flamejetStacks;
-        dmg = apply_specific_spell_dmg_bonus(dmg);
-        dmg = apply_elemental_dmg_bonus(dmg);
-        float randomFactor = MathUtils.random(1 - dmgVariance, 1 + dmgVariance);
-        dmg *= randomFactor;
-        monster.hp -= dmg;
-
-        checkGearProcs(monster);
-
-        if(dmg_text_on) {
-            dmgText( (int)dmg, monster);
-        }
     }
 
 }

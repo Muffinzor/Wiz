@@ -31,7 +31,6 @@ public class Judgement_Spell extends Spell {
 
         dmg = 60;
 
-        main_element = ARCANE;
 
         cooldown = 5;
     }

@@ -37,9 +37,6 @@ public class Rifts_Spell extends Spell {
 
         cooldown = 5f;
         dmg = 16;
-
-        main_element = SpellUtils.Spell_Element.ARCANE;
-
     }
 
     @Override

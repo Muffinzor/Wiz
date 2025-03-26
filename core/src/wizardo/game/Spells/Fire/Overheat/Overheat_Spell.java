@@ -31,7 +31,6 @@ public class Overheat_Spell extends Spell {
         cooldown = 6.4f;
         dmg = 90;
 
-        main_element = SpellUtils.Spell_Element.FIRE;
     }
 
     public void update(float delta) {
@@ -79,29 +78,6 @@ public class Overheat_Spell extends Spell {
     public float getCooldown() {
         float castspeed_bonus = player.spellbook.castSpeed/100f + player.spellbook.overheat_bonus_cdreduction/100f;
         return Math.max(cooldown * (1 - castspeed_bonus), cooldown/2);
-    }
-
-    @Override
-    public void dealDmg(Monster monster) {
-        float dmg = getDmg();
-        dmg = apply_specific_spell_dmg_bonus(dmg);
-        dmg = apply_elemental_dmg_bonus(dmg);
-        float randomFactor = MathUtils.random(1 - dmgVariance, 1 + dmgVariance);
-        dmg *= randomFactor;
-
-        checkGearProcs(monster);
-        dmg = applyGearModifiers(monster, dmg);
-        dmg = checkOtherModifiers(monster, dmg);
-
-        if(monster.hp / monster.maxHP >= 0.85f) {
-            dmg *= (1 + player.spellbook.overheat_bonus_fullhpdmg/100f);
-        }
-
-        monster.hp -= dmg;
-
-        if(dmg_text_on) {
-            dmgText( (int)dmg, monster);
-        }
     }
 
 }

@@ -283,6 +283,7 @@ public class Frozenorb_Projectile extends Frozenorb_Spell {
                 }
             }
             frostNovaSpent = true;
+            body.setLinearVelocity(0,0);
         }
     }
 }

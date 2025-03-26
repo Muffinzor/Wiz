@@ -27,23 +27,15 @@ public class Legendary_FrostStaff extends Staff {
 
     public String getDescription() {
         return String.format("""
-            Your frost damage deals 150%% damage
-            to frozen enemies and bosses
+            Killing a frozen monster with frost
+            damage can cause them to shatter
             
-            When you freeze an enemy, there is a
-            chance it releases a freezing mist""");
+            You deal 20%% more damage to
+            frozen monsters""");
     }
 
     public String getFlavorText() {
         return "\" True Equilibrium\"";
-    }
-
-    public void castNova(Monster monster) {
-        if(Math.random() >= 0.8f) {
-            FreezingBlast_Explosion nova = new FreezingBlast_Explosion(monster.body.getPosition());
-            monster.screen.spellManager.add(nova);
-        }
-
     }
 
 }

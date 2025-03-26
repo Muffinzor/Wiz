@@ -98,6 +98,13 @@ public class LevelUpTable extends MenuTable {
             case CELESTIALSTRIKE -> panel = new H_Celestialstrike(screen);
             case JUDGEMENT -> panel = new H_Judgement(screen);
             case ENERGYRAIN -> panel = new H_Energyrain(screen);
+            case LIGHTNINGHANDS -> panel = new H_Lightninghands(screen);
+            case METEORS -> panel = new H_Meteors(screen);
+            case LASERS -> panel = new H_Lasers(screen);
+            case ORBIT -> panel = new H_Orbit(screen);
+            case FORKEDLIGHTNING -> panel = new H_Forkedlightning(screen);
+            case FROSTNOVA -> panel = new H_Frostnova(screen);
+            case REPULSIONFIELD -> panel = new H_Repulsionfield(screen);
 
             case LUCK -> panel = new B_Luck(screen);
             case REGEN -> panel = new B_Regen(screen);
@@ -105,7 +112,6 @@ public class LevelUpTable extends MenuTable {
             case EXPERIENCE -> panel = new B_Experience(screen);
             case SHIELD -> panel = new B_Shield(screen);
             case DEFENSE -> panel = new B_Defense(screen);
-
             case ELEMENT -> panel = new B_Element(screen, get_random_unique_element());
         }
         return panel;

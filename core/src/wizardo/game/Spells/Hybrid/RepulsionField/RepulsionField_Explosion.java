@@ -39,8 +39,6 @@ public class RepulsionField_Explosion extends RepulsionField_Spell {
         anim = RepulsionFieldAnims.repulsion_field;
 
         anim_element = SpellUtils.Spell_Element.ARCANE;
-        main_element = SpellUtils.Spell_Element.ARCANE;
-        bonus_element = FIRE;
 
     }
 

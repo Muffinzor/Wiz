@@ -35,7 +35,7 @@ public abstract class PanelButton extends TextButton {
     public boolean selected;
 
     public Spell learned_spell;  // if this is a mastery powerup
-    public int spell_dmg_buff = 10;
+    public int spell_dmg_buff = 15;
     public float bonus_effect_chance = 0.4f;
 
     public PanelButton(LevelUpScreen screen) {

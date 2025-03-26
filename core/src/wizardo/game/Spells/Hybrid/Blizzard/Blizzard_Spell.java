@@ -36,7 +36,6 @@ public class Blizzard_Spell extends Spell {
 
         blizz_radius = 18;
 
-        main_element = SpellUtils.Spell_Element.FROST;
     }
 
     public void setup() {

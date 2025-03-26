@@ -36,9 +36,6 @@ public class EnergyBeam_Spell extends Spell {
         dmg = 60;
         cooldown = 3.2f;
         autoaimable = true;
-
-        main_element = SpellUtils.Spell_Element.ARCANE;
-
     }
 
     @Override

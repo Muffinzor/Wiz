@@ -53,9 +53,9 @@ public class Arcane_Spells {
         Laser_Spell arcane6 = new Laser_Spell();
         arcane6.anim_element = ARCANE;
         arcane6.rifts = true;
-        arcane6.spellParts.add(RIFTS);
         arcane6.spellParts.add(MISSILES);
         arcane6.spellParts.add(BEAM);
+        arcane6.spellParts.add(RIFTS);
         arcane_spells[6] = arcane6;
 
     }

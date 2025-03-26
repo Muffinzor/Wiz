@@ -39,15 +39,11 @@ public class LightningHands_Projectile extends LightningHands_Spell {
 
         anim = LightningHandsAnims.lightning_branch_anim;
 
-        bonus_element = FIRE;
         anim_element = FIRE;
 
         red = 0.75f;
         green = 0.15f;
         lightAlpha = 0.3f;
-
-
-
     }
 
     public void update(float delta) {
@@ -61,7 +57,6 @@ public class LightningHands_Projectile extends LightningHands_Spell {
         animTime += delta;
         stateTime += delta;
         drawFrame();
-
 
         if(!body.getLinearVelocity().isZero() && isTooFar()) {
             body.setLinearVelocity(0, 0);
@@ -78,9 +73,9 @@ public class LightningHands_Projectile extends LightningHands_Spell {
         chainlightning(monster);
         chargedbolts(monster);
         if(thunderstorm) {
-            float str = 2.8f + 0.4f * player.spellbook.thunderstorm_lvl;
-            float duration = 0.18f + 0.04f * player.spellbook.thunderstorm_lvl;
-            float decay = 0.91f + 0.0025f * player.spellbook.thunderstorm_lvl;
+            float str = 2.4f + 0.8f * player.spellbook.thunderstorm_lvl;
+            float duration = 0.16f + 0.06f * player.spellbook.thunderstorm_lvl;
+            float decay = 0.91f + 0.005f * player.spellbook.thunderstorm_lvl;
             Vector2 direction = monster.body.getPosition().sub(player.pawn.body.getPosition());
             monster.movementManager.applyPush(direction, str, duration, decay);
         }
@@ -136,13 +131,12 @@ public class LightningHands_Projectile extends LightningHands_Spell {
             }
 
             for (int i = 0; i <= numLights; i++) {
-                float t = i / (float) numLights; // Interpolation factor (0 to 1)
+                float t = i / (float) numLights;
                 Vector2 lightPosition = new Vector2(
                         MathUtils.lerp(player.pawn.getPosition().x, currentPosition.x, t),
                         MathUtils.lerp(player.pawn.getPosition().y, currentPosition.y, t)
                 );
 
-                // Create the light (you can adjust the radius and color as needed)
                 RoundLight light = screen.lightManager.pool.getLight();
                 light.setLight(red, green, blue, lightAlpha + 0.01f * i, lightRadius, lightPosition);
                 light.dimKill(0.02f);
@@ -163,7 +157,7 @@ public class LightningHands_Projectile extends LightningHands_Spell {
 
     public void chainlightning(Monster monster) {
         if(chainlightning) {
-            float procRate = 0.933f - 0.033f * player.spellbook.chainlightning_lvl;
+            float procRate = 0.975f - 0.075f * player.spellbook.chainlightning_lvl;
             if(Math.random() >= procRate) {
                 ForkedLightning_Spell lightning = new ForkedLightning_Spell();
                 lightning.setElements(this);
@@ -175,9 +169,10 @@ public class LightningHands_Projectile extends LightningHands_Spell {
 
     public void chargedbolts(Monster monster) {
         if(chargedbolts) {
-            float procRate = 0.95f - 0.05f * player.spellbook.chargedbolt_lvl;
+            float procRate = 1f - 0.1f * player.spellbook.chargedbolt_lvl;
             if(Math.random() >= procRate) {
-                for (int i = 0; i < 3; i++) {
+                int quantity = 3 + player.spellbook.chargedbolts_bonus_proj;
+                for (int i = 0; i < quantity; i++) {
                     ChargedBolts_Spell bolt = new ChargedBolts_Spell();
                     bolt.setElements(this);
                     bolt.spawnPosition = new Vector2(monster.body.getPosition());

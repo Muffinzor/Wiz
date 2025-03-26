@@ -63,7 +63,6 @@ public class StaticPulse extends Spell {
     }
 
     public void pickAnim() {
-        main_element = anim_element;
         switch(anim_element) {
             case FROST, COLDLITE -> {
                 blue = 0.9f;

@@ -25,7 +25,6 @@ public class Brand_Explosion extends Spell {
     public Brand_Explosion(Vector2 position) {
         this.targetPosition = SpellUtils.getRandomVectorInRadius(position, 1.2f);
         anim_element = SpellUtils.Spell_Element.FIRE;
-        main_element = SpellUtils.Spell_Element.FIRE;
 
         rotation = MathUtils.random(360);
         flipX = MathUtils.randomBoolean();

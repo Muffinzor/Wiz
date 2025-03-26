@@ -11,6 +11,7 @@ import wizardo.game.Screens.Battle.BattleScreen;
 import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyPool;
 
+import static wizardo.game.Screens.BaseScreen.xRatio;
 import static wizardo.game.Wizardo.player;
 
 public abstract class MonsterSpawner {
@@ -210,10 +211,10 @@ public abstract class MonsterSpawner {
     public Vector2 getSpawnPosition() {
         Vector2 playerPosition = player.pawn.getPosition();
         if(direction == null) {
-            return SpellUtils.getClearRandomPositionRing(playerPosition, 32, 45);
+            return SpellUtils.getClearRandomPositionRing(playerPosition, 32 * xRatio, 42 * xRatio);
         } else {
             float angle = direction.angleDeg();
-            return SpellUtils.getClearRandomPositionCone(playerPosition, 32, 45, angle);
+            return SpellUtils.getClearRandomPositionCone(playerPosition, 32 * xRatio, 42 * xRatio, angle);
         }
     }
 

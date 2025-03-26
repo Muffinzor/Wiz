@@ -36,6 +36,7 @@ public class Skeleton extends MonsterMelee {
         stateTime = (float) Math.random();
         walk_anim = SkeletonAnims.skelly_walk_T1;
         death_anim = SkeletonAnims.skelly_death_T1;
+        shatter_anim = SkeletonAnims.skelly_shatter;
         weaponSprite = MonsterWeapons.bone;
 
         movementManager = new MovementManager(this);
