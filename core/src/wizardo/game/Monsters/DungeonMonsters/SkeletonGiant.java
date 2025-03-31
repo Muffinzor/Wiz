@@ -1,14 +1,17 @@
-package wizardo.game.Monsters;
+package wizardo.game.Monsters.DungeonMonsters;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import wizardo.game.Items.Drop.GoldDrop;
+import wizardo.game.Monsters.MonsterActionManager;
 import wizardo.game.Monsters.MonsterArchetypes.MonsterMelee;
 import wizardo.game.Monsters.MonsterMovement.MovementManager;
 import wizardo.game.Monsters.MonsterActions.AttackSwing.AttackSwing;
 import wizardo.game.Monsters.MonsterStateManager.MeleeStateManager;
+import wizardo.game.Monsters.MonsterUtils;
 import wizardo.game.Resources.MonsterResources.MonsterWeapons;
 import wizardo.game.Resources.MonsterResources.OrcBruteAnims;
+import wizardo.game.Resources.MonsterResources.SkeletonGiantAnims;
 import wizardo.game.Screens.Battle.BattleScreen;
 import wizardo.game.Screens.Battle.MonsterSpawner.MonsterSpawner;
 import wizardo.game.Screens.Battle.MonsterSpawner.MonsterSpawner_Dungeon;
@@ -16,14 +19,14 @@ import wizardo.game.Screens.Battle.MonsterSpawner.MonsterSpawner_Dungeon;
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.player;
 
-public class TEST_BIGMONSTER extends MonsterMelee {
+public class SkeletonGiant extends MonsterMelee {
 
-    public TEST_BIGMONSTER(BattleScreen screen, Vector2 position, MonsterSpawner spawner) {
+    public SkeletonGiant(BattleScreen screen, Vector2 position, MonsterSpawner spawner) {
         super(screen, position, spawner);
         speed = 20f/PPM;
-        hp = 150;
-        maxHP = 150;
-        xp = 30;
+        hp = 125;
+        maxHP = 125;
+        xp = 25;
 
         dmg = 20;
 
@@ -33,8 +36,8 @@ public class TEST_BIGMONSTER extends MonsterMelee {
         width = 32;
 
         stateTime = (float) Math.random();
-        walk_anim = OrcBruteAnims.orcBrute_walk;
-        death_anim = OrcBruteAnims.orcBrute_death;
+        walk_anim = SkeletonGiantAnims.skellygiant_walk;
+        death_anim = SkeletonGiantAnims.skellygiant_death;
         weaponSprite = MonsterWeapons.bone_axe;
 
         movementManager = new MovementManager(this);
@@ -46,7 +49,6 @@ public class TEST_BIGMONSTER extends MonsterMelee {
 
         state = MonsterUtils.MONSTER_STATE.ADVANCING;
         heavy = true;
-
     }
 
     @Override

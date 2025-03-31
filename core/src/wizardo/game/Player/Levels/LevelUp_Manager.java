@@ -36,13 +36,13 @@ public class LevelUp_Manager {
         masteries = new int[12];
     }
 
-    public ArrayList<LevelUpEnums.LevelUps> get_selection(LevelUpScreen screen) {
+    public ArrayList<LevelUpEnums.LevelUps> get_selection() {
         ArrayList<LevelUpEnums.LevelUps> list = new ArrayList<>();
 
         for (int i = 0; i < player.levelup_choices; i++) {
             double random = Math.random();
             if(random >= 0.9f) {
-                list.add(get_rare_level_up(screen, list));
+                list.add(get_rare_level_up(list));
             } else if (random >= 0.5f){
                 if(Math.random() >= 0.7f) {
                     list.add(get_equipped_parts_buff(list));
@@ -78,17 +78,19 @@ public class LevelUp_Manager {
         return list.getFirst();
     }
 
-    public LevelUpEnums.LevelUps get_rare_level_up(LevelUpScreen screen, ArrayList<LevelUpEnums.LevelUps> current_choices) {
+    public LevelUpEnums.LevelUps get_rare_level_up(ArrayList<LevelUpEnums.LevelUps> current_choices) {
         ArrayList<LevelUpEnums.LevelUps> list = new ArrayList<>();
-        int random = MathUtils.random(1, 18);
-        switch(random) {
-            case 1,2,3,4,5,6,7,8 -> list.add(ELEMENT);
-            case 9,10,11 -> list.add(get_learnable_mastery(2, false, current_choices));
-            case 12 -> list.add(get_learnable_mastery(3, true, current_choices));
-            case 13,14,15 -> list.add(REGEN);
-            case 16,17,18 -> list.add(DEFENSE);
+        while(list.isEmpty()) {
+            int random = MathUtils.random(1, 18);
+            switch(random) {
+                case 1,2,3,4,5,6,7,8 -> list.add(ELEMENT);
+                case 9,10,11 -> list.add(get_learnable_mastery(2, false, current_choices));
+                case 12 -> list.add(get_learnable_mastery(3, true, current_choices));
+                case 13,14,15 -> list.add(REGEN);
+                case 16,17,18 -> list.add(DEFENSE);
+            }
+            list.removeAll(current_choices);
         }
-        Collections.shuffle(list);
         return list.getFirst();
     }
 

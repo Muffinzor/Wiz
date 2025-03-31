@@ -19,13 +19,10 @@ public class MonsterActionManager {
 
     public void update(float delta) {
         timer -= delta;
-
         if(monster.state == ATTACKING && timer <= 0 && monster.movementManager.pushBackTimer <= 0 && monster.freezeTimer < 0) {
             monster.launchAttack();
             timer = attackCD;
         }
-
-
     }
 
 }

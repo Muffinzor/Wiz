@@ -109,12 +109,11 @@ public class Flamejet_Projectile extends Flamejet_Spell {
         }
 
 
-        if(!icespear && quantity > 1) {
-            float angleVariation = Math.min(quantity * 5, 20);
+        if(!icespear) {
+            float angleVariation = quantity * 2f;
             float randomAngle = MathUtils.random(-angleVariation, angleVariation);
             direction.rotateDeg(randomAngle);
         }
-
 
         Vector2 offset = new Vector2(direction.cpy().scl(1f));
         Vector2 adjustedSpawn = new Vector2(spawnPosition.add(offset));

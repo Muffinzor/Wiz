@@ -24,7 +24,6 @@ public class MovementManager {
     }
 
     public void moveMonster(float delta) {
-
         if(delta == 0) {
             stopMonster();
         } else if(pushBackTimer > 0) {
@@ -39,7 +38,6 @@ public class MovementManager {
                     frameCounter = 20;
                 }
             }
-
         }
     }
 
@@ -68,7 +66,6 @@ public class MovementManager {
 
     public void checkDistance() {
         float dst = monster.body.getPosition().dst(player.pawn.getPosition());
-        System.out.println(dst + " vs " + (0.83 * Gdx.graphics.getWidth())/PPM);
         if(dst > (0.83 * Gdx.graphics.getWidth())/PPM) {
             monster.tooFar = true;
         }

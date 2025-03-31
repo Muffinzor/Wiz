@@ -1,21 +1,28 @@
-package wizardo.game.Monsters;
+package wizardo.game.Monsters.DungeonMonsters;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import wizardo.game.Items.Drop.ScrollDrop;
+import wizardo.game.Monsters.MonsterActionManager;
+import wizardo.game.Monsters.MonsterActions.AttackSwing.AttackSwing;
+import wizardo.game.Monsters.MonsterActions.MonsterSpell;
 import wizardo.game.Monsters.MonsterActions.SmallLaser.SmallLaser_Action;
-import wizardo.game.Monsters.MonsterArchetypes.MonsterRanged;
+import wizardo.game.Monsters.MonsterActions.TrackingMissile.TrackingMissile_Action;
+import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Monsters.MonsterMovement.MovementManager;
 import wizardo.game.Monsters.MonsterStateManager.RangedStateManager;
+import wizardo.game.Monsters.MonsterUtils;
 import wizardo.game.Resources.MonsterResources.AcolyteAnims;
 import wizardo.game.Screens.Battle.BattleScreen;
-import wizardo.game.Screens.Battle.MonsterSpawner.MonsterSpawner;
+import wizardo.game.Screens.Battle.MonsterSpawner.MonsterSpawner_Dungeon;
 
 import static wizardo.game.Utils.Constants.PPM;
 
-public class TEST_RANGED extends MonsterRanged {
+public class AcolytePurple extends Monster {
 
-    public TEST_RANGED(BattleScreen screen, Vector2 position, MonsterSpawner spawner) {
+    MonsterSpell projectile;
+
+    public AcolytePurple(BattleScreen screen, Vector2 position, MonsterSpawner_Dungeon spawner) {
         super(screen, position, spawner);
         speed = 25f/PPM;
         hp = 50;
@@ -29,9 +36,9 @@ public class TEST_RANGED extends MonsterRanged {
         width = 24;
         height = 32;
 
-        spawn_anim = AcolyteAnims.acolyte_spawn_blue;
-        walk_anim = AcolyteAnims.acolyte_walk_blue;
-        death_anim = AcolyteAnims.acolyte_death_blue;
+        spawn_anim = AcolyteAnims.acolyte_spawn_purple;
+        walk_anim = AcolyteAnims.acolyte_walk_purple;
+        death_anim = AcolyteAnims.acolyte_death_purple;
 
         movementManager = new MovementManager(this);
         stateManager = new RangedStateManager(this, 4.5f, 12f);
@@ -39,7 +46,13 @@ public class TEST_RANGED extends MonsterRanged {
 
         state = MonsterUtils.MONSTER_STATE.SPAWNING;
 
-        projectile = new SmallLaser_Action(this);
+        projectile = new TrackingMissile_Action(this);
+    }
+
+    @Override
+    public void launchAttack() {
+        TrackingMissile_Action proj = new TrackingMissile_Action(this);
+        screen.monsterSpellManager.toAdd(proj);
     }
 
     @Override

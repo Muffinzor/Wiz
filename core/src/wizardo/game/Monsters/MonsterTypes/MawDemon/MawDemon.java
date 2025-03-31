@@ -31,7 +31,7 @@ public class MawDemon extends Monster {
         maxHP = 2800;
         xp = 400;
         elite = true;
-
+        heavy = true;
         dmg = 20;
 
         massValue = 10000f;
@@ -48,7 +48,7 @@ public class MawDemon extends Monster {
         monsterActionManager = new MawDemon_ActionManager(this, 2.5f);
 
         state = MonsterUtils.MONSTER_STATE.ADVANCING;
-        heavy = true;
+
     }
 
     float chargeTimer;

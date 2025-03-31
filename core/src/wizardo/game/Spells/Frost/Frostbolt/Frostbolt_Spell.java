@@ -29,7 +29,7 @@ public class Frostbolt_Spell extends Spell {
         cooldown = 0.8f;
         autoaimable = true;
 
-
+        soundPath = "Sounds/Spells/IceThrow1.wav";
     }
 
     public void setup() {
@@ -51,6 +51,8 @@ public class Frostbolt_Spell extends Spell {
     @Override
     public void update(float delta) {
         setup();
+
+        playSound(getSpawnPosition());
 
         autoAimCheck();
 

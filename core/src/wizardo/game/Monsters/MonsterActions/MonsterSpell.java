@@ -41,7 +41,6 @@ public abstract class MonsterSpell implements Cloneable {
         this.originMonster = monster;
     }
 
-
     public void update(float delta) {
         if(!initialized) {
             initialize();
@@ -139,7 +138,6 @@ public abstract class MonsterSpell implements Cloneable {
 
     /** Default set up for projectile **/
     public void createBody() {
-
         if(targetPosition == null) {
             targetPosition = new Vector2(player.pawn.getPosition());
         }
@@ -152,7 +150,6 @@ public abstract class MonsterSpell implements Cloneable {
         Vector2 velocity = direction.scl(speed);
         rotation = velocity.angleDeg();
         body.setLinearVelocity(velocity);
-
     }
 
     public abstract void dispose();

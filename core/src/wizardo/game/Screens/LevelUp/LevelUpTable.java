@@ -68,7 +68,7 @@ public class LevelUpTable extends MenuTable {
     }
 
     public void createPanels() {
-        ArrayList<LevelUpEnums.LevelUps> choices = player.levelUpManager.get_selection(screen);
+        ArrayList<LevelUpEnums.LevelUps> choices = player.levelUpManager.get_selection();
         for (int i = 0; i < choices.size(); i++) {
             PanelButton panel = build_panel(choices.get(i));
             table.add(panel).padLeft(15).padRight(15);
@@ -168,7 +168,6 @@ public class LevelUpTable extends MenuTable {
         for (PanelButton panel : buttonsMatrix) {
                 panel.adjustSize();
         }
-
     }
 
     public LevelUpEnums.LevelUps get_random_unique_element() {

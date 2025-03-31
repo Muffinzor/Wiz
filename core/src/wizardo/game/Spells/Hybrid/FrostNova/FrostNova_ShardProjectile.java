@@ -28,12 +28,10 @@ public class FrostNova_ShardProjectile extends Spell {
         this.originMonster = originMonster;
         spawnPosition = new Vector2(originMonster.body.getPosition());
         targetPosition = SpellUtils.getRandomVectorInRadius(originMonster.body.getPosition(), 2);
-
         speed = MathUtils.random(5f, 7f);
         lightAlpha = 1;
         scale = MathUtils.random(1.6f, 2);
         anim_element = FROST;
-
     }
 
     @Override
@@ -43,32 +41,30 @@ public class FrostNova_ShardProjectile extends Spell {
             createBody();
             createLight();
         }
-
         stateTime += delta;
         drawFrame();
-
         if(delta > 0) {
             scale -= 0.04f;
         }
-
         if(scale <= 0.2f) {
             world.destroyBody(body);
             screen.spellManager.remove(this);
         } else {
             adjustLight();
         }
-
     }
 
     @Override
     public void handleCollision(Monster monster) {
-        dealDmg(monster);
+        if(monster != originMonster) {
+            dealDmg(monster);
+        }
     }
 
     @Override
     public int getDmg() {
         float monster_part = 0.1f * originMonster.maxHP * Math.max(1, player.spellbook.overheat_lvl);
-        return 45 + (int) monster_part;
+        return 30 + (int) monster_part;
     }
 
     public void drawFrame() {

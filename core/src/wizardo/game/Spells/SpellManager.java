@@ -79,7 +79,7 @@ public class SpellManager {
                 clone.castByPawn = true;
                 spellsToCast.add(clone);
                 cooldown1 = clone.getCooldown();
-                attemptMulticast(player.spellbook.equippedSpells.getFirst().clone());
+                attemptMulticast(clone.clone());
             }
 
             cooldown2 -= delta;
@@ -88,7 +88,7 @@ public class SpellManager {
                 clone.castByPawn = true;
                 spellsToCast.add(clone);
                 cooldown2 = clone.getCooldown();
-                attemptMulticast(player.spellbook.equippedSpells.get(1).clone());
+                attemptMulticast(clone.clone());
             }
 
             cooldown3 -= delta;
@@ -97,7 +97,7 @@ public class SpellManager {
                 clone.castByPawn = true;
                 spellsToCast.add(clone);
                 cooldown3 = clone.getCooldown();
-                attemptMulticast(player.spellbook.equippedSpells.get(2).clone());
+                attemptMulticast(clone.clone());
             }
         }
     }

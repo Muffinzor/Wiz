@@ -38,25 +38,23 @@ public class Frostbolt_Explosion extends Frostbolt_Spell{
         super();
         soundType = MathUtils.random(1,3);
         soundPath = "Sounds/Spells/IceExplosion" + soundType + ".wav";
-
     }
 
     public void update(float delta) {
-
         if(!initialized) {
             initialize();
             pickAnim();
             createBody();
             createLight();
-            playSound(body.getPosition());
             initialized = true;
             chargedbolts();
+            playSound(body.getPosition());
         }
 
         drawFrame();
         stateTime += delta;
 
-        if(body.isActive() && stateTime >= 0.2) {
+        if(body.isActive() && stateTime >= 0.1f) {
             body.setActive(false);
         }
 

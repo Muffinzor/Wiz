@@ -33,7 +33,7 @@ public class ForkedLightning_Spell extends Spell {
     public ForkedLightning_Spell() {
         string_name = "Forked Lightning";
         levelup_enum = LevelUpEnums.LevelUps.FORKEDLIGHTNING;
-        dmg = 16;
+        dmg = 28;
 
         raycasted = true;
         aimReach = 3.2f;
@@ -88,7 +88,7 @@ public class ForkedLightning_Spell extends Spell {
 
     @Override
     public int getDmg() {
-        return this.dmg + player.spellbook.chainlightning_lvl * 8;
+        return this.dmg + player.spellbook.chainlightning_lvl * 14;
     }
 
     public void setup() {
@@ -137,7 +137,7 @@ public class ForkedLightning_Spell extends Spell {
     public float getCooldown() {
         float trueCD = cooldown;
         if(player.inventory.equippedHat instanceof Epic_ForkedLightningHat) {
-            trueCD = 0.07f;
+            trueCD = cooldown * 0.8f;
         }
         return trueCD;
     }

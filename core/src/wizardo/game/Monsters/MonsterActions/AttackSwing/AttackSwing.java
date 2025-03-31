@@ -11,6 +11,7 @@ import wizardo.game.Monsters.MonsterArchetypes.MonsterMelee;
 import wizardo.game.Monsters.MonsterActions.MonsterSpell;
 import wizardo.game.Utils.BodyFactory;
 
+import static wizardo.game.Resources.MonsterResources.MonsterWeapons.invis_weapon;
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.player;
 import static wizardo.game.Wizardo.world;
@@ -35,6 +36,11 @@ public class AttackSwing extends MonsterSpell {
     public AttackSwing(Monster monster) {
         super(monster);
         this.weaponSprite = monster.weaponSprite;
+        if(monster.weaponSprite == invis_weapon) {
+            this.startAngle = 180;
+            this.endAngle = -180;
+            this.swingDuration = 0.1f;
+        }
         this.monster = originMonster;
         flipY = player.pawn.getPosition().x < monster.body.getPosition().x;
     }

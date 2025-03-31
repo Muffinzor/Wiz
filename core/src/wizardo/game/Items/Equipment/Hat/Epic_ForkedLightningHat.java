@@ -22,12 +22,10 @@ public class Epic_ForkedLightningHat extends Hat {
         quantity_masteries.add(1);
         masteries.add(SpellUtils.Spell_Name.CHAIN);
         quantity_masteries.add(1);
-
     }
 
     public String getDescription() {
-
-        return "Forked Lightning is cast 30% faster\nand can sometimes chain";
+        return "Forked Lightning is cast 20% faster\nand can sometimes chain";
     }
 
     public String getFlavorText() {

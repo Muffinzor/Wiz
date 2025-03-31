@@ -44,8 +44,6 @@ public class Icespear_Spell extends Spell {
         speed = 400f/PPM;
         cooldown = 0.8f;
         autoaimable = true;
-
-
     }
 
     public void setup() {

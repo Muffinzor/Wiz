@@ -13,6 +13,8 @@ public class MONSTER_ANIMS {
         OrcMinionAnims.loadAtlas();
         OrcBruteAnims.loadAtlas();
         OrcShamanAnims.loadAtlas();
+        SludgeAnims.loadAtlas();
+        ZombieAnims.loadAtlas();
     }
 
     public static void load_all_monster_anims() {
@@ -24,5 +26,7 @@ public class MONSTER_ANIMS {
         OrcMinionAnims.loadAnimations();
         OrcBruteAnims.loadAnimations();
         OrcShamanAnims.loadAnimations();
+        SludgeAnims.loadAnimations();
+        ZombieAnims.loadAnimations();
     }
 }

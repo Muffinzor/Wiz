@@ -11,7 +11,7 @@ public class SoundPlayer implements Disposable {
 
     private static SoundPlayer soundPlayer;
 
-    private Map<String, Sound> soundMap;
+    private final Map<String, Sound> soundMap;
 
     private SoundPlayer() {
         soundMap = new HashMap<>();

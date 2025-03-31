@@ -1,50 +1,65 @@
-package wizardo.game.Monsters;
+package wizardo.game.Monsters.DungeonMonsters;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import wizardo.game.Monsters.MonsterActionManager;
 import wizardo.game.Monsters.MonsterArchetypes.MonsterMelee;
 import wizardo.game.Monsters.MonsterMovement.MovementManager;
 import wizardo.game.Monsters.MonsterActions.AttackSwing.AttackSwing;
 import wizardo.game.Monsters.MonsterStateManager.MeleeStateManager;
+import wizardo.game.Monsters.MonsterUtils;
 import wizardo.game.Resources.MonsterResources.MonsterWeapons;
-import wizardo.game.Resources.MonsterResources.OrcMinionAnims;
+import wizardo.game.Resources.MonsterResources.SkeletonAnims;
+import wizardo.game.Resources.MonsterResources.SludgeAnims;
 import wizardo.game.Screens.Battle.BattleScreen;
-import wizardo.game.Screens.Battle.MonsterSpawner.MonsterSpawner;
 import wizardo.game.Screens.Battle.MonsterSpawner.MonsterSpawner_Dungeon;
 
+import static wizardo.game.Resources.MonsterResources.MonsterWeapons.invis_weapon;
 import static wizardo.game.Utils.Constants.PPM;
 
-public class TEST_MELEE extends MonsterMelee {
+public class GreenSludge_Mini extends MonsterMelee {
 
-    public TEST_MELEE(BattleScreen screen, Vector2 position, MonsterSpawner spawner) {
+    int speed_frames = 0;
+
+    public GreenSludge_Mini(BattleScreen screen, Vector2 position, MonsterSpawner_Dungeon spawner) {
         super(screen, position, spawner);
-        speed = 20f/PPM;
-        hp = 25;
-        maxHP = 25;
-        xp = 5;
+        speed = 0.825f;
+        hp = 35;
+        maxHP = 35;
+        xp = 8;
 
         basic = true;
 
-        dmg = 5;
+        dmg = 8;
 
-        massValue = 5f;
+        massValue = 8;
         bodyRadius = 10;
-        height = 40;
+        height = 25;
         width = 20;
 
         stateTime = (float) Math.random();
-        walk_anim = OrcMinionAnims.orcMinion_walk_T1;
-        death_anim = OrcMinionAnims.orcMinion_death_T1;
-        weaponSprite = MonsterWeapons.short_sword;
+        walk_anim = SludgeAnims.sludge_green_move_mini;
+        death_anim = SludgeAnims.sludge_green_death_mini;
+        spawn_anim = SludgeAnims.sludge_green_move_mini;
+        weaponSprite = invis_weapon;
 
         movementManager = new MovementManager(this);
 
         state = MonsterUtils.MONSTER_STATE.ADVANCING;
         stateManager = new MeleeStateManager(this);
-        monsterActionManager = new MonsterActionManager(this, 1.5f);
-        attackRange = 1;
-        hitboxRadius = 10;
-        rushDistance = 2.5f;
+        monsterActionManager = new MonsterActionManager(this, 1);
+        attackRange = 0.75f;
+        hitboxRadius = 8;
+    }
+
+    public void specific_update(float delta) {
+        speed -= 0.01f;
+        speed_frames ++;
+
+        if(speed_frames >= 60) {
+            speed = 0.825f;
+            speed_frames = 0;
+        }
     }
 
     @Override

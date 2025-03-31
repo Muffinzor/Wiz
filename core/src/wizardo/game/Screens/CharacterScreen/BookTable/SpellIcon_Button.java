@@ -385,7 +385,6 @@ public class SpellIcon_Button extends ImageButton {
         int known_index = player.spellbook.knownSpells.indexOf(spell_known);
 
         if(spell_equipped.string_name.equals(spell_known.string_name)) {
-
             player.spellbook.equippedSpells.set(equipped_index, spell_known);
             spell_known.resetCD();
             player.spellbook.knownSpells.set(known_index, spell_equipped);
@@ -394,7 +393,6 @@ public class SpellIcon_Button extends ImageButton {
             } else {
                 createSwapAnims(screen.selectedSpell_Button, this, spell_equipped, spell_known);
             }
-
             screen.knownSpells_table.updateSpells();
             screen.equippedSpells_table.updateSpells();
             screen.selectedSpell_Button = null;
@@ -406,6 +404,7 @@ public class SpellIcon_Button extends ImageButton {
                 screen.selectedButton = screen.knownSpells_table.buttonsMatrix[screen.knownSpells_table.x_pos][screen.knownSpells_table.y_pos];
                 screen.activeTable = screen.knownSpells_table;
             }
+            screen.mastery_table.mixingTable.updateForgetButton();
             return;
         }
 

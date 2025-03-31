@@ -27,6 +27,7 @@ public class ChargedBolts_Projectile extends ChargedBolts_Spell {
     boolean canSplit;
     float directionAngle;
     boolean canExplode;
+    boolean fromSplit;
 
     public int rotation;
     public boolean reverseRotation;
@@ -60,15 +61,16 @@ public class ChargedBolts_Projectile extends ChargedBolts_Spell {
 
         currentWobbleOffset = new Vector2();
         targetWobbleOffset = new Vector2();
-
     }
 
     public void setup() {
         stateTime = (float) Math.random();
-        speed = speed * MathUtils.random(0.85f, 1.15f);
-        speed = getScaledSpeed();
         duration = duration * MathUtils.random(0.95f, 1.05f);
-        duration *= (1 + player.spellbook.chargedbolts_bonus_duration/100f);
+        if(!fromSplit) {
+            duration *= (1 + player.spellbook.chargedbolts_bonus_duration / 100f);
+            speed = speed * MathUtils.random(0.85f, 1.15f);
+            speed = getScaledSpeed();
+        }
     }
 
     public void update(float delta) {
@@ -152,10 +154,8 @@ public class ChargedBolts_Projectile extends ChargedBolts_Spell {
     }
 
     public void drawFrame() {
-
         Sprite frame = screen.displayManager.spriteRenderer.pool.getSprite();
         frame.set(anim.getKeyFrame(stateTime, true));
-
         frame.rotate(rotation);
         if(alpha < 1) {
             frame.setAlpha(alpha);
@@ -164,10 +164,8 @@ public class ChargedBolts_Projectile extends ChargedBolts_Spell {
             frame.setScale(1.5f);
         }
         frame.setCenter(body.getPosition().x * PPM, body.getPosition().y * PPM);
-
         screen.centerSort(frame, body.getPosition().y * PPM - 10);
         screen.displayManager.spriteRenderer.regular_sorted_sprites.add(frame);
-
     }
 
     private void createBody() {
@@ -201,7 +199,7 @@ public class ChargedBolts_Projectile extends ChargedBolts_Spell {
 
     public boolean canSplit() {
         if(spear) {
-            float procRate = 1f - 0.1f * player.spellbook.icespear_lvl;
+            float procRate = 1f - 0.15f * player.spellbook.icespear_lvl;
             return Math.random() >= procRate;
         }
         return false;
@@ -222,11 +220,10 @@ public class ChargedBolts_Projectile extends ChargedBolts_Spell {
         for (int i = 0; i < bolts; i++) {
             float angle = initialAngle - halfCone + (stepSize * i);
             Vector2 direction = new Vector2(MathUtils.cosDeg(angle), MathUtils.sinDeg(angle));
-            ChargedBolts_Spell bolt = new ChargedBolts_Spell();
-            bolt.spawnPosition = new Vector2(body.getPosition());
-            bolt.targetPosition = new Vector2(body.getPosition().cpy().add(direction));
+            ChargedBolts_Projectile bolt = new ChargedBolts_Projectile(body.getPosition(), body.getPosition().cpy().add(direction));
             bolt.setNext(this);
-            bolt.duration = duration - stateTime/2;
+            bolt.fromSplit = true;
+            bolt.duration = this.duration - (this.stateTime/3f);
             bolt.setElements(this);
             screen.spellManager.add(bolt);
         }
@@ -279,9 +276,7 @@ public class ChargedBolts_Projectile extends ChargedBolts_Spell {
                 // Clamp the angle difference to the maximum allowed
                 float maxRotationPerFrame = 4 + player.spellbook.arcanemissile_lvl;
                 float rotationStep = MathUtils.clamp(angleDiff, -maxRotationPerFrame, maxRotationPerFrame);
-
                 direction.rotateDeg(rotationStep);
-
                 if (direction.len() > 0) {
                     direction.nor().scl(speed);
                 }
@@ -291,8 +286,6 @@ public class ChargedBolts_Projectile extends ChargedBolts_Spell {
             }
         }
     }
-
-
 
     private void wobble(float delta) {
         if (stateTime >= nextWobbleTime) {
@@ -306,9 +299,7 @@ public class ChargedBolts_Projectile extends ChargedBolts_Spell {
 
         //interpolate towards the new wobble offset
         currentWobbleOffset.lerp(targetWobbleOffset, delta / wobbleChangeInterval);
-
         body.setTransform(body.getPosition().add(currentWobbleOffset), body.getAngle());
-
     }
 
     public void explode() {
@@ -317,9 +308,6 @@ public class ChargedBolts_Projectile extends ChargedBolts_Spell {
         screen.spellManager.add(explosion);
     }
 
-    /**
-     * @param monster
-     */
     private void frostbolts(Monster monster) {
         if(frostbolts) {
             float procTreshold = .9f - player.spellbook.frostbolt_lvl * .1f;
@@ -331,7 +319,6 @@ public class ChargedBolts_Projectile extends ChargedBolts_Spell {
                 explosion.setElements(this);
                 screen.spellManager.add(explosion);
             }
-
         }
     }
 
@@ -371,10 +358,5 @@ public class ChargedBolts_Projectile extends ChargedBolts_Spell {
                 green = 0.15f;
             }
         }
-
     }
-
-
-
-
 }

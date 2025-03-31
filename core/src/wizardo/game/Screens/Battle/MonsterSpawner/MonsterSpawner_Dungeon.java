@@ -2,11 +2,9 @@ package wizardo.game.Screens.Battle.MonsterSpawner;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import wizardo.game.Monsters.DungeonMonsters.AcolyteBlue;
-import wizardo.game.Monsters.DungeonMonsters.Skeleton;
+import wizardo.game.Monsters.DungeonMonsters.*;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Monsters.MonsterTypes.MawDemon.MawDemon;
-import wizardo.game.Monsters.TEST_BIGMONSTER;
 import wizardo.game.Screens.Battle.BattleScreen;
 import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyPool;
@@ -17,8 +15,6 @@ import static wizardo.game.Wizardo.player;
 public class MonsterSpawner_Dungeon extends MonsterSpawner {
 
     float stateTime;
-
-    public boolean eliteAlive = false;
 
     Vector2 playerPreviousLocation;
     Vector2 playerCurrentLocation;
@@ -38,23 +34,20 @@ public class MonsterSpawner_Dungeon extends MonsterSpawner {
     float packTimer = 0;
     float demonTimer = 0;
     float targetedSpawnTimer = 0;
+    float sludgeTimer = 0;
 
     public BodyPool bodyPool;
     int maxMeleeMonsters = 100;
 
-
     public MonsterSpawner_Dungeon(BattleScreen screen) {
         super(screen);
         bodyPool = new BodyPool();
-
         playerPreviousLocation = player.pawn.getPosition();
         playerCurrentLocation = player.pawn.getPosition();
-
     }
 
     public void update(float delta) {
         updateTimers(delta);
-
         if (killResetTimer >= cycleDuration) {
             monsterToughnessRatio = monsterToughnessRatio * 1.075f;
             monsterDamageRatio = monsterDamageRatio * 1.03f;
@@ -71,12 +64,17 @@ public class MonsterSpawner_Dungeon extends MonsterSpawner {
             directionTimer = 0;
         }
 
-        spawnMeleeMonsters();
-        spawnRangedMonsters();
-        spawnPack();
-        spawnMonstersInEmptyQuadrant();
+        //spawnMeleeMonsters();
+        //spawnRangedMonsters();
+        //spawnPack();
+        //spawnMonstersInEmptyQuadrant();
         spawnDemon();
+        spawnSludges();
 
+        for(Monster monster : monster_to_spawn) {
+            spawnMonster(monster);
+        }
+        monster_to_spawn.clear();
     }
 
     public void updateTimers(float delta) {
@@ -88,17 +86,36 @@ public class MonsterSpawner_Dungeon extends MonsterSpawner {
         rangedSpawnTimer += delta;
         targetedSpawnTimer += delta;
         demonTimer += delta;
+        sludgeTimer += delta;
         maxMeleeMonsters = Math.min(1000, (int) (100 * spawnRatio));
     }
 
+    public void spawnSludges() {
+        if(sludgeTimer > 1 && stateTime > 0) {
+            sludgeTimer = 0;
+            if(Math.random() >= 0.75f) {
+                Monster monster2 = new AcolytePurple(screen, SpawnerUtils.getRandomRangeSpawnVector(), this);
+                spawnMonster(monster2);
+            }
+            if(Math.random() >= 0.9f) {
+                Monster monster2 = new Zombie(screen, null, this);
+                spawnMonster(monster2);
+            }
+            for (int i = 0; i < 2; i++) {
+                Monster monster2 = new GreenSludge(screen, null, this);
+                spawnMonster(monster2);
+            }
+        }
+    }
 
     public void spawnDemon() {
-        if(demonTimer > 300f) {
-            demonTimer = 0;
+        if(demonTimer > 1) {
+            demonTimer = -1000000;
             Monster monster = new MawDemon(screen, null, this);
             spawnMonster(monster);
         }
     }
+
     public void spawnMeleeMonsters() {
         if(meleeSpawnTimer > 2f) {
             meleeSpawnTimer = 0;
@@ -106,7 +123,7 @@ public class MonsterSpawner_Dungeon extends MonsterSpawner {
                 for (int i = 0; i < spawnRatio; i++) {
                     Monster monster;
                     if(Math.random() >= 0.9f && stateTime > 0) {
-                        monster = new TEST_BIGMONSTER(screen, null, this);
+                        monster = new SkeletonGiant(screen, null, this);
                     } else {
                         monster = new Skeleton(screen, null, this);
                     }
@@ -124,6 +141,7 @@ public class MonsterSpawner_Dungeon extends MonsterSpawner {
             }
         }
     }
+
     public void spawnPack() {
         if(packTimer >= 15 && screen.monsterManager.liveMonsters.size() < maxMeleeMonsters) {
             packTimer = 0;
@@ -143,7 +161,7 @@ public class MonsterSpawner_Dungeon extends MonsterSpawner {
                 Vector2 spawnPoint = SpellUtils.getClearRandomPosition(centerpoint, Math.min(2 * spawnRatio, 6));
                 Monster monster;
                 if(Math.random() >= 0.95f) {
-                    monster = new TEST_BIGMONSTER(screen, spawnPoint, this);
+                    monster = new SkeletonGiant(screen, spawnPoint, this);
                 } else {
                     monster = new Skeleton(screen, spawnPoint, this);
                 }
@@ -151,6 +169,7 @@ public class MonsterSpawner_Dungeon extends MonsterSpawner {
             }
         }
     }
+
     public void spawnMonstersInEmptyQuadrant() {
         if(targetedSpawnTimer > 2 && screen.monsterManager.liveMonsters.size() < maxMeleeMonsters) {
 
@@ -191,7 +210,6 @@ public class MonsterSpawner_Dungeon extends MonsterSpawner {
         }
     }
 
-
     public void spawnMonster(Monster monster) {
         monster.maxHP = monster.maxHP * monsterToughnessRatio;
         monster.hp = monster.hp * monsterToughnessRatio;
@@ -208,7 +226,6 @@ public class MonsterSpawner_Dungeon extends MonsterSpawner {
             return SpellUtils.getClearRandomPositionCone(playerPosition, 32 * xRatio, 42 * xRatio, angle);
         }
     }
-
 
     public void registerKill() {
         killsLastCycle++;
@@ -231,7 +248,7 @@ public class MonsterSpawner_Dungeon extends MonsterSpawner {
         if (spawnRatio < previousRatio * 0.95f) {
             spawnRatio = previousRatio * 0.95f; // Limit to 5% reduction
         }
-        if( spawnRatio > 10) {
+        if(spawnRatio > 10) {
             spawnRatio = 10;
         }
     }

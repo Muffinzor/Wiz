@@ -75,32 +75,21 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 		font: SimpleFont26
 		up: Panel_Empyrean
 	}
-	energy: {
-		font: SimpleFont26
-		up: Panel_Energy
-	}
 	explosives: {
 		font: SimpleFont26
 		up: Panel_Explosives
 	}
-	flare: {
+	magnet: {
 		font: SimpleFont26
-		up: Panel_Flare
+		up: Panel_Magnet
 	}
-	force: {
+	experience: {
 		font: SimpleFont26
-		up: Panel_Force
-	}
-	gravity: {
-		font: SimpleFont26
-		up: Panel_Gravity
+		up: Panel_Experience
 	}
 	luck: {
 		font: SimpleFont26
 		up: Panel_Luck
-	}
-	projectiles: {
-		font: SimpleFont26
 	}
 	defense: {
 		font: SimpleFont26
@@ -201,14 +190,6 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 	energyrain: {
 		font: SimpleFont26
 		up: Panel_EnergyRain
-	}
-	magnet: {
-		font: SimpleFont26
-		up: Panel_Magnet
-	}
-	experience: {
-		font: SimpleFont26
-		up: Panel_Experience
 	}
 	lightninghands: {
 		font: SimpleFont26

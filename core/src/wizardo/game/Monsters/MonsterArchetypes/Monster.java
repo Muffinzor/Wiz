@@ -137,6 +137,7 @@ public abstract class Monster {
             stateManager.updateState(delta);
             monsterActionManager.update(delta);
         }
+        specific_update(delta);
 
         if(hp <= 0) {
             onDeath();
@@ -164,7 +165,9 @@ public abstract class Monster {
         }
     }
 
+    public void specific_update(float delta) {
 
+    }
 
     public abstract void launchAttack();
 
@@ -228,7 +231,6 @@ public abstract class Monster {
         Sprite frame = screen.displayManager.spriteRenderer.pool.getSprite();
 
         switch(state) {
-            case ADVANCING -> frame.set(walk_anim.getKeyFrame(stateTime, true));
             case SPAWNING -> {
                 if(spawn_anim != null && stateTime <= spawn_anim.getAnimationDuration()) {
                     frame.set(spawn_anim.getKeyFrame(stateTime, false));
@@ -320,12 +322,8 @@ public abstract class Monster {
         }
         frame.flip(deathFrameFlip, false);
         frame.setPosition(body.getPosition().x * PPM - frame.getWidth() / 2, body.getPosition().y * PPM - bodyRadius);
-        //screen.centerSort(frame, body.getPosition().y * PPM - bodyRadius + 10);
-        screen.displayManager.spriteRenderer.under_sprites.add(frame);
-    }
-
-    public void dispose() {
-
+        screen.centerSort(frame, body.getPosition().y * PPM);
+        screen.displayManager.spriteRenderer.regular_sorted_sprites.add(frame);
     }
 
     public void timers(float delta) {
@@ -380,13 +378,13 @@ public abstract class Monster {
         corpseExplosion();
         shatter();
 
-        float pot_rate = 0.995f - player.stats.luck/2000f;
+        float pot_rate = 0.995f;
         if(Math.random() >= pot_rate) {
             PotionDrop potion = new PotionDrop(body.getPosition());
             screen.dropManager.addDrop(potion);
         }
 
-        float goldrate = 0.95f - player.stats.luck/500f;
+        float goldrate = 0.85f - player.stats.luck/500f;
         if(Math.random() >= goldrate) {
             GoldDrop gold = new GoldDrop(body.getPosition(),1 , 1);
             screen.dropManager.addDrop(gold);

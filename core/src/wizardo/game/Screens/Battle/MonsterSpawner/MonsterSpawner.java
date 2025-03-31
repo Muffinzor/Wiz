@@ -1,26 +1,23 @@
 package wizardo.game.Screens.Battle.MonsterSpawner;
 
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Monsters.MonsterTypes.MawDemon.MawDemon;
-import wizardo.game.Monsters.TEST_BIGMONSTER;
-import wizardo.game.Monsters.TEST_MELEE;
-import wizardo.game.Monsters.TEST_RANGED;
 import wizardo.game.Screens.Battle.BattleScreen;
 import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyPool;
+
+import java.util.ArrayList;
 
 import static wizardo.game.Screens.BaseScreen.xRatio;
 import static wizardo.game.Wizardo.player;
 
 public abstract class MonsterSpawner {
 
+    public ArrayList<Monster> monster_to_spawn;
 
     public BattleScreen screen;
     float stateTime;
-
-    public boolean eliteAlive = false;
 
     Vector2 playerPreviousLocation;
     Vector2 playerCurrentLocation;
@@ -48,6 +45,7 @@ public abstract class MonsterSpawner {
     public MonsterSpawner(BattleScreen screen) {
         this.screen = screen;
         bodyPool = new BodyPool();
+        monster_to_spawn = new ArrayList<>();
 
         playerPreviousLocation = player.pawn.getPosition();
         playerCurrentLocation = player.pawn.getPosition();
@@ -60,7 +58,6 @@ public abstract class MonsterSpawner {
         } else {
             direction = null;
         }
-
         playerPreviousLocation.set(playerCurrentLocation);
         playerCurrentLocation.set(player.pawn.getPosition());
     }
@@ -80,12 +77,12 @@ public abstract class MonsterSpawner {
             calculateTrajectory();
             directionTimer = 0;
         }
-
         spawnMeleeMonsters();
         spawnRangedMonsters();
         spawnPack();
         spawnMonstersInEmptyQuadrant();
         spawnDemon();
+
     }
 
     public void updateTimers(float delta) {
@@ -109,97 +106,17 @@ public abstract class MonsterSpawner {
         }
     }
     public void spawnMeleeMonsters() {
-        if(meleeSpawnTimer > 2f) {
-            meleeSpawnTimer = 0;
-            if(screen.monsterManager.liveMonsters.size() < maxMeleeMonsters) {
-                for (int i = 0; i < spawnRatio; i++) {
-                    Monster monster;
-                    if(Math.random() >= 0.9f && stateTime > 0) {
-                        monster = new TEST_BIGMONSTER(screen, null, this);
-                    } else {
-                        monster = new TEST_MELEE(screen, null, this);
-                    }
-                    spawnMonster(monster);
-                }
-            }
-        }
+
     }
     public void spawnRangedMonsters() {
-        if(rangedSpawnTimer > 3.2f && stateTime > 120) {
-            rangedSpawnTimer = 0;
-            if(screen.monsterManager.getRangedMonstersCount() < 30) {
-                TEST_RANGED monster = new TEST_RANGED(screen, SpawnerUtils.getRandomRangeSpawnVector(), this);
-                spawnMonster(monster);
-            }
-        }
+
     }
     public void spawnPack() {
-        if(packTimer >= 15 && screen.monsterManager.liveMonsters.size() < maxMeleeMonsters) {
-            packTimer = 0;
 
-            Vector2 randomizedDirection;
-            if(direction != null) {
-                randomizedDirection = direction.cpy().nor().rotateDeg(MathUtils.random(-20,20));
-            } else {
-                randomizedDirection = SpellUtils.getRandomVectorInRadius(player.pawn.getPosition(), 1);
-                randomizedDirection.nor();
-            }
-            randomizedDirection.scl(36);
-            Vector2 centerpoint = player.pawn.getPosition().add(randomizedDirection);
-
-            int count = (int) (6 * spawnRatio);
-            for (int i = 0; i < count; i++) {
-                Vector2 spawnPoint = SpellUtils.getClearRandomPosition(centerpoint, Math.min(2 * spawnRatio, 10));
-                Monster monster;
-                if(Math.random() >= 0.95f) {
-                    monster = new TEST_BIGMONSTER(screen, spawnPoint, this);
-                } else {
-                    monster = new TEST_MELEE(screen, spawnPoint, this);
-                }
-                spawnMonster(monster);
-            }
-        }
     }
     public void spawnMonstersInEmptyQuadrant() {
-        if(emptyQuadrantSpawnTimer > 2 && screen.monsterManager.liveMonsters.size() < maxMeleeMonsters) {
 
-            emptyQuadrantSpawnTimer = 0;
-            int topLeft = 0, topRight = 0, bottomLeft = 0, bottomRight = 0;
-
-            Vector2 playerPos = player.pawn.getPosition();
-            for (Monster monster : screen.monsterManager.liveMonsters) {
-                Vector2 pos = monster.body.getPosition();
-                if (pos.x < playerPos.x && pos.y > playerPos.y) {
-                    topLeft++;
-                } else if (pos.x > playerPos.x && pos.y > playerPos.y) {
-                    topRight++;
-                } else if (pos.x < playerPos.x && pos.y < playerPos.y) {
-                    bottomLeft++;
-                } else {
-                    bottomRight++;
-                }
-            }
-
-            int minQuadrant = Math.min(Math.min(topLeft, topRight), Math.min(bottomLeft, bottomRight));
-            int angle;
-            if (minQuadrant == topLeft) {
-                angle = 135;
-            } else if (minQuadrant == topRight) {
-                angle = 45;
-            } else if (minQuadrant == bottomLeft) {
-                angle = 225;
-            } else {
-                angle = 315;
-            }
-
-            for (int i = 0; i < 6 * spawnRatio; i++) {
-                Vector2 position = SpellUtils.getClearRandomPositionCone(player.pawn.getPosition(), 34, 45, angle);
-                Monster monster = new TEST_MELEE(screen, position, this);
-                spawnMonster(monster);
-            }
-        }
     }
-
 
     public void spawnMonster(Monster monster) {
         monster.maxHP = monster.maxHP * monsterToughnessRatio;

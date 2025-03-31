@@ -18,6 +18,7 @@ import wizardo.game.Resources.EffectAnims.CorpseExplosionAnims;
 import wizardo.game.Resources.EffectAnims.GearFlareAnims;
 import wizardo.game.Resources.MonsterResources.MonsterProjectiles.MonsterExplosions;
 import wizardo.game.Resources.MonsterResources.MonsterProjectiles.SmallFireboltAnims;
+import wizardo.game.Resources.MonsterResources.MonsterProjectiles.VoidOrbAnims;
 import wizardo.game.Resources.ScreenResources.CharacterScreenResources;
 import wizardo.game.Resources.DecorResources.GeneralDecorResources;
 import wizardo.game.Resources.MonsterResources.MonsterProjectiles.SmallLaserAnims;

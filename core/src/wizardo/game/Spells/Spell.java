@@ -197,14 +197,13 @@ public abstract class Spell implements Cloneable {
             direction.setLength(5);
             target = new Vector2(player.pawn.body.getPosition().add(direction));
         }
-
         return target;
     }
 
     public Monster rayCastTargeting() {
         Vector2 direction = new Vector2(player.pawn.targetVector);
         if (direction.isZero()) {
-            direction.set(0, 1); // Default direction when targetVector is zero
+            direction.set(0, 1);
         }
         direction.setLength(aimReach);
 
@@ -513,21 +512,23 @@ public abstract class Spell implements Cloneable {
     }
 
     public void dealDmg(Monster monster) {
-        float dmg = getDmg();
-        dmg = apply_specific_spell_dmg_bonus(dmg);
-        dmg = apply_elemental_dmg_bonus(dmg);
-        float randomFactor = MathUtils.random(1 - dmgVariance, 1 + dmgVariance);
-        dmg *= randomFactor;
+        if(monster.stateTime > 0.4f) {
+            float dmg = getDmg();
+            dmg = apply_specific_spell_dmg_bonus(dmg);
+            dmg = apply_elemental_dmg_bonus(dmg);
+            float randomFactor = MathUtils.random(1 - dmgVariance, 1 + dmgVariance);
+            dmg *= randomFactor;
 
-        checkGearProcs(monster);
-        dmg = applyGearModifiers(monster, dmg);
-        dmg = checkOtherModifiers(monster, dmg);
+            checkGearProcs(monster);
+            dmg = applyGearModifiers(monster, dmg);
+            dmg = checkOtherModifiers(monster, dmg);
 
-        monster.hp -= dmg;
-        monster.last_element_hit = this.anim_element;
+            monster.hp -= dmg;
+            monster.last_element_hit = this.anim_element;
 
-        if(dmg_text_on) {
-            dmgText( (int)dmg, monster);
+            if (dmg_text_on) {
+                dmgText((int) dmg, monster);
+            }
         }
     }
 
