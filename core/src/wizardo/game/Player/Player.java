@@ -1,18 +1,11 @@
 package wizardo.game.Player;
 
-import com.badlogic.gdx.graphics.g2d.Sprite;
+import wizardo.game.Account.AccountProgress;
 import wizardo.game.Items.Equipment.Equipment;
 import wizardo.game.Maps.TriggerObject;
 import wizardo.game.Player.Levels.LevelUp_Manager;
-import wizardo.game.Resources.PlayerResources;
 import wizardo.game.Screens.Battle.BattleScreen;
 import wizardo.game.Spells.SpellManager;
-
-import static wizardo.game.Account.Unlocked.max_levelup_choices;
-import static wizardo.game.Screens.BaseScreen.xRatio;
-import static wizardo.game.Screens.BaseScreen.yRatio;
-import static wizardo.game.Utils.Constants.PPM;
-import static wizardo.game.Wizardo.player;
 
 public class Player {
 
@@ -28,9 +21,11 @@ public class Player {
     public Stats stats;
 
     public int level = 1;
+    public int monsterSouls = 0;
     public float currentXP = 0;
     public float neededXP = 100;
-    public int levelup_choices = max_levelup_choices;
+    public int levelup_choices = AccountProgress.loaded.max_levelup_choices;
+    public int max_equipped_spells = AccountProgress.loaded.max_equipped_spells;
 
     int shieldtick = 0;
 
@@ -42,7 +37,6 @@ public class Player {
         this.levelUpManager = new LevelUp_Manager();
         this.stats = new Stats();
     }
-
 
     public void update(float delta) {
         updateEquippedGear(delta);
@@ -64,6 +58,14 @@ public class Player {
     public void updateEquippedGear(float delta) {
         for(Equipment piece : inventory.equippedGear) {
             piece.update(delta);
+        }
+    }
+
+    public void load_progress() {
+        if (AccountProgress.loaded != null) {
+            this.monsterSouls = AccountProgress.loaded.monster_souls;
+            this.levelup_choices = AccountProgress.loaded.max_levelup_choices;
+            this.max_equipped_spells = AccountProgress.loaded.max_equipped_spells;
         }
     }
 

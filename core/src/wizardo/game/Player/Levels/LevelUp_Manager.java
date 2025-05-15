@@ -1,9 +1,6 @@
 package wizardo.game.Player.Levels;
 
 import com.badlogic.gdx.math.MathUtils;
-import wizardo.game.Player.Levels.Choices.*;
-import wizardo.game.Screens.LevelUp.LevelUpScreen;
-import wizardo.game.Screens.LevelUp.PanelButton;
 import wizardo.game.Spells.Hybrid.Blizzard.Blizzard_Spell;
 import wizardo.game.Spells.Hybrid.CelestialStrike.CelestialStrike_Spell;
 import wizardo.game.Spells.Hybrid.DragonBreath.DragonBreath_Spell;
@@ -24,7 +21,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import static wizardo.game.Account.Unlocked.max_levelup_choices;
 import static wizardo.game.Player.Levels.LevelUpEnums.LevelUps.*;
 import static wizardo.game.Wizardo.player;
 
@@ -55,7 +51,7 @@ public class LevelUp_Manager {
         }
 
         if(player.level % 12 == 2) {
-            int replaced_index = MathUtils.random(0, max_levelup_choices-1);
+            int replaced_index = MathUtils.random(0, player.levelup_choices-1);
             if(player.level >= 20)
                 list.set(replaced_index, get_learnable_mastery(3, false, list));
             else if(player.level >= 10)

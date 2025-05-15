@@ -18,7 +18,7 @@ public class ErrorLogger {
         String filename = "crashlog_" + timestamp + ".txt";
         try (PrintWriter writer = new PrintWriter(new FileWriter(filename, true))) {
             if(player != null) {
-                writer.println("Crash occured with this screen on top of the stack: " + player.screen.game.currentScreen + "\n");
+               // writer.println("Crash occured with this screen on top of the stack: " + player.screen.game.currentScreen + "\n");
             }
             writer.println(message);
             throwable.printStackTrace(writer);

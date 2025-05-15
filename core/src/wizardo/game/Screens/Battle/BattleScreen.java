@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import wizardo.game.Account.AccountProgress;
 import wizardo.game.Maps.MapGeneration.MapManager;
 import wizardo.game.Monsters.*;
 import wizardo.game.Monsters.MonsterActions.MonsterSpellManager;
@@ -120,6 +121,7 @@ public class BattleScreen extends BaseScreen {
         stage.draw();
 
         if(player.stats.shield <= 0) {
+            AccountProgress.save();
             game.freshScreen(new MainMenuScreen(game));
         }
 

@@ -6,28 +6,35 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import wizardo.game.Account.SaveLoader;
 import wizardo.game.Maps.Hub.HubChunk;
 import wizardo.game.Maps.MapGeneration.MapChunk;
+import wizardo.game.NPC.NPC;
+import wizardo.game.NPC.Witch_NPC;
 import wizardo.game.Player.Pawn;
 import wizardo.game.Player.Player;
 import wizardo.game.Screens.BaseScreen;
 import wizardo.game.Wizardo;
 
+import java.util.ArrayList;
+
 import static wizardo.game.GameSettings.debug_camera;
 import static wizardo.game.Utils.Constants.PPM;
-import static wizardo.game.Wizardo.createNewWorld;
-import static wizardo.game.Wizardo.world;
+import static wizardo.game.Wizardo.*;
 
 public class HubScreen extends BaseScreen {
 
     public Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
 
-    public MapChunk chunk;
+    public HubChunk chunk;
     public Pawn playerPawn;
+
+    public ArrayList<NPC> npc_list;
 
     public HubScreen(Wizardo game) {
         super(game);
-        chunk = new HubChunk("Maps/TEST/Map_HUB.tmx", 0, 0, game, this);
+        chunk = new HubChunk("Maps/HubMap/Map_HUB.tmx", 0, 0, game, this);
+        npc_list = new ArrayList<>();
 
         mainCamera.viewportWidth = Gdx.graphics.getWidth();
         mainCamera.viewportHeight = Gdx.graphics.getHeight();
@@ -43,6 +50,7 @@ public class HubScreen extends BaseScreen {
         playerPawn = new Pawn(this);
         playerPawn.createPawn(new Vector2(1000f/PPM,1000f/PPM));
         Wizardo.player = new Player(playerPawn);
+        player.load_progress();
 
         cursorTexturePath = "Cursors/Battle_Cursor.png";
     }
@@ -54,13 +62,15 @@ public class HubScreen extends BaseScreen {
         if(paused) {
             delta = 0;
         }
+        stateTime += delta;
 
         world.step(1 / 30f, 2, 1);
         updateCamera();
 
         chunk.render(delta);
-
         playerPawn.update(delta);
+
+        updateNPCs(delta);
 
         displayManager.update(delta);
         lightManager.update(delta);
@@ -68,6 +78,12 @@ public class HubScreen extends BaseScreen {
         if(debug_camera) {
             Matrix4 debugMatrix = mainCamera.combined.cpy().scl(PPM);
             debugRenderer.render(world, debugMatrix);
+        }
+    }
+
+    public void updateNPCs(float delta) {
+        for(NPC npc : npc_list) {
+            npc.draw_frame();
         }
     }
 

@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.EllipseMapObject;
-import com.badlogic.gdx.math.Ellipse;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import wizardo.game.Lighting.RoundLight;
@@ -151,7 +150,7 @@ public class Chest extends TriggerObject {
     }
 
     public void createTriggerBody() {
-        triggerBody = MapUtils.createEventTriggerBody(chunk, object, 60);
+        triggerBody = MapUtils.createEventTriggerBodyFromMapObject(chunk, object, 60);
         if(fromEllipseObject) {
             triggerBody.setTransform(ellipseCenter, 0);
         }

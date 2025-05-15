@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.RayCastCallback;
-import wizardo.game.Account.Unlocked;
+import wizardo.game.Account.AccountProgress;
 import wizardo.game.Audio.Sounds.SoundPlayer;
 import wizardo.game.Display.Text.FloatingDamage;
 import wizardo.game.Items.Equipment.Amulet.Legendary_MarkAmulet;
@@ -329,8 +329,8 @@ public abstract class Spell implements Cloneable {
     public boolean canMix() {
 
         boolean duplicate = this.alreadyOwned();
-        boolean spaceInEquipped = player.spellbook.equippedSpells.size() < Unlocked.max_equipped_spells;
-        boolean spaceInKnown = player.spellbook.knownSpells.size() < Unlocked.max_known_spells;
+        boolean spaceInEquipped = player.spellbook.equippedSpells.size() < player.max_equipped_spells;
+        boolean spaceInKnown = player.spellbook.knownSpells.size() < 4;
         boolean sameTypeEquipped = false;
         for(Spell equipped : player.spellbook.equippedSpells) {
             if(equipped.toString().equals(this.toString())) {
@@ -364,8 +364,8 @@ public abstract class Spell implements Cloneable {
 
     public void learn() {
 
-        boolean spaceInEquipped = player.spellbook.equippedSpells.size() < Unlocked.max_equipped_spells;
-        boolean spaceInKnown = player.spellbook.knownSpells.size() < Unlocked.max_known_spells;
+        boolean spaceInEquipped = player.spellbook.equippedSpells.size() < player.max_equipped_spells;
+        boolean spaceInKnown = player.spellbook.knownSpells.size() < 4;
         boolean sameTypeEquipped = false;
         for(Spell equipped : player.spellbook.equippedSpells) {
             if(equipped.toString().equals(this.toString())) {

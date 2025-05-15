@@ -46,7 +46,7 @@ public class MapShop extends TriggerObject {
     }
 
     public void createTriggerBody() {
-        triggerBody = MapUtils.createEventTriggerBody(chunk, object, 75);
+        triggerBody = MapUtils.createEventTriggerBodyFromMapObject(chunk, object, 75);
         triggerBody.setUserData(this);
         Vector2 CurrentPosition = triggerBody.getPosition();
         triggerBody.setTransform(CurrentPosition.x + 128f/PPM, CurrentPosition.y + 30f/PPM, 0);

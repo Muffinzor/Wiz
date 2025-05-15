@@ -117,7 +117,7 @@ public class ChunkPaths {
 
     public static ArrayList<String> getAllDungeonMapPaths() {
         ArrayList<String> dungeonMapPaths = new ArrayList<>();
-        dungeonMapPaths.add("Maps/TEST/Map_HUB.tmx");
+        dungeonMapPaths.add("Maps/HubMap/Map_HUB.tmx");
         dungeonMapPaths.add("Maps/DungeonMaps/Chunks/StartingChunk.tmx");
         dungeonMapPaths.add("Maps/DungeonMaps/Chunks/Tile1.tmx");
         dungeonMapPaths.add("Maps/DungeonMaps/Chunks/Tile2.tmx");

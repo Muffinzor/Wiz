@@ -24,6 +24,7 @@ public class Thunderstorm_Spell extends Spell {
     public boolean rifts;
     public boolean overheat;
     public boolean frostbolts;
+    public boolean forkedlightning;
 
     int thunderSent;
 
@@ -43,9 +44,7 @@ public class Thunderstorm_Spell extends Spell {
             initialized = true;
             setup();
         }
-
         stateTime += delta;
-
         if(stateTime % interval < delta) {
             thunderSent++;
             Vector2 target;
@@ -65,15 +64,13 @@ public class Thunderstorm_Spell extends Spell {
                 thunder.arcaneMissile = arcaneMissile;
                 thunder.nested_spell = nested_spell;
                 thunder.frostbolts = frostbolts;
+                thunder.forkedlightning = forkedlightning;
                 screen.spellManager.add(thunder);
             }
         }
-
         if(stateTime >= duration) {
             screen.spellManager.remove(this);
-
         }
-
     }
 
     /** any monster at random within radius */

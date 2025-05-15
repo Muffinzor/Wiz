@@ -126,7 +126,7 @@ public class LightningFire_Spells {
 
             Thunderstorm_Spell litefire11 = new Thunderstorm_Spell();
             litefire11.anim_element = FIRE;
-            litefire11.nested_spell = litefire1;
+            litefire11.forkedlightning = true;
             litefire11.spellParts.add(FLAMEJET);
             litefire11.spellParts.add(CHAIN);
             litefire11.spellParts.add(THUNDERSTORM);

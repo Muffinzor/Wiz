@@ -7,6 +7,7 @@ import wizardo.game.Screens.EscapeMenu.EscapeScreen;
 import wizardo.game.Screens.Hub.HubScreen;
 
 import static wizardo.game.Screens.BaseScreen.controllerActive;
+import static wizardo.game.Wizardo.player;
 
 public class KeyboardMouseListener_HUB implements InputProcessor {
 
@@ -58,6 +59,10 @@ public class KeyboardMouseListener_HUB implements InputProcessor {
 
         if (keycode == Input.Keys.ESCAPE) {
             screen.game.addNewScreen(new EscapeScreen(screen.game));
+        }
+
+        if (keycode == Input.Keys.F && player.nearbyTriggerObject != null) {
+            player.nearbyTriggerObject.trigger();
         }
 
         return true;

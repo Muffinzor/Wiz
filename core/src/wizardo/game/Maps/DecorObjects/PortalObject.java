@@ -78,7 +78,7 @@ public class PortalObject extends TriggerObject {
     }
 
     public void createBody() {
-        triggerBody = MapUtils.createEventTriggerBody(chunk, object, 10);
+        triggerBody = MapUtils.createEventTriggerBodyFromMapObject(chunk, object, 10);
         triggerBody.setUserData(this);
     }
 

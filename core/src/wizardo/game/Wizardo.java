@@ -6,6 +6,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import wizardo.game.Account.AccountProgress;
 import wizardo.game.Items.Drop.DropManager;
 import wizardo.game.Player.Player;
 import wizardo.game.Screens.BaseScreen;
@@ -26,7 +27,6 @@ public class Wizardo extends Game {
 	public static AssetManager assetManager;
 	public OrthographicCamera mainCamera;
 	public OrthographicCamera uiCamera;
-	public OrthographicCamera mapCamera;
 	
 	@Override
 	public void create () {
@@ -35,10 +35,10 @@ public class Wizardo extends Game {
 		screenStack = new Stack<>();
 		mainCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		uiCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		mapCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		assetManager = new AssetManager();
 		contactListener = new WizContactListener();
 		loadSettings();
+		AccountProgress.load();
 		addNewScreen(new LoadingScreen(this));
 	}
 
@@ -144,6 +144,7 @@ public class Wizardo extends Game {
 	}
 
 	public static void exit() {
+		AccountProgress.save();
 		saveSettings();
 		Gdx.app.exit();
 	}

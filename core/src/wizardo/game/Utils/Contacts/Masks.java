@@ -6,7 +6,7 @@ public class Masks {
 
     public static final short SPELL = 0x0001;
     public static final short PAWN = 0x0002;
-    public static final short FLYING_MONSTER = 0x0004;
+    public static final short NPC = 0x0004;
     public static final short MONSTER = 0x0008;
 
     public static final short OBSTACLE = 0x0010;
@@ -24,7 +24,7 @@ public class Masks {
 
     // MASKS
 
-    public static final short SPELL_MASK = (short) ( MONSTER | OBSTACLE | DECOR | MONSTER_BODY | MONSTER_PROJECTILE | FLYING_MONSTER);
+    public static final short SPELL_MASK = (short) ( MONSTER | OBSTACLE | DECOR | MONSTER_BODY | MONSTER_PROJECTILE);
 
     public static final short EVENT_MASK = PAWN;
 

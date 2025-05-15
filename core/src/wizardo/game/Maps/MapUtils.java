@@ -231,12 +231,38 @@ public class MapUtils {
      * @param radius radius of the trigger zone, from object center
      * @return a body with the TRIGGER mask
      */
-    public static Body createEventTriggerBody(MapChunk chunk, MapObject object, float radius) {
+    public static Body createEventTriggerBodyFromMapObject(MapChunk chunk, MapObject object, float radius) {
         Body body;
         BodyDef def = new BodyDef();
 
         float x = object.getProperties().get("x", Float.class) + chunk.x_pos;
         float y = object.getProperties().get("y", Float.class) + chunk.y_pos;
+
+        def.type = BodyDef.BodyType.StaticBody;
+        def.position.set(x/PPM, y/PPM);
+        def.fixedRotation = true;
+        body = world.createBody(def);
+
+        CircleShape shape = new CircleShape();
+        shape.setRadius(radius / PPM);
+
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = shape;
+        fixtureDef.filter.categoryBits = TRIGGER;
+        fixtureDef.filter.maskBits = EVENT_MASK;
+        fixtureDef.isSensor = true;
+
+        body.createFixture(fixtureDef);
+        shape.dispose();
+
+        return body;
+    }
+    public static Body createEventTriggerBodyFromVector(Vector2 position, float radius) {
+        Body body;
+        BodyDef def = new BodyDef();
+
+        float x = position.x;
+        float y = position.y;
 
         def.type = BodyDef.BodyType.StaticBody;
         def.position.set(x/PPM, y/PPM);

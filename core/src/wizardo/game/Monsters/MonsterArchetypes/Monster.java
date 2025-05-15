@@ -78,6 +78,7 @@ public abstract class Monster {
     public float maxHP;
     public int dmg;
     public int xp;
+    public int souls_worth = 1;
     public boolean basic;
     public boolean elite;
 

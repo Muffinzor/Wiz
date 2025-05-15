@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import wizardo.game.Account.AccountProgress;
 import wizardo.game.Audio.Sounds.SoundPlayer;
 import wizardo.game.Display.MenuTable;
 import wizardo.game.Screens.Hub.HubScreen;
@@ -108,8 +109,6 @@ public class MainMenuTable extends MenuTable {
     }
     public void quitButton() {
 
-
-
         MainMenuButton exitButton = new MainMenuButton("Quit", skin);
         buttons.add(exitButton);
         table.add(exitButton);
@@ -181,8 +180,11 @@ public class MainMenuTable extends MenuTable {
     public void pressSelectedButton() {
         switch (selectedButtonIndex) {
             case 0 -> game.addNewScreen(new HubScreen(game));
-            case 1 -> System.out.println("Nope");
-            case 2 -> Gdx.app.exit();
+            case 1 -> AccountProgress.save();
+            case 2 -> {
+                AccountProgress.save();
+                Gdx.app.exit();
+            }
         }
     }
 

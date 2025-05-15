@@ -25,7 +25,7 @@ public class MonsterSpawner_Forest extends MonsterSpawner {
     Vector2 direction;
     float directionTimer = 0;
 
-    float spawnRatio = 1.0f;
+    float spawnRatio = 1f;
     float cycleDuration = 20;
     int killsLastCycle = 0;
     float killResetTimer = 0;

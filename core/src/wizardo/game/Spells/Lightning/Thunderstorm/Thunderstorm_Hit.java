@@ -12,11 +12,14 @@ import wizardo.game.Spells.Fire.Flamejet.Flamejet_Spell;
 import wizardo.game.Spells.Fire.Overheat.Overheat_Explosion;
 import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Explosion;
 import wizardo.game.Spells.Frost.Frostbolt.Frostbolt_Spell;
+import wizardo.game.Spells.Hybrid.ForkedLightning.ForkedLightning_Hit;
 import wizardo.game.Spells.Hybrid.ForkedLightning.ForkedLightning_Spell;
 import wizardo.game.Spells.Lightning.ChargedBolts.ChargedBolts_Spell;
 import wizardo.game.Spells.Spell;
 import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyFactory;
+
+import java.util.ArrayList;
 
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.*;
@@ -44,6 +47,7 @@ public class Thunderstorm_Hit extends Thunderstorm_Spell {
             nestedProjectiles();
             overheat();
             frostbolts();
+            forkedLightning();
         }
 
         drawFrame();
@@ -129,10 +133,8 @@ public class Thunderstorm_Hit extends Thunderstorm_Spell {
 
     public void nestedProjectiles() {
         if(nested_spell != null) {
-
             float procRate = getProcRate();
             int quantity = getQuantity();
-
             if (Math.random() >= procRate) {
                 for (int i = 0; i < quantity; i++) {
                     Spell proj = nested_spell.clone();
@@ -145,6 +147,7 @@ public class Thunderstorm_Hit extends Thunderstorm_Spell {
             }
         }
     }
+
     public void frostbolts() {
         if(frostbolts) {
             float procRate = 0.9f - 0.1f * player.spellbook.frostbolt_lvl;
@@ -167,6 +170,20 @@ public class Thunderstorm_Hit extends Thunderstorm_Spell {
                 Rift_Zone rift = new Rift_Zone(monster.body.getPosition());
                 rift.setElements(this);
                 screen.spellManager.add(rift);
+            }
+        }
+    }
+
+    public void forkedLightning() {
+        if(forkedlightning) {
+            float radius = 4.5f * (1 + player.spellbook.forkedlightning_bonus_range/100f);
+            ArrayList<Monster> inRange = SpellUtils.findMonstersInRangeOfVector(body.getPosition(), radius, true);
+            int quantity = Math.min(3 + player.spellbook.flamejet_lvl, inRange.size());
+            for (int i = 0; i < quantity; i++) {
+                ForkedLightning_Hit hit = new ForkedLightning_Hit(inRange.get(i));
+                hit.originBody = body;
+                hit.setElements(this);
+                screen.spellManager.add(hit);
             }
         }
     }
@@ -196,13 +213,9 @@ public class Thunderstorm_Hit extends Thunderstorm_Spell {
         if(nested_spell instanceof Flamejet_Spell) {
             procRate = 0.85f - 0.1f * player.spellbook.flamejet_lvl;
         }
-        if(nested_spell instanceof ForkedLightning_Spell) {
-            float level = player.spellbook.chargedbolt_lvl + player.spellbook.chainlightning_lvl;
-            level = level/2f;
-            procRate = 0.9f - level * 0.1f;
-        }
         return procRate;
     }
+
     public int getQuantity() {
         int quantity = 1;
         if(nested_spell instanceof ChargedBolts_Spell) {
@@ -213,10 +226,6 @@ public class Thunderstorm_Hit extends Thunderstorm_Spell {
         }
         if(nested_spell instanceof Flamejet_Spell) {
             quantity = 3 + player.spellbook.flamejet_lvl;
-        }
-        if(nested_spell instanceof ForkedLightning_Spell) {
-            float level = (player.spellbook.chainlightning_lvl + player.spellbook.flamejet_lvl)/2f;
-            quantity = (int) (1 + level);
         }
         return quantity;
     }

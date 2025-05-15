@@ -39,6 +39,34 @@ public class BodyFactory {
         return body;
 
     }
+    public static Body NpcBody (Vector2 position) {
+        BodyDef def = new BodyDef();
+        def.type = BodyDef.BodyType.StaticBody;
+        def.fixedRotation = true;
+        def.position.set(position.x, position.y);
+
+        Body body = world.createBody(def);
+
+        CircleShape shape = new CircleShape();
+        shape.setRadius(12f / PPM);
+
+        FixtureDef fixt = new FixtureDef();
+        fixt.filter.categoryBits = NPC;
+        fixt.shape = shape;
+        fixt.density = 1;
+        fixt.friction = 0;
+        fixt.restitution = 0;
+        fixt.isSensor = false;
+
+        body.createFixture(fixt);
+        shape.dispose();
+
+        MassData data = new MassData();
+        data.mass = 100000;
+        body.setMassData(data);
+
+        return body;
+    }
     public static Body monsterBody(Vector2 position, float radius) {
         BodyDef def = new BodyDef();
         def.type = BodyDef.BodyType.DynamicBody;
@@ -62,6 +90,8 @@ public class BodyFactory {
 
         return body;
     }
+
+
     public static Body spellProjectileCircleBody(Vector2 position, float radius, boolean isSensor) {
         Body body;
         BodyDef def = new BodyDef();

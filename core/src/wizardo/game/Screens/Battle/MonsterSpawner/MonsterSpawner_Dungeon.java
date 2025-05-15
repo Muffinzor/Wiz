@@ -97,11 +97,11 @@ public class MonsterSpawner_Dungeon extends MonsterSpawner {
                 Monster monster2 = new AcolytePurple(screen, SpawnerUtils.getRandomRangeSpawnVector(), this);
                 spawnMonster(monster2);
             }
-            if(Math.random() >= 0.9f) {
+            if(Math.random() >= 0.95f) {
                 Monster monster2 = new Zombie(screen, null, this);
                 spawnMonster(monster2);
             }
-            for (int i = 0; i < 2; i++) {
+            for (int i = 0; i < 2 * spawnRatio; i++) {
                 Monster monster2 = new GreenSludge(screen, null, this);
                 spawnMonster(monster2);
             }

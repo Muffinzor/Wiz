@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="60" height="60" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="32">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="60" height="60" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="34">
  <tileset firstgid="1" source="../ForestMaps/Tilesets/grass-light-to-mid.tsx"/>
  <tileset firstgid="404" source="../ForestMaps/Tilesets/grass-mid-to-light.tsx"/>
  <layer id="4" name="Tile Layer 1" width="60" height="60">
@@ -83,5 +83,11 @@
   <object id="22" name="Tree" x="1568" y="998" width="8" height="8"/>
   <object id="24" name="Tree" x="921" y="721" width="8" height="8"/>
   <object id="25" name="Tree" x="1405" y="702" width="8" height="8"/>
+ </objectgroup>
+ <objectgroup id="5" name="DecorBodies">
+  <object id="32" name="Cauldron" x="1284" y="1105" width="8" height="8"/>
+ </objectgroup>
+ <objectgroup id="6" name="NPCs">
+  <object id="33" name="Witch" x="1276" y="1088" width="8" height="8"/>
  </objectgroup>
 </map>

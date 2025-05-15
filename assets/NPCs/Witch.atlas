@@ -1,0 +1,11 @@
+Witch.png
+size:256,128
+repeat:none
+witch1
+bounds:70,2,32,64
+witch2
+bounds:2,2,32,64
+witch3
+bounds:104,2,32,64
+witch4
+bounds:36,2,32,64

@@ -2,6 +2,7 @@ package wizardo.game.Monsters;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
+import wizardo.game.Account.AccountProgress;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Monsters.MonsterArchetypes.MonsterRanged;
 import wizardo.game.Screens.Battle.BattleScreen;
@@ -46,6 +47,7 @@ public class MonsterManager {
             monster.update(delta);
             if(monster.dead) {
                 screen.monsterSpawner.registerKill();
+                AccountProgress.loaded.monster_souls += monster.souls_worth;
                 player.currentXP += (monster.xp * (1 + player.stats.bonus_experience/100f));
                 monster.stateTime = 0;
                 dyingMonsters.add(monster);
@@ -62,33 +64,27 @@ public class MonsterManager {
                 monster.alpha = 0.05f;
             }
         }
-
         liveMonsters.removeIf(monster -> monster.dead);
         liveMonsters.removeIf(monster -> monster.tooFar);
 
         for(Monster monster : liveMonsters) {
             monster.movement(delta);
         }
-
-
     }
 
     public void updateDeadMonsters(float delta) {
         for(Monster monster : dyingMonsters) {
-
             if(monster.body.isActive()) {
                 monster.deathPosition = new Vector2(monster.body.getPosition());
                 monster.body.setActive(false);
             }
             monster.drawDeathFrame(delta);
             monster.stateTime += delta;
-
         }
 
         if(delta > 0) {
             bodiesRemoval();
         }
-
     }
 
     /** spaced to prevent garbage collection crazyness **/
