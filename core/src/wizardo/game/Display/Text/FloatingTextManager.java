@@ -94,7 +94,7 @@ public class FloatingTextManager {
         bottomTextsQueue.add(text);
     }
     public void addGoldText(BottomText text) {
-        text.position = new Vector2(635 * xRatio * MathUtils.random(0.98f, 1.02f),95 * yRatio);
+        text.position = new Vector2(670 * xRatio * MathUtils.random(0.98f, 1.02f),145 * yRatio);
         goldTextsQueue.add(text);
     }
 

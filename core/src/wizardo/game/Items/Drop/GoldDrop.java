@@ -67,7 +67,7 @@ public class GoldDrop extends Drop{
         pickedUp = true;
         stateTime = 0;
         player.inventory.gold += goldAmount;
-        screen.battleUI.updateGoldPanel();
+        screen.battleUI.updatePanels();
 
         BottomText text = new BottomText();
         text.setAll("+" + goldAmount, position, inventorySkin.getFont("Gear_Text"), Color.YELLOW);

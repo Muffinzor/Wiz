@@ -132,7 +132,7 @@ public class ShopButton_Reagent extends ImageButton implements MenuButton {
             }
 
             BattleScreen battlescreen = (BattleScreen) screen.game.getPreviousScreen();
-            battlescreen.battleUI.updateGoldPanel();
+            battlescreen.battleUI.updatePanels();
 
             BottomText text = new BottomText();
             text.setAll("-" + price, new Vector2(0,0), inventorySkin.getFont("Gear_Text"), Color.YELLOW);

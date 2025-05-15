@@ -162,7 +162,7 @@ public class ShopButton_Scroll extends ImageButton implements MenuButton {
             apply_Scroll(mastery);
 
             BattleScreen battlescreen = (BattleScreen) screen.game.getPreviousScreen();
-            battlescreen.battleUI.updateGoldPanel();
+            battlescreen.battleUI.updatePanels();
 
             BottomText text = new BottomText();
             text.setAll("-" + price, new Vector2(0,0), inventorySkin.getFont("Gear_Text"), Color.YELLOW);

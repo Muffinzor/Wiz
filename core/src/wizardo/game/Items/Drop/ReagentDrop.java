@@ -1,7 +1,6 @@
 package wizardo.game.Items.Drop;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
@@ -19,14 +18,13 @@ public class ReagentDrop extends Drop {
     Animation<Sprite> anim;
 
     /**
-     * @param spawnPosition
+     * @param spawnPosition self-explanatory
      * @param chance from 0 to 100, chance to be better reagent
      */
     public ReagentDrop(Vector2 spawnPosition, float chance) {
         this.position = new Vector2(spawnPosition);
         displayScale = 0.25f;
         lightRadius = 25f;
-        sprite = new Sprite(new Texture("Items/Drops/Potion.png"));
         triple = Math.random() >= 1f - chance/100f;
     }
 

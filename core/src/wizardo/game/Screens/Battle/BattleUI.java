@@ -2,9 +2,11 @@ package wizardo.game.Screens.Battle;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import wizardo.game.Items.Drop.DropAnims;
 import wizardo.game.Resources.PlayerResources;
 
 import static wizardo.game.Resources.Skins.inventorySkin;
@@ -17,14 +19,19 @@ public class BattleUI {
     BattleScreen screen;
 
     public Label goldLabel;
+    public Label dualLabel;
+    public Label tripleLabel;
 
     public BattleUI(BattleScreen screen) {
         this.screen = screen;
-        goldPanel();
+        createPanels();
     }
 
     public void update() {
         drawPlayerHP();
+        drawGoldIcon();
+        drawReagents();
+        updatePanels();
         drawControllerTarget();
     }
 
@@ -50,6 +57,25 @@ public class BattleUI {
         frame2.setPosition(50 * xRatio, 45 * yRatio);
         screen.displayManager.spriteRenderer.ui_sprites.add(frame2);
 
+    }
+    public void drawGoldIcon() {
+        Sprite gold_frame = new Sprite(new Texture("Items/Drops/GoldLoot/GoldPouch.png"));
+        gold_frame.setSize(25 * xRatio, 25 * xRatio);
+        gold_frame.setCenter(645 * xRatio, 128 * yRatio);
+        screen.displayManager.spriteRenderer.ui_sprites.add(gold_frame);
+    }
+    public void drawReagents() {
+        Sprite dual_frame = screen.getSprite();
+        dual_frame.set(DropAnims.dualGem_anim.getKeyFrame(screen.stateTime/2, true));
+        dual_frame.setSize(25 * xRatio, 25 * xRatio);
+        dual_frame.setCenter(645 * xRatio, 93 * yRatio);
+        screen.displayManager.spriteRenderer.ui_sprites.add(dual_frame);
+
+        Sprite triple_frame = screen.getSprite();
+        triple_frame.set(DropAnims.tripleGem_anim.getKeyFrame(screen.stateTime/2, true));
+        triple_frame.setSize(25 * xRatio, 25 * xRatio);
+        triple_frame.setCenter(645 * xRatio, 60 * yRatio);
+        screen.displayManager.spriteRenderer.ui_sprites.add(triple_frame);
     }
 
     public void drawControllerTarget() {
@@ -91,18 +117,31 @@ public class BattleUI {
             screen.displayManager.spriteRenderer.ui_sprites.add(frame);
         }
     }
-    public void goldPanel() {
+    public void createPanels() {
         goldLabel = new Label("" + player.inventory.gold + "g", inventorySkin, "Gear_Name", Color.YELLOW);
-        goldLabel.setPosition(630 * xRatio,55 * yRatio);
+        goldLabel.setPosition(670 * xRatio,45 * yRatio);
         screen.stage.addActor(goldLabel);
+
+        dualLabel = new Label("" + player.inventory.dual_reagents, inventorySkin, "Gear_Name", Color.WHITE);
+        dualLabel.setPosition(670 * xRatio,79 * yRatio);
+        screen.stage.addActor(dualLabel);
+
+        tripleLabel = new Label("" + player.inventory.triple_reagents, inventorySkin, "Gear_Name", Color.WHITE);
+        tripleLabel.setPosition(670 * xRatio,114 * yRatio);
+        screen.stage.addActor(tripleLabel);
+
     }
 
-    public void updateGoldPanel() {
+    public void updatePanels() {
         goldLabel.setText("" + player.inventory.gold + "g");
+        dualLabel.setText("" + player.inventory.dual_reagents);
+        tripleLabel.setText("" + player.inventory.triple_reagents);
     }
 
     public void resize() {
-        goldLabel.setPosition(630 * xRatio,55 * yRatio);
+        goldLabel.setPosition(670 * xRatio,114 * yRatio);
+        dualLabel.setPosition(670 * xRatio,79 * yRatio);
+        tripleLabel.setPosition(670 * xRatio,45 * yRatio);
     }
 
 

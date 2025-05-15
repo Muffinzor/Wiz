@@ -16,19 +16,15 @@ import wizardo.game.Display.Text.BottomText;
 import wizardo.game.Items.Equipment.Equipment;
 import wizardo.game.Items.ItemUtils;
 import wizardo.game.Resources.EffectAnims.GearFlareAnims;
-import wizardo.game.Screens.BaseScreen;
 import wizardo.game.Screens.Battle.BattleScreen;
-import wizardo.game.Screens.CharacterScreen.CharacterScreen;
 import wizardo.game.Screens.CharacterScreen.EquipmentTable.GearPanel;
 import wizardo.game.Screens.CharacterScreen.EquipmentTable.MenuButton;
-import wizardo.game.Screens.Popups.AreYouSureScreen;
 import wizardo.game.Screens.Shop.Anims.Gear_Anim;
 
 import static wizardo.game.Resources.ScreenResources.CharacterScreenResources.*;
 import static wizardo.game.Resources.ScreenResources.CharacterScreenResources.redQuality;
 import static wizardo.game.Resources.Skins.inventorySkin;
 import static wizardo.game.Screens.BaseScreen.xRatio;
-import static wizardo.game.Screens.BaseScreen.yRatio;
 import static wizardo.game.Wizardo.player;
 
 public class ShopButton_Equipment extends ImageButton implements MenuButton {
@@ -167,7 +163,7 @@ public class ShopButton_Equipment extends ImageButton implements MenuButton {
             screen.anims.add(new Gear_Anim(screen, this));
 
             BattleScreen battlescreen = (BattleScreen) screen.game.getPreviousScreen();
-            battlescreen.battleUI.updateGoldPanel();
+            battlescreen.battleUI.updatePanels();
 
             BottomText text = new BottomText();
             text.setAll("-" + piece.price, new Vector2(0,0), inventorySkin.getFont("Gear_Text"), Color.YELLOW);

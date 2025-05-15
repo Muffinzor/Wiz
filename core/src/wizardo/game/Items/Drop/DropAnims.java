@@ -12,8 +12,8 @@ public class DropAnims {
     public static Animation<Sprite> dualGem_anim;
     public static Animation<Sprite> tripleGem_anim;
     public static String gem_atlas_path = "Items/Drops/MixingReagent/Gems.atlas";
-
-
+    public static Sprite dualGem_sprite;
+    public static Sprite tripleGem_sprite;
 
     public static void loadAnimations() {
 
@@ -30,7 +30,10 @@ public class DropAnims {
         }
         tripleGem_anim = new Animation<>(0.03f, triple_frames);
 
-
+        dualGem_sprite = new Sprite();
+        dualGem_sprite.set(dual_frames[0]);
+        tripleGem_sprite = new Sprite();
+        tripleGem_sprite.set(triple_frames[0]);
     }
 
     public static void loadAtlas() {
