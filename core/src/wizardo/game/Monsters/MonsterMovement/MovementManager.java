@@ -66,7 +66,7 @@ public class MovementManager {
 
     public void checkDistance() {
         float dst = monster.body.getPosition().dst(player.pawn.getPosition());
-        if(dst > (0.83 * Gdx.graphics.getWidth())/PPM) {
+        if(dst > monster.screen.max_monster_distance) {
             monster.tooFar = true;
         }
     }

@@ -40,6 +40,7 @@ public class BattleScreen extends BaseScreen {
     public MapManager mapManager;
     public MonsterSpawner monsterSpawner;
     public MonsterSpellManager monsterSpellManager;
+    public double max_monster_distance;
 
     public final BattleUI battleUI;
 
@@ -179,6 +180,7 @@ public class BattleScreen extends BaseScreen {
     @Override
     public void resize(int width, int height) {
         super.resize(width, height);
+        max_monster_distance = Math.max(30, (0.83 * Gdx.graphics.getWidth())/PPM);
         battleUI.resize();
     }
 

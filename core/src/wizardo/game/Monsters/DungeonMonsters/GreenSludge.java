@@ -21,11 +21,12 @@ import static wizardo.game.Utils.Constants.PPM;
 
 public class GreenSludge extends MonsterMelee {
 
-    int speed_frames = 0;
+    int speed_frames;
 
     public GreenSludge(BattleScreen screen, Vector2 position, MonsterSpawner_Dungeon spawner) {
         super(screen, position, spawner);
         speed = 0.825f;
+        speed_frames = MathUtils.random(0,60);
         hp = 75;
         maxHP = 75;
         xp = 15;
@@ -56,7 +57,7 @@ public class GreenSludge extends MonsterMelee {
         speed_frames ++;
 
         if(speed_frames >= 60) {
-            speed = 0.825f;
+            speed = 0.825f * MathUtils.random(0.9f, 1.1f);
             speed_frames = 0;
         }
     }
@@ -77,12 +78,10 @@ public class GreenSludge extends MonsterMelee {
     @Override
     public void onDeath() {
         super.onDeath();
-        GreenSludge_Mini mini1 = new GreenSludge_Mini(screen, body.getPosition(), (MonsterSpawner_Dungeon) spawner);
-        screen.monsterSpawner.monster_to_spawn.add(mini1);
-        GreenSludge_Mini mini2 = new GreenSludge_Mini(screen, body.getPosition(), (MonsterSpawner_Dungeon) spawner);
-        screen.monsterSpawner.monster_to_spawn.add(mini2);
-        GreenSludge_Mini mini3 = new GreenSludge_Mini(screen, body.getPosition(), (MonsterSpawner_Dungeon) spawner);
-        screen.monsterSpawner.monster_to_spawn.add(mini3);
+        for (int i = 0; i < 3; i++) {
+            GreenSludge_Mini mini = new GreenSludge_Mini(screen, body.getPosition(), (MonsterSpawner_Dungeon) spawner);
+            screen.monsterSpawner.monster_to_spawn.add(mini);
+        }
     }
 
 }
