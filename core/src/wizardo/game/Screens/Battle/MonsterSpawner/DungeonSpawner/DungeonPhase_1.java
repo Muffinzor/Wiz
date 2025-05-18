@@ -7,6 +7,7 @@ import wizardo.game.Monsters.DungeonMonsters.SkeletonGiant;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Screens.Battle.MonsterSpawner.MonsterSpawner;
 import wizardo.game.Screens.Battle.MonsterSpawner.SpawnerPhase;
+import wizardo.game.Screens.Battle.MonsterSpawner.SpawnerUtils;
 import wizardo.game.Spells.SpellUtils;
 
 import static wizardo.game.Screens.BaseScreen.xRatio;
@@ -17,6 +18,7 @@ public class DungeonPhase_1 implements SpawnerPhase {
     float stateTime = 0;
     float skellyTimer = 0;
     float packTimer = 0;
+    float quadrantTimer = 0;
     MonsterSpawner spawner;
 
     public DungeonPhase_1(MonsterSpawner spawner) {
@@ -28,8 +30,10 @@ public class DungeonPhase_1 implements SpawnerPhase {
         stateTime += delta;
         skellyTimer += delta;
         packTimer += delta;
+        quadrantTimer += delta;
         spawnSkellies();
         spawnPack();
+        spawnQuadrant();
         if(stateTime >= 180) {
             spawner.phase = new DungeonPhase_2(spawner);
         }
@@ -52,7 +56,7 @@ public class DungeonPhase_1 implements SpawnerPhase {
         }
     }
     public void spawnPack() {
-        if(packTimer >= 15 && spawner.screen.monsterManager.liveMonsters.size() < spawner.maxMeleeMonsters) {
+        if(packTimer >= 14 && spawner.screen.monsterManager.liveMonsters.size() < spawner.maxMeleeMonsters) {
             packTimer = 0;
 
             Vector2 randomizedDirection;
@@ -70,6 +74,23 @@ public class DungeonPhase_1 implements SpawnerPhase {
                 Vector2 spawnPoint = SpellUtils.getClearRandomPosition(centerPoint, Math.min(2 * spawner.spawnRatio, 5));
                 Monster monster;
                 if(stateTime >= 120 && Math.random() >= 0.95f) {
+                    monster = new SkeletonGiant(spawner.screen, spawnPoint, spawner);
+                } else {
+                    monster = new Skeleton(spawner.screen, spawnPoint, spawner);
+                }
+                spawner.spawnMonster(monster);
+            }
+        }
+    }
+    void spawnQuadrant() {
+        if(quadrantTimer >= 8) {
+            quadrantTimer = 0;
+            int quadrantAngle = spawner.getEmptyQuadrantAngle();
+            for (int i = 0; i < 4 * spawner.spawnRatio; i++) {
+                Monster monster;
+                Vector2 spawnPoint = SpawnerUtils.getClearRandomVectorInConeRing(player.pawn.getPosition(),
+                        34 * xRatio, 42 * xRatio, quadrantAngle);
+                if(stateTime > 120 && Math.random() >= 0.95f) {
                     monster = new SkeletonGiant(spawner.screen, spawnPoint, spawner);
                 } else {
                     monster = new Skeleton(spawner.screen, spawnPoint, spawner);

@@ -21,6 +21,7 @@ public class DungeonPhase_2 implements SpawnerPhase {
     float skellyTimer = 0;
     float packTimer = 0;
     float rangeTimer = 0;
+    float quadrantTimer = 0;
     MonsterSpawner spawner;
 
     boolean acolyte_wave_spawned;
@@ -35,9 +36,11 @@ public class DungeonPhase_2 implements SpawnerPhase {
         skellyTimer += delta;
         packTimer += delta;
         rangeTimer += delta;
+        quadrantTimer += delta;
         spawnSkellies();
         spawnAcolyte();
         spawnPack();
+        spawnQuadrant();
 
         if(!acolyte_wave_spawned && stateTime >= 120) {
             spawnAcolytePack();
@@ -102,10 +105,28 @@ public class DungeonPhase_2 implements SpawnerPhase {
             }
         }
     }
+    void spawnQuadrant() {
+        if(quadrantTimer >= 8) {
+            quadrantTimer = 0;
+            int quadrantAngle = spawner.getEmptyQuadrantAngle();
+            for (int i = 0; i < 4 * spawner.spawnRatio; i++) {
+                Monster monster;
+                Vector2 spawnPoint = SpawnerUtils.getClearRandomVectorInConeRing(player.pawn.getPosition(),
+                        34 * xRatio, 42 * xRatio, quadrantAngle);
+                if(stateTime > 120 && Math.random() >= 0.9f) {
+                    monster = new SkeletonGiant(spawner.screen, spawnPoint, spawner);
+                } else {
+                    monster = new Skeleton(spawner.screen, spawnPoint, spawner);
+                }
+                spawner.spawnMonster(monster);
+            }
+        }
+    }
     void spawnAcolytePack() {
         for (int i = 0; i < 8; i++) {
             Monster monster = new AcolyteBlue(spawner.screen, SpawnerUtils.getRandomRangeSpawnVector(), spawner);
             spawner.spawnMonster(monster);
         }
     }
+
 }

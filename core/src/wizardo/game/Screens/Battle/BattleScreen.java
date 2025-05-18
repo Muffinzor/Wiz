@@ -72,10 +72,9 @@ public class BattleScreen extends BaseScreen {
         player.screen = this;
 
         mapManager = new MapManager(biome, game, this);
-        if(biome.equals("Dungeon")) {
-            monsterSpawner = new MonsterSpawner_Dungeon(this);
-        } else {
-            monsterSpawner = new MonsterSpawner_Forest(this);
+        switch(biome) {
+            case "Dungeon" -> monsterSpawner = new MonsterSpawner_Dungeon(this);
+            case "Forest" -> monsterSpawner = new MonsterSpawner_Forest(this);
         }
 
         monsterManager = new MonsterManager(this);

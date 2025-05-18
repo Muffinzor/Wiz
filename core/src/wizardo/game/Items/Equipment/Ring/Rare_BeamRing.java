@@ -13,7 +13,7 @@ public class Rare_BeamRing extends Ring{
         displayScale = 0.75f;
 
         name = "Amplifying Halo";
-        title = "Epic Ring";
+        title = "Rare Ring";
         quality = ItemUtils.EquipQuality.RARE;
 
         masteries.add(SpellUtils.Spell_Name.BEAM);
