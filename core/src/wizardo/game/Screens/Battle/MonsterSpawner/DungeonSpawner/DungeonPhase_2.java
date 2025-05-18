@@ -39,7 +39,7 @@ public class DungeonPhase_2 implements SpawnerPhase {
         spawnAcolyte();
         spawnPack();
 
-        if(!acolyte_wave_spawned) {
+        if(!acolyte_wave_spawned && stateTime >= 120) {
             spawnAcolytePack();
             acolyte_wave_spawned = true;
         }
@@ -91,7 +91,7 @@ public class DungeonPhase_2 implements SpawnerPhase {
 
             int count = (int) (5 * spawner.spawnRatio);
             for (int i = 0; i < count; i++) {
-                Vector2 spawnPoint = SpellUtils.getClearRandomPosition(centerPoint, Math.min(2 * spawner.spawnRatio, 6));
+                Vector2 spawnPoint = SpellUtils.getClearRandomPosition(centerPoint, Math.min(2 * spawner.spawnRatio, 5));
                 Monster monster;
                 if(stateTime >= 0 && Math.random() >= 0.9f) {
                     monster = new SkeletonGiant(spawner.screen, spawnPoint, spawner);

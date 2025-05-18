@@ -110,70 +110,20 @@ public class SpellUtils {
      * @return Vector with randomized coordinates
      */
     public static Vector2 getRandomVectorInRadius(Vector2 areaCenter, float radius) {
-        float randomAngle = MathUtils.random(0, MathUtils.PI2); // Random angle in radians
-        float randomRadius = (float) Math.sqrt(MathUtils.random(0f, 1f)) * radius; // Adjusted random radius for uniform distribution
-        float offsetX = randomRadius * MathUtils.cos(randomAngle); // X offset
-        float offsetY = randomRadius * MathUtils.sin(randomAngle); // Y offset
-
-        // Calculate the randomized coordinates
-        float x = areaCenter.x + offsetX;
-        float y = areaCenter.y + offsetY;
-
-        return new Vector2(x, y);
-    }
-
-    /**
-     * randomizes a vector in a ring around a vector
-     * @param minRadius minimum distance from center
-     * @param maxRadius maximum distance
-     * @return Vector with randomized coordinates
-     */
-    public static Vector2 getRandomVectorInRing(Vector2 areaCenter, float minRadius, float maxRadius) {
-        float randomAngle = MathUtils.random(0, MathUtils.PI2); // Random angle in radians
-        float randomRadius = (float) Math.sqrt(MathUtils.random(minRadius * minRadius, maxRadius * maxRadius)); // Adjusted random radius for uniform distribution
-        float offsetX = randomRadius * MathUtils.cos(randomAngle); // X offset
-        float offsetY = randomRadius * MathUtils.sin(randomAngle); // Y offset
-
-        // Calculate the randomized coordinates
-        float x = areaCenter.x + offsetX;
-        float y = areaCenter.y + offsetY;
-
-        return new Vector2(x, y);
-    }
-
-    /**
-     * randomizes a vector in a 60 degree cone of a ring around the center
-     * @param minRadius minimum distance from center
-     * @param maxRadius maximum distance
-     * @param centralAngle the central angle of the cone
-     * @return Vector with randomized coordinates
-     */
-    public static Vector2 getRandomVectorInConeRing(Vector2 areaCenter, float minRadius, float maxRadius, float centralAngle) {
-        // Convert central angle from degrees to radians
-        float centralAngleRadians = centralAngle * MathUtils.degreesToRadians;
-
-        // Generate a random angle constrained within ±30 degrees of the central angle
-        float halfCone = MathUtils.PI / 4; // 30 degrees in radians
-        float randomAngle = MathUtils.random(
-                centralAngleRadians - halfCone,
-                centralAngleRadians + halfCone
-        );
-
-        // Generate a random radius within the ring boundaries
-        float randomRadius = MathUtils.random(minRadius, maxRadius);
-
-        // Compute offsets for X and Y using polar coordinates
+        float randomAngle = MathUtils.random(0, MathUtils.PI2);
+        float randomRadius = (float) Math.sqrt(MathUtils.random(0f, 1f)) * radius;
         float offsetX = randomRadius * MathUtils.cos(randomAngle);
         float offsetY = randomRadius * MathUtils.sin(randomAngle);
 
-        // Return the final coordinates in Vector2 form
-        return new Vector2(areaCenter.x + offsetX, areaCenter.y + offsetY);
+        float x = areaCenter.x + offsetX;
+        float y = areaCenter.y + offsetY;
+
+        return new Vector2(x, y);
     }
 
     /**
      * returns a randomized position that does not collide with obstacles, if it can find one quickly
      * @param center center of the search circle
-     * @return
      */
     public static Vector2 getClearRandomPosition(Vector2 center, float radius) {
         Vector2 randomTarget = null;
@@ -186,40 +136,6 @@ public class SpellUtils {
             }
         }
         return randomTarget;
-    }
-
-    /**
-     * returns a randomized position that does not collide with obstacles, if it can find one quickly
-     * @param center center of the search circle
-     * @param minRadius minimum distance
-     */
-    public static Vector2 getClearRandomPositionRing(Vector2 center, float minRadius, float maxRadius) {
-        Vector2 randomTarget = SpellUtils.getRandomVectorInRing(center, minRadius, maxRadius);
-        int attempts = 0;
-        while (attempts < 10) {
-            if (!isPositionOverlappingWithObstacle(randomTarget)) {
-                return randomTarget;
-            } else {
-                randomTarget = SpellUtils.getRandomVectorInRing(center, minRadius, maxRadius);
-                attempts++;
-            }
-        }
-        return randomTarget;
-    }
-
-    public static Vector2 getClearRandomPositionCone(Vector2 center, float minRadius, float maxRadius, float centralAngle) {
-        Vector2 position = SpellUtils.getRandomVectorInConeRing(center, minRadius, maxRadius, centralAngle);
-        int attempts = 0;
-        while (attempts < 10) {
-            if (!isPositionOverlappingWithObstacle(position)) {
-                return position;
-            } else {
-                position = SpellUtils.getRandomVectorInConeRing(center, minRadius, maxRadius, centralAngle);
-            }
-            attempts++;
-
-        }
-        return position;
     }
 
     /**
@@ -242,7 +158,7 @@ public class SpellUtils {
     public static ArrayList<Monster> findMonstersInRangeOfVector(Vector2 origin, float radius, boolean need_LoS) {
         ArrayList<Monster> monstersInRange = new ArrayList<>();
 
-        // Define the AABB
+        // AABB
         float lowerX = origin.x - radius;
         float lowerY = origin.y - radius;
         float upperX = origin.x + radius;
@@ -263,7 +179,7 @@ public class SpellUtils {
                     }
                 }
             }
-            return true; // Continue the query
+            return true; // Continue
         };
 
         world.QueryAABB(callback, lowerX, lowerY, upperX, upperY);
@@ -274,9 +190,10 @@ public class SpellUtils {
         return monstersInRange;
     }
 
-    /** recursive will also make the previous tiers available as picks.
+    /**
+     * recursive will also make the previous tiers available as picks.
      * null element for all access
-     * */
+     **/
     public static Spell_Name getRandomMastery(SpellUtils.Spell_Element element, int tier, boolean recursive) {
         List<Spell_Name> list = new ArrayList<>();
         if(element != null) {
@@ -318,7 +235,6 @@ public class SpellUtils {
             }
             return list.get(MathUtils.random(minIndex, maxIndex));
         }
-
     }
 
     public static Spell_Element whatElementIsThis(Spell_Name spell) {

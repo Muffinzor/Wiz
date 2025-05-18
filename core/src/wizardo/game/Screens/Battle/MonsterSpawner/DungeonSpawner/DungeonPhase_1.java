@@ -30,7 +30,7 @@ public class DungeonPhase_1 implements SpawnerPhase {
         packTimer += delta;
         spawnSkellies();
         spawnPack();
-        if(stateTime >= 30) {
+        if(stateTime >= 180) {
             spawner.phase = new DungeonPhase_2(spawner);
         }
     }
@@ -67,7 +67,7 @@ public class DungeonPhase_1 implements SpawnerPhase {
 
             int count = (int) (6 * spawner.spawnRatio);
             for (int i = 0; i < count; i++) {
-                Vector2 spawnPoint = SpellUtils.getClearRandomPosition(centerPoint, Math.min(2 * spawner.spawnRatio, 6));
+                Vector2 spawnPoint = SpellUtils.getClearRandomPosition(centerPoint, Math.min(2 * spawner.spawnRatio, 5));
                 Monster monster;
                 if(stateTime >= 120 && Math.random() >= 0.95f) {
                     monster = new SkeletonGiant(spawner.screen, spawnPoint, spawner);

@@ -20,7 +20,7 @@ import wizardo.game.Screens.BaseScreen;
 import wizardo.game.Items.Drop.DropManager;
 import wizardo.game.Screens.Battle.MonsterSpawner.MonsterSpawner;
 import wizardo.game.Screens.Battle.MonsterSpawner.DungeonSpawner.MonsterSpawner_Dungeon;
-import wizardo.game.Screens.Battle.MonsterSpawner.MonsterSpawner_Forest;
+import wizardo.game.Screens.Battle.MonsterSpawner.ForestSpawner.MonsterSpawner_Forest;
 import wizardo.game.Screens.MainMenu.MainMenuScreen;
 import wizardo.game.Spells.SpellManager;
 import wizardo.game.Wizardo;

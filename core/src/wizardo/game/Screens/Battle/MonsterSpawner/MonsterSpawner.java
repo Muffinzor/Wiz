@@ -37,7 +37,6 @@ public abstract class MonsterSpawner {
     public BodyPool bodyPool;
     public int maxMeleeMonsters = 100;
 
-
     public MonsterSpawner(BattleScreen screen) {
         this.screen = screen;
         phase = new DungeonPhase_1(this);
@@ -46,7 +45,6 @@ public abstract class MonsterSpawner {
 
         playerPreviousLocation = player.pawn.getPosition();
         playerCurrentLocation = player.pawn.getPosition();
-
     }
 
     /**
@@ -110,10 +108,10 @@ public abstract class MonsterSpawner {
     public Vector2 getSpawnPositionAhead() {
         Vector2 playerPosition = player.pawn.getPosition();
         if(direction == null) {
-            return SpellUtils.getClearRandomPositionRing(playerPosition, 35 * xRatio, 42 * xRatio);
+            return SpawnerUtils.getClearRandomPositionRing(playerPosition, 35 * xRatio, 42 * xRatio);
         } else {
             float angle = direction.angleDeg();
-            return SpellUtils.getClearRandomPositionCone(playerPosition, 35 * xRatio, 42 * xRatio, angle);
+            return SpawnerUtils.getClearRandomVectorInConeRing(playerPosition, 35 * xRatio, 42 * xRatio, angle);
         }
     }
 
