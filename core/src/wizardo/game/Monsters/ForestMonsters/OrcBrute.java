@@ -11,10 +11,8 @@ import wizardo.game.Monsters.MonsterStateManager.MeleeStateManager;
 import wizardo.game.Monsters.MonsterUtils;
 import wizardo.game.Resources.MonsterResources.MonsterWeapons;
 import wizardo.game.Resources.MonsterResources.OrcBruteAnims;
-import wizardo.game.Resources.MonsterResources.SkeletonGiantAnims;
 import wizardo.game.Screens.Battle.BattleScreen;
 import wizardo.game.Screens.Battle.MonsterSpawner.MonsterSpawner;
-import wizardo.game.Screens.Battle.MonsterSpawner.MonsterSpawner_Dungeon;
 
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.player;

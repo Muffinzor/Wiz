@@ -12,7 +12,6 @@ import wizardo.game.Player.Player;
 import wizardo.game.Resources.MonsterResources.MawDemonAnims;
 import wizardo.game.Screens.Battle.BattleScreen;
 import wizardo.game.Screens.Battle.MonsterSpawner.MonsterSpawner;
-import wizardo.game.Screens.Battle.MonsterSpawner.MonsterSpawner_Dungeon;
 
 import static wizardo.game.Monsters.MonsterUtils.MONSTER_STATE.CHARGING;
 import static wizardo.game.Utils.Constants.PPM;

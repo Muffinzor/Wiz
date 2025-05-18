@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Monsters.MonsterTypes.MawDemon.MawDemon;
 import wizardo.game.Screens.Battle.BattleScreen;
+import wizardo.game.Screens.Battle.MonsterSpawner.DungeonSpawner.DungeonPhase_1;
 import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyPool;
 
@@ -17,33 +18,29 @@ public abstract class MonsterSpawner {
     public ArrayList<Monster> monster_to_spawn;
 
     public BattleScreen screen;
-    float stateTime;
+    public SpawnerPhase phase;
+    public float stateTime;
 
-    Vector2 playerPreviousLocation;
-    Vector2 playerCurrentLocation;
-    Vector2 direction;
-    float directionTimer = 0;
+    public Vector2 playerPreviousLocation;
+    public Vector2 playerCurrentLocation;
+    public Vector2 direction;
+    public float directionTimer = 0;
 
     public float spawnRatio = 1.0f;
-    float cycleDuration = 20;
-    int killsLastCycle = 0;
-    float killResetTimer = 0;
+    public float cycleDuration = 20;
+    public int killsLastCycle = 0;
+    public float killResetTimer = 0;
 
-    float monsterToughnessRatio = 1;
-    float monsterDamageRatio = 1;
-
-    float meleeSpawnTimer = 0;
-    float rangedSpawnTimer = 0;
-    float packTimer = 0;
-    float eliteTimer = 0;
-    float emptyQuadrantSpawnTimer = 0;
+    public float monsterToughnessRatio = 1;
+    public float monsterDamageRatio = 1;
 
     public BodyPool bodyPool;
-    int maxMeleeMonsters = 100;
+    public int maxMeleeMonsters = 100;
 
 
     public MonsterSpawner(BattleScreen screen) {
         this.screen = screen;
+        phase = new DungeonPhase_1(this);
         bodyPool = new BodyPool();
         monster_to_spawn = new ArrayList<>();
 
@@ -52,6 +49,10 @@ public abstract class MonsterSpawner {
 
     }
 
+    /**
+     * calculates the direction of the player
+     * used to spawn monsters ahead of the player
+     */
     public void calculateTrajectory() {
         if(playerPreviousLocation.dst(playerCurrentLocation) > 1) {
             direction = new Vector2(playerCurrentLocation.cpy().sub(playerPreviousLocation));
@@ -77,47 +78,24 @@ public abstract class MonsterSpawner {
             calculateTrajectory();
             directionTimer = 0;
         }
-        spawnMeleeMonsters();
-        spawnRangedMonsters();
-        spawnPack();
-        spawnMonstersInEmptyQuadrant();
-        spawnDemon();
 
+        for(Monster monster : monster_to_spawn) {
+            spawnMonster(monster);
+        }
+        monster_to_spawn.clear();
+        phase.update(delta, this);
     }
 
     public void updateTimers(float delta) {
         stateTime += delta;
         directionTimer += delta;
         killResetTimer += delta;
-        meleeSpawnTimer += delta;
-        packTimer += delta;
-        rangedSpawnTimer += delta;
-        emptyQuadrantSpawnTimer += delta;
-        eliteTimer += delta;
         maxMeleeMonsters = Math.min(1000, (int) (100 * spawnRatio));
     }
 
-
-    public void spawnDemon() {
-        if(eliteTimer > 300f) {
-            eliteTimer = 0;
-            Monster monster = new MawDemon(screen, null, this);
-            spawnMonster(monster);
-        }
-    }
-    public void spawnMeleeMonsters() {
-
-    }
-    public void spawnRangedMonsters() {
-
-    }
-    public void spawnPack() {
-
-    }
-    public void spawnMonstersInEmptyQuadrant() {
-
-    }
-
+    /**
+     * sets the monster initial values and adds it to the spawn list
+     */
     public void spawnMonster(Monster monster) {
         monster.maxHP = monster.maxHP * monsterToughnessRatio;
         monster.hp = monster.hp * monsterToughnessRatio;
@@ -125,27 +103,36 @@ public abstract class MonsterSpawner {
         screen.monsterManager.addMonster(monster);
     }
 
-    public Vector2 getSpawnPosition() {
+    /**
+     * returns a spawn position in the direction the player is moving
+     * if player is not moving, returns a random position around them
+     */
+    public Vector2 getSpawnPositionAhead() {
         Vector2 playerPosition = player.pawn.getPosition();
         if(direction == null) {
-            return SpellUtils.getClearRandomPositionRing(playerPosition, 32 * xRatio, 42 * xRatio);
+            return SpellUtils.getClearRandomPositionRing(playerPosition, 35 * xRatio, 42 * xRatio);
         } else {
             float angle = direction.angleDeg();
-            return SpellUtils.getClearRandomPositionCone(playerPosition, 32 * xRatio, 42 * xRatio, angle);
+            return SpellUtils.getClearRandomPositionCone(playerPosition, 35 * xRatio, 42 * xRatio, angle);
         }
     }
 
 
-    public void registerKill() {
-        killsLastCycle++;
+    public void registerKill(Monster monster) {
+        if(!monster.basic) {
+            killsLastCycle += 5;
+        } else {
+            killsLastCycle++;
+        }
     }
 
     private void updateSpawnRatio() {
+        spawnRatio += 0.1f;
         float previousRatio = spawnRatio;
 
         // Calculate the new ratio based on kills
-        if (killsLastCycle > 10) {
-            spawnRatio = 1.0f + (killsLastCycle - 10 * spawnRatio) * 0.025f; // 0.025 is arbitrary and just a test
+        if (killsLastCycle > 5) {
+            spawnRatio = 1.0f + (killsLastCycle - 5 * spawnRatio) * 0.1f; // 0.1 is arbitrary and just a test
             if(spawnRatio > previousRatio * 1.15f) {
                 spawnRatio = previousRatio * 1.15f; // Limit to 15% increase
             }
@@ -153,12 +140,47 @@ public abstract class MonsterSpawner {
             spawnRatio = 1.0f;
         }
 
-        // Clamp the decrease to a maximum of 10% per cycle
-        if (spawnRatio < previousRatio * 0.9f) {
-            spawnRatio = previousRatio * 0.9f; // Limit to 10% reduction
+        if (spawnRatio < previousRatio * 0.95f) {
+            spawnRatio = previousRatio * 0.95f; // Limit to 5% reduction
         }
-        if( spawnRatio > 10) {
+        if(spawnRatio > 10) {
             spawnRatio = 10;
         }
+        System.out.println("Spawn ratio: " + spawnRatio);
+    }
+
+    /**
+     * calculates the angle from the player of the screen quadrant with the
+     * smallest amount of monsters
+     */
+    public int getEmptyQuadrantAngle() {
+        int topLeft = 0, topRight = 0, bottomLeft = 0, bottomRight = 0;
+
+        Vector2 playerPos = player.pawn.getPosition();
+        for (Monster monster : screen.monsterManager.liveMonsters) {
+            Vector2 pos = monster.body.getPosition();
+            if (pos.x < playerPos.x && pos.y > playerPos.y) {
+                topLeft++;
+            } else if (pos.x > playerPos.x && pos.y > playerPos.y) {
+                topRight++;
+            } else if (pos.x < playerPos.x && pos.y < playerPos.y) {
+                bottomLeft++;
+            } else {
+                bottomRight++;
+            }
+        }
+
+        int minQuadrant = Math.min(Math.min(topLeft, topRight), Math.min(bottomLeft, bottomRight));
+        int angle;
+        if (minQuadrant == topLeft) {
+            angle = 135;
+        } else if (minQuadrant == topRight) {
+            angle = 45;
+        } else if (minQuadrant == bottomLeft) {
+            angle = 225;
+        } else {
+            angle = 315;
+        }
+        return angle;
     }
 }

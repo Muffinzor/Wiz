@@ -3,7 +3,6 @@ package wizardo.game.Monsters.MonsterArchetypes;
 import com.badlogic.gdx.math.Vector2;
 import wizardo.game.Screens.Battle.BattleScreen;
 import wizardo.game.Screens.Battle.MonsterSpawner.MonsterSpawner;
-import wizardo.game.Screens.Battle.MonsterSpawner.MonsterSpawner_Dungeon;
 
 public abstract class MonsterMelee extends Monster {
 

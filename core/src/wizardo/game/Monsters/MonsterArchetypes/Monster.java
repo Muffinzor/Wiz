@@ -111,7 +111,7 @@ public abstract class Monster {
     public Monster(BattleScreen screen, Vector2 position, MonsterSpawner spawner) {
         this.spawner = spawner;
         if(position == null) {
-            position = spawner.getSpawnPosition();
+            position = spawner.getSpawnPositionAhead();
         }
         this.screen = screen;
         this.position = new Vector2(position);

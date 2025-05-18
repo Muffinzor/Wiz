@@ -46,7 +46,7 @@ public class MonsterManager {
         for(Monster monster : liveMonsters) {
             monster.update(delta);
             if(monster.dead) {
-                screen.monsterSpawner.registerKill();
+                screen.monsterSpawner.registerKill(monster);
                 AccountProgress.loaded.monster_souls += monster.souls_worth;
                 player.currentXP += (monster.xp * (1 + player.stats.bonus_experience/100f));
                 monster.stateTime = 0;

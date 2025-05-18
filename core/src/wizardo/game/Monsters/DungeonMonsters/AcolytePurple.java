@@ -4,9 +4,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import wizardo.game.Items.Drop.ScrollDrop;
 import wizardo.game.Monsters.MonsterActionManager;
-import wizardo.game.Monsters.MonsterActions.AttackSwing.AttackSwing;
 import wizardo.game.Monsters.MonsterActions.MonsterSpell;
-import wizardo.game.Monsters.MonsterActions.SmallLaser.SmallLaser_Action;
 import wizardo.game.Monsters.MonsterActions.TrackingMissile.TrackingMissile_Action;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Monsters.MonsterMovement.MovementManager;
@@ -14,7 +12,7 @@ import wizardo.game.Monsters.MonsterStateManager.RangedStateManager;
 import wizardo.game.Monsters.MonsterUtils;
 import wizardo.game.Resources.MonsterResources.AcolyteAnims;
 import wizardo.game.Screens.Battle.BattleScreen;
-import wizardo.game.Screens.Battle.MonsterSpawner.MonsterSpawner_Dungeon;
+import wizardo.game.Screens.Battle.MonsterSpawner.DungeonSpawner.MonsterSpawner_Dungeon;
 
 import static wizardo.game.Utils.Constants.PPM;
 

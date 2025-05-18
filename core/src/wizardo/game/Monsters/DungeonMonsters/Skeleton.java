@@ -11,13 +11,14 @@ import wizardo.game.Monsters.MonsterUtils;
 import wizardo.game.Resources.MonsterResources.MonsterWeapons;
 import wizardo.game.Resources.MonsterResources.SkeletonAnims;
 import wizardo.game.Screens.Battle.BattleScreen;
-import wizardo.game.Screens.Battle.MonsterSpawner.MonsterSpawner_Dungeon;
+import wizardo.game.Screens.Battle.MonsterSpawner.DungeonSpawner.MonsterSpawner_Dungeon;
+import wizardo.game.Screens.Battle.MonsterSpawner.MonsterSpawner;
 
 import static wizardo.game.Utils.Constants.PPM;
 
 public class Skeleton extends MonsterMelee {
 
-    public Skeleton(BattleScreen screen, Vector2 position, MonsterSpawner_Dungeon spawner) {
+    public Skeleton(BattleScreen screen, Vector2 position, MonsterSpawner spawner) {
         super(screen, position, spawner);
         speed = 20f/PPM;
         hp = 25;

@@ -8,14 +8,11 @@ import wizardo.game.Monsters.MonsterMovement.MovementManager;
 import wizardo.game.Monsters.MonsterActions.AttackSwing.AttackSwing;
 import wizardo.game.Monsters.MonsterStateManager.MeleeStateManager;
 import wizardo.game.Monsters.MonsterUtils;
-import wizardo.game.Resources.MonsterResources.MonsterWeapons;
-import wizardo.game.Resources.MonsterResources.SkeletonAnims;
 import wizardo.game.Resources.MonsterResources.SludgeAnims;
 import wizardo.game.Screens.Battle.BattleScreen;
-import wizardo.game.Screens.Battle.MonsterSpawner.MonsterSpawner_Dungeon;
+import wizardo.game.Screens.Battle.MonsterSpawner.DungeonSpawner.MonsterSpawner_Dungeon;
 
 import static wizardo.game.Resources.MonsterResources.MonsterWeapons.invis_weapon;
-import static wizardo.game.Utils.Constants.PPM;
 
 public class GreenSludge_Mini extends MonsterMelee {
 

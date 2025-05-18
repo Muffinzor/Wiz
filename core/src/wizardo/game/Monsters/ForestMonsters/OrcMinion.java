@@ -12,7 +12,6 @@ import wizardo.game.Resources.MonsterResources.MonsterWeapons;
 import wizardo.game.Resources.MonsterResources.OrcMinionAnims;
 import wizardo.game.Screens.Battle.BattleScreen;
 import wizardo.game.Screens.Battle.MonsterSpawner.MonsterSpawner;
-import wizardo.game.Screens.Battle.MonsterSpawner.MonsterSpawner_Dungeon;
 
 import static wizardo.game.Utils.Constants.PPM;
 
