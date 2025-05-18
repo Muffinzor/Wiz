@@ -13,7 +13,7 @@ public class MonsterActionManager {
 
     public MonsterActionManager(Monster monster, float attackCD) {
         this.monster = monster;
-        this.timer = attackCD * MathUtils.random(0.8f, 1.2f);
+        this.timer = attackCD * MathUtils.random(0.1f, 0.4f);
         this.attackCD = attackCD * MathUtils.random(0.9f, 1.1f);
     }
 

@@ -8,6 +8,6 @@ import static wizardo.game.Wizardo.player;
 public class SpawnerUtils {
 
     public static Vector2 getRandomRangeSpawnVector() {
-        return SpellUtils.getClearRandomPositionRing(player.pawn.getPosition(), 8, 24);
+        return SpellUtils.getClearRandomPositionRing(player.pawn.getPosition(), 8, 16);
     }
 }

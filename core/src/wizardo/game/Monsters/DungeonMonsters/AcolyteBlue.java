@@ -13,6 +13,7 @@ import wizardo.game.Monsters.MonsterUtils;
 import wizardo.game.Resources.MonsterResources.AcolyteAnims;
 import wizardo.game.Screens.Battle.BattleScreen;
 import wizardo.game.Screens.Battle.MonsterSpawner.DungeonSpawner.MonsterSpawner_Dungeon;
+import wizardo.game.Screens.Battle.MonsterSpawner.MonsterSpawner;
 
 import static wizardo.game.Utils.Constants.PPM;
 
@@ -20,7 +21,7 @@ public class AcolyteBlue extends Monster {
 
     MonsterSpell projectile;
 
-    public AcolyteBlue(BattleScreen screen, Vector2 position, MonsterSpawner_Dungeon spawner) {
+    public AcolyteBlue(BattleScreen screen, Vector2 position, MonsterSpawner spawner) {
         super(screen, position, spawner);
         speed = 25f/PPM;
         hp = 50;
