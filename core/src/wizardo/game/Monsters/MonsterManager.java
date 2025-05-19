@@ -56,12 +56,7 @@ public class MonsterManager {
                     monster.light = null;
                 }
             } else if(monster.tooFar) {
-                if(monster.light != null) {
-                    monster.light.dimKill(0.5f);
-                    monster.light = null;
-                }
-                dyingMonsters.add(monster);
-                monster.alpha = 0.05f;
+                monster.handleTooFar();
             }
         }
         liveMonsters.removeIf(monster -> monster.dead);

@@ -127,7 +127,7 @@ public abstract class Monster {
             initialized = true;
         }
 
-        handleSpawning();
+        handleSpawning(delta);
 
         timers(delta);
         drawFrame();
@@ -154,7 +154,16 @@ public abstract class Monster {
 
     }
 
-    public void handleSpawning() {
+    public void handleTooFar() {
+        if(light != null) {
+            light.dimKill(0.5f);
+            light = null;
+        }
+        screen.monsterManager.dyingMonsters.add(this);
+        alpha = 0.05f;
+    }
+
+    public void handleSpawning(float delta) {
         if(!spawned) {
             if(spawn_anim != null && stateTime < spawn_anim.getAnimationDuration()) {
                 body.setActive(false);
@@ -250,7 +259,6 @@ public abstract class Monster {
         }
 
         frame.setPosition(body.getPosition().x * PPM - frame.getWidth()/2, body.getPosition().y * PPM - bodyRadius);
-        //frame.setCenter(body.getPosition().x * PPM, body.getPosition().y * PPM);
         boolean flip = player.pawn.getBodyX() < body.getPosition().x;
         frame.flip(flip, false);
         if(freezeTimer > 0) {
@@ -259,6 +267,9 @@ public abstract class Monster {
         } else if(slowedTimer > 0) {
             Color tint = new Color(0.7f, 0.7f, 1f, 1.0f);
             frame.setColor(tint);
+        }
+        if(alpha != 1) {
+            frame.setAlpha(alpha);
         }
         screen.addSortedSprite(frame);
     }

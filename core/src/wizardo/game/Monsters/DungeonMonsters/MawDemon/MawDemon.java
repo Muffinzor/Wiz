@@ -1,4 +1,4 @@
-package wizardo.game.Monsters.MonsterTypes.MawDemon;
+package wizardo.game.Monsters.DungeonMonsters.MawDemon;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
@@ -12,19 +12,24 @@ import wizardo.game.Player.Player;
 import wizardo.game.Resources.MonsterResources.MawDemonAnims;
 import wizardo.game.Screens.Battle.BattleScreen;
 import wizardo.game.Screens.Battle.MonsterSpawner.MonsterSpawner;
+import wizardo.game.Screens.Battle.MonsterSpawner.SpawnerUtils;
 
 import static wizardo.game.Monsters.MonsterUtils.MONSTER_STATE.CHARGING;
+import static wizardo.game.Monsters.MonsterUtils.MONSTER_STATE.SPAWNING;
 import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.player;
 
 public class MawDemon extends Monster {
 
     float explosionDelay = 0.25f;
-
+    float chargeTimer;
+    boolean charging;
+    boolean respawn;
+    Vector2 toPlayer;
 
     public MawDemon(BattleScreen screen, Vector2 position, MonsterSpawner spawner) {
         super(screen, position, spawner);
-
+        alpha = 0;
         speed = 1f;
         hp = 2800;
         maxHP = 2800;
@@ -46,14 +51,42 @@ public class MawDemon extends Monster {
         stateManager = new MawDemonStateManager(this);
         monsterActionManager = new MawDemon_ActionManager(this, 2.5f);
 
-        state = MonsterUtils.MONSTER_STATE.ADVANCING;
-
+        state = SPAWNING;
+        MawDemon_Pentagram pentagram = new MawDemon_Pentagram(this);
+        screen.monsterSpellManager.toAdd(pentagram);
     }
 
-    float chargeTimer;
-    boolean charging;
+    public void handleSpawning(float delta) {
+        if(!spawned) {
+            alpha += 0.005f;
+            if(respawn) {
+                alpha += 0.0075f;
+            }
+            stateTime -= delta;
+            body.setActive(false);
+            if(alpha >= 1) {
+                alpha = 1;
+                spawned = true;
+                body.setActive(true);
+                state = MonsterUtils.MONSTER_STATE.ADVANCING;
+                MawDemon_SkullExplosion explosion = new MawDemon_SkullExplosion(this);
+                screen.monsterSpellManager.toAdd(explosion);
+            }
+        }
+    }
 
-    Vector2 toPlayer;
+    public void handleTooFar() {
+        state = SPAWNING;
+        spawned = false;
+        respawn = true;
+        alpha = 0.1f;
+        tooFar = false;
+        Vector2 newPosition = SpawnerUtils.getRandomCloseSpawnVector();
+        body.setTransform(newPosition, 0);
+        body.setActive(false);
+        MawDemon_Pentagram pentagram = new MawDemon_Pentagram(this);
+        screen.monsterSpellManager.toAdd(pentagram);
+    }
 
     @Override
     public void launchAttack() {
@@ -79,6 +112,7 @@ public class MawDemon extends Monster {
             flip = player.pawn.getBodyX() < body.getPosition().x;
         }
         frame.flip(flip, false);
+        frame.setAlpha(alpha);
 
         screen.addSortedSprite(frame);
     }
@@ -101,6 +135,7 @@ public class MawDemon extends Monster {
         createBody();
         createLight(75, 1f);
     }
+
     public void adjustLight() {
         light.pointLight.setPosition(body.getPosition().x * PPM, body.getPosition().y * PPM + 20);
     }
@@ -108,7 +143,7 @@ public class MawDemon extends Monster {
     @Override
     public void onDeath() {
         super.onDeath();
-        MawDemon_DeathExplosion explosion = new MawDemon_DeathExplosion(this);
+        MawDemon_SkullExplosion explosion = new MawDemon_SkullExplosion(this);
         screen.monsterSpellManager.toAdd(explosion);
 
         double roll = Math.random();
@@ -124,47 +159,31 @@ public class MawDemon extends Monster {
         }
     }
 
-
-
     public void handleCollision(Player player) {
         dealDmg();
         if(charging) {
-            // Get the monster's velocity
             Vector2 monsterVelocity = body.getLinearVelocity();
 
-            // If the monster has no velocity, push the player backward relative to the monster
             if (monsterVelocity.isZero()) {
-                Vector2 pushDirection = player.pawn.body.getPosition()
-                        .cpy()
-                        .sub(body.getPosition())
-                        .nor()
-                        .scl(15); // Push intensity
+                Vector2 pushDirection = player.pawn.body.getPosition().cpy().sub(body.getPosition()).nor().scl(15);
                 player.pawn.applyPush(pushDirection, 15, 0.35f, 0.9f);
                 return;
             }
 
-            // Get two possible perpendicular directions
             Vector2 perp1 = new Vector2(-monsterVelocity.y, monsterVelocity.x).nor();
             Vector2 perp2 = new Vector2(monsterVelocity.y, -monsterVelocity.x).nor();
 
-            // Compute the direction to the player relative to the monster
-            Vector2 directionToPlayer = player.pawn.body.getPosition()
-                    .cpy()
-                    .sub(body.getPosition())
-                    .nor();
+            Vector2 directionToPlayer = player.pawn.body.getPosition().cpy().sub(body.getPosition()).nor();
 
-            // Determine which perpendicular direction is closer to the player
             float dot1 = perp1.dot(directionToPlayer);
             float dot2 = perp2.dot(directionToPlayer);
-
-            // Pick the perpendicular direction that is closer to the player
             Vector2 chosenDirection = dot1 > dot2 ? perp1 : perp2;
 
-            // Apply push to the player in the chosen direction
-            chosenDirection.scl(15); // Adjust push intensity
+            chosenDirection.scl(15);
             player.pawn.applyPush(chosenDirection, 8, 0.35f, 0.9f);
         }
     }
+
     public void handleCollision(Monster monster) {
         if(charging) {
             // Get the monster's velocity

@@ -3,6 +3,7 @@ package wizardo.game.Screens.Battle.MonsterSpawner;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
+import static wizardo.game.Screens.BaseScreen.xRatio;
 import static wizardo.game.Utils.Methods.isPositionOverlappingWithObstacle;
 import static wizardo.game.Wizardo.player;
 
@@ -12,7 +13,14 @@ public class SpawnerUtils {
      * randomizes a vector near the player for acolyte-style spawning
      */
     public static Vector2 getRandomRangeSpawnVector() {
-        return getClearRandomPositionRing(player.pawn.getPosition(), 8, 16);
+        return getClearRandomPositionRing(player.pawn.getPosition(), 8, 16 * xRatio);
+    }
+
+    /**
+     * randomizes a vector very close to the player
+     */
+    public static Vector2 getRandomCloseSpawnVector() {
+        return getClearRandomPositionRing(player.pawn.getPosition(), 3, 4.5f);
     }
 
     /**

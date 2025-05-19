@@ -1,6 +1,5 @@
-package wizardo.game.Monsters.MonsterTypes.MawDemon;
+package wizardo.game.Monsters.DungeonMonsters.MawDemon;
 
-import com.badlogic.gdx.math.MathUtils;
 import wizardo.game.Monsters.MonsterActionManager;
 import wizardo.game.Monsters.MonsterActions.SelfFireExplosion.SelfFireExplosion;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;

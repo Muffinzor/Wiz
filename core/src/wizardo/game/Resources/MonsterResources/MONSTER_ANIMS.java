@@ -1,7 +1,5 @@
 package wizardo.game.Resources.MonsterResources;
 
-import wizardo.game.Monsters.MonsterTypes.MawDemon.MawDemon;
-
 public class MONSTER_ANIMS {
 
     public static void load_all_monster_atlas() {

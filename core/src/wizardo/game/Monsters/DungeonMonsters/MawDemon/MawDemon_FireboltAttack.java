@@ -1,9 +1,8 @@
-package wizardo.game.Monsters.MonsterTypes.MawDemon;
+package wizardo.game.Monsters.DungeonMonsters.MawDemon;
 
 import com.badlogic.gdx.math.Vector2;
 import wizardo.game.Monsters.MonsterActions.MonsterSpell;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
-import wizardo.game.Spells.Hybrid.LightningHands.LightningHands_Projectile;
 
 import static wizardo.game.Wizardo.player;
 

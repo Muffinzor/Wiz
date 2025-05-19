@@ -1,4 +1,4 @@
-package wizardo.game.Monsters.MonsterTypes.MawDemon;
+package wizardo.game.Monsters.DungeonMonsters.MawDemon;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -9,12 +9,14 @@ import wizardo.game.Resources.MonsterResources.MawDemonAnims;
 
 import static wizardo.game.Utils.Constants.PPM;
 
-public class MawDemon_DeathExplosion extends MonsterSpell {
+public class MawDemon_SkullExplosion extends MonsterSpell {
 
     Animation<Sprite> anim;
+    Vector2 animPosition;
 
-    public MawDemon_DeathExplosion(Monster monster) {
+    public MawDemon_SkullExplosion(Monster monster) {
         super(monster);
+        animPosition = new Vector2(monster.body.getPosition());
     }
 
     @Override
@@ -28,10 +30,10 @@ public class MawDemon_DeathExplosion extends MonsterSpell {
     public void drawFrame() {
         Sprite frame = screen.getSprite();
         frame.set(anim.getKeyFrame(stateTime, false));
-        frame.setCenter(originMonster.body.getPosition().x * PPM, originMonster.body.getPosition().y * PPM + 80);
+        frame.setCenter(animPosition.x * PPM, animPosition.y * PPM + 80);
         frame.flip(!originMonster.frameReversed, false);
         screen.addSortedSprite(frame);
-        screen.centerSort(frame,originMonster.body.getPosition().y * PPM - 20);
+        screen.centerSort(frame,animPosition.y * PPM - 30);
     }
 
     public void createLight() {

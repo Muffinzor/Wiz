@@ -1,4 +1,4 @@
-package wizardo.game.Monsters.MonsterTypes.MawDemon;
+package wizardo.game.Monsters.DungeonMonsters.MawDemon;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;

@@ -2,10 +2,8 @@ package wizardo.game.Screens.Battle.MonsterSpawner;
 
 import com.badlogic.gdx.math.Vector2;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
-import wizardo.game.Monsters.MonsterTypes.MawDemon.MawDemon;
 import wizardo.game.Screens.Battle.BattleScreen;
 import wizardo.game.Screens.Battle.MonsterSpawner.DungeonSpawner.DungeonPhase_1;
-import wizardo.game.Spells.SpellUtils;
 import wizardo.game.Utils.BodyPool;
 
 import java.util.ArrayList;

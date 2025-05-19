@@ -1,4 +1,4 @@
-package wizardo.game.Monsters.MonsterTypes.MawDemon;
+package wizardo.game.Monsters.DungeonMonsters.MawDemon;
 
 import wizardo.game.Monsters.MonsterStateManager.StateManager;
 import wizardo.game.Monsters.MonsterUtils;

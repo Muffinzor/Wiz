@@ -2,6 +2,7 @@ package wizardo.game.Screens.Battle.MonsterSpawner.DungeonSpawner;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import wizardo.game.Monsters.DungeonMonsters.MawDemon.MawDemon;
 import wizardo.game.Monsters.DungeonMonsters.Skeleton;
 import wizardo.game.Monsters.DungeonMonsters.SkeletonGiant;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
@@ -34,7 +35,7 @@ public class DungeonPhase_1 implements SpawnerPhase {
         spawnSkellies();
         spawnPack();
         spawnQuadrant();
-        if(stateTime >= 180) {
+        if(stateTime >= 240) {
             spawner.phase = new DungeonPhase_2(spawner);
         }
     }
