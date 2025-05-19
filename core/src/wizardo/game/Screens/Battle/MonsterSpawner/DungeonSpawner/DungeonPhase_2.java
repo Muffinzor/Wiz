@@ -65,12 +65,12 @@ public class DungeonPhase_2 implements SpawnerPhase {
     }
 
     public void spawnSkellies() {
-        if(skellyTimer > 2f) {
+        if(skellyTimer > 1f) {
             skellyTimer = 0;
             if(spawner.screen.monsterManager.liveMonsters.size() < spawner.maxMeleeMonsters) {
                 for (int i = 0; i < spawner.spawnRatio; i++) {
                     Monster monster;
-                    if(stateTime > 0 && Math.random() >= 0.9f) {
+                    if(stateTime > 0 && Math.random() >= 0.92f) {
                         monster = new SkeletonGiant(spawner.screen, null, spawner);
                     } else {
                         monster = new Skeleton(spawner.screen, null, spawner);
@@ -95,9 +95,10 @@ public class DungeonPhase_2 implements SpawnerPhase {
         }
     }
     public void spawnPack() {
-        if(packTimer >= 15 && spawner.screen.monsterManager.liveMonsters.size() < spawner.maxMeleeMonsters) {
+        int packSize = Math.max(20, (int) (20 * spawner.spawnRatio/2));
+        float packDelay = 12 / (spawner.spawnRatio/2);
+        if(packTimer >= packDelay && spawner.screen.monsterManager.liveMonsters.size() < spawner.maxMeleeMonsters) {
             packTimer = 0;
-
             Vector2 randomizedDirection;
             if(spawner.direction != null) {
                 randomizedDirection = spawner.direction.cpy().nor().rotateDeg(MathUtils.random(-20,20));
@@ -105,14 +106,13 @@ public class DungeonPhase_2 implements SpawnerPhase {
                 randomizedDirection = SpellUtils.getRandomVectorInRadius(player.pawn.getPosition(), 1);
                 randomizedDirection.nor();
             }
-            randomizedDirection.scl(36 * xRatio);
+            randomizedDirection.scl(42 * xRatio);
             Vector2 centerPoint = player.pawn.getPosition().add(randomizedDirection);
 
-            int count = (int) (5 * spawner.spawnRatio);
-            for (int i = 0; i < count; i++) {
+            for (int i = 0; i < packSize; i++) {
                 Vector2 spawnPoint = SpellUtils.getClearRandomPosition(centerPoint, Math.min(2 * spawner.spawnRatio, 5));
                 Monster monster;
-                if(stateTime >= 0 && Math.random() >= 0.9f) {
+                if(stateTime >= 120 && Math.random() >= 0.92f) {
                     monster = new SkeletonGiant(spawner.screen, spawnPoint, spawner);
                 } else {
                     monster = new Skeleton(spawner.screen, spawnPoint, spawner);
@@ -122,14 +122,15 @@ public class DungeonPhase_2 implements SpawnerPhase {
         }
     }
     void spawnQuadrant() {
-        if(quadrantTimer >= 8) {
+        float quadrantDelay = 8 / (spawner.spawnRatio/2);
+        if(quadrantTimer >= quadrantDelay) {
             quadrantTimer = 0;
             int quadrantAngle = spawner.getEmptyQuadrantAngle();
             for (int i = 0; i < 4 * spawner.spawnRatio; i++) {
                 Monster monster;
                 Vector2 spawnPoint = SpawnerUtils.getClearRandomVectorInConeRing(player.pawn.getPosition(),
                         34 * xRatio, 42 * xRatio, quadrantAngle);
-                if(stateTime > 120 && Math.random() >= 0.9f) {
+                if(stateTime > 120 && Math.random() >= 0.92f) {
                     monster = new SkeletonGiant(spawner.screen, spawnPoint, spawner);
                 } else {
                     monster = new Skeleton(spawner.screen, spawnPoint, spawner);

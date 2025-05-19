@@ -8,54 +8,46 @@ import wizardo.game.Monsters.MonsterMovement.MovementManager;
 import wizardo.game.Monsters.MonsterActions.AttackSwing.AttackSwing;
 import wizardo.game.Monsters.MonsterStateManager.MeleeStateManager;
 import wizardo.game.Monsters.MonsterUtils;
-import wizardo.game.Resources.MonsterResources.SludgeAnims;
+import wizardo.game.Resources.MonsterResources.MonsterWeapons;
+import wizardo.game.Resources.MonsterResources.SkeletonAnims;
 import wizardo.game.Screens.Battle.BattleScreen;
 import wizardo.game.Screens.Battle.MonsterSpawner.DungeonSpawner.MonsterSpawner_Dungeon;
 import wizardo.game.Screens.Battle.MonsterSpawner.MonsterSpawner;
 
-import static wizardo.game.Resources.MonsterResources.MonsterWeapons.invis_weapon;
+import static wizardo.game.Utils.Constants.PPM;
 
-public class GreenSludge extends MonsterMelee {
+public class Skeleton_T2 extends MonsterMelee {
 
-    int speed_frames;
-
-    public GreenSludge(BattleScreen screen, Vector2 position, MonsterSpawner spawner) {
+    public Skeleton_T2(BattleScreen screen, Vector2 position, MonsterSpawner spawner) {
         super(screen, position, spawner);
-        speed = 0.825f;
-        speed_frames = MathUtils.random(0,60);
-        hp = 75;
-        maxHP = 75;
-        xp = 15;
+        speed = 20f/PPM;
+        hp = 40;
+        maxHP = 40;
+        xp = 8;
 
-        dmg = 10;
+        basic = true;
 
-        massValue = 10f;
-        bodyRadius = 15;
-        height = 35;
-        width = 35;
+        dmg = 8;
+
+        massValue = 5f;
+        bodyRadius = 10;
+        height = 40;
+        width = 20;
 
         stateTime = (float) Math.random();
-        walk_anim = SludgeAnims.sludge_green_move;
-        death_anim = SludgeAnims.sludge_green_death;
-        weaponSprite = invis_weapon;
+        walk_anim = SkeletonAnims.skelly_walk_T2;
+        death_anim = SkeletonAnims.skelly_death_T2;
+        shatter_anim = SkeletonAnims.skelly_shatter;
+        weaponSprite = MonsterWeapons.bone;
 
         movementManager = new MovementManager(this);
 
         state = MonsterUtils.MONSTER_STATE.ADVANCING;
         stateManager = new MeleeStateManager(this);
-        monsterActionManager = new MonsterActionManager(this, 1);
+        monsterActionManager = new MonsterActionManager(this, 1.5f);
         attackRange = 1;
         hitboxRadius = 10;
-    }
-
-    public void specific_update(float delta) {
-        speed -= 0.01f;
-        speed_frames ++;
-
-        if(speed_frames >= 60) {
-            speed = 0.825f * MathUtils.random(0.9f, 1.1f);
-            speed_frames = 0;
-        }
+        rushDistance = 2f;
     }
 
     @Override
@@ -69,15 +61,6 @@ public class GreenSludge extends MonsterMelee {
         initialized = true;
         createBody();
         speed = speed * MathUtils.random(0.9f, 1.1f);
-    }
-
-    @Override
-    public void onDeath() {
-        super.onDeath();
-        for (int i = 0; i < 3; i++) {
-            GreenSludge_Mini mini = new GreenSludge_Mini(screen, body.getPosition(), (MonsterSpawner_Dungeon) spawner);
-            screen.monsterSpawner.monster_to_spawn.add(mini);
-        }
     }
 
 }
