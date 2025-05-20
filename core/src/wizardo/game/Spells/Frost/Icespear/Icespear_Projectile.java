@@ -52,15 +52,9 @@ public class Icespear_Projectile extends Icespear_Spell {
 
 
     public Icespear_Projectile(Vector2 spawnPosition, Vector2 targetPosition) {
-
         this.spawnPosition = new Vector2(spawnPosition);
         this.targetPosition = new Vector2(targetPosition);
         timerBeforeSplit = 0;
-
-        if(player.inventory.equippedAmulet instanceof Rare_IcespearAmulet) {
-            split_shards += 1;
-        }
-
     }
 
     public void update(float delta) {
@@ -70,6 +64,9 @@ public class Icespear_Projectile extends Icespear_Spell {
             pickAnim();
             createBody();
             createLight();
+            if(player.inventory.equippedAmulet instanceof Rare_IcespearAmulet) {
+                split_shards += 1;
+            }
             initialized = true;
         }
 
