@@ -42,7 +42,7 @@ public class DungeonPhase_1 implements SpawnerPhase {
     }
 
     public void spawnSkellies() {
-        if(skellyTimer > 1f) {
+        if(skellyTimer > 1.2f) {
             skellyTimer = 0;
             if(spawner.screen.monsterManager.liveMonsters.size() < spawner.maxMeleeMonsters) {
                 for (int i = 0; i < spawner.spawnRatio; i++) {
@@ -89,7 +89,7 @@ public class DungeonPhase_1 implements SpawnerPhase {
         if(quadrantTimer >= quadrantDelay) {
             quadrantTimer = 0;
             int quadrantAngle = spawner.getEmptyQuadrantAngle();
-            for (int i = 0; i < 4 * spawner.spawnRatio; i++) {
+            for (int i = 0; i < 2 * spawner.spawnRatio; i++) {
                 Monster monster;
                 Vector2 spawnPoint = SpawnerUtils.getClearRandomVectorInConeRing(player.pawn.getPosition(),
                         34 * xRatio, 42 * xRatio, quadrantAngle);

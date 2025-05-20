@@ -48,7 +48,7 @@ public class DungeonPhase_3 implements SpawnerPhase {
         }
     }
     public void spawnSludgesAround() {
-        float delay = 2.4f/spawner.spawnRatio;
+        float delay = 2.4f/(spawner.spawnRatio/2);
         if(sludgeAroundTimer > delay) {
             sludgeAroundTimer = 0;
             Vector2 position = SpawnerUtils.getClearRandomPositionRing(player.pawn.getPosition(), 36 * xRatio, 40 * xRatio);

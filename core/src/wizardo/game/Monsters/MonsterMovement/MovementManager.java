@@ -1,11 +1,8 @@
 package wizardo.game.Monsters.MonsterMovement;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 
-import static wizardo.game.Screens.BaseScreen.xRatio;
-import static wizardo.game.Utils.Constants.PPM;
 import static wizardo.game.Wizardo.player;
 
 public class MovementManager {
@@ -46,9 +43,9 @@ public class MovementManager {
         if(frameCounter >= 30) {
             checkDistance();
             if(backwards) {
-                monster.directionVector = pathfinder.awayFromPlayer();
+                monster.directionVector = pathfinder.moveBackwards();
             } else {
-                monster.directionVector = pathfinder.towardsPlayer();
+                monster.directionVector = pathfinder.moveTowards();
             }
             frameCounter = 0;
         }

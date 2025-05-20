@@ -21,7 +21,7 @@ public class Pathfinder {
         playerBody = player.pawn.body;
     }
 
-    public Vector2 towardsPlayer() {
+    public Vector2 moveTowards() {
 
         Vector2 direction = new Vector2(player.pawn.getPosition().sub(monster.body.getPosition()));
 
@@ -32,7 +32,7 @@ public class Pathfinder {
         }
     }
 
-    public Vector2 awayFromPlayer() {
+    public Vector2 moveBackwards() {
 
         Vector2 backwards = player.pawn.getPosition().cpy().sub(monster.body.getPosition());
         backwards.scl(-1);

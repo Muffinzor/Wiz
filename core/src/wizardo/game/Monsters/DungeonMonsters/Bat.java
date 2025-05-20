@@ -3,6 +3,7 @@ package wizardo.game.Monsters.DungeonMonsters;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import wizardo.game.Monsters.MonsterActionManager;
+import wizardo.game.Monsters.MonsterArchetypes.MonsterFlying;
 import wizardo.game.Monsters.MonsterArchetypes.MonsterMelee;
 import wizardo.game.Monsters.MonsterMovement.MovementManager;
 import wizardo.game.Monsters.MonsterActions.AttackSwing.AttackSwing;
@@ -16,18 +17,18 @@ import wizardo.game.Screens.Battle.MonsterSpawner.MonsterSpawner;
 
 import static wizardo.game.Utils.Constants.PPM;
 
-public class Skeleton_T2 extends MonsterMelee {
+public class Bat extends MonsterMelee {
 
-    public Skeleton_T2(BattleScreen screen, Vector2 position, MonsterSpawner spawner) {
+    public Bat(BattleScreen screen, Vector2 position, MonsterSpawner spawner) {
         super(screen, position, spawner);
         speed = 20f/PPM;
-        hp = 50;
-        maxHP = 50;
-        xp = 8;
+        hp = 25;
+        maxHP = 25;
+        xp = 5;
 
         basic = true;
 
-        dmg = 8;
+        dmg = 5;
 
         massValue = 5f;
         bodyRadius = 10;
@@ -35,10 +36,10 @@ public class Skeleton_T2 extends MonsterMelee {
         width = 20;
 
         stateTime = (float) Math.random();
-        walk_anim = SkeletonAnims.skelly_walk_T2;
-        death_anim = SkeletonAnims.skelly_death_T2;
+        walk_anim = SkeletonAnims.skelly_walk_T1;
+        death_anim = SkeletonAnims.skelly_death_T1;
         shatter_anim = SkeletonAnims.skelly_shatter;
-        weaponSprite = MonsterWeapons.bone_knife;
+        weaponSprite = MonsterWeapons.bone;
 
         movementManager = new MovementManager(this);
 
