@@ -17,8 +17,8 @@ import static wizardo.game.Utils.Constants.PPM;
 
 public class OrcMinion extends MonsterMelee {
 
-    public OrcMinion(BattleScreen screen, Vector2 position, MonsterSpawner spawner) {
-        super(screen, position, spawner);
+    public OrcMinion(BattleScreen screen, Vector2 position, MonsterSpawner spawner, Vector2 patrolDirection) {
+        super(screen, position, spawner, patrolDirection);
         speed = 20f/PPM;
         hp = 25;
         maxHP = 25;
@@ -38,7 +38,7 @@ public class OrcMinion extends MonsterMelee {
         death_anim = OrcMinionAnims.orcMinion_death_T1;
         weaponSprite = MonsterWeapons.short_sword;
 
-        movementManager = new MovementManager(this);
+        movementManager = new MovementManager(this, patrolDirection);
 
         state = MonsterUtils.MONSTER_STATE.ADVANCING;
         stateManager = new MeleeStateManager(this);

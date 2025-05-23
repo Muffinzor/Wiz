@@ -20,8 +20,8 @@ public class WizContactListener implements ContactListener {
         boolean f1isPawn = (f1.getFilterData().categoryBits & PAWN) != 0;
         boolean f2isPawn = (f2.getFilterData().categoryBits & PAWN) != 0;
 
-        boolean f1isMonster = (f1.getFilterData().categoryBits & MONSTER) != 0;
-        boolean f2isMonster = (f2.getFilterData().categoryBits & MONSTER) != 0;
+        boolean f1isMonster = (f1.getFilterData().categoryBits & MONSTER) != 0 || (f1.getFilterData().categoryBits & FLYING_MONSTER) != 0;
+        boolean f2isMonster = (f2.getFilterData().categoryBits & MONSTER) != 0 || (f2.getFilterData().categoryBits & FLYING_MONSTER) != 0;
 
         boolean f1isSpell = (f1.getFilterData().categoryBits & SPELL) != 0;
         boolean f2isSpell = (f2.getFilterData().categoryBits & SPELL) != 0;

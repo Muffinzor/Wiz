@@ -19,8 +19,8 @@ import static wizardo.game.Wizardo.player;
 
 public class OrcBrute extends MonsterMelee {
 
-    public OrcBrute(BattleScreen screen, Vector2 position, MonsterSpawner spawner) {
-        super(screen, position, spawner);
+    public OrcBrute(BattleScreen screen, Vector2 position, MonsterSpawner spawner, Vector2 patrolDirection) {
+        super(screen, position, spawner, patrolDirection);
         speed = 20f/PPM;
         hp = 120;
         maxHP = 120;
@@ -38,7 +38,7 @@ public class OrcBrute extends MonsterMelee {
         death_anim = OrcBruteAnims.orcBrute_death;
         weaponSprite = MonsterWeapons.orc_bludgeon;
 
-        movementManager = new MovementManager(this);
+        movementManager = new MovementManager(this, patrolDirection);
         stateManager = new MeleeStateManager(this);
         monsterActionManager = new MonsterActionManager(this, 2.5f);
         attackRange = 1.75f;

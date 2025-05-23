@@ -35,7 +35,7 @@ public class MeleeStateManager implements StateManager {
             frameCounter = 0;
 
             float actualDst = player.pawn.getPosition().dst(monster.body.getPosition());
-            boolean hasLoS = MonsterUtils.hasCompleteLoS(monster);
+            boolean hasLoS = MonsterUtils.hasCompleteLoS_withPlayer(monster);
 
             if (hasLoS) {
                 hasLoS(actualDst);
@@ -52,7 +52,7 @@ public class MeleeStateManager implements StateManager {
             monster.state = ATTACKING;
         } else if (dst < monster.rushDistance && sprintCD <= 0 && monster.state == ADVANCING) {
             monster.state = CHARGING;
-            Rush sprint = new Rush(monster, 0.5f, 1.8f);
+            Rush sprint = new Rush(monster, monster.rushDuration, monster.rushRatio);
             monster.screen.monsterSpellManager.toAdd(sprint);
             sprintCD = 10;
         } else {

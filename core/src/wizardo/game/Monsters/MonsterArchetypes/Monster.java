@@ -18,6 +18,7 @@ import wizardo.game.Items.Equipment.Staff.Legendary_FrostStaff;
 import wizardo.game.Lighting.RoundLight;
 import wizardo.game.Monsters.MonsterActionManager;
 import wizardo.game.Monsters.MonsterMovement.MovementManager;
+import wizardo.game.Monsters.MonsterMovement.Pathfinder_PlayerChase;
 import wizardo.game.Monsters.MonsterStateManager.StateManager;
 import wizardo.game.Monsters.MonsterUtils;
 import wizardo.game.Player.Player;
@@ -45,6 +46,7 @@ public abstract class Monster {
     public boolean deathFrameFlip;
     public Sprite weaponSprite;
     public float alpha = 1;
+    public float frame_y_adjust = 0;
 
     public float stateTime;
     public int frameCounter;
@@ -54,6 +56,8 @@ public abstract class Monster {
     public MovementManager movementManager;
     public StateManager stateManager;
     public MonsterActionManager monsterActionManager;
+    public boolean patrolling;
+    public Vector2 patrol_target;
 
     public Body body;
     public RoundLight light;
@@ -108,13 +112,14 @@ public abstract class Monster {
     public static Sprite greenHP = new Sprite(new Texture("Monsters/hpbar.png"));
     public static Sprite redHP = new Sprite(new Texture("Monsters/redbar.png"));
 
-    public Monster(BattleScreen screen, Vector2 position, MonsterSpawner spawner) {
+    public Monster(BattleScreen screen, Vector2 position, MonsterSpawner spawner, Vector2 patrolDirection) {
         this.spawner = spawner;
         if(position == null) {
             position = spawner.getSpawnPositionAhead();
         }
         this.screen = screen;
         this.position = new Vector2(position);
+        movementManager = new MovementManager(this, patrolDirection);
         stateTime = 0;
         frameCounter = 0;
         directionVector = new Vector2();
@@ -216,6 +221,7 @@ public abstract class Monster {
         } else {
             body = BodyFactory.monsterBody(position, bodyRadius);
         }
+        frame_y_adjust = bodyRadius;
         body.setUserData(this);
         body.setActive(true);
         MassData mass = new MassData();
@@ -258,9 +264,8 @@ public abstract class Monster {
             default -> frame.set(walk_anim.getKeyFrame(stateTime, true));
         }
 
-        frame.setPosition(body.getPosition().x * PPM - frame.getWidth()/2, body.getPosition().y * PPM - bodyRadius);
-        boolean flip = player.pawn.getBodyX() < body.getPosition().x;
-        frame.flip(flip, false);
+        frame.setPosition(body.getPosition().x * PPM - frame.getWidth()/2, body.getPosition().y * PPM - frame_y_adjust);
+        frame.flip(is_frame_flipped(), false);
         if(freezeTimer > 0) {
             Color tint = new Color(0.5f, 0.5f, 1f, 1.0f);
             frame.setColor(tint);
@@ -272,6 +277,16 @@ public abstract class Monster {
             frame.setAlpha(alpha);
         }
         screen.addSortedSprite(frame);
+    }
+
+    public boolean is_frame_flipped() {
+        boolean flip;
+        if(!patrolling) {
+            flip = player.pawn.getBodyX() < body.getPosition().x;
+        } else {
+            flip = patrol_target.x < body.getPosition().x;
+        }
+        return flip;
     }
 
     public void drawMark() {
@@ -333,7 +348,7 @@ public abstract class Monster {
             frame.setAlpha(alpha);
         }
         frame.flip(deathFrameFlip, false);
-        frame.setPosition(body.getPosition().x * PPM - frame.getWidth() / 2, body.getPosition().y * PPM - bodyRadius);
+        frame.setPosition(body.getPosition().x * PPM - frame.getWidth() / 2, body.getPosition().y * PPM - frame_y_adjust);
         screen.centerSort(frame, body.getPosition().y * PPM);
         screen.displayManager.spriteRenderer.regular_sorted_sprites.add(frame);
     }

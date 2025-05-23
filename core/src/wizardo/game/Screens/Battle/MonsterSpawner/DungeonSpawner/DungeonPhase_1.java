@@ -48,9 +48,9 @@ public class DungeonPhase_1 implements SpawnerPhase {
                 for (int i = 0; i < spawner.spawnRatio; i++) {
                     Monster monster;
                     if(stateTime > 120 && Math.random() >= 0.95f) {
-                        monster = new SkeletonGiant(spawner.screen, null, spawner);
+                        monster = new SkeletonGiant(spawner.screen, null, spawner, null);
                     } else {
-                        monster = new Skeleton(spawner.screen, null, spawner);
+                        monster = new Skeleton(spawner.screen, null, spawner, null);
                     }
                     spawner.spawnMonster(monster);
                 }
@@ -76,9 +76,9 @@ public class DungeonPhase_1 implements SpawnerPhase {
                 Vector2 spawnPoint = SpellUtils.getClearRandomPosition(centerPoint, Math.min(2 * spawner.spawnRatio, 5));
                 Monster monster;
                 if(stateTime >= 120 && Math.random() >= 0.95f) {
-                    monster = new SkeletonGiant(spawner.screen, spawnPoint, spawner);
+                    monster = new SkeletonGiant(spawner.screen, spawnPoint, spawner, null);
                 } else {
-                    monster = new Skeleton(spawner.screen, spawnPoint, spawner);
+                    monster = new Skeleton(spawner.screen, spawnPoint, spawner, null);
                 }
                 spawner.spawnMonster(monster);
             }
@@ -94,9 +94,9 @@ public class DungeonPhase_1 implements SpawnerPhase {
                 Vector2 spawnPoint = SpawnerUtils.getClearRandomVectorInConeRing(player.pawn.getPosition(),
                         34 * xRatio, 42 * xRatio, quadrantAngle);
                 if(stateTime > 120 && Math.random() >= 0.95f) {
-                    monster = new SkeletonGiant(spawner.screen, spawnPoint, spawner);
+                    monster = new SkeletonGiant(spawner.screen, spawnPoint, spawner, null);
                 } else {
-                    monster = new Skeleton(spawner.screen, spawnPoint, spawner);
+                    monster = new Skeleton(spawner.screen, spawnPoint, spawner, null);
                 }
                 spawner.spawnMonster(monster);
             }

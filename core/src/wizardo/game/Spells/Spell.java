@@ -26,6 +26,7 @@ import wizardo.game.Items.Equipment.Staff.Legendary_LightningStaff;
 import wizardo.game.Maps.EnvironmentObject;
 import wizardo.game.Monsters.MonsterActions.MonsterSpell;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
+import wizardo.game.Monsters.MonsterMovement.Pathfinder_PlayerChase;
 import wizardo.game.Player.Levels.LevelUpEnums;
 import wizardo.game.Screens.BaseScreen;
 import wizardo.game.Spells.Arcane.ArcaneMissiles.ArcaneMissile_Spell;
@@ -513,6 +514,10 @@ public abstract class Spell implements Cloneable {
 
     public void dealDmg(Monster monster) {
         if(monster.stateTime > 0.4f) {
+            if(monster.patrolling) {
+                monster.patrolling = false;
+                monster.movementManager.pathfinder = new Pathfinder_PlayerChase(monster);
+            }
             float dmg = getDmg();
             dmg = apply_specific_spell_dmg_bonus(dmg);
             dmg = apply_elemental_dmg_bonus(dmg);

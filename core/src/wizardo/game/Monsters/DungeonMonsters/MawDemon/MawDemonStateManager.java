@@ -27,7 +27,7 @@ public class MawDemonStateManager implements StateManager {
             float dst = demon.body.getPosition().dst(player.pawn.getPosition());
 
             if(chargeCooldown <= 0 && dst < 12) {
-                if(MonsterUtils.hasCompleteLoS(demon)) {
+                if(MonsterUtils.hasCompleteLoS_withPlayer(demon)) {
                     chargeCooldown = 6;
                     demon.state = CHARGING;
                     demon.initiateCharge();

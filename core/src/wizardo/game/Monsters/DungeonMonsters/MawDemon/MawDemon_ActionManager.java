@@ -21,7 +21,7 @@ class MawDemon_ActionManager extends MonsterActionManager {
         timer -= delta;
 
         if(demon.state == ADVANCING && timer <= 0) {
-            if(MonsterUtils.hasCompleteLoS(demon)) {
+            if(MonsterUtils.hasCompleteLoS_withPlayer(demon)) {
                 demon.launchAttack();
                 timer = attackCD;
             }

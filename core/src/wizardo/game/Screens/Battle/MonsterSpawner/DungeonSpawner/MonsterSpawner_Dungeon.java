@@ -7,6 +7,6 @@ public class MonsterSpawner_Dungeon extends MonsterSpawner {
 
     public MonsterSpawner_Dungeon(BattleScreen screen) {
         super(screen);
-        phase = new DungeonPhase_1(this);
+        phase = new DungeonPhase_4(this);
     }
 }

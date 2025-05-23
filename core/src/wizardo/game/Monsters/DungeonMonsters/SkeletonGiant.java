@@ -19,8 +19,8 @@ import static wizardo.game.Wizardo.player;
 
 public class SkeletonGiant extends MonsterMelee {
 
-    public SkeletonGiant(BattleScreen screen, Vector2 position, MonsterSpawner spawner) {
-        super(screen, position, spawner);
+    public SkeletonGiant(BattleScreen screen, Vector2 position, MonsterSpawner spawner, Vector2 patrolDirection) {
+        super(screen, position, spawner, patrolDirection);
         speed = 20f/PPM;
         hp = 125;
         maxHP = 125;
@@ -38,7 +38,7 @@ public class SkeletonGiant extends MonsterMelee {
         death_anim = SkeletonGiantAnims.skellygiant_death;
         weaponSprite = MonsterWeapons.bone_axe;
 
-        movementManager = new MovementManager(this);
+        movementManager = new MovementManager(this, patrolDirection);
         stateManager = new MeleeStateManager(this);
         monsterActionManager = new MonsterActionManager(this, 2.5f);
         attackRange = 1.5f;

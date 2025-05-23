@@ -57,7 +57,7 @@ public class DungeonPhase_2 implements SpawnerPhase {
 
     public void spawnDemon() {
         Vector2 position = SpawnerUtils.getRandomRangeSpawnVector();
-        demon = new MawDemon(spawner.screen, position, spawner);
+        demon = new MawDemon(spawner.screen, position, spawner, null);
         spawner.spawnMonster(demon);
     }
 
@@ -68,12 +68,12 @@ public class DungeonPhase_2 implements SpawnerPhase {
                 for (int i = 0; i < spawner.spawnRatio; i++) {
                     Monster monster;
                     if(stateTime > 0 && Math.random() >= 0.92f) {
-                        monster = new SkeletonGiant(spawner.screen, null, spawner);
+                        monster = new SkeletonGiant(spawner.screen, null, spawner, null);
                     } else {
                         if(Math.random() >= 0.7f) {
-                            monster = new Skeleton_T2(spawner.screen, null, spawner);
+                            monster = new Skeleton_T2(spawner.screen, null, spawner, null);
                         } else {
-                            monster = new Skeleton(spawner.screen, null, spawner);
+                            monster = new Skeleton(spawner.screen, null, spawner, null);
                         }
 
                     }
@@ -88,9 +88,9 @@ public class DungeonPhase_2 implements SpawnerPhase {
             if(spawner.screen.monsterManager.getRangedMonstersCount() < 8) {
                 Monster monster;
                 if(stateTime >= 120 && Math.random() >= 0.9f) {
-                    monster = new AcolytePurple(spawner.screen, SpawnerUtils.getRandomRangeSpawnVector(), spawner);
+                    monster = new AcolytePurple(spawner.screen, SpawnerUtils.getRandomRangeSpawnVector(), spawner, null);
                 } else {
-                    monster = new AcolyteBlue(spawner.screen, SpawnerUtils.getRandomRangeSpawnVector(), spawner);
+                    monster = new AcolyteBlue(spawner.screen, SpawnerUtils.getRandomRangeSpawnVector(), spawner, null);
                 }
                 spawner.spawnMonster(monster);
             }
@@ -115,12 +115,12 @@ public class DungeonPhase_2 implements SpawnerPhase {
                 Vector2 spawnPoint = SpellUtils.getClearRandomPosition(centerPoint, Math.min(2 * spawner.spawnRatio, 5));
                 Monster monster;
                 if(stateTime >= 120 && Math.random() >= 0.92f) {
-                    monster = new SkeletonGiant(spawner.screen, spawnPoint, spawner);
+                    monster = new SkeletonGiant(spawner.screen, spawnPoint, spawner, null);
                 } else {
                     if(Math.random() >= 0.7f) {
-                        monster = new Skeleton_T2(spawner.screen, null, spawner);
+                        monster = new Skeleton_T2(spawner.screen, null, spawner, null);
                     } else {
-                        monster = new Skeleton(spawner.screen, null, spawner);
+                        monster = new Skeleton(spawner.screen, null, spawner, null);
                     }
                 }
                 spawner.spawnMonster(monster);
@@ -137,12 +137,12 @@ public class DungeonPhase_2 implements SpawnerPhase {
                 Vector2 spawnPoint = SpawnerUtils.getClearRandomVectorInConeRing(player.pawn.getPosition(),
                         34 * xRatio, 42 * xRatio, quadrantAngle);
                 if(stateTime > 120 && Math.random() >= 0.92f) {
-                    monster = new SkeletonGiant(spawner.screen, spawnPoint, spawner);
+                    monster = new SkeletonGiant(spawner.screen, spawnPoint, spawner, null);
                 } else {
                     if(Math.random() >= 0.7f) {
-                        monster = new Skeleton_T2(spawner.screen, null, spawner);
+                        monster = new Skeleton_T2(spawner.screen, null, spawner, null);
                     } else {
-                        monster = new Skeleton(spawner.screen, null, spawner);
+                        monster = new Skeleton(spawner.screen, null, spawner, null);
                     }
                 }
                 spawner.spawnMonster(monster);
@@ -151,7 +151,7 @@ public class DungeonPhase_2 implements SpawnerPhase {
     }
     void spawnAcolytePack() {
         for (int i = 0; i < 8; i++) {
-            Monster monster = new AcolyteBlue(spawner.screen, SpawnerUtils.getRandomRangeSpawnVector(), spawner);
+            Monster monster = new AcolyteBlue(spawner.screen, SpawnerUtils.getRandomRangeSpawnVector(), spawner, null);
             spawner.spawnMonster(monster);
         }
     }

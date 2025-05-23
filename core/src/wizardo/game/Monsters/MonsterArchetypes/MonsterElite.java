@@ -5,7 +5,7 @@ import wizardo.game.Screens.Battle.BattleScreen;
 import wizardo.game.Screens.Battle.MonsterSpawner.DungeonSpawner.MonsterSpawner_Dungeon;
 
 public abstract class MonsterElite extends Monster {
-    public MonsterElite(BattleScreen screen, Vector2 position, MonsterSpawner_Dungeon spawner) {
-        super(screen, position, spawner);
+    public MonsterElite(BattleScreen screen, Vector2 position, MonsterSpawner_Dungeon spawner, Vector2 patrolDirection) {
+        super(screen, position, spawner, patrolDirection);
     }
 }

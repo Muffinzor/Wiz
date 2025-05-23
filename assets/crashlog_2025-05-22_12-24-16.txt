@@ -1,0 +1,17 @@
+Crash during runtime
+java.lang.NullPointerException: Cannot invoke "wizardo.game.Monsters.MonsterManager.addMonster(wizardo.game.Monsters.MonsterArchetypes.Monster)" because "this.screen.monsterManager" is null
+	at wizardo.game.Screens.Battle.MonsterSpawner.MonsterSpawner.spawnMonster(MonsterSpawner.java:99)
+	at wizardo.game.Screens.Battle.MonsterSpawner.DungeonSpawner.DungeonPhase_4.<init>(DungeonPhase_4.java:36)
+	at wizardo.game.Screens.Battle.MonsterSpawner.DungeonSpawner.MonsterSpawner_Dungeon.<init>(MonsterSpawner_Dungeon.java:10)
+	at wizardo.game.Screens.Battle.BattleScreen.<init>(BattleScreen.java:76)
+	at wizardo.game.Screens.Hub.BattleSelection.BattleSelectionTable$2.clicked(BattleSelectionTable.java:104)
+	at com.badlogic.gdx.scenes.scene2d.utils.ClickListener.touchUp(ClickListener.java:88)
+	at com.badlogic.gdx.scenes.scene2d.InputListener.handle(InputListener.java:71)
+	at com.badlogic.gdx.scenes.scene2d.Stage.touchUp(Stage.java:354)
+	at com.badlogic.gdx.InputMultiplexer.touchUp(InputMultiplexer.java:124)
+	at com.badlogic.gdx.InputEventQueue.drain(InputEventQueue.java:70)
+	at com.badlogic.gdx.backends.lwjgl3.DefaultLwjgl3Input.update(DefaultLwjgl3Input.java:189)
+	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Window.update(Lwjgl3Window.java:378)
+	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application.loop(Lwjgl3Application.java:193)
+	at com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application.<init>(Lwjgl3Application.java:167)
+	at wizardo.game.DesktopLauncher.main(DesktopLauncher.java:26)

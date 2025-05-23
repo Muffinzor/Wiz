@@ -3,7 +3,6 @@ package wizardo.game.Monsters.MonsterStateManager;
 import com.badlogic.gdx.math.MathUtils;
 import wizardo.game.Monsters.MonsterArchetypes.Monster;
 import wizardo.game.Monsters.MonsterUtils;
-import wizardo.game.Spells.SpellUtils;
 
 import static wizardo.game.Monsters.MonsterUtils.MONSTER_STATE.*;
 import static wizardo.game.Wizardo.player;
@@ -33,7 +32,7 @@ public class RangedStateManager implements StateManager {
             frameCounter = 0;
 
             float actualDst = player.pawn.getPosition().dst(monster.body.getPosition());
-            boolean hasLoS = MonsterUtils.hasCompleteLoS(monster);
+            boolean hasLoS = MonsterUtils.hasCompleteLoS_withPlayer(monster);
 
             if (hasLoS) {
                 hasLoS(actualDst);

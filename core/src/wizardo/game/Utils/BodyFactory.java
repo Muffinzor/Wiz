@@ -90,6 +90,29 @@ public class BodyFactory {
 
         return body;
     }
+    public static Body flyingBody(Vector2 position, float radius) {
+        BodyDef def = new BodyDef();
+        def.type = BodyDef.BodyType.DynamicBody;
+        def.position.set(position.x, position.y);
+        def.fixedRotation = true;
+
+        Body body = world.createBody(def);
+
+        CircleShape shape = new CircleShape();
+        shape.setRadius(radius / PPM);
+
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = shape;
+        fixtureDef.filter.categoryBits = FLYING_MONSTER;
+        fixtureDef.filter.maskBits = FLYING_MONSTER_MASK;
+        fixtureDef.isSensor = false;
+        fixtureDef.friction = 0f;
+
+        body.createFixture(fixtureDef);
+        shape.dispose();
+
+        return body;
+    }
 
 
     public static Body spellProjectileCircleBody(Vector2 position, float radius, boolean isSensor) {

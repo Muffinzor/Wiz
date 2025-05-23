@@ -16,7 +16,7 @@ public class Masks {
 
     public static final short LIGHT_PROJECTILE = 0x0100;
     public static final short DECOR = 0x0200;
-    public static final short MONSTER_BODY = 0x0400;
+    public static final short FLYING_MONSTER = 0x0400;
 
     public static final short DROP = 0x1000;
     public static final short TRIGGER = 0x2000;
@@ -24,11 +24,13 @@ public class Masks {
 
     // MASKS
 
-    public static final short SPELL_MASK = (short) ( MONSTER | OBSTACLE | DECOR | MONSTER_BODY | MONSTER_PROJECTILE);
+    public static final short SPELL_MASK = (short) ( MONSTER | FLYING_MONSTER | OBSTACLE | DECOR | MONSTER_PROJECTILE);
 
     public static final short EVENT_MASK = PAWN;
 
     public static final short MONSTER_MASK = (short) ( SPELL | OBSTACLE | PAWN | DECOR | MONSTER | LIGHT_PROJECTILE | SHORT_OBSTACLE);
+
+    public static final short FLYING_MONSTER_MASK = (short) ( SPELL | OBSTACLE | PAWN | FLYING_MONSTER | LIGHT_PROJECTILE );
 
     public static final short DECOR_MASK = (short) ( SPELL | MONSTER_PROJECTILE | PAWN | MONSTER | DROP );
 

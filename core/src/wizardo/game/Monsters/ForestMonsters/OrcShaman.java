@@ -23,8 +23,8 @@ public class OrcShaman extends Monster {
 
     MonsterSpell projectile;
 
-    public OrcShaman(BattleScreen screen, Vector2 position, MonsterSpawner spawner) {
-        super(screen, position, spawner);
+    public OrcShaman(BattleScreen screen, Vector2 position, MonsterSpawner spawner, Vector2 patrolDirection) {
+        super(screen, position, spawner, patrolDirection);
         speed = 25f/PPM;
         hp = 50;
         maxHP = 50;
@@ -41,7 +41,7 @@ public class OrcShaman extends Monster {
         death_anim = OrcShamanAnims.orcShaman_death;
         idle_anim = OrcShamanAnims.orcShaman_stop;
 
-        movementManager = new MovementManager(this);
+        movementManager = new MovementManager(this, patrolDirection);
         stateManager = new RangedStateManager(this, 3f, 9f);
         monsterActionManager = new MonsterActionManager(this, 5f);
 

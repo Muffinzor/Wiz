@@ -21,8 +21,8 @@ public class AcolyteBlue extends Monster {
 
     MonsterSpell projectile;
 
-    public AcolyteBlue(BattleScreen screen, Vector2 position, MonsterSpawner spawner) {
-        super(screen, position, spawner);
+    public AcolyteBlue(BattleScreen screen, Vector2 position, MonsterSpawner spawner, Vector2 patrolDirection) {
+        super(screen, position, spawner, patrolDirection);
         speed = 25f/PPM;
         hp = 50;
         maxHP = 50;
@@ -39,7 +39,7 @@ public class AcolyteBlue extends Monster {
         walk_anim = AcolyteAnims.acolyte_walk_blue;
         death_anim = AcolyteAnims.acolyte_death_blue;
 
-        movementManager = new MovementManager(this);
+        movementManager = new MovementManager(this, patrolDirection);
         stateManager = new RangedStateManager(this, 4.5f, 12f);
         monsterActionManager = new MonsterActionManager(this, 6f);
 

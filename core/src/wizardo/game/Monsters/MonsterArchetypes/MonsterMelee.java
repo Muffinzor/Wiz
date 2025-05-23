@@ -8,9 +8,11 @@ public abstract class MonsterMelee extends Monster {
 
     public float attackRange;
     public float rushDistance;
+    public float rushDuration = 0.5f;
+    public float rushRatio = 1.8f;
 
-    public MonsterMelee(BattleScreen screen, Vector2 position, MonsterSpawner spawner) {
-        super(screen, position, spawner);
+    public MonsterMelee(BattleScreen screen, Vector2 position, MonsterSpawner spawner, Vector2 patrolDirection) {
+        super(screen, position, spawner, patrolDirection);
     }
 
 }

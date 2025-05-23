@@ -19,8 +19,8 @@ public class GreenSludge extends MonsterMelee {
 
     int speed_frames;
 
-    public GreenSludge(BattleScreen screen, Vector2 position, MonsterSpawner spawner) {
-        super(screen, position, spawner);
+    public GreenSludge(BattleScreen screen, Vector2 position, MonsterSpawner spawner, Vector2 patrolDirection) {
+        super(screen, position, spawner, patrolDirection);
         speed = 0.825f;
         speed_frames = MathUtils.random(0,60);
         hp = 75;
@@ -39,7 +39,7 @@ public class GreenSludge extends MonsterMelee {
         death_anim = SludgeAnims.sludge_green_death;
         weaponSprite = invis_weapon;
 
-        movementManager = new MovementManager(this);
+        movementManager = new MovementManager(this, patrolDirection);
 
         state = MonsterUtils.MONSTER_STATE.ADVANCING;
         stateManager = new MeleeStateManager(this);
@@ -75,7 +75,7 @@ public class GreenSludge extends MonsterMelee {
     public void onDeath() {
         super.onDeath();
         for (int i = 0; i < 3; i++) {
-            GreenSludge_Mini mini = new GreenSludge_Mini(screen, body.getPosition(), (MonsterSpawner_Dungeon) spawner);
+            GreenSludge_Mini mini = new GreenSludge_Mini(screen, body.getPosition(), (MonsterSpawner_Dungeon) spawner, null);
             screen.monsterSpawner.monster_to_spawn.add(mini);
         }
     }

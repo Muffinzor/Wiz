@@ -41,7 +41,7 @@ public class DungeonPhase_3 implements SpawnerPhase {
             int quantity = Math.max(1, (int) spawner.spawnRatio/2);
             if(spawner.screen.monsterManager.liveMonsters.size() < spawner.maxMeleeMonsters) {
                 for (int i = 0; i < quantity; i++) {
-                    GreenSludge sludge = new GreenSludge(spawner.screen, null, spawner);
+                    GreenSludge sludge = new GreenSludge(spawner.screen, null, spawner, null);
                     spawner.spawnMonster(sludge);
                 }
             }
@@ -52,7 +52,7 @@ public class DungeonPhase_3 implements SpawnerPhase {
         if(sludgeAroundTimer > delay) {
             sludgeAroundTimer = 0;
             Vector2 position = SpawnerUtils.getClearRandomPositionRing(player.pawn.getPosition(), 36 * xRatio, 40 * xRatio);
-            GreenSludge sludge = new GreenSludge(spawner.screen, position, spawner);
+            GreenSludge sludge = new GreenSludge(spawner.screen, position, spawner, null);
             spawner.spawnMonster(sludge);
         }
     }

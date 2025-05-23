@@ -8,16 +8,27 @@ import static wizardo.game.Wizardo.player;
 public class MovementManager {
 
     Monster monster;
-    Pathfinder pathfinder;
+    public Pathfinder pathfinder;
 
     Vector2 pushBackForce = new Vector2();
     public float pushBackTimer = 0;
     float pushDecayRate = 0;
     int frameCounter = 0;
 
-    public MovementManager(Monster monster) {
+    /**
+     * if direction is null, will be set to chase Player
+     * if direction is set, will be set to patrol towards that direction
+     */
+    public MovementManager(Monster monster, Vector2 direction) {
         this.monster = monster;
-        this.pathfinder = new Pathfinder(monster);
+        if(direction == null) {
+            this.pathfinder = new Pathfinder_PlayerChase(monster);
+        } else {
+            Vector2 patrolDirection = new Vector2(direction);
+            monster.patrol_target = new Vector2(patrolDirection);
+            this.pathfinder = new Pathfinder_Patrol(monster, patrolDirection);
+            monster.patrolling = true;
+        }
     }
 
     public void moveMonster(float delta) {
@@ -26,7 +37,6 @@ public class MovementManager {
         } else if(pushBackTimer > 0) {
             pushMonster(delta);
         } else {
-
             switch(monster.state) {
                 case ADVANCING -> walk(false);
                 case FLEEING -> walk(true);
@@ -42,11 +52,7 @@ public class MovementManager {
         frameCounter ++;
         if(frameCounter >= 30) {
             checkDistance();
-            if(backwards) {
-                monster.directionVector = pathfinder.moveBackwards();
-            } else {
-                monster.directionVector = pathfinder.moveTowards();
-            }
+            monster.directionVector = pathfinder.getDirection(backwards);
             frameCounter = 0;
         }
 

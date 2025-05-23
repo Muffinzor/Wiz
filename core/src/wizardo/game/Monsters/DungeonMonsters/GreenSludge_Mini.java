@@ -18,8 +18,8 @@ public class GreenSludge_Mini extends MonsterMelee {
 
     int speed_frames = 0;
 
-    public GreenSludge_Mini(BattleScreen screen, Vector2 position, MonsterSpawner_Dungeon spawner) {
-        super(screen, position, spawner);
+    public GreenSludge_Mini(BattleScreen screen, Vector2 position, MonsterSpawner_Dungeon spawner, Vector2 patrolDirection) {
+        super(screen, position, spawner, patrolDirection);
         speed = 0.825f;
         hp = 35;
         maxHP = 35;
@@ -40,7 +40,7 @@ public class GreenSludge_Mini extends MonsterMelee {
         spawn_anim = SludgeAnims.sludge_green_move_mini;
         weaponSprite = invis_weapon;
 
-        movementManager = new MovementManager(this);
+        movementManager = new MovementManager(this, patrolDirection);
 
         state = MonsterUtils.MONSTER_STATE.ADVANCING;
         stateManager = new MeleeStateManager(this);

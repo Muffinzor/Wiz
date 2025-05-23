@@ -27,8 +27,8 @@ public class MawDemon extends Monster {
     boolean respawn;
     Vector2 toPlayer;
 
-    public MawDemon(BattleScreen screen, Vector2 position, MonsterSpawner spawner) {
-        super(screen, position, spawner);
+    public MawDemon(BattleScreen screen, Vector2 position, MonsterSpawner spawner, Vector2 patrolDirection) {
+        super(screen, position, spawner, patrolDirection);
         alpha = 0;
         speed = 1f;
         hp = 2500;
@@ -47,7 +47,7 @@ public class MawDemon extends Monster {
         walk_anim = MawDemonAnims.mawDemon_walk;
         death_anim = MawDemonAnims.mawDemon_death;
 
-        movementManager = new MovementManager(this);
+        movementManager = new MovementManager(this, patrolDirection);
         stateManager = new MawDemonStateManager(this);
         monsterActionManager = new MawDemon_ActionManager(this, 2.5f);
 

@@ -18,8 +18,8 @@ import static wizardo.game.Utils.Constants.PPM;
 
 public class Skeleton_T2 extends MonsterMelee {
 
-    public Skeleton_T2(BattleScreen screen, Vector2 position, MonsterSpawner spawner) {
-        super(screen, position, spawner);
+    public Skeleton_T2(BattleScreen screen, Vector2 position, MonsterSpawner spawner, Vector2 patrolDirection) {
+        super(screen, position, spawner, patrolDirection);
         speed = 20f/PPM;
         hp = 50;
         maxHP = 50;
@@ -40,7 +40,7 @@ public class Skeleton_T2 extends MonsterMelee {
         shatter_anim = SkeletonAnims.skelly_shatter;
         weaponSprite = MonsterWeapons.bone_knife;
 
-        movementManager = new MovementManager(this);
+        movementManager = new MovementManager(this, patrolDirection);
 
         state = MonsterUtils.MONSTER_STATE.ADVANCING;
         stateManager = new MeleeStateManager(this);

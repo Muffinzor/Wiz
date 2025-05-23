@@ -17,8 +17,8 @@ import static wizardo.game.Utils.Constants.PPM;
 
 public class Zombie extends MonsterMelee {
 
-    public Zombie(BattleScreen screen, Vector2 position, MonsterSpawner_Dungeon spawner) {
-        super(screen, position, spawner);
+    public Zombie(BattleScreen screen, Vector2 position, MonsterSpawner_Dungeon spawner, Vector2 patrolDirection) {
+        super(screen, position, spawner, patrolDirection);
         speed = 16f/PPM;
         hp = 250;
         maxHP = 250;
@@ -37,7 +37,7 @@ public class Zombie extends MonsterMelee {
         death_anim = ZombieAnims.zombie_death;
         weaponSprite = MonsterWeapons.bone_club;
 
-        movementManager = new MovementManager(this);
+        movementManager = new MovementManager(this, patrolDirection);
 
         state = MonsterUtils.MONSTER_STATE.ADVANCING;
         stateManager = new MeleeStateManager(this);

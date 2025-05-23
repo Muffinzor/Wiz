@@ -9,8 +9,8 @@ public abstract class MonsterFlying extends Monster {
     public float attackRange;
     public float rushDistance;
 
-    public MonsterFlying(BattleScreen screen, Vector2 position, MonsterSpawner spawner) {
-        super(screen, position, spawner);
+    public MonsterFlying(BattleScreen screen, Vector2 position, MonsterSpawner spawner, Vector2 patrolDirection) {
+        super(screen, position, spawner, patrolDirection);
     }
 
 }
